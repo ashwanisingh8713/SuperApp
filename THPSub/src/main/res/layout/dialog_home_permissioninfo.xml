@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Hindu"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="The Hindu requires the following information"
+            app:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Location"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please permit us to access your location, which will then be used to send personalised stories, updates and notifications."
+            app:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/cancelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="CANCEL"
+                android:textColor="@color/blueColor_1"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_SemiBold" />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/okTxt"
+                android:layout_marginLeft="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="OK"
+                app:textColor="@color/blueColor_1"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.ns.view.layout.NSFrameLayout>

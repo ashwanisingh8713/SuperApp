@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/parentLayoutPaddingStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutType="Black_Dark">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/pref_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ns.view.btn.NSImageButton
+                app:btnType="arrow_no_line"
+                android:id="@+id/backBtn"
+                style="@style/backBtnStyle" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/userName_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="11"
+                android:layout_toRightOf="@+id/backBtn"
+                android:layout_centerInParent="true"
+                android:text="Personalise My Stories"
+                app:viewType="color_static"
+                android:textSize="18sp"
+                app:font_path="@string/THP_TundraOffc_Bold" />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/tv_savepref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:text="Save Preference"
+                android:textColor="#1b528e"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pref_layout"
+            android:layout_marginTop="10dp">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/tv_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                app:viewType="color_static"
+                android:textSize="20sp"
+                app:font_path="@string/THP_FiraSans_Bold" />
+
+            <ImageButton
+                android:id="@+id/forwardArrow"
+                style="@style/fwdBtnStyle"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_right_arror_enable"
+                />
+
+            <com.ns.view.btn.NSImageButton
+                app:btnType="back_circle"
+                android:id="@+id/backArrow"
+                style="@style/backBtnStyle"
+                android:layout_toLeftOf="@+id/forwardArrow"
+                app:srcCompat="@drawable/ic_left_arrow_disable"
+                android:layout_marginEnd="5dp"/>
+
+        </RelativeLayout>
+
+        <com.ns.view.NonSwipeableViewPager
+            android:id="@+id/personalise_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnLayout"
+            android:layout_below="@+id/layout"
+            />
+
+<!--        Button Layout-->
+        <FrameLayout
+            android:id="@+id/btnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:visibility="visible">
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/savePersonaliseBtn_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/signInAndUp_editText_height"
+                android:background="@drawable/blue_backgraoud"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Save &amp; Next "
+                android:textColor="@color/white"
+                android:textSize="@dimen/personal_info_textSize_18sp"
+                app:font_path="@string/THP_FiraSans_SemiBold" />
+
+            <com.ns.view.CustomProgressBarWhite
+                android:id="@+id/progressBarVerify"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/progress_container"
+        layout="@layout/progress_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</com.ns.view.layout.NSFrameLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="21dp"
+    android:paddingStart="21dp"
+    android:paddingRight="21dp"
+    android:paddingEnd="21dp"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <com.joooonho.SelectableRoundedImageView
+        android:id="@+id/image_author"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/tv_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@+id/image_author"
+        android:layout_centerVertical="true"
+        android:textSize="16sp"
+        android:lineSpacingExtra="-2sp"
+        app:viewType="color_static"
+        android:text="Doglas Grey"
+        app:font_path="@string/THP_FiraSans_Regular"/>
+
+    <ImageView
+        android:id="@+id/imageview_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_plus_1" />
+
+    <include layout="@layout/listing_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/accoutCreatedParent"
+    android:background="@color/dimBackground"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/otpLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+        <LinearLayout
+            android:id="@+id/shadowLayout"
+            android:background="@drawable/shadow_white_r12_s6_wh200_ltr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/baseLayoutLeftPadding"
+            android:paddingRight="@dimen/baseLayoutRightPadding"
+            android:paddingTop="@dimen/baseLayoutTopPadding"
+            android:paddingBottom="@dimen/baseLayoutTopPadding"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            >
+
+            <com.ns.view.text.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:letterSpacing="0.03"
+                android:text="Account Created"
+                android:textColor="#033da2"
+                android:textSize="20sp"
+                app:font_path="@string/THP_TundraOffc_Bold" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:gravity="center_horizontal"
+                android:alpha="0.6"
+                app:viewType="color_static"
+                android:letterSpacing="0.03"
+                android:text="You have unlocked 30 days free trial for The Hindu Premium"
+                app:font_path="@string/THP_FiraSans_Regular"
+                />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/viewSubscriptionBtn_Txt"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:text="View Subscription Details"
+                app:textColor="@color/color_static_text"
+                android:background="@drawable/grey_background"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/setPreferenceBtn_Txt"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/set_preference"
+                app:textColor="@color/color_static_text"
+                android:background="@drawable/grey_background"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                />
+
+        </LinearLayout>
+
+        <com.ns.view.btn.NSImageButton
+            android:id="@+id/closeButton"
+            style="@style/backBtnStyle"
+            app:btnType="cross_circle"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp" />
+
+    </FrameLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

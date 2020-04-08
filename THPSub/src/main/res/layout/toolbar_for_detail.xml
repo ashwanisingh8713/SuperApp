@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutType="Black_Full"
+    >
+
+    <com.ns.view.btn.NSImageButton
+        app:btnType="arrow_no_line"
+        android:id="@+id/back"
+        style="@style/backBtnStyle"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/premiumLogoBtn"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        app:srcCompat="@drawable/ic_premium_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:visibility="gone"
+        />
+
+
+
+    <ImageView
+        android:id="@+id/likeTHPIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_switch_off_copy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/premiumLogoBtn"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        />
+
+    <ProgressBar
+        android:id="@+id/likeTHPProgressBar"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        style="@android:style/Widget.Holo.ProgressBar.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/premiumLogoBtn"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:visibility="gone"/>
+
+
+    <FrameLayout
+        android:id="@+id/bookmarkParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/likeTHPIC"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bookmarkedIC"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_bookmark_selected"
+            android:visibility="invisible"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/bookmarkIC"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_bookmark_unselected"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/bookmarkrogressBar"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            style="@android:style/Widget.Holo.ProgressBar.Small"
+            android:visibility="gone"
+            />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/fontSizeIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        android:src="@drawable/font_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/bookmarkParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/favTHPIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_like_unselected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/bookmarkParent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/favTHPProgressBar"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        style="@android:style/Widget.Holo.ProgressBar.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/bookmarkParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+
+
+    <ImageView
+        android:id="@+id/shareTHPIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        android:src="@drawable/share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/favTHPIC"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/ttsPauseIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        android:src="@drawable/tts_pause"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/shareTHPIC"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ttsPlayIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        android:src="@drawable/tts_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/shareTHPIC"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/ttsProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/shareTHPIC"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+
+</com.ns.view.layout.NSConstraintLayout>

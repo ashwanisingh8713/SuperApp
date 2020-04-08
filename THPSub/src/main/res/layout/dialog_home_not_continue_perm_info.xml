@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="220dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Could not continue"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="The app requires the following permission(s) to perform this action"
+            app:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Location"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To give better news content and user experiene we need location access."
+            app:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To grant permissions, go to App info > Permissions"
+            app:textColor="@color/timeColor"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/cancelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:text="Cancel"
+                app:textColor="@color/blueColor_1"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_SemiBold"
+                android:layout_marginRight="45dp"
+                android:layout_marginEnd="45dp"
+                />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/appInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:text="App Info"
+            app:textColor="@color/blueColor_1"
+            android:textSize="14sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.ns.view.layout.NSFrameLayout>

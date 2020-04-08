@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/transactionParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dimBackground"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
+
+    <FrameLayout
+        android:id="@+id/otpLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/txnMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/baseLayoutLeftPadding"
+            android:paddingTop="@dimen/baseLayoutTopPadding"
+            android:paddingEnd="@dimen/baseLayoutRightPadding"
+            android:paddingBottom="@dimen/baseLayoutBottomPadding"
+            android:background="@drawable/apptab_transaction_bg"
+            >
+
+            <com.ns.view.text.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:letterSpacing="0.03"
+                android:text="Transaction Failed"
+                app:textColor="#033da2"
+                android:textSize="20sp"
+                app:font_path="@string/THP_TundraOffc_Bold" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/textViewFailedMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:alpha="0.6"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.03"
+                android:text="You have cancelled the transaction"
+                app:viewType="color_static"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/textViewTryAgain"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/grey_background"
+                android:gravity="center"
+                android:text="Try Again"
+                app:textColor="@color/color_static_text"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/textViewDismissWindow"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="36dp"
+                android:background="@drawable/grey_background"
+                android:gravity="center"
+                android:text="Dismiss"
+                app:textColor="@color/color_static_text"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+        </LinearLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

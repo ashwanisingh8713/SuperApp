@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="baseLayoutLeftPadding">11dp</dimen>
+    <dimen name="baseLayoutRightPadding">11dp</dimen>
+    <dimen name="baseLayoutTopPadding">26dp</dimen>
+    <dimen name="baseLayoutBottomPadding">26dp</dimen>
+
+    <dimen name="becomeMemberbackBtnMarginTop">20dp</dimen>
+    <dimen name="margine_18_dp">18dp</dimen>
+    <dimen name="backBtnWidthHeight">45dp</dimen>
+
+    <dimen name="toolbar_height">56dp</dimen>
+
+    <dimen name="signInAndUp_editText_height">45dp</dimen>
+    <dimen name="signInAndUp_signin_top_margin">24dp</dimen>
+
+    <dimen name="introIconWidthHeight">21.5dp</dimen>
+    <dimen name="introIconMarginTop">29dp</dimen>
+    <dimen name="introTextMarginTop">26dp</dimen>
+
+
+
+
+    <dimen name="subscription_layout_step_2_gap">6.5dp</dimen>
+
+    <string name="subscription_layout_step_2_ratio">h,10.5:14</string>
+
+
+    <dimen name="subscription_pack_width">199dp</dimen>
+    <dimen name="subscription_pack_height_1">231dp</dimen>
+    <dimen name="subscription_pack_height_2">273dp</dimen>
+    <dimen name="subscription_pack_item_gap">15dp</dimen>
+    <dimen name="subscription_pack_item_border_padding">3.4dp</dimen>
+    <dimen name="subscription_pack_item_rupee_gap">1dp</dimen>
+
+
+    <string name="account_created_layout_ratio">h,12:11.3</string>
+    <string name="bottom_popup_layout_ratio">h,12:14</string>
+    <string name="bottom_popup_layout_ratio_otp">h,12:14</string>
+    <string name="bottom_popup_layout_ratio_set_password">h,12:14</string>
+
+    <dimen name="forgot_top_icon_width_height">155dp</dimen>
+    <dimen name="otp_top_icon_width_height">155dp</dimen>
+    <dimen name="reset_top_icon_width_height">155dp</dimen>
+
+    <string name="edition_popup_layout_ratio">h,10.9:9</string>
+    <string name="more_popup_layout_ratio">h,14:9</string>
+
+    <string name="calendar_popup_layout_ratio">h,10.9:9</string>
+    <string name="dropdown_popup_layout_ratio">h,15:9</string>
+    <string name="dropdown_country_popup_layout_ratio">h,9:9</string>
+
+    <string name="tc_layout_ratio">h,10:14</string>
+
+    <string name="become_member_part1">h,10:10</string>
+    <string name="become_member_part2">h,30:4</string>
+
+    <dimen name="become_member_part1_gap">14dp</dimen>
+    <dimen name="become_member_part2_gap">18dp</dimen>
+    <dimen name="become_member_margintop">15dp</dimen>
+
+    <dimen name="userprofile_gap_for_1">5dp</dimen>
+    <dimen name="userprofile_gap_for_2">6.5dp</dimen>
+    <dimen name="userprofile_gap_for_partLayout">20dp</dimen>
+
+    <string name="account_info_1_ratio">h,4.5:4</string>
+    <dimen name="account_info_et_height">63.5dp</dimen>
+    <dimen name="account_info_update_btn_parent_height">65dp</dimen>
+    <dimen name="account_info_title_gap">49dp</dimen>
+
+    <string name="personal_info_1_ratio">h,6.8:4</string>
+    <dimen name="personal_info_et_height">44dp</dimen>
+    <dimen name="personal_info_et_gap">5dp</dimen>
+    <dimen name="personal_info_et_paddingBottom">5dp</dimen>
+    <dimen name="personal_info_update_btn_parent_height">70dp</dimen>
+    <dimen name="personal_info_gap_for_partLayout">10dp</dimen>
+    <dimen name="personal_info_gap_for_part2Layout">2dp</dimen>
+    <dimen name="personal_info_gap_for_verifyotp">20dp</dimen>
+
+    <dimen name="personal_info_textSize_18sp">18sp</dimen>
+    <dimen name="personal_info_textSize_16sp">16sp</dimen>
+    <dimen name="personal_info_textSize_14sp">14sp</dimen>
+    <dimen name="textSize_20sp">20sp</dimen>
+    <dimen name="textSize_27sp">27sp</dimen>
+    <dimen name="textSize_10sp">10sp</dimen>
+
+    <dimen name="margin_26">26dp</dimen>
+
+    <dimen name="subscription_other_content_left_padding">1dp</dimen>
+    <dimen name="choose_plan_top_padding">20dp</dimen>
+    <dimen name="choose_plan_left_padding">24dp</dimen>
+    <dimen name="choose_plan_bottom_padding">10dp</dimen>
+
+
+    <dimen name="apptab_listing_top_padding">2dp</dimen>
+    <dimen name="apptab_listing_left_padding">17dp</dimen>
+    <dimen name="apptab_listing_right_padding">22dp</dimen>
+    <dimen name="listing_divider_height">1dp</dimen>
+    <string name="apptab_dashboard_image_ratio">h,16:9</string>
+
+    <dimen name="snackbar_bottom_margin">56dp</dimen>
+
+    <dimen name="add_address_et_height">49dp</dimen>
+    <dimen name="add_address_info_et_gap">15dp</dimen>
+
+    <dimen name="profile_icon_width_height">31dp</dimen>
+
+    <dimen name="toolbar_ic_width">30dp</dimen>
+    <dimen name="toolbar_ic_height">30dp</dimen>
+    <dimen name="toolbar_ic_gap">17dp</dimen>
+
+    <dimen name="video_land_width">650dp</dimen>
+    <dimen name="video_land_height">380dp</dimen>
+    <dimen name="video_poitrate_width">350dp</dimen>
+    <dimen name="video_poitrate_height">250dp</dimen>
+
+    <dimen name="personalise_margin_top">10dp</dimen>
+    <dimen name="personalise_author_margin_top">10dp</dimen>
+    <dimen name="personalise_author_width_height">41dp</dimen>
+    <dimen name="personalise_margin_left">5dp</dimen>
+    <dimen name="padding">8dp</dimen>
+
+    <dimen name="thp_tab_home_margin_left">25dp</dimen>
+    <dimen name="thp_tab_home_margin_right">23dp</dimen>
+
+    <dimen name="thp_tab_profile_margin_left">24dp</dimen>
+    <dimen name="thp_tab_profile_margin_right">24dp</dimen>
+
+    <dimen name="thp_tab_btn_margin_top">2dp</dimen>
+
+    <dimen name="become_member_part2_height">180dp</dimen>
+    <dimen name="signUp_faq_bottomMargin">40dp</dimen>
+    <dimen name="signUp_social_bottomMargin">60dp</dimen>
+    <dimen name="address_action_padding_start">20dp</dimen>
+
+    <dimen name="subscription_bottom_title">12sp</dimen>
+    <dimen name="subscription_bottom_sub_title">9sp</dimen>
+
+    <dimen name="default_home_bottom_padding_1">150dp</dimen>
+    <dimen name="default_home_bottom_padding_2">100dp</dimen>
+    <dimen name="default_home_bottom_padding_3">50dp</dimen>
+    <dimen name="change_password_top_margin">50dp</dimen>
+    <dimen name="signIn_tc_bottom_margin">30dp</dimen>
+    <dimen name="signInUp_header_margin">40dp</dimen>
+    <dimen name="subscribeLayoutHeight">50dp</dimen>
+    <dimen name="snackbarBottomMargin">52dp</dimen>
+    <dimen name="bottomTabHeight">50dp</dimen>
+    <dimen name="signin_field_text_size">16sp</dimen>
+    <dimen name="padding_current_plan">20dp</dimen>
+    <dimen name="margin_to_social_signin_text">16dp</dimen>
+    <dimen name="margin_to_social_signin_text_signup">36dp</dimen>
+    <dimen name="top_margin_signin_signout_layout">12dp</dimen>
+
+    <dimen name="listing_page_empty_btn_height">40dp</dimen>
+    <dimen name="listing_page_empty_btn_padding">22dp</dimen>
+    <dimen name="subscribe_plan_btn_height">30dp</dimen>
+    <dimen name="subscribe_plan_btn_margintop">20dp</dimen>
+    <dimen name="marging_end_author_name">6dp</dimen>
+
+    <dimen name="webview_shadow_SMALLER">67dp</dimen>
+    <dimen name="webview_shadow_NORMAL">77dp</dimen>
+    <dimen name="webview_shadow_LARGER">89dp</dimen>
+    <dimen name="webview_shadow_LARGEST">110dp</dimen>
+
+</resources>

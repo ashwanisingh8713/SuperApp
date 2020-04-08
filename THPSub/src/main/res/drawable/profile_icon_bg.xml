@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid
+        android:color="#1b528e"/>
+
+    <size
+        android:width="@dimen/profile_icon_width_height"
+        android:height="@dimen/profile_icon_width_height"/>
+</shape>

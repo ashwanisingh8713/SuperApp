@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="become_member_part1">h,10:10</string>
+    <string name="account_created_layout_ratio">h,12:10.5</string>
+    <dimen name="become_member_part2_height">180dp</dimen>
+    <dimen name="become_member_part2_gap">18dp</dimen>
+
+    <dimen name="subscription_bottom_title">13sp</dimen>
+    <dimen name="subscription_bottom_sub_title">11sp</dimen>
+
+    <dimen name="signInAndUp_signin_top_margin">20dp</dimen>
+    <dimen name="signInAndUp_editText_height">45dp</dimen>
+
+    <dimen name="signIn_tc_bottom_margin">10dp</dimen>
+    <dimen name="backBtnWidthHeight">45dp</dimen>
+    <dimen name="signInUp_header_margin">22dp</dimen>
+
+    <dimen name="introIconWidthHeight">25dp</dimen>
+    <dimen name="introIconMarginTop">35dp</dimen>
+    <dimen name="introTextMarginTop">32dp</dimen>
+
+    <dimen name="become_member_part1_gap">28dp</dimen>
+    <dimen name="top_margin_signin_signout_layout">30dp</dimen>
+
+    <dimen name="thp_tab_btn_margin_top">1.7dp</dimen>
+
+    <dimen name="thp_tab_home_margin_left">23.3dp</dimen>
+    <dimen name="thp_tab_home_margin_right">23.2dp</dimen>
+    <dimen name="thp_tab_profile_margin_left">22.5dp</dimen>
+    <dimen name="thp_tab_profile_margin_right">23.3dp</dimen>
+
+</resources>

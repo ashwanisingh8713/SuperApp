@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/subscription_pack_width"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/subscription_pack_item_gap"
+    android:background="@drawable/shadow_for_plan_subscription_pack"
+    android:padding="@dimen/subscription_pack_item_border_padding">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemContentMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_blue_backgraoud"
+        android:paddingStart="31dp"
+        android:paddingLeft="31dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="31dp"
+        android:paddingRight="31dp"
+        android:paddingBottom="11dp">
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/packName_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:minLines="1"
+            android:text="Starter Pack"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            app:font_path="@string/THP_TundraOffc_Bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/planValidity_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:text="1 month"
+            android:minLines="2"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            app:font_path="@string/THP_FiraSans_Regular"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/packName_Txt" />
+
+        <LinearLayout
+            android:id="@+id/currencyLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/planValidity_Txt"
+            >
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/currencyType_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rs"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                app:font_path="@string/THP_TundraOffc" />
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/currencyValue_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="top|left"
+                android:text="99"
+                android:textColor="#ffffff"
+                android:textSize="38sp"
+                app:font_path="@string/THP_TundraOffc_Bold" />
+        </LinearLayout>
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/planOffer_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:maxLines="2"
+            android:text="Limited period offer"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            app:font_path="@string/THP_FiraSans_Regular"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currencyLayout" />
+
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/subscribeBtn_Txt"
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.7"
+            android:background="@drawable/white_backgraoud"
+            android:gravity="center"
+            android:text="Subscribe"
+            android:textColor="#AC1717"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:layout_constraintTop_toBottomOf="@+id/planOffer_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

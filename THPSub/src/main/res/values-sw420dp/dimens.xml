@@ -1,0 +1,15 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+
+    <string name="become_member_part1">h,10:10.2</string>
+    <string name="account_created_layout_ratio">h,12:10</string>
+
+    <dimen name="thp_tab_home_margin_left">25dp</dimen>
+    <dimen name="thp_tab_home_margin_right">25dp</dimen>
+    <dimen name="thp_tab_profile_margin_left">24dp</dimen>
+    <dimen name="thp_tab_profile_margin_right">25dp</dimen>
+</resources>

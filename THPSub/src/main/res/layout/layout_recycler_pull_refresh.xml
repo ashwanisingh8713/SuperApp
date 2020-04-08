@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layoutType="Black_Dark">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPull"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/tryAgainButton"
+            android:layout_width="wrap_content"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:minHeight="45dp"
+            android:background="@drawable/grey_btn_background"
+            android:text="Try Again"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:alpha="0.5"
+            android:visibility="gone"
+            android:textColor="@color/boldBlackColor"
+            />
+
+        <com.ns.view.CustomProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/networkIndicationLayout"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/boldBlackColor"
+        android:visibility="gone">
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No internet connection!"
+            android:gravity="center_vertical"
+            android:textColor="@color/greyColor_1"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            />
+
+    </LinearLayout>
+
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/smoothProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        style="@style/GNowProgressBar"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+
+</com.ns.view.layout.NSFrameLayout>

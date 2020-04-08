@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ns.view.btn.NSImageButton
+        app:btnType="arrow_no_line"
+        android:id="@+id/backBtn"
+        style="@style/backBtnStyle"
+        android:layout_marginLeft="@dimen/baseLayoutLeftPadding"
+        android:layout_marginStart="@dimen/baseLayoutLeftPadding"
+        android:layout_marginTop="@dimen/baseLayoutTopPadding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--Start Part 1 Layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/part1Layout"
+        style="@style/parentLayoutPaddingStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/userprofile_gap_for_1"
+        android:layout_marginLeft="@dimen/userprofile_gap_for_1"
+        android:layout_marginEnd="@dimen/userprofile_gap_for_1"
+        android:layout_marginRight="@dimen/userprofile_gap_for_1"
+        android:layout_marginBottom="@dimen/personal_info_gap_for_partLayout"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintTop_toBottomOf="@id/backBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/userName_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="11"
+                android:text="Personal Info "
+                app:viewType="color_static"
+                android:textSize="@dimen/personal_info_textSize_18sp"
+                app:font_path="@string/THP_FiraSans_Bold" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/mobileNumber_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit your personal details"
+                app:viewType="color_static"
+                android:textSize="14sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--End Part 1 Layout-->
+
+    <!--Start Part 2 Layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/part2Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/userprofile_gap_for_2"
+        android:layout_marginTop="@dimen/userprofile_gap_for_2"
+        android:layout_marginLeft="@dimen/userprofile_gap_for_2"
+        android:layout_marginEnd="@dimen/userprofile_gap_for_2"
+        android:layout_marginRight="@dimen/userprofile_gap_for_2"
+        android:layout_marginBottom="@dimen/personal_info_gap_for_part2Layout"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/part1Layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Name"
+            app:hintTextAppearance="@style/HintLabel"
+
+            android:theme="@style/TextLabelDark">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/nameET"
+                style="@style/personalInfoET_Style"
+                android:inputType="textVisiblePassword"
+                android:importantForAutofill="no"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                app:hintTextAppearance="@style/HintLabel"
+                android:imeOptions="normal"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dobLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameLayout"
+            android:hint="Date of Birth"
+            app:hintTextAppearance="@style/HintLabel"
+            android:theme="@style/TextLabelDark"
+
+            >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dobLayoutET"
+                style="@style/personalInfoET_Style"
+                android:inputType="textPersonName"
+                android:drawableEnd="@drawable/ic_dob_wrapper"
+                android:paddingBottom="15dp"
+                android:maxLines="1"
+                app:hintTextAppearance="@style/HintLabel"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+        <!--====================================-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/genderLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/countryLayout"
+            app:layout_constraintTop_toBottomOf="@+id/dobLayout"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            android:layout_marginRight="18dp"
+            android:layout_marginEnd="18dp"
+            app:hintTextAppearance="@style/HintLabel"
+            android:theme="@style/TextLabelDark">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/genderLayoutET"
+                style="@style/personalInfoET_Style"
+                android:hint="Gender"
+                android:inputType="textPersonName"
+                android:drawableRight="@drawable/ic_edition_dropdown_white"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/countryLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            app:layout_constraintLeft_toRightOf="@+id/genderLayout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dobLayout"
+            app:hintTextAppearance="@style/HintLabel"
+            android:theme="@style/TextLabelDark">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/countryET"
+                style="@style/personalInfoET_Style"
+                android:hint="Country"
+                android:inputType="textPersonName"
+                android:drawableRight="@drawable/ic_edition_dropdown_white"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/stateLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryLayout"
+            android:hint="State"
+            app:hintTextAppearance="@style/HintLabel"
+            android:theme="@style/TextLabelDark">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/stateET"
+                style="@style/personalInfoET_Style"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:drawableRight="@drawable/ic_edition_dropdown_white"
+                app:hintTextAppearance="@style/HintLabel"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/currentLocationBtn_Txt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            app:layout_constraintTop_toBottomOf="@+id/stateLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:maxEms="14"
+            android:text="Use my current location"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:drawableLeft="@drawable/ic_location_wrapper" />
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/clearAll_Txt"
+            android:layout_marginTop="@dimen/personal_info_et_gap"
+            app:layout_constraintTop_toBottomOf="@+id/currentLocationBtn_Txt"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingBottom="2dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:textColor="@color/grey"
+            android:textSize="14sp"
+            android:text="Clear All"
+            app:font_path="@string/THP_FiraSans_Regular"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--End Part 2 Layout-->
+
+    <!--Start Part 3 Layout-->
+    <LinearLayout
+        android:id="@+id/part3Layout"
+        android:layout_marginLeft="@dimen/baseLayoutLeftPadding"
+        android:layout_marginStart="@dimen/baseLayoutLeftPadding"
+        android:layout_marginRight="@dimen/baseLayoutLeftPadding"
+        android:layout_marginEnd="@dimen/baseLayoutLeftPadding"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@drawable/shadow_r10_s4_wh50"
+        android:padding="@dimen/choose_plan_left_padding"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/info_Txt"
+        app:layout_constraintDimensionRatio="@string/personal_info_1_ratio"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="invisible">
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="11"
+            android:text="Additional UID"
+            app:viewType="color_static"
+            android:textSize="@dimen/personal_info_textSize_18sp"
+            app:font_path="@string/THP_FiraSans_Bold" />
+
+        <include layout="@layout/listing_divider"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/listing_divider_height"/>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/emailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabelDark"
+            android:hint="Email"
+            app:hintTextAppearance="@style/HintLabel"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/emailET"
+                style="@style/personalInfoET_Style"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:textColor="@color/dark_color_static_text"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/verifyViaOTPBtn_Txt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/personal_info_gap_for_verifyotp"
+            android:text="Verify via OTP"
+            app:textColor="@color/blueColor_1"
+            android:background="@drawable/blue_outline_backgraoud"
+            android:textSize="@dimen/personal_info_textSize_18sp"
+            app:font_path="@string/THP_FiraSans_Bold" />
+
+    </LinearLayout>
+    <!--End Part 3 Layout-->
+
+
+
+    <!--Start Part 4 Layout-->
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/info_Txt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="Why The Hindu group needs your personal information?"
+        app:viewType="color_static"
+        android:drawableLeft="@drawable/ic_info_wrapper"
+        android:focusable="false"
+        android:drawablePadding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        android:textSize="14sp"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/part4Layout"
+        android:background="@color/dark_color_home_banner_background"/>
+
+    <!--End Part 4 Layout-->
+
+
+
+    <!--Start Part 5 Layout-->
+    <FrameLayout
+        android:id="@+id/part4Layout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/personal_info_update_btn_parent_height"
+        android:background="@drawable/shadow_r10_s4_wh200x50_lrb"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/choose_plan_left_padding"
+        android:paddingStart="@dimen/choose_plan_left_padding"
+        android:paddingRight="@dimen/choose_plan_left_padding"
+        android:paddingEnd="@dimen/choose_plan_left_padding"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/updateBtn_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/signInAndUp_editText_height"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Update Profile"
+                app:textColor="@color/white"
+                android:background="@drawable/blue_backgraoud"
+                android:textSize="@dimen/personal_info_textSize_18sp"
+                app:font_path="@string/THP_FiraSans_SemiBold" />
+
+            <com.ns.view.CustomProgressBarWhite
+                android:layout_gravity="center"
+                android:id="@+id/progressBarVerify"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                />
+
+
+
+        </FrameLayout>
+
+
+
+
+    </FrameLayout>
+    <!--End Part 5 Layout-->
+
+    <com.ns.view.CustomProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

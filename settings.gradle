@@ -1,0 +1,2 @@
+include ':app', ':THPSub', ':photoview', ':reactivenetwork', ':pinentryedittext', ':exo_ui', ':exo_core'
+rootProject.name='My Application'

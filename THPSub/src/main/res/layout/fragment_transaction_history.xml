@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/parentLayoutPaddingStyle"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.ns.view.btn.NSImageButton
+        app:btnType="arrow_no_line"
+        android:id="@+id/backBtn"
+        style="@style/backBtnStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--Start Part 1 Layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/part1Layout"
+        style="@style/parentLayoutPaddingStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/userprofile_gap_for_1"
+        android:layout_marginLeft="@dimen/userprofile_gap_for_1"
+        android:layout_marginEnd="@dimen/userprofile_gap_for_1"
+        android:layout_marginRight="@dimen/userprofile_gap_for_1"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backBtn">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/userName_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="11"
+                android:text="Transactions"
+                app:viewType="color_static"
+                android:textSize="20sp"
+                app:font_path="@string/THP_FiraSans_Bold" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/mobileNumber_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:text="All your transactions done with us"
+                app:viewType="color_static"
+                android:textSize="15sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--End Part 1 Layout-->
+
+    <com.ns.view.RecyclerViewPullToRefresh
+        android:id="@+id/recyclerViewPullToRefresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part1Layout"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

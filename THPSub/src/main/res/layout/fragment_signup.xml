@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/parentLayoutPaddingStyle">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/pleaseUseOnly_Txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:viewType="color_static"
+        app:font_path="@string/THP_FiraSans_Regular"
+        android:lineSpacingExtra="5sp"
+        android:alpha="0.6"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxEms="10"
+        android:text="@string/users_from_outside_india"
+        />
+
+    <com.ns.view.text.CustomEditView
+        app:viewType="color_static"
+        app:hintColor="@color/gray"
+        android:id="@+id/emailOrMobile_Et"
+        style="@style/editTextStyle"
+        android:layout_marginTop="@dimen/signInAndUp_signin_top_margin"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/pleaseUseOnly_Txt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:imeOptions="actionDone"
+        android:textSize="@dimen/signin_field_text_size"
+        android:hint="Mobile Number/Email Address"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="textEmailAddress"
+        android:digits="()*_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.@+ "
+        android:importantForAutofill="no"
+        />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/textViewErrorEmail"
+        style="@style/errorTextStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailOrMobile_Et"/>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutBtn"
+        android:layout_marginTop="@dimen/signInAndUp_signin_top_margin"
+        app:layout_constraintTop_toBottomOf="@+id/textViewErrorEmail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/signUp_Txt"
+            app:font_path="@string/THP_FiraSans_SemiBold"
+            android:text="Sign Up for Free Trial"
+            style="@style/btnTextStyle"/>
+
+
+        <com.ns.view.CustomProgressBarWhite
+            android:layout_gravity="center"
+            android:id="@+id/progressBarVerify"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            />
+
+
+    </FrameLayout>
+
+
+
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/orSignup_Txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_to_social_signin_text_signup"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        app:viewType="color_static"
+        android:letterSpacing="0.02"
+        android:text="or Sign up using Social profiles"
+        android:alpha="0.5"
+        />
+
+
+
+
+
+<!--============================================-->
+
+    <!--========= Below is for Social Buttons ===================-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/signUp_social_bottomMargin"
+        android:layout_marginTop="14dp"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orSignup_Txt"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <ImageButton
+            android:id="@+id/facebookBtn"
+            style="@style/backBtnStyle"
+            app:srcCompat="@drawable/ic_facebook"
+            app:layout_constraintRight_toLeftOf="@+id/tweeterBtn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/tweeterBtn"
+            style="@style/backBtnStyle"
+            app:srcCompat="@drawable/ic_twitter"
+            android:visibility="visible"
+            app:layout_constraintRight_toLeftOf="@+id/googleBtn"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:layout_constraintLeft_toRightOf="@+id/facebookBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/googleBtn"
+            style="@style/backBtnStyle"
+            app:srcCompat="@drawable/ic_google"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:layout_constraintLeft_toRightOf="@+id/tweeterBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--========= Above is for Social Buttons ===================-->
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/faq_Txt"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="FAQ"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/tc_Txt"
+        android:layout_marginBottom="@dimen/signUp_faq_bottomMargin"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:font_path="@string/THP_FiraSans_Bold"
+        android:textColor="@color/blueColor_1"/>
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/tc_Txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="8sp"
+        android:text="By signing up, you agree to our Terms and Conditions"
+        android:maxEms="9"
+        android:gravity="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:viewType="color_static"
+        android:layout_marginBottom="@dimen/signIn_tc_bottom_margin"
+        />
+
+    <com.ns.view.CustomProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

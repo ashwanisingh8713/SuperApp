@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TextView">
+        <attr name="font_path" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="hintColor" format="color" />
+        <attr name="viewType" format="enum">
+            <enum name="L" value="0" />
+            <enum name="M" value="1" />
+            <enum name="S" value="2" />
+            <enum name="XS" value="3" />
+            <enum name="White" value="4" />
+            <enum name="color_static" value="5" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="NSLayout">
+        <attr name="layoutType" format="enum">
+            <enum name="OPINION" value="0" />
+            <enum name="MULTIMEDIA" value="1" />
+            <enum name="CARTOON" value="2" />
+            <enum name="APPEXCLUSIVE" value="3" />
+            <enum name="NORMAL_WIDGET" value="4" />
+            <enum name="Black_Light" value="5" />
+            <enum name="Black_Dark" value="6" />
+            <enum name="Black_Full" value="7" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="NSImageLogo">
+        <attr name="logoType" format="enum">
+            <enum name="Splash" value="0" />
+            <enum name="SlideBar" value="1" />
+            <enum name="Toolbar" value="2" />
+            <enum name="ToolbarTHP" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="NSImageButton">
+        <attr name="btnType" format="enum">
+            <enum name="arrow_no_line" value="0" />
+            <enum name="back_circle" value="1" />
+            <enum name="arrow_back" value="2" />
+            <enum name="cross_circle" value="3" />
+            <enum name="password_field" value="4" />
+            <enum name="back_circle_dark_arrow" value="5" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyImageView">
+        <attr name="emptyView" format="enum">
+            <enum name="TH_Bookmark" value="0" />
+            <enum name="THP_Bookmark" value="1" />
+            <enum name="Briefing" value="2" />
+            <enum name="Mystories" value="3" />
+            <enum name="Suggestion" value="4" />
+            <enum name="Crown" value="5" />
+        </attr>
+    </declare-styleable>
+
+
+</resources>

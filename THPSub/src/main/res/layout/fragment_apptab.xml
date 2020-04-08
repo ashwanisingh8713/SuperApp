@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layoutType="Black_Full">
+
+    <!--Bottom Divider-->
+    <View
+        android:id="@+id/appTabsHorizontalDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/boldBlackColor"
+        app:layout_constraintBottom_toTopOf="@+id/appTabsTabLayoutParent" />
+
+    <LinearLayout
+        android:id="@+id/appTabsTabLayoutParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottomTabHeight"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/appTabsTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/appTabsViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/subscribeLayout"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subscribeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/subscribeLayoutHeight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/appTabsTabLayoutParent"
+        android:layout_marginBottom=".2dp"
+        android:background="#b49443"
+        android:paddingLeft="13dp"
+        android:paddingStart="13dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:clickable="true"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/subsCrownImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:srcCompat="@drawable/ic_crown"
+            />
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/subsTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/subsCrownImg"
+            android:textSize="@dimen/subscription_bottom_title"
+            android:textColor="#ffffff"
+            android:text="Become a Premium member now!"
+            app:font_path="@string/THP_FiraSans_Bold"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            />
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/subsTitle12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/subsCrownImg"
+            app:layout_constraintTop_toBottomOf="@+id/subsTitle1"
+            android:textSize="@dimen/subscription_bottom_sub_title"
+            android:textColor="#ffffff"
+            android:text="Enjoy member benefits and more…"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            />
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/subscribeBtn_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/subsCloseImg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/subscription_bottom_sub_title"
+            android:textColor="#ad8b41"
+            android:text="Subscribe"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/apptab_subscription_bg"
+            />
+
+        <ImageView
+            android:id="@+id/subsCloseImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:srcCompat="@drawable/ic_close_subscrible_layout"
+            android:visibility="visible"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.ns.view.layout.NSConstraintLayout>

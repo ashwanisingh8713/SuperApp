@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.ns.view.btn.NSImageButton
+        android:id="@+id/backBtn"
+        style="@style/backBtnStyle"
+        android:layout_marginStart="@dimen/baseLayoutLeftPadding"
+        android:layout_marginLeft="@dimen/baseLayoutLeftPadding"
+        android:layout_marginTop="@dimen/baseLayoutTopPadding"
+        app:btnType="arrow_no_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/backBtn"
+        android:layout_marginBottom="@dimen/account_info_update_btn_parent_height"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/part1Layout"
+                style="@style/parentLayoutPaddingStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/userprofile_gap_for_1"
+                android:layout_marginLeft="@dimen/userprofile_gap_for_1"
+                android:layout_marginEnd="@dimen/userprofile_gap_for_1"
+                android:layout_marginRight="@dimen/userprofile_gap_for_1"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backBtn">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:id="@+id/userName_Txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxEms="11"
+                        android:text="Add Address"
+                        android:textSize="18sp"
+                        app:font_path="@string/THP_FiraSans_Bold"
+                        app:viewType="color_static" />
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:id="@+id/mobileNumber_Txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.8"
+                        android:text="Edit your address details"
+                        android:textSize="14sp"
+                        app:font_path="@string/THP_FiraSans_Regular"
+                        app:viewType="color_static" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/part2Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/userprofile_gap_for_2"
+                android:layout_marginLeft="@dimen/userprofile_gap_for_2"
+                android:layout_marginEnd="@dimen/userprofile_gap_for_2"
+                android:layout_marginRight="@dimen/userprofile_gap_for_2"
+                android:fillViewport="true"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/flatNoLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="House / Flat No"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/flatNoET"
+                        style="@style/addAddressET_Style"
+                        android:inputType="textPostalAddress"
+                        android:maxLines="1"
+                        android:textColor="@color/dark_color_static_text"
+                        app:hintTextAppearance="@style/HintLabel" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/addressLine1Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_address_info_et_gap"
+                    android:hint="Address"
+                    android:inputType="textPostalAddress"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/flatNoLayout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/addressLine1ET"
+                        style="@style/addAddressET_Style"
+                        android:inputType="textPostalAddress"
+                        android:maxLines="1"
+                        android:paddingBottom="15dp"
+                        android:textColor="@color/dark_color_static_text"
+                        app:hintTextAppearance="@style/HintLabel" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <!--====================================-->
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/pincodeLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_address_info_et_gap"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/stateLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/addressLine1Layout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/pincodeET"
+                        style="@style/addAddressET_Style"
+                        android:hint="Pincode"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:textColor="@color/dark_color_static_text"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/stateLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="@dimen/add_address_info_et_gap"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintLeft_toRightOf="@+id/pincodeLayout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addressLine1Layout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/stateET"
+                        style="@style/addAddressET_Style"
+                        android:hint="State"
+                        android:inputType="textPostalAddress"
+                        android:textColor="@color/dark_color_static_text"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/cityLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_address_info_et_gap"
+                    android:hint="City"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pincodeLayout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/cityET"
+                        style="@style/addAddressET_Style"
+                        android:importantForAutofill="no"
+                        android:inputType="textPostalAddress"
+                        android:maxLines="1"
+                        app:hintTextAppearance="@style/HintLabel"
+                        android:textColor="@color/dark_color_static_text"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/landmarkLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_address_info_et_gap"
+                    android:hint="Landmark (if any)"
+                    android:theme="@style/TextLabelDark"
+                    app:hintTextAppearance="@style/HintLabel"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cityLayout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/landmarkET"
+                        style="@style/addAddressET_Style"
+                        android:inputType="textPostalAddress"
+                        android:maxLines="1"
+                        app:hintTextAppearance="@style/HintLabel"
+                        android:textColor="@color/dark_color_static_text"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/setAsPrimaryBtn_Txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/ic_ok"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="Label this location as"
+                    android:textSize="12sp"
+                    app:font_path="@string/THP_FiraSans_Regular"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/landmarkLayout"
+                    app:viewType="color_static" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/part3Layout"
+                style="@style/parentLayoutPaddingStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:paddingTop="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/part4Layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <com.ns.view.text.CustomTextView
+                    android:id="@+id/homeBtn_Txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/blue_padding_backgraoud"
+                    android:gravity="center"
+                    android:text="Home"
+                    android:textColor="@color/white"
+                    app:font_path="@string/THP_FiraSans_Regular"
+                    app:layout_constraintEnd_toStartOf="@+id/officeBtn_Txt"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.ns.view.text.CustomTextView
+                    android:id="@+id/officeBtn_Txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/blue_padding_backgraoud"
+                    android:gravity="center"
+                    android:text="Office"
+                    android:textColor="@color/white"
+                    app:font_path="@string/THP_FiraSans_Regular"
+                    app:layout_constraintEnd_toStartOf="@+id/othersBtn_Txt"
+                    app:layout_constraintStart_toEndOf="@+id/homeBtn_Txt"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.ns.view.text.CustomTextView
+                    android:id="@+id/othersBtn_Txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/blue_padding_backgraoud"
+                    android:gravity="center"
+                    android:text="Others"
+                    android:textColor="@color/white"
+                    app:font_path="@string/THP_FiraSans_Regular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/officeBtn_Txt"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.ns.view.text.CustomTextView
+                    android:id="@+id/clearAll_Txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/userprofile_gap_for_2"
+                    android:layout_marginLeft="@dimen/userprofile_gap_for_2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/userprofile_gap_for_2"
+                    android:layout_marginRight="@dimen/userprofile_gap_for_2"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Clear All"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:font_path="@string/THP_FiraSans_Regular"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/othersBtn_Txt"
+                    app:textColor="@color/grey" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--<com.ns.view.CustomProgressBar-->
+            <!--android:id="@+id/progressBar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="visible"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <com.ns.view.CustomProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="330dp"
+        android:visibility="gone" />
+    <!--Start Part 1 Layout-->
+
+    <!--End Part 1 Layout-->
+
+    <!--Start Part 2 Layout-->
+
+    <!--End Part 2 Layout-->
+
+
+    <!--Start Part 3 Layout-->
+
+
+    <!--End Part 3 Layout-->
+
+    <!--Start Part 4 Layout-->
+
+    <!--End Part 4 Layout-->
+
+    <FrameLayout
+        android:id="@+id/part4Layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/account_info_update_btn_parent_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shadow_r10_s4_wh200x50_lrb"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/choose_plan_left_padding"
+        android:paddingLeft="@dimen/choose_plan_left_padding"
+        android:paddingEnd="@dimen/choose_plan_left_padding"
+        android:paddingRight="@dimen/choose_plan_left_padding"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/saveAddressBtn_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/signInAndUp_editText_height"
+                android:layout_gravity="center"
+                android:background="@drawable/blue_backgraoud"
+                android:gravity="center"
+                android:text="Save Address"
+                android:textColor="@color/white"
+                android:textSize="@dimen/personal_info_textSize_18sp"
+                app:font_path="@string/THP_FiraSans_SemiBold" />
+
+            <com.ns.view.CustomProgressBarWhite
+                android:id="@+id/progressBarVerify"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+
+    </FrameLayout>
+
+
+</RelativeLayout>

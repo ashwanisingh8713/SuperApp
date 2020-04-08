@@ -1,0 +1,155 @@
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
+    defaultConfig {
+        minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
+        targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
+        versionCode 6
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        //Staging / Production Switch
+        buildConfigField "boolean", "IS_PRODUCTION", "true"
+
+        buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
+        buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
+
+        buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
+        buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
+
+        buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
+        buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
+
+        buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+        buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
+
+        //Use this during staging environment. Given by Vijay
+//        buildConfigField "String", "BASE_URL", "\"https://hindumysqlstaging.ninestars.in/hindu/subscription/api/\""
+
+        buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
+        buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
+
+        buildConfigField "String", "STATGGING_PAYMENT_VERIFY", "\"https://myaccount.thehindu.co.in/payTm-verify\""
+        buildConfigField "String", "PRODUCTION_PAYMENT_VERIFY", "\"https://subscription.thehindu.com/payTm-verify\""
+
+        buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
+        buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
+
+        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
+        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
+
+        buildConfigField "String", "STATGGING_SEARCH_BY_ARTICLE_ID_URL", "\"https://alphath.thehindu.co.in/app/getArticleByIds.json?articleIds=\""
+        buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_ID_URL", "\"https://thehindu.com/app/getArticleByIds.json?articleIds=\""
+
+        buildConfigField "String", "LOCALE", "\"en\""
+        buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+        buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
+        buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
+        buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
+
+    }
+    buildTypes {
+        release {
+            //minifyEnabled MINIFY_ENABLED
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api deps.appcompatv7
+    implementation deps.supportAnnotations
+    api deps.supportDesign
+    api deps.supportCardView
+    implementation deps.constraintLayout
+    implementation deps.picasso
+
+    implementation deps.CONSTRAINT_LAYOUT
+    // Multidex
+    api deps.multiDex
+    implementation 'com.joooonho:selectableroundedimageview:1.0.1'
+    // Dot Indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
+    //Image Zooming
+    implementation deps.photoview
+    implementation deps.otpEntryEditText
+    implementation deps.reactivenetwork
+    api deps.rxAndroid2
+    // For In App Billing
+    implementation 'com.android.billingclient:billing:1.0'
+    api files('libs/YouTubeAndroidPlayerApi.jar')
+
+
+    // For Google Sign in
+    api deps.PS_Auth
+
+    // For Facebook sign in
+    api 'com.facebook.android:facebook-login:5.0.1'
+    // Few gradle, Play service version issue, getting so not used
+//    implementation 'com.facebook.android:facebook-login:5.2.0'
+
+    // For twitter Sign in
+    api 'com.twitter.sdk.android:twitter-core:3.1.1'
+    api 'com.twitter.sdk.android:tweet-ui:3.1.1'
+
+
+    // To Fetch user current location
+    implementation deps.PS_location
+
+    implementation deps.SMOOTH_PROGRESS_HORIZONTAL
+
+//    implementation deps.PS_map
+
+    //Paytm SDK for payment gateway
+    implementation("com.paytm:pgplussdk:$PAYTM_SDK_VERSION") {
+        transitive = true
+    }
+
+    // FIREBASE
+    implementation deps.FIREBASE_CORE
+
+    // CleverTap
+    api 'com.clevertap.android:clevertap-android-sdk:3.6.4'
+    api 'com.android.installreferrer:installreferrer:1.0'
+
+
+    implementation deps.rxjava2
+    implementation deps.rxAndroid2
+    implementation deps.rxRetrofitAdapter
+    implementation deps.gson
+    implementation deps.retrofit
+    implementation deps.retrofitGsonConverter
+    implementation deps.jodaTime
+
+    // Room components
+    implementation deps.room
+    annotationProcessor deps.room_annotationProcessor
+    implementation deps.room_compiler
+    implementation deps.room_rxjava2
+
+    // Lifecycle components
+    implementation deps.archLifecycle
+    annotationProcessor deps.archLifecycle_annotationProcessor
+
+    //Using RxPS - RxJavaPriorityScheduler Library - RxPS is used to set the priority for the given task.
+    implementation 'com.mindorks.scheduler:rxps:0.1.0'
+}
+
+

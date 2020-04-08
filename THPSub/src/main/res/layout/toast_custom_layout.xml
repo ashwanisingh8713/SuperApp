@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    >
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/messageToast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center"
+        android:background="@drawable/toast_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/personal_info_textSize_14sp"
+        app:font_path="@string/THP_FiraSans_SemiBold" />
+
+</FrameLayout>

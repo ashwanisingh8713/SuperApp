@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app:androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/subscribeLayout_Mp"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/subscribeLayoutHeight"
+    android:background="#b49443"
+    android:clickable="true"
+    android:paddingStart="13dp"
+    android:paddingLeft="13dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:visibility="visible"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/msgCountTxt_Mp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:text="You have read this article"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        app:autoSizeTextType="uniform"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:layout_constraintRight_toLeftOf="@+id/subscribeBtn_Txt_Mp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/subscribeBtn_Txt_Mp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/apptab_subscription_bg"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Subscribe"
+        android:textColor="#ad8b41"
+        android:textSize="@dimen/subscription_bottom_sub_title"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/subsCloseImg_Mp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/subsCloseImg_Mp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_subscrible_layout" />
+
+
+</app:androidx.constraintlayout.widget.ConstraintLayout>

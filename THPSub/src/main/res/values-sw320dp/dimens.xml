@@ -1,0 +1,104 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+
+
+
+
+    <dimen name="subscription_pack_width">189dp</dimen>
+    <dimen name="subscription_pack_height_1">231dp</dimen>
+    <dimen name="subscription_pack_height_2">273dp</dimen>
+    <dimen name="subscription_pack_item_gap">10dp</dimen>
+    <dimen name="subscription_pack_item_border_padding">1dp</dimen>
+    <dimen name="subscription_pack_item_rupee_gap">1dp</dimen>
+
+    <dimen name="forgot_top_icon_width_height">100dp</dimen>
+    <dimen name="otp_top_icon_width_height">100dp</dimen>
+    <dimen name="reset_top_icon_width_height">100dp</dimen>
+
+
+    <string name="bottom_popup_layout_ratio">h,12:15.2</string>
+    <string name="bottom_popup_layout_ratio_otp">h,12:16.5</string>
+    <string name="bottom_popup_layout_ratio_set_password">h,12:17.2</string>
+
+    <string name="edition_popup_layout_ratio">h,10.9:9</string>
+    <string name="more_popup_layout_ratio">h,14:9</string>
+
+    <string name="calendar_popup_layout_ratio">h,10.9:9</string>
+    <string name="dropdown_popup_layout_ratio">h,15:9</string>
+    <string name="dropdown_country_popup_layout_ratio">h,9:9</string>
+
+    <string name="tc_layout_ratio">h,10:14</string>
+    <string name="become_member_part1">h,10:9.6</string>
+
+
+    <dimen name="userprofile_gap_for_1">5dp</dimen>
+    <dimen name="userprofile_gap_for_2">6.5dp</dimen>
+
+    <string name="account_info_1_ratio">h,4.5:4</string>
+    <dimen name="account_info_et_height">63.5dp</dimen>
+    <dimen name="account_info_update_btn_parent_height">65dp</dimen>
+    <dimen name="account_info_title_gap">10dp</dimen>
+
+    <string name="personal_info_1_ratio">h,8.2:4</string>
+    <dimen name="personal_info_et_height">40dp</dimen>
+    <dimen name="personal_info_et_gap">1dp</dimen>
+    <dimen name="personal_info_et_paddingBottom">5dp</dimen>
+    <dimen name="personal_info_update_btn_parent_height">60dp</dimen>
+    <dimen name="personal_info_gap_for_partLayout">15dp</dimen>
+    <dimen name="personal_info_gap_for_verifyotp">1dp</dimen>
+
+    <dimen name="personal_info_textSize_18sp">15sp</dimen>
+    <dimen name="personal_info_textSize_16sp">14sp</dimen>
+    <dimen name="personal_info_textSize_14sp">14sp</dimen>
+    <dimen name="textSize_20sp">17sp</dimen>
+    <dimen name="textSize_27sp">25sp</dimen>
+    <dimen name="textSize_10sp">9sp</dimen>
+
+
+    <dimen name="subscription_other_content_left_padding">14dp</dimen>
+    <dimen name="choose_plan_top_padding">24dp</dimen>
+
+
+    <dimen name="apptab_listing_top_padding">2dp</dimen>
+    <dimen name="apptab_listing_left_padding">17dp</dimen>
+    <dimen name="apptab_listing_right_padding">22dp</dimen>
+    <dimen name="listing_divider_height">1dp</dimen>
+    <string name="apptab_dashboard_image_ratio">h,16:9</string>
+
+    <dimen name="snackbar_bottom_margin">56dp</dimen>
+
+    <dimen name="add_address_et_height">49dp</dimen>
+    <dimen name="add_address_info_et_gap">15dp</dimen>
+    <dimen name="signUp_faq_bottomMargin">15dp</dimen>
+    <dimen name="signUp_social_bottomMargin">50dp</dimen>
+
+    <dimen name="thp_tab_home_margin_left">21dp</dimen>
+    <dimen name="thp_tab_home_margin_right">15dp</dimen>
+    <dimen name="thp_tab_profile_margin_left">17dp</dimen>
+    <dimen name="thp_tab_profile_margin_right">21dp</dimen>
+
+    <dimen name="subscription_bottom_title">12sp</dimen>
+    <dimen name="subscription_bottom_sub_title">9sp</dimen>
+
+    <dimen name="signInAndUp_editText_height">35dp</dimen>
+    <dimen name="signInAndUp_signin_top_margin">10dp</dimen>
+    <dimen name="signIn_tc_bottom_margin">6dp</dimen>
+    <dimen name="backBtnWidthHeight">35dp</dimen>
+    <dimen name="signInUp_header_margin">15dp</dimen>
+
+    <dimen name="become_member_part2_height">140dp</dimen>
+
+    <dimen name="become_member_margintop">2dp</dimen>
+    <dimen name="become_member_part2_gap">8dp</dimen>
+
+    <dimen name="introIconWidthHeight">21.5dp</dimen>
+    <dimen name="introIconMarginTop">19dp</dimen>
+    <dimen name="introTextMarginTop">17dp</dimen>
+    <dimen name="subscribe_plan_btn_height">30dp</dimen>
+    <dimen name="subscribe_plan_btn_margintop">10dp</dimen>
+
+</resources>

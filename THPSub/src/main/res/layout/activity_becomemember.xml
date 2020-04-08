@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutType="Black_Full"
+    android:paddingLeft="@dimen/baseLayoutLeftPadding"
+    android:paddingTop="@dimen/baseLayoutTopPadding"
+    android:paddingRight="@dimen/baseLayoutRightPadding">
+
+    <com.ns.view.btn.NSImageButton
+        app:btnType="arrow_no_line"
+        android:id="@+id/backBtn"
+        style="@style/backBtnStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/part1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/becomeMemberbackBtnMarginTop"
+        android:paddingLeft="@dimen/baseLayoutLeftPadding"
+        android:paddingRight="@dimen/baseLayoutRightPadding"
+        app:layout_constraintDimensionRatio="@string/become_member_part1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backBtn"></FrameLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1" />
+
+
+    <!--======== Above is Part 1=================================-->
+
+    <FrameLayout
+        android:id="@+id/part2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/become_member_part1_gap"
+        android:paddingLeft="@dimen/baseLayoutLeftPadding"
+        android:paddingRight="@dimen/baseLayoutRightPadding"
+        app:layout_constraintDimensionRatio="@string/become_member_part2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part1">
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/signUpFor30Days_Txt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/signInAndUp_editText_height"
+            android:layout_gravity="center"
+            android:background="@drawable/yellow_backgraoud"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:text="Sign Up for 30 days Free Trial"
+            app:font_path="@string/THP_FiraSans_Bold"
+            />
+
+    </FrameLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1" />
+
+    <!--======== Above is Part 2=================================-->
+
+    <FrameLayout
+        style="@style/bottomLayoutStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/part3"
+        android:layout_marginTop="@dimen/become_member_part2_gap"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/become_member_part2_height"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/become_member_part2_gap"
+            android:paddingBottom="@dimen/become_member_part2_gap"
+            >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/subscribeNowForExclusive_Txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="@dimen/become_member_margintop"
+                    android:text="Subscribe now for exclusive feature "
+                    app:viewType="color_static"
+                    android:textSize="@dimen/textSize_20sp"
+                    app:font_path="@string/THP_TundraOffc_Bold"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <com.ns.view.text.CustomTextView
+                    android:id="@+id/exploreSubscriptionPlans_Txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/signInAndUp_editText_height"
+                    android:gravity="center"
+                    android:text="Explore our Subscription Plans "
+                    app:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:background="@drawable/blue_backgraoud"
+                    android:layout_gravity="center_horizontal"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    />
+            </FrameLayout>
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/signIn_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="bottom"
+                android:letterSpacing="0.02"
+                android:text="Already have an account? Sign In"
+                app:viewType="color_static"
+                android:textSize="15sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</com.ns.view.layout.NSConstraintLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/apptab_listing_left_padding"
+    android:paddingLeft="@dimen/apptab_listing_left_padding"
+    android:paddingEnd="@dimen/apptab_listing_right_padding"
+    android:paddingRight="@dimen/apptab_listing_right_padding"
+    >
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/option_Txt"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:viewType="color_static"
+        android:textSize="16sp"
+        app:font_path="@string/THP_FiraSans_Regular"
+        android:gravity="center"
+        android:text="All Editions"
+        />
+
+    <include
+        android:id="@+id/horizontalDivider"
+        layout="@layout/listing_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listing_divider_height"
+        />
+
+</LinearLayout>

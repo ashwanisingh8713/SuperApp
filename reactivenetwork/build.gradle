@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
+  defaultConfig {
+    minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
+    targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
+    versionCode 1
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled MINIFY_ENABLED
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+
+    debug {
+      minifyEnabled false
+      testCoverageEnabled true
+    }
+  }
+
+}
+
+dependencies {
+  implementation deps.rxjava2
+  implementation deps.rxAndroid2
+  implementation deps.supportAnnotations
+}

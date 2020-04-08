@@ -1,0 +1,117 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="test">THPremium</string>
+
+    <string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
+    <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>
+    <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>
+    <string name="THP_TundraOffc">fonts/THP_TundraOffc.ttf</string>
+    <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>
+    <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
+    <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
+
+    <string name="Rs">\u20B9</string>
+    <string name="hint_registered_mobile_number"><font size="30">My hint string</font></string>
+
+    <string name="type_device">Default Device</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="something_went_wrong">Oops! Something went wrong.\nPlease try after sometime.</string>
+
+    <string name="please_check_ur_connectivity">Please check your internet connectivity.</string>
+    <string name="connectivity_try_again">Please check your internet connectivity and\n Try Again</string>
+    <string name="failed_to_connect">Failed to connect</string>
+    <string name="try_again">Could not load the data.\n Tap to retry</string>
+
+    <string name="article_not_loaded">Clicked link\'s article is not loaded.\nPlease check your internet connectivity.</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="kindly">Kindly!</string>
+    <string name="alert">Alert!</string>
+    <string name="passwd_length_err_msg">Password length must be greater than or equal to 5.</string>
+    <string name="passwd_char_err_msg">Password should contain atleast 1 number and 1 alphabet. No special characters allowed.</string>
+    <string name="all_field_mandatory">All fields are mandatory.</string>
+
+    <string name="comments">COMMENTS</string>
+
+    <string name="language_not_available">Language is not available.</string>
+    <string name="language_missing_data">Language is not downloaded. Please download from Google TTS voice data.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="select_preference">Please select preference.</string>
+
+    <string name="api_create_subscription_failure_message">We are unable to confirm your payment due to some technical issues. Please wait for 30 minutes for the confirmation.</string>
+    <string name="api_create_subscription_failure_title">Payment Failure</string>
+    <string name="api_create_subscription_success_message">Purchase was successful. Enjoy!</string>
+    <string name="api_create_subscription_success_title">Payment confirmed</string>
+
+    <!-- For Facebook Login-->
+    <!-- Test credentials
+    <string name="facebook_app_id">429571521229925</string>
+    <string name="fb_login_protocol_scheme">fb429571521229925</string>-->
+
+    <string name="facebook_app_id">467175884091779</string>
+    <string name="fb_login_protocol_scheme">fb467175884091779</string>
+
+    <!-- For twitter Login-->
+    <!--<string name="com.twitter.sdk.android.CONSUMER_KEY" tools:ignore="ExtraTranslation">R4aG29tZVOgu3t8bIA2t7T9by</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET" tools:ignore="ExtraTranslation">1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH</string>-->
+
+
+    <string name="no_geocoder_available">No geocoder available</string>
+    <string name="address_found">Address found</string>
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+
+
+    <string name="permission_rationale">Needed to get current location</string>
+    <string name="permission_location">Location permission is denied</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed to get current location.</string>
+    <string name="location_not_enabled">It seems your location service is disabled. Please enable from your device settings.</string>
+    <string name="settings">Settings</string>
+
+<!-- Test Credentials
+    <string name="default_web_client_id">853251516072-115fgpvlg675347qbomllk77ojksam9f.apps.googleusercontent.com</string>
+-->
+    <string name="default_web_client_id">617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com</string>
+
+    <string name="youtube_api_key">AIzaSyBENdg9kEoEsb8WrOWIUk7cS0HPgU0BztQ</string>
+    <string name="users_from_outside_india">Users from outside India, please provide email address</string>
+    <string name="toast_otp_verified">OTP verified</string>
+    <string name="set_preference">Set Preferences</string>
+    <string name="primary_address">Set Primary Address</string>
+    <string name="empty_fields">Empty fields!</string>
+    <string name="address_updated">Address updated successfully</string>
+    <string name="pincode_error">Pincode error!</string>
+    <string name="password_reset_success">Password reset successfully.</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="text_confirm_signout">Are you sure?</string>
+    <string name="text_days_left">%d days left</string>
+
+    <string name="item_removed_message">Show fewer stories like this.</string>
+    <string name="undo">Undo</string>
+    <string name="please_enter_valid">Please enter your Mobile Number/Email Address</string>
+    <string name="please_enter_password">Please enter your Password</string>
+    <string name="please_enter__new_password">Please enter New Password</string>
+    <string name="password_constraints"><![CDATA[Password must contain a minimum of 5 characters and a maximum of 20. Use a mix of letters, numbers & symbols for better password strength]]></string>
+    <string name="clear_all">Clear All</string>
+    <string name="text_confirm_clear_all">Are you sure?</string>
+    <string name="subscribe_now">Subscribe Now</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
+    <string name="purchase_now">Purchase Now</string>
+    <string name="yet_to_active">Yet to Active</string>
+
+    <string name="CLEVERTAP_AC_ID">TEST-Z8W-R8K-465Z</string>
+    <string name="CLEVERTAP_TOKEN" tools:ignore="TypographyDashes">TEST-3b2-0b1</string>
+    <string name="CLEVERTAP_ACCOUNT_ID_LIVE">W8W-R8K-465Z</string>
+    <string name="CLEVERTAP_ACCOUNT_TOKEN_LIVE" tools:ignore="TypographyDashes">3b2-0b0</string>
+    <string name="default_notification_channel_id" translatable="false">TheHindu</string>
+
+    <string name="alpha_detail">0.0</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>

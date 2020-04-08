@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/headerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:paddingLeft="@dimen/subscription_other_content_left_padding"
+        android:paddingTop="@dimen/choose_plan_top_padding"
+        android:text="Purchased Plans"
+        app:viewType="color_static"
+        android:textSize="20sp"
+        app:font_path="@string/THP_FiraSans_Bold" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/headerSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/baseLayoutTopPadding"
+        android:alpha="0.6"
+        android:paddingLeft="@dimen/subscription_other_content_left_padding"
+        android:paddingTop="5dp"
+        android:text="Your list of purchased plan"
+        app:viewType="color_static"
+        android:textSize="15sp"
+        app:font_path="@string/THP_FiraSans_Regular" />
+
+    <include layout="@layout/current_subscription_pack"/>
+
+</LinearLayout>

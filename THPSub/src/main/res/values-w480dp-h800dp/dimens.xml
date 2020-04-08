@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_to_social_signin_text">60dp</dimen>
+</resources>

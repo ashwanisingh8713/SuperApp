@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/otpParentLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/otpLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="@string/bottom_popup_layout_ratio_otp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+    <LinearLayout
+        android:id="@+id/shadowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/baseLayoutLeftPadding"
+        android:paddingRight="@dimen/baseLayoutRightPadding"
+        android:paddingTop="@dimen/becomeMemberbackBtnMarginTop"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        >
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            app:viewType="color_static"
+            android:letterSpacing="0.03"
+            android:text="OTP Verification"
+            app:font_path="@string/THP_TundraOffc_Bold"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:textSize="14sp"
+            android:gravity="center_horizontal"
+            android:alpha="0.6"
+            app:viewType="color_static"
+            android:letterSpacing="0.03"
+            android:text="Enter OTP sent to your mobile number"
+            app:font_path="@string/THP_FiraSans_Regular"
+            />
+
+        <com.alimuzaffar.lib.pin.PinEntryEditText
+            android:id="@+id/pinEntry_ET"
+            android:layout_width="250dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textIsSelectable="false"
+            android:textSize="24dp"
+            app:pinAnimationType="fromBottom"
+            app:pinBackgroundDrawable="@drawable/bg_pin"
+            app:pinBackgroundIsSquare="false"
+            app:pinCharacterSpacing="20dp"
+            app:pinTextBottomPadding="15dp"
+            tools:ignore="SpUsage" />
+
+        <FrameLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/verify_Txt"
+                android:text="Verify"
+                style="@style/btnTextStyle" />
+
+           <com.ns.view.CustomProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progressBarVerify"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.ns.view.text.CustomTextView
+                android:id="@+id/resend_Txt"
+                android:text="Resend OTP"
+                style="@style/gray_background"
+                android:textColor="@color/blueColor_1"
+                app:font_path="@string/THP_FiraSans_Regular"
+                />
+
+            <com.ns.view.CustomProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progressBar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                />
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+        <com.ns.view.btn.NSImageButton
+            app:btnType="back_circle_dark_arrow"
+            style="@style/backBtnStyle"
+            android:id="@+id/backBtn"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/topImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_white_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/otpLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

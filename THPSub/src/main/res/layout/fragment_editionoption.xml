@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/moreTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dimBackground"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/shadowLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow_white_r12_s6_wh200_ltr"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/apptab_listing_left_padding"
+            android:paddingLeft="@dimen/apptab_listing_left_padding"
+            android:paddingTop="@dimen/apptab_listing_top_padding"
+            android:paddingEnd="@dimen/apptab_listing_right_padding"
+            android:paddingRight="@dimen/apptab_listing_right_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="@string/edition_popup_layout_ratio"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/allEditions_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="All Editions"
+                app:viewType="color_static"
+                android:textSize="16sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+            <include
+                android:id="@+id/horizontalDivider"
+                layout="@layout/listing_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listing_divider_height"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/morningEditions_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Morning Editions"
+                app:viewType="color_static"
+                android:textSize="16sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+            <include
+                android:id="@+id/horizontalDivider"
+                layout="@layout/listing_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listing_divider_height"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
+
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/noonEditions_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Noon Editions"
+                app:viewType="color_static"
+                android:textSize="16sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+            <include
+                android:id="@+id/horizontalDivider"
+                layout="@layout/listing_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listing_divider_height"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
+
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/eveningEditions_Txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Evening Editions"
+                app:viewType="color_static"
+                android:textSize="16sp"
+                app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

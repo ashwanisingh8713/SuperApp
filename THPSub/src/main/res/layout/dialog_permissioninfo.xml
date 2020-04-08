@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="240dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TheHindu Subscription Permission"
+            android:textColor="@color/boldBlackColor"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TheHindu Subscription requires the following permission(s)"
+            android:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Phone"
+            android:textColor="@color/boldBlackColor"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To get network type"
+            android:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Wifi and Network"
+            android:textColor="@color/boldBlackColor"
+            android:textSize="@dimen/personal_info_textSize_16sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+
+        <com.ns.view.text.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To get public IP address"
+            android:textColor="@color/timeColor"
+            android:textSize="12sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/okTxt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:text="OK"
+            android:layout_gravity="right"
+            android:textColor="@color/blueColor_1"
+            android:textSize="14sp"
+            app:font_path="@string/THP_FiraSans_SemiBold" />
+    </LinearLayout>
+
+</FrameLayout>

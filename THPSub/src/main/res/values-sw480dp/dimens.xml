@@ -1,0 +1,13 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+
+    <dimen name="come_and_see_margin_top">30dp</dimen>
+    <dimen name="come_and_see_txt_size">35sp</dimen>
+    <dimen name="signInUp_header_margin">40dp</dimen>
+    <dimen name="top_margin_signin_signout_layout">30dp</dimen>
+
+</resources>
