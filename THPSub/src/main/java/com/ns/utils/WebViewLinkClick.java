@@ -8,7 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.alerts.Alerts;
@@ -17,7 +17,6 @@ import com.ns.thpremium.R;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -100,16 +99,16 @@ public class WebViewLinkClick {
                                        }
                                        // Making Server request to get Article from server
                                        // and Saving into DB, with SectionName = "tempSec"
-                                       Observable<RecoBean> observable =  ApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL, NetConstants.RECO_TEMP_NOT_EXIST);
+                                       Observable<ArticleBean> observable =  ApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL, NetConstants.RECO_TEMP_NOT_EXIST);
                                        observable.observeOn(AndroidSchedulers.mainThread())
-                                               .subscribe(new Consumer<RecoBean>() {
+                                               .subscribe(new Consumer<ArticleBean>() {
                                                               @Override
-                                                              public void accept(RecoBean recoBean)  {
+                                                              public void accept(ArticleBean articleBean)  {
                                                                   if(context == null) {
                                                                       return;
                                                                   }
-                                                                  if(recoBean != null &&  recoBean.getArticleId() != null && !ResUtil.isEmpty(recoBean.getArticleId())) {
-                                                                      IntentUtil.openDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, recoBean.getArticleId());
+                                                                  if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
+                                                                      IntentUtil.openDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, articleBean.getArticleId());
                                                                   }
                                                                   else {
                                                                       // Opening Article In Web Page

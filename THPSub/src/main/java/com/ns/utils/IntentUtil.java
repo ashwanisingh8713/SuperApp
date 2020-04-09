@@ -22,8 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
-import com.netoperation.model.RecoBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.THPPreferences;
 import com.ns.activity.AppTabActivity;
@@ -604,7 +604,7 @@ public class IntentUtil {
     }
 
 
-    public static void openCommentActivity(Context context, RecoBean articlesBean) {
+    public static void openCommentActivity(Context context, ArticleBean articlesBean) {
         String Vukkle_API_KEY = BuildConfig.VUUKLE_API_KEY;
 
         String articleId = articlesBean.getArticleId();

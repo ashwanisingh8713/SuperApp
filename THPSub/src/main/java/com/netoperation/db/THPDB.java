@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {DashboardTable.class, BookmarkTable.class,
+@Database(entities = {SubscriptionArticleTable.class, BookmarkTable.class,
         BreifingTable.class, UserProfileTable.class, MPTable.class},
         version = 4, exportSchema = false)
 @TypeConverters({Converters.class})

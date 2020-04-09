@@ -16,12 +16,13 @@ import com.mindorks.scheduler.Priority;
 import com.mindorks.scheduler.RxPS;
 import com.netoperation.db.BookmarkTable;
 import com.netoperation.db.BreifingTable;
-import com.netoperation.db.DashboardTable;
+import com.netoperation.db.SubscriptionArticleTable;
 import com.netoperation.db.MPTable;
 import com.netoperation.db.MPTableDao;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.UserProfileDao;
 import com.netoperation.db.UserProfileTable;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.MPConfigurationModel;
@@ -32,7 +33,6 @@ import com.netoperation.model.PaytmTransactionStatus;
 import com.netoperation.model.PersonaliseDetails;
 import com.netoperation.model.PersonaliseModel;
 import com.netoperation.model.PrefListModel;
-import com.netoperation.model.RecoBean;
 import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.TransactionHistoryModel;
@@ -68,7 +68,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ApiManager {
 
-    private static final String TAG = ApiManager.class.getCanonicalName();
 
     private ApiManager() {
     }
@@ -828,14 +827,14 @@ public class ApiManager {
 
     }
 
-    public static Observable<List<RecoBean>> getRecommendationFromServer(final Context context, String userid,
-                                                                         final @RetentionDef.Recomendation String recotype,
-                                                                         String size, String siteid) {
+    public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String userid,
+                                                                            final @RetentionDef.Recomendation String recotype,
+                                                                            String size, String siteid) {
         Observable<RecomendationData> observable = ServiceFactory.getServiceAPIs().getRecommendation(userid, recotype,
                 size, siteid, ReqBody.REQUEST_SOURCE);
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
-                            List<RecoBean> beans = new ArrayList<>();
+                            List<ArticleBean> beans = new ArrayList<>();
                             if (value == null) {
                                 return beans;
                             }
@@ -848,7 +847,7 @@ public class ApiManager {
                                 if (!recotype.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
                                     thp.dashboardDao().deleteAll(recotype);
                                 }
-                                for (RecoBean bean : beans) {
+                                for (ArticleBean bean : beans) {
 
                                     if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
                                         BookmarkTable bookmarkTable = new BookmarkTable(bean.getArticleId(), bean);
@@ -864,8 +863,8 @@ public class ApiManager {
                                             thp.bookmarkTableDao().deleteBookmarkArticle(bean.getArticleId());
                                         }
 
-                                        DashboardTable dashboardTable = new DashboardTable(bean.getArticleId(), recotype, bean);
-                                        thp.dashboardDao().insertDashboard(dashboardTable);
+                                        SubscriptionArticleTable subscriptionArticleTable = new SubscriptionArticleTable(bean.getArticleId(), recotype, bean);
+                                        thp.dashboardDao().insertDashboard(subscriptionArticleTable);
                                     }
                                 }
                             }
@@ -881,12 +880,12 @@ public class ApiManager {
     }
 
 
-    public static Observable<List<RecoBean>> getRecommendationFromDB(final Context context,
-                                                                     final @RetentionDef.Recomendation String recotype, String aid) {
+    public static Observable<List<ArticleBean>> getRecommendationFromDB(final Context context,
+                                                                        final @RetentionDef.Recomendation String recotype, String aid) {
         Observable<RecomendationData> observable = Observable.just(new RecomendationData());
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
-                            List<RecoBean> beans = new ArrayList<>();
+                            List<ArticleBean> beans = new ArrayList<>();
                             if (context == null) {
                                 return beans;
                             }
@@ -899,16 +898,16 @@ public class ApiManager {
                                     }
                                 }
                             } else if (aid != null && recotype.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
-                                DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                                if (dashboardTable != null) {
-                                    List<RecoBean> tempRecoBean = new ArrayList<>();
-                                    tempRecoBean.add(dashboardTable.getBean());
-                                    return tempRecoBean;
+                                SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                                if (subscriptionArticleTable != null) {
+                                    List<ArticleBean> tempArticleBean = new ArrayList<>();
+                                    tempArticleBean.add(subscriptionArticleTable.getBean());
+                                    return tempArticleBean;
                                 }
                             } else {
-                                List<DashboardTable> dashboardTable = thp.dashboardDao().getAllDashboardBean(recotype);
-                                if (dashboardTable != null) {
-                                    for (DashboardTable dash : dashboardTable) {
+                                List<SubscriptionArticleTable> subscriptionArticleTable = thp.dashboardDao().getAllDashboardBean(recotype);
+                                if (subscriptionArticleTable != null) {
+                                    for (SubscriptionArticleTable dash : subscriptionArticleTable) {
                                         beans.add(dash.getBean());
                                     }
                                 }
@@ -920,7 +919,7 @@ public class ApiManager {
     }
 
 
-    public static Observable<RecoBean> isExistInBookmark(Context context, final String aid) {
+    public static Observable<ArticleBean> isExistInBookmark(Context context, final String aid) {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
                 .map(articleId -> {
@@ -928,19 +927,19 @@ public class ApiManager {
                     if (bookmarkTable != null && bookmarkTable.size() > 0) {
                         return bookmarkTable.get(0).getBean();
                     }
-                    return new RecoBean();
+                    return new ArticleBean();
                 })
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
 
-    public static Observable createBookmark(Context context, final RecoBean articleBean) {
+    public static Observable createBookmark(Context context, final ArticleBean articleBean) {
         return Observable.just(articleBean)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<RecoBean, Boolean>() {
+                .map(new Function<ArticleBean, Boolean>() {
                     @Override
-                    public Boolean apply(RecoBean articleBean) {
-                        RecoBean bean = new RecoBean();
+                    public Boolean apply(ArticleBean articleBean) {
+                        ArticleBean bean = new ArticleBean();
                         bean.setArticleId(articleBean.getArticleId());
                         bean.setArticleSection(articleBean.getArticleSection());
                         bean.setArticletitle(articleBean.getArticletitle());
@@ -962,9 +961,9 @@ public class ApiManager {
                         BookmarkTable bookmarkTable = new BookmarkTable(articleBean.getArticleId(), bean);
                         thpdb.bookmarkTableDao().insertBookmark(bookmarkTable);
 
-                        DashboardTable dashboardTable = thpdb.dashboardDao().getSingleDashboardBean(articleBean.getArticleId());
-                        if (dashboardTable != null) {
-                            RecoBean recoBean = dashboardTable.getBean();
+                        SubscriptionArticleTable subscriptionArticleTable = thpdb.dashboardDao().getSingleDashboardBean(articleBean.getArticleId());
+                        if (subscriptionArticleTable != null) {
+                            ArticleBean recoBean = subscriptionArticleTable.getBean();
                             if (recoBean != null) {
                                 recoBean.setIsBookmark(articleBean.getIsBookmark());
                                 thpdb.dashboardDao().updateRecobean(articleBean.getArticleId(), recoBean);
@@ -977,26 +976,26 @@ public class ApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<RecoBean> updateBookmark(Context context, String aid, int like) {
+    public static Observable<ArticleBean> updateBookmark(Context context, String aid, int like) {
         Observable<String> observable = Observable.just(aid);
         return observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<String, RecoBean>() {
+                .map(new Function<String, ArticleBean>() {
                     @Override
-                    public RecoBean apply(String model) {
+                    public ArticleBean apply(String model) {
 
                         THPDB thp = THPDB.getInstance(context);
 
                         BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(model);
 
                         if (bookmarkTable != null) {
-                            RecoBean recoBean = bookmarkTable.getBean();
-                            recoBean.setIsFavourite(like);
-                            thp.bookmarkTableDao().updateBookmark(aid, recoBean);
-                            return recoBean;
+                            ArticleBean articleBean = bookmarkTable.getBean();
+                            articleBean.setIsFavourite(like);
+                            thp.bookmarkTableDao().updateBookmark(aid, articleBean);
+                            return articleBean;
                         }
 
                         Log.i("", "");
-                        return new RecoBean();
+                        return new ArticleBean();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
@@ -1037,9 +1036,9 @@ public class ApiManager {
                 .subscribeOn(Schedulers.io())
                 .map(articleId -> {
                     THPDB thp = THPDB.getInstance(context);
-                    DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                    if (dashboardTable != null) {
-                        return dashboardTable.getBean().getIsFavourite();
+                    SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                    if (subscriptionArticleTable != null) {
+                        return subscriptionArticleTable.getBean().getIsFavourite();
                     }
                     return 0;
                 })
@@ -1058,12 +1057,12 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        RecoBean recoBean = new RecoBean();
-                        recoBean.setArticleId(aid);
+                        ArticleBean articleBean = new ArticleBean();
+                        articleBean.setArticleId(aid);
 
-                        DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                        if (dashboardTable != null) {
-                            if (dashboardTable.getAid().equals(aid)) {
+                        SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                        if (subscriptionArticleTable != null) {
+                            if (subscriptionArticleTable.getAid().equals(aid)) {
                                 isContain = true;
                             }
                         }
@@ -1078,116 +1077,116 @@ public class ApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static final Observable<RecoBean> articleDetailFromServer(Context context, String aid, String url, String recoType) {
+    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url, String recoType) {
         url = url + aid;
         Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
         return observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<SearchedArticleModel, RecoBean>() {
+                .map(new Function<SearchedArticleModel, ArticleBean>() {
                     @Override
-                    public RecoBean apply(SearchedArticleModel model) {
+                    public ArticleBean apply(SearchedArticleModel model) {
 
                         THPDB thp = THPDB.getInstance(context);
 
                         if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
                             BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (bookmarkTable != null) {
-                                RecoBean recoBean = bookmarkTable.getBean();
+                                ArticleBean articleBean = bookmarkTable.getBean();
                                 if (model.getData().size() > 0) {
-                                    recoBean.setDescription(model.getData().get(0).getDe());
-                                    recoBean.setLeadText(model.getData().get(0).getAl());
-                                    recoBean.setIMAGES(model.getData().get(0).getMe());
-                                    recoBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
-                                    recoBean.setHasDescription(1);
+                                    articleBean.setDescription(model.getData().get(0).getDe());
+                                    articleBean.setLeadText(model.getData().get(0).getAl());
+                                    articleBean.setIMAGES(model.getData().get(0).getMe());
+                                    articleBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
+                                    articleBean.setHasDescription(1);
                                     String thumbUrl = model.getData().get(0).getIm_thumbnail();
                                     if (thumbUrl == null || TextUtils.isEmpty(thumbUrl)) {
                                         thumbUrl = model.getData().get(0).getIm_thumbnail_v2();
                                     }
                                     ArrayList<String> tu = new ArrayList<>();
                                     tu.add(thumbUrl);
-                                    recoBean.setThumbnailUrl(tu);
+                                    articleBean.setThumbnailUrl(tu);
 
-                                    thp.bookmarkTableDao().updateBookmark(aid, recoBean);
+                                    thp.bookmarkTableDao().updateBookmark(aid, articleBean);
                                 }
-                                return recoBean;
+                                return articleBean;
                             }
                         } // End Bookmark
                         else {
-                            DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                            if (dashboardTable != null) {
-                                RecoBean recoBean = dashboardTable.getBean();
+                            SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                            if (subscriptionArticleTable != null) {
+                                ArticleBean articleBean = subscriptionArticleTable.getBean();
                                 if (model.getData().size() > 0) {
-                                    recoBean.setDescription(model.getData().get(0).getDe());
-                                    recoBean.setLeadText(model.getData().get(0).getAl());
-                                    recoBean.setIMAGES(model.getData().get(0).getMe());
-                                    recoBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
-                                    recoBean.setHasDescription(1);
+                                    articleBean.setDescription(model.getData().get(0).getDe());
+                                    articleBean.setLeadText(model.getData().get(0).getAl());
+                                    articleBean.setIMAGES(model.getData().get(0).getMe());
+                                    articleBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
+                                    articleBean.setHasDescription(1);
                                     String thumbUrl = model.getData().get(0).getIm_thumbnail();
                                     if (thumbUrl == null || TextUtils.isEmpty(thumbUrl)) {
                                         thumbUrl = model.getData().get(0).getIm_thumbnail_v2();
                                     }
                                     ArrayList<String> tu = new ArrayList<>();
                                     tu.add(thumbUrl);
-                                    recoBean.setThumbnailUrl(tu);
+                                    articleBean.setThumbnailUrl(tu);
 
-                                    thp.dashboardDao().updateRecobean(aid, recoBean);
+                                    thp.dashboardDao().updateRecobean(aid, articleBean);
 
                                 }
-                                return recoBean;
-                            } else { // dashboardTable == null
-                                RecoBean recoBean = new RecoBean();
+                                return articleBean;
+                            } else { // subscriptionArticleTable == null
+                                ArticleBean articleBean = new ArticleBean();
                                 if (model.getData().size() > 0) {
-                                    recoBean.setDescription(model.getData().get(0).getDe());
-                                    recoBean.setLeadText(model.getData().get(0).getAl());
-                                    recoBean.setIMAGES(model.getData().get(0).getMe());
-                                    recoBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
-                                    recoBean.setHasDescription(1);
+                                    articleBean.setDescription(model.getData().get(0).getDe());
+                                    articleBean.setLeadText(model.getData().get(0).getAl());
+                                    articleBean.setIMAGES(model.getData().get(0).getMe());
+                                    articleBean.setYoutubeVideoId(model.getData().get(0).getYoutube_video_id());
+                                    articleBean.setHasDescription(1);
                                     String thumbUrl = model.getData().get(0).getIm_thumbnail();
                                     if (thumbUrl == null || TextUtils.isEmpty(thumbUrl)) {
                                         thumbUrl = model.getData().get(0).getIm_thumbnail_v2();
                                     }
                                     ArrayList<String> tu = new ArrayList<>();
                                     tu.add(thumbUrl);
-                                    recoBean.setThumbnailUrl(tu);
-                                    recoBean.setTitle(model.getData().get(0).getTi());
-                                    recoBean.setArticletitle(model.getData().get(0).getTi());
-                                    recoBean.setSectionName(model.getData().get(0).getSname());
-                                    recoBean.setArticleSection(model.getData().get(0).getSname());
-                                    recoBean.setPubDateTime(model.getData().get(0).getGmt());
-                                    recoBean.setArticleLink(model.getData().get(0).getAl());
-                                    recoBean.setArticleId("" + model.getData().get(0).getAid());
-                                    recoBean.setShortDescription(model.getData().get(0).getLe());
+                                    articleBean.setThumbnailUrl(tu);
+                                    articleBean.setTitle(model.getData().get(0).getTi());
+                                    articleBean.setArticletitle(model.getData().get(0).getTi());
+                                    articleBean.setSectionName(model.getData().get(0).getSname());
+                                    articleBean.setArticleSection(model.getData().get(0).getSname());
+                                    articleBean.setPubDateTime(model.getData().get(0).getGmt());
+                                    articleBean.setArticleLink(model.getData().get(0).getAl());
+                                    articleBean.setArticleId("" + model.getData().get(0).getAid());
+                                    articleBean.setShortDescription(model.getData().get(0).getLe());
 
-                                    DashboardTable dashboardTable1 = new DashboardTable(aid, NetConstants.RECO_TEMP_NOT_EXIST, recoBean);
-                                    thp.dashboardDao().insertDashboard(dashboardTable1);
+                                    SubscriptionArticleTable subscriptionArticleTable1 = new SubscriptionArticleTable(aid, NetConstants.RECO_TEMP_NOT_EXIST, articleBean);
+                                    thp.dashboardDao().insertDashboard(subscriptionArticleTable1);
                                 }
-                                return recoBean;
+                                return articleBean;
                             }
                         }
 
                         Log.i("", "");
-                        return new RecoBean();
+                        return new ArticleBean();
                     }
                 });
 
     }
 
 
-    public static final Observable<RecoBean> articleDetailFromDB(Context context, String aid, String recoType) {
+    public static final Observable<ArticleBean> articleDetailFromDB(Context context, String aid, String recoType) {
         return Observable.just("articleDetailFromDB")
                 .subscribeOn(Schedulers.newThread())
-                .map(new Function<String, RecoBean>() {
+                .map(new Function<String, ArticleBean>() {
                     @Override
-                    public RecoBean apply(String str) {
+                    public ArticleBean apply(String str) {
 
                         THPDB thp = THPDB.getInstance(context);
 
                         if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
                             BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (bookmarkTable != null) {
-                                RecoBean recoBean = bookmarkTable.getBean();
-                                return recoBean;
+                                ArticleBean articleBean = bookmarkTable.getBean();
+                                return articleBean;
                             } else {
-                                return new RecoBean();
+                                return new ArticleBean();
                             }
                         } else if (recoType != null && (recoType.equalsIgnoreCase(NetConstants.BREIFING_ALL)
                                 || recoType.equalsIgnoreCase(NetConstants.BREIFING_MORNING)
@@ -1195,9 +1194,9 @@ public class ApiManager {
                                 || recoType.equalsIgnoreCase(NetConstants.BREIFING_EVENING))) {
                             BreifingTable breifingTable = thp.breifingDao().getBreifingTable();
                             if (breifingTable != null) {
-                                List<RecoBean> morning = null;
-                                List<RecoBean> noon = null;
-                                List<RecoBean> evening = null;
+                                List<ArticleBean> morning = null;
+                                List<ArticleBean> noon = null;
+                                List<ArticleBean> evening = null;
 
                                 if (recoType.equalsIgnoreCase(NetConstants.BREIFING_ALL)) {
                                     morning = breifingTable.getMorning();
@@ -1211,7 +1210,7 @@ public class ApiManager {
                                     evening = breifingTable.getEvening();
                                 }
 
-                                final List<RecoBean> allBreifing = new ArrayList<>();
+                                final List<ArticleBean> allBreifing = new ArrayList<>();
                                 if (morning != null && morning.size() > 0) {
                                     allBreifing.addAll(morning);
                                 }
@@ -1222,20 +1221,20 @@ public class ApiManager {
                                     allBreifing.addAll(evening);
                                 }
 
-                                for (RecoBean bean : allBreifing) {
+                                for (ArticleBean bean : allBreifing) {
                                     if (bean.getArticleId().equalsIgnoreCase(aid)) {
                                         return bean;
                                     }
                                 }
                             }
-                            return new RecoBean();
+                            return new ArticleBean();
                         } else {
-                            DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                            if (dashboardTable != null) {
-                                RecoBean recoBean = dashboardTable.getBean();
-                                return recoBean;
+                            SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                            if (subscriptionArticleTable != null) {
+                                ArticleBean articleBean = subscriptionArticleTable.getBean();
+                                return articleBean;
                             } else {
-                                return new RecoBean();
+                                return new ArticleBean();
                             }
                         }
 
@@ -1245,25 +1244,25 @@ public class ApiManager {
     }
 
 
-    public static Observable<RecoBean> updateLike(Context context, String aid, int like) {
+    public static Observable<ArticleBean> updateLike(Context context, String aid, int like) {
         Observable<String> observable = Observable.just(aid);
         return observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<String, RecoBean>() {
+                .map(new Function<String, ArticleBean>() {
                     @Override
-                    public RecoBean apply(String model) {
+                    public ArticleBean apply(String model) {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        DashboardTable dashboardTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                        SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
 
-                        if (dashboardTable != null) {
-                            RecoBean recoBean = dashboardTable.getBean();
-                            recoBean.setIsFavourite(like);
-                            thp.dashboardDao().updateRecobean(aid, recoBean);
-                            return recoBean;
+                        if (subscriptionArticleTable != null) {
+                            ArticleBean articleBean = subscriptionArticleTable.getBean();
+                            articleBean.setIsFavourite(like);
+                            thp.dashboardDao().updateRecobean(aid, articleBean);
+                            return articleBean;
                         }
                         Log.i("", "");
-                        return new RecoBean();
+                        return new ArticleBean();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
@@ -1277,12 +1276,12 @@ public class ApiManager {
      * @param breifingUrl
      * @return
      */
-    public static Observable<List<RecoBean>> getBreifingFromServer(final Context context, String breifingUrl, final String breifingType) {
+    public static Observable<List<ArticleBean>> getBreifingFromServer(final Context context, String breifingUrl, final String breifingType) {
         Observable<BreifingModelNew> observable = ServiceFactory.getServiceAPIs().getBriefing(breifingUrl);
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
 
-                            final List<RecoBean> allBriefing = new ArrayList<>();
+                            final List<ArticleBean> allBriefing = new ArrayList<>();
 
                             if (value == null) {
                                 return allBriefing;
@@ -1301,12 +1300,12 @@ public class ApiManager {
                             List<MorningBean> eveningBeans = value.getEvening();*/
 
 
-                            List<RecoBean> morningBriefing = new ArrayList<>();
-                            List<RecoBean> noonBriefing = new ArrayList<>();
-                            List<RecoBean> eveningBriefing = new ArrayList<>();
+                            List<ArticleBean> morningBriefing = new ArrayList<>();
+                            List<ArticleBean> noonBriefing = new ArrayList<>();
+                            List<ArticleBean> eveningBriefing = new ArrayList<>();
 
                             for (MorningBean bean : morningBeans) {
-                                RecoBean reco = new RecoBean();
+                                ArticleBean reco = new ArticleBean();
                                 reco.setTimeForBriefing(morningTime);
                                 reco.setArticleId(bean.getArticleId());
                                 reco.setArticleSection(bean.getSectionName());
@@ -1339,7 +1338,7 @@ public class ApiManager {
                             }
 
                             for (MorningBean bean : noonBeans) {
-                                RecoBean reco = new RecoBean();
+                                ArticleBean reco = new ArticleBean();
                                 reco.setTimeForBriefing(noonTime);
                                 reco.setArticleId(bean.getArticleId());
                                 reco.setArticleSection(bean.getSectionName());
@@ -1372,7 +1371,7 @@ public class ApiManager {
                             }
 
                             for (MorningBean bean : eveningBeans) {
-                                RecoBean reco = new RecoBean();
+                                ArticleBean reco = new ArticleBean();
                                 reco.setTimeForBriefing(eveningTime);
                                 reco.setArticleId(bean.getArticleId());
                                 reco.setArticleSection(bean.getSectionName());
@@ -1444,11 +1443,11 @@ public class ApiManager {
      * @param breifingType
      * @return
      */
-    public static Observable<List<RecoBean>> getBreifingFromDB(final Context context, final String breifingType) {
+    public static Observable<List<ArticleBean>> getBreifingFromDB(final Context context, final String breifingType) {
         return Observable.just("BreifingItem")
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
-                            List<RecoBean> briefingItems = new ArrayList<>();
+                            List<ArticleBean> briefingItems = new ArrayList<>();
 
                             THPDB thp = THPDB.getInstance(context);
 

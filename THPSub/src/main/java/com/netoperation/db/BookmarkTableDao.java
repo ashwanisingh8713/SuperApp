@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public interface BookmarkTableDao {
     int deleteBookmarkArticle(String aid);
 
     @Query("UPDATE BookmarkTable SET bean = :bean WHERE aid = :aid")
-    int updateBookmark(String aid, RecoBean bean);
+    int updateBookmark(String aid, ArticleBean bean);
 
     @Query("DELETE FROM BookmarkTable")
     void deleteAll();

@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
@@ -15,22 +15,22 @@ public interface DashboardDao {
 
 //    @Insert(onConflict = ABORT)
     @Insert
-    void insertDashboard(DashboardTable HomeTable);
+    void insertDashboard(SubscriptionArticleTable HomeTable);
 
-    @Query("SELECT * FROM DashboardTable WHERE recoFrom = :recoFrom")
-    List<DashboardTable> getAllDashboardBean(String recoFrom);
+    @Query("SELECT * FROM SubscriptionArticleTable WHERE recoFrom = :recoFrom")
+    List<SubscriptionArticleTable> getAllDashboardBean(String recoFrom);
 
-    @Query("SELECT * FROM DashboardTable WHERE aid = :aid")
-    DashboardTable getSingleDashboardBean(String aid);
+    @Query("SELECT * FROM SubscriptionArticleTable WHERE aid = :aid")
+    SubscriptionArticleTable getSingleDashboardBean(String aid);
 
-    @Query("DELETE FROM DashboardTable")
+    @Query("DELETE FROM SubscriptionArticleTable")
     void deleteAll();
 
-    @Query("DELETE FROM DashboardTable WHERE recoFrom = :recoFrom")
+    @Query("DELETE FROM SubscriptionArticleTable WHERE recoFrom = :recoFrom")
     void deleteAll(String recoFrom);
 
-    @Query("UPDATE DashboardTable SET bean = :bean WHERE aid = :aid")
-    int updateRecobean(String aid, RecoBean bean);
+    @Query("UPDATE SubscriptionArticleTable SET bean = :bean WHERE aid = :aid")
+    int updateRecobean(String aid, ArticleBean bean);
 
 
 }

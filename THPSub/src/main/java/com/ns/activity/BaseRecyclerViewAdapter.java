@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 
@@ -32,7 +32,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
      * @param articleType
      * @param articleTypeimageView
      */
-    protected void articleTypeImage(String articleType, RecoBean articleBean, ImageView articleTypeimageView) {
+    protected void articleTypeImage(String articleType, ArticleBean articleBean, ImageView articleTypeimageView) {
         if(articleType != null) {
             if(articleType.equalsIgnoreCase(THPConstants.ARTICLE_TYPE_ARTICLE)) {
                 articleTypeimageView.setVisibility(View.GONE);
@@ -67,7 +67,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    protected boolean isVideo(String articleType, RecoBean articleBean) {
+    protected boolean isVideo(String articleType, ArticleBean articleBean) {
         if(articleType != null && articleType.equalsIgnoreCase(THPConstants.ARTICLE_TYPE_VIDEO)) {
             return articleBean.getVIDEO_URL() != null && !TextUtils.isEmpty(articleBean.getVIDEO_URL());
 

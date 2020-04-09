@@ -9,6 +9,7 @@ import com.netoperation.model.PlanRecoModel;
 import com.netoperation.model.PrefListModel;
 import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
+import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
@@ -164,4 +165,25 @@ public interface ServiceAPIs {
 
     @GET("")
     Observable<MPCycleDurationModel> mpCycleDurationAPI(@Url String url);
+
+
+    // ######################################################################################################## //
+    // ##################################### DEFAULT TH APIS ################################################## //
+    // ######################################################################################################## //
+
+    @POST("") // sectionList_v4.php
+    Observable<SectionAndWidget> sectionList(@Url String url, @Body JsonObject jsonObject);
+
+    @POST("") // newsFeed.php
+    Observable<SectionAndWidget> homeContent(@Url String url, @Body JsonObject jsonObject);
+
+    @POST("") // section-content.php
+    Observable<JsonElement> sectionContent(@Url String url, @Body JsonObject jsonObject);
+
+    @GET("") // url = "https://api.vuukle.com/api/v1/Comments/getCommentCountListByHost?host=thehindu.com&articleIds="+articleId;
+    Observable<JsonElement> getCommentCount(@Url String url);
+
+    @GET("") // newsLetter.php
+    Observable<JsonElement> DailyDigestApi(@Url String url);
+
 }

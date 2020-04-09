@@ -4,7 +4,7 @@ package com.netoperation.db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class BreifingTable {
     private int id;
 
 
-    private List<RecoBean> morning;
-    private List<RecoBean> noon;
-    private List<RecoBean> evening;
+    private List<ArticleBean> morning;
+    private List<ArticleBean> noon;
+    private List<ArticleBean> evening;
 
     private String morningTime;
     private String noonTime ;
@@ -55,27 +55,27 @@ public class BreifingTable {
         this.id = id;
     }
 
-    public List<RecoBean> getMorning() {
+    public List<ArticleBean> getMorning() {
         return morning;
     }
 
-    public void setMorning(List<RecoBean> morning) {
+    public void setMorning(List<ArticleBean> morning) {
         this.morning = morning;
     }
 
-    public List<RecoBean> getNoon() {
+    public List<ArticleBean> getNoon() {
         return noon;
     }
 
-    public void setNoon(List<RecoBean> noon) {
+    public void setNoon(List<ArticleBean> noon) {
         this.noon = noon;
     }
 
-    public List<RecoBean> getEvening() {
+    public List<ArticleBean> getEvening() {
         return evening;
     }
 
-    public void setEvening(List<RecoBean> evening) {
+    public void setEvening(List<ArticleBean> evening) {
         this.evening = evening;
     }
 }

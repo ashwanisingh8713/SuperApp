@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.THPPreferences;
@@ -142,7 +142,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
-        final RecoBean bean = mContent.get(position).getBean();
+        final ArticleBean bean = mContent.get(position).getBean();
 
         if(viewHolder instanceof DashboardViewHolder) {
             ui_Dash_Tren_Book_Populate(viewHolder, bean, position);
@@ -163,7 +163,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    private void ui_Dash_Tren_Book_Populate(RecyclerView.ViewHolder viewHolder, RecoBean bean, int position) {
+    private void ui_Dash_Tren_Book_Populate(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         DashboardViewHolder holder = (DashboardViewHolder) viewHolder;
         if(mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
             holder.trendingIcon_Img.setVisibility(View.VISIBLE);
@@ -252,7 +252,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      * @param bean
      * @param position
      */
-    private void ui_Briefing_Populate(RecyclerView.ViewHolder viewHolder, RecoBean bean, int position) {
+    private void ui_Briefing_Populate(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BriefcaseViewHolder holder = (BriefcaseViewHolder) viewHolder;
         GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
@@ -284,7 +284,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      * @param viewHolder
      * @param bean
      */
-    private void ui_detail_banner(RecyclerView.ViewHolder viewHolder, RecoBean bean) {
+    private void ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DetailBannerViewHolder holder = (DetailBannerViewHolder) viewHolder;
         final String articleType = bean.getArticletype();
         // To shows Article Type Image
@@ -411,7 +411,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    private void ui_detail_description(RecyclerView.ViewHolder viewHolder, RecoBean bean, int position) {
+    private void ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         DetailDescriptionWebViewHolder holder = (DetailDescriptionWebViewHolder) viewHolder;
         mLastDescriptionTextSize = UserPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
@@ -445,7 +445,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    private void BriefingHeader(RecyclerView.ViewHolder viewHolder, RecoBean bean) {
+    private void BriefingHeader(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         BriefingHeaderViewHolder holder = (BriefingHeaderViewHolder) viewHolder;
         holder.userName_Txt.setText(bean.getTitle());
         if(mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
@@ -500,9 +500,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         notifyDataSetChanged();
     }
 
-    public void replaceData(RecoBean recoBean, int position) {
+    public void replaceData(ArticleBean articleBean, int position) {
         if(position < mContent.size()) {
-            mContent.get(position).setBean(recoBean);
+            mContent.get(position).setBean(articleBean);
         }
         notifyDataSetChanged();
     }
@@ -515,19 +515,19 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     /**
      * Checks, Visible Article is bookmarked or not.
      * @param context
-     * @param recoBean
+     * @param articleBean
      * @param imageView1
      */
-    private void isExistInBookmark(Context context, RecoBean recoBean, final ImageView imageView1) {
-        ApiManager.isExistInBookmark(context, recoBean.getArticleId())
+    private void isExistInBookmark(Context context, ArticleBean articleBean, final ImageView imageView1) {
+        ApiManager.isExistInBookmark(context, articleBean.getArticleId())
                 .subscribe(bean-> {
-                    RecoBean bean1 = bean;
-                    if(recoBean != null) {
-                        recoBean.setIsBookmark(bean1.getIsBookmark());
+                    ArticleBean bean1 = bean;
+                    if(articleBean != null) {
+                        articleBean.setIsBookmark(bean1.getIsBookmark());
                     }
                     imageView1.setVisibility(View.VISIBLE);
                     imageView1.setEnabled(true);
-                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(recoBean.getArticleId())) {
+                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
                         imageView1.setImageResource(R.drawable.ic_bookmark_selected);
                     } else {
                         imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
@@ -539,12 +539,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 });
     }
 
-    private void isFavOrLike(Context context, RecoBean recoBean, final ImageView favStartImg, final ImageView toggleLikeDisLikeImg) {
-        ApiManager.isExistFavNdLike(context, recoBean.getArticleId())
+    private void isFavOrLike(Context context, ArticleBean articleBean, final ImageView favStartImg, final ImageView toggleLikeDisLikeImg) {
+        ApiManager.isExistFavNdLike(context, articleBean.getArticleId())
                 .subscribe(likeVal-> {
                     int like = (int)likeVal;
-                    if(recoBean != null) {
-                        recoBean.setIsFavourite(like);
+                    if(articleBean != null) {
+                        articleBean.setIsFavourite(like);
                     }
                     favStartImg.setVisibility(View.VISIBLE);
                     toggleLikeDisLikeImg.setVisibility(View.VISIBLE);
@@ -569,7 +569,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    private void updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, RecoBean bean
+    private void updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean
             , String from) {
         if(bar != null) {
             bar.setVisibility(View.VISIBLE);

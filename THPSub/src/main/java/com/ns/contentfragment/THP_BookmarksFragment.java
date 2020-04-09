@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -131,7 +131,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
     private void loadData(boolean isOnline) {
 
-        Observable<List<RecoBean>> observable = null;
+        Observable<List<ArticleBean>> observable = null;
 
         if (isOnline) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
@@ -144,7 +144,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                 observable
                         .map(value->{
                             List<AppTabContentModel> content = new ArrayList<>();
-                            for(RecoBean bean : value) {
+                            for(ArticleBean bean : value) {
                                 AppTabContentModel model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_BOOKMARK);
                                 model.setBean(bean);
                                 content.add(model);

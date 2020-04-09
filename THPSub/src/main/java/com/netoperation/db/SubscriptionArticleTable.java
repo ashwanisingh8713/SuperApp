@@ -5,10 +5,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
-@Entity(tableName ="DashboardTable")
-public class DashboardTable {
+@Entity(tableName ="SubscriptionArticleTable")
+public class SubscriptionArticleTable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -25,13 +25,13 @@ public class DashboardTable {
     private String aid ;
 
     @ColumnInfo(name ="bean")
-    private RecoBean bean;
+    private ArticleBean bean;
 
     @ColumnInfo(name ="recoFrom")
     private String recoFrom;
 
 
-    public DashboardTable(String aid, String recoFrom, RecoBean bean) {
+    public SubscriptionArticleTable(String aid, String recoFrom, ArticleBean bean) {
         this.aid = aid;
         this.bean = bean;
         this.recoFrom = recoFrom;
@@ -45,11 +45,11 @@ public class DashboardTable {
         this.aid = aid;
     }
 
-    public RecoBean getBean() {
+    public ArticleBean getBean() {
         return bean;
     }
 
-    public void setBean(RecoBean bean) {
+    public void setBean(ArticleBean bean) {
         this.bean = bean;
     }
 

@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.alerts.Alerts;
@@ -141,14 +141,14 @@ public class DetailToolbar extends Toolbar {
         }
     }
 
-    public void isFavOrLike(Context context, RecoBean recoBean, String articleId) {
+    public void isFavOrLike(Context context, ArticleBean articleBean, String articleId) {
         ApiManager.isExistFavNdLike(context, articleId)
                 .subscribe(likeVal-> {
                     hideLikeProgTHP(true);
                     hideFavProgTHP(true);
                     int like = (int)likeVal;
-                    if(recoBean != null) {
-                        recoBean.setIsFavourite(like);
+                    if(articleBean != null) {
+                        articleBean.setIsFavourite(like);
                     }
                     favStarTHPIC.setVisibility(View.VISIBLE);
                     toggleLikeDisLikeTHPIC.setVisibility(View.VISIBLE);

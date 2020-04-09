@@ -8,8 +8,7 @@ import android.speech.tts.Voice;
 import android.util.Log;
 
 
-import com.netoperation.model.RecoBean;
-import com.ns.thpremium.BuildConfig;
+import com.netoperation.model.ArticleBean;
 import com.ns.utils.TextUtil;
 
 import java.util.HashMap;
@@ -135,7 +134,7 @@ public class TTSManager {
     }
 
 
-    public void speakSpeech(RecoBean articlesBean) {
+    public void speakSpeech(ArticleBean articlesBean) {
         String speakableText = TextUtil.speakableText(articlesBean.getArticletitle(), "", articlesBean.getDescription());
         List<String> parts = TextUtil.splitOnPunctuation(speakableText);
         int count = 0;

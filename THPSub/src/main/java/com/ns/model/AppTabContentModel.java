@@ -1,11 +1,11 @@
 package com.ns.model;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
 public class AppTabContentModel {
 
     private int viewType;
-    private RecoBean bean;
+    private ArticleBean bean;
     private String uniqueIdForView;
 
     public AppTabContentModel(int viewType) {
@@ -21,11 +21,11 @@ public class AppTabContentModel {
         return viewType;
     }
 
-    public RecoBean getBean() {
+    public ArticleBean getBean() {
         return bean;
     }
 
-    public void setBean(RecoBean bean) {
+    public void setBean(ArticleBean bean) {
         this.bean = bean;
     }
 

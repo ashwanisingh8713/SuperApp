@@ -5,7 +5,7 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.UserProfile;
 
 import java.lang.reflect.Type;
@@ -15,28 +15,28 @@ import java.util.Set;
 public class Converters {
 
     @TypeConverter
-    public static List<RecoBean> stringToBeanList(String value) {
-        Type listType = new TypeToken<List<RecoBean>>() {}.getType();
+    public static List<ArticleBean> stringToBeanList(String value) {
+        Type listType = new TypeToken<List<ArticleBean>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String beanListToString(List<RecoBean> list) {
+    public static String beanListToString(List<ArticleBean> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;
     }
 
     @TypeConverter
-    public static String recobeanToString(RecoBean articleBean) {
+    public static String recobeanToString(ArticleBean articleBean) {
         Gson gson = new Gson();
         String json = gson.toJson(articleBean);
         return json;
     }
 
     @TypeConverter
-    public static RecoBean stringToRecobean(String value) {
-        Type listType = new TypeToken<RecoBean>() {}.getType();
+    public static ArticleBean stringToRecobean(String value) {
+        Type listType = new TypeToken<ArticleBean>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 

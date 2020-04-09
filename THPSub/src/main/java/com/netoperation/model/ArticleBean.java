@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecoBean implements Parcelable {
+public class ArticleBean implements Parcelable {
     /**
      * articleId : 27130581
      * articletitle : In 2018, 207 Indians gave up citizenship
@@ -46,8 +46,9 @@ public class RecoBean implements Parcelable {
     private int hasDescription;
 
 
-
-
+    private int isPremium;
+    private int isRestricted;
+    private String description2;
     private String sectionName;
     private String publishedDate;
     private String originalDate;
@@ -63,6 +64,30 @@ public class RecoBean implements Parcelable {
     private ArrayList<MeBean> media;
 
     private String timeForBriefing;
+
+    public int getIsPremium() {
+        return isPremium;
+    }
+
+    public void setIsPremium(int isPremium) {
+        this.isPremium = isPremium;
+    }
+
+    public int getIsRestricted() {
+        return isRestricted;
+    }
+
+    public void setIsRestricted(int isRestricted) {
+        this.isRestricted = isRestricted;
+    }
+
+    public String getDescription2() {
+        return description2;
+    }
+
+    public void setDescription2(String description2) {
+        this.description2 = description2;
+    }
 
     public String getTimeForBriefing() {
         return timeForBriefing;
@@ -260,7 +285,7 @@ public class RecoBean implements Parcelable {
     }
 
 
-    public RecoBean() {
+    public ArticleBean() {
     }
 
     public String getSectionName() {
@@ -372,8 +397,8 @@ public class RecoBean implements Parcelable {
     public boolean equals(Object obj) {
         super.equals(obj);
 
-        if(obj instanceof RecoBean) {
-            RecoBean bean = (RecoBean) obj;
+        if(obj instanceof ArticleBean) {
+            ArticleBean bean = (ArticleBean) obj;
             return bean.getArticleId().equals(getArticleId());
         }
 
@@ -394,6 +419,7 @@ public class RecoBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.description);
+        dest.writeString(this.description2);
         dest.writeString(this.articleId);
         dest.writeString(this.leadText);
         dest.writeString(this.commentCount);
@@ -413,6 +439,8 @@ public class RecoBean implements Parcelable {
         dest.writeStringList(this.author);
         dest.writeInt(this.isFavourite);
         dest.writeInt(this.isBookmark);
+        dest.writeInt(this.isPremium);
+        dest.writeInt(this.isRestricted);
         dest.writeInt(this.hasDescription);
         dest.writeString(this.sectionName);
         dest.writeString(this.publishedDate);
@@ -429,8 +457,9 @@ public class RecoBean implements Parcelable {
         dest.writeString(this.timeForBriefing);
     }
 
-    protected RecoBean(Parcel in) {
+    protected ArticleBean(Parcel in) {
         this.description = in.readString();
+        this.description2 = in.readString();
         this.articleId = in.readString();
         this.leadText = in.readString();
         this.commentCount = in.readString();
@@ -450,6 +479,8 @@ public class RecoBean implements Parcelable {
         this.author = in.createStringArrayList();
         this.isFavourite = in.readInt();
         this.isBookmark = in.readInt();
+        this.isPremium = in.readInt();
+        this.isRestricted = in.readInt();
         this.hasDescription = in.readInt();
         this.sectionName = in.readString();
         this.publishedDate = in.readString();
@@ -466,15 +497,15 @@ public class RecoBean implements Parcelable {
         this.timeForBriefing = in.readString();
     }
 
-    public static final Creator<RecoBean> CREATOR = new Creator<RecoBean>() {
+    public static final Creator<ArticleBean> CREATOR = new Creator<ArticleBean>() {
         @Override
-        public RecoBean createFromParcel(Parcel source) {
-            return new RecoBean(source);
+        public ArticleBean createFromParcel(Parcel source) {
+            return new ArticleBean(source);
         }
 
         @Override
-        public RecoBean[] newArray(int size) {
-            return new RecoBean[size];
+        public ArticleBean[] newArray(int size) {
+            return new ArticleBean[size];
         }
     };
 }

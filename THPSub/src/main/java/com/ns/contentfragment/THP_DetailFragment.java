@@ -11,7 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
@@ -45,7 +45,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private AppTabContentAdapter mRecyclerAdapter;
-    private RecoBean mRecoBean;
+    private ArticleBean mArticleBean;
     private String mArticleId;
     private String mFrom;
 
@@ -53,10 +53,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     private long mPageEndTime = 0l;
 
 
-    public static THP_DetailFragment getInstance(RecoBean recoBean, String articleId, String userId, String from) {
+    public static THP_DetailFragment getInstance(ArticleBean articleBean, String articleId, String userId, String from) {
         THP_DetailFragment fragment = new THP_DetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("RecoBean", recoBean);
+        bundle.putParcelable("ArticleBean", articleBean);
         bundle.putString("articleId", articleId);
         bundle.putString("userId", userId);
         bundle.putString("from", from);
@@ -87,7 +87,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            mRecoBean = getArguments().getParcelable("RecoBean");
+            mArticleBean = getArguments().getParcelable("ArticleBean");
             mArticleId = getArguments().getString("articleId");
             mUserId = getArguments().getString("userId");
             mFrom = getArguments().getString("from");
@@ -121,16 +121,16 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         registerPullToRefresh();
 
         AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_IMAGE_BANNER);
-        bannerModel.setBean(mRecoBean);
+        bannerModel.setBean(mArticleBean);
 
         mRecyclerAdapter.addData(bannerModel);
 
         AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_DESCRIPTION_WEBVIEW);
-        descriptionModel.setBean(mRecoBean);
+        descriptionModel.setBean(mArticleBean);
 
         mRecyclerAdapter.addData(descriptionModel);
 
-        if(mRecoBean.getHasDescription() == 0) {
+        if(mArticleBean.getHasDescription() == 0) {
             loadDataFromServer();
         } else {
             loadDataFromDB();
@@ -161,7 +161,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             mActivity.setOnFragmentTools(this);
 
             // Checking Visible Article is bookmarked or not.
-            isExistInBookmark(mRecoBean.getArticleId());
+            isExistInBookmark(mArticleBean.getArticleId());
 
             // Checking Visible Article is Like and Fav or not.
             isFavOrLike();
@@ -216,13 +216,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             SEARCH_BY_ARTICLE_ID_URL = BuildConfig.STATGGING_SEARCH_BY_ARTICLE_ID_URL;
         }
 
-        Observable<RecoBean> observable =  ApiManager.articleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+        Observable<ArticleBean> observable =  ApiManager.articleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recoBean->{
                             mRecyclerAdapter.replaceData(recoBean, 0);
                             mRecyclerAdapter.replaceData(recoBean, 1);
-                            mRecoBean = recoBean;
+                            mArticleBean = recoBean;
                             if(mIsVisible) {
                                 //sendEventCapture();
                             }
@@ -234,13 +234,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     private void loadDataFromDB() {
-        Observable<RecoBean> observable =  ApiManager.articleDetailFromDB(getActivity(), mArticleId, mFrom);
+        Observable<ArticleBean> observable =  ApiManager.articleDetailFromDB(getActivity(), mArticleId, mFrom);
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{
                                     mRecyclerAdapter.replaceData(recoBean, 0);
                                     mRecyclerAdapter.replaceData(recoBean, 1);
-                                    mRecoBean = recoBean;
+                                    mArticleBean = recoBean;
                                     if(mIsVisible) {
                                         //sendEventCapture();
                                     }
@@ -264,34 +264,34 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onShareClickListener(ToolbarCallModel toolbarCallModel) {
-        CommonUtil.shareArticle(getActivity(), mRecoBean);
+        CommonUtil.shareArticle(getActivity(), mArticleBean);
     }
 
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mRecoBean, "bookmark");
+        updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
     }
 
     @Override
     public void onFavClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mRecoBean, "favourite");
+        updateBookmarkFavLike(getActivity(), mArticleBean, "favourite");
     }
 
     @Override
     public void onLikeClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mRecoBean, "dislike");
+        updateBookmarkFavLike(getActivity(), mArticleBean, "dislike");
     }
 
     @Override
     public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mRecoBean, "bookmark");
+        updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
     ////////////////// Start For Bookmark, Fav, Like & Dislike ////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
-    private void updateBookmarkFavLike(final Context context,  RecoBean bean, String from) {
+    private void updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
 
         if(!mIsOnline) {
             noConnectionSnackBar(getView());
@@ -439,20 +439,20 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCommentClickListener(ToolbarCallModel toolbarCallModel) {
-        IntentUtil.openCommentActivity(getActivity(), mRecoBean);
+        IntentUtil.openCommentActivity(getActivity(), mArticleBean);
     }
 
     @Override
     public void onTTSPlayClickListener(ToolbarCallModel toolbarCallModel) {
         TTSManager ttsManager2 = TTSManager.getInstance();
         if(ttsManager2.isTTSInitialized()) {
-            ttsManager2.speakSpeech(mRecoBean);
+            ttsManager2.speakSpeech(mArticleBean);
             return;
         }
         ttsManager2.init(getActivity(),  new TTSCallbacks() {
             @Override
             public boolean onTTSInitialized() {
-                TTSManager.getInstance().speakSpeech(mRecoBean);
+                TTSManager.getInstance().speakSpeech(mArticleBean);
                 return false;
             }
 
@@ -521,8 +521,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 .subscribe(
                         recoBean-> {
                             mActivity.getDetailToolbar().setIsBookmarked(recoBean.getIsBookmark()==1);
-                            if(mRecoBean != null) {
-                                mRecoBean.setIsBookmark(recoBean.getIsBookmark());
+                            if(mArticleBean != null) {
+                                mArticleBean.setIsBookmark(recoBean.getIsBookmark());
                             }
                         },
                         throwable->{
@@ -538,7 +538,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(isBriefingDetail() || isTempArticle() || isBookmarkDetailPage()) {
             return;
         }
-        mActivity.getDetailToolbar().isFavOrLike(getActivity(), mRecoBean, mArticleId);
+        mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleId);
 
     }
 
@@ -562,22 +562,22 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
 
     private void sendEventCapture(long pageStartTime, long pageEndTime) {
-        if(mRecoBean != null) {
+        if(mArticleBean != null) {
             // Torcai Event Capture
             ApiManager.detailEventCapture(ResUtil.getOsReleaseVersion(), ResUtil.getOsVersion(),
-                    mRecoBean.getArticleSection(), mUserPhone, mUserEmail, mRecoBean.getArticletitle(),
-                    mUserId, ""+System.currentTimeMillis(), mArticleId, mRecoBean.getArticleSection(),
-                    ResUtil.getDeviceId(getActivity()), mRecoBean.getArticleUrl(), BuildConfig.SITEID);
+                    mArticleBean.getArticleSection(), mUserPhone, mUserEmail, mArticleBean.getArticletitle(),
+                    mUserId, ""+System.currentTimeMillis(), mArticleId, mArticleBean.getArticleSection(),
+                    ResUtil.getDeviceId(getActivity()), mArticleBean.getArticleUrl(), BuildConfig.SITEID);
 
             final String totalTime = AppDateUtil.millisToMinAndSec(pageEndTime - pageStartTime);
 
             // CleverTap Event Capture
             CleverTapUtil.cleverTapDetailPageEvent(getActivity(), isBriefingDetail(), THPConstants.CT_FROM_TH_PREMIUM, mFrom,
-                    Integer.parseInt(mRecoBean.getArticleId()), mRecoBean.getArticletitle(), mRecoBean.getArticleLink(),
-                    mRecoBean.getSectionName(), mRecoBean.getArticleType(), totalTime);
+                    Integer.parseInt(mArticleBean.getArticleId()), mArticleBean.getArticletitle(), mArticleBean.getArticleLink(),
+                    mArticleBean.getSectionName(), mArticleBean.getArticleType(), totalTime);
 
-            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_ARTICLE, Integer.parseInt(mRecoBean.getArticleId()),
-                    mRecoBean.getSectionName(), mRecoBean.getAuthor() == null ? "No Author" : TextUtils.join(", ", mRecoBean.getAuthor()), 1);
+            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_ARTICLE, Integer.parseInt(mArticleBean.getArticleId()),
+                    mArticleBean.getSectionName(), mArticleBean.getAuthor() == null ? "No Author" : TextUtils.join(", ", mArticleBean.getAuthor()), 1);
         }
     }
 

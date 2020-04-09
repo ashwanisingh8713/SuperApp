@@ -11,7 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 
@@ -131,7 +131,7 @@ public class CommonUtil {
     }
 
 
-    public static void shareArticle(Context mContext, RecoBean bean) {
+    public static void shareArticle(Context mContext, ArticleBean bean) {
         String mShareTitle = bean.getArticletitle();
         String mShareUrl = bean.getArticleUrl();
         String sectionName = bean.getArticleSection();

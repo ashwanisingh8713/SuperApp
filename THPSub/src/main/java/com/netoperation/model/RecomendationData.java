@@ -5,13 +5,13 @@ import java.util.List;
 public class RecomendationData {
 
 
-    private List<RecoBean> reco;
+    private List<ArticleBean> reco;
 
-    public List<RecoBean> getReco() {
+    public List<ArticleBean> getReco() {
         return reco;
     }
 
-    public void setReco(List<RecoBean> reco) {
+    public void setReco(List<ArticleBean> reco) {
         this.reco = reco;
     }
 

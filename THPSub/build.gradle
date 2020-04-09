@@ -8,6 +8,7 @@ android {
         minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
         targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
         versionCode 6
+        versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
@@ -16,6 +17,8 @@ android {
 
         buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
         buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
+
+        buildConfigField "String", "DEFAULT_TH_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
 
         buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
         buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""

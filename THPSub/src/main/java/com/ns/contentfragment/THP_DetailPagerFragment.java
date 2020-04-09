@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
@@ -38,7 +38,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private String mFrom;
     private int mClickedPosition;
     private String mArticleUrl;
-    private RecoBean mRecoBean;
+    private ArticleBean mArticleBean;
     private String mArticleId;
 
     private DetailPagerAdapter mSectionsPagerAdapter;
@@ -83,7 +83,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
-            mRecoBean = getArguments().getParcelable("RecoBean");
+            mArticleBean = getArguments().getParcelable("ArticleBean");
             mClickedPosition = getArguments().getInt("clickedPosition");
             mArticleId = getArguments().getString("articleId");
             mArticleUrl = getArguments().getString("articleUrl");
@@ -153,7 +153,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
 
     private void loadData() {
-        Observable<List<RecoBean>> observable = null;
+        Observable<List<ArticleBean>> observable = null;
         if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING)
         || mFrom.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
             observable = ApiManager.getBreifingFromDB(getActivity(), mFrom);
@@ -168,7 +168,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    for(RecoBean model : value) {
+                    for(ArticleBean model : value) {
                         // This happens if user clicks on any hyper link then we have to show only one detail page.
                         if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
                             if(model.getArticleId().equalsIgnoreCase(mArticleId)) {
@@ -183,7 +183,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
                     // To Check the selected article Index
                     if (mArticleId != null) {
-                        RecoBean bean = new RecoBean();
+                        ArticleBean bean = new ArticleBean();
                         bean.setArticleId(mArticleId);
 
                         int index = value.indexOf(bean);

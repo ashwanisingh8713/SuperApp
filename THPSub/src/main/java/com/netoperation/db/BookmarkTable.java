@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 
 @Entity(tableName = "BookmarkTable")
 public class BookmarkTable {
@@ -15,10 +15,10 @@ public class BookmarkTable {
     @NonNull
     private String aid ;
 
-    private RecoBean bean;
+    private ArticleBean bean;
 
 
-    public BookmarkTable(String aid, RecoBean bean) {
+    public BookmarkTable(String aid, ArticleBean bean) {
         this.aid = aid;
         this.bean = bean;
     }
@@ -31,11 +31,11 @@ public class BookmarkTable {
         this.aid = aid;
     }
 
-    public RecoBean getBean() {
+    public ArticleBean getBean() {
         return bean;
     }
 
-    public void setBean(RecoBean bean) {
+    public void setBean(ArticleBean bean) {
         this.bean = bean;
     }
 }

@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.THPPreferences;
 import com.ns.adapter.ExpandableListAdapter;
@@ -102,6 +103,7 @@ public class AppTabActivity extends BaseAcitivityTHP {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        DefaultTHApiManager.sectionList(this);
 //        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
     }

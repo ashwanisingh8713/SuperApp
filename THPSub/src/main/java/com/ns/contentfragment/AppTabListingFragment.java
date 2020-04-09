@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.netoperation.model.PersonaliseDetails;
 import com.netoperation.model.PersonaliseModel;
-import com.netoperation.model.RecoBean;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
@@ -136,7 +136,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
                     //Create Header Model
                     if(mProfileNameModel != null) {
-                        final RecoBean bean = mProfileNameModel.getBean();
+                        final ArticleBean bean = mProfileNameModel.getBean();
                         final String tt = bean.getTitle();
                         if(tt != null && !tt.equals(title)) {
                             createUserNameHeaderModel(title);
@@ -209,7 +209,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
 
     private void loadData(boolean isOnline ) {
-        Observable<List<RecoBean>> observable = null;
+        Observable<List<ArticleBean>> observable = null;
         if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL)) {
             if (isOnline) {
 
@@ -247,7 +247,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                             } else {
                                 viewType = BaseRecyclerViewAdapter.VT_DASHBOARD;
                             }
-                            for(RecoBean bean : value) {
+                            for(ArticleBean bean : value) {
                                 AppTabContentModel model = new AppTabContentModel(viewType);
                                 model.setBean(bean);
                                 content.add(model);
@@ -347,27 +347,27 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
 
     private void createUserNameHeaderModel(String title) {
-        RecoBean profileRecoBean = new RecoBean();
+        ArticleBean profileArticleBean = new ArticleBean();
         if (isBriefingPage()) {
-            profileRecoBean.setSectionName("All Editions");
+            profileArticleBean.setSectionName("All Editions");
         } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
-            profileRecoBean.setSectionName("Yours personalised stories");
+            profileArticleBean.setSectionName("Yours personalised stories");
         } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested)) {
-            profileRecoBean.setSectionName("Your suggested stories");
+            profileArticleBean.setSectionName("Your suggested stories");
 //            title = "Your suggested stories";
-            profileRecoBean.setSectionName("Your suggested stories");
+            profileArticleBean.setSectionName("Your suggested stories");
         } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
-            profileRecoBean.setSectionName("Trending now");
+            profileArticleBean.setSectionName("Trending now");
             title = "Trending now";
         }
         if(BuildConfig.DEBUG) {
-//            profileRecoBean.setTitle(title + " :: " + getString(R.string.type_device));
-            profileRecoBean.setTitle(title);
+//            profileArticleBean.setTitle(title + " :: " + getString(R.string.type_device));
+            profileArticleBean.setTitle(title);
         } else {
-            profileRecoBean.setTitle(title);
+            profileArticleBean.setTitle(title);
         }
         mProfileNameModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_HEADER, "userHeader");
-        mProfileNameModel.setBean(profileRecoBean);
+        mProfileNameModel.setBean(profileArticleBean);
     }
 
 

@@ -3,8 +3,10 @@ package com.netoperation.retrofit;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.netoperation.util.RetentionDef;
+import com.ns.thpremium.BuildConfig;
 
 
 public class ReqBody {
@@ -310,4 +312,41 @@ public class ReqBody {
 
         return object;
     }
+
+    public static JsonObject sectionList() {
+        JsonObject object = new JsonObject();
+        object.addProperty("device", "android");
+        object.addProperty("api_key", "hindu@9*M");
+        object.addProperty("app_version", BuildConfig.VERSION_NAME);
+        object.addProperty("os_version", android.os.Build.VERSION.SDK_INT);
+        return object;
+    }
+
+    public static JsonObject homeFeed(JsonArray personliseSectionIds, String bannerId, long lut) {
+        JsonObject object = new JsonObject();
+        object.addProperty("device", "android");
+        object.addProperty("api_key", "hindu@9*M");
+        object.addProperty("app_version", BuildConfig.VERSION_NAME);
+        object.addProperty("os_version", android.os.Build.VERSION.SDK_INT);
+        object.addProperty("bannerId", bannerId);
+        object.addProperty("lut", lut);
+        object.add("sec_id", personliseSectionIds);
+
+        return object;
+    }
+
+    public static JsonObject sectionContent(final String id, final int page, final String type, long lut) {
+        JsonObject object = new JsonObject();
+        object.addProperty("device", "android");
+        object.addProperty("api_key", "hindu@9*M");
+        object.addProperty("app_version", BuildConfig.VERSION_NAME);
+        object.addProperty("os_version", android.os.Build.VERSION.SDK_INT);
+        object.addProperty("id", id);
+        object.addProperty("type", type);
+        object.addProperty("lut", lut);
+        object.addProperty("page", page);
+        return object;
+    }
+
+
 }
