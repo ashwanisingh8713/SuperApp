@@ -1,27 +1,6 @@
-package com.netoperation.default_db;
+package com.netoperation.model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import com.netoperation.model.SectionBean;
-import com.netoperation.model.StaticPageUrlBean;
-
-import java.util.List;
-
-@Entity(tableName = "TableSectionList")
-public class TableSectionList {
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+public class THSection {
 
     private int secId;
     private String secName;
@@ -34,12 +13,11 @@ public class TableSectionList {
     private boolean show_on_explore;
     private String webLink;
     private StaticPageUrlBean staticPageUrl;
-    private List<SectionBean> subSections;
 
-    public TableSectionList(int secId, String secName, String type, boolean show_on_burger, boolean show_on_explore) {
+    public THSection(int secId, String secName, String link, boolean show_on_burger, boolean show_on_explore) {
         this.secId = secId;
         this.secName = secName;
-        this.type = type;
+        this.link = link;
         this.show_on_burger = show_on_burger;
         this.show_on_explore = show_on_explore;
     }
@@ -130,13 +108,5 @@ public class TableSectionList {
 
     public void setStaticPageUrl(StaticPageUrlBean staticPageUrl) {
         this.staticPageUrl = staticPageUrl;
-    }
-
-    public List<SectionBean> getSubSections() {
-        return subSections;
-    }
-
-    public void setSubSections(List<SectionBean> subSections) {
-        this.subSections = subSections;
     }
 }

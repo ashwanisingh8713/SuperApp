@@ -23,14 +23,14 @@ public class TableWidget {
 
     private int position;
 
-    private int secId;
+    private String secId;
     private String secName;
     private String type;
     private boolean viewAllCTA;
 
     private List<ArticleBean> beans;
 
-    public TableWidget(int position, int secId, String secName, String type, boolean viewAllCTA, List<ArticleBean> beans) {
+    public TableWidget(int position, String secId, String secName, String type, boolean viewAllCTA, List<ArticleBean> beans) {
         this.position = position;
         this.secId = secId;
         this.secName = secName;
@@ -55,11 +55,11 @@ public class TableWidget {
         this.position = position;
     }
 
-    public int getSecId() {
+    public String getSecId() {
         return secId;
     }
 
-    public void setSecId(int secId) {
+    public void setSecId(String secId) {
         this.secId = secId;
     }
 

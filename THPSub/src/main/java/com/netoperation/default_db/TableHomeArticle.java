@@ -4,7 +4,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.model.ArticleBean;
-import com.netoperation.model.StaticPageUrlBean;
+
+import java.util.List;
 
 @Entity(tableName = "TableHomeArticle")
 public class TableHomeArticle {
@@ -20,39 +21,17 @@ public class TableHomeArticle {
         this.id = id;
     }
 
+    private List<ArticleBean> beans;
 
-    private StaticPageUrlBean staticPageBean;
-    private String articleId ;
-
-    private ArticleBean bean;
-
-
-    public TableHomeArticle(String articleId, ArticleBean bean) {
-        this.articleId = articleId;
-        this.bean = bean;
+    public TableHomeArticle(List<ArticleBean> beans) {
+        this.beans = beans;
     }
 
-    public StaticPageUrlBean getStaticPageBean() {
-        return staticPageBean;
+    public List<ArticleBean> getBeans() {
+        return beans;
     }
 
-    public void setStaticPageBean(StaticPageUrlBean staticPageBean) {
-        this.staticPageBean = staticPageBean;
-    }
-
-    public String getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
-    }
-
-    public ArticleBean getBean() {
-        return bean;
-    }
-
-    public void setBean(ArticleBean bean) {
-        this.bean = bean;
+    public void setBeans(List<ArticleBean> beans) {
+        this.beans = beans;
     }
 }

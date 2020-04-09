@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.StaticPageUrlBean;
 
 import java.util.List;
 
@@ -24,12 +25,22 @@ public class TableBanner {
     private String secId ;
     private String secName;
 
+    private StaticPageUrlBean staticPageBean;
+
     private List<ArticleBean> beans;
 
     public TableBanner(String secId, String secName, List<ArticleBean> beans) {
         this.secId = secId;
         this.secName = secName;
         this.beans = beans;
+    }
+
+    public StaticPageUrlBean getStaticPageBean() {
+        return staticPageBean;
+    }
+
+    public void setStaticPageBean(StaticPageUrlBean staticPageBean) {
+        this.staticPageBean = staticPageBean;
     }
 
     public String getSecId() {

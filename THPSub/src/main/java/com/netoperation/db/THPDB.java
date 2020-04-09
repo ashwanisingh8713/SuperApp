@@ -10,21 +10,28 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoHomeArticle;
+import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoSectionArticle;
-import com.netoperation.default_db.DaoSectionList;
+import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.DaoWidget;
+import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
+import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableSectionArticle;
-import com.netoperation.default_db.TableSectionList;
+import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSubSectionArticle;
+import com.netoperation.default_db.TableWidget;
 
 @Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
         TableBreifing.class, TableUserProfile.class, TableMP.class,
         TableHomeArticle.class, TableSectionArticle.class,
-        TableSectionList.class, TableSubSectionArticle.class, TableConfiguration.class},
+        TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
+        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class},
         version = 4, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
@@ -38,10 +45,13 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoMP mpTableDao();
 
     public abstract DaoHomeArticle daoHomeArticle();
+    public abstract DaoBanner daoBanner();
     public abstract DaoSectionArticle daoSectionArticle();
-    public abstract DaoSectionList daoSectionList();
+    public abstract DaoSection daoSectionList();
     public abstract DaoSubSectionArticle daoSubSectionArticle();
     public abstract DaoConfiguration daoConfiguration();
+    public abstract DaoWidget daoWidget();
+    public abstract DaoPersonaliseDefault daoPersonaliseDefault();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {

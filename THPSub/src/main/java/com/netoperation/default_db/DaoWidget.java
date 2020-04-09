@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 
+import com.netoperation.model.ArticleBean;
+
 import java.util.List;
 
 
@@ -16,5 +18,14 @@ public interface DaoWidget {
 
     @Query("SELECT * FROM TableWidget")
     List<TableWidget> getWidgets();
+
+    @Query("UPDATE TableWidget SET beans = :beans WHERE secId = :secId")
+    int updateWidgetArticles(String secId, List<ArticleBean> beans);
+
+    @Query("DELETE FROM TableWidget WHERE secId = :secId")
+    int deleteWidget(String secId);
+
+    @Query("DELETE FROM TableWidget")
+    void deleteAll();
 
 }
