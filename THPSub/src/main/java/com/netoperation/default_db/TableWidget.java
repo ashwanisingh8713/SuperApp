@@ -3,8 +3,12 @@ package com.netoperation.default_db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "WidgetTable")
-public class WidgetTable {
+import com.netoperation.model.ArticleBean;
+
+import java.util.List;
+
+@Entity(tableName = "TableWidget")
+public class TableWidget {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -24,6 +28,24 @@ public class WidgetTable {
     private String type;
     private boolean viewAllCTA;
 
+    private List<ArticleBean> beans;
+
+    public TableWidget(int position, int secId, String secName, String type, boolean viewAllCTA, List<ArticleBean> beans) {
+        this.position = position;
+        this.secId = secId;
+        this.secName = secName;
+        this.type = type;
+        this.viewAllCTA = viewAllCTA;
+        this.beans = beans;
+    }
+
+    public List<ArticleBean> getBeans() {
+        return beans;
+    }
+
+    public void setBeans(List<ArticleBean> beans) {
+        this.beans = beans;
+    }
 
     public int getPosition() {
         return position;

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class MPTable {
+public class TableMP {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)

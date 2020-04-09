@@ -10,19 +10,38 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {SubscriptionArticleTable.class, BookmarkTable.class,
-        BreifingTable.class, UserProfileTable.class, MPTable.class},
+import com.netoperation.default_db.DaoConfiguration;
+import com.netoperation.default_db.DaoHomeArticle;
+import com.netoperation.default_db.DaoSectionArticle;
+import com.netoperation.default_db.DaoSectionList;
+import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.TableConfiguration;
+import com.netoperation.default_db.TableHomeArticle;
+import com.netoperation.default_db.TableSectionArticle;
+import com.netoperation.default_db.TableSectionList;
+import com.netoperation.default_db.TableSubSectionArticle;
+
+@Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
+        TableBreifing.class, TableUserProfile.class, TableMP.class,
+        TableHomeArticle.class, TableSectionArticle.class,
+        TableSectionList.class, TableSubSectionArticle.class, TableConfiguration.class},
         version = 4, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
 
     private static volatile THPDB INSTANCE;
 
-    public abstract DashboardDao dashboardDao();
-    public abstract BookmarkTableDao bookmarkTableDao();
-    public abstract BreifingDao breifingDao();
-    public abstract UserProfileDao userProfileDao();
-    public abstract MPTableDao mpTableDao();
+    public abstract DaoSubscriptionArticle dashboardDao();
+    public abstract DaoBookmark bookmarkTableDao();
+    public abstract DaoBreifing breifingDao();
+    public abstract DaoUserProfile userProfileDao();
+    public abstract DaoMP mpTableDao();
+
+    public abstract DaoHomeArticle daoHomeArticle();
+    public abstract DaoSectionArticle daoSectionArticle();
+    public abstract DaoSectionList daoSectionList();
+    public abstract DaoSubSectionArticle daoSubSectionArticle();
+    public abstract DaoConfiguration daoConfiguration();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {
@@ -62,7 +81,7 @@ public abstract class THPDB extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
-            //Create the MPTable Table
+            //Create the TableMP Table
             database.execSQL("CREATE TABLE IF NOT EXISTS `MPTable` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `cycleUniqueId` TEXT, `cycleName` TEXT, `networkCurrentTimeInMilli` INTEGER NOT NULL, `allowedTimeInSecs` INTEGER NOT NULL, `expiryTimeInMillis` INTEGER NOT NULL, `startTimeInMillis` INTEGER NOT NULL, `allowedArticleCounts` INTEGER NOT NULL, `isMpFeatureEnabled` INTEGER NOT NULL, `isTaboolaNeeded` INTEGER NOT NULL, `isMpBannerNeeded` INTEGER NOT NULL, `mpBannerMsg` TEXT, `showFullAccessBtn` INTEGER NOT NULL, `fullAccessBtnName` TEXT, `showSignInBtn` INTEGER NOT NULL, `signInBtnName` TEXT, `signInBtnNameBoldWord` TEXT, `showSignUpBtn` INTEGER NOT NULL, `signUpBtnName` TEXT, `signUpBtnNameBoldWord` TEXT, `nonSignInBlockerTitle` TEXT, `nonSignInBlockerDescription` TEXT, `expiredUserBlockerTitle` TEXT, `expiredUserBlockerDescription` TEXT, `readArticleIds` TEXT)");
         }
     };

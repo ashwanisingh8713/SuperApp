@@ -3,6 +3,7 @@ package com.netoperation.model;
 import java.util.List;
 
 public class SectionBean {
+
     /**
      * parentId : 0
      * secId : 43
@@ -26,26 +27,27 @@ public class SectionBean {
      * staticPageUrl : {"url":"","isEnabled":false,"position":"0","sectionId":0}
      */
 
-    private int parentId;
     private int secId;
     private String secName;
     private String link;
-    private String secColorRgb;
     private String type;
     private int priority;
-    private int overridePriority;
-    private int explorePriority;
-    private int overrideExplore;
     private String image;
     private String image_v2;
     private boolean show_on_burger;
     private boolean show_on_explore;
-    private boolean custom;
     private String webLink;
-    private int customScreen;
-    private int customScreenPri;
     private StaticPageUrlBean staticPageUrl;
     private List<SectionBean> subSections;
+
+    private int parentId;
+    private String secColorRgb;
+    private int overridePriority;
+    private int explorePriority;
+    private int overrideExplore;
+    private boolean custom;
+    private int customScreen;
+    private int customScreenPri;
 
     public int getParentId() {
         return parentId;

@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 
 import com.netoperation.model.ArticleBean;
 
-@Entity(tableName = "BookmarkTable")
-public class BookmarkTable {
+@Entity(tableName = "TableBookmark")
+public class TableBookmark {
 
 
     @PrimaryKey
@@ -18,7 +18,7 @@ public class BookmarkTable {
     private ArticleBean bean;
 
 
-    public BookmarkTable(String aid, ArticleBean bean) {
+    public TableBookmark(String aid, ArticleBean bean) {
         this.aid = aid;
         this.bean = bean;
     }

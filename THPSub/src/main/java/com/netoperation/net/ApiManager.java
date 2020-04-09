@@ -14,14 +14,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mindorks.scheduler.Priority;
 import com.mindorks.scheduler.RxPS;
-import com.netoperation.db.BookmarkTable;
-import com.netoperation.db.BreifingTable;
-import com.netoperation.db.SubscriptionArticleTable;
-import com.netoperation.db.MPTable;
-import com.netoperation.db.MPTableDao;
+import com.netoperation.db.TableBookmark;
+import com.netoperation.db.TableBreifing;
+import com.netoperation.db.DaoMP;
+import com.netoperation.db.TableSubscriptionArticle;
+import com.netoperation.db.TableMP;
 import com.netoperation.db.THPDB;
-import com.netoperation.db.UserProfileDao;
-import com.netoperation.db.UserProfileTable;
+import com.netoperation.db.DaoUserProfile;
+import com.netoperation.db.TableUserProfile;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.KeyValueModel;
@@ -297,9 +297,9 @@ public class ApiManager {
 
                                         userProfile.setHasFreePlan(true);
 
-                                        UserProfileTable userProfileTable = new UserProfileTable(userId, userProfile);
+                                        TableUserProfile tableUserProfile = new TableUserProfile(userId, userProfile);
 
-                                        db.userProfileDao().insertUserProfile(userProfileTable);
+                                        db.userProfileDao().insertUserProfile(tableUserProfile);
 
                                         String email_Contact = emailId;
                                         if (email_Contact == null || TextUtils.isEmpty(email_Contact)) {
@@ -550,9 +550,9 @@ public class ApiManager {
                                     userProfile.setNextRenewalDate(nextRenewalDate);
                                     userProfile.setUserMigrated(userMigrated);
 
-                                    UserProfileTable userProfileTable = new UserProfileTable(userId, userProfile);
+                                    TableUserProfile tableUserProfile = new TableUserProfile(userId, userProfile);
 
-                                    thpdb.userProfileDao().insertUserProfile(userProfileTable);
+                                    thpdb.userProfileDao().insertUserProfile(tableUserProfile);
 
                                     String mUserLoggedName = null;
                                     if (userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
@@ -788,9 +788,9 @@ public class ApiManager {
                                     userProfile.setNextRenewalDate(nextRenewalDate);
                                     userProfile.setUserMigrated(userMigrated);
 
-                                    UserProfileTable userProfileTable = new UserProfileTable(userId, userProfile);
+                                    TableUserProfile tableUserProfile = new TableUserProfile(userId, userProfile);
 
-                                    thpdb.userProfileDao().insertUserProfile(userProfileTable);
+                                    thpdb.userProfileDao().insertUserProfile(tableUserProfile);
 
                                     String mUserLoggedName = null;
                                     if (userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
@@ -850,21 +850,21 @@ public class ApiManager {
                                 for (ArticleBean bean : beans) {
 
                                     if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
-                                        BookmarkTable bookmarkTable = new BookmarkTable(bean.getArticleId(), bean);
-                                        thp.bookmarkTableDao().insertBookmark(bookmarkTable);
+                                        TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean);
+                                        thp.bookmarkTableDao().insertBookmark(tableBookmark);
                                     } else {
-                                        BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(bean.getArticleId());
-                                        if (bookmarkTable != null && bean.getIsBookmark() == 1) {
+                                        TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(bean.getArticleId());
+                                        if (tableBookmark != null && bean.getIsBookmark() == 1) {
                                             thp.bookmarkTableDao().updateBookmark(bean.getArticleId(), bean);
                                         } else if (bean.getIsBookmark() == 1) {
-                                            BookmarkTable bookmarkkTable = new BookmarkTable(bean.getArticleId(), bean);
+                                            TableBookmark bookmarkkTable = new TableBookmark(bean.getArticleId(), bean);
                                             thp.bookmarkTableDao().insertBookmark(bookmarkkTable);
                                         } else if (bean.getIsBookmark() == 0) {
                                             thp.bookmarkTableDao().deleteBookmarkArticle(bean.getArticleId());
                                         }
 
-                                        SubscriptionArticleTable subscriptionArticleTable = new SubscriptionArticleTable(bean.getArticleId(), recotype, bean);
-                                        thp.dashboardDao().insertDashboard(subscriptionArticleTable);
+                                        TableSubscriptionArticle tableSubscriptionArticle = new TableSubscriptionArticle(bean.getArticleId(), recotype, bean);
+                                        thp.dashboardDao().insertDashboard(tableSubscriptionArticle);
                                     }
                                 }
                             }
@@ -891,23 +891,23 @@ public class ApiManager {
                             }
                             THPDB thp = THPDB.getInstance(context);
                             if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
-                                List<BookmarkTable> bookmarkTable = thp.bookmarkTableDao().getAllBookmark();
-                                if (bookmarkTable != null) {
-                                    for (BookmarkTable dash : bookmarkTable) {
+                                List<TableBookmark> tableBookmark = thp.bookmarkTableDao().getAllBookmark();
+                                if (tableBookmark != null) {
+                                    for (TableBookmark dash : tableBookmark) {
                                         beans.add(dash.getBean());
                                     }
                                 }
                             } else if (aid != null && recotype.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
-                                SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                                if (subscriptionArticleTable != null) {
+                                TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
+                                if (tableSubscriptionArticle != null) {
                                     List<ArticleBean> tempArticleBean = new ArrayList<>();
-                                    tempArticleBean.add(subscriptionArticleTable.getBean());
+                                    tempArticleBean.add(tableSubscriptionArticle.getBean());
                                     return tempArticleBean;
                                 }
                             } else {
-                                List<SubscriptionArticleTable> subscriptionArticleTable = thp.dashboardDao().getAllDashboardBean(recotype);
-                                if (subscriptionArticleTable != null) {
-                                    for (SubscriptionArticleTable dash : subscriptionArticleTable) {
+                                List<TableSubscriptionArticle> tableSubscriptionArticle = thp.dashboardDao().getAllDashboardBean(recotype);
+                                if (tableSubscriptionArticle != null) {
+                                    for (TableSubscriptionArticle dash : tableSubscriptionArticle) {
                                         beans.add(dash.getBean());
                                     }
                                 }
@@ -923,9 +923,9 @@ public class ApiManager {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
                 .map(articleId -> {
-                    List<BookmarkTable> bookmarkTable = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticles(articleId);
-                    if (bookmarkTable != null && bookmarkTable.size() > 0) {
-                        return bookmarkTable.get(0).getBean();
+                    List<TableBookmark> tableBookmark = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticles(articleId);
+                    if (tableBookmark != null && tableBookmark.size() > 0) {
+                        return tableBookmark.get(0).getBean();
                     }
                     return new ArticleBean();
                 })
@@ -958,12 +958,12 @@ public class ApiManager {
                         bean.setMedia(articleBean.getMedia());
 
                         THPDB thpdb = THPDB.getInstance(context);
-                        BookmarkTable bookmarkTable = new BookmarkTable(articleBean.getArticleId(), bean);
-                        thpdb.bookmarkTableDao().insertBookmark(bookmarkTable);
+                        TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean);
+                        thpdb.bookmarkTableDao().insertBookmark(tableBookmark);
 
-                        SubscriptionArticleTable subscriptionArticleTable = thpdb.dashboardDao().getSingleDashboardBean(articleBean.getArticleId());
-                        if (subscriptionArticleTable != null) {
-                            ArticleBean recoBean = subscriptionArticleTable.getBean();
+                        TableSubscriptionArticle tableSubscriptionArticle = thpdb.dashboardDao().getSingleDashboardBean(articleBean.getArticleId());
+                        if (tableSubscriptionArticle != null) {
+                            ArticleBean recoBean = tableSubscriptionArticle.getBean();
                             if (recoBean != null) {
                                 recoBean.setIsBookmark(articleBean.getIsBookmark());
                                 thpdb.dashboardDao().updateRecobean(articleBean.getArticleId(), recoBean);
@@ -985,10 +985,10 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(model);
+                        TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(model);
 
-                        if (bookmarkTable != null) {
-                            ArticleBean articleBean = bookmarkTable.getBean();
+                        if (tableBookmark != null) {
+                            ArticleBean articleBean = tableBookmark.getBean();
                             articleBean.setIsFavourite(like);
                             thp.bookmarkTableDao().updateBookmark(aid, articleBean);
                             return articleBean;
@@ -1036,9 +1036,9 @@ public class ApiManager {
                 .subscribeOn(Schedulers.io())
                 .map(articleId -> {
                     THPDB thp = THPDB.getInstance(context);
-                    SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                    if (subscriptionArticleTable != null) {
-                        return subscriptionArticleTable.getBean().getIsFavourite();
+                    TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
+                    if (tableSubscriptionArticle != null) {
+                        return tableSubscriptionArticle.getBean().getIsFavourite();
                     }
                     return 0;
                 })
@@ -1060,9 +1060,9 @@ public class ApiManager {
                         ArticleBean articleBean = new ArticleBean();
                         articleBean.setArticleId(aid);
 
-                        SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                        if (subscriptionArticleTable != null) {
-                            if (subscriptionArticleTable.getAid().equals(aid)) {
+                        TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
+                        if (tableSubscriptionArticle != null) {
+                            if (tableSubscriptionArticle.getAid().equals(aid)) {
                                 isContain = true;
                             }
                         }
@@ -1088,9 +1088,9 @@ public class ApiManager {
                         THPDB thp = THPDB.getInstance(context);
 
                         if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
-                            BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(aid);
-                            if (bookmarkTable != null) {
-                                ArticleBean articleBean = bookmarkTable.getBean();
+                            TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
+                            if (tableBookmark != null) {
+                                ArticleBean articleBean = tableBookmark.getBean();
                                 if (model.getData().size() > 0) {
                                     articleBean.setDescription(model.getData().get(0).getDe());
                                     articleBean.setLeadText(model.getData().get(0).getAl());
@@ -1111,9 +1111,9 @@ public class ApiManager {
                             }
                         } // End Bookmark
                         else {
-                            SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                            if (subscriptionArticleTable != null) {
-                                ArticleBean articleBean = subscriptionArticleTable.getBean();
+                            TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
+                            if (tableSubscriptionArticle != null) {
+                                ArticleBean articleBean = tableSubscriptionArticle.getBean();
                                 if (model.getData().size() > 0) {
                                     articleBean.setDescription(model.getData().get(0).getDe());
                                     articleBean.setLeadText(model.getData().get(0).getAl());
@@ -1132,7 +1132,7 @@ public class ApiManager {
 
                                 }
                                 return articleBean;
-                            } else { // subscriptionArticleTable == null
+                            } else { // tableSubscriptionArticle == null
                                 ArticleBean articleBean = new ArticleBean();
                                 if (model.getData().size() > 0) {
                                     articleBean.setDescription(model.getData().get(0).getDe());
@@ -1156,8 +1156,8 @@ public class ApiManager {
                                     articleBean.setArticleId("" + model.getData().get(0).getAid());
                                     articleBean.setShortDescription(model.getData().get(0).getLe());
 
-                                    SubscriptionArticleTable subscriptionArticleTable1 = new SubscriptionArticleTable(aid, NetConstants.RECO_TEMP_NOT_EXIST, articleBean);
-                                    thp.dashboardDao().insertDashboard(subscriptionArticleTable1);
+                                    TableSubscriptionArticle tableSubscriptionArticle1 = new TableSubscriptionArticle(aid, NetConstants.RECO_TEMP_NOT_EXIST, articleBean);
+                                    thp.dashboardDao().insertDashboard(tableSubscriptionArticle1);
                                 }
                                 return articleBean;
                             }
@@ -1181,9 +1181,9 @@ public class ApiManager {
                         THPDB thp = THPDB.getInstance(context);
 
                         if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
-                            BookmarkTable bookmarkTable = thp.bookmarkTableDao().getBookmarkArticle(aid);
-                            if (bookmarkTable != null) {
-                                ArticleBean articleBean = bookmarkTable.getBean();
+                            TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
+                            if (tableBookmark != null) {
+                                ArticleBean articleBean = tableBookmark.getBean();
                                 return articleBean;
                             } else {
                                 return new ArticleBean();
@@ -1192,22 +1192,22 @@ public class ApiManager {
                                 || recoType.equalsIgnoreCase(NetConstants.BREIFING_MORNING)
                                 || recoType.equalsIgnoreCase(NetConstants.BREIFING_NOON)
                                 || recoType.equalsIgnoreCase(NetConstants.BREIFING_EVENING))) {
-                            BreifingTable breifingTable = thp.breifingDao().getBreifingTable();
-                            if (breifingTable != null) {
+                            TableBreifing tableBreifing = thp.breifingDao().getBreifingTable();
+                            if (tableBreifing != null) {
                                 List<ArticleBean> morning = null;
                                 List<ArticleBean> noon = null;
                                 List<ArticleBean> evening = null;
 
                                 if (recoType.equalsIgnoreCase(NetConstants.BREIFING_ALL)) {
-                                    morning = breifingTable.getMorning();
-                                    noon = breifingTable.getNoon();
-                                    evening = breifingTable.getEvening();
+                                    morning = tableBreifing.getMorning();
+                                    noon = tableBreifing.getNoon();
+                                    evening = tableBreifing.getEvening();
                                 } else if (recoType.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
-                                    morning = breifingTable.getMorning();
+                                    morning = tableBreifing.getMorning();
                                 } else if (recoType.equalsIgnoreCase(NetConstants.BREIFING_NOON)) {
-                                    noon = breifingTable.getNoon();
+                                    noon = tableBreifing.getNoon();
                                 } else if (recoType.equalsIgnoreCase(NetConstants.BREIFING_EVENING)) {
-                                    evening = breifingTable.getEvening();
+                                    evening = tableBreifing.getEvening();
                                 }
 
                                 final List<ArticleBean> allBreifing = new ArrayList<>();
@@ -1229,9 +1229,9 @@ public class ApiManager {
                             }
                             return new ArticleBean();
                         } else {
-                            SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
-                            if (subscriptionArticleTable != null) {
-                                ArticleBean articleBean = subscriptionArticleTable.getBean();
+                            TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
+                            if (tableSubscriptionArticle != null) {
+                                ArticleBean articleBean = tableSubscriptionArticle.getBean();
                                 return articleBean;
                             } else {
                                 return new ArticleBean();
@@ -1253,10 +1253,10 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        SubscriptionArticleTable subscriptionArticleTable = thp.dashboardDao().getSingleDashboardBean(aid);
+                        TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
 
-                        if (subscriptionArticleTable != null) {
-                            ArticleBean articleBean = subscriptionArticleTable.getBean();
+                        if (tableSubscriptionArticle != null) {
+                            ArticleBean articleBean = tableSubscriptionArticle.getBean();
                             articleBean.setIsFavourite(like);
                             thp.dashboardDao().updateRecobean(aid, articleBean);
                             return articleBean;
@@ -1412,14 +1412,14 @@ public class ApiManager {
                             THPDB thp = THPDB.getInstance(context);
                             thp.breifingDao().deleteAll();
 
-                            BreifingTable breifingTable = new BreifingTable();
-                            breifingTable.setEvening(eveningBriefing);
-                            breifingTable.setNoon(noonBriefing);
-                            breifingTable.setMorning(morningBriefing);
-                            breifingTable.setMorningTime(morningTime);
-                            breifingTable.setNoonTime(noonTime);
-                            breifingTable.setEveningTime(eveningTime);
-                            thp.breifingDao().insertBreifing(breifingTable);
+                            TableBreifing tableBreifing = new TableBreifing();
+                            tableBreifing.setEvening(eveningBriefing);
+                            tableBreifing.setNoon(noonBriefing);
+                            tableBreifing.setMorning(morningBriefing);
+                            tableBreifing.setMorningTime(morningTime);
+                            tableBreifing.setNoonTime(noonTime);
+                            tableBreifing.setEveningTime(eveningTime);
+                            thp.breifingDao().insertBreifing(tableBreifing);
                             if (breifingType.equals(NetConstants.BREIFING_ALL)) {
                                 return allBriefing;
                             } else if (breifingType.equals(NetConstants.BREIFING_MORNING)) {
@@ -1451,21 +1451,21 @@ public class ApiManager {
 
                             THPDB thp = THPDB.getInstance(context);
 
-                            BreifingTable breifingTable = thp.breifingDao().getBreifingTable();
+                            TableBreifing tableBreifing = thp.breifingDao().getBreifingTable();
 
-                            if (breifingTable == null) {
+                            if (tableBreifing == null) {
                                 return briefingItems;
                             }
                             if (breifingType.equals(NetConstants.BREIFING_ALL)) {
-                                briefingItems.addAll(breifingTable.getMorning());
-                                briefingItems.addAll(breifingTable.getNoon());
-                                briefingItems.addAll(breifingTable.getEvening());
+                                briefingItems.addAll(tableBreifing.getMorning());
+                                briefingItems.addAll(tableBreifing.getNoon());
+                                briefingItems.addAll(tableBreifing.getEvening());
                             } else if (breifingType.equals(NetConstants.BREIFING_MORNING)) {
-                                briefingItems.addAll(breifingTable.getMorning());
+                                briefingItems.addAll(tableBreifing.getMorning());
                             } else if (breifingType.equals(NetConstants.BREIFING_NOON)) {
-                                briefingItems.addAll(breifingTable.getNoon());
+                                briefingItems.addAll(tableBreifing.getNoon());
                             } else if (breifingType.equals(NetConstants.BREIFING_EVENING)) {
-                                briefingItems.addAll(breifingTable.getEvening());
+                                briefingItems.addAll(tableBreifing.getEvening());
                             }
 
                             return briefingItems;
@@ -1488,15 +1488,15 @@ public class ApiManager {
 
                             THPDB thp = THPDB.getInstance(context);
 
-                            BreifingTable breifingTable = thp.breifingDao().getBreifingTable();
+                            TableBreifing tableBreifing = thp.breifingDao().getBreifingTable();
 
-                            if (breifingTable == null) {
+                            if (tableBreifing == null) {
                                 return timeMap;
                             }
 
-                            String morningTime = breifingTable.getMorningTime();
-                            String noonTime = breifingTable.getNoonTime();
-                            String eveningTime = breifingTable.getEveningTime();
+                            String morningTime = tableBreifing.getMorningTime();
+                            String noonTime = tableBreifing.getNoonTime();
+                            String eveningTime = tableBreifing.getEveningTime();
 
                             if (morningTime == null) {
                                 morningTime = "";
@@ -1512,14 +1512,14 @@ public class ApiManager {
                             timeMap.put("noonTime", noonTime);
                             timeMap.put("eveningTime", eveningTime);
 
-                            if (breifingTable.getMorning() != null && breifingTable.getMorning().size() > 0) {
+                            if (tableBreifing.getMorning() != null && tableBreifing.getMorning().size() > 0) {
                                 timeMap.put("morningEnable", "1");
                             }
-                            if (breifingTable.getNoon() != null && breifingTable.getNoon().size() > 0) {
+                            if (tableBreifing.getNoon() != null && tableBreifing.getNoon().size() > 0) {
                                 timeMap.put("noonEnable", "1");
                             }
 
-                            if (breifingTable.getEvening() != null && breifingTable.getEvening().size() > 0) {
+                            if (tableBreifing.getEvening() != null && tableBreifing.getEvening().size() > 0) {
                                 timeMap.put("eveningEnable", "1");
                             }
 
@@ -1534,7 +1534,7 @@ public class ApiManager {
         return Observable.just("userProfile")
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
-                            UserProfileDao dao = THPDB.getInstance(context).userProfileDao();
+                            DaoUserProfile dao = THPDB.getInstance(context).userProfileDao();
                             if (dao.getUserProfileTable() == null) {
                                 return new UserProfile();
                             }
@@ -2274,13 +2274,13 @@ public class ApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(configurationModel -> {
                     THPDB db = THPDB.getInstance(context);
-                    MPTableDao mpTableDao = db.mpTableDao();
-                    MPTable mpTable = mpTableDao.getMPTable();
-                    if (mpTable == null) {
-                        mpTable = new MPTable();
+                    DaoMP daoMP = db.mpTableDao();
+                    TableMP tableMP = daoMP.getMPTable();
+                    if (tableMP == null) {
+                        tableMP = new TableMP();
                     }
                     boolean isMpFeatureEnabled = configurationModel.isSTATUS();
-                    mpTable.setMpFeatureEnabled(isMpFeatureEnabled);
+                    tableMP.setMpFeatureEnabled(isMpFeatureEnabled);
                     //Update MP preferences
                     UserPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
                     if (isMpFeatureEnabled) {
@@ -2306,31 +2306,31 @@ public class ApiManager {
                         String expiredUserBlockerTitle = configurationModel.getDATA().getConfigs().getExpiredUserBlockerTitle();
                         String expiredUserBlockerDescription = configurationModel.getDATA().getConfigs().getExpiredUserBlockerDescription();
 
-                        mpTable.setTaboolaNeeded(isTaboolaNeeded);
-                        mpTable.setMpBannerNeeded(isMpBannerNeeded);
+                        tableMP.setTaboolaNeeded(isTaboolaNeeded);
+                        tableMP.setMpBannerNeeded(isMpBannerNeeded);
 
-                        mpTable.setMpBannerMsg(mpBannerMsg);
+                        tableMP.setMpBannerMsg(mpBannerMsg);
 
-                        mpTable.setFullAccessBtnName(fullAccessBtnName);
-                        mpTable.setShowFullAccessBtn(showFullAccessBtn);
+                        tableMP.setFullAccessBtnName(fullAccessBtnName);
+                        tableMP.setShowFullAccessBtn(showFullAccessBtn);
 
-                        mpTable.setShowSignInBtn(showSignInBtn);
-                        mpTable.setSignInBtnName(signInBtnName);
-                        mpTable.setSignInBtnNameBoldWord(signInBtnNameBoldWord);
+                        tableMP.setShowSignInBtn(showSignInBtn);
+                        tableMP.setSignInBtnName(signInBtnName);
+                        tableMP.setSignInBtnNameBoldWord(signInBtnNameBoldWord);
 
-                        mpTable.setShowSignUpBtn(showSignUpBtn);
-                        mpTable.setSignUpBtnName(signUpBtnName);
-                        mpTable.setSignUpBtnNameBoldWord(signUpBtnNameBoldWord);
+                        tableMP.setShowSignUpBtn(showSignUpBtn);
+                        tableMP.setSignUpBtnName(signUpBtnName);
+                        tableMP.setSignUpBtnNameBoldWord(signUpBtnNameBoldWord);
 
-                        mpTable.setNonSignInBlockerTitle(nonSignInBlockerTitle);
-                        mpTable.setNonSignInBlockerDescription(nonSignInBlockerDescription);
-                        mpTable.setExpiredUserBlockerTitle(expiredUserBlockerTitle);
-                        mpTable.setExpiredUserBlockerDescription(expiredUserBlockerDescription);
+                        tableMP.setNonSignInBlockerTitle(nonSignInBlockerTitle);
+                        tableMP.setNonSignInBlockerDescription(nonSignInBlockerDescription);
+                        tableMP.setExpiredUserBlockerTitle(expiredUserBlockerTitle);
+                        tableMP.setExpiredUserBlockerDescription(expiredUserBlockerDescription);
                     }
-                    if (mpTable.getId() > 0) {
-                        mpTableDao.updateMPTable(mpTable);
+                    if (tableMP.getId() > 0) {
+                        daoMP.updateMPTable(tableMP);
                     } else {
-                        mpTableDao.insertMpTableData(mpTable);
+                        daoMP.insertMpTableData(tableMP);
                     }
                     Log.i("ApiManager", "MP Cyle END "+System.currentTimeMillis());
                     return "";
@@ -2347,14 +2347,14 @@ public class ApiManager {
                 .map(value -> {
                     Log.i("ApiManager", "MP Cyle START "+System.currentTimeMillis());
                     THPDB thpdb = THPDB.getInstance(context);
-                    MPTableDao mpTableDAO = thpdb.mpTableDao();
-                    if (mpTableDAO != null && mpTableDAO.getMPTable() != null) {
+                    DaoMP DAOMP = thpdb.mpTableDao();
+                    if (DAOMP != null && DAOMP.getMPTable() != null) {
                         //Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle
-                        long startTimeInMillis = mpTableDAO.getStartTimeInMillis();
+                        long startTimeInMillis = DAOMP.getStartTimeInMillis();
                         if (startTimeInMillis > 0) {
                             long currentTimeInMillis = System.currentTimeMillis();
                             long difference = currentTimeInMillis - startTimeInMillis;
-                            long expiryTimeInMillis = mpTableDAO.getExpiryTimeInMillis();
+                            long expiryTimeInMillis = DAOMP.getExpiryTimeInMillis();
                             if (difference < expiryTimeInMillis /*|| difference > (expiryTimeInMillis + 86400000)*/) {
                                 // It calls configuration api, whenever cycle api is called.
                                 mpConfigurationAPI(context, urlConfigAPI);
@@ -2367,9 +2367,9 @@ public class ApiManager {
                             .subscribeOn(Schedulers.newThread())
                             .map(cycleDurationModel -> {
                                 THPDB db = THPDB.getInstance(context);
-                                MPTableDao mpTableDao = db.mpTableDao();
+                                DaoMP daoMP = db.mpTableDao();
                                 boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
-                                MPTable table = new MPTable();
+                                TableMP table = new TableMP();
                                 table.setMpFeatureEnabled(isMpFeatureEnabled);
                                 UserPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
                                 if (isMpFeatureEnabled) {
@@ -2387,30 +2387,30 @@ public class ApiManager {
                                     table.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
                                 }
                                 //Insert new record into Table in this case, when New Cycle name is found, else Update the record.
-                                MPTable localMpTable = mpTableDao.getMPTable();
-                                if ((localMpTable != null && !TextUtils.isEmpty(table.getCycleName()) && !localMpTable.getCycleName().equalsIgnoreCase(table.getCycleName()))
-                                    || localMpTable == null) {
-                                    mpTableDao.deleteAll();
-                                    mpTableDao.insertMpTableData(table);
+                                TableMP localTableMP = daoMP.getMPTable();
+                                if ((localTableMP != null && !TextUtils.isEmpty(table.getCycleName()) && !localTableMP.getCycleName().equalsIgnoreCase(table.getCycleName()))
+                                    || localTableMP == null) {
+                                    daoMP.deleteAll();
+                                    daoMP.insertMpTableData(table);
                                     //Clear close Ids Preferences
                                     UserPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
-                                } else if (localMpTable != null){
-                                    localMpTable.setMpFeatureEnabled(isMpFeatureEnabled);
+                                } else if (localTableMP != null){
+                                    localTableMP.setMpFeatureEnabled(isMpFeatureEnabled);
                                     if (isMpFeatureEnabled) {
                                         String cycleName = cycleDurationModel.getDATA().getCycleName();
                                         int numOfAllowedArticles = cycleDurationModel.getDATA().getNumOfAllowedArticles();
                                         long totalAllowedTimeInSec = cycleDurationModel.getDATA().getExpiryInSeconds();
                                         long mpServerTimeInMillis = cycleDurationModel.getDATA().getGmtInMillis();
                                         String uniqueId = cycleDurationModel.getDATA().getUniqueId();
-                                        localMpTable.setAllowedArticleCounts(numOfAllowedArticles);
-                                        localMpTable.setCycleName(cycleName);
-                                        localMpTable.setAllowedTimeInSecs(totalAllowedTimeInSec);
+                                        localTableMP.setAllowedArticleCounts(numOfAllowedArticles);
+                                        localTableMP.setCycleName(cycleName);
+                                        localTableMP.setAllowedTimeInSecs(totalAllowedTimeInSec);
                                         long allowedTimeInMillis = TimeUnit.SECONDS.toMillis(totalAllowedTimeInSec);
-                                        localMpTable.setExpiryTimeInMillis(allowedTimeInMillis);
-                                        localMpTable.setCycleUniqueId(uniqueId);
-                                        localMpTable.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
+                                        localTableMP.setExpiryTimeInMillis(allowedTimeInMillis);
+                                        localTableMP.setCycleUniqueId(uniqueId);
+                                        localTableMP.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
                                     }
-                                    mpTableDao.updateMPTable(localMpTable);
+                                    daoMP.updateMPTable(localTableMP);
                                 }
                                 // It calls configuration api, whenever cycle api is called.
                                 mpConfigurationAPI(context, urlConfigAPI);
@@ -2429,24 +2429,24 @@ public class ApiManager {
 
     public static Flowable<HashMap> readArticleCount(Context context) {
         THPDB thpdb = THPDB.getInstance(context);
-        MPTableDao mpTableDao = thpdb.mpTableDao();
-        return mpTableDao.getArticleIdsFlowable()
+        DaoMP daoMP = thpdb.mpTableDao();
+        return daoMP.getArticleIdsFlowable()
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     Log.i("", "");
                     HashMap<String, Object> valueMap = new HashMap<>();
-                    String mpBannerMsg = mpTableDao.getMpBannerMsg();
-                    int allowedArticleCounts = mpTableDao.getAllowedArticleCounts();
-                    long allowedTimeInSecs = mpTableDao.getAllowedArticleTimesInSecs();
-                    String cycleName = mpTableDao.getCycleName();
+                    String mpBannerMsg = daoMP.getMpBannerMsg();
+                    int allowedArticleCounts = daoMP.getAllowedArticleCounts();
+                    long allowedTimeInSecs = daoMP.getAllowedArticleTimesInSecs();
+                    String cycleName = daoMP.getCycleName();
                     int totalReadSize = value.size();
                     boolean isAllowedToRead = totalReadSize <= allowedArticleCounts;
                     //Calculate Time Difference
-                    long startTimeInMillis = mpTableDao.getStartTimeInMillis();
+                    long startTimeInMillis = daoMP.getStartTimeInMillis();
                     if (startTimeInMillis > 0) {
                         long currentTimeInMillis = System.currentTimeMillis();
                         long difference = currentTimeInMillis - startTimeInMillis;
-                        long expiryTimeInMillis = mpTableDao.getExpiryTimeInMillis();
+                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
                         if (difference >= expiryTimeInMillis) {
                             isAllowedToRead = false;
                         }
@@ -2479,32 +2479,32 @@ public class ApiManager {
                 //.subscribeOn(RxPS.get(Priority.IMMEDIATE))
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    MPTableDao mpTableDao = thpdb.mpTableDao();
-                    MPTable mpTable = mpTableDao.getMPTable();
-                    int allowedArticleCounts = mpTable.getAllowedArticleCounts();
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    TableMP tableMP = daoMP.getMPTable();
+                    int allowedArticleCounts = tableMP.getAllowedArticleCounts();
                     //Get readArticles Set size, if it's 0, then save currentTimeInMillis as startTimeInMillis
-                    int size = mpTable.getReadArticleIds().size();
+                    int size = tableMP.getReadArticleIds().size();
                     if (size == 0) {
                         long currentTimeInMillis = System.currentTimeMillis();
-                        mpTable.setStartTimeInMillis(currentTimeInMillis);
+                        tableMP.setStartTimeInMillis(currentTimeInMillis);
                     }
-                    mpTable.addReadArticleId(readArticleId);
+                    tableMP.addReadArticleId(readArticleId);
                     //Calculate Time Difference
-                    long startTimeInMillis = mpTableDao.getStartTimeInMillis();
+                    long startTimeInMillis = daoMP.getStartTimeInMillis();
                     if (startTimeInMillis > 0) {
                         long currentTimeInMillis = System.currentTimeMillis();
                         long difference = currentTimeInMillis - startTimeInMillis;
-                        long expiryTimeInMillis = mpTableDao.getExpiryTimeInMillis();
+                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
                         if (difference >= expiryTimeInMillis) {
-                            Set readArticleIds = mpTableDao.getArticleIds();
+                            Set readArticleIds = daoMP.getArticleIds();
                             return !readArticleIds.contains(readArticleId);
                         }
                     }
-                    if (mpTable.getReadArticleIds().size() < allowedArticleCounts) {
-                        mpTableDao.updateMPTable(mpTable);
+                    if (tableMP.getReadArticleIds().size() < allowedArticleCounts) {
+                        daoMP.updateMPTable(tableMP);
                         return false;
-                    } else if (mpTable.getReadArticleIds().size() == allowedArticleCounts) {
-                        mpTableDao.updateMPTable(mpTable);
+                    } else if (tableMP.getReadArticleIds().size() == allowedArticleCounts) {
+                        daoMP.updateMPTable(tableMP);
                         return false;
                     } else {
                         return true;
@@ -2518,24 +2518,24 @@ public class ApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    MPTableDao mpTableDao = thpdb.mpTableDao();
-                    MPTable mpTable = mpTableDao.getMPTable();
-                    mpTable.clearArticleCounts();
-                    mpTable.setStartTimeInMillis(0);
-                    mpTableDao.updateMPTable(mpTable);
-                    MPTable mpTableNew = thpdb.mpTableDao().getMPTable();
-                    return mpTableNew.getReadArticleIds().size();
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    TableMP tableMP = daoMP.getMPTable();
+                    tableMP.clearArticleCounts();
+                    tableMP.setStartTimeInMillis(0);
+                    daoMP.updateMPTable(tableMP);
+                    TableMP tableMPNew = thpdb.mpTableDao().getMPTable();
+                    return tableMPNew.getReadArticleIds().size();
                 });
 
     }
 
-    public static Observable<MPTable> getMPTableObject(Context context) {
+    public static Observable<TableMP> getMPTableObject(Context context) {
         return Observable.just("mpTable")
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    MPTableDao mpTableDao = thpdb.mpTableDao();
-                    return mpTableDao.getMPTable();
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    return daoMP.getMPTable();
                 });
 
     }

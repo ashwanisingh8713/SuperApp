@@ -8,8 +8,8 @@ import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
-@Entity(tableName = "BreifingTable")
-public class BreifingTable {
+@Entity(tableName = "TableBreifing")
+public class TableBreifing {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

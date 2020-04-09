@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 
 import com.netoperation.model.UserProfile;
 
-@Entity(tableName = "UserProfileTable")
-public class UserProfileTable {
+@Entity(tableName = "TableUserProfile")
+public class TableUserProfile {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -19,7 +19,7 @@ public class UserProfileTable {
     @ColumnInfo(name ="userProfile")
     private UserProfile userProfile;
 
-    public UserProfileTable(String userId, UserProfile userProfile) {
+    public TableUserProfile(String userId, UserProfile userProfile) {
         this.userId = userId;
         this.userProfile = userProfile;
     }

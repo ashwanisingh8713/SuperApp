@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 
 import com.netoperation.model.ArticleBean;
 
-@Entity(tableName ="SubscriptionArticleTable")
-public class SubscriptionArticleTable {
+@Entity(tableName ="TableSubscriptionArticle")
+public class TableSubscriptionArticle {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -31,7 +31,7 @@ public class SubscriptionArticleTable {
     private String recoFrom;
 
 
-    public SubscriptionArticleTable(String aid, String recoFrom, ArticleBean bean) {
+    public TableSubscriptionArticle(String aid, String recoFrom, ArticleBean bean) {
         this.aid = aid;
         this.bean = bean;
         this.recoFrom = recoFrom;
