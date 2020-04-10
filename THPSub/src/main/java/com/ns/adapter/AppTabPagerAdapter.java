@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.netoperation.util.NetConstants;
 import com.ns.contentfragment.AppTabListingFragment;
+import com.ns.contentfragment.TopTabsFragment;
+import com.ns.utils.THPConstants;
 
 public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -24,13 +26,13 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         if(i==0) {
-            return AppTabListingFragment.getInstance(mUserId, NetConstants.BREIFING_ALL);
+            return TopTabsFragment.getInstance(THPConstants.FROM_DEFAULT, NetConstants.RECO_HOME, false, "");
         }
         else if(i==1) {
-            return AppTabListingFragment.getInstance(mUserId, NetConstants.RECO_Mystories);
+            return AppTabListingFragment.getInstance(mUserId, NetConstants.BREIFING_ALL);
         }
         else if(i==2) {
-            return AppTabListingFragment.getInstance(mUserId, NetConstants.RECO_suggested);
+            return AppTabListingFragment.getInstance(mUserId, NetConstants.RECO_Mystories);
         }
         else {
             return AppTabListingFragment.getInstance(mUserId, NetConstants.RECO_suggested);

@@ -2,7 +2,7 @@ package com.netoperation.model;
 
 public class THSection {
 
-    private int secId;
+    private String secId;
     private String secName;
     private String link;
     private String type;
@@ -12,9 +12,15 @@ public class THSection {
     private boolean show_on_burger;
     private boolean show_on_explore;
     private String webLink;
+
+    private String parentId;
+    private String overridePriority;
+    private String customScreen;
+    private String customScreenPri;
+
     private StaticPageUrlBean staticPageUrl;
 
-    public THSection(int secId, String secName, String link, boolean show_on_burger, boolean show_on_explore) {
+    public THSection(String secId, String secName, String link, boolean show_on_burger, boolean show_on_explore) {
         this.secId = secId;
         this.secName = secName;
         this.link = link;
@@ -22,11 +28,11 @@ public class THSection {
         this.show_on_explore = show_on_explore;
     }
 
-    public int getSecId() {
+    public String getSecId() {
         return secId;
     }
 
-    public void setSecId(int secId) {
+    public void setSecId(String secId) {
         this.secId = secId;
     }
 
@@ -108,5 +114,37 @@ public class THSection {
 
     public void setStaticPageUrl(StaticPageUrlBean staticPageUrl) {
         this.staticPageUrl = staticPageUrl;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getOverridePriority() {
+        return overridePriority;
+    }
+
+    public void setOverridePriority(String overridePriority) {
+        this.overridePriority = overridePriority;
+    }
+
+    public String getCustomScreen() {
+        return customScreen;
+    }
+
+    public void setCustomScreen(String customScreen) {
+        this.customScreen = customScreen;
+    }
+
+    public String getCustomScreenPri() {
+        return customScreenPri;
+    }
+
+    public void setCustomScreenPri(String customScreenPri) {
+        this.customScreenPri = customScreenPri;
     }
 }

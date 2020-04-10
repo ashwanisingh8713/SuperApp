@@ -6,6 +6,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 @Dao
 public interface DaoSection {
 
@@ -16,7 +18,7 @@ public interface DaoSection {
     List<TableSection> getSections();
 
     @Query("SELECT * FROM TableSection WHERE show_on_burger = :show_on_burger")
-    List<TableSection> getSectionsOfBurger(boolean show_on_burger);
+    Observable<List<TableSection>> getSectionsOfBurger(boolean show_on_burger);
 
     @Query("SELECT * FROM TableSection WHERE show_on_explore = :show_on_explore")
     List<TableSection> getSectionsOfExplore(boolean show_on_explore);

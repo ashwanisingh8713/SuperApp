@@ -25,6 +25,9 @@ public class THPConstants {
     public static final String FROM_DASHBOARD_SET_PREFERENCE = "DashboardSetPreference";
     public static final String PAYMENT = "Payment";
 
+
+    public static final String FROM_DEFAULT = "default";
+
     public static final String date_dd_MM_yyyy = "dd-MM-yyyy";
 
     public static final int DESCRIPTION_SMALL = 1;

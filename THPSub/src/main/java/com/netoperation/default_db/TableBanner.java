@@ -25,14 +25,37 @@ public class TableBanner {
     private String secId ;
     private String secName;
 
+    private String lastUpdatedTime;
+    private String type;
+
     private StaticPageUrlBean staticPageBean;
 
     private List<ArticleBean> beans;
 
-    public TableBanner(String secId, String secName, List<ArticleBean> beans) {
+
+
+    public TableBanner(String secId, String secName, String type, String lastUpdatedTime, StaticPageUrlBean staticPageBean) {
         this.secId = secId;
         this.secName = secName;
-        this.beans = beans;
+        this.type = type;
+        this.lastUpdatedTime = lastUpdatedTime;
+        this.staticPageBean = staticPageBean;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(String lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
     }
 
     public StaticPageUrlBean getStaticPageBean() {

@@ -15,7 +15,7 @@ public interface DaoBanner {
     void insertWidget(TableBanner tableBanner);
 
     @Query("SELECT * FROM TableBanner")
-    List<TableBanner> getBanners();
+    TableBanner getBanners();
 
     @Query("UPDATE TableBanner SET beans = :beans WHERE secId = :secId")
     int updateBannerArticles(String secId, List<ArticleBean> beans);

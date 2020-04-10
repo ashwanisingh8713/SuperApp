@@ -13,13 +13,13 @@ public class NetConstants {
 
 //    public static final String SEARCH_BY_ARTICLE_ID_URL = "https://hinduappserver1.ninestars.in/hindu/service/api_v3/mobiles/search.php?guid=";
 
-    public static final String RECO_ALL = "all";
     public static final String RECO_suggested = "suggested";
     public static final String RECO_Mystories = "mystories";
     public static final String RECO_trending = "trending";
     public static final String RECO_bookmarks = "bookmarks";
     public static final String RECO_briefcase = "briefcase";
     public static final String RECO_TEMP_NOT_EXIST = "TEMP_NOT_EXIST";
+    public static final String RECO_HOME = "HOME";
 
     public static final String BREIFING_ALL = "ALL";
     public static final String BREIFING_EVENING = "EVENIING";

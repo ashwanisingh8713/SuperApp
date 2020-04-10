@@ -47,7 +47,7 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoHomeArticle daoHomeArticle();
     public abstract DaoBanner daoBanner();
     public abstract DaoSectionArticle daoSectionArticle();
-    public abstract DaoSection daoSectionList();
+    public abstract DaoSection daoSection();
     public abstract DaoSubSectionArticle daoSubSectionArticle();
     public abstract DaoConfiguration daoConfiguration();
     public abstract DaoWidget daoWidget();

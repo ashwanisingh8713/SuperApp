@@ -7,15 +7,15 @@ public class BannerBean {
      * type : TN
      */
 
-    private int secId;
+    private String secId;
     private String secName;
     private String type;
 
-    public int getSecId() {
+    public String getSecId() {
         return secId;
     }
 
-    public void setSecId(int secId) {
+    public void setSecId(String secId) {
         this.secId = secId;
     }
 

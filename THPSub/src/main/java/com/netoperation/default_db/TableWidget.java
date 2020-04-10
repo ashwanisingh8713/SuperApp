@@ -30,13 +30,11 @@ public class TableWidget {
 
     private List<ArticleBean> beans;
 
-    public TableWidget(int position, String secId, String secName, String type, boolean viewAllCTA, List<ArticleBean> beans) {
-        this.position = position;
+    public TableWidget(String secId, String secName, String type, boolean viewAllCTA) {
         this.secId = secId;
         this.secName = secName;
         this.type = type;
         this.viewAllCTA = viewAllCTA;
-        this.beans = beans;
     }
 
     public List<ArticleBean> getBeans() {

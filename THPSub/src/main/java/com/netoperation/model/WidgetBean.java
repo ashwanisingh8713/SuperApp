@@ -12,7 +12,7 @@ public class WidgetBean {
      */
 
     private int parentSecId;
-    private int secId;
+    private String secId;
     private int homePriority;
     private int overridePriority;
     private String secName;
@@ -27,11 +27,11 @@ public class WidgetBean {
         this.parentSecId = parentSecId;
     }
 
-    public int getSecId() {
+    public String getSecId() {
         return secId;
     }
 
-    public void setSecId(int secId) {
+    public void setSecId(String secId) {
         this.secId = secId;
     }
 
