@@ -74,6 +74,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPullToRefreshLayout.hideProgressBar();
 
         if(mSectionId.equals(NetConstants.RECO_HOME)) {
+
+            DefaultTHApiManager.getHomeArticle(getActivity());
+
             DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
             daoWidget.getWidgets()
                     .subscribeOn(Schedulers.newThread())

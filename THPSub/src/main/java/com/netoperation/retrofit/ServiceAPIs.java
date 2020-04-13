@@ -2,6 +2,7 @@ package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.netoperation.model.BreifingModelNew;
+import com.netoperation.model.HomeData;
 import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
@@ -176,7 +177,7 @@ public interface ServiceAPIs {
     Observable<SectionAndWidget> sectionList(@Url String url, @Body JsonObject jsonObject);
 
     @POST("") // newsFeed.php
-    Observable<SectionAndWidget> homeContent(@Url String url, @Body JsonObject jsonObject);
+    Observable<HomeData> homeContent(@Url String url, @Body JsonObject jsonObject);
 
     @POST("") // section-content.php
     Observable<SectionContentFromServer> sectionContent(@Url String url, @Body JsonObject jsonObject);

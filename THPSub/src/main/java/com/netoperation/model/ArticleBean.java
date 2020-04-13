@@ -58,8 +58,17 @@ public class ArticleBean implements Parcelable {
     private String im_thumbnail;
     private String im_thumbnail_v2;
     private String comm_count;
-    private List<ArticleBean> rn;
     private ArrayList<MeBean> me;
+
+    private List<ArticleBean> rn;
+
+    public List<ArticleBean> getRn() {
+        return rn;
+    }
+
+    public void setRn(List<ArticleBean> rn) {
+        this.rn = rn;
+    }
 
 
     public int getAid() {

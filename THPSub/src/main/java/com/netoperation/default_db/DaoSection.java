@@ -17,6 +17,15 @@ public interface DaoSection {
     @Query("SELECT * FROM TableSection")
     List<TableSection> getSections();
 
+    @Query("SELECT * FROM TableSection WHERE customScreen = 2 ORDER BY customScreenPri ASC")
+    List<TableSection> getRegionalSection();
+
+    @Query("SELECT * FROM TableSection WHERE customScreen = 1 ORDER BY customScreenPri ASC")
+    List<TableSection> getHomeNewsFeedSection();
+
+    @Query("SELECT * FROM TableSection WHERE isUserPreferred = 1")
+    Observable<List<TableSection>> getUserPreferredSectionObservable();
+
     @Query("SELECT * FROM TableSection WHERE show_on_burger = :show_on_burger")
     Observable<List<TableSection>> getSectionsOfBurger(boolean show_on_burger);
 

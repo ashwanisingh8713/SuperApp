@@ -3,28 +3,32 @@ package com.netoperation.net;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.JsonArray;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
+import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
+import com.netoperation.model.HomeData;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.SectionContentFromServer;
+import com.netoperation.model.THDefaultPersonalizeBean;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.NetConstants;
 import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
-import com.ns.utils.THPConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,13 +101,21 @@ public class DefaultTHApiManager {
                                     homeBean.setWebLink(NetConstants.RECO_HOME);
                                     homeBean.setShow_on_burger(true);
                                     homeBean.setShow_on_explore(true);
-
                                     sections.add(0, homeBean);
+
+                                    final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
+
                                     for(SectionBean section : sections) {
                                         List<SectionBean> subSections = new ArrayList<>(section.getSubSections());
                                         section.setSubSections(null);
                                         TableSection tableSection = new TableSection(section.getSecId(), section.getSecName(), section.getType(), section, section.isShow_on_burger(), section.isShow_on_explore(), subSections);
-                                        tableSection.setUserPreferred(false);
+                                        // Adding Default selected persionlise news feed section
+                                        THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
+                                        personalizeBean.setSecId(section.getSecId());
+                                        if(defaultPersonalizeBeans.contains(personalizeBean)) {
+                                            tableSection.setUserPreferred(true);
+                                        }
+
                                         daoSection.insertSection(tableSection);
                                     }
 
@@ -159,46 +171,68 @@ public class DefaultTHApiManager {
 
 
     /**
-     * Making paraller request to get Widgets data.
+     * Making request to get Home data.
+     * For Example http://getgoingit.blogspot.com/2018/05/passing-value-from-one-observable-to.html
      * @param context
      * @return
      */
-//    public static Disposable getHomeArticle(Context context, String secId, String secName, String type) {
-//
-//        if(context != null) {
-//            THPDB thpdb = THPDB.getInstance(context);
-//            DaoBanner daoBanner = thpdb.daoBanner();
-//            DaoSection daoSection = thpdb.daoSection();
-//            daoBanner.getBanners().flatMap(tableBanner -> {
-//                return daoSection.getSections()
-//            });
-//        }
-//
-//        final String url = BuildConfig.DEFAULT_TH_BASE_URL+"newsFeed.php";
-//        return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.homeFeed(secId, 1, type, 0))
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe(value-> {
-//                    Log.i("", "");
-//                    if(context != null) {
-//                        THPDB thpdb = THPDB.getInstance(context);
-//                        // Updating Home Banner Article
-//                        DaoBanner daoBanner = thpdb.daoBanner();
-//                        daoBanner.updateBannerArticles(secId, value.getData().getArticle());
-//
-//                        // Deleting all article from TableSectionArticle  = "secId"
-//                        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
-//                        daoSectionArticle.deleteSection(secId);
-//
-//                        // Inserting new article in TableSectionArticle  = "secId"
-//                        TableSectionArticle tableSectionArticle = new TableSectionArticle(secId, secName, 1, value.getData().getArticle());
-//                        daoSectionArticle.insertSectionArticle(tableSectionArticle);
-//                    }
-//                }, throwable -> {
-//                    Log.i("", "");
-//                }, ()->{
-//                    Log.i("", "");
-//                });
-//    }
+    public static Disposable getHomeArticle(Context context) {
+
+        if(context != null) {
+            THPDB thpdb = THPDB.getInstance(context);
+            DaoBanner daoBanner = thpdb.daoBanner();
+            DaoSection daoSection = thpdb.daoSection();
+            Observable<TableBanner> tableBanner = daoBanner.getBannersObservable().subscribeOn(Schedulers.io());
+            Observable<List<TableSection>>  tableSection = daoSection.getUserPreferredSectionObservable().subscribeOn(Schedulers.io());
+
+            return tableBanner
+                    .switchMap(bannerVal->{
+                        return tableSection.map(sectionVal->{
+                            final String url = BuildConfig.DEFAULT_TH_BASE_URL+"newsFeed.php";
+                            String bannerId = bannerVal.getSecId();
+
+                            JsonArray personliseSectionIds = new JsonArray();
+                            for(TableSection section : sectionVal) {
+                                personliseSectionIds.add(section.getSecId());
+                            }
+
+                            return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
+                        });
+
+                    })
+                    .switchMap(val->{
+                        Log.i("", "");
+                        return val.subscribeOn(Schedulers.newThread());
+                    })
+                    .map(homeData -> {
+                        if(context != null) {
+                            THPDB db = THPDB.getInstance(context);
+                            // Banner Article Update
+                            DaoBanner banner = db.daoBanner();
+                            banner.updateBannerArticles(banner.getBanners().getSecId(), homeData.getNewsFeed().getBanner());
+
+                            DaoHomeArticle daoHomeArticle = db.daoHomeArticle();
+                            // Delete All before Inserting New articles
+                            daoHomeArticle.deleteAll();
+                            // Insert articles in HomeArticle Table
+                            for(HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
+                                TableHomeArticle tableHomeArticle = new TableHomeArticle(articlesBeans.getSec_id(), articlesBeans.getData());
+                                daoHomeArticle.insertWidget(tableHomeArticle);
+                            }
+                        }
+                        return "";
+                    })
+                    .subscribe(val->{
+                        Log.i("", "");
+                    }, throwable -> {
+                        Log.i("", "");
+                    });
+        }
+
+        return null;
+
+
+    }
 
 
     /**

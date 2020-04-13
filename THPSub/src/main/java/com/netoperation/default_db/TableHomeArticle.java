@@ -22,9 +22,19 @@ public class TableHomeArticle {
     }
 
     private List<ArticleBean> beans;
+    private String secId;
 
-    public TableHomeArticle(List<ArticleBean> beans) {
+    public TableHomeArticle(String secId, List<ArticleBean> beans) {
         this.beans = beans;
+        this.secId = secId;
+    }
+
+    public String getSecId() {
+        return secId;
+    }
+
+    public void setSecId(String secId) {
+        this.secId = secId;
     }
 
     public List<ArticleBean> getBeans() {

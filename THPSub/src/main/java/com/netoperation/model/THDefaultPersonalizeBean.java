@@ -1,5 +1,7 @@
 package com.netoperation.model;
 
+import androidx.annotation.Nullable;
+
 public class THDefaultPersonalizeBean {
     /**
      * secId : 12
@@ -9,17 +11,17 @@ public class THDefaultPersonalizeBean {
      * type : GN
      */
 
-    private int secId;
+    private String secId;
     private int homePriority;
     private int overridePriority;
     private String secName;
     private String type;
 
-    public int getSecId() {
+    public String getSecId() {
         return secId;
     }
 
-    public void setSecId(int secId) {
+    public void setSecId(String secId) {
         this.secId = secId;
     }
 
@@ -53,5 +55,21 @@ public class THDefaultPersonalizeBean {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        super.equals(obj);
+        if(obj != null && obj instanceof THDefaultPersonalizeBean) {
+            THDefaultPersonalizeBean bean = (THDefaultPersonalizeBean) obj;
+            return bean.secId.equals(secId);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        super.hashCode();
+        return secId.hashCode();
     }
 }
