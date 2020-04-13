@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 @Dao
 public interface DaoSectionArticle {
 
@@ -16,7 +18,7 @@ public interface DaoSectionArticle {
     List<TableSectionArticle> getAllArticles(String secId);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId AND page = :page")
-    List<TableSectionArticle> getPageArticles(String secId, int page);
+    Observable<List<TableSectionArticle>> getPageArticles(String secId, int page);
 
 
     @Query("DELETE FROM TableSectionArticle WHERE secId = :secId")

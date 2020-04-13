@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root_opinion"
+    android:layout_width="300dp"
+    android:layout_height="126dp"
+    android:layout_marginEnd="@dimen/widget_recyclerView_opinion_marginRight"
+    android:layout_marginRight="@dimen/widget_recyclerView_opinion_marginRight"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_recyclerView_opinion_padding"
+    app:layoutType="APPEXCLUSIVE">
+
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="@dimen/text_line_spacing"
+        android:maxLines="3"
+        app:font_path="@string/THP_TundraOffc"
+        app:viewType="White"
+        android:textSize="@dimen/widget_opinion_title_size" />
+
+</com.ns.view.layout.NSLinearLayout>

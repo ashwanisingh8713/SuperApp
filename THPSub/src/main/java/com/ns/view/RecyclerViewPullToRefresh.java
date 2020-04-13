@@ -139,7 +139,7 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
         return mSwipeRefreshLayout;
     }
 
-    public LinearLayoutManager getLlm() {
+    public LinearLayoutManager getLinearLayoutManager() {
         return llm;
     }
 

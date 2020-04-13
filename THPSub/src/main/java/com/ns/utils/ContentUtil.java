@@ -38,11 +38,15 @@ public class ContentUtil {
         return "";
     }
 
-    /*public static final String THUMB_SIZE ="SQUARE_170";
-    public static final String CARTOON_SIZE ="LANDSCAPE_435";
-    public static final String BANNER_SIZE ="LANDSCAPE_435";
-    public static final String WIDGET_SIZE ="LANDSCAPE_240";
-    public static final String MULTIMEDIA_SIZE ="LANDSCAPE_240";*/
+    private static final String THUMB_SIZE ="SQUARE_170";
+    private static final String CARTOON_SIZE ="LANDSCAPE_435";
+    private static final String BANNER_SIZE ="LANDSCAPE_435";
+    private static final String WIDGET_SIZE ="LANDSCAPE_240";
+    private static final String MULTIMEDIA_SIZE ="LANDSCAPE_240";
+
+
+
+
 
     public static String getThumbUrl(List<String> urls) {
         if(urls != null && urls.size()>0) {
@@ -50,7 +54,7 @@ public class ContentUtil {
             if(imageUrl != null && imageUrl.contains("BINARY")) {
                 imageUrl = urls.get(0).replace("BINARY/thumbnail", "alternates/SQUARE_170");
             } else if(imageUrl != null) {
-                imageUrl = urls.get(0).replace("FREE_660", "SQUARE_170");
+                imageUrl = urls.get(0).replace("FREE_660", THUMB_SIZE);
             }
             return imageUrl;
         }
@@ -63,7 +67,7 @@ public class ContentUtil {
             if(imageUrl != null && imageUrl.contains("BINARY")) {
                 imageUrl = urls.get(0).replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
             } else if(imageUrl != null) {
-                imageUrl = urls.get(0).replace("FREE_660", "LANDSCAPE_435");
+                imageUrl = urls.get(0).replace("FREE_660", BANNER_SIZE);
             }
             return imageUrl;
         }
@@ -77,11 +81,63 @@ public class ContentUtil {
                 if (imageUrl != null && imageUrl.contains("BINARY")) {
                     imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
                 } else if (imageUrl != null) {
-                    imageUrl = imageUrl.replace("FREE_660", "LANDSCAPE_435");
+                    imageUrl = imageUrl.replace("FREE_660", BANNER_SIZE);
                 }
                 return imageUrl;
             }
         }
+        return "";
+    }
+
+    public static String getBannerUrl(String imageUrl) {
+        if (imageUrl != null) {
+            if (imageUrl != null && imageUrl.contains("BINARY")) {
+                imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
+            } else if (imageUrl != null) {
+                imageUrl = imageUrl.replace("FREE_660", BANNER_SIZE);
+            }
+            return imageUrl;
+        }
+
+        return "";
+    }
+
+    public static String getWidgetUrl(String imageUrl) {
+        if (imageUrl != null) {
+            if (imageUrl != null && imageUrl.contains("BINARY")) {
+                imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
+            } else if (imageUrl != null) {
+                imageUrl = imageUrl.replace("FREE_660", WIDGET_SIZE);
+            }
+            return imageUrl;
+        }
+
+        return "";
+    }
+
+    public static String getCartoonUrl(String imageUrl) {
+        if (imageUrl != null) {
+            if (imageUrl != null && imageUrl.contains("BINARY")) {
+                imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
+            } else if (imageUrl != null) {
+                imageUrl = imageUrl.replace("FREE_660", CARTOON_SIZE);
+            }
+            return imageUrl;
+        }
+
+        return "";
+    }
+
+    public static String getMultimediaUrl(String imageUrl) {
+        if (imageUrl != null) {
+            if (imageUrl != null && imageUrl.contains("BINARY")) {
+                imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/LANDSCAPE_435");
+            } else if (imageUrl != null) {
+                imageUrl = imageUrl.replace("FREE_660", MULTIMEDIA_SIZE);
+            }
+            return imageUrl;
+        }
+
         return "";
     }
 }

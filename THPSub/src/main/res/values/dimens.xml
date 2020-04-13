@@ -162,4 +162,104 @@
     <dimen name="webview_shadow_LARGER">89dp</dimen>
     <dimen name="webview_shadow_LARGEST">110dp</dimen>
 
+
+    <!--Below is Default-->
+    <!--Below is Default-->
+    <!--Below is Default-->
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- card -->
+    <dimen name="card_elevation">15dp</dimen>
+
+    <!-- Banner -->
+    <dimen name="banner_title_margin">8dp</dimen>
+    <dimen name="banner_image_height">250dp</dimen>
+    <dimen name="banner_image_newheight">225dp</dimen>
+
+    <!-- explore -->
+    <dimen name="explore_content_marginTop">5dp</dimen>
+    <dimen name="explore_column_text_padding">2dp</dimen>
+    <dimen name="explore_column_margin_right">2dp</dimen>
+    <dimen name="explore_column_image_height">90dp</dimen>
+
+    <dimen name="explore_column_image_newheight">103dp</dimen>
+
+    <!-- article list-->
+    <dimen name="article_list_bottom_bookmark_size">24dp</dimen>
+    <dimen name="article_list_text_marginLeft">12dp</dimen>
+
+    <!-- widgets-->
+    <dimen name="widget_paddingTop">10dp</dimen>
+    <dimen name="widget_paddingBottom">5dp</dimen>
+    <dimen name="widget_recyclerView_column_width">165dp</dimen>
+    <dimen name="widget_recyclerView_image_height">90dp</dimen>
+    <dimen name="widget_recyclerView_text_size">15sp</dimen>
+    <dimen name="widget_recyclerView_text_margin">8dp</dimen>
+    <dimen name="widget_recyclerView_column_margin_right">2dp</dimen>
+    <dimen name="widget_recyclerView_opinion_width">160dp</dimen>
+    <dimen name="widget_recyclerView_opinion_height">125dp</dimen>
+    <dimen name="widget_recyclerView_opinion_padding">10dp</dimen>
+    <dimen name="widget_recyclerView_opinion_marginRight">2dp</dimen>
+    <dimen name="widget_recyclerView_multimedia_width">165dp</dimen>
+    <dimen name="widget_recyclerView_multimedia_height">90dp</dimen>
+    <dimen name="widget_recyclerView_cartoon_height">193dp</dimen>
+    <dimen name="widget_recyclerView_cartoon_margin">10dp</dimen>
+    <dimen name="widget_recyclerView_multimedia_widget_height">170dp</dimen>
+
+
+    <dimen name="widget_recyclerView_multimedia_widget_newheight">180dp</dimen>
+    <dimen name="widget_recyclerView_multimedia_newheight">103dp</dimen>
+
+    <dimen name="widget_recyclerView_image_newheight">103dp</dimen>
+    <dimen name="widget_recyclerView_cartoon_newheight">203dp</dimen>
+
+    <!--outbrain item-->
+    <!--outbrain item-->
+
+    <!--Article Item  new changes-->
+    <dimen name="article_item_parent_height">100dp</dimen>
+    <dimen name="article_item_parent_left_right_padding">10dp</dimen>
+    <dimen name="article_item_parent_top_bottom_padding">7dp</dimen>
+    <dimen name="article_item_image_height">75dp</dimen>
+    <dimen name="article_item_image_width">85dp</dimen>
+    <dimen name="article_item_title_height">60dp</dimen>
+    <dimen name="article_item_icon_height">28dp</dimen>
+    <dimen name="article_item_icon_width">25dp</dimen>
+    <dimen name="article_item_margin_between_icons">10dp</dimen>
+
+    <dimen name="article_item_image_square">80dp</dimen>
+
+    <dimen name="widget_item_newheight">180dp</dimen>
+
+    <dimen name="widget_item_height">170dp</dimen>
+    <dimen name="text_line_spacing">2dp</dimen>
+    <dimen name="widget_opinion_title_size">17sp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="customise_home_text_padding">22dp</dimen>
+    <dimen name="overlay_menu_left_margin">8dp</dimen>
+    <dimen name="overlay_overflow_right_margin">8dp</dimen>
+    <dimen name="overlay_textsize_rightmargin">48dp</dimen>
+    <dimen name="overlay_bookmark_rightmargin">24dp</dimen>
+    <dimen name="overlay_audio_rightmargin">62dp</dimen>
+    <dimen name="overlay_textsize_arrow_rightmargin">44dp</dimen>
+    <dimen name="overlay_bookmark_arrow_rightmargin">44dp</dimen>
+    <dimen name="overlay_audio_arrow_rightmargin">90dp</dimen>
+
+    <dimen name="thumb_width">30dp</dimen>
+    <dimen name="thumb_height">30dp</dimen>
+
+    <dimen name="speed_seekbar_top_margin">25dp</dimen>
+    <dimen name="pitch_seekbar_top_margin">7dp</dimen>
+    <dimen name="speed_seekbar_dot_size">30sp</dimen>
+    <dimen name="speed_seekbar_dot_height">35dp</dimen>
+    <dimen name="setting_item_height">70dp</dimen>
+
+    <dimen name="taboola_height">600dp</dimen>
+
 </resources>

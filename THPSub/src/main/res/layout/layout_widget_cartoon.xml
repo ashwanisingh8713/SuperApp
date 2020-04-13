@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root_cartoon"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/widget_recyclerView_cartoon_newheight"
+    android:layout_marginRight="@dimen/widget_recyclerView_cartoon_margin"
+    android:orientation="vertical"
+    app:layoutType="CARTOON"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageview_widget_cartoon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ph_topnews_th" />
+
+</com.ns.view.layout.NSLinearLayout>

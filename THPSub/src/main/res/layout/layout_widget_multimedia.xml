@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginEnd="@dimen/explore_column_margin_right"
+    android:layout_marginRight="@dimen/explore_column_margin_right"
+    app:layoutType="MULTIMEDIA">
+
+    <LinearLayout
+        android:id="@+id/layout_multimedia_root"
+        android:layout_width="@dimen/widget_recyclerView_multimedia_width"
+        android:layout_height="@dimen/widget_recyclerView_multimedia_widget_newheight"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/layout_multimedia_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_recyclerView_multimedia_newheight">
+
+            <ImageView
+                android:id="@+id/imageview_multimedia_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ph_exploresections_th" />
+
+            <ImageView
+                android:id="@+id/button_multimedia_play"
+                android:layout_width="@dimen/article_list_bottom_bookmark_size"
+                android:layout_height="@dimen/article_list_bottom_bookmark_size"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_play_mm" />
+        </FrameLayout>
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_multimedia_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/text_line_spacing"
+            android:maxLines="2"
+            android:minLines="2"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="3dp"
+            app:font_path="@string/THP_TundraOffc"
+             />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_multimedia_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:font_path="@string/THP_TundraOffc" />
+    </LinearLayout>
+
+</com.ns.view.layout.NSLinearLayout>

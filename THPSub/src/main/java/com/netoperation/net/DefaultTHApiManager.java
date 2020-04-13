@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
-import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoWidget;
@@ -16,12 +15,10 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableWidget;
-import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
-import com.netoperation.model.SectionContentFromServer;
 import com.netoperation.model.THDefaultPersonalizeBean;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
@@ -95,10 +92,10 @@ public class DefaultTHApiManager {
 
                                     // Home Section,
                                     SectionBean homeBean = new SectionBean();
-                                    homeBean.setSecId(NetConstants.RECO_HOME);
-                                    homeBean.setSecName(NetConstants.RECO_HOME);
-                                    homeBean.setLink(NetConstants.RECO_HOME);
-                                    homeBean.setWebLink(NetConstants.RECO_HOME);
+                                    homeBean.setSecId(NetConstants.RECO_HOME_TAB);
+                                    homeBean.setSecName(NetConstants.RECO_HOME_TAB);
+                                    homeBean.setLink(NetConstants.RECO_HOME_TAB);
+                                    homeBean.setWebLink(NetConstants.RECO_HOME_TAB);
                                     homeBean.setShow_on_burger(true);
                                     homeBean.setShow_on_explore(true);
                                     sections.add(0, homeBean);
@@ -115,15 +112,10 @@ public class DefaultTHApiManager {
                                         if(defaultPersonalizeBeans.contains(personalizeBean)) {
                                             tableSection.setUserPreferred(true);
                                         }
-
                                         daoSection.insertSection(tableSection);
                                     }
-
                                 }
-
                             }
-
-
                             return sectionAndWidget;
                         }
                 )

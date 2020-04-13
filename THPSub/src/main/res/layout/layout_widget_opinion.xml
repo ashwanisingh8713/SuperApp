@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root_opinion"
+    android:layout_width="@dimen/widget_recyclerView_opinion_width"
+    android:layout_height="@dimen/widget_recyclerView_opinion_height"
+    android:layout_marginEnd="@dimen/widget_recyclerView_opinion_marginRight"
+    android:layout_marginRight="@dimen/widget_recyclerView_opinion_marginRight"
+    app:layoutType="OPINION"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_recyclerView_opinion_padding">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/textview_opinion_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:viewType="White"
+        android:textSize="9sp"
+        />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/textview_opinion_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/text_line_spacing"
+        android:maxLines="3"
+        app:font_path="@string/THP_TundraOffc"
+        app:viewType="White"
+        android:textSize="@dimen/widget_opinion_title_size" />
+
+</com.ns.view.layout.NSLinearLayout>

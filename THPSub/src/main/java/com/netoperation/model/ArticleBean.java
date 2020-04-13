@@ -311,6 +311,8 @@ public class ArticleBean implements Parcelable {
     private String gmt;
     private String articleType;
     private boolean isRead;
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -353,6 +355,14 @@ public class ArticleBean implements Parcelable {
     private ArrayList<MeBean> media;
 
     private String timeForBriefing;
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
 
     public int getIsPremium() {
         return isPremium;

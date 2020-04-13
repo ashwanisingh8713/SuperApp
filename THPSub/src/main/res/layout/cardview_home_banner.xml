@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/article_list_bottom" />
+
+    <com.ns.view.layout.NSLinearLayout
+        android:id="@+id/layout_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutType="Black_Dark">
+
+        <FrameLayout
+            android:id="@+id/imageParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_image_newheight"
+            >
+
+            <ImageView
+                android:id="@+id/imageview_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_image_newheight"
+                android:src="@drawable/ph_topnews_th" />
+
+            <ImageButton
+                android:id="@+id/multimedia_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/text_line_spacing"
+            android:maxLines="3"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:paddingTop="10dp"
+            app:font_path="@string/THP_TundraOffc"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:viewType="color_static" />
+
+        <include
+            layout="@layout/layout_article_list_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp" />
+    </com.ns.view.layout.NSLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:background="@color/article_list_bottom" />
+
+</LinearLayout>

@@ -26,6 +26,24 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_DETAIL_AUDIO_PLAYER= 11;
     public static final int VT_HEADER = 12;
 
+    public static final int VT_THD_BANNER = 13;
+    public static final int VT_THD_WIDGET_News_In_Quotes = 14;
+    public static final int VT_THD_WIDGET_Top_Picks = 15;
+    public static final int VT_THD_WIDGET_Editorials_Opinion = 16;
+    public static final int VT_THD_WIDGET_Multimedia = 17;
+    public static final int VT_THD_WIDGET_Cartoons = 18;
+    public static final int VT_THD_WIDGET_DEFAULT = 19;
+    public static final int VT_THD_300X250_ADS = 20;
+    public static final int VT_THD_TABOOLA_ADS = 21;
+    public static final int VT_THD_DEFAULT_ROW = 22;
+
+    public static final int VT_BLD_BANNER = 23;
+    public static final int VT_BLD_WIDGET_DEFAULT = 24;
+    public static final int VT_BLD_DEFAULT_ROW = 25;
+
+    private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
+
+
 
     /**
      * Shows Article Type Image

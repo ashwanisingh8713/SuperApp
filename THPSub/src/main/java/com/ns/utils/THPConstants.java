@@ -26,8 +26,6 @@ public class THPConstants {
     public static final String PAYMENT = "Payment";
 
 
-    public static final String FROM_DEFAULT = "default";
-
     public static final String date_dd_MM_yyyy = "dd-MM-yyyy";
 
     public static final int DESCRIPTION_SMALL = 1;
@@ -263,6 +261,12 @@ public class THPConstants {
     public static final String MP_Cycle_Firebase = "Cycle_Name";
     public static final String ArticleCount_Firebase = "Article_Count";
     public static final String Allowed_Counts_Firebase = "Allowed_Counts";
+
+    // DEFAULT
+
+
+
+    public static final int APP_EXCLUSIVE_SECTION_ID = 142;
 
 
 }
