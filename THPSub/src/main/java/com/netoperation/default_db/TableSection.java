@@ -37,8 +37,10 @@ public class TableSection {
 
     private List<SectionBean> subSections;
 
-    public TableSection(String secId, SectionBean section, boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections) {
+    public  TableSection(String secId, String secName,  String type, SectionBean section, boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections) {
         this.secId = secId;
+        this.secName = secName;
+        this.type = type;
         this.section = section;
         this.show_on_burger = show_on_burger;
         this.show_on_explore = show_on_explore;

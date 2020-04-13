@@ -24,15 +24,12 @@ public class TableBanner {
 
     private String secId ;
     private String secName;
-
-    private String lastUpdatedTime;
     private String type;
+    private String lastUpdatedTime;
 
     private StaticPageUrlBean staticPageBean;
 
     private List<ArticleBean> beans;
-
-
 
     public TableBanner(String secId, String secName, String type, String lastUpdatedTime, StaticPageUrlBean staticPageBean) {
         this.secId = secId;

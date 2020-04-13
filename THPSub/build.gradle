@@ -12,6 +12,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
+        applicationId "com.superapp"
+
         //Staging / Production Switch
         buildConfigField "boolean", "IS_PRODUCTION", "true"
 

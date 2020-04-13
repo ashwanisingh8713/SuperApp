@@ -4,10 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.ns.utils.TextUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleBean implements Parcelable {
+
+
+
     /**
      * articleId : 27130581
      * articletitle : In 2018, 207 Indians gave up citizenship
@@ -21,6 +26,284 @@ public class ArticleBean implements Parcelable {
      * recotype : trending
      * articletype : story
      */
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // TH Default Response Fields
+    private int aid;
+    private String au;
+    private String sid;
+    private String sname;
+    private String parentId;
+    private String parentName;
+    private String pid;
+    private String opid;
+    private String pd;
+    private String od;
+    private String ti;
+    private String al;
+    private String bk;
+    private String hi;
+    private String youtube_video_id;
+    private String audioLink;
+    private String weblink;
+    private String de;
+    private String short_de;
+    private String le;
+    private String add_pos;
+    private String vid;
+    private String parent_section_id;
+    private String sub_section_id;
+    private String sub_section_name;
+    private String im_thumbnail;
+    private String im_thumbnail_v2;
+    private String comm_count;
+    private List<ArticleBean> rn;
+    private ArrayList<MeBean> me;
+
+
+    public int getAid() {
+        return aid;
+    }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+
+    public String getAu() {
+        return au;
+    }
+
+    public void setAu(String au) {
+        this.au = au;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getOpid() {
+        return opid;
+    }
+
+    public void setOpid(String opid) {
+        this.opid = opid;
+    }
+
+    public String getPd() {
+        return pd;
+    }
+
+    public void setPd(String pd) {
+        this.pd = pd;
+    }
+
+    public String getOd() {
+        return od;
+    }
+
+    public void setOd(String od) {
+        this.od = od;
+    }
+
+    public String getTi() {
+        return ti;
+    }
+
+    public void setTi(String ti) {
+        this.ti = ti;
+    }
+
+    public String getAl() {
+        return al;
+    }
+
+    public void setAl(String al) {
+        this.al = al;
+    }
+
+    public String getBk() {
+        return bk;
+    }
+
+    public void setBk(String bk) {
+        this.bk = bk;
+    }
+
+    public String getHi() {
+        return hi;
+    }
+
+    public void setHi(String hi) {
+        this.hi = hi;
+    }
+
+    public String getYoutube_video_id() {
+        return youtube_video_id;
+    }
+
+    public void setYoutube_video_id(String youtube_video_id) {
+        this.youtube_video_id = youtube_video_id;
+    }
+
+    public String getAudioLink() {
+        return audioLink;
+    }
+
+    public void setAudioLink(String audioLink) {
+        this.audioLink = audioLink;
+    }
+
+    public String getWeblink() {
+        return weblink;
+    }
+
+    public void setWeblink(String weblink) {
+        this.weblink = weblink;
+    }
+
+    public String getDe() {
+        return de;
+    }
+
+    public void setDe(String de) {
+        this.de = de;
+    }
+
+    public String getShort_de() {
+        return short_de;
+    }
+
+    public void setShort_de(String short_de) {
+        this.short_de = short_de;
+    }
+
+    public String getLe() {
+        return le;
+    }
+
+    public void setLe(String le) {
+        this.le = le;
+    }
+
+    public String getAdd_pos() {
+        return add_pos;
+    }
+
+    public void setAdd_pos(String add_pos) {
+        this.add_pos = add_pos;
+    }
+
+    public String getVid() {
+        return vid;
+    }
+
+    public void setVid(String vid) {
+        this.vid = vid;
+    }
+
+    public String getParent_section_id() {
+        return parent_section_id;
+    }
+
+    public void setParent_section_id(String parent_section_id) {
+        this.parent_section_id = parent_section_id;
+    }
+
+    public String getSub_section_id() {
+        return sub_section_id;
+    }
+
+    public void setSub_section_id(String sub_section_id) {
+        this.sub_section_id = sub_section_id;
+    }
+
+    public String getSub_section_name() {
+        return sub_section_name;
+    }
+
+    public void setSub_section_name(String sub_section_name) {
+        this.sub_section_name = sub_section_name;
+    }
+
+    public String getIm_thumbnail() {
+        return im_thumbnail;
+    }
+
+    public void setIm_thumbnail(String im_thumbnail) {
+        this.im_thumbnail = im_thumbnail;
+    }
+
+    public String getIm_thumbnail_v2() {
+        return im_thumbnail_v2;
+    }
+
+    public void setIm_thumbnail_v2(String im_thumbnail_v2) {
+        this.im_thumbnail_v2 = im_thumbnail_v2;
+    }
+
+    public String getComm_count() {
+        return comm_count;
+    }
+
+    public void setComm_count(String comm_count) {
+        this.comm_count = comm_count;
+    }
+
+    public ArrayList<MeBean> getMe() {
+        return me;
+    }
+
+    public void setMe(ArrayList<MeBean> me) {
+        this.me = me;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Common Fields
+    private String location;
+    private String gmt;
+    private String articleType;
+    private boolean isRead;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     private String description;
     private String articleId;
@@ -52,14 +335,11 @@ public class ArticleBean implements Parcelable {
     private String sectionName;
     private String publishedDate;
     private String originalDate;
-    private String location;
     private String title;
     private String articleLink;
-    private String gmt;
     private String youtubeVideoId;
     private String shortDescription;
     private String videoId;
-    private String articleType;
     private String timeToRead;
     private ArrayList<MeBean> media;
 
@@ -186,6 +466,9 @@ public class ArticleBean implements Parcelable {
 
     public String getTitle() {
         if(title == null || TextUtils.isEmpty(title)) {
+            if(articletitle == null || TextUtils.isEmpty(articletitle)) {
+                return ti;
+            }
             return articletitle;
         }
         return title;
@@ -208,6 +491,9 @@ public class ArticleBean implements Parcelable {
 
     public String getArticleUrl() {
         if(articleUrl == null) {
+            if(articleLink == null) {
+                return al;
+            }
             return articleLink;
         }
         return articleUrl;
@@ -218,6 +504,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getPubDate() {
+        if(pubDate == null) {
+            return pd;
+        }
         return pubDate;
     }
 
@@ -427,6 +716,7 @@ public class ArticleBean implements Parcelable {
         dest.writeString(this.VIDEO_URL);
         dest.writeTypedList(this.IMAGES);
         dest.writeTypedList(this.media);
+        dest.writeTypedList(this.me);
         dest.writeString(this.articletitle);
         dest.writeString(this.articleSection);
         dest.writeString(this.articleUrl);
@@ -467,6 +757,7 @@ public class ArticleBean implements Parcelable {
         this.VIDEO_URL = in.readString();
         this.IMAGES = in.createTypedArrayList(MeBean.CREATOR);
         this.media = in.createTypedArrayList(MeBean.CREATOR);
+        this.me = in.createTypedArrayList(MeBean.CREATOR);
         this.articletitle = in.readString();
         this.articleSection = in.readString();
         this.articleUrl = in.readString();

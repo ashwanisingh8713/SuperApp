@@ -10,7 +10,7 @@ public interface DaoSectionArticle {
 
 
     @Insert
-    void insertWidget(TableSectionArticle tableSectionArticle);
+    void insertSectionArticle(TableSectionArticle tableSectionArticle);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId")
     List<TableSectionArticle> getAllArticles(String secId);

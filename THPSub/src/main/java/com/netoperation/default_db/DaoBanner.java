@@ -8,11 +8,16 @@ import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 @Dao
 public interface DaoBanner {
 
     @Insert
     void insertWidget(TableBanner tableBanner);
+
+    @Query("SELECT * FROM TableBanner")
+    Observable<TableBanner> getBannersObservable();
 
     @Query("SELECT * FROM TableBanner")
     TableBanner getBanners();

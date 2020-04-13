@@ -10,6 +10,7 @@ import com.netoperation.model.PrefListModel;
 import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAndWidget;
+import com.netoperation.model.SectionContentFromServer;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
@@ -178,7 +179,7 @@ public interface ServiceAPIs {
     Observable<SectionAndWidget> homeContent(@Url String url, @Body JsonObject jsonObject);
 
     @POST("") // section-content.php
-    Observable<JsonElement> sectionContent(@Url String url, @Body JsonObject jsonObject);
+    Observable<SectionContentFromServer> sectionContent(@Url String url, @Body JsonObject jsonObject);
 
     @GET("") // url = "https://api.vuukle.com/api/v1/Comments/getCommentCountListByHost?host=thehindu.com&articleIds="+articleId;
     Observable<JsonElement> getCommentCount(@Url String url);

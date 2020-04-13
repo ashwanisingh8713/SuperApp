@@ -279,27 +279,8 @@
     <color name="progressDialogLight">#191919</color>
     <color name="progressDialogDark">#ededed</color>
 
-    <!--<color name="widget_viewall">#006599</color>
-    <color name="dark_background_tab_pressed">#006599</color>
-    <color name="dark_text_peacock_blue">#006599</color>
-    <color name="dark_widget_viewall">#006599</color>
-    <color name="dark_color_primary_dark">#006599</color>
-    <color name="dark_color_primary">#006599</color>
-
-    <color name="color_primary_dark">#006599</color>
-    <color name="section_strip_color">#006599</color>
-
-    <color name="color_comment_from">#006599</color>
-    <color name="customise_home_text_color">#006599</color>
-    <color name="color_customize_item_select_background">#006599</color>
-    <color name="color_flow_font">#006599</color>
-    <color name="feaded_blue">#006599</color>
-    <color name="background_tab_pressed">#006599</color>
-    <color name="blueColor_1">#E4623A</color>
-    <color name="pinFocusColor">#006599</color>
-    <color name="text_peacock_blue_dummy">#006599</color>
-    <color name="customise_tag_background">#006599</color>
-    <color name="color_primary">#006599</color>-->
+    <color name="epaper_night">#ededed</color>
+    <color name="epaper_day">#005DA3</color>
 
 
 </resources>

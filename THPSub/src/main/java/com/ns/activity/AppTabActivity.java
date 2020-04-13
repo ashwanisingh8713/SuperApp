@@ -4,51 +4,47 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoSection;
+import com.netoperation.default_db.TableSection;
+import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.THPPreferences;
-import com.ns.adapter.ExpandableListAdapter;
+import com.ns.adapter.NavigationExpandableListViewAdapter;
+import com.ns.alerts.Alerts;
+import com.ns.callbacks.OnExpandableListViewItemClickListener;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.AppTabFragment;
 import com.ns.loginfragment.AccountCreatedFragment;
-import com.ns.model.MenuModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class AppTabActivity extends BaseAcitivityTHP {
+public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableListViewItemClickListener {
 
     private String mFrom;
-    private AppTabFragment appTabFragment;
 
+    private AppTabFragment mAppTabFragment;
 
-    ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
-
-
-    List<MenuModel> headerList = new ArrayList<>();
-    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    private NavigationExpandableListViewAdapter mNavigationExpandableListViewAdapter;
+    private ExpandableListView mNavigationExpandableListView;
+    private DrawerLayout mDrawerLayout;
 
 
     @Override
@@ -78,9 +74,9 @@ public class AppTabActivity extends BaseAcitivityTHP {
                 .subscribe(userProfile -> {
                     String taIn = THPConstants.FLOW_TAB_CLICK;
                     int tabIndex = getIntent().getIntExtra("tabIndex", 0);
-                    appTabFragment = AppTabFragment.getInstance(mFrom, userProfile.getUserId(), tabIndex);
+                    mAppTabFragment = AppTabFragment.getInstance(mFrom, userProfile.getUserId(), tabIndex);
 
-                    FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, appTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                    FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
                     // THis below condition will be executed when user creates normal Sign-UP
                     if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
@@ -91,20 +87,32 @@ public class AppTabActivity extends BaseAcitivityTHP {
 
 
         // Drawer Setup
-        expandableListView = findViewById(R.id.expandableListView);
-        prepareMenuData();
-        populateExpandableList();
+        mNavigationExpandableListView = findViewById(R.id.expandableListView);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawerLayout, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        // Making server request for Section and Sub-Section List
         DefaultTHApiManager.sectionList(this);
-//        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        // Show Expandable List Content from Database
+        DaoSection section = THPDB.getInstance(this).daoSection();
+        section.getSectionsOfBurger(true)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(sectionList -> {
+                    return sectionList;
+                })
+                .subscribe(sectionList -> {
+                    mNavigationExpandableListViewAdapter = new NavigationExpandableListViewAdapter(this, sectionList, this);
+                    mNavigationExpandableListView.setAdapter(mNavigationExpandableListViewAdapter);
+                });
+
+//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
     }
 
@@ -114,9 +122,9 @@ public class AppTabActivity extends BaseAcitivityTHP {
 
         if(intent != null) {
             mFrom = intent.getStringExtra("from");
-            if(appTabFragment != null && mFrom != null) {
-                appTabFragment.updateFromValue(mFrom);
-                appTabFragment.updateTabIndex();
+            if(mAppTabFragment != null && mFrom != null) {
+                mAppTabFragment.updateFromValue(mFrom);
+                mAppTabFragment.updateTabIndex();
             }
             Log.i("", "");
         }
@@ -163,79 +171,29 @@ public class AppTabActivity extends BaseAcitivityTHP {
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
     }
 
+    @Override
+    public void onExpandButtonClick(int groupPostion, boolean isExpanded) {
+        Alerts.showToast(this, ""+groupPostion);
 
-    private void prepareMenuData() {
-
-        MenuModel menuModel = new MenuModel("Android WebView Tutorial", true, false, "https://www.journaldev.com/9333/android-webview-example-tutorial"); //Menu of Android Tutorial. No sub menus
-        headerList.add(menuModel);
-
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-
-        menuModel = new MenuModel("Java Tutorials", true, true, ""); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel childModel = new MenuModel("Core Java Tutorial", false, false, "https://www.journaldev.com/7153/core-java-tutorial");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Java FileInputStream", false, false, "https://www.journaldev.com/19187/java-fileinputstream");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Java FileReader", false, false, "https://www.journaldev.com/19115/java-filereader");
-        childModelsList.add(childModel);
-
-
-        if (menuModel.hasChildren) {
-            Log.d("API123","here");
-            childList.put(menuModel, childModelsList);
-        }
-
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Python Tutorials", true, true, ""); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        childModel = new MenuModel("Python AST – Abstract Syntax Tree", false, false, "https://www.journaldev.com/19243/python-ast-abstract-syntax-tree");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Python Fractions", false, false, "https://www.journaldev.com/19226/python-fractions");
-        childModelsList.add(childModel);
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList);
+        if (isExpanded) {
+            mNavigationExpandableListView.collapseGroup(groupPostion);
+        } else {
+            mNavigationExpandableListView.expandGroup(groupPostion);
         }
     }
 
-    private void populateExpandableList() {
+    @Override
+    public void onGroupClick(int groupPostion, TableSection tableSection, boolean isExpanded) {
+        Alerts.showToast(this, ""+tableSection.getSecName());
 
-        expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
-        expandableListView.setAdapter(expandableListAdapter);
+        mDrawerLayout.closeDrawers();
 
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        // CleverTap Hamburger Event Tracking
+        CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), null);
+    }
 
-                if (headerList.get(groupPosition).isGroup) {
-                    if (!headerList.get(groupPosition).hasChildren) {
-                        Toast.makeText(AppTabActivity.this, "Group", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                return false;
-            }
-        });
-
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                if (childList.get(headerList.get(groupPosition)) != null) {
-                    MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    if (model.url.length() > 0) {
-                        Toast.makeText(AppTabActivity.this, "Childe", Toast.LENGTH_LONG).show();
-                    }
-                }
-                return false;
-            }
-        });
+    @Override
+    public void onChildClick(int groupPostion, int childPosition, TableSection tableSection, SectionBean childSection) {
+        Alerts.showToast(this, ""+childPosition);
     }
 }

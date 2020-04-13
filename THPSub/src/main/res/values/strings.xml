@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="test">THPremium</string>
+    <string name="appName">SuperApp</string>
 
     <string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
     <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>

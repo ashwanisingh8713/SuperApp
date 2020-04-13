@@ -1,5 +1,6 @@
 package com.netoperation.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SectionBean {
@@ -38,7 +39,7 @@ public class SectionBean {
     private boolean show_on_explore;
     private String webLink;
     private StaticPageUrlBean staticPageUrl;
-    private List<SectionBean> subSections;
+    private List<SectionBean> subSections = new ArrayList<>();
 
     private int parentId;
     private String secColorRgb;

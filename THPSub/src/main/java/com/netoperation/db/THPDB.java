@@ -32,7 +32,7 @@ import com.netoperation.default_db.TableWidget;
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
         TableWidget.class, TablePersonaliseDefault.class, TableBanner.class},
-        version = 4, exportSchema = false)
+        version = 5, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
 

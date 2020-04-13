@@ -5,9 +5,11 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
+import com.netoperation.default_db.DaoWidget;
 import com.ns.adapter.TopTabsAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
@@ -27,7 +29,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
     private String mSubSectionId;
     private boolean mIsSubsection;
 
-    public CustomViewPager mViewPager;
+    public ViewPager mViewPager;
     private CustomTabLayout mTabLayout;
 
     private TopTabsAdapter mTopTabsAdapter;
@@ -80,21 +82,12 @@ public class TopTabsFragment extends BaseFragmentTHP {
                 })
                 .subscribe(sectionList -> {
                     mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, sectionList, mIsSubsection);
+                    mViewPager.setAdapter(mTopTabsAdapter);
+                    mTabLayout.setupWithViewPager(mViewPager);
                 }));
 
-        /*Observable.just(mFrom)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(value->{
-
-                    if(mFrom == null || mFrom.equalsIgnoreCase(THPConstants.FROM_DEFAULT)) {
-                        DaoSection section = THPDB.getInstance(getActivity()).daoSection();
 
 
-                    }
-                    return "";
-                })
-                .subscribe();*/
 
 
     }

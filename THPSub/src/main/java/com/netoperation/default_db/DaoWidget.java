@@ -9,6 +9,8 @@ import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 
 @Dao
 public interface DaoWidget {
@@ -17,7 +19,7 @@ public interface DaoWidget {
     void insertWidget(TableWidget tableWidget);
 
     @Query("SELECT * FROM TableWidget")
-    List<TableWidget> getWidgets();
+    Observable<List<TableWidget>> getWidgets();
 
     @Query("UPDATE TableWidget SET beans = :beans WHERE secId = :secId")
     int updateWidgetArticles(String secId, List<ArticleBean> beans);
