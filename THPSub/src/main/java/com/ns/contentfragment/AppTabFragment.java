@@ -193,7 +193,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
      * Loads User Profile Data
      */
     private void loadUserProfile() {
-        ApiManager.getUserProfile(getActivity())
+        mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
                     if(userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
@@ -214,7 +214,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     } else {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.VISIBLE);
                     }
-                });
+                }));
     }
 
     /**

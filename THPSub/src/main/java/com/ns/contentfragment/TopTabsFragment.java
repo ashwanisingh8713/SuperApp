@@ -10,12 +10,21 @@ import androidx.viewpager.widget.ViewPager;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoWidget;
+import com.netoperation.default_db.TableSection;
+import com.netoperation.model.SectionBean;
 import com.ns.adapter.TopTabsAdapter;
+import com.ns.alerts.Alerts;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 import com.ns.view.CustomTabLayout;
 import com.ns.view.CustomViewPager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +42,8 @@ public class TopTabsFragment extends BaseFragmentTHP {
     private CustomTabLayout mTabLayout;
 
     private TopTabsAdapter mTopTabsAdapter;
+
+    private List<TableSection> mTableSectionList;
 
 
     public static TopTabsFragment getInstance(String from, String sectionId,
@@ -77,19 +88,50 @@ public class TopTabsFragment extends BaseFragmentTHP {
         mDisposable.add(section.getSectionsOfBurger(true)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(sectionList -> {
-                    return sectionList;
-                })
                 .subscribe(sectionList -> {
+                    mTableSectionList = sectionList;
                     mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, sectionList, mIsSubsection);
                     mViewPager.setAdapter(mTopTabsAdapter);
                     mTabLayout.setupWithViewPager(mViewPager);
                 }));
 
+    }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(TableSection tableSection) {
+        Alerts.showToast(getActivity(), "Section");
+        int index = mTableSectionList.indexOf(tableSection);
+        mViewPager.setCurrentItem(index);
 
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(SectionBean tableSection) {
+        Alerts.showToast(getActivity(), "SubSection");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
 

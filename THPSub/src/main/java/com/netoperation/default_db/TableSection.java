@@ -1,5 +1,6 @@
 package com.netoperation.default_db;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -157,4 +158,19 @@ public class TableSection {
         this.type = type;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        super.equals(obj);
+        if(obj != null && obj instanceof TableSection) {
+            TableSection tableSection = (TableSection) obj;
+            return getSecId().equals(tableSection.getSecId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        super.hashCode();
+        return getSecId().hashCode();
+    }
 }

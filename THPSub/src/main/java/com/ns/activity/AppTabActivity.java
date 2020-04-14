@@ -10,13 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.navigation.NavigationView;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.THPPreferences;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
@@ -31,6 +29,9 @@ import com.ns.utils.FragmentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -69,7 +70,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             ServiceFactory.BASE_URL = BuildConfig.STATGGING_BASE_URL;
         }
 
-        ApiManager.getUserProfile(this)
+        mDisposable.add(ApiManager.getUserProfile(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
                     String taIn = THPConstants.FLOW_TAB_CLICK;
@@ -83,7 +84,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
                         FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                     }
-                });
+                }));
 
 
         // Drawer Setup
@@ -98,7 +99,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         // Show Expandable List Content from Database
         DaoSection section = THPDB.getInstance(this).daoSection();
-        section.getSectionsOfBurger(true)
+        mDisposable.add(section.getSectionsOfBurger(true)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(sectionList -> {
@@ -107,7 +108,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 .subscribe(sectionList -> {
                     mNavigationExpandableListViewAdapter = new NavigationExpandableListViewAdapter(this, sectionList, this);
                     mNavigationExpandableListView.setAdapter(mNavigationExpandableListViewAdapter);
-                });
+                }));
 
 //        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
@@ -144,13 +145,13 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
      * Fetch latest userinfo from server
      */
     private void fetchLatestUserInfo() {
-        ApiManager.getUserProfile(this)
+        mDisposable.add(ApiManager.getUserProfile(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .delay(3, TimeUnit.SECONDS)
                 .subscribe(userProfile -> {
                     mUserId = userProfile.getUserId();
                         // Fetch latest userinfo from server
-                        ApiManager.getUserInfo(this, BuildConfig.SITEID,
+                        mDisposable.add(ApiManager.getUserInfo(this, BuildConfig.SITEID,
                                 ResUtil.getDeviceId(this), mUserId,
                                 THPPreferences.getInstance(this).getLoginId(),
                                 THPPreferences.getInstance(this).getLoginPasswd())
@@ -158,8 +159,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                                     Log.i("", "");
                                 }, thr->{
                                     Log.i("", "");
-                                });
-                });
+                                }));
+                }));
     }
 
     @Override
@@ -181,16 +182,23 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onGroupClick(int groupPostion, TableSection tableSection, boolean isExpanded) {
-        Alerts.showToast(this, ""+tableSection.getSecName());
-
+        // Sending Event in TopTabsFragment.java => handleEvent()
+        EventBus.getDefault().post(tableSection);
         mDrawerLayout.closeDrawers();
 
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), null);
+
+
     }
 
     @Override
     public void onChildClick(int groupPostion, int childPosition, TableSection tableSection, SectionBean childSection) {
-        Alerts.showToast(this, ""+childPosition);
+        // Sending Event in TopTabsFragment.java => handleEvent()
+        EventBus.getDefault().post(childSection);
+        mDrawerLayout.closeDrawers();
+
+        // CleverTap Hamburger Event Tracking
+        CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), childSection.getSecName());
     }
 }

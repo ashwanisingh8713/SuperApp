@@ -185,12 +185,12 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         THPDB thpdb = THPDB.getInstance(getActivity());
         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
         Maybe<List<TableSectionArticle>> sectionArticlesMaybe = daoSectionArticle.getPageArticlesMaybe(mSectionId, mPage).subscribeOn(Schedulers.io());
-        sectionArticlesMaybe
+        mDisposable.add(sectionArticlesMaybe
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value-> {
                     if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB :: Page - "+mPage);
-                        getSectionDataFromServer();
+                        getSectionDataFromServer(mPage);
                     }
                     else {
                         for (TableSectionArticle sectionArticle : value) {
@@ -208,46 +208,43 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         incrementPageCount();
                     }
 
-
         }, throwable->{
                     Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from DB :: Page - "+mPage+" :: throwable - "+throwable);
         }, ()->{
                     Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB :: Page - "+(mPage-1));
-            if(mAdapter.getItemCount() == 0) {
-                //getSectionDataFromServer();
-            }
-        });
+        }));
 
     }
 
-    private void getSectionDataFromServer() {
+    private void getSectionDataFromServer(int page) {
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
             @Override
             public void onNext(ArrayList<SectionAdapterItem> articleBeans) {
-                if(mPage == 1) {
+                if(page == 1) {
                     mAdapter.deleteAllItems();
+                    resetPageCount();
                 }
                 if(articleBeans.size() > 0) {
-                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from Server :: Page - " + mPage);
+                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from Server :: Page - " + page);
                     mAdapter.addMultiItems(articleBeans);
                     incrementPageCount();
                 } else {
-                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO MORE ARTICLE On Server :: Page - " + mPage);
+                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO MORE ARTICLE On Server :: Page - " + page);
                 }
             }
 
             @Override
             public void onError(Throwable throwable, String str) {
-                Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from Server :: Page - "+mPage+" :: throwable - "+throwable);
+                Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from Server :: Page - "+page+" :: throwable - "+throwable);
             }
 
             @Override
             public void onComplete(String str) {
-                Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete Server :: Page - "+(mPage-1));
+                Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete Server :: Page - "+(page));
 
             }
         };
-        DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, mPage, mSectionType, 0);
+        DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
     }
 
     private void addSubsectionUI() {
@@ -332,7 +329,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         .subscribe();
             }
             else {
-                loadMoreItems();
+
+                getSectionDataFromServer(1);
             }
         });
     }

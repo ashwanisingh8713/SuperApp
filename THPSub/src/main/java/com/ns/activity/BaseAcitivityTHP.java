@@ -101,6 +101,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     protected void onDestroy() {
         TTSManager.getInstance().release();
         mDisposable.clear();
+        mDisposable.dispose();
         super.onDestroy();
     }
 

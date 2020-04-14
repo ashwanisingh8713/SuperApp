@@ -56,13 +56,11 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
 
     @Override
     public long getGroupId(int groupPosition) {
-//        return mSectionList.get(groupPosition).getSecId();
         return 0;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-//        return mSectionList.get(groupPosition).getSubSectionList().get(childPosition).getSecId();
         return 0;
     }
 
