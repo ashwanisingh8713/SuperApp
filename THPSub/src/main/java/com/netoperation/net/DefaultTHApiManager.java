@@ -222,7 +222,7 @@ public class DefaultTHApiManager {
                     });
         }
 
-        return null;
+        return Observable.just("").subscribe();
 
 
     }
@@ -244,25 +244,28 @@ public class DefaultTHApiManager {
                     .subscribeOn(Schedulers.newThread());
             count++;
         }
-        return Observable.mergeArray(observables)
-                .map(value -> {
-                    SectionContentFromServer sectionContent = (SectionContentFromServer) value;
-                    THPDB thpdb = THPDB.getInstance(context);
-                    DaoWidget daoWidget = thpdb.daoWidget();
+        if(observables.length > 0) {
+            return Observable.mergeArray(observables)
+                    .map(value -> {
+                        SectionContentFromServer sectionContent = (SectionContentFromServer) value;
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoWidget daoWidget = thpdb.daoWidget();
 
-                    TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
-                    tableWidget.setBeans(sectionContent.getData().getArticle());
-                    daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
+                        TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
+                        tableWidget.setBeans(sectionContent.getData().getArticle());
+                        daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
 
-                    return sectionContent.getData().getSid() + "-" + sectionContent.getData().getSname();
-                })
-                .subscribe(value -> {
-                    Log.i(TAG, "widgetContent :: subscribe-" + value);
-                }, throwable -> {
-                    Log.i(TAG, "widgetContent :: throwable "+throwable);
-                }, () -> {
-                    Log.i(TAG, "widgetContent :: completed");
-                });
+                        return sectionContent.getData().getSid() + "-" + sectionContent.getData().getSname();
+                    })
+                    .subscribe(value -> {
+                        Log.i(TAG, "widgetContent :: subscribe-" + value);
+                    }, throwable -> {
+                        Log.i(TAG, "widgetContent :: throwable " + throwable);
+                    }, () -> {
+                        Log.i(TAG, "widgetContent :: completed");
+                    });
+        }
+        return Observable.just("").subscribe();
     }
 
 

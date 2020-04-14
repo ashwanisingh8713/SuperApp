@@ -1,6 +1,8 @@
 package com.ns.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.SectionAdapterItem;
@@ -20,6 +23,8 @@ import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 
 import java.util.ArrayList;
+
+import static android.widget.LinearLayout.HORIZONTAL;
 
 public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
@@ -64,7 +69,14 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         SectionAdapterItem item = adapterItems.get(position);
         if(holder instanceof BannerViewHolder) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-
+            bannerViewHolder.mArticleSectionName.setText("pos : "+position);
+        }
+        else if(holder instanceof WidgetsViewHolder) {
+            fillWidgetData((WidgetsViewHolder)holder, position);
+        }
+        else if(holder instanceof ArticlesViewHolder) {
+            ArticlesViewHolder articlesViewHolder = (ArticlesViewHolder) holder;
+            articlesViewHolder.mArticleSectionName.setText("pos : "+position);
         }
 
     }
@@ -151,6 +163,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
+    public void deleteItem(SectionAdapterItem item) {
+        adapterItems.remove(item);
+    }
+
     public void addSingleItem(SectionAdapterItem item) {
         if(adapterItems == null) {
             adapterItems = new ArrayList<>();
@@ -167,7 +183,19 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     public void insertItem(SectionAdapterItem item, int index) {
-        adapterItems.add(index, item);
+        if(index >= adapterItems.size()) {
+            adapterItems.add(item);
+        } else if(index < adapterItems.size()){
+            adapterItems.add(index, item);
+        }
+    }
+
+    public int indexOf(SectionAdapterItem item) {
+        return adapterItems.indexOf(item);
+    }
+
+    public SectionAdapterItem getItem(int index) {
+        return adapterItems.get(index);
     }
 
     public void updateItem(SectionAdapterItem item) {
@@ -186,6 +214,81 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             adapterItems.clear();
             adapterItems = new ArrayList<>();
         }
+    }
+
+
+    ////////////////////////////////////
+    private void fillWidgetData(WidgetsViewHolder mWidgetsViewHolder, final int position) {
+
+        final SectionAdapterItem dataBean = adapterItems.get(position);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mWidgetsViewHolder.mWidgetsRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        /*mWidgetsViewHolder.mWidgetsRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_MOVE:
+                        if (SlidingSectionFragment.mViewPager != null) {
+                            SlidingSectionFragment.mViewPager.setPagingEnabled(false);
+                        }
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (SlidingSectionFragment.mViewPager != null) {
+                            SlidingSectionFragment.mViewPager.setPagingEnabled(false);
+                        }
+                        break;
+                    case MotionEvent.ACTION_OUTSIDE:
+                        if (SlidingSectionFragment.mViewPager != null) {
+                            SlidingSectionFragment.mViewPager.setPagingEnabled(true);
+                        }
+                        break;
+
+                }
+                return false;
+            }
+        });*/
+
+        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(dataBean.getWidgetAdapter());
+        mWidgetsViewHolder.mWidgetsRecyclerView.setLayoutManager(mLayoutManager);
+//        mWidgetsViewHolder.mWidgetsRecyclerView.setHasFixedSize(true);
+        mWidgetsViewHolder.mWidgetTitleTextView.setText(dataBean.getWidgetAdapter().getSectionName());
+        //for top-picks we are desableing the visiblity the view all textview
+        if (dataBean.getWidgetAdapter().getSectionId()== 88) {
+            mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.GONE);
+        } else {
+            mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
+            mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + dataBean.getWidgetAdapter().getSectionName());
+        }
+
+        /*mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int parentId = dataBean.getWidgetParentSecId();
+                int position;
+                boolean isSubsection;
+                String parentName;
+                if (parentId == 0) {
+                    position = DatabaseJanitor.getSectionPosition(dataBean.getWidgetSectionId());
+                    parentName = dataBean.getWidgetName();
+                    isSubsection = false;
+                } else {
+                    position = DatabaseJanitor.getSubsectionPostion(parentId, dataBean.getWidgetSectionId());
+                    parentName = DatabaseJanitor.getParentSectionName(parentId);
+                    isSubsection = true;
+                }
+                if (position >= 0) {
+                    SlidingSectionFragment fragment = SlidingSectionFragment.newInstance(SlidingSectionFragment.FROM_VIEW_ALL, position, isSubsection, parentId, parentName);
+                    pushFragmentToBackStack(fragment);
+
+                } else if (position == -1) {
+                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(0, String.valueOf(dataBean.getWidgetSectionId()),
+                            false);
+                    pushFragmentToBackStack(fragment);
+                }
+            }
+        });*/
+
     }
 
 }

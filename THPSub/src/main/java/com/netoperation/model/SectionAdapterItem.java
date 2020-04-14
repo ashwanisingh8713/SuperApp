@@ -11,10 +11,19 @@ public class SectionAdapterItem {
     private String ADID_300X250;
     private String itemRowId;
     private WidgetAdapter widgetAdapter;
+    private boolean isItemRowId;
 
     public SectionAdapterItem(int viewType, String itemRowId) {
         this.viewType = viewType;
         this.itemRowId = itemRowId;
+    }
+
+    public boolean isItemRowId() {
+        return isItemRowId;
+    }
+
+    public void setItemRowId(boolean itemRowId) {
+        isItemRowId = itemRowId;
     }
 
     public int getViewType() {
@@ -58,7 +67,13 @@ public class SectionAdapterItem {
         super.equals(obj);
         if(obj != null && obj instanceof SectionAdapterItem) {
             SectionAdapterItem item = (SectionAdapterItem) obj;
-            return item.itemRowId.equals(itemRowId);
+            if(item.isItemRowId()) {
+                return item.itemRowId.equals(itemRowId);
+            }
+            else {
+                return item.viewType==viewType;
+            }
+
         }
         return false;
     }

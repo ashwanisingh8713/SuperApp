@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
+import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
@@ -21,6 +23,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.SectionContentAdapter;
+import com.ns.adapter.WidgetAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
@@ -126,35 +129,95 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
             DaoWidget daoWidget = thpdb.daoWidget();
             DaoBanner daoBanner = thpdb.daoBanner();
+            DaoHomeArticle daoHomeArticle = thpdb.daoHomeArticle();
 
             Observable<TableBanner> bannerObservable = daoBanner.getBannersObservable().subscribeOn(Schedulers.io());
+            Observable<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticles().subscribeOn(Schedulers.io());
             Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
 
-            Observable.mergeArray(bannerObservable, widgetObservable)
+            mDisposable.add(Observable.mergeArray(bannerObservable, homeArticleObservable, widgetObservable)
                     .observeOn(AndroidSchedulers.mainThread())
+                    .map(value->{
+                        return value;
+                    })
                     .subscribe(value->{
                         if(value instanceof TableBanner) {
                             final TableBanner banner = (TableBanner) value;
                             ArticleBean bean = banner.getBeans().get(0);
-                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, bean.getSid()+"_Banner");
-                            item.setArticleBean(bean);
-                            mAdapter.addSingleItem(item);
+                            final String itemRowId = "banner_"+bean.getSid();
+                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
+                            item.setItemRowId(true);
+                            int index = mAdapter.indexOf(item);
+                            if(index == -1) {
+                                item.setArticleBean(bean);
+                                mAdapter.insertItem(item, 0);
+                                Log.i(TAG, "SEC-ID :: "+mSectionId+" :: UI :: Banner Added :: "+itemRowId);
+                            }
+                            else {
+                                item = mAdapter.getItem(index);
+                                item.setArticleBean(bean);
+                                mAdapter.notifyItemChanged(index);
+                                Log.i(TAG, "SEC-ID :: "+mSectionId+" :: UI :: Banner Updated :: "+itemRowId);
+                            }
+
                         }
                         else if(value instanceof ArrayList) {
-                            /*for(Object table : value) {
+                            ArrayList tableDatas = ((ArrayList) value);
+                            for(int i=0; i<tableDatas.size(); i++) {
+                                // Widgets
+                                if(tableDatas.get(i) instanceof TableWidget) {
+                                    TableWidget widget = (TableWidget) tableDatas.get(i);
+                                    final String itemRowId = "widget_" + widget.getSecId();
+                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
+                                    item.setItemRowId(true);
+                                    int index = mAdapter.indexOf(item);
+                                    if (index == -1) {
+                                        WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
+                                        item.setWidgetAdapter(widgetAdapter);
+                                        mAdapter.addSingleItem(item);
+                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Widget Added :: " + itemRowId);
+                                    } else {
+                                        item = mAdapter.getItem(index);
+                                        item.getWidgetAdapter().updateArticleList(widget.getBeans());
+                                        mAdapter.notifyItemChanged(index);
+                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Widget Updated :: " + itemRowId);
+                                    }
+                                }
+                                else if(tableDatas.get(i) instanceof TableHomeArticle) {
+                                    TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
+                                    homeArticle.getBeans();
 
-                            }*/
+                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, "");
+                                    item.setItemRowId(false);
+                                    mAdapter.deleteItem(item);
+
+                                    for(ArticleBean bean : homeArticle.getBeans()) {
+                                        final String itemRowId = "defaultRow_"+bean.getAid();
+                                        item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                        item.setItemRowId(false);
+                                        item.setArticleBean(bean);
+                                        mAdapter.addSingleItem(item);
+                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Default Row Added :: " + itemRowId);
+                                    }
+                                }
+
+
+                            }
+
+                        } else {
+
                         }
-                       Log.i(TAG, "SEC-ID :: "+mSectionId+" :: subscribe - DB");
+
+                        mPullToRefreshLayout.setRefreshing(false);
+                        hideProgressDialog();
+                        Log.i(TAG, "SEC-ID :: "+mSectionId+" :: subscribe - DB");
+
                     }, throwable -> {
                         Log.i(TAG, "SEC-ID :: "+mSectionId+" :: throwable - DB");
                     }, () ->{
                         Log.i(TAG, "SEC-ID :: "+mSectionId+" :: completed - DB");
-                        hideProgressDialog();
-                        mPullToRefreshLayout.setRefreshing(false);
-                    });
 
-
+                    }));
 
         }
         else if(mIsSubsection) { // Sub - Sections
@@ -166,8 +229,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
             DefaultTHApiManager.getSectionContent(getActivity(), mSectionId, mPage, mSectionType, 0);
-
-
 
         }
 
@@ -190,7 +251,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment");
                 final THPDB thpdb = THPDB.getInstance(getActivity());
                 DaoWidget daoWidget = thpdb.daoWidget();
-                daoWidget.getWidgets()
+                daoWidget.getWidgetsSingle()
                         .subscribeOn(Schedulers.io())
                         .map(widgets-> {
                             final Map<String, String> sections = new HashMap<>();

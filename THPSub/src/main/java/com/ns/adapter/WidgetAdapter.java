@@ -21,7 +21,7 @@ import com.ns.utils.ContentUtil;
 import com.ns.utils.GlideUtil;
 import com.ns.utils.THPConstants;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -37,14 +37,22 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     private final int SECTION_MULTIMEDIA = 138;
     private final int SECTION_CARTOON = 69;
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
-    private Context mContext;
-    private ArrayList<ArticleBean> mWidgetList;
+    private List<ArticleBean> mWidgetList;
     private int sectionId;
+    private String sectionName;
 
-    public WidgetAdapter(Context ctxParam, ArrayList<ArticleBean> mWidgetListParam, int sectionId) {
-        mContext = ctxParam;
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public int getSectionId() {
+        return sectionId;
+    }
+
+    public WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
         mWidgetList = mWidgetListParam;
         this.sectionId = sectionId;
+        this.sectionName = sectionName;
     }
 
     @Override
@@ -141,7 +149,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 //                            position, bean.getSid(), false);
 //                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
 //                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();
-                    Alerts.showToast(mContext, "fillAppExclusiveData");
+                    Alerts.showToast(view.getContext(), "fillAppExclusiveData");
                 }
             });
 
@@ -184,7 +192,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                             position, bean.getSid(), false);
                     ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(mContext, "fillWidgetData");
+                    Alerts.showToast(view.getContext(), "fillWidgetData");
                 }
             });
         }
@@ -220,7 +228,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                             position, bean.getSid(), false);
                     ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(mContext, "fillCartoonData");
+                    Alerts.showToast(view.getContext(), "fillCartoonData");
                 }
             });
         }
@@ -254,7 +262,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                             position, bean.getSid(), false);
                     ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(mContext, "fillOpinionData");
+                    Alerts.showToast(view.getContext(), "fillOpinionData");
                 }
             });
         }
@@ -292,7 +300,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
             mMultiMediaViewHolder.mParentView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
 
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
@@ -300,27 +308,31 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                             position, bean.getSid(), false);
                     ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(mContext, "fillMultiMediaData 1");
+                    Alerts.showToast(view.getContext(), "fillMultiMediaData 1");
                 }
             });
 
             mMultiMediaViewHolder.mPlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
                             position, bean.getSid(), false);
                     ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(mContext, "fillMultiMediaData 2");
+                    Alerts.showToast(view.getContext(), "fillMultiMediaData 2");
                 }
             });
         }
     }
 
-    public ArrayList<ArticleBean> getArticleList() {
+    public List<ArticleBean> getArticleList() {
         return mWidgetList;
+    }
+
+    public void updateArticleList(List<ArticleBean> articleBeans) {
+        this.mWidgetList = articleBeans;
     }
 
     public class WidgetViewHolder extends RecyclerView.ViewHolder {
