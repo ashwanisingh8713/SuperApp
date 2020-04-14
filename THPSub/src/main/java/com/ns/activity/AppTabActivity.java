@@ -96,9 +96,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Making server request for Section and Sub-Section List
-        DefaultTHApiManager.sectionList(this);
-
         // Show Expandable List Content from Database
         DaoSection section = THPDB.getInstance(this).daoSection();
         section.getSectionsOfBurger(true)

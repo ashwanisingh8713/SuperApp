@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.StaticPageUrlBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "TableBanner")
@@ -29,7 +30,7 @@ public class TableBanner {
 
     private StaticPageUrlBean staticPageBean;
 
-    private List<ArticleBean> beans;
+    private List<ArticleBean> beans = new ArrayList<>();
 
     public TableBanner(String secId, String secName, String type, String lastUpdatedTime, StaticPageUrlBean staticPageBean) {
         this.secId = secId;

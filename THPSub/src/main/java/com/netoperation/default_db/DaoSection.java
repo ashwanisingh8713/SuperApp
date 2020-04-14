@@ -26,6 +26,9 @@ public interface DaoSection {
     @Query("SELECT * FROM TableSection WHERE isUserPreferred = 1")
     Observable<List<TableSection>> getUserPreferredSectionObservable();
 
+    @Query("SELECT * FROM TableSection WHERE isUserPreferred = 1")
+    List<TableSection> getUserPreferredSection();
+
     @Query("SELECT * FROM TableSection WHERE show_on_burger = :show_on_burger")
     Observable<List<TableSection>> getSectionsOfBurger(boolean show_on_burger);
 

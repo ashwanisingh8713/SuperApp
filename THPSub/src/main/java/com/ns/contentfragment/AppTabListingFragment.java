@@ -182,7 +182,6 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     private void registerPullToRefresh() {
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
             if(!mIsOnline) {
-                //Alerts.showSnackbar(getActivity(), getResources().getString(R.string.please_check_ur_connectivity));
                 noConnectionSnackBar(getView());
                 mPullToRefreshLayout.setRefreshing(false);
                 return;

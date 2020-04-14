@@ -18,7 +18,7 @@
             android:id="@+id/imageview_widget_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/widget_recyclerView_image_newheight"
-            android:src="@mipmap/ph_toppicks_th" />
+            android:src="@drawable/ph_toppicks_th" />
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/textview_widget_text"

@@ -27,7 +27,11 @@ import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.DetailToolbar;
 import com.ns.view.ListingToolbar;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public abstract class BaseAcitivityTHP extends AppCompatActivity implements ToolbarClickListener {
+
+    protected final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public abstract int layoutRes();
 
@@ -96,6 +100,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     @Override
     protected void onDestroy() {
         TTSManager.getInstance().release();
+        mDisposable.clear();
         super.onDestroy();
     }
 

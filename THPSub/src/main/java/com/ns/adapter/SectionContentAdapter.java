@@ -61,6 +61,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        SectionAdapterItem item = adapterItems.get(position);
+        if(holder instanceof BannerViewHolder) {
+            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
+
+        }
 
     }
 
@@ -151,6 +156,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             adapterItems = new ArrayList<>();
         }
         adapterItems.add(item);
+        notifyItemChanged(adapterItems.size()-1);
     }
 
     public void addMultiItems(ArrayList<SectionAdapterItem> items) {

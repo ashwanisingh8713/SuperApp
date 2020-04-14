@@ -13,6 +13,6 @@
         android:id="@+id/imageview_widget_cartoon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/ph_topnews_th" />
+        android:src="@drawable/ph_topnews_th" />
 
 </com.ns.view.layout.NSLinearLayout>

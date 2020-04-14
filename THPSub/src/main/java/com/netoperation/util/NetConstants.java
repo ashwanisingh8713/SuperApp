@@ -2,6 +2,8 @@ package com.netoperation.util;
 
 public class NetConstants {
 
+    public static final String UNIQUE_TAG = "Ashwani";
+
     /** When user does sign up*/
     public static final String EVENT_SIGNUP = "signup";
 

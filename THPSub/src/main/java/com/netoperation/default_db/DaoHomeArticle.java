@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 public interface DaoHomeArticle {
 
     @Insert
-    void insertWidget(TableHomeArticle tableHomeArticle);
+    void insertHomeArticle(TableHomeArticle tableHomeArticle);
 
     @Query("SELECT * FROM TableHomeArticle")
     Observable<List<TableHomeArticle>> getArticles();

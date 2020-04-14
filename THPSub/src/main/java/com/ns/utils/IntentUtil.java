@@ -52,6 +52,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class IntentUtil {
 
+    public static void openMainTabPage(Activity context) {
+        Intent intent = new Intent(context, AppTabActivity.class);
+        context.startActivity(intent);
+        context.finish();
+    }
+
 
     /**
      * Updated requirement 11 Oct 2019

@@ -6,9 +6,6 @@ import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * Created by arvind on 18/1/17.
- */
 
 public class CustomViewPager extends ViewPager {
 
