@@ -11,20 +11,15 @@ public class SectionAdapterItem {
     private String ADID_300X250;
     private String itemRowId;
     private WidgetAdapter widgetAdapter;
-    private boolean isItemRowId;
+    private StaticPageUrlBean staticPageUrlBean;
+
+
 
     public SectionAdapterItem(int viewType, String itemRowId) {
         this.viewType = viewType;
         this.itemRowId = itemRowId;
     }
 
-    public boolean isItemRowId() {
-        return isItemRowId;
-    }
-
-    public void setItemRowId(boolean itemRowId) {
-        isItemRowId = itemRowId;
-    }
 
     public int getViewType() {
         return viewType;
@@ -62,18 +57,20 @@ public class SectionAdapterItem {
         this.widgetAdapter = widgetAdapter;
     }
 
+    public StaticPageUrlBean getStaticPageUrlBean() {
+        return staticPageUrlBean;
+    }
+
+    public void setStaticPageUrlBean(StaticPageUrlBean staticPageUrlBean) {
+        this.staticPageUrlBean = staticPageUrlBean;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         super.equals(obj);
         if(obj != null && obj instanceof SectionAdapterItem) {
             SectionAdapterItem item = (SectionAdapterItem) obj;
-            if(item.isItemRowId()) {
-                return item.itemRowId.equals(itemRowId);
-            }
-            else {
-                return item.viewType==viewType;
-            }
-
+            return item.itemRowId.equals(itemRowId);
         }
         return false;
     }

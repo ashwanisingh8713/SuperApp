@@ -38,7 +38,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onNext(Object o) {
                 final THPDB thpdb = THPDB.getInstance(SplashActivity.this);
-                DefaultTHApiManager.homeArticles(SplashActivity.this, "SplashActivity");
+                DefaultTHApiManager.homeArticles(SplashActivity.this, "SplashActivity", null);
                 DaoWidget daoWidget = thpdb.daoWidget();
                 daoWidget.getWidgetsSingle()
                         .subscribeOn(Schedulers.io())

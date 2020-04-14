@@ -9,6 +9,7 @@ import com.netoperation.model.ArticleBean;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface DaoHomeArticle {
@@ -18,6 +19,9 @@ public interface DaoHomeArticle {
 
     @Query("SELECT * FROM TableHomeArticle")
     Observable<List<TableHomeArticle>> getArticles();
+
+    @Query("SELECT * FROM TableHomeArticle")
+    Single<List<TableHomeArticle>> getArticlesSingle();
 
     @Query("UPDATE TableHomeArticle SET beans = :beans WHERE secId = :secId")
     int updateHomeArticles(String secId, List<ArticleBean> beans);

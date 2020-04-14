@@ -36,6 +36,47 @@ public class WebViewLinkClick {
 
     }
 
+    public void linkClick(WebView webView, Context context) {
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        //javascript support
+        webView.getSettings().setJavaScriptEnabled(true);
+        //html5 support
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //Clicked url
+                //if u use super() it will load url into webview
+                URI uri = null;
+                try {
+                    uri = new URI(url);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+
+                String domain = uri.getHost();
+                String path = uri.getPath();
+
+                String aid = ""+CommonUtil.getArticleIdFromArticleUrl(url);
+
+                if (domain != null && domain.equalsIgnoreCase("vuukle.com")) {
+                    String[] uris = url.split("&uri=");
+                    if (uris.length == 2) {
+                        url = uris[1];
+                    }
+                }
+
+                openActivity(context,  aid, url);
+
+                return true;
+            }
+        });
+    }
+
     public void linkClick(WebView webView, Context context, String articleAid) {
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         //javascript support

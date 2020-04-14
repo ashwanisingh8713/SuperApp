@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public abstract class DaoBanner {
@@ -20,6 +21,9 @@ public abstract class DaoBanner {
 
     @Query("SELECT * FROM TableBanner")
     public abstract Observable<TableBanner> getBannersObservable();
+
+    @Query("SELECT * FROM TableBanner")
+    public abstract Single<TableBanner> getBannersSingle();
 
     @Query("SELECT * FROM TableBanner")
     public abstract TableBanner getBanners();

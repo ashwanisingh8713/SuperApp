@@ -19,7 +19,9 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
+import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.SectionContentAdapter;
@@ -32,9 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -56,6 +61,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     private LinearLayout emptyLayout;
 
     private SectionContentAdapter mAdapter;
+
+    private StaticPageUrlBean mStaticPageBean;
 
 
     public static SectionFragment getInstance(String from, String sectionId, String sectionType, boolean isSubsection) {
@@ -124,52 +131,25 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        final THPDB thpdb = THPDB.getInstance(getActivity());
 
         if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
-            DaoWidget daoWidget = thpdb.daoWidget();
-            DaoBanner daoBanner = thpdb.daoBanner();
-            DaoHomeArticle daoHomeArticle = thpdb.daoHomeArticle();
 
-            Observable<TableBanner> bannerObservable = daoBanner.getBannersObservable().subscribeOn(Schedulers.io());
-            Observable<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticles().subscribeOn(Schedulers.io());
+            getBannerAndHomeArticleObservable();
+
+            DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
             Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
-
-            mDisposable.add(Observable.mergeArray(bannerObservable, homeArticleObservable, widgetObservable)
+            mDisposable.add(widgetObservable
+                    .delay(500, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .map(value->{
-                        return value;
-                    })
                     .subscribe(value->{
-                        if(value instanceof TableBanner) {
-                            final TableBanner banner = (TableBanner) value;
-                            ArticleBean bean = banner.getBeans().get(0);
-                            final String itemRowId = "banner_"+bean.getSid();
-                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
-                            item.setItemRowId(true);
-                            int index = mAdapter.indexOf(item);
-                            if(index == -1) {
-                                item.setArticleBean(bean);
-                                mAdapter.insertItem(item, 0);
-                                Log.i(TAG, "SEC-ID :: "+mSectionId+" :: UI :: Banner Added :: "+itemRowId);
-                            }
-                            else {
-                                item = mAdapter.getItem(index);
-                                item.setArticleBean(bean);
-                                mAdapter.notifyItemChanged(index);
-                                Log.i(TAG, "SEC-ID :: "+mSectionId+" :: UI :: Banner Updated :: "+itemRowId);
-                            }
-
-                        }
-                        else if(value instanceof ArrayList) {
+                        if(value instanceof ArrayList) {
                             ArrayList tableDatas = ((ArrayList) value);
-                            for(int i=0; i<tableDatas.size(); i++) {
-                                // Widgets
-                                if(tableDatas.get(i) instanceof TableWidget) {
+                            // Widgets
+                            for (int i = 0; i < tableDatas.size(); i++) {
+                                if (tableDatas.get(i) instanceof TableWidget) {
                                     TableWidget widget = (TableWidget) tableDatas.get(i);
                                     final String itemRowId = "widget_" + widget.getSecId();
                                     SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
-                                    item.setItemRowId(true);
                                     int index = mAdapter.indexOf(item);
                                     if (index == -1) {
                                         WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
@@ -183,39 +163,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                         Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Widget Updated :: " + itemRowId);
                                     }
                                 }
-                                else if(tableDatas.get(i) instanceof TableHomeArticle) {
-                                    TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
-                                    homeArticle.getBeans();
-
-                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, "");
-                                    item.setItemRowId(false);
-                                    mAdapter.deleteItem(item);
-
-                                    for(ArticleBean bean : homeArticle.getBeans()) {
-                                        final String itemRowId = "defaultRow_"+bean.getAid();
-                                        item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
-                                        item.setItemRowId(false);
-                                        item.setArticleBean(bean);
-                                        mAdapter.addSingleItem(item);
-                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Default Row Added :: " + itemRowId);
-                                    }
-                                }
-
-
                             }
-
-                        } else {
-
                         }
-
-                        mPullToRefreshLayout.setRefreshing(false);
-                        hideProgressDialog();
-                        Log.i(TAG, "SEC-ID :: "+mSectionId+" :: subscribe - DB");
-
-                    }, throwable -> {
-                        Log.i(TAG, "SEC-ID :: "+mSectionId+" :: throwable - DB");
-                    }, () ->{
-                        Log.i(TAG, "SEC-ID :: "+mSectionId+" :: completed - DB");
 
                     }));
 
@@ -225,14 +174,175 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
         }
         else { // Other Sections
-
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
             DefaultTHApiManager.getSectionContent(getActivity(), mSectionId, mPage, mSectionType, 0);
 
         }
 
+    }
 
+    private void getBannerAndHomeArticleObservable() {
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
+        DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
+        Observable<TableBanner> bannerObservable = daoBanner.getBannersObservable().subscribeOn(Schedulers.io());
+        Observable<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticles().subscribeOn(Schedulers.io());
+
+        disposable.add(Observable.merge(bannerObservable, homeArticleObservable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(value instanceof TableBanner) {
+                        final TableBanner banner = (TableBanner) value;
+                        mStaticPageBean = banner.getStaticPageBean();
+
+                        int count = 0;
+                        for(ArticleBean bean : banner.getBeans()) {
+                            final String itemRowId = "banner_" + bean.getSid()+"_"+bean.getAid();
+                            if(count == 0) {
+                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
+                                int index = mAdapter.indexOf(item);
+                                if (index == -1) {
+                                    item.setArticleBean(bean);
+                                    mAdapter.insertItem(item, count);
+                                    Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Added :: " + itemRowId);
+                                } else {
+                                    item = mAdapter.getItem(index);
+                                    item.setArticleBean(bean);
+                                    mAdapter.notifyItemChanged(index);
+                                    Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Updated :: " + itemRowId);
+                                }
+                            }
+                            else {
+                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                item.setArticleBean(bean);
+                                mAdapter.insertItem(item, count);
+                                Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Row Added :: " + itemRowId);
+                            }
+                            count++;
+                        }
+                    }
+                    else if(value instanceof ArrayList) {
+                        ArrayList tableDatas = ((ArrayList) value);
+                        for(int i=0; i<tableDatas.size(); i++) {
+                            // Home Articles
+                            if(tableDatas.get(i) instanceof TableHomeArticle) {
+                                final TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
+                                for(ArticleBean bean : homeArticle.getBeans()) {
+                                    final String itemRowId = "defaultRow_"+bean.getAid();
+                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                    int index = mAdapter.indexOf(item);
+                                    if(index == -1) {
+                                        item.setArticleBean(bean);
+                                        mAdapter.addSingleItem(item);
+                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Default Row Added :: " + itemRowId);
+                                    }
+                                }
+                            }
+                        }
+
+                        disposable.dispose();
+
+                        addStaticPageBean();
+                    }
+
+                    mPullToRefreshLayout.setRefreshing(false);
+                    hideProgressDialog();
+
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: subscribe - DB");
+
+                }, throwable -> {
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: throwable - DB");
+                }, () ->{
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: completed - DB");
+
+                }));
+    }
+
+    private void getBannerAndHomeArticle() {
+        DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
+        DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
+        Single<TableBanner> bannerObservable = daoBanner.getBannersSingle().subscribeOn(Schedulers.io());
+        Single<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticlesSingle().subscribeOn(Schedulers.io());
+
+        mDisposable.add(Single.merge(bannerObservable, homeArticleObservable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(value instanceof TableBanner) {
+                        final TableBanner banner = (TableBanner) value;
+                        mStaticPageBean = banner.getStaticPageBean();
+                        int count = 0;
+                        for(ArticleBean bean : banner.getBeans()) {
+                            final String itemRowId = "banner_" + bean.getSid()+"_"+bean.getAid();
+                            if(count == 0) {
+                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
+                                int index = mAdapter.indexOf(item);
+                                if (index == -1) {
+                                    item.setArticleBean(bean);
+                                    mAdapter.insertItem(item, count);
+                                    Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Added :: " + itemRowId);
+                                } else {
+                                    item = mAdapter.getItem(index);
+                                    item.setArticleBean(bean);
+                                    mAdapter.notifyItemChanged(index);
+                                    Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Updated :: " + itemRowId);
+                                }
+                            }
+                            else {
+                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                item.setArticleBean(bean);
+                                mAdapter.insertItem(item, count);
+                                Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Banner Row Added :: " + itemRowId);
+                            }
+                            count++;
+                        }
+                    }
+                    else if(value instanceof ArrayList) {
+                        final ArrayList tableDatas = ((ArrayList) value);
+                        for(int i=0; i<tableDatas.size(); i++) {
+                            // Home Articles
+                            if(tableDatas.get(i) instanceof TableHomeArticle) {
+                                TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
+
+                                for(ArticleBean bean : homeArticle.getBeans()) {
+                                    final String itemRowId = "defaultRow_"+bean.getAid();
+                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                    int index = mAdapter.indexOf(item);
+                                    if(index == -1) {
+                                        item.setArticleBean(bean);
+                                        mAdapter.addSingleItem(item);
+                                        Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Default Row Added :: " + itemRowId);
+                                    }
+                                    Log.i(TAG, "SEC-ID :: " + mSectionId + " :: UI :: Default Row Added :: " + itemRowId);
+                                }
+                            }
+                        }
+                    }
+
+                    mPullToRefreshLayout.setRefreshing(false);
+                    hideProgressDialog();
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: subscribe - DB");
+
+                }, throwable -> {
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: throwable - DB");
+                }, () -> {
+                    Log.i(TAG, "SEC-ID :: "+mSectionId+" :: completed - DB");
+                }));
+    }
+
+
+    private void addStaticPageBean() {
+        if(mStaticPageBean != null && mStaticPageBean.getPosition() > -1 && mIsOnline) {
+            final String itemRowId = "staticWebpage_" + mStaticPageBean.getPosition();
+            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
+            int index = mAdapter.indexOf(item);
+            if (index == -1) {
+                item.setStaticPageUrlBean(mStaticPageBean);
+                mAdapter.insertItem(item, mStaticPageBean.getPosition());
+            }
+        }
     }
 
     /**
@@ -248,7 +358,24 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             mPullToRefreshLayout.setRefreshing(true);
             if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
                 Log.i(TAG, "SEC-ID :: "+mSectionId+" :: REFRESH STARTED ");
-                DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment");
+                DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment", new RequestCallback() {
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t, String str) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String str) {
+                        mAdapter.deleteAllItems();
+                        getBannerAndHomeArticle();
+                    }
+                });
+
                 final THPDB thpdb = THPDB.getInstance(getActivity());
                 DaoWidget daoWidget = thpdb.daoWidget();
                 daoWidget.getWidgetsSingle()

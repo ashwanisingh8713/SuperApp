@@ -17,14 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.SectionAdapterItem;
+import com.netoperation.model.StaticPageUrlBean;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
-import com.ns.viewholder.BookmarkViewHolder;
+import com.ns.utils.WebViewLinkClick;
 import com.ns.viewholder.LoadMoreViewHolder;
+import com.ns.viewholder.StaticItemWebViewHolder;
 
 import java.util.ArrayList;
 
-import static android.widget.LinearLayout.HORIZONTAL;
 
 public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
@@ -60,6 +61,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new WidgetsViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_home_widgets, viewGroup, false));
         }
+        else if(viewType == VT_WEB_WIDGET) {
+            return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_webview, viewGroup, false));
+        }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
@@ -69,14 +74,29 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         SectionAdapterItem item = adapterItems.get(position);
         if(holder instanceof BannerViewHolder) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            bannerViewHolder.mArticleSectionName.setText("pos : "+position);
+            bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
         }
         else if(holder instanceof WidgetsViewHolder) {
             fillWidgetData((WidgetsViewHolder)holder, position);
         }
         else if(holder instanceof ArticlesViewHolder) {
             ArticlesViewHolder articlesViewHolder = (ArticlesViewHolder) holder;
-            articlesViewHolder.mArticleSectionName.setText("pos : "+position);
+            articlesViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
+        }
+        else if(holder instanceof StaticItemWebViewHolder) {
+            StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
+            StaticPageUrlBean pageUrlBean = item.getStaticPageUrlBean();
+            staticItemHolder.webView.loadUrl(pageUrlBean.getUrl());
+            if(!pageUrlBean.getSectionId().equals("0")) {
+                staticItemHolder.mDummyView.setVisibility(View.VISIBLE);
+                // DummyView Click Listener
+                // TODO, redirect on particular section or sub-section
+//                staticItemHolder.mDummyView.setOnClickListener(new StaticItemDummyViewClick(url, mContext, null, false, -1));
+            } else {
+                staticItemHolder.mDummyView.setVisibility(View.GONE);
+                // Enabling Weblink click on Lead Text
+                new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext());
+            }
         }
 
     }
@@ -209,7 +229,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    public void clearAllItems() {
+    public void deleteAllItems() {
         if(adapterItems != null) {
             adapterItems.clear();
             adapterItems = new ArrayList<>();

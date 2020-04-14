@@ -153,8 +153,7 @@ public class DefaultTHApiManager {
      * @param context
      * @return
      */
-    public static Disposable homeArticles(Context context, String from) {
-
+    public static Disposable homeArticles(Context context, String from, RequestCallback callback) {
         if (context != null) {
             Log.i(TAG, from+" :: HomeArticles :: Sent Server Request to get latest data");
             THPDB thpdb = THPDB.getInstance(context);
@@ -214,10 +213,19 @@ public class DefaultTHApiManager {
                         return "";
                     })
                     .subscribe(val -> {
+                        if(callback != null) {
+                            callback.onNext("homeArticles");
+                        }
                         Log.i(TAG, "homeArticles :: subscribe");
                     }, throwable -> {
+                        if(callback != null) {
+                            callback.onError(throwable, "homeArticles");
+                        }
                         Log.i(TAG, "homeArticles :: throwable "+throwable);
                     }, () -> {
+                        if(callback != null) {
+                            callback.onComplete("homeArticles");
+                        }
                         Log.i(TAG, "homeArticles :: completed");
                     });
         }

@@ -41,6 +41,8 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_BLD_WIDGET_DEFAULT = 24;
     public static final int VT_BLD_DEFAULT_ROW = 25;
 
+    public static final int VT_WEB_WIDGET = 26;
+
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 
 

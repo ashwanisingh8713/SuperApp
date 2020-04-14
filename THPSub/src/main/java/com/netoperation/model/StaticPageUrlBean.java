@@ -13,8 +13,8 @@ public class StaticPageUrlBean {
     private boolean isEnabled;
     private String url;
     private String youtubeId;
-    private String position;
-    private int sectionId;
+    private int position;
+    private String sectionId;
     private String lastUpdatedOn;
 
     public boolean isIsEnabled() {
@@ -41,19 +41,19 @@ public class StaticPageUrlBean {
         this.youtubeId = youtubeId;
     }
 
-    public String getPosition() {
+    public int getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
-    public int getSectionId() {
+    public String getSectionId() {
         return sectionId;
     }
 
-    public void setSectionId(int sectionId) {
+    public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
     }
 
