@@ -113,11 +113,10 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getItemCount() {
-        if (mWidgetList.size() > 5) {
-            return 5;
-        } else {
-            return mWidgetList.size();
+        if (mWidgetList == null) {
+            return 0;
         }
+        return mWidgetList.size();
     }
 
     @Override

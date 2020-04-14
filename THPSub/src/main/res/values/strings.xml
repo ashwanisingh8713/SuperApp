@@ -114,4 +114,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--DEFAULT-->
+    <string name="info_home_explore">Explore Section</string>
+    <string name="info_widget_viewall">VIEW ALL</string>
+
 </resources>

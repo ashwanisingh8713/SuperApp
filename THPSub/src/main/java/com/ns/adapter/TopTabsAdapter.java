@@ -26,7 +26,7 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return SectionFragment.getInstance(mFrom, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mIsSubsection);
+        return SectionFragment.getInstance(mFrom, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
     }
 
     @Override

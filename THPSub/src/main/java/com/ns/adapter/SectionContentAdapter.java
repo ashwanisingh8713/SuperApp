@@ -65,6 +65,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_webview, viewGroup, false));
         }
+        else if(viewType == VT_THD_SUB_SECTION) {
+            return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.cardview_home_explore, viewGroup, false));
+        }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
@@ -199,7 +203,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if(adapterItems == null) {
             adapterItems = new ArrayList<>();
         }
+        int fromIndex = adapterItems.size();
         adapterItems.addAll(items);
+        notifyItemRangeChanged(fromIndex, items.size());
     }
 
     public void insertItem(SectionAdapterItem item, int index) {

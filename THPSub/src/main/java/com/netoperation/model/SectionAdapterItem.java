@@ -2,6 +2,7 @@ package com.netoperation.model;
 
 import androidx.annotation.Nullable;
 
+import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.WidgetAdapter;
 
 public class SectionAdapterItem {
@@ -11,6 +12,7 @@ public class SectionAdapterItem {
     private String ADID_300X250;
     private String itemRowId;
     private WidgetAdapter widgetAdapter;
+    private ExploreAdapter exploreAdapter;
     private StaticPageUrlBean staticPageUrlBean;
 
 
@@ -20,6 +22,13 @@ public class SectionAdapterItem {
         this.itemRowId = itemRowId;
     }
 
+    public ExploreAdapter getExploreAdapter() {
+        return exploreAdapter;
+    }
+
+    public void setExploreAdapter(ExploreAdapter exploreAdapter) {
+        this.exploreAdapter = exploreAdapter;
+    }
 
     public int getViewType() {
         return viewType;

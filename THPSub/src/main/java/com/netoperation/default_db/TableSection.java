@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.model.SectionBean;
+import com.netoperation.model.StaticPageUrlBean;
 
 import java.util.List;
 
@@ -34,10 +35,12 @@ public class TableSection {
     private String secName;
     private String type;
     private boolean isUserPreferred;
+    private StaticPageUrlBean staticPageUrlBean;
 
     private List<SectionBean> subSections;
 
-    public  TableSection(String secId, String secName,  String type, SectionBean section, boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections) {
+    public  TableSection(String secId, String secName, String type, SectionBean section,
+                         boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections, StaticPageUrlBean staticPageUrlBean) {
         this.secId = secId;
         this.secName = secName;
         this.type = type;
@@ -45,6 +48,15 @@ public class TableSection {
         this.show_on_burger = show_on_burger;
         this.show_on_explore = show_on_explore;
         this.subSections = subSections;
+        this.staticPageUrlBean = staticPageUrlBean;
+    }
+
+    public StaticPageUrlBean getStaticPageUrlBean() {
+        return staticPageUrlBean;
+    }
+
+    public void setStaticPageUrlBean(StaticPageUrlBean staticPageUrlBean) {
+        this.staticPageUrlBean = staticPageUrlBean;
     }
 
     public boolean isUserPreferred() {

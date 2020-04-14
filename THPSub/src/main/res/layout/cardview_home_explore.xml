@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:elevation="@dimen/card_elevation">
+
+    <com.ns.view.layout.NSLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_home_explore_background"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/banner_title_margin"
+        android:paddingRight="@dimen/banner_title_margin"
+        app:layoutType="Black_Dark">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/banner_title_margin"
+            android:paddingTop="@dimen/banner_title_margin"
+            android:text="@string/info_home_explore"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:font_path="@string/THP_FiraSans_Regular"
+            app:viewType="L"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_explore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/explore_content_marginTop" />
+    </com.ns.view.layout.NSLinearLayout>
+
+</androidx.cardview.widget.CardView>

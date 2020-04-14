@@ -15,8 +15,10 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableWidget;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
 import com.netoperation.model.HomeData;
+import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.SectionContentFromServer;
@@ -25,6 +27,7 @@ import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
 
@@ -34,6 +37,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -109,7 +113,10 @@ public class DefaultTHApiManager {
                                     for (SectionBean section : sections) {
                                         List<SectionBean> subSections = new ArrayList<>(section.getSubSections());
                                         section.setSubSections(null);
-                                        TableSection tableSection = new TableSection(section.getSecId(), section.getSecName(), section.getType(), section, section.isShow_on_burger(), section.isShow_on_explore(), subSections);
+                                        TableSection tableSection = new TableSection(section.getSecId(),
+                                                section.getSecName(), section.getType(), section,
+                                                section.isShow_on_burger(), section.isShow_on_explore(),
+                                                subSections, section.getStaticPageUrl());
                                         // Adding Default selected persionlise news feed section
                                         THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
                                         personalizeBean.setSecId(section.getSecId());
@@ -287,24 +294,48 @@ public class DefaultTHApiManager {
      * @param lut
      * @return
      */
-    public static Disposable getSectionContent(Context context, String secId, int page, String type, long lut) {
+    public static Disposable getSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
         final String url = BuildConfig.DEFAULT_TH_BASE_URL + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
-                    Log.i("", "");
-                    THPDB thpdb = THPDB.getInstance(context);
-                    DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
-                    TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
-                    daoSectionArticle.insertSectionArticle(sectionArticles);
-                    return value;
+                    final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
+                    if(value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
+                        if(page == 1) {
+                            daoSectionArticle.deleteAll();
+                            Log.i(TAG, "getSectionContent :: DELETED ALL ARTICLES OF SecId :: "+secId);
+                        }
+                        TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
+                        daoSectionArticle.insertSectionArticle(sectionArticles);
+
+                        for (ArticleBean bean : value.getData().getArticle()) {
+                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                            item.setArticleBean(bean);
+                            uiRowItem.add(item);
+                        }
+                    }
+
+                    return uiRowItem;
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
+                    if(requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
                     Log.i(TAG, "getSectionContent :: subscribe");
                 }, throwable -> {
                     Log.i(TAG, "getSectionContent :: throwable "+throwable);
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "getSectionContent");
+                    }
                 }, () -> {
                     Log.i(TAG, "getSectionContent :: completed");
+                    if(requestCallback != null) {
+                        requestCallback.onComplete("getSectionContent");
+                    }
                 });
     }
 

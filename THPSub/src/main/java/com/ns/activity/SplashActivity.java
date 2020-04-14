@@ -34,6 +34,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         DefaultTHApiManager.sectionList(this, new RequestCallback() {
             @Override
             public void onNext(Object o) {
@@ -65,7 +66,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-
+                IntentUtil.openMainTabPage(SplashActivity.this);
             }
 
             @Override
