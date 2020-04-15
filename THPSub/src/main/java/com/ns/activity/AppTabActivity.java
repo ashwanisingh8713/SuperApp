@@ -64,6 +64,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getToolbar().setTitle(null);
+
         // Fetch latest userinfo from server
         fetchLatestUserInfo();
 
@@ -99,8 +101,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -117,8 +119,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     mNavigationExpandableListViewAdapter = new NavigationExpandableListViewAdapter(this, sectionList, this);
                     mNavigationExpandableListView.setAdapter(mNavigationExpandableListViewAdapter);
                 }));
-
-//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
     }
 

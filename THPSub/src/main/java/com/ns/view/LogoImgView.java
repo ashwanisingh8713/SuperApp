@@ -40,7 +40,7 @@ public class LogoImgView extends AppCompatImageView {
             }
         }
 
-        // 0 = Splash
+        // 0 = app:logoType="Splash"
         if(imgType == 0) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.about_us_logo);
@@ -48,15 +48,23 @@ public class LogoImgView extends AppCompatImageView {
                 setImageResource(R.drawable.about_us_logo_white);
             }
         }
-        // 0 = SlideBar
+        // 1 = app:logoType="Section"
         else if(imgType == 1) {
-
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.about_us_logo);
+            } else {
+                setImageResource(R.drawable.about_us_logo_white);
+            }
         }
-        // 0 = Toolbar
+        // 2 = app:logoType="SubSection"
         else if(imgType == 2) {
-
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.about_us_logo);
+            } else {
+                setImageResource(R.drawable.about_us_logo_white);
+            }
         }
-        // 0 = ToolbarTHP
+        // 3 = app:logoType="ToolbarTHP"
         else if(imgType == 3) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.logo_actionbar);

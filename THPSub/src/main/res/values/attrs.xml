@@ -31,8 +31,8 @@
     <declare-styleable name="NSImageLogo">
         <attr name="logoType" format="enum">
             <enum name="Splash" value="0" />
-            <enum name="SlideBar" value="1" />
-            <enum name="Toolbar" value="2" />
+            <enum name="Section" value="1" />
+            <enum name="SubSection" value="2" />
             <enum name="ToolbarTHP" value="3" />
         </attr>
     </declare-styleable>
