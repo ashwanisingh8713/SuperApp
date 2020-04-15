@@ -17,7 +17,6 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.retrofit.ServiceFactory;
-import com.netoperation.util.NetConstants;
 import com.netoperation.util.THPPreferences;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
 import com.ns.alerts.Alerts;
@@ -60,11 +59,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         return R.layout.activity_apptab;
     }
 
+
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getToolbar().setTitle(null);
+        // Section Navigation
+        showSectionToolbar();
 
         // Fetch latest userinfo from server
         fetchLatestUserInfo();
@@ -244,6 +248,33 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         } else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+
+        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION)) {
+            showSectionToolbar();
+        }
+
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION)) {
+            showSubSectionToolbar(toolbarChangeRequired.getTitle());
+        }
+
+    }
+
+    /**
+     * Show Section Screen Toolbar icons and sets navigation btn click
+     */
+    private void showSectionToolbar() {
+        getDetailToolbar().showSectionIcons(navigationBtnClick->{
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        });
+    }
+
+    /**
+     * Show Sub-Section Screen Toolbar icons and sets Back btn click and send event for pop-out fragment
+     */
+    private void showSubSectionToolbar(String title) {
+        getDetailToolbar().showSubSectionIcons(title, backBtnClick->{
+            EventBus.getDefault().post(new BackPressImpl());
+        });
     }
 
     @Override

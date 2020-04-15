@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
@@ -90,13 +91,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.tabs);
 
-        if (mIsSubsection) {
-            TextView ttt = view.findViewById(R.id.tttt);
-            ttt.setText("SUB-Section");
-        }
-
         final DaoSection section = THPDB.getInstance(getActivity()).daoSection();
-
 
         mDisposable.add(section.getSectionsOfBurger(true)
                 .subscribeOn(Schedulers.newThread())
@@ -114,10 +109,16 @@ public class TopTabsFragment extends BaseFragmentTHP {
                             }
                         }
                         mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                        if(mSubSectionList.size() < 5) {
+                            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+                        }
                     }
                     else {
                         mTableSectionList = sectionList;
                         mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, null);
+                        if(mTableSectionList.size() < 5) {
+                            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+                        }
                     }
                     mViewPager.setAdapter(mTopTabsAdapter);
                     mTabLayout.setupWithViewPager(mViewPager);

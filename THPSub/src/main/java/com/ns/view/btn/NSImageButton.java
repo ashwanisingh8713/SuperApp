@@ -3,7 +3,6 @@ package com.ns.view.btn;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.ImageButton;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 
@@ -12,7 +11,8 @@ import com.ns.thpremium.R;
 
 public class NSImageButton extends AppCompatImageButton {
 
-    private int viewType = -1;
+    private int mBtnType = -1;
+    private boolean isDayTheme;
 
     public NSImageButton(Context context) {
         super(context);
@@ -30,20 +30,25 @@ public class NSImageButton extends AppCompatImageButton {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        boolean isDayTheme = UserPref.getInstance(context).isUserThemeDay();
+        isDayTheme = UserPref.getInstance(context).isUserThemeDay();
         setBackground(null);
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSImageButton);
             if (typedArray.hasValue(R.styleable.NSImageButton_btnType)) {
-                viewType = typedArray.getInt(R.styleable.NSImageButton_btnType, 0);
+                mBtnType = typedArray.getInt(R.styleable.NSImageButton_btnType, 0);
             } else {
-                viewType = -1;
+                mBtnType = -1;
             }
         }
 
+        setIcon(mBtnType);
+
+    }
+
+    public void setIcon(int btnType) {
         // arrow_no_line
-        if(viewType == 0) {
+        if(btnType == 0) {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_back_copy_2);
             } else {
@@ -51,7 +56,7 @@ public class NSImageButton extends AppCompatImageButton {
             }
         }
         // back_circle
-        else if(viewType == 1) {
+        else if(btnType == 1) {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_left_arrow_disable);
             } else {
@@ -59,7 +64,7 @@ public class NSImageButton extends AppCompatImageButton {
             }
         }
         // arrow_back
-        else if(viewType == 2) {
+        else if(btnType == 2) {
             if(isDayTheme) {
                 setImageResource(R.drawable.arrow_back);
             } else {
@@ -67,7 +72,7 @@ public class NSImageButton extends AppCompatImageButton {
             }
         }
         // cross_circle
-        else if(viewType == 3) {
+        else if(btnType == 3) {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_close_ss);
             } else {
@@ -75,7 +80,7 @@ public class NSImageButton extends AppCompatImageButton {
             }
         }
         // password_field
-        else if(viewType == 4) {
+        else if(btnType == 4) {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_show_password);
             } else {
@@ -84,7 +89,7 @@ public class NSImageButton extends AppCompatImageButton {
         }
 
         // back_circle_dark_arrow
-        else if(viewType == 5) {
+        else if(btnType == 5) {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_back_copy_42);
             } else {
@@ -92,8 +97,14 @@ public class NSImageButton extends AppCompatImageButton {
             }
         }
 
-
-
+        // Section
+        else if(btnType == 6) {
+            if(isDayTheme) {
+                setImageResource(R.drawable.ic_navigation);
+            } else {
+                setImageResource(R.drawable.ic_navigation_white);
+            }
+        }
     }
 
 

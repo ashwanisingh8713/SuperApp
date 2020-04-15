@@ -42,6 +42,26 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         return adapterItems.get(position).getViewType();
     }
 
+    /*@Override
+    public void onViewAttachedToWindow(final RecyclerView.ViewHolder holder) {
+        if (holder instanceof StaticItemWebViewHolder) {
+            holder.setIsRecyclable(false);
+        } else if (holder instanceof WidgetsViewHolder) {
+            holder.setIsRecyclable(false);
+        }
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(final RecyclerView.ViewHolder holder) {
+        if (holder instanceof StaticItemWebViewHolder){
+            holder.setIsRecyclable(true);
+        } else if (holder instanceof WidgetsViewHolder){
+            holder.setIsRecyclable(true);
+        }
+        super.onViewDetachedFromWindow(holder);
+    }*/
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {

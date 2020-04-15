@@ -45,6 +45,25 @@
             <enum name="cross_circle" value="3" />
             <enum name="password_field" value="4" />
             <enum name="back_circle_dark_arrow" value="5" />
+            <enum name="Section" value="6" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="NSIcon">
+        <attr name="iconType" format="enum">
+            <enum name="ttsPlay" value="0" />
+            <enum name="share" value="1" />
+            <enum name="favourite" value="2" />
+            <enum name="bookmarked" value="3" />
+            <enum name="unbookmark" value="4" />
+            <enum name="fontSize" value="5" />
+            <enum name="like" value="6" />
+            <enum name="crown" value="7" />
+            <enum name="overflow" value="8" />
+            <enum name="search" value="9" />
+            <enum name="dislike" value="10" />
+            <enum name="unfavourite" value="11" />
+            <enum name="ttsStop" value="12" />
         </attr>
     </declare-styleable>
 

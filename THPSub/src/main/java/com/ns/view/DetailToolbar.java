@@ -1,14 +1,12 @@
 package com.ns.view;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,28 +38,79 @@ public class DetailToolbar extends Toolbar {
     private TextView mTitleTextView;
     private NSImageButton mBackImageView;
     private LogoImgView mLogoImageView;
-    private ImageView mSearchImageView;
-    private ImageView mCreateBookMarkImageView;
-    private ImageView mRemoveBookMarkedImageView;
-    private ImageView mTextSizeImageView;
-    private ImageView mTTSPlayImageView;
-    private ImageView mTTSPauseImageView;
-    private ImageView premiumLogoBtn;
+    private IconImgView mSearchImageView;
+    private IconImgView mCreateBookMarkImageView;
+    private IconImgView mRemoveBookMarkedImageView;
+    private IconImgView mTextSizeImageView;
+    private IconImgView mTTSPlayImageView;
+    private IconImgView mTTSPauseImageView;
+    private IconImgView premiumLogoBtn;
 
     private ProgressBar mProgressTTS;
     private ProgressBar mProgressFavourite;
     private ProgressBar mProgressBookmark;
     private ProgressBar mProgressLike;
 
-    private ImageView favStarTHPIC;
-    private ImageView shareTHPIC;
-    private ImageView toggleLikeDisLikeTHPIC;
+    private IconImgView favStarTHPIC;
+    private IconImgView shareTHPIC;
+    private IconImgView toggleLikeDisLikeTHPIC;
 
     private FrameLayout overflowParent;
     private FrameLayout likeParent;
     private FrameLayout bookmarkParent;
     private FrameLayout favouriteParent;
     private FrameLayout ttsParent;
+
+    public void showSectionIcons(OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+
+        mBackImageView.setVisibility(VISIBLE);
+        mLogoImageView.setVisibility(VISIBLE);
+        overflowParent.setVisibility(VISIBLE);
+        mSearchImageView.setVisibility(VISIBLE);
+        premiumLogoBtn.setVisibility(VISIBLE);
+        // In declare-styleable name="NSImageButton" enum Section = 6
+        int sectionBtnType = 6;
+        mBackImageView.setIcon(sectionBtnType);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showSubSectionIcons(String title, OnClickListener onClickListener) {
+        overflowParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+
+        mTitleTextView.setVisibility(VISIBLE);
+        premiumLogoBtn.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+        mTitleTextView.setText(title);
+
+        // In declare-styleable name="NSImageButton" enum arrow_back = 2
+        int arrow_back = 2;
+        mBackImageView.setIcon(arrow_back);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showDetailIcons() {
+
+    }
 
     private View mView;
     private String mTitle;
@@ -94,16 +143,16 @@ public class DetailToolbar extends Toolbar {
         mCreateBookMarkImageView = findViewById(R.id.bookmarkIC);
         mRemoveBookMarkedImageView = findViewById(R.id.bookmarkedIC);
         mTextSizeImageView = findViewById(R.id.action_fontSizeIC);
-        mTTSPlayImageView = findViewById(R.id.action_ttsPlayIC);
-        mTTSPauseImageView = findViewById(R.id.action_ttsPauseIC);
+        mTTSPlayImageView = findViewById(R.id.action_ttsPlay);
+        mTTSPauseImageView = findViewById(R.id.action_ttsStop);
 
         mProgressTTS = findViewById(R.id.action_ttsProgress);
         mProgressFavourite = findViewById(R.id.action_favTHPProgressBar);
         mProgressBookmark = findViewById(R.id.bookmarkrogressBar);
         mProgressLike = findViewById(R.id.action_likeTHPProgressBar);
 
-        favStarTHPIC = findViewById(R.id.action_favTHPIC);
-        shareTHPIC = findViewById(R.id.action_shareTHPIC);
+        favStarTHPIC = findViewById(R.id.action_favTHP);
+        shareTHPIC = findViewById(R.id.action_shareTHP);
         toggleLikeDisLikeTHPIC = findViewById(R.id.action_likeTHPIC);
 
         overflowParent = findViewById(R.id.overflowParent);
@@ -196,10 +245,6 @@ public class DetailToolbar extends Toolbar {
                 if (mToolbarClickListener != null) {
                     mToolbarClickListener.onTTSStopClickListener(mToolbarCallModel);
                 }
-
-
-
-//                mTTSPlayImageView.setVisibility(VISIBLE);
             });
         }
 
@@ -216,6 +261,8 @@ public class DetailToolbar extends Toolbar {
 
         setToolbarTitle(mTitle);
     }
+
+
 
 
     public void hideBookmark_Fav_Like() {
@@ -348,17 +395,6 @@ public class DetailToolbar extends Toolbar {
 
     public void setToolbarTitle(int resId) {
         mTitleTextView.setText(resId);
-    }
-
-    @Override
-    public void setNavigationIcon(@Nullable Drawable icon) {
-        if(icon == null) {
-            mBackImageView.setImageDrawable(icon);
-            mBackImageView.setVisibility(GONE);
-        } else {
-            mBackImageView.setImageDrawable(icon);
-            mBackImageView.setVisibility(VISIBLE);
-        }
     }
 
     public TextView getTitleView() {

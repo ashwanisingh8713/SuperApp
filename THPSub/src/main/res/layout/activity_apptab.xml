@@ -25,7 +25,8 @@
             android:contentInsetRight="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetRight="0dp"
-            app:contentInsetEnd="0dp"/>
+            app:contentInsetEnd="0dp"
+            android:background="@color/blueColor_1"/>
 
         <FrameLayout
             android:id="@+id/parentLayout"
