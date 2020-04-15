@@ -213,7 +213,7 @@ public class ForgotPasswordFragment extends BaseFragmentTHP {
                     // Opening OTP Verification Screen
                     OTPVerificationFragment fragment = OTPVerificationFragment.getInstance(THPConstants.FROM_FORGOT_PASSWORD,
                             isUserEnteredEmail, email, mobile);
-                    FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+                    FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                             FragmentUtil.FRAGMENT_ANIMATION, false);
 
                 }

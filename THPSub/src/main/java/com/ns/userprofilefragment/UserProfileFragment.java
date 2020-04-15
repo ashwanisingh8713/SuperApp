@@ -141,7 +141,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
                 return;
             }
             SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_PROFILE_VIEWALL);
-            FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                     FragmentUtil.FRAGMENT_ANIMATION, false);
         });
 
@@ -152,7 +152,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
                 return;
             }
             SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_PROFILE_VIEWALL);
-            FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                     FragmentUtil.FRAGMENT_ANIMATION, false);
         });
 
@@ -160,7 +160,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         // User Next Btn button click listener
         view.findViewById(R.id.part1Layout).setOnClickListener(v->{
             AccountInfoFragment fragment = AccountInfoFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Hi User clicked", UserProfileFragment.class.getSimpleName());
         });
@@ -168,7 +168,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         // Personal Info Row click listener - 1
         view.findViewById(R.id.personalInfo_Row).setOnClickListener(v->{
             PersonalInfoFragment fragment = PersonalInfoFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Personal Info clicked", UserProfileFragment.class.getSimpleName());
         });
@@ -176,7 +176,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         // My Address Row click listener - 2
         view.findViewById(R.id.myAddress_Row).setOnClickListener(v->{
             MyAddressFragment fragment = MyAddressFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "My Address clicked", UserProfileFragment.class.getSimpleName());
         });
@@ -185,7 +185,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         view.findViewById(R.id.notification_Row).setVisibility(View.GONE);
         view.findViewById(R.id.notification_Row).setOnClickListener(v->{
             NotificationFragment fragment = NotificationFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Notifications clicked", UserProfileFragment.class.getSimpleName());
         });
@@ -193,7 +193,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         // Transaction History Row click listener - 4
         view.findViewById(R.id.transactionHistory_Row).setOnClickListener(v->{
             TransactionHistoryFragment fragment = TransactionHistoryFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Transaction History clicked", UserProfileFragment.class.getSimpleName());
         });
@@ -205,7 +205,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
             // Because if user logged in by normal login then we get response "app_direct"
             if(loginSource != null && loginSource.contains("direct")) {
                 ChangePasswordFragment fragment = ChangePasswordFragment.getInstance("");
-                FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+                FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                         fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Change Password clicked", UserProfileFragment.class.getSimpleName());
             } else {
@@ -216,7 +216,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         // Manage Your Address Row click listener - 6
         view.findViewById(R.id.manageYourAccounts_Row).setOnClickListener(v->{
             ManageAccountsFragment fragment = ManageAccountsFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
         });
 

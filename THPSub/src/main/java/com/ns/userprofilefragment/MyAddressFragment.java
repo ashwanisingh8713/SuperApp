@@ -67,7 +67,7 @@ public class MyAddressFragment extends BaseFragmentTHP {
 
         addNewAddress_Txt.setOnClickListener(v->{
             AddAddressFragment fragment = AddAddressFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                     FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Add Edit Address clicked", MyAddressFragment.class.getSimpleName());
         });

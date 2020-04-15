@@ -55,7 +55,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 .subscribe(userProfile -> {
                     THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(articleId, clickedPosition, mFrom, userProfile.getUserId());
 
-                    FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
                     boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
                     if(hasSubscriptionPlan) {

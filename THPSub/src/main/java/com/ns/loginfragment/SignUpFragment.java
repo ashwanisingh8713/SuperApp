@@ -47,7 +47,6 @@ import com.ns.view.EmailMobileTextChangedListener;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes.SIGN_IN_CANCELLED;
@@ -153,7 +152,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 return;
             }
             TCFragment fragment = TCFragment.getInstance(THPConstants.FAQ_URL, "crossBackImg");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "FAQ clicked", SignUpFragment.class.getSimpleName());
         });
@@ -169,7 +168,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                             return;
                         }
                         TCFragment fragment = TCFragment.getInstance(THPConstants.TnC_URL, "crossBackImg");
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
                                 fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                         THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Terms and Conditions clicked", SignUpFragment.class.getSimpleName());
                     }
@@ -288,7 +287,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                         }
                         OTPVerificationFragment fragment = OTPVerificationFragment.getInstance(from,
                                 isUserEnteredEmail, email, mobile);
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                                 FragmentUtil.FRAGMENT_ANIMATION, false);
 
                     }

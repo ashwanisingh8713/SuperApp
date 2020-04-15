@@ -57,7 +57,7 @@ public class SignInAndUpActivity extends BaseAcitivityTHP {
         mFrom = getIntent().getExtras().getString("from");
 
         SignInAndUpFragment fragment = SignInAndUpFragment.getInstance(mFrom);
-        FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+        FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
         //Register Become a member Killing broadcast receiver
         registerReceiver(broadcastFinishActivity, new IntentFilter(THPConstants.BROADCAST_ACTION_KILL_BECOME_MEMBER_PAGE));

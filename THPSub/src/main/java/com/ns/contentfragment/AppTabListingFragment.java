@@ -19,6 +19,8 @@ import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.AppTabContentAdapter;
+import com.ns.callbacks.BackPressCallback;
+import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnEditionBtnClickListener;
 import com.ns.callbacks.THP_AppEmptyPageListener;
 import com.ns.clevertap.CleverTapUtil;
@@ -33,6 +35,10 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.text.CustomTextView;
 import com.ns.view.RecyclerViewPullToRefresh;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,11 +66,14 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     private long mPageStartTime = 0l;
     private long mPageEndTime = 0l;
 
-    public static AppTabListingFragment getInstance(String userId, String from) {
+    private int mTabIndex;
+
+    public static AppTabListingFragment getInstance(int tabIndex, String userId, String from) {
         AppTabListingFragment fragment = new AppTabListingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("userId", userId);
         bundle.putString("from", from);
+        bundle.putInt("tabIndex", tabIndex);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,6 +89,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         if(getArguments() != null) {
             mUserId = getArguments().getString("userId");
             mFrom = getArguments().getString("from");
+            mTabIndex = getArguments().getInt("tabIndex");
         }
     }
 
@@ -114,9 +124,9 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onResume() {
         super.onResume();
-        /*if(mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() >0) {
-            //mRecyclerAdapter.notifyDataSetChanged();
-        }*/
+        Log.i("TabFragment", "onResume() TabIndex = "+mTabIndex);
+        Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
+        EventBus.getDefault().register(this);
 
         // Shows user name
         mDisposable.add(ApiManager.getUserProfile(getActivity())
@@ -634,6 +644,34 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         CleverTapUtil.cleverTapTHPTabTimeSpent(getActivity(), from,totalTime,timeInSeconds);
     }
 
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }*/
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("TabFragment", "onPause() TabIndex = "+mTabIndex);
+        EventBus.getDefault().unregister(this);
+        Log.i("TabFragment", "onPause() TabIndex = "+mTabIndex+" EventBus UnRegistered");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i("TabFragment", "onDestroyView() TabIndex = "+mTabIndex);
+        EventBus.getDefault().unregister(this);
+        Log.i("TabFragment", "onDestroyView() TabIndex = "+mTabIndex+" EventBus UnRegistered");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressImpl backPress) {
+        Log.i("handleEvent", "Back Button Pressed :: TabIndex = "+mTabIndex);
+        BackPressCallback backPressCallback = new BackPressImpl(this, mFrom, mTabIndex).onBackPressed();
+        EventBus.getDefault().post(backPressCallback);
+    }
 
 
 }

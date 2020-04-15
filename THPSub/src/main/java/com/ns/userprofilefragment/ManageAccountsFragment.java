@@ -91,7 +91,7 @@ public class ManageAccountsFragment extends BaseFragmentTHP {
     private void openOtpVerificationScreen(String from) {
         enableViews(from, true);
         OTPVerificationFragment fragment = OTPVerificationFragment.getInstance(from);
-        FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+        FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                 FragmentUtil.FRAGMENT_ANIMATION, false);
         fragment.setOtpVerification(new OTPVerificationFragment.OnOtpVerification() {
             @Override

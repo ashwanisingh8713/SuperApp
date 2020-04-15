@@ -16,14 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.facebook.FacebookSdk;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.UserPref;
 import com.ns.activity.BaseAcitivityTHP;
-import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -154,4 +151,6 @@ public abstract class BaseFragmentTHP extends Fragment {
         mSnackbarView.addView(snackView);
         mSnackbar.show();
     }
+
+
 }

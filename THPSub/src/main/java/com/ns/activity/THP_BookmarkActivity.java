@@ -29,7 +29,7 @@ public class THP_BookmarkActivity extends BaseAcitivityTHP {
             mUserId = getIntent().getStringExtra("userId");
         }
         THP_BookmarksFragment fragment = THP_BookmarksFragment.getInstance(mUserId);
-        FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+        FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
     }
 
     @Override

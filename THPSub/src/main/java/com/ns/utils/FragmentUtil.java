@@ -13,19 +13,14 @@ public class FragmentUtil {
 
     public static void pushFragmentFromFragment(Fragment fragmentParent, int resId, Fragment fragment) {
         FragmentTransaction trasaction = fragmentParent.getChildFragmentManager().beginTransaction();
-        trasaction.replace(resId, fragment, fragmentParent.getClass().getCanonicalName());
-        trasaction.commit();
-    }
-
-    public static void pushFragment(AppCompatActivity activity, int resId, Fragment fragment) {
-        FragmentTransaction trasaction = activity.getSupportFragmentManager().beginTransaction();
-        trasaction.replace(resId, fragment, activity.getSupportFragmentManager().getBackStackEntryCount() + "");
+//        trasaction.add(resId, fragment, fragmentParent.getClass().getCanonicalName());
+        trasaction.add(resId, fragment);
         trasaction.addToBackStack(null);
         trasaction.commit();
     }
 
-    public static void pushFragmentAnim(AppCompatActivity activity, int resId, Fragment fragment,
-                                        final int animationSet, final boolean isRoot) {
+    public static void replaceFragmentAnim(AppCompatActivity activity, int resId, Fragment fragment,
+                                           final int animationSet, final boolean isRoot) {
         FragmentTransaction trasaction = activity.getSupportFragmentManager().beginTransaction();
         if (animationSet != FRAGMENT_NO_ANIMATION) {
             trasaction.setTransition(animationSet);

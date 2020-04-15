@@ -3,7 +3,6 @@ package com.ns.activity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class THPUserProfileActivity extends AppLocationActivity implements OnSubscribeBtnClick, OnPlanInfoLoad, RecoPlansWebViewFragment.SubsPlanSelectListener {
 
@@ -84,25 +82,25 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
         if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
             //SubscriptionStep_1_Fragment fragment = SubscriptionStep_1_Fragment.getInstance(from);
             RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance(from);
-            FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
         } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_PROFILE)) {
 
             // Uncomment below code snippet
             UserProfileFragment fragment = UserProfileFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
         } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
 
             // Uncomment below code snippet
             UserProfileFragment fragment = UserProfileFragment.getInstance("");
-            FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
             AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
             FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
 
         } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_ACCOUNT_CREATED)) {
             SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_USER_ACCOUNT_CREATED);
-            FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment,
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment,
                     FragmentUtil.FRAGMENT_ANIMATION, true);
         }
 
@@ -175,7 +173,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                         .subscribe(val -> {
                             hideProgressDialog();
                             TxnStatusFragment fragment = TxnStatusFragment.getInstance("success", "");
-                            FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
                             //MP Firebase & CleverTap events
                             if (THPConstants.IS_FROM_MP_BLOCKER) {
                                 ApiManager.getMPTableObject(THPUserProfileActivity.this)
@@ -190,7 +188,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                         }, throwable -> {
                             hideProgressDialog();
                             TxnStatusFragment fragment = TxnStatusFragment.getInstance("pending", "Verifying transaction failed");
-                            FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                            FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                         });
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -198,7 +196,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 if (data != null) {
                     getUserInfoApiCall();
                     TxnStatusFragment fragment = TxnStatusFragment.getInstance(data.getStringExtra("status"), data.getStringExtra("message"));
-                    FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
                 }
             }
         }  else if (requestCode == 100) {
@@ -409,13 +407,13 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
             THPPreferences.getInstance(this).setStatusTest("");
             if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("success")) {
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("success", "");
-                FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
             } else if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("failed")){
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("failed", "");
-                FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             } else if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("pending")){
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("pending", "");
-                FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             }
             if (!THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("")) {
                 return;
@@ -439,7 +437,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                     //Fail and success conditional implementation
                     if (paytmModel == null) {
                         TxnStatusFragment fragment = TxnStatusFragment.getInstance("failed", "Payment request failed. "+getString(R.string.please_check_ur_connectivity));
-                        FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                        FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                       //  CleverTapUtil.cleverTapEventPaymentStatus(this,"failed",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                         THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(THPUserProfileActivity.this,"Action","failed",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                     } else {
@@ -450,7 +448,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                     //Handle Error and network interruption
                     Log.i("THPUserProfileActivity", throwable.getMessage());
                     TxnStatusFragment fragment = TxnStatusFragment.getInstance("failed", "Payment request failed. "+getString(R.string.please_check_ur_connectivity));
-                    FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                    FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                   //  CleverTapUtil.cleverTapEventPaymentStatus(this,"failed",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                     THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(THPUserProfileActivity.this,"Action","failed",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                 });
@@ -514,7 +512,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     fragment = TxnStatusFragment.getInstance("pending", paytmTransactionStatus.RESPMSG);
                                     isRoot = false;
                                 }
-                                FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
+                                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
 
                             });
                 }, throwable -> {
@@ -522,7 +520,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                     //Handle Error and network interruption
                     Log.i("THPUserProfileActivity", throwable.getMessage());
                     TxnStatusFragment fragment = TxnStatusFragment.getInstance("pending", "Verifying transaction failed");
-                    FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                    FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 });
     }
 
@@ -594,7 +592,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
             public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
                 /*Display the message as below */
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("failed", "Transaction cancelled : "+inErrorMessage);
-                FragmentUtil.pushFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             }
         });
 

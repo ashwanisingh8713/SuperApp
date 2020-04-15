@@ -47,7 +47,6 @@ import com.ns.view.EmailMobileTextChangedListener;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -218,7 +217,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                             return;
                         }
                         TCFragment fragment = TCFragment.getInstance(THPConstants.TnC_URL, "crossBackImg");
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                                 fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                         THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Terms and Conditions clicked", SignInFragment.class.getSimpleName());
                     }
@@ -476,7 +475,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
             }
             IS_FORGOT_PASSWORD_REDIRECT_PAYMENT = mFrom != null && mFrom.contains(THPConstants.PAYMENT);
             ForgotPasswordFragment fragment = ForgotPasswordFragment.getInstance(emailOrMobile);
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     fragment, FragmentUtil.FRAGMENT_ANIMATION, false);
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Forgot Password clicked", SignInFragment.class.getSimpleName());
         });

@@ -8,6 +8,7 @@ import android.widget.ExpandableListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.netoperation.db.THPDB;
@@ -16,10 +17,14 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.util.NetConstants;
 import com.netoperation.util.THPPreferences;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
 import com.ns.alerts.Alerts;
+import com.ns.callbacks.BackPressCallback;
+import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
+import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.AppTabFragment;
 import com.ns.loginfragment.AccountCreatedFragment;
@@ -31,6 +36,8 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.concurrent.TimeUnit;
 
@@ -77,7 +84,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     int tabIndex = getIntent().getIntExtra("tabIndex", 0);
                     mAppTabFragment = AppTabFragment.getInstance(mFrom, userProfile.getUserId(), tabIndex);
 
-                    FragmentUtil.pushFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
                     // THis below condition will be executed when user creates normal Sign-UP
                     if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
@@ -96,6 +103,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 this, mDrawerLayout, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
 
         // Show Expandable List Content from Database
         DaoSection section = THPDB.getInstance(this).daoSection();
@@ -167,6 +175,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
+        Log.i("TabFragment", "onResume() In Activity EventBus Registered");
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("TabFragment", "onStop() In Activity EventBus UnRegistered");
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -189,7 +207,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), null);
 
-
     }
 
     @Override
@@ -200,5 +217,38 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), childSection.getSecName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressCallback backPressCallback) {
+        Log.i("handleEvent", "Received BackPressCallback :: From TabIndex = "+backPressCallback.getTabIndex());
+        if(backPressCallback.isPopBack()) {
+            return;
+        } else if(backPressCallback.getTabIndex() != 0){
+            mAppTabFragment.setCurrentTab(0);
+        } else {
+            finish();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
+        Log.i("handleEvent", "Received ToolbarChangeRequired :: From TabIndex = "+toolbarChangeRequired.getTabIndex());
+        if(toolbarChangeRequired.isEnableLeftSlider()) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //drawer is open
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        EventBus.getDefault().post(new BackPressImpl());
     }
 }

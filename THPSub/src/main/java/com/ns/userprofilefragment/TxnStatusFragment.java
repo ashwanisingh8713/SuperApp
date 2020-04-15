@@ -78,7 +78,7 @@ public class TxnStatusFragment extends BaseFragmentTHP {
             view.findViewById(R.id.viewSubscriptionBtn_Txt).setOnClickListener(view1 ->
             {
                 SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_PROFILE_VIEWALL);
-                FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+                FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                         FragmentUtil.FRAGMENT_ANIMATION, true);
             });
             view.findViewById(R.id.setPreferenceBtn_Txt).setOnClickListener(v ->
@@ -120,7 +120,7 @@ public class TxnStatusFragment extends BaseFragmentTHP {
             view.findViewById(R.id.checkSubscriptionBtn_Txt).setOnClickListener(view1 ->
             {
                 SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_PROFILE_VIEWALL);
-                FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
+                FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                         FragmentUtil.FRAGMENT_ANIMATION, true);
             });
             view.findViewById(R.id.textViewDismissWindow).setOnClickListener(view13 -> {

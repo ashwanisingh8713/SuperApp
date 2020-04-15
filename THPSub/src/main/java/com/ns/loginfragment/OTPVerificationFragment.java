@@ -362,7 +362,7 @@ public class OTPVerificationFragment extends BaseFragmentTHP implements GoogleAp
                             || mFrom.equalsIgnoreCase(THPConstants.FROM_START_30_DAYS_TRAIL) || THPConstants.IS_FROM_MP_BLOCKER) {
                         FragmentUtil.clearSingleBackStack((AppCompatActivity)getActivity());
                         SetPasswordFragment fragment = SetPasswordFragment.getInstance(mFrom, isUserEnteredEmail, email, contact, otp);
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(),
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(),
                                 R.id.parentLayout, fragment,
                                 FragmentUtil.FRAGMENT_NO_ANIMATION, false);
 
@@ -374,7 +374,7 @@ public class OTPVerificationFragment extends BaseFragmentTHP implements GoogleAp
                     else if(mFrom != null && (mFrom.equalsIgnoreCase(THPConstants.FROM_FORGOT_PASSWORD))) {
                         FragmentUtil.clearSingleBackStack((AppCompatActivity)getActivity());
                         SetPasswordFragment fragment = SetPasswordFragment.getInstance(mFrom, isUserEnteredEmail, email, contact, otp);
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(),
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(),
                                 R.id.parentLayout, fragment,
                                 FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                     }

@@ -49,8 +49,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
 
     private TabLayout mTabLayout;
-    private ViewPager viewPager;
-    private AppTabPagerAdapter pagerAdapter;
+    private ViewPager mViewPager;
+    private AppTabPagerAdapter mPagerAdapter;
     private int tabIndex = 0;
 
     /** Holds String value of User Name, to know whether user has logged in or not*/
@@ -106,7 +106,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         // To select default tab
         mTabUtils.SetOnSelectView(getActivity(), mTabLayout, tabIndex);
-        viewPager.setCurrentItem(tabIndex);
+        mViewPager.setCurrentItem(tabIndex);
     }
 
     public void updateFromValue(String from) {
@@ -119,17 +119,17 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         subscribeLayout = view.findViewById(R.id.subscribeLayout);
         mTabLayout = view.findViewById(R.id.appTabsTabLayout);
-        viewPager = view.findViewById(R.id.appTabsViewPager);
+        mViewPager = view.findViewById(R.id.appTabsViewPager);
 
-        pagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), mUserId, tabNames);
+        mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), mUserId, tabNames);
 
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(4);
 
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
 
-        mTabLayout.setupWithViewPager(viewPager, true);
+        mTabLayout.setupWithViewPager(mViewPager, true);
 
          mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
 
@@ -148,7 +148,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
                 mTabUtils.SetOnSelectView(getActivity(), mTabLayout, pos);
-                viewPager.setCurrentItem(pos);
+                mViewPager.setCurrentItem(pos);
 
                 THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), tab.getText() + " Screen", AppTabFragment.class.getSimpleName());
             }
@@ -224,7 +224,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         try {
             Field mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);
-            mScroller.set(viewPager, new ViewPagerScroller(getActivity(),
+            mScroller.set(mViewPager, new ViewPagerScroller(getActivity(),
                     new LinearInterpolator(), 250));
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,4 +248,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("", "");
     }
+
+
+    public void setCurrentTab(int tabIndex) {
+        mViewPager.setCurrentItem(tabIndex);
+    }
+
 }

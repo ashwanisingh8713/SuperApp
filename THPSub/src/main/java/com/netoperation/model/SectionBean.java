@@ -16,8 +16,8 @@ public class SectionBean {
      * overridePriority : 0
      * explorePriority : 1
      * overrideExplore : 0
-     * image : https://www.thehindu.com/news/cities/chennai/ei5ezc/article31285827.ece/ALTERNATES/FREE_660/prayer-chennai-corona
-     * image_v2 : https://www.thehindu.com/news/cities/chennai/ei5ezc/article31285827.ece/ALTERNATES/FREE_660/prayer-chennai-corona
+     * image : https://www.thehindu.com/news/cities/chennai/ei5ezc/article31285827.ece/
+     * image_v2 : https://www.thehindu.com/news/cities/chennai/ei5ezc/article31285827.ece/
      * show_on_burger : false
      * show_on_explore : false
      * custom : false

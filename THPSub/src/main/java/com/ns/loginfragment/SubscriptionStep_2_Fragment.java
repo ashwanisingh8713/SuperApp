@@ -68,7 +68,7 @@ public class SubscriptionStep_2_Fragment extends BaseFragmentTHP {
                     @Override
                     public void onTextSpanClick() {
                         TCFragment fragment = TCFragment.getInstance(THPConstants.TnC_URL, "arrowBackImg");
-                        FragmentUtil.pushFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
+                        FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout,
                                 fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                     }
                 });

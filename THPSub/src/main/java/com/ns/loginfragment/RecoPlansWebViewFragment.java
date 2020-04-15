@@ -105,14 +105,14 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         // frequently asked questions click listener
         view.findViewById(R.id.tv_frequent_questions).setOnClickListener(v->{
             TCFragment tcFragment = TCFragment.getInstance(THPConstants.FAQ_URL, "arrowBackImg");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     tcFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
         });
 
         // terms and conditions click listener
         view.findViewById(R.id.tv_terms).setOnClickListener(v->{
             TCFragment tcFragment = TCFragment.getInstance(THPConstants.TnC_URL, "arrowBackImg");
-            FragmentUtil.pushFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
+            FragmentUtil.replaceFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout,
                     tcFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
         });*/
     }

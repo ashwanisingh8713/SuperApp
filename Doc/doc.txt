@@ -1,0 +1,2 @@
+### android-multiple-fragments-stack-in-each-viewpager-tab
+https://tausiq.wordpress.com/2014/06/06/android-multiple-fragments-stack-in-each-viewpager-tab/
