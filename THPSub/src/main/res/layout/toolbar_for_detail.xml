@@ -7,13 +7,17 @@
     >
     <!-- Start Back Icon-->
     <com.ns.view.btn.NSImageButton
-        app:btnType="arrow_no_line"
+        app:btnType="arrow_back"
         android:id="@+id/action_back"
         style="@style/backBtnStyle"
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginStart="@dimen/toolbar_ic_gap"
+        android:layout_marginLeft="@dimen/toolbar_ic_gap"/>
     <!-- End Back Icon-->
 
     <!-- Start Logo Icon-->
@@ -25,16 +29,32 @@
         android:scaleType="centerInside"
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/action_back"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/action_back"
         android:visibility="gone"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
         />
     <!-- End Logo Icon-->
 
+    <!-- Start Title TextView-->
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/action_titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/action_logo"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:text="@string/appName"
+        />
+    <!-- Start Title TextView-->
 
     <!-- Start Overflow Icon-->
     <FrameLayout
-        android:id="@+id/action_overflow"
+        android:id="@+id/overflowParent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -47,6 +67,7 @@
         >
 
         <ImageView
+            android:id="@+id/action_overfloddw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -78,8 +99,8 @@
         android:layout_height="@dimen/toolbar_ic_height"
         app:srcCompat="@drawable/ic_premium_logo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/action_overflow"
-        app:layout_constraintRight_toLeftOf="@id/action_overflow"
+        app:layout_constraintEnd_toStartOf="@id/overflowParent"
+        app:layout_constraintRight_toLeftOf="@id/overflowParent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
@@ -110,7 +131,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintRight_toLeftOf="@+id/action_search"
+        app:layout_constraintRight_toLeftOf="@id/action_search"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         android:layout_marginEnd="@dimen/toolbar_ic_gap">
     <ImageView
@@ -126,7 +147,6 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         style="@android:style/Widget.Holo.ProgressBar.Small"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         />
     </FrameLayout>
     <!-- End Like -->
@@ -141,7 +161,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toLeftOf="@+id/likeParent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/bookmarkedIC"
@@ -262,7 +283,7 @@
         android:id="@+id/action_ttsProgress"
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
-        style="@android:style/Widget.ProgressBar.Small"
+        style="@android:style/Widget.Holo.ProgressBar.Small"
         android:visibility="visible"/>
     </FrameLayout>
     <!-- End TTS Icon -->
