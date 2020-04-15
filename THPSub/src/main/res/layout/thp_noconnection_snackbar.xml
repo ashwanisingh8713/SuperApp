@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:layout_toLeftOf="@id/action_button"
         android:singleLine="true"
-        android:text="No internet connection"
+        android:text="@string/no_internet_connection"
         android:textColor="#8a8a8a"
         android:textSize="18sp" />
 

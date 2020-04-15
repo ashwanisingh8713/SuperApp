@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,20 +55,22 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     private AppTabPagerAdapter mPagerAdapter;
     private int tabIndex = 0;
 
-    /** Holds String value of User Name, to know whether user has logged in or not*/
+    /**
+     * Holds String value of User Name, to know whether user has logged in or not
+     */
     protected String mUserLoggedName;
 
     private boolean mIsUserThemeDay;
 
-    private String [] tabNames = {"Home", THPConstants.TAB_1, THPConstants.TAB_2, THPConstants.TAB_3, "Profile"};
-    private int [] tabUnSelectedIcons = {
+    private String[] tabNames = {"Home", THPConstants.TAB_1, THPConstants.TAB_2, THPConstants.TAB_3, "Profile"};
+    private int[] tabUnSelectedIcons = {
             com.ns.thpremium.R.drawable.ic_thp_tab_home_unselected,
             com.ns.thpremium.R.drawable.ic_tab_briefcase_unselected,
             com.ns.thpremium.R.drawable.ic_tab_dashboard_unselected,
             com.ns.thpremium.R.drawable.ic_tab_suggested_unselected,
             com.ns.thpremium.R.drawable.ic_thp_tab_profile_unselected
     };
-    private int [] tabSelectedIcons = {
+    private int[] tabSelectedIcons = {
             com.ns.thpremium.R.drawable.ic_thp_tab_home_selected,
             com.ns.thpremium.R.drawable.ic_tab_briefcase_selected,
             com.ns.thpremium.R.drawable.ic_tab_dashboard_selected,
@@ -82,7 +86,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             mUserId = getArguments().getString("userId");
             tabIndex = getArguments().getInt("tabIndex");
             mFrom = getArguments().getString("from");
@@ -92,15 +96,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
     public void updateTabIndex() {
-        if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_PERSONALISE)) {
+        if (mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_PERSONALISE)) {
             tabIndex = 1;
         } else if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
             tabIndex = 0;
-        } else if(THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_1)) {
+        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_1)) {
             tabIndex = 0;
-        } else if(THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_2)) {
+        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_2)) {
             tabIndex = 1;
-        } else if(THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_3)) {
+        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_3)) {
             tabIndex = 2;
         }
 
@@ -131,8 +135,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         mTabLayout.setupWithViewPager(mViewPager, true);
 
-         mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
-
+        mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
 
         // Iterate over all tabs and set the custom view
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {
@@ -166,27 +169,45 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         });
 
 
-            // Subscribe Button Click Listener
-            view.findViewById(R.id.subscribeBtn_Txt).setOnClickListener(v -> {
-                if(mIsOnline) {
-                    IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
-                } else {
-                    noConnectionSnackBar(getView());
-                }
-            });
-            view.findViewById(R.id.subscribeLayout).setOnClickListener(v -> {
-                if(!mIsOnline) {
-                    noConnectionSnackBar(getView());
-                    return;
-                }
+        // Subscribe Button Click Listener
+        view.findViewById(R.id.subscribeBtn_Txt).setOnClickListener(v -> {
+            if (mIsOnline) {
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
-            });
+            } else {
+                noConnectionSnackBar(getView());
+            }
+        });
+        view.findViewById(R.id.subscribeLayout).setOnClickListener(v -> {
+            if (!mIsOnline) {
+                noConnectionSnackBar(getView());
+                return;
+            }
+            IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+        });
 
-            view.findViewById(R.id.subsCloseImg).setOnClickListener(v -> {
-                THPPreferences.getInstance(getActivity()).setIsSubscribeClose(true);
-                view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
-            });
+        view.findViewById(R.id.subsCloseImg).setOnClickListener(v -> {
+            THPPreferences.getInstance(getActivity()).setIsSubscribeClose(true);
+            view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+        });
 
+        tabClicks();
+
+    }
+
+
+    private void tabClicks() {
+        LinearLayout tabStrip = ((LinearLayout)mTabLayout.getChildAt(0));
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            if(i==0 || i==4) {
+                continue;
+            }
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
     }
 
     /**
@@ -196,20 +217,20 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
-                    if(userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
+                    if (userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
                         mUserLoggedName = userProfile.getFullName().toUpperCase();
-                    } else if(userProfile != null && !TextUtils.isEmpty(userProfile.getEmailId())) {
+                    } else if (userProfile != null && !TextUtils.isEmpty(userProfile.getEmailId())) {
                         mUserLoggedName = userProfile.getEmailId().toUpperCase();
-                    } else if(userProfile != null && !TextUtils.isEmpty(userProfile.getContact())) {
+                    } else if (userProfile != null && !TextUtils.isEmpty(userProfile.getContact())) {
                         mUserLoggedName = userProfile.getContact().toUpperCase();
                     }
 
                     boolean hasFreePlan = userProfile.isHasFreePlan();
                     boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
 
-                    if(hasSubscriptionPlan) {
+                    if (hasSubscriptionPlan) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
-                    } else if(THPPreferences.getInstance(getActivity()).isSubscribeClose()) {
+                    } else if (THPPreferences.getInstance(getActivity()).isSubscribeClose()) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
                     } else {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.VISIBLE);

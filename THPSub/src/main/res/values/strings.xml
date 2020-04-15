@@ -117,5 +117,6 @@
     <!--DEFAULT-->
     <string name="info_home_explore">Explore Section</string>
     <string name="info_widget_viewall">VIEW ALL</string>
+    <string name="no_internet_connection">No internet connection</string>
 
 </resources>
