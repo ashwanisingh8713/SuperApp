@@ -152,9 +152,12 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         else { // Other Sections or Sub-Section
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
-            if(mIsSubsection) {
+
+            // If it is section
+            if(!mIsSubsection) {
                 getSubsections();
             }
+
             loadMoreItems();
 
         }
@@ -178,7 +181,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     THPDB thpdb = THPDB.getInstance(getActivity());
                     DaoSection daoSection = thpdb.daoSection();
                     TableSection section = daoSection.getSubSections(value);
-                    mSubSections = section.getSubSections();
+                    if(section != null) {
+                        mSubSections = section.getSubSections();
+                    }
                     return value;
                 })
                 .subscribe();

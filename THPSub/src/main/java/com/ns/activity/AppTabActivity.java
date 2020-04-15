@@ -210,13 +210,18 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     }
 
     @Override
-    public void onChildClick(int groupPostion, int childPosition, TableSection tableSection, SectionBean childSection) {
+    public void onChildClick(int groupPostion, int childPosition, TableSection groupSection, SectionBean childSection) {
+
+        // Setting Group Section name, It will be used to show in Toolbar title
+        childSection.setParentSecName(groupSection.getSecName());
+        childSection.setParentSecId(groupSection.getSecId());
         // Sending Event in TopTabsFragment.java => handleEvent()
         EventBus.getDefault().post(childSection);
+        // Closing Left Drawer
         mDrawerLayout.closeDrawers();
 
         // CleverTap Hamburger Event Tracking
-        CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), childSection.getSecName());
+        CleverTapUtil.cleverTapEventHamberger(this, groupSection.getSecName(), childSection.getSecName());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)

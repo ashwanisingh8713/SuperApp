@@ -30,7 +30,9 @@ public class SectionBean {
      * staticPageUrl : {"url":"","isEnabled":false,"position":"0","sectionId":0}
      */
 
+    private String parentSecId;
     private String secId;
+    private String parentSecName;
     private String secName;
     private String link;
     private String type;
@@ -68,12 +70,28 @@ public class SectionBean {
         this.secId = secId;
     }
 
+    public String getParentSecId() {
+        return parentSecId;
+    }
+
+    public void setParentSecId(String parentSecId) {
+        this.parentSecId = parentSecId;
+    }
+
     public String getSecName() {
         return secName;
     }
 
     public void setSecName(String secName) {
         this.secName = secName;
+    }
+
+    public String getParentSecName() {
+        return parentSecName;
+    }
+
+    public void setParentSecName(String parentSecName) {
+        this.parentSecName = parentSecName;
     }
 
     public String getLink() {

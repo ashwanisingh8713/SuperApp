@@ -49,6 +49,8 @@ public class TopTabsFragment extends BaseFragmentTHP {
     private List<SectionBean> mSubSectionList;
     private int mTabIndex;
 
+    int mSelectedPagerIndex = 0;
+
 
     public static TopTabsFragment getInstance(int tabIndex, String from, String sectionId,
                                               boolean isSubsection, String subSectionId) {
@@ -95,28 +97,31 @@ public class TopTabsFragment extends BaseFragmentTHP {
 
         final DaoSection section = THPDB.getInstance(getActivity()).daoSection();
 
+
         mDisposable.add(section.getSectionsOfBurger(true)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sectionList -> {
-
                     if(mIsSubsection) {
                         SectionBean subSectionBean = new SectionBean();
                         subSectionBean.setSecId(mSubSectionId);
                         for(TableSection tableSection : sectionList) {
                             List<SectionBean> subSection = tableSection.getSubSections();
-                            if(subSection.contains(subSectionBean)) {
+                            mSelectedPagerIndex = subSection.indexOf(subSectionBean);
+                            if(mSelectedPagerIndex != -1) {
                                 mSubSectionList = subSection;
                                 break;
                             }
                         }
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
                     }
                     else {
                         mTableSectionList = sectionList;
-                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, mSubSectionList);
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, null);
                     }
                     mViewPager.setAdapter(mTopTabsAdapter);
                     mTabLayout.setupWithViewPager(mViewPager);
+                    mViewPager.setCurrentItem(mSelectedPagerIndex);
                 }));
 
     }
@@ -165,7 +170,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, topTabsFragment);
 
         // ToolbarChangeRequired Event Post
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, ToolbarChangeRequired.SUB_SECTION));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, tableSection.getParentSecName(), ToolbarChangeRequired.SUB_SECTION));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -173,7 +178,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Back Button Pressed :: TabIndex = " + mTabIndex);
 
         // ToolbarChangeRequired Event Post
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mTabIndex, ToolbarChangeRequired.SECTION));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mTabIndex, null, ToolbarChangeRequired.SECTION));
 
         // Back Press Event Post
         EventBus.getDefault().post(new BackPressImpl(this, mFrom, mTabIndex).onBackPressed());

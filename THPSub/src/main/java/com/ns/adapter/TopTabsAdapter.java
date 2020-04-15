@@ -36,20 +36,32 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(mIsSubsection) {
-            SectionFragment.getInstance(mFrom, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
+            return SectionFragment.getInstance(mFrom, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
         }
         return SectionFragment.getInstance(mFrom, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
     }
 
     @Override
     public int getCount() {
-        return mSectionList.size();
+        if(mSectionList != null) {
+            return mSectionList.size();
+        } else if (mSubSectionList != null) {
+            return mSubSectionList.size();
+        } else {
+            return 0;
+        }
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mSectionList.get(position).getSecName();
+        if(mSectionList != null) {
+            return mSectionList.get(position).getSecName();
+        } else if (mSubSectionList != null) {
+            return mSubSectionList.get(position).getSecName();
+        } else {
+            return "";
+        }
     }
 
     /**

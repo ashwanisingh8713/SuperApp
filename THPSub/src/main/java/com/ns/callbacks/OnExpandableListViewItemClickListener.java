@@ -12,5 +12,5 @@ public interface OnExpandableListViewItemClickListener {
 
     void onGroupClick(int groupPostion, TableSection tableSection, boolean isExpanded);
 
-    void onChildClick(int groupPostion, int childPosition, TableSection tableSection, SectionBean childSection);
+    void onChildClick(int groupPostion, int childPosition, TableSection groupSection, SectionBean childSection);
 }

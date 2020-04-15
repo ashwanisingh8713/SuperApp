@@ -12,6 +12,7 @@ public class ToolbarChangeRequired {
     private boolean isEnableLeftSlider;
     private int tabIndex;
     private String typeOfToolbar;
+    private String title;
 
     public static final String SECTION = "section";
     public static final String SUB_SECTION = "subSection";
@@ -23,11 +24,20 @@ public class ToolbarChangeRequired {
     })
     public @interface ChangeType {}
 
-    public ToolbarChangeRequired(String from, boolean isEnableLeftSlider, int tabIndex, @ChangeType String typeOfToolbar) {
+    public ToolbarChangeRequired(String from, boolean isEnableLeftSlider, int tabIndex, String title, @ChangeType String typeOfToolbar) {
         this.from = from;
         this.isEnableLeftSlider = isEnableLeftSlider;
         this.tabIndex = tabIndex;
         this.typeOfToolbar = typeOfToolbar;
+        this.title = title;
+    }
+
+    public String getTypeOfToolbar() {
+        return typeOfToolbar;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getFrom() {
