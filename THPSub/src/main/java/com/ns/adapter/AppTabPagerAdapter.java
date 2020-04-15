@@ -30,7 +30,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         if(i==0) {
-            return TopTabsFragment.getInstance(i, NetConstants.RECO_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "");
+            return TopTabsFragment.getInstance(i, NetConstants.RECO_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
         }
         else if(i==1) {
             return AppTabListingFragment.getInstance(i, mUserId, NetConstants.BREIFING_ALL);

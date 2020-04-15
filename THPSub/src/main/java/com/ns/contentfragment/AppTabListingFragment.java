@@ -23,6 +23,7 @@ import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnEditionBtnClickListener;
 import com.ns.callbacks.THP_AppEmptyPageListener;
+import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.AppTabContentModel;
@@ -124,6 +125,10 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onResume() {
         super.onResume();
+
+        // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
+        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM));
+
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);
 
@@ -662,6 +667,8 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(BackPressImpl backPress) {
         Log.i("handleEvent", "Back Button Pressed :: TabIndex = "+mTabIndex);
+
+        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mFrom, mTabIndex).onBackPressed();
         EventBus.getDefault().post(backPressCallback);
     }

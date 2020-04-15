@@ -61,6 +61,7 @@ public class DetailToolbar extends Toolbar {
     private FrameLayout favouriteParent;
     private FrameLayout ttsParent;
 
+
     public void showSectionIcons(OnClickListener onClickListener) {
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
@@ -80,6 +81,28 @@ public class DetailToolbar extends Toolbar {
         // In declare-styleable name="NSImageButton" enum Section = 6
         int sectionBtnType = 6;
         mBackImageView.setIcon(sectionBtnType);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showPremiumIcons(OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+
+        mBackImageView.setVisibility(VISIBLE);
+        mLogoImageView.setVisibility(VISIBLE);
+        premiumLogoBtn.setVisibility(VISIBLE);
+        // In declare-styleable name="NSImageButton" enum Section = 6
+        int arrow_no_line = 0;
+        mBackImageView.setIcon(arrow_no_line);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -469,4 +492,9 @@ public class DetailToolbar extends Toolbar {
                 premiumLogoBtn.setVisibility(VISIBLE);
             }
         }
+
+    @Override
+    public CharSequence getTitle() {
+        return mTitleTextView.getText();
+    }
 }

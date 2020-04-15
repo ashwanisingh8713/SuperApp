@@ -13,7 +13,6 @@ public class FragmentUtil {
 
     public static void pushFragmentFromFragment(Fragment fragmentParent, int resId, Fragment fragment) {
         FragmentTransaction trasaction = fragmentParent.getChildFragmentManager().beginTransaction();
-//        trasaction.add(resId, fragment, fragmentParent.getClass().getCanonicalName());
         trasaction.add(resId, fragment);
         trasaction.addToBackStack(null);
         trasaction.commit();

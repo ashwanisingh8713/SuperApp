@@ -60,9 +60,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     }
 
 
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,35 +225,27 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         CleverTapUtil.cleverTapEventHamberger(this, groupSection.getSecName(), childSection.getSecName());
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void handleEvent(BackPressCallback backPressCallback) {
-        Log.i("handleEvent", "Received BackPressCallback :: From TabIndex = "+backPressCallback.getTabIndex());
-        if(backPressCallback.isPopBack()) {
-            return;
-        } else if(backPressCallback.getTabIndex() != 0){
-            mAppTabFragment.setCurrentTab(0);
-        } else {
-            finish();
-        }
+    /**
+     * Lock drawer
+     */
+    private void lockDrawer() {
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
-        Log.i("handleEvent", "Received ToolbarChangeRequired :: From TabIndex = "+toolbarChangeRequired.getTabIndex());
-        if(toolbarChangeRequired.isEnableLeftSlider()) {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        } else {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }
+    /**
+     * Un-Lock Drawer
+     */
+    private void unLockDrawer() {
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
 
-        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION)) {
-            showSectionToolbar();
-        }
-
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION)) {
-            showSubSectionToolbar(toolbarChangeRequired.getTitle());
-        }
-
+    /**
+     * Show Section Screen Toolbar icons and sets navigation btn click
+     */
+    private void showPremiumToolbar() {
+        getDetailToolbar().showPremiumIcons(navigationBtnClick->{
+            mAppTabFragment.setCurrentTab(0);
+        });
     }
 
     /**
@@ -275,6 +264,38 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         getDetailToolbar().showSubSectionIcons(title, backBtnClick->{
             EventBus.getDefault().post(new BackPressImpl());
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressCallback backPressCallback) {
+        Log.i("handleEvent", "Received BackPressCallback :: From TabIndex = "+backPressCallback.getTabIndex());
+        if(backPressCallback.isPopBack()) {
+            return;
+        } else if(backPressCallback.getTabIndex() != 0){
+            mAppTabFragment.setCurrentTab(0);
+        } else {
+            finish();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
+        Log.i("handleEvent", "Received ToolbarChangeRequired :: From TabIndex = "+toolbarChangeRequired.getTabIndex());
+        if(toolbarChangeRequired.isEnableLeftSlider()) {
+            unLockDrawer();
+        } else {
+            lockDrawer();
+        }
+
+        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION)) {
+            showSectionToolbar();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION)) {
+            showSubSectionToolbar(toolbarChangeRequired.getTitle());
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM)) {
+            showPremiumToolbar();
+        }
     }
 
     @Override

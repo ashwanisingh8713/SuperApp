@@ -3,8 +3,6 @@ package com.ns.callbacks;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class BackPressImpl {
 

@@ -3,7 +3,6 @@ package com.ns.contentfragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +14,6 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.ns.adapter.TopTabsAdapter;
-import com.ns.alerts.Alerts;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.ToolbarChangeRequired;
@@ -49,16 +47,18 @@ public class TopTabsFragment extends BaseFragmentTHP {
     private List<TableSection> mTableSectionList;
     private List<SectionBean> mSubSectionList;
     private int mTabIndex;
+    private String mParentSectionName;
 
     int mSelectedPagerIndex = 0;
 
 
     public static TopTabsFragment getInstance(int tabIndex, String from, String sectionId,
-                                              boolean isSubsection, String subSectionId) {
+                                              boolean isSubsection, String subSectionId, String parentSectionName) {
         TopTabsFragment fragment = new TopTabsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("from", from);
         bundle.putString("sectionId", sectionId);
+        bundle.putString("parentSectionName", parentSectionName);
         bundle.putString("subSectionId", subSectionId);
         bundle.putBoolean("isSubsection", isSubsection);
         bundle.putInt("tabIndex", tabIndex);
@@ -79,6 +79,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
             mFrom = getArguments().getString("from");
             mSectionId = getArguments().getString("sectionId");
             mSubSectionId = getArguments().getString("subSectionId");
+            mParentSectionName = getArguments().getString("parentSectionName");
             mTabIndex = getArguments().getInt("tabIndex");
             mIsSubsection = getArguments().getBoolean("isSubsection");
         }
@@ -131,7 +132,13 @@ public class TopTabsFragment extends BaseFragmentTHP {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
+        // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
+        if(mIsSubsection) {
+            EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.SUB_SECTION));
+        } else {
+            EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mTabIndex, null, ToolbarChangeRequired.SECTION));
+        }
+        Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered, isSubSection :: "+mIsSubsection);
         EventBus.getDefault().register(this);
     }
 
@@ -139,7 +146,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("TabFragment", "onPause() TabIndex = " + mTabIndex + " EventBus UnRegistered");
+        Log.i("TabFragment", "onPause() TabIndex = " + mTabIndex + " EventBus UnRegistered, isSubSection :: "+mIsSubsection);
         EventBus.getDefault().unregister(this);
     }
 
@@ -147,7 +154,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
-        Log.i("TabFragment", "onDestroyView() TabIndex = " + mTabIndex + " EventBus UnRegistered");
+        Log.i("TabFragment", "onDestroyView() TabIndex = " + mTabIndex + " EventBus UnRegistered, isSubSection :: "+mIsSubsection);
     }
 
     @Override
@@ -167,22 +174,22 @@ public class TopTabsFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Left Slider Sub-Section Pressed :: " + tableSection.getSecName() + "-" + tableSection.getSecId());
 
         // Opening Sub-Section Fragment
-        TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mTabIndex, mFrom, mSectionId, true, tableSection.getSecId());
+        TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mTabIndex, mFrom, mSectionId, true, tableSection.getSecId(), tableSection.getParentSecName());
         FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, topTabsFragment);
 
-        // ToolbarChangeRequired Event Post
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, tableSection.getParentSecName(), ToolbarChangeRequired.SUB_SECTION));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(BackPressImpl backPress) {
         Log.i("handleEvent", "Back Button Pressed :: TabIndex = " + mTabIndex);
 
-        // ToolbarChangeRequired Event Post
+        // ToolbarChangeRequired Event Post, It shows Toolbar for Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mTabIndex, null, ToolbarChangeRequired.SECTION));
 
-        // Back Press Event Post
-        EventBus.getDefault().post(new BackPressImpl(this, mFrom, mTabIndex).onBackPressed());
+        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
+        BackPressCallback backPressCallback = new BackPressImpl(this, mFrom, mTabIndex).onBackPressed();
+        EventBus.getDefault().post(backPressCallback);
+
     }
 
 
