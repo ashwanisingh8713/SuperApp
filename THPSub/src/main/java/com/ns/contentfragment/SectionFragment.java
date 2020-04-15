@@ -683,10 +683,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     });
                 }
             }
-         /*else {
+         else {
             mPullToRefreshLayout.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
-        }*/
+        }
     }
 
 
