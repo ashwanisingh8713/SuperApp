@@ -14,11 +14,13 @@ import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
+import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
+import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
@@ -103,7 +105,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             int totalItemCount = mPullToRefreshLayout.getLinearLayoutManager().getItemCount();
             int firstVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstVisibleItemPosition();
 
-            if (!isLoading && !isLastPage) {
+            if (!isLoading() && !isLastPage()) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= PAGE_SIZE) {
@@ -142,20 +144,31 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
         if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
-            getHomeData();
+            // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
+            homeAndBannerArticleFromObservable();
+            // Widget Observable
+            homeWidgetsFromDB();
         }
-        else if(mIsSubsection) { // Sub - Sections
+        else { // Other Sections or Sub-Section
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
-        }
-        else { // Other Sections
-            // Registering Scroll Listener to load more item
-            mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
-            getSubsections();
+            if(mIsSubsection) {
+                getSubsections();
+            }
             loadMoreItems();
 
         }
 
+    }
+
+
+
+    private void loadMoreItems() {
+        if(mIsSubsection) {
+            subSectionDataFromDB();
+        } else {
+            sectionDataFromDB();
+        }
     }
 
     private void getSubsections() {
@@ -172,16 +185,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
 
-    private void incrementPageCount() {
-        mPage++;
-    }
 
-    private void resetPageCount() {
-        mPage = 1;
-    }
 
-    private void getSectionDataFromDB() {
-
+    private void sectionDataFromDB() {
         THPDB thpdb = THPDB.getInstance(getActivity());
         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
         Maybe<List<TableSectionArticle>> sectionArticlesMaybe = daoSectionArticle.getPageArticlesMaybe(mSectionId, mPage).subscribeOn(Schedulers.io());
@@ -190,10 +196,43 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 .subscribe(value-> {
                     if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB :: Page - "+mPage);
-                        getSectionDataFromServer(mPage);
+                        sectionOrSubSectionFromServer(mPage);
                     }
                     else {
                         for (TableSectionArticle sectionArticle : value) {
+                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
+                                for (ArticleBean bean : articleBeanList) {
+                                    final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                    item.setArticleBean(bean);
+                                    mAdapter.addSingleItem(item);
+                                }
+                        }
+                        Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: Loaded from DB :: Page - "+mPage);
+                        incrementPageCount();
+                    }
+
+        }, throwable->{
+                    Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from DB :: Page - "+mPage+" :: throwable - "+throwable);
+        }, ()->{
+                    Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB :: Page - "+(mPage-1));
+        }));
+
+    }
+
+    private void subSectionDataFromDB() {
+        final THPDB thpdb = THPDB.getInstance(getActivity());
+        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
+        Maybe<List<TableSubSectionArticle>> sectionArticlesMaybe = daoSubSectionArticle.getPageArticlesMaybe(mSectionId, mPage).subscribeOn(Schedulers.io());
+        mDisposable.add(sectionArticlesMaybe
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value-> {
+                    if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
+                        Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB :: Page - "+mPage);
+                        sectionOrSubSectionFromServer(mPage);
+                    }
+                    else {
+                        for (TableSubSectionArticle sectionArticle : value) {
                             List<ArticleBean> articleBeanList = sectionArticle.getBeans();
                             {
                                 for (ArticleBean bean : articleBeanList) {
@@ -208,15 +247,20 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         incrementPageCount();
                     }
 
-        }, throwable->{
+                }, throwable->{
                     Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from DB :: Page - "+mPage+" :: throwable - "+throwable);
-        }, ()->{
+                }, ()->{
                     Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB :: Page - "+(mPage-1));
-        }));
+                }));
 
     }
 
-    private void getSectionDataFromServer(int page) {
+
+
+    private void sectionOrSubSectionFromServer(int page) {
+
+        setLoading(true);
+
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
             @Override
             public void onNext(ArrayList<SectionAdapterItem> articleBeans) {
@@ -230,21 +274,28 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     incrementPageCount();
                 } else {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO MORE ARTICLE On Server :: Page - " + page);
+                    setLastPage(true);
                 }
             }
 
             @Override
             public void onError(Throwable throwable, String str) {
                 Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from Server :: Page - "+page+" :: throwable - "+throwable);
+                setLoading(false);
             }
 
             @Override
             public void onComplete(String str) {
                 Log.i(TAG, "SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete Server :: Page - "+(page));
+                setLoading(false);
 
             }
         };
-        DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
+        if(mIsSubsection) {
+            DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
+        } else {
+            DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
+        }
     }
 
     private void addSubsectionUI() {
@@ -293,9 +344,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 mPullToRefreshLayout.setRefreshing(false);
                 return;
             }
+
             mPullToRefreshLayout.setRefreshing(true);
+
             if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
-                Log.i(TAG, "SECTION :: "+mSectionId+" :: REFRESH STARTED ");
                 DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment", new RequestCallback() {
                     @Override
                     public void onNext(Object o) {
@@ -304,40 +356,25 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
                     @Override
                     public void onError(Throwable t, String str) {
-
+                        setLoading(false);
                     }
 
                     @Override
                     public void onComplete(String str) {
                         mAdapter.deleteAllItems();
-                        getBannerAndHomeArticle();
+                        homeAndBannerArticleFromDB();
                     }
                 });
 
-                final THPDB thpdb = THPDB.getInstance(getActivity());
-                DaoWidget daoWidget = thpdb.daoWidget();
-                daoWidget.getWidgetsSingle()
-                        .subscribeOn(Schedulers.io())
-                        .map(widgets-> {
-                            final Map<String, String> sections = new HashMap<>();
-                            for (TableWidget widget : widgets) {
-                                sections.put(widget.getSecId(), widget.getType());
-                            }
-                            DefaultTHApiManager.widgetContent(getActivity(), sections);
-                            return "";
-                        })
-                        .subscribe();
+                homeWidgetFromServer();
             }
             else {
-
-                getSectionDataFromServer(1);
+                sectionOrSubSectionFromServer(1);
             }
         });
     }
 
-    private void loadMoreItems() {
-        getSectionDataFromDB();
-    }
+
 
     @Override
     public void tryAgainBtnClick() {
@@ -345,14 +382,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
 
-
-    /**
-     * Home data from db
-     */
-    private void getHomeData() {
-        // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-        getBannerAndHomeArticleObservable();
-
+    private void homeWidgetsFromDB() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
         mDisposable.add(widgetObservable
@@ -386,10 +416,26 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }));
     }
 
+    private void homeWidgetFromServer() {
+        final THPDB thpdb = THPDB.getInstance(getActivity());
+        DaoWidget daoWidget = thpdb.daoWidget();
+        daoWidget.getWidgetsSingle()
+                .subscribeOn(Schedulers.io())
+                .map(widgets-> {
+                    final Map<String, String> sections = new HashMap<>();
+                    for (TableWidget widget : widgets) {
+                        sections.put(widget.getSecId(), widget.getType());
+                    }
+                    DefaultTHApiManager.widgetContent(getActivity(), sections);
+                    return "";
+                })
+                .subscribe();
+    }
+
     /**
-     * Home data from db, observable based
+     * Home data from db, observable based and in last of statement immediately it is being disposed
      */
-    private void getBannerAndHomeArticleObservable() {
+    private void homeAndBannerArticleFromObservable() {
 
         CompositeDisposable disposable = new CompositeDisposable();
 
@@ -471,7 +517,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     /**
      * Home data from db
      */
-    private void getBannerAndHomeArticle() {
+    private void homeAndBannerArticleFromDB() {
         DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
         DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
         Single<TableBanner> bannerObservable = daoBanner.getBannersSingle().subscribeOn(Schedulers.io());
@@ -555,6 +601,29 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         }
     }
 
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
+
+    public boolean isLastPage() {
+        return isLastPage;
+    }
+
+    public void setLastPage(boolean lastPage) {
+        isLastPage = lastPage;
+    }
+
+    private void incrementPageCount() {
+        mPage++;
+    }
+
+    private void resetPageCount() {
+        mPage = 1;
+    }
 
 
 }

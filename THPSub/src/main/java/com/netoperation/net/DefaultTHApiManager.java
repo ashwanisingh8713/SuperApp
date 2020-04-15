@@ -9,11 +9,13 @@ import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
+import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
+import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
@@ -304,11 +306,66 @@ public class DefaultTHApiManager {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
                         if(page == 1) {
-                            daoSectionArticle.deleteAll();
+                            daoSectionArticle.deleteSection(secId);
                             Log.i(TAG, "getSectionContent :: DELETED ALL ARTICLES OF SecId :: "+secId);
                         }
                         TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
                         daoSectionArticle.insertSectionArticle(sectionArticles);
+
+                        for (ArticleBean bean : value.getData().getArticle()) {
+                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                            item.setArticleBean(bean);
+                            uiRowItem.add(item);
+                        }
+                    }
+
+                    return uiRowItem;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    if(requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
+                    Log.i(TAG, "getSectionContent :: subscribe");
+                }, throwable -> {
+                    Log.i(TAG, "getSectionContent :: throwable "+throwable);
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "getSectionContent");
+                    }
+                }, () -> {
+                    Log.i(TAG, "getSectionContent :: completed");
+                    if(requestCallback != null) {
+                        requestCallback.onComplete("getSectionContent");
+                    }
+                });
+    }
+
+    /**
+     * Making request to get Section or sub-section articles from server
+     *
+     * @param context
+     * @param secId
+     * @param page
+     * @param type
+     * @param lut
+     * @return
+     */
+    public static Disposable getSubSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
+        final String url = BuildConfig.DEFAULT_TH_BASE_URL + "section-content.php";
+        return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
+                    if(value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
+                        if(page == 1) {
+                            daoSubSectionArticle.deleteSection(secId);
+                            Log.i(TAG, "getSubSectionContent :: DELETED ALL ARTICLES OF SecId :: "+secId);
+                        }
+                        TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
+                        daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
                             final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();

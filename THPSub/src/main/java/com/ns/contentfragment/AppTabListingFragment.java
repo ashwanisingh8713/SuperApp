@@ -124,7 +124,6 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("TabFragment", "onResume() TabIndex = "+mTabIndex);
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);
 
@@ -644,16 +643,11 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         CleverTapUtil.cleverTapTHPTabTimeSpent(getActivity(), from,totalTime,timeInSeconds);
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }*/
+
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("TabFragment", "onPause() TabIndex = "+mTabIndex);
         EventBus.getDefault().unregister(this);
         Log.i("TabFragment", "onPause() TabIndex = "+mTabIndex+" EventBus UnRegistered");
     }
@@ -661,7 +655,6 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i("TabFragment", "onDestroyView() TabIndex = "+mTabIndex);
         EventBus.getDefault().unregister(this);
         Log.i("TabFragment", "onDestroyView() TabIndex = "+mTabIndex+" EventBus UnRegistered");
     }

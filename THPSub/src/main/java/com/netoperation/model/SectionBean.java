@@ -1,5 +1,7 @@
 package com.netoperation.model;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,5 +212,20 @@ public class SectionBean {
         this.subSections = subSections;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        super.equals(obj);
+        if(obj != null && obj instanceof SectionBean) {
+            SectionBean bean = (SectionBean)obj;
+            return bean.getSecId().equals(getSecId());
+        }
+        return false;
+    }
 
+    @Override
+    public int hashCode() {
+        super.hashCode();
+
+        return secId.hashCode();
+    }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.netoperation.default_db.TableSection;
+import com.netoperation.model.SectionBean;
 import com.ns.contentfragment.SectionFragment;
 
 import java.util.List;
@@ -17,21 +18,26 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
 
     private String mFrom;
     private List<TableSection> mSectionList;
+    private List<SectionBean> mSubSectionList;
     private boolean mIsSubsection;
 
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
 
-    public TopTabsAdapter(FragmentManager fm, String from, List<TableSection> sectionList, boolean isSubsection) {
+    public TopTabsAdapter(FragmentManager fm, String from, List<TableSection> sectionList, boolean isSubsection, List<SectionBean> subSectionList) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.mFrom = from;
         this.mSectionList = sectionList;
+        this.mSubSectionList = subSectionList;
         this.mIsSubsection = isSubsection;
 
     }
 
     @Override
     public Fragment getItem(int position) {
+        if(mIsSubsection) {
+            SectionFragment.getInstance(mFrom, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
+        }
         return SectionFragment.getInstance(mFrom, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
     }
 

@@ -6,17 +6,16 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Maybe;
+
 @Dao
 public interface DaoSubSectionArticle {
 
     @Insert
-    void insertWidget(TableSubSectionArticle tableSubSectionArticle);
-
-    @Query("SELECT * FROM TableSubSectionArticle WHERE secId = :secId")
-    List<TableSubSectionArticle> getAllArticles(String secId);
+    void insertSubSectionArticle(TableSubSectionArticle tableSubSectionArticle);
 
     @Query("SELECT * FROM TableSubSectionArticle WHERE secId = :secId AND page = :page")
-    List<TableSubSectionArticle> getPageArticles(String secId, int page);
+    Maybe<List<TableSubSectionArticle>> getPageArticlesMaybe(String secId, int page);
 
 
     @Query("DELETE FROM TableSubSectionArticle WHERE secId = :secId")

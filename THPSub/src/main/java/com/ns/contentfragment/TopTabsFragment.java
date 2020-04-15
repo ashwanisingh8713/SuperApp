@@ -46,6 +46,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
     private TopTabsAdapter mTopTabsAdapter;
 
     private List<TableSection> mTableSectionList;
+    private List<SectionBean> mSubSectionList;
     private int mTabIndex;
 
 
@@ -98,8 +99,22 @@ public class TopTabsFragment extends BaseFragmentTHP {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sectionList -> {
-                    mTableSectionList = sectionList;
-                    mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, sectionList, mIsSubsection);
+
+                    if(mIsSubsection) {
+                        SectionBean subSectionBean = new SectionBean();
+                        subSectionBean.setSecId(mSubSectionId);
+                        for(TableSection tableSection : sectionList) {
+                            List<SectionBean> subSection = tableSection.getSubSections();
+                            if(subSection.contains(subSectionBean)) {
+                                mSubSectionList = subSection;
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        mTableSectionList = sectionList;
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, mSubSectionList);
+                    }
                     mViewPager.setAdapter(mTopTabsAdapter);
                     mTabLayout.setupWithViewPager(mViewPager);
                 }));
@@ -108,21 +123,8 @@ public class TopTabsFragment extends BaseFragmentTHP {
 
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (mIsVisible) {
-            Log.i("TabFragment", "setUserVisibleHint() TabIndex = " + mTabIndex + " EventBus Registered");
-            EventBus.getDefault().register(this);
-        } else {
-            Log.i("TabFragment", "setUserVisibleHint() TabIndex = " + mTabIndex + " EventBus UnRegistered");
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex);
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);
     }
@@ -131,15 +133,13 @@ public class TopTabsFragment extends BaseFragmentTHP {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("TabFragment", "onPause() TabIndex = " + mTabIndex);
-        EventBus.getDefault().unregister(this);
         Log.i("TabFragment", "onPause() TabIndex = " + mTabIndex + " EventBus UnRegistered");
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i("TabFragment", "onDestroyView() TabIndex = " + mTabIndex);
         EventBus.getDefault().unregister(this);
         Log.i("TabFragment", "onDestroyView() TabIndex = " + mTabIndex + " EventBus UnRegistered");
     }
