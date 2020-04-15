@@ -180,23 +180,23 @@ public class DetailToolbar extends Toolbar {
         }
 
         mTitleTextView =  findViewById(R.id.title);
-        mBackImageView = findViewById(R.id.back);
+        mBackImageView = findViewById(R.id.action_back);
         mCreateBookMarkImageView = findViewById(R.id.bookmarkIC);
         mRemoveBookMarkedImageView = findViewById(R.id.bookmarkedIC);
-        mTextSizeImageView = findViewById(R.id.fontSizeIC);
-        mTTSPlayImageView = findViewById(R.id.ttsPlayIC);
-        mTTSPauseImageView = findViewById(R.id.ttsPauseIC);
+        mTextSizeImageView = findViewById(R.id.action_fontSizeIC);
+        mTTSPlayImageView = findViewById(R.id.action_ttsPlayIC);
+        mTTSPauseImageView = findViewById(R.id.action_ttsPauseIC);
 
-        mTtsProgress = findViewById(R.id.ttsProgress);
-        favTHPProgressBar = findViewById(R.id.favTHPProgressBar);
+        mTtsProgress = findViewById(R.id.action_ttsProgress);
+        favTHPProgressBar = findViewById(R.id.action_favTHPProgressBar);
         bookmarkProgressBar = findViewById(R.id.bookmarkrogressBar);
-        likeTHPProgressBar = findViewById(R.id.likeTHPProgressBar);
+        likeTHPProgressBar = findViewById(R.id.action_likeTHPProgressBar);
 
-        favStarTHPIC = findViewById(R.id.favTHPIC);
-        shareTHPIC = findViewById(R.id.shareTHPIC);
-        toggleLikeDisLikeTHPIC = findViewById(R.id.likeTHPIC);
+        favStarTHPIC = findViewById(R.id.action_favTHPIC);
+        shareTHPIC = findViewById(R.id.action_shareTHPIC);
+        toggleLikeDisLikeTHPIC = findViewById(R.id.action_likeTHPIC);
 
-        premiumLogoBtn = findViewById(R.id.premiumLogoBtn);
+        premiumLogoBtn = findViewById(R.id.action_premiumLogoBtn);
 
         if(favStarTHPIC != null) {
             favStarTHPIC.setOnClickListener(v -> {

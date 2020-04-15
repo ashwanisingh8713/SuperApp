@@ -39,7 +39,7 @@
 
 
         <ImageView
-            android:id="@+id/premiumLogoBtn"
+            android:id="@+id/action_premiumLogoBtn"
             android:layout_width="@dimen/profile_icon_width_height"
             android:layout_height="@dimen/profile_icon_width_height"
             app:srcCompat="@drawable/ic_premium_logo"

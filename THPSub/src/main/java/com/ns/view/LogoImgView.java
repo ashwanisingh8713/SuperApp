@@ -51,9 +51,9 @@ public class LogoImgView extends AppCompatImageView {
         // 1 = app:logoType="Section"
         else if(imgType == 1) {
             if (isUserThemeDay) {
-                setImageResource(R.drawable.about_us_logo);
+                setImageResource(R.drawable.logo_actionbar);
             } else {
-                setImageResource(R.drawable.about_us_logo_white);
+                setImageResource(R.drawable.logo_actionbar_white);
             }
         }
         // 2 = app:logoType="SubSection"

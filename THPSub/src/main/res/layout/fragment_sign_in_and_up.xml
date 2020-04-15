@@ -22,7 +22,7 @@
         <com.ns.view.LogoImgView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/logo"
+            android:id="@+id/action_logo"
             app:logoType="ToolbarTHP"
             android:scaleType="centerInside"
             android:layout_margin="@dimen/signInUp_header_margin"

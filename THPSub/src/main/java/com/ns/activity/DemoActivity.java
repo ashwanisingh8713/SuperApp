@@ -39,7 +39,7 @@ public class DemoActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        premiumLogoBtn = findViewById(R.id.premiumLogoBtn);
+        premiumLogoBtn = findViewById(R.id.action_premiumLogoBtn);
         profileBtn = findViewById(R.id.profileBtn);
 
         premiumLogoBtn.setVisibility(View.GONE);
