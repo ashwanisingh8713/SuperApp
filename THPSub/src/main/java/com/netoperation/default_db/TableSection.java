@@ -35,13 +35,12 @@ public class TableSection {
     private String customScreenPri;
     private String secName;
     private String type;
-    private boolean isUserPreferred;
     private StaticPageUrlBean staticPageUrlBean;
 
     private List<SectionBean> subSections;
 
-    public  TableSection(String secId, String secName, String type, SectionBean section,
-                         boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections, StaticPageUrlBean staticPageUrlBean) {
+    public TableSection(String secId, String secName, String type, SectionBean section,
+                         boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections, StaticPageUrlBean staticPageUrlBean, String customScreen, String customScreenPri) {
         this.secId = secId;
         this.secName = secName;
         this.type = type;
@@ -50,6 +49,8 @@ public class TableSection {
         this.show_on_explore = show_on_explore;
         this.subSections = subSections;
         this.staticPageUrlBean = staticPageUrlBean;
+        this.customScreen = customScreen;
+        this.customScreenPri = customScreenPri;
     }
 
     public StaticPageUrlBean getStaticPageUrlBean() {
@@ -60,13 +61,6 @@ public class TableSection {
         this.staticPageUrlBean = staticPageUrlBean;
     }
 
-    public boolean isUserPreferred() {
-        return isUserPreferred;
-    }
-
-    public void setUserPreferred(boolean userPreferred) {
-        isUserPreferred = userPreferred;
-    }
 
     public boolean isShow_on_burger() {
         return show_on_burger;

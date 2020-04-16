@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.util.THPPreferences;
 import com.netoperation.util.UserPref;
+import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -25,7 +27,6 @@ import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.DetailToolbar;
-import com.ns.view.ListingToolbar;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -42,10 +43,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     public DetailToolbar getDetailToolbar() {
         return (DetailToolbar) mToolbar;
-    }
-
-    public ListingToolbar getListingToolbar() {
-        return (ListingToolbar) mToolbar;
     }
 
     public Toolbar getToolbar() {
@@ -198,6 +195,13 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         }
     }
 
+    @Override
+    public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
+        Alerts.showToast(this, "TO");
+        if(mFragmentTools != null) {
+            mFragmentTools.onLikeClickListener(toolbarCallModel);
+        }
+    }
 
     public void noConnectionSnackBar(View view) {
         if(view == null) {
@@ -227,5 +231,9 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     protected void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "BaseAcitivityTHP Screen", BaseAcitivityTHP.class.getSimpleName());
+    }
+
+    protected boolean isUserLoggedIn() {
+        return THPPreferences.getInstance(this).isUserLoggedIn();
     }
 }

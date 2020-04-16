@@ -119,4 +119,52 @@
     <string name="info_widget_viewall">VIEW ALL</string>
     <string name="no_internet_connection">No internet connection</string>
 
+    <!--Start Google Analytics screen Name -->
+    <string name="ga_initial_setup_screen">Initial Setup Screen</string>
+    <string name="ga_overlay_screen">Overlay Screen</string>
+    <string name="ga_sidebar_category">Navigation Drawer</string>
+    <string name="ga_post_comment">Post comment Screen</string>
+    <string name="ga_splash_screen">Splash Screen</string>
+    <string name="ga_home">Home Screen</string>
+    <string name="ga_action">Action</string>
+    <string name="ga_action_button_click">Button Click</string>
+    <string name="ga_action_image_click">Image Click</string>
+    <string name="ga_article_detail_lebel">Article Detail Screen</string>
+    <string name="ga_section_listing_label">Section Screen</string>
+    <string name="ga_bookmark_screen_button_clicked">Bookmark icon click</string>
+    <string name="ga_bookmark_article_button_clicked">Article detail: Bookmark button clicked</string>
+    <string name="ga_bookmark_read_later_button_clicked">Read later: Bookmark button clicked</string>
+    <string name="ga_article_back_button_clicked">Article detail: Back button clicked</string>
+    <string name="ga_article_share_button_clicked">Article detail: Share button clicked</string>
+    <string name="ga_article_audio_button_clicked">Article detail: Audio button clicked</string>
+    <string name="ga_section_share_button_clicked">Section: Share button clicked</string>
+    <string name="ga_article_text_button_clicked">Article detail: Font Size button clicked</string>
+    <string name="ga_article_comment_button_clicked">Article detail: Comments button clicked</string>
+    <string name="ga_article_postcomment_button_clicked">Article detail: Post comment button clicked</string>
+    <string name="ga_article_video_button_clicked">Article detail: Video button clicked</string>
+    <string name="ga_article_main_image_clicked">Article detail: Article image clicked</string>
+    <string name="ga_article_taboola_organic_clicked">Article detail: Taboola Organic Hindu article clicked</string>
+    <string name="ga_article_taboola_nonorganic_clicked">Article detail: Taboola Non Organic article clicked</string>
+    <string name="ga_article_taboola_home_organic_clicked">Home: Taboola Organic Hindu article clicked</string>
+    <string name="ga_article_taboola_section_organic_clicked">Section: Taboola Organic Hindu article clicked</string>
+    <string name="ga_article_taboola_home_nonorganic_clicked">Home: Taboola Non Organic article clicked</string>
+    <string name="ga_article_taboola_section_nonorganic_clicked">Section: Taboola Non Organic article clicked</string>
+    <!--End Start Google Analytics screen Name-->
+
+    <!-- Start Pop Up Window Options-->
+    <string name="setting_menu">Settings</string>
+    <string name="clear_all_menu"></string>
+    <string name="share_app_menu">Share this app</string>
+    <string name="custom_home_screen">Personalise Home Screen</string>
+
+    <!--End Pop Up Window Options-->
+    <string name="custom_local_screen">Localise Home Screen</string>
+
+    <string name="intital_setup_customize">Personalise app</string>
+    <string name="intital_setup_localize">Localise app</string>
+    <string name="intital_setup_customize_info">We will show more news from topics you choose in the Home Screen</string>
+    <string name="intital_setup_localize_info">Select the regional news you would like to read in the Home Screen</string>
+    <string name="inital_setup_head_info">Select your favourite topics to see more stories you like on your Home Screen</string>
+    <string name="select_atleast_five_section">You need to select atleast 5 sections</string>
+
 </resources>

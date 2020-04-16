@@ -18,4 +18,5 @@ public interface ToolbarClickListener {
     void onTTSStopClickListener(ToolbarCallModel toolbarCallModel);
     void onFavClickListener(ToolbarCallModel toolbarCallModel);
     void onLikeClickListener(ToolbarCallModel toolbarCallModel);
+    void onOverflowClickListener(ToolbarCallModel toolbarCallModel);
 }

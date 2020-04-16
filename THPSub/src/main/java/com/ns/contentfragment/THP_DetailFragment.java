@@ -287,6 +287,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
     }
 
+    @Override
+    public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
+
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
     ////////////////// Start For Bookmark, Fav, Like & Dislike ////////////////////////

@@ -1,0 +1,48 @@
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
+
+    <com.ns.view.layout.NSFrameLayout
+        android:id="@+id/selectTopicFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutType="Black_Dark">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/selectTopic"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/intital_setup_localize_info"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+    </com.ns.view.layout.NSFrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/selectTopicFrame"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none">
+
+        <com.ns.view.flowlayout.TagFlowLayout
+            android:id="@+id/flowlayout_city_interest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:gravity="left"
+            app:max_select="-1"
+            app:paddingEnd="10dp"
+            app:paddingStart="10dp" />
+    </ScrollView>
+
+
+</com.ns.view.layout.NSLinearLayout>

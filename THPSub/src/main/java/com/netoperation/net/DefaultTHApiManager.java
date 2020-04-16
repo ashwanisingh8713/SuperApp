@@ -7,12 +7,14 @@ import com.google.gson.JsonArray;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
+import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
+import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
@@ -31,7 +33,6 @@ import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
-import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +78,10 @@ public class DefaultTHApiManager {
 
                             if (daoBanner != null) {
                                 TableBanner tableBanner = daoBanner.getBanners();
-                                if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+                                /*if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
 
                                     return "";
-                                } else {
+                                } else*/ {
                                     daoSection.deleteAll();
                                     daoBanner.deleteAll();
                                     daoWidget.deleteAll();
@@ -110,7 +111,18 @@ public class DefaultTHApiManager {
                                     homeBean.setShow_on_explore(true);
                                     sections.add(0, homeBean);
 
-                                    final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
+
+
+                                    DaoPersonaliseDefault daoPersonaliseDefault = db.daoPersonaliseDefault();
+                                    List<TablePersonaliseDefault> tablePersonaliseDefaults = daoPersonaliseDefault.getAllPersonalise();
+                                    if(tablePersonaliseDefaults == null || tablePersonaliseDefaults.size()==0) {
+                                        final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
+                                        for(THDefaultPersonalizeBean personalizeBean : defaultPersonalizeBeans) {
+                                            TablePersonaliseDefault personaliseDefault = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, "0",
+                                                    personalizeBean.getSecId(), null, personalizeBean.getSecName(), false, true);
+                                            daoPersonaliseDefault.insertDefaultPersonalise(personaliseDefault);
+                                        }
+                                    }
 
                                     for (SectionBean section : sections) {
                                         List<SectionBean> subSections = new ArrayList<>(section.getSubSections());
@@ -118,13 +130,15 @@ public class DefaultTHApiManager {
                                         TableSection tableSection = new TableSection(section.getSecId(),
                                                 section.getSecName(), section.getType(), section,
                                                 section.isShow_on_burger(), section.isShow_on_explore(),
-                                                subSections, section.getStaticPageUrl());
+                                                subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
+
+                                        if(section.getCustomScreen().equals("1")) {
+                                            Log.i("CustomScreen", ""+section.getSecName());
+                                        }
+
                                         // Adding Default selected persionlise news feed section
                                         THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
                                         personalizeBean.setSecId(section.getSecId());
-                                        if (defaultPersonalizeBeans.contains(personalizeBean)) {
-                                            tableSection.setUserPreferred(true);
-                                        }
                                         daoSection.insertSection(tableSection);
                                     }
                                 }
@@ -172,22 +186,22 @@ public class DefaultTHApiManager {
                 return tableBanner;
             }).subscribeOn(Schedulers.io());
 
-            Observable<List<TableSection>> sectionObservable = Observable.just("TableSection").map(val -> {
-                final DaoSection daoSection = thpdb.daoSection();
-                List<TableSection> tableSections = daoSection.getUserPreferredSection();
-                return tableSections;
+            Observable<List<TablePersonaliseDefault>> sectionObservable = Observable.just("TablePersonaliseDefault").map(val -> {
+                final DaoPersonaliseDefault daoSection = thpdb.daoPersonaliseDefault();
+                List<TablePersonaliseDefault> personaliseIdsTable = daoSection.getAllPersonalise();
+                return personaliseIdsTable;
             }).subscribeOn(Schedulers.io());
 
 
             return bannerObservable
                     .switchMap(bannerVal -> {
-                        return sectionObservable.map(sectionVal -> {
+                        return sectionObservable.map(personaliseIdsTable -> {
                             final String url = BuildConfig.DEFAULT_TH_BASE_URL + "newsFeed.php";
                             String bannerId = bannerVal.getSecId();
 
-                            JsonArray personliseSectionIds = new JsonArray();
-                            for (TableSection section : sectionVal) {
-                                personliseSectionIds.add(section.getSecId());
+                            final JsonArray personliseSectionIds = new JsonArray();
+                            for (TablePersonaliseDefault personaliseDefault : personaliseIdsTable) {
+                                personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
 
                             return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));

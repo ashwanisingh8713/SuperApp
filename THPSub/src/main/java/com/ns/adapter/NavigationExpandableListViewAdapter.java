@@ -88,10 +88,11 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
         if(getGroup(groupPosition) != null) {
 
             String mSectionName = getGroup(groupPosition).getSecName();
+            String customeScreen = getGroup(groupPosition).getCustomScreen();
             if(mSectionName == null) {
                 mSectionName = "";
             }
-            mGroupViewHolder.textView.setText(mSectionName);
+            mGroupViewHolder.textView.setText(groupPosition+" :: "+mSectionName +" - "+customeScreen);
 
             //Set Epaper Text View color and logo
             String sectionIdEpaper = "159";

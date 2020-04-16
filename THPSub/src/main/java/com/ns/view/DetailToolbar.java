@@ -156,10 +156,9 @@ public class DetailToolbar extends Toolbar {
     }
 
 
-
     private void init(Context context, AttributeSet attrs) {
         mView = LayoutInflater.from(context).inflate(R.layout.toolbar_for_detail, this, true);
-        mTitleTextView =  findViewById(R.id.action_titleText);
+        mTitleTextView = findViewById(R.id.action_titleText);
         mBackImageView = findViewById(R.id.action_back);
         mLogoImageView = findViewById(R.id.action_logo);
         mSearchImageView = findViewById(R.id.action_search);
@@ -186,7 +185,7 @@ public class DetailToolbar extends Toolbar {
 
         premiumLogoBtn = findViewById(R.id.action_premiumLogoBtn);
 
-        if(favStarTHPIC != null) {
+        if (favStarTHPIC != null) {
             favStarTHPIC.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     hideFavProgTHP(false);
@@ -196,7 +195,7 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(toggleLikeDisLikeTHPIC != null) {
+        if (toggleLikeDisLikeTHPIC != null) {
             toggleLikeDisLikeTHPIC.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     hideLikeProgTHP(false);
@@ -205,8 +204,8 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(mCreateBookMarkImageView != null) {
-            mCreateBookMarkImageView.setOnClickListener(v->{
+        if (mCreateBookMarkImageView != null) {
+            mCreateBookMarkImageView.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     showBookmarkProgTHP(true, false);
                     mToolbarClickListener.onCreateBookmarkClickListener(mToolbarCallModel);
@@ -214,8 +213,8 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(mRemoveBookMarkedImageView != null) {
-            mRemoveBookMarkedImageView.setOnClickListener(v->{
+        if (mRemoveBookMarkedImageView != null) {
+            mRemoveBookMarkedImageView.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     showBookmarkProgTHP(true, false);
                     mToolbarClickListener.onRemoveBookmarkClickListener(mToolbarCallModel);
@@ -223,7 +222,7 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(mBackImageView != null) {
+        if (mBackImageView != null) {
             mBackImageView.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     mToolbarClickListener.onBackClickListener();
@@ -231,7 +230,7 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(shareTHPIC != null) {
+        if (shareTHPIC != null) {
             shareTHPIC.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     mToolbarClickListener.onShareClickListener(mToolbarCallModel);
@@ -240,16 +239,28 @@ public class DetailToolbar extends Toolbar {
         }
 
 
-        if(mTextSizeImageView != null) {
-            mTextSizeImageView.setOnClickListener(v->{
+        if (mTextSizeImageView != null) {
+            mTextSizeImageView.setOnClickListener(v -> {
                 if (mToolbarClickListener != null) {
                     mToolbarClickListener.onFontSizeClickListener(mToolbarCallModel);
                 }
             });
         }
 
-        if(mTTSPlayImageView != null) {
-            mTTSPlayImageView.setOnClickListener(v->{
+        mSearchImageView.setOnClickListener(v -> {
+            if (mToolbarClickListener != null) {
+                mToolbarClickListener.onSearchClickListener(mToolbarCallModel);
+            }
+        });
+
+        overflowParent.setOnClickListener(v -> {
+            if (mToolbarClickListener != null) {
+                mToolbarClickListener.onOverflowClickListener(mToolbarCallModel);
+            }
+        });
+
+        if (mTTSPlayImageView != null) {
+            mTTSPlayImageView.setOnClickListener(v -> {
 
                 mProgressTTS.setVisibility(VISIBLE);
                 mTTSPlayImageView.setVisibility(GONE);
@@ -260,8 +271,8 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(mTTSPauseImageView != null) {
-            mTTSPauseImageView.setOnClickListener(v->{
+        if (mTTSPauseImageView != null) {
+            mTTSPauseImageView.setOnClickListener(v -> {
                 mProgressTTS.setVisibility(VISIBLE);
                 mTTSPauseImageView.setVisibility(GONE);
 
@@ -271,12 +282,12 @@ public class DetailToolbar extends Toolbar {
             });
         }
 
-        if(premiumLogoBtn != null) {
-            premiumLogoBtn.setOnClickListener(v->{
-                if(NetUtils.isConnected(getContext())) {
+        if (premiumLogoBtn != null) {
+            premiumLogoBtn.setOnClickListener(v -> {
+                if (NetUtils.isConnected(getContext())) {
                     IntentUtil.openSubscriptionActivity(getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                 } else {
-                    Alerts.noConnectionSnackBar(v, (AppCompatActivity)getContext());
+                    Alerts.noConnectionSnackBar(v, (AppCompatActivity) getContext());
                 }
             });
         }
@@ -284,8 +295,6 @@ public class DetailToolbar extends Toolbar {
 
         setToolbarTitle(mTitle);
     }
-
-
 
 
     public void hideBookmark_Fav_Like() {
@@ -310,7 +319,7 @@ public class DetailToolbar extends Toolbar {
 
     private void showHideBookmarkImg(boolean isBookmarked) {
         mProgressBookmark.setVisibility(GONE);
-        if(isBookmarked) {
+        if (isBookmarked) {
             mCreateBookMarkImageView.setVisibility(GONE);
             mRemoveBookMarkedImageView.setVisibility(VISIBLE);
         } else {
@@ -320,13 +329,12 @@ public class DetailToolbar extends Toolbar {
     }
 
     private void showBookmarkProgTHP(boolean shouldVisible, boolean isBookmarked) {
-        if(shouldVisible) {
+        if (shouldVisible) {
             mProgressBookmark.setVisibility(VISIBLE);
             mCreateBookMarkImageView.setVisibility(GONE);
             mRemoveBookMarkedImageView.setVisibility(GONE);
-        }
-        else {
-            if(isBookmarked) {
+        } else {
+            if (isBookmarked) {
                 mCreateBookMarkImageView.setVisibility(GONE);
                 mRemoveBookMarkedImageView.setVisibility(VISIBLE);
             } else {
@@ -338,7 +346,7 @@ public class DetailToolbar extends Toolbar {
     }
 
     private void hideFavProgTHP(boolean shouldVisible) {
-        if(shouldVisible) {
+        if (shouldVisible) {
             mProgressFavourite.setVisibility(GONE);
             favStarTHPIC.setVisibility(VISIBLE);
         } else {
@@ -348,7 +356,7 @@ public class DetailToolbar extends Toolbar {
     }
 
     private void hideLikeProgTHP(boolean shouldVisible) {
-        if(shouldVisible) {
+        if (shouldVisible) {
             mProgressLike.setVisibility(GONE);
             toggleLikeDisLikeTHPIC.setVisibility(VISIBLE);
         } else {
@@ -359,31 +367,29 @@ public class DetailToolbar extends Toolbar {
 
     public void isFavOrLike(Context context, ArticleBean articleBean, String articleId) {
         ApiManager.isExistFavNdLike(context, articleId)
-                .subscribe(likeVal-> {
+                .subscribe(likeVal -> {
                     hideLikeProgTHP(true);
                     hideFavProgTHP(true);
-                    int like = (int)likeVal;
-                    if(articleBean != null) {
+                    int like = (int) likeVal;
+                    if (articleBean != null) {
                         articleBean.setIsFavourite(like);
                     }
                     favStarTHPIC.setVisibility(View.VISIBLE);
                     toggleLikeDisLikeTHPIC.setVisibility(View.VISIBLE);
                     favStarTHPIC.setEnabled(true);
                     toggleLikeDisLikeTHPIC.setEnabled(true);
-                    if(like == NetConstants.LIKE_NEUTRAL) {
+                    if (like == NetConstants.LIKE_NEUTRAL) {
                         favStarTHPIC.setImageResource(R.drawable.ic_like_unselected);
                         toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_off_copy);
-                    }
-                    else if(like == NetConstants.LIKE_YES) {
+                    } else if (like == NetConstants.LIKE_YES) {
                         favStarTHPIC.setImageResource(R.drawable.ic_like_selected);
                         toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_off_copy);
-                    }
-                    else if(like == NetConstants.LIKE_NO) {
+                    } else if (like == NetConstants.LIKE_NO) {
                         favStarTHPIC.setImageResource(R.drawable.ic_like_unselected);
                         toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_on_copy);
                     }
 
-                }, val->{
+                }, val -> {
                     Log.i("", "");
                 });
     }
@@ -410,7 +416,7 @@ public class DetailToolbar extends Toolbar {
 
 
     public void setToolbarTitle(CharSequence title) {
-        if(mTitleTextView != null) {
+        if (mTitleTextView != null) {
             mTitleTextView.setText(title);
             mTitleTextView.setVisibility(VISIBLE);
         }
@@ -438,10 +444,9 @@ public class DetailToolbar extends Toolbar {
     }
 
 
-
     public void showTTSPlayView(int isLanguageSupportTTS) {
-        if(isLanguageSupportTTS == 0) {
-            if(mTTSPlayImageView != null) {
+        if (isLanguageSupportTTS == 0) {
+            if (mTTSPlayImageView != null) {
                 mTTSPlayImageView.setVisibility(GONE);
                 mTTSPauseImageView.setVisibility(GONE);
             }
@@ -455,8 +460,8 @@ public class DetailToolbar extends Toolbar {
     }
 
     public void showTTSPauseView(int isLanguageSupportTTS) {
-        if(isLanguageSupportTTS == 0) {
-            if(mTTSPlayImageView != null) {
+        if (isLanguageSupportTTS == 0) {
+            if (mTTSPlayImageView != null) {
                 mTTSPlayImageView.setVisibility(GONE);
                 mTTSPauseImageView.setVisibility(GONE);
             }
@@ -482,16 +487,16 @@ public class DetailToolbar extends Toolbar {
     }
 
     public void hideCrownBtn() {
-        if(premiumLogoBtn != null) {
+        if (premiumLogoBtn != null) {
             premiumLogoBtn.setVisibility(GONE);
         }
     }
 
     public void showCrownBtn() {
-            if(premiumLogoBtn != null) {
-                premiumLogoBtn.setVisibility(VISIBLE);
-            }
+        if (premiumLogoBtn != null) {
+            premiumLogoBtn.setVisibility(VISIBLE);
         }
+    }
 
     @Override
     public CharSequence getTitle() {

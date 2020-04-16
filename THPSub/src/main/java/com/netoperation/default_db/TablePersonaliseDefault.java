@@ -1,5 +1,6 @@
 package com.netoperation.default_db;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,49 +17,22 @@ public class TablePersonaliseDefault {
         this.id = id;
     }
 
-    private int secId;
-    private String secName;
-    private String type;
+    private String personaliseSecId;
+    private String parentSecId;
+    private String displayName;
     private String category;
-    private boolean isSelected;
+    private String customScreenPri;
+    private boolean isSubSection;
+    private boolean isUserPreffered;
 
-    public TablePersonaliseDefault(int secId, String secName, String type, String category) {
-        this.secId = secId;
-        this.secName = secName;
-        this.type = type;
+    public TablePersonaliseDefault(String category, String customScreenPri, String personaliseSecId, String parentSecId, String displayName, boolean isSubSection, boolean isUserPreffered) {
         this.category = category;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public int getSecId() {
-        return secId;
-    }
-
-    public void setSecId(int secId) {
-        this.secId = secId;
-    }
-
-    public String getSecName() {
-        return secName;
-    }
-
-    public void setSecName(String secName) {
-        this.secName = secName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        this.customScreenPri = customScreenPri;
+        this.personaliseSecId = personaliseSecId;
+        this.parentSecId = parentSecId;
+        this.displayName = displayName;
+        this.isSubSection = isSubSection;
+        this.isUserPreffered = isUserPreffered;
     }
 
     public String getCategory() {
@@ -67,5 +41,69 @@ public class TablePersonaliseDefault {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getCustomScreenPri() {
+        return customScreenPri;
+    }
+
+    public void setCustomScreenPri(String customScreenPri) {
+        this.customScreenPri = customScreenPri;
+    }
+
+    public String getPersonaliseSecId() {
+        return personaliseSecId;
+    }
+
+    public void setPersonaliseSecId(String personaliseSecId) {
+        this.personaliseSecId = personaliseSecId;
+    }
+
+    public String getParentSecId() {
+        return parentSecId;
+    }
+
+    public void setParentSecId(String parentSecId) {
+        this.parentSecId = parentSecId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public boolean isSubSection() {
+        return isSubSection;
+    }
+
+    public void setSubSection(boolean subSection) {
+        isSubSection = subSection;
+    }
+
+    public boolean isUserPreffered() {
+        return isUserPreffered;
+    }
+
+    public void setUserPreffered(boolean userPreffered) {
+        isUserPreffered = userPreffered;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        super.equals(obj);
+        if(obj != null && obj instanceof TablePersonaliseDefault) {
+            TablePersonaliseDefault personaliseDefault = (TablePersonaliseDefault) obj;
+            return personaliseSecId.equals(personaliseDefault.getPersonaliseSecId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        super.hashCode();
+        return personaliseSecId.hashCode();
     }
 }

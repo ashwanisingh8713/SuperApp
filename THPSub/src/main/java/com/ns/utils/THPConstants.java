@@ -268,5 +268,7 @@ public class THPConstants {
 
     public static final int APP_EXCLUSIVE_SECTION_ID = 142;
 
+    public static final String IS_CITY = "IsCity";
+
 
 }

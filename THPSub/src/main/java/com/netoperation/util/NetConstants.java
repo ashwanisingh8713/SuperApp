@@ -40,4 +40,7 @@ public class NetConstants {
 
     public static final String FAILURE = "Fail";
 
+    public static final String PERSONALISE_CATEGORY_CITY = "city";
+    public static final String PERSONALISE_CATEGORY_NEWS = "news";
+
 }

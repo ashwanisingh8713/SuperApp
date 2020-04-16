@@ -15,23 +15,23 @@ import com.netoperation.util.UserPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
-public class ListingToolbar extends Toolbar {
+public class THToolbar extends Toolbar {
 
     private int viewType;
     boolean isUserThemeDay;
 
 
-    public ListingToolbar(Context context) {
+    public THToolbar(Context context) {
         super(context);
         init(context, null);
     }
 
-    public ListingToolbar(Context context, @Nullable AttributeSet attrs) {
+    public THToolbar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ListingToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public THToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -65,7 +65,7 @@ public class ListingToolbar extends Toolbar {
             if(view instanceof TextView) {
                 TextView textView = (TextView) view;
 
-                Typeface myCustomFont=FontCache.getTypeface(getResources().getString(R.string.THP_FiraSans_Bold), context);
+                Typeface myCustomFont= FontCache.getTypeface(getResources().getString(R.string.THP_FiraSans_Bold), context);
                 textView.setTypeface(myCustomFont); }
         }
 

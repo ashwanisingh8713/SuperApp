@@ -51,8 +51,8 @@ public class SectionBean {
     private int explorePriority;
     private int overrideExplore;
     private boolean custom;
-    private int customScreen;
-    private int customScreenPri;
+    private String customScreen = "";
+    private String customScreenPri = "";
 
     public int getParentId() {
         return parentId;
@@ -198,19 +198,19 @@ public class SectionBean {
         this.webLink = webLink;
     }
 
-    public int getCustomScreen() {
+    public String getCustomScreen() {
         return customScreen;
     }
 
-    public void setCustomScreen(int customScreen) {
+    public void setCustomScreen(String customScreen) {
         this.customScreen = customScreen;
     }
 
-    public int getCustomScreenPri() {
+    public String getCustomScreenPri() {
         return customScreenPri;
     }
 
-    public void setCustomScreenPri(int customScreenPri) {
+    public void setCustomScreenPri(String customScreenPri) {
         this.customScreenPri = customScreenPri;
     }
 
