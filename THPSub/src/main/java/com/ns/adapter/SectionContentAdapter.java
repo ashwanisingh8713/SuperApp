@@ -16,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
+import com.ns.utils.IntentUtil;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
@@ -31,10 +33,16 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     private ArrayList<SectionAdapterItem> adapterItems;
     private String mFrom;
+    private boolean mIsSubSection;
+    private String mSectionId;
+    private String mSectionType;
 
-    public SectionContentAdapter(String from, ArrayList<SectionAdapterItem> adapterItems) {
+    public SectionContentAdapter(String from, ArrayList<SectionAdapterItem> adapterItems, boolean isSubsection, String sectionId, String sectionType) {
         this.mFrom = from;
         this.adapterItems = adapterItems;
+        this.mIsSubSection = isSubsection;
+        this.mSectionId = sectionId;
+        this.mSectionType = sectionType;
     }
 
     @Override
@@ -99,6 +107,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if(holder instanceof BannerViewHolder) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
+
         }
         else if(holder instanceof WidgetsViewHolder) {
             fillWidgetData((WidgetsViewHolder)holder, position);
@@ -106,6 +115,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         else if(holder instanceof ArticlesViewHolder) {
             ArticlesViewHolder articlesViewHolder = (ArticlesViewHolder) holder;
             articlesViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
+
+            ArticleBean bean = item.getArticleBean();
+
+            articlesViewHolder.itemView.setOnClickListener(v->{
+                IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+            });
         }
         else if(holder instanceof StaticItemWebViewHolder) {
             StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;

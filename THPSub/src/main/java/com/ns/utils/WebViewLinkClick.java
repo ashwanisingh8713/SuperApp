@@ -129,7 +129,7 @@ public class WebViewLinkClick {
                                @Override
                                public void accept(Boolean aBoolean) {
                                    if (aBoolean) {
-                                       IntentUtil.openDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, aid);
+                                       IntentUtil.openPremiumDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, aid);
                                        progress.dismiss();
                                    } else {
                                        String SEARCH_BY_ARTICLE_ID_URL = "";
@@ -149,7 +149,7 @@ public class WebViewLinkClick {
                                                                       return;
                                                                   }
                                                                   if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
-                                                                      IntentUtil.openDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, articleBean.getArticleId());
+                                                                      IntentUtil.openPremiumDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, url, 0, articleBean.getArticleId());
                                                                   }
                                                                   else {
                                                                       // Opening Article In Web Page

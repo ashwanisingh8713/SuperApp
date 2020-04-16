@@ -17,6 +17,9 @@ public interface DaoSubSectionArticle {
     @Query("SELECT * FROM TableSubSectionArticle WHERE secId = :secId AND page = :page")
     Maybe<List<TableSubSectionArticle>> getPageArticlesMaybe(String secId, int page);
 
+    @Query("SELECT * FROM TableSubSectionArticle WHERE secId = :secId")
+    Maybe<List<TableSubSectionArticle>> getArticlesMaybe(String secId);
+
 
     @Query("DELETE FROM TableSubSectionArticle WHERE secId = :secId")
     int deleteSection(String secId);

@@ -593,12 +593,23 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openDetailActivity(Context context, String from, String url, int clickedPosition, String articleId) {
+    public static void openPremiumDetailActivity(Context context, String from, String url, int clickedPosition, String articleId) {
         Intent intent = new Intent(context, THP_DetailActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("url", url);
         intent.putExtra("clickedPosition", clickedPosition);
         intent.putExtra("articleId", articleId);
+        context.startActivity(intent);
+    }
+
+    public static void openNonPremiumDetailActivity(Context context, String from, String articleId, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
+        Intent intent = new Intent(context, THP_DetailActivity.class);
+        intent.putExtra("from", from);
+        intent.putExtra("articleId", articleId);
+        intent.putExtra("sectionId", sectionId);
+        intent.putExtra("sectionOrSubsectionName", sectionOrSubsectionName);
+        intent.putExtra("sectionType", sectionType);
+        intent.putExtra("isSubsection", isSubsection);
         context.startActivity(intent);
     }
 

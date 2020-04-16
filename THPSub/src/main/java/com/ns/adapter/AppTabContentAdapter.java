@@ -231,7 +231,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.itemView.setOnClickListener(v-> {
             if(THPPreferences.getInstance(holder.itemView.getContext()).isUserAdsFree()){
-                IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+                IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), mFrom,
                         bean.getArticleUrl(), position, bean.getArticleId());
             }else{
                 IntentUtil.openSubscriptionActivity(holder.itemView.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -272,7 +272,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.description_Txt.setText(ResUtil.htmlText(bean.getDescription()));
 
         holder.itemView.setOnClickListener(v -> {
-            IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+            IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), mFrom,
                     bean.getArticleUrl(), position, bean.getArticleId());
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Briefing clicked : " + bean.getArticleId() + " : " + bean.getTitle(), "Briefing List Screen");
 

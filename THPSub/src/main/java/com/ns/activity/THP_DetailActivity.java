@@ -27,43 +27,47 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     }
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null) {
             mFrom = getIntent().getStringExtra("from");
             url = getIntent().getStringExtra("url");
             clickedPosition = getIntent().getIntExtra("clickedPosition", 0);
             articleId = getIntent().getStringExtra("articleId");
         }
 
-        if(mFrom != null && ((NetConstants.BREIFING_ALL.equalsIgnoreCase(mFrom))
+        if (mFrom != null && ((NetConstants.BREIFING_ALL.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_EVENING.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_NOON.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
             getDetailToolbar().hideBookmark_Fav_Like();
-        }/* else if(mFrom != null && NetConstants.RECO_TEMP_NOT_EXIST.equalsIgnoreCase(mFrom)) {
-            getDetailToolbar().hideBookmark_Fav_Like();
-        }*/ else if(mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
+        } else if (mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
             getDetailToolbar().hide_Fav_Like();
         }
 
-        ApiManager.getUserProfile(this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userProfile -> {
-                    THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(articleId, clickedPosition, mFrom, userProfile.getUserId());
-
-                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
-
-                    boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-                    if(hasSubscriptionPlan) {
-                        getDetailToolbar().hideCrownBtn();
-                    } else {
-                        getDetailToolbar().showCrownBtn();
-                    }
-                });
+        if (mFrom.equals(NetConstants.RECO_DEFAULT_SECTIONS)) {
+            String sectionId = getIntent().getStringExtra("sectionId");
+            String sectionType = getIntent().getStringExtra("sectionType");
+            String sectionOrSubsectionName = getIntent().getStringExtra("sectionOrSubsectionName");
+            boolean isSubsection = getIntent().getBooleanExtra("isSubsection", false);
+            THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(mFrom, articleId, sectionId, sectionType, sectionOrSubsectionName, isSubsection);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+        } else {
+            ApiManager.getUserProfile(this)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userProfile -> {
+                        THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(articleId, clickedPosition, mFrom, userProfile.getUserId());
+                        FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                        boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
+                        if (hasSubscriptionPlan) {
+                            getDetailToolbar().hideCrownBtn();
+                        } else {
+                            getDetailToolbar().showCrownBtn();
+                        }
+                    });
+        }
 
 
     }

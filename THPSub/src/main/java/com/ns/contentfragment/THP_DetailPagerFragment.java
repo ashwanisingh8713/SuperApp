@@ -3,6 +3,7 @@ package com.ns.contentfragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -10,10 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoSectionArticle;
+import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.TableSectionArticle;
+import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -25,15 +33,23 @@ import com.ns.view.ViewPagerScroller;
 import java.lang.reflect.Field;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
-    private ViewPager mViewPager;
+    private static String TAG = NetConstants.UNIQUE_TAG;
+
+    private String mSectionId;
+    private String mSectionType;
+    private String sectionOrSubsectionName;
+    private boolean mIsSubsection;
 
     private String mFrom;
     private int mClickedPosition;
@@ -41,6 +57,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private ArticleBean mArticleBean;
     private String mArticleId;
 
+    private ViewPager mViewPager;
     private DetailPagerAdapter mSectionsPagerAdapter;
 
     private THP_DetailActivity mActivity;
@@ -54,6 +71,23 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         bundle.putString("articleId", articleId);
         bundle.putString("from", from);
         bundle.putString("userId", userId);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+
+    /**
+     * This is for Non-Premium
+     */
+    public static THP_DetailPagerFragment getInstance(String from, String articleId, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
+        THP_DetailPagerFragment fragment = new THP_DetailPagerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("from", from);
+        bundle.putString("articleId", articleId);
+        bundle.putString("sectionId", sectionId);
+        bundle.putString("sectionOrSubsectionName", sectionOrSubsectionName);
+        bundle.putString("sectionType", sectionType);
+        bundle.putBoolean("isSubsection", isSubsection);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -89,6 +123,12 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             mArticleUrl = getArguments().getString("articleUrl");
             mFrom = getArguments().getString("from");
             mUserId = getArguments().getString("userId");
+
+            // This is for Non-Premium
+            mSectionId = getArguments().getString("sectionId");
+            mSectionType = getArguments().getString("sectionType");
+            sectionOrSubsectionName = getArguments().getString("sectionOrSubsectionName");
+            mIsSubsection = getArguments().getBoolean("isSubsection");
         }
     }
 
@@ -98,7 +138,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
         mViewPager = view.findViewById(R.id.viewPager);
 
-
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
 
@@ -106,7 +145,16 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        loadData();
+        if(mFrom.equals(NetConstants.RECO_DEFAULT_SECTIONS)) {
+            if(mIsSubsection) {
+                subSectionDataFromDB();
+            } else {
+                sectionDataFromDB();
+            }
+        }
+        else {
+            loadDataFromPremium();
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -152,7 +200,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
 
 
-    private void loadData() {
+    private void loadDataFromPremium() {
         Observable<List<ArticleBean>> observable = null;
         if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING)
         || mFrom.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
@@ -216,6 +264,92 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Details Screen", THP_DetailPagerFragment.class.getSimpleName());
         // Log.e("ARTICLE",""+mArticleId);
+    }
+
+    private void sectionDataFromDB() {
+        THPDB thpdb = THPDB.getInstance(getActivity());
+        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
+        Maybe<List<TableSectionArticle>> sectionArticlesMaybe = daoSectionArticle.getArticlesMaybe(mSectionId).subscribeOn(Schedulers.io());
+        mDisposable.add(sectionArticlesMaybe
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
+                        Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB");
+                    } else {
+                        ArrayList<String> articleIds = new ArrayList<>();
+                        for (TableSectionArticle sectionArticle : value) {
+                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
+                            for (ArticleBean model : articleBeanList) {
+                                articleIds.add(model.getArticleId());
+                                mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
+                            }
+                        }
+                        // To Check the selected article Index
+                        if (mArticleId != null) {
+                            int index = articleIds.indexOf(mArticleId);
+                            if (index != -1) {
+                                mClickedPosition = index;
+                            }
+                        }
+
+                        // Setting current position of ViewPager
+                        setCurrentPage(mClickedPosition, false);
+
+                        Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from DB");
+                    }
+
+                }, throwable -> {
+                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: throwable - " + throwable);
+                }, () -> {
+                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB");
+                }));
+
+    }
+
+    /**
+     * Sub-Section all articles from DB
+     */
+    private void subSectionDataFromDB() {
+        final THPDB thpdb = THPDB.getInstance(getActivity());
+        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
+        Maybe<List<TableSubSectionArticle>> sectionArticlesMaybe = daoSubSectionArticle.getArticlesMaybe(mSectionId).subscribeOn(Schedulers.io());
+        mDisposable.add(sectionArticlesMaybe
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value-> {
+                    if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
+                        Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB");
+                        //sectionOrSubSectionFromServer(mPage);
+                    }
+                    else {
+                        ArrayList<String> articleIds = new ArrayList<>();
+                        for (TableSubSectionArticle sectionArticle : value) {
+                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
+                            for (ArticleBean model : articleBeanList) {
+                                articleIds.add(model.getArticleId());
+                                mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
+                            }
+                        }
+
+                        // To Check the selected article Index
+                        if (mArticleId != null) {
+                            int index = articleIds.indexOf(mArticleId);
+                            if (index != -1) {
+                                mClickedPosition = index;
+                            }
+                        }
+
+                        // Setting current position of ViewPager
+                        setCurrentPage(mClickedPosition, false);
+
+                        Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: Loaded from DB ::");
+                    }
+
+                }, throwable->{
+                    Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from DB :: throwable - "+throwable);
+                }, ()->{
+                    Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB ");
+                }));
+
     }
 
 }

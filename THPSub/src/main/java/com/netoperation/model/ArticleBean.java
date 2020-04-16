@@ -30,7 +30,7 @@ public class ArticleBean implements Parcelable {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TH Default Response Fields
-    private int aid;
+    private String aid;
     private String au;
     private String sid;
     private String sname;
@@ -71,11 +71,11 @@ public class ArticleBean implements Parcelable {
     }
 
 
-    public int getAid() {
+    public String getAid() {
         return aid;
     }
 
-    public void setAid(int aid) {
+    public void setAid(String aid) {
         this.aid = aid;
     }
 
@@ -469,6 +469,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getArticleId() {
+        if(articleId == null) {
+            return aid;
+        }
         return articleId;
     }
 

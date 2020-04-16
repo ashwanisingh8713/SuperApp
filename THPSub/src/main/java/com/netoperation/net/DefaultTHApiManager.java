@@ -33,6 +33,7 @@ import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
+import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,10 +79,10 @@ public class DefaultTHApiManager {
 
                             if (daoBanner != null) {
                                 TableBanner tableBanner = daoBanner.getBanners();
-                                /*if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+                                if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
 
                                     return "";
-                                } else*/ {
+                                } else {
                                     daoSection.deleteAll();
                                     daoBanner.deleteAll();
                                     daoWidget.deleteAll();
