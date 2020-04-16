@@ -848,16 +848,16 @@ public class ApiManager {
                                     thp.dashboardDao().deleteAll(recotype);
                                 }
                                 for (ArticleBean bean : beans) {
-
                                     if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
-                                        TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean);
+                                        bean.setIsBookmark(1);
+                                        TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                         thp.bookmarkTableDao().insertBookmark(tableBookmark);
                                     } else {
                                         TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(bean.getArticleId());
                                         if (tableBookmark != null && bean.getIsBookmark() == 1) {
                                             thp.bookmarkTableDao().updateBookmark(bean.getArticleId(), bean);
                                         } else if (bean.getIsBookmark() == 1) {
-                                            TableBookmark bookmarkkTable = new TableBookmark(bean.getArticleId(), bean);
+                                            TableBookmark bookmarkkTable = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                             thp.bookmarkTableDao().insertBookmark(bookmarkkTable);
                                         } else if (bean.getIsBookmark() == 0) {
                                             thp.bookmarkTableDao().deleteBookmarkArticle(bean.getArticleId());
@@ -923,9 +923,9 @@ public class ApiManager {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
                 .map(articleId -> {
-                    List<TableBookmark> tableBookmark = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticles(articleId);
-                    if (tableBookmark != null && tableBookmark.size() > 0) {
-                        return tableBookmark.get(0).getBean();
+                    TableBookmark tableBookmark = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticle(articleId);
+                    if (tableBookmark != null) {
+                        return tableBookmark.getBean();
                     }
                     return new ArticleBean();
                 })
@@ -956,9 +956,10 @@ public class ApiManager {
                         bean.setShortDescription(articleBean.getShortDescription());
                         bean.setHasDescription(articleBean.getHasDescription());
                         bean.setMedia(articleBean.getMedia());
+                        bean.setGroupType(articleBean.getGroupType());
 
                         THPDB thpdb = THPDB.getInstance(context);
-                        TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean);
+                        TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean, articleBean.getGroupType());
                         thpdb.bookmarkTableDao().insertBookmark(tableBookmark);
 
                         TableSubscriptionArticle tableSubscriptionArticle = thpdb.dashboardDao().getSingleDashboardBean(articleBean.getArticleId());

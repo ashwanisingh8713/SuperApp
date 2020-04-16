@@ -24,14 +24,17 @@ public interface DaoBookmark {
     @Query("SELECT * FROM TableBookmark WHERE aid = :aid")
     TableBookmark getBookmarkArticle(String aid);
 
-    @Query("SELECT * FROM TableBookmark WHERE aid = :aid")
-    List<TableBookmark> getBookmarkArticles(String aid);
+    @Query("SELECT * FROM TableBookmark WHERE groupType = :groupType")
+    List<TableBookmark> getBookmarkGroupType(String groupType);
 
     @Query("DELETE FROM TableBookmark WHERE aid = :aid")
     int deleteBookmarkArticle(String aid);
 
     @Query("UPDATE TableBookmark SET bean = :bean WHERE aid = :aid")
     int updateBookmark(String aid, ArticleBean bean);
+
+    @Query("DELETE FROM TableBookmark WHERE groupType = :groupType")
+    void delete(String groupType);
 
     @Query("DELETE FROM TableBookmark")
     void deleteAll();

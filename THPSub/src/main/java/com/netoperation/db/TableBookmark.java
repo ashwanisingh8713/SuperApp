@@ -10,17 +10,35 @@ import com.netoperation.model.ArticleBean;
 @Entity(tableName = "TableBookmark")
 public class TableBookmark {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    @PrimaryKey
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @NonNull
     private String aid ;
 
     private ArticleBean bean;
 
+    private String groupType;
 
-    public TableBookmark(String aid, ArticleBean bean) {
+    public TableBookmark(String aid, ArticleBean bean, String groupType) {
         this.aid = aid;
         this.bean = bean;
+        this.groupType = groupType;
+    }
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
     }
 
     public String getAid() {

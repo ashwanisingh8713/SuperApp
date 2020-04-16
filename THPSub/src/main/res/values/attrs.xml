@@ -64,6 +64,7 @@
             <enum name="dislike" value="10" />
             <enum name="unfavourite" value="11" />
             <enum name="ttsStop" value="12" />
+            <enum name="comment" value="13" />
         </attr>
     </declare-styleable>
 

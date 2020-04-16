@@ -17,11 +17,9 @@ import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.model.ArticleBean;
-import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
-import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -145,7 +143,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        if(mFrom.equals(NetConstants.RECO_DEFAULT_SECTIONS)) {
+        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
             if(mIsSubsection) {
                 subSectionDataFromDB();
             } else {
@@ -318,7 +316,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 .subscribe(value-> {
                     if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB");
-                        //sectionOrSubSectionFromServer(mPage);
                     }
                     else {
                         ArrayList<String> articleIds = new ArrayList<>();

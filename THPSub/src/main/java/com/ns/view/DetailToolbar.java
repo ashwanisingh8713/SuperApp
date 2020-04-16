@@ -45,6 +45,7 @@ public class DetailToolbar extends Toolbar {
     private IconImgView mTTSPlayImageView;
     private IconImgView mTTSPauseImageView;
     private IconImgView premiumLogoBtn;
+    private IconImgView mCommentBtn;
 
     private ProgressBar mProgressTTS;
     private ProgressBar mProgressFavourite;
@@ -72,6 +73,7 @@ public class DetailToolbar extends Toolbar {
         toggleLikeDisLikeTHPIC.setVisibility(GONE);
         mTitleTextView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
 
         mBackImageView.setVisibility(VISIBLE);
         mLogoImageView.setVisibility(VISIBLE);
@@ -81,28 +83,6 @@ public class DetailToolbar extends Toolbar {
         // In declare-styleable name="NSImageButton" enum Section = 6
         int sectionBtnType = 6;
         mBackImageView.setIcon(sectionBtnType);
-        mBackImageView.setOnClickListener(onClickListener);
-    }
-
-    public void showPremiumIcons(OnClickListener onClickListener) {
-        likeParent.setVisibility(GONE);
-        bookmarkParent.setVisibility(GONE);
-        favouriteParent.setVisibility(GONE);
-        ttsParent.setVisibility(GONE);
-        favStarTHPIC.setVisibility(GONE);
-        shareTHPIC.setVisibility(GONE);
-        toggleLikeDisLikeTHPIC.setVisibility(GONE);
-        mTitleTextView.setVisibility(GONE);
-        mTextSizeImageView.setVisibility(GONE);
-        overflowParent.setVisibility(GONE);
-        mSearchImageView.setVisibility(GONE);
-
-        mBackImageView.setVisibility(VISIBLE);
-        mLogoImageView.setVisibility(VISIBLE);
-        premiumLogoBtn.setVisibility(VISIBLE);
-        // In declare-styleable name="NSImageButton" enum Section = 6
-        int arrow_no_line = 0;
-        mBackImageView.setIcon(arrow_no_line);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -118,6 +98,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
@@ -129,6 +110,59 @@ public class DetailToolbar extends Toolbar {
         int arrow_back = 2;
         mBackImageView.setIcon(arrow_back);
         mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showPremiumDetailIcons(OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
+
+        mBackImageView.setVisibility(VISIBLE);
+        mLogoImageView.setVisibility(VISIBLE);
+        premiumLogoBtn.setVisibility(VISIBLE);
+        // In declare-styleable name="NSImageButton" enum Section = 6
+        int arrow_no_line = 0;
+        mBackImageView.setIcon(arrow_no_line);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showNonPremiumDetailIcons(boolean hasSubscriptionPlan) {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+
+        if(hasSubscriptionPlan) {
+            premiumLogoBtn.setVisibility(GONE);
+        } else {
+            premiumLogoBtn.setVisibility(VISIBLE);
+        }
+
+        mCommentBtn.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
+        mTextSizeImageView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+
+        // In declare-styleable name="NSImageButton" enum arrow_back = 2
+        int arrow_back = 2;
+        mBackImageView.setIcon(arrow_back);
     }
 
     public void showDetailIcons() {
@@ -167,6 +201,7 @@ public class DetailToolbar extends Toolbar {
         mTextSizeImageView = findViewById(R.id.action_fontSizeIC);
         mTTSPlayImageView = findViewById(R.id.action_ttsPlay);
         mTTSPauseImageView = findViewById(R.id.action_ttsStop);
+        mCommentBtn = findViewById(R.id.action_commentTHP);
 
         mProgressTTS = findViewById(R.id.action_ttsProgress);
         mProgressFavourite = findViewById(R.id.action_favTHPProgressBar);
@@ -256,6 +291,12 @@ public class DetailToolbar extends Toolbar {
         overflowParent.setOnClickListener(v -> {
             if (mToolbarClickListener != null) {
                 mToolbarClickListener.onOverflowClickListener(mToolbarCallModel);
+            }
+        });
+
+        mCommentBtn.setOnClickListener(v -> {
+            if (mToolbarClickListener != null) {
+                mToolbarClickListener.onCommentClickListener(mToolbarCallModel);
             }
         });
 

@@ -269,7 +269,45 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
+            mArticleBean.setGroupType(NetConstants.RECO_GROUP_DEFAULT_SECTIONS);
+            mArticleBean.setIsBookmark(1);
+            // To Create at App end
+            mDisposable.add(ApiManager.createBookmark(getContext(), mArticleBean).subscribe(boole -> {
+                mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
+                mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleBean.getArticleId());
+                isExistInBookmark(mArticleBean.getArticleId());
+            }, throwable -> {
+                Log.i("", "");
+            }));
+
+            Alerts.showToastAtCenter(getActivity(), "Added to Read Later");
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getActivity(), "Action", "Details : Added Read Later : " + mArticleBean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+            CleverTapUtil.cleverTapBookmarkFavLike(getActivity(), mArticleId, mFrom, "NetConstants.BOOKMARK_YES");
+        }
+        else {
+            updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+        }
+    }
+
+    @Override
+    public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
+        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
+            mArticleBean.setIsBookmark(0);
+            // To Remove at App end
+            mDisposable.add(ApiManager.createUnBookmark(getActivity(), mArticleBean.getArticleId()).subscribe(boole -> {
+                mActivity.getDetailToolbar().setIsBookmarked(!(Boolean)boole);
+                mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleBean.getArticleId());
+                isExistInBookmark(mArticleBean.getArticleId());
+            }, throwable -> {
+                Log.i("", "");
+            }));
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getActivity(), "Action", "Details : Removed Read Later : " + mArticleBean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+            CleverTapUtil.cleverTapBookmarkFavLike(getActivity(), mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
+        }
+        else {
+            updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+        }
     }
 
     @Override
@@ -280,11 +318,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void onLikeClickListener(ToolbarCallModel toolbarCallModel) {
         updateBookmarkFavLike(getActivity(), mArticleBean, "dislike");
-    }
-
-    @Override
-    public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
     }
 
     @Override
@@ -334,6 +367,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 favourite = NetConstants.LIKE_NO;
             }
         }
+
+        bean.setGroupType(NetConstants.RECO_GROUP_PREMIUM);
 
         final int book = bookmark;
         final int fav = favourite;

@@ -43,9 +43,9 @@ public class IconImgView extends AppCompatImageView {
         // 0 = app:iconType="ttsPlay"
         if(mIconType == 0) {
             if (isUserThemeDay) {
-                setImageResource(R.drawable.tts_play);
+                setImageResource(R.drawable.ic_audio);
             } else {
-                setImageResource(R.drawable.tts_play);
+                setImageResource(R.drawable.ic_audio_w);
             }
         }
         // 1 = app:iconType="share"
@@ -142,6 +142,14 @@ public class IconImgView extends AppCompatImageView {
                 setImageResource(R.drawable.tts_stop);
             } else {
                 setImageResource(R.drawable.tts_stop);
+            }
+        }
+        // 13 = app:iconType="comment"
+        if(mIconType == 13) {
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.ic_comment);
+            } else {
+                setImageResource(R.drawable.ic_comment_w);
             }
         }
 

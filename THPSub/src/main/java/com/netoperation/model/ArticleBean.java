@@ -58,6 +58,16 @@ public class ArticleBean implements Parcelable {
     private String im_thumbnail;
     private String im_thumbnail_v2;
     private String comm_count;
+    private String groupType;
+
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
+    }
+
     private ArrayList<MeBean> me;
 
     private List<ArticleBean> rn;

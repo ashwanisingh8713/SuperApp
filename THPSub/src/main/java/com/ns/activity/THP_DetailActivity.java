@@ -43,17 +43,19 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 || (NetConstants.BREIFING_NOON.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
             getDetailToolbar().hideBookmark_Fav_Like();
-        } else if (mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
+        }
+        else if (mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
             getDetailToolbar().hide_Fav_Like();
         }
 
-        if (mFrom.equals(NetConstants.RECO_DEFAULT_SECTIONS)) {
+        if (mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
             String sectionId = getIntent().getStringExtra("sectionId");
             String sectionType = getIntent().getStringExtra("sectionType");
             String sectionOrSubsectionName = getIntent().getStringExtra("sectionOrSubsectionName");
             boolean isSubsection = getIntent().getBooleanExtra("isSubsection", false);
             THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(mFrom, articleId, sectionId, sectionType, sectionOrSubsectionName, isSubsection);
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+            getDetailToolbar().showNonPremiumDetailIcons(false);
         } else {
             ApiManager.getUserProfile(this)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -61,11 +63,6 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                         THP_DetailPagerFragment fragment = THP_DetailPagerFragment.getInstance(articleId, clickedPosition, mFrom, userProfile.getUserId());
                         FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
                         boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-                        if (hasSubscriptionPlan) {
-                            getDetailToolbar().hideCrownBtn();
-                        } else {
-                            getDetailToolbar().showCrownBtn();
-                        }
                     });
         }
 

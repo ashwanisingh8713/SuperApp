@@ -19,6 +19,7 @@ import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.NetUtils;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
@@ -63,7 +64,6 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
 
@@ -74,12 +74,6 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         mPullToRefreshLayout.setTryAgainBtnClickListener(this);
 
         mPullToRefreshLayout.showProgressBar();
-
-        // Back button click listener
-        /*view.findViewById(R.id.backBtn).setOnClickListener(v->{
-            getActivity().finish();
-        });*/
-
 
         // Pull To Refresh Listener
         registerPullToRefresh();
@@ -133,7 +127,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
         Observable<List<ArticleBean>> observable = null;
 
-        if (isOnline) {
+        if (isOnline && !ResUtil.isEmpty(mUserId)) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
                     NetConstants.RECO_bookmarks, ""+1000, BuildConfig.SITEID);
         } else {
@@ -145,7 +139,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         .map(value->{
                             List<AppTabContentModel> content = new ArrayList<>();
                             for(ArticleBean bean : value) {
-                                AppTabContentModel model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_BOOKMARK);
+                                AppTabContentModel model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM);
                                 model.setBean(bean);
                                 content.add(model);
                             }

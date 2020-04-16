@@ -37,7 +37,6 @@ import com.ns.loginfragment.AccountCreatedFragment;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
-import com.ns.utils.DeviceUtils;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
@@ -259,7 +258,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
      * Show Section Screen Toolbar icons and sets navigation btn click
      */
     private void showPremiumToolbar() {
-        getDetailToolbar().showPremiumIcons(navigationBtnClick->{
+        getDetailToolbar().showPremiumDetailIcons(navigationBtnClick->{
             mAppTabFragment.setCurrentTab(0);
         });
     }

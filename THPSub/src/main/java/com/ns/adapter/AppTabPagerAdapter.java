@@ -1,7 +1,5 @@
 package com.ns.adapter;
 
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -30,7 +28,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         if(i==0) {
-            return TopTabsFragment.getInstance(i, NetConstants.RECO_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
+            return TopTabsFragment.getInstance(i, NetConstants.RECO_GROUP_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
         }
         else if(i==1) {
             return AppTabListingFragment.getInstance(i, mUserId, NetConstants.BREIFING_ALL);

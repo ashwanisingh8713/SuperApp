@@ -22,7 +22,8 @@ public class NetConstants {
     public static final String RECO_briefcase = "briefcase";
     public static final String RECO_TEMP_NOT_EXIST = "TEMP_NOT_EXIST";
     public static final String RECO_HOME_TAB = "HOME_TAB";
-    public static final String RECO_DEFAULT_SECTIONS = "DEFAULT_SECTIONS";
+    public static final String RECO_GROUP_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
+    public static final String RECO_GROUP_PREMIUM = "GROUP_PREMIUM";
 
     public static final String BREIFING_ALL = "ALL";
     public static final String BREIFING_EVENING = "EVENIING";
@@ -42,5 +43,6 @@ public class NetConstants {
 
     public static final String PERSONALISE_CATEGORY_CITY = "city";
     public static final String PERSONALISE_CATEGORY_NEWS = "news";
+
 
 }
