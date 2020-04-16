@@ -876,9 +876,35 @@ public class ApiManager {
                             return beans;
                         }
                 );
-
     }
 
+    public static Observable<List<ArticleBean>> getBookmarkGroupType(final Context context, final String groupType) {
+        Observable<RecomendationData> observable = Observable.just(new RecomendationData());
+        return observable.subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                            List<ArticleBean> beans = new ArrayList<>();
+                            if (context == null) {
+                                return beans;
+                            }
+                            THPDB thp = THPDB.getInstance(context);
+                            List<TableBookmark> tableBookmark = null;
+                            if (groupType == null || groupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
+                                tableBookmark = thp.bookmarkTableDao().getAllBookmark();
+                            } else {
+                                tableBookmark = thp.bookmarkTableDao().getBookmarkGroupType(groupType);
+                            }
+
+                            if (tableBookmark != null) {
+                                for (TableBookmark bookmark : tableBookmark) {
+                                    ArticleBean bean = bookmark.getBean();
+                                    beans.add(bean);
+                                }
+                            }
+                            return beans;
+                        }
+                );
+
+    }
 
     public static Observable<List<ArticleBean>> getRecommendationFromDB(final Context context,
                                                                         final @RetentionDef.Recomendation String recotype, String aid) {

@@ -269,13 +269,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
-            mArticleBean.setGroupType(NetConstants.RECO_GROUP_DEFAULT_SECTIONS);
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+            mArticleBean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
             mArticleBean.setIsBookmark(1);
             // To Create at App end
             mDisposable.add(ApiManager.createBookmark(getContext(), mArticleBean).subscribe(boole -> {
-                mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
-                mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleBean.getArticleId());
                 isExistInBookmark(mArticleBean.getArticleId());
             }, throwable -> {
                 Log.i("", "");
@@ -292,12 +290,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)  || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             mArticleBean.setIsBookmark(0);
             // To Remove at App end
             mDisposable.add(ApiManager.createUnBookmark(getActivity(), mArticleBean.getArticleId()).subscribe(boole -> {
-                mActivity.getDetailToolbar().setIsBookmarked(!(Boolean)boole);
-                mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleBean.getArticleId());
                 isExistInBookmark(mArticleBean.getArticleId());
             }, throwable -> {
                 Log.i("", "");
@@ -368,7 +364,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             }
         }
 
-        bean.setGroupType(NetConstants.RECO_GROUP_PREMIUM);
+        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
 
         final int book = bookmark;
         final int fav = favourite;
@@ -383,6 +379,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 if(from.equals("bookmark")) {
                                     if(book == NetConstants.BOOKMARK_YES) {
                                         // To Create at App end
+                                        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+
                                         ApiManager.createBookmark(context, bean).subscribe(boole -> {
                                             mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
                                         });

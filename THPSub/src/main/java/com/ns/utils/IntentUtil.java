@@ -29,16 +29,17 @@ import com.netoperation.util.THPPreferences;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BecomeMemberActivity;
+import com.ns.activity.BookmarkMergedActivity;
 import com.ns.activity.DemoActivity;
 import com.ns.activity.SignInAndUpActivity;
 import com.ns.activity.THPImageGallaryActivity;
 import com.ns.activity.THPImageGallaryVerticleActivity;
 import com.ns.activity.THPPersonaliseActivity;
 import com.ns.activity.THPUserProfileActivity;
-import com.ns.activity.THP_BookmarkActivity;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.activity.THP_WebActivity;
 import com.ns.activity.THP_YouTubeFullScreenActivity;
+import com.ns.adapter.MergedBookmarkPagerAdapter;
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -708,7 +709,7 @@ public class IntentUtil {
     }
 
     public static void openBookmarkActivity(Context context, String from, String userId) {
-        Intent intent = new Intent(context, THP_BookmarkActivity.class);
+        Intent intent = new Intent(context, BookmarkMergedActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("userId", userId);
         context.startActivity(intent);

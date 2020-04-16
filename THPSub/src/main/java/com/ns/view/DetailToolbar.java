@@ -135,6 +135,36 @@ public class DetailToolbar extends Toolbar {
         mBackImageView.setOnClickListener(onClickListener);
     }
 
+    public void showBookmarkPremiumDetailIcons(boolean hasSubscriptionPlan) {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+
+        if(hasSubscriptionPlan) {
+            premiumLogoBtn.setVisibility(GONE);
+        } else {
+            premiumLogoBtn.setVisibility(VISIBLE);
+        }
+
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mTextSizeImageView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+
+        // In declare-styleable name="NSImageButton" enum arrow_back = 2
+        int arrow_back = 2;
+        mBackImageView.setIcon(arrow_back);
+    }
+
     public void showNonPremiumDetailIcons(boolean hasSubscriptionPlan) {
         overflowParent.setVisibility(GONE);
         mSearchImageView.setVisibility(GONE);

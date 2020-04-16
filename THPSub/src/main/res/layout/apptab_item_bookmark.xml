@@ -73,15 +73,6 @@
             android:layout_marginBottom="10dp"
             />
 
-        <ImageView
-            android:id="@+id/trendingIcon_Img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/tab_trending_selected"
-            android:scaleType="centerInside"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone"/>
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/time_Txt"
@@ -91,40 +82,17 @@
             app:textColor="@color/timeColor"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular"
-            app:layout_constraintLeft_toRightOf="@+id/trendingIcon_Img"
-            app:layout_constraintBottom_toBottomOf="@+id/trendingIcon_Img"
-            app:layout_constraintTop_toTopOf="@+id/trendingIcon_Img"
-            />
-
-        <ImageView
-            android:id="@+id/toggleBtn_Img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/ic_switch_on_copy"
-            android:visibility="gone"
-            />
-
-        <ProgressBar
-            android:id="@+id/toggleBtnProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:visibility="gone"
             />
 
 
-        <ImageView
+        <com.ns.view.IconImgView
+            app:iconType="bookmarked"
             android:id="@+id/bookmark_Img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/ic_bookmark_unselected"
             />
@@ -133,7 +101,7 @@
             android:id="@+id/bookmarkProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/ic_bookmark_unselected"
             style="@android:style/Widget.Holo.ProgressBar.Small"
@@ -142,30 +110,18 @@
             android:layout_marginRight="10dp"
             />
 
-        <ImageView
-            android:id="@+id/like_Img"
+        <com.ns.view.IconImgView
+            app:iconType="share"
+            android:id="@+id/share_Img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            app:srcCompat="@drawable/ic_like_unselected"
-            android:visibility="gone"
+            app:srcCompat="@drawable/ic_share_article"
             />
 
-        <ProgressBar
-            android:id="@+id/likeProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="30dp"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:visibility="gone"
-            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

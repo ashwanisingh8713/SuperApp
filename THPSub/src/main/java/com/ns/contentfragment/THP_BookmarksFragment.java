@@ -3,6 +3,7 @@ package com.ns.contentfragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +20,6 @@ import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.NetUtils;
-import com.ns.utils.ResUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
@@ -38,11 +38,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private LinearLayout emptyLayout;
     private AppTabContentAdapter mRecyclerAdapter;
     private String mUserId;
+    private String mGoupType;
 
-    public static THP_BookmarksFragment getInstance(String userId) {
+    public static THP_BookmarksFragment getInstance(String userId, String groupType) {
         THP_BookmarksFragment fragment = new THP_BookmarksFragment();
         Bundle bundle = new Bundle();
         bundle.putString("userId",userId);
+        bundle.putString("groupType",groupType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,6 +59,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             mUserId = getArguments().getString("userId");
+            mGoupType = getArguments().getString("groupType");
         }
     }
 
@@ -110,7 +113,6 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         });
     }
 
-
     @Override
     public void tryAgainBtnClick() {
         mPullToRefreshLayout.showProgressBar();
@@ -122,16 +124,26 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         loadData(mIsOnline);
     }
 
-
+    /**
+     * Load bookmarks from respective Group
+     * @param isOnline
+     */
     private void loadData(boolean isOnline) {
 
         Observable<List<ArticleBean>> observable = null;
 
-        if (isOnline && !ResUtil.isEmpty(mUserId)) {
+        if (isOnline && mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
                     NetConstants.RECO_bookmarks, ""+1000, BuildConfig.SITEID);
-        } else {
-            observable = ApiManager.getRecommendationFromDB(getActivity(), NetConstants.RECO_bookmarks, null);
+        }
+        else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
+        }
+        else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_DEFAULT_BOOKMARK);
+        }
+        else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
         }
 
         mDisposable.add(
@@ -163,8 +175,6 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                             mPullToRefreshLayout.hideProgressBar();
                             mPullToRefreshLayout.setRefreshing(false);
 
-
-
                         }, () -> {
 
                             mPullToRefreshLayout.hideProgressBar();
@@ -175,8 +185,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         }));
 
     }
+
     private void showEmptyLayout() {
         if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
+            if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+                TextView emptyTxtMsg = emptyLayout.findViewById(R.id.emptyTitleTxt);
+                emptyTxtMsg.setText("You have not added any bookmarks");
+            }
             emptyLayout.setVisibility(View.VISIBLE);
             mPullToRefreshLayout.setVisibility(View.GONE);
         } else {

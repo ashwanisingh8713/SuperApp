@@ -22,8 +22,15 @@ public class NetConstants {
     public static final String RECO_briefcase = "briefcase";
     public static final String RECO_TEMP_NOT_EXIST = "TEMP_NOT_EXIST";
     public static final String RECO_HOME_TAB = "HOME_TAB";
-    public static final String RECO_GROUP_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
-    public static final String RECO_GROUP_PREMIUM = "GROUP_PREMIUM";
+
+    public static final String GROUP_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
+    public static final String GROUP_DEFAULT_BOOKMARK = "GROUP_DEFAULT_BOOKMARK";
+    public static final String GROUP_PREMIUM_SECTIONS = "GROUP_PREMIUM_SECTIONS";
+    public static final String GROUP_PREMIUM_BOOKMARK = "GROUP_PREMIUM_BOOKMARK";
+    public static final String BOOKMARK_IN_ONE = "BOOKMARK_IN_ONE";
+
+    public static final int BOOKMARK_DEFAULT_PREMIUM_IN_ONE = 1;
+    public static final int BOOKMARK_DEFAULT_PREMIUM_IN_TAB = 2;
 
     public static final String BREIFING_ALL = "ALL";
     public static final String BREIFING_EVENING = "EVENIING";

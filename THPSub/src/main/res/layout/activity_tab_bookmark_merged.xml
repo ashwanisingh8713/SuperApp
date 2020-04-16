@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
+
+    <com.ns.view.layout.NSLinearLayout
+        android:id="@+id/backParentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:orientation="horizontal"
+        app:layoutType="Black_Full"
+        >
+
+        <com.ns.view.btn.NSImageButton
+            app:btnType="arrow_no_line"
+            android:id="@+id/backBtn"
+            style="@style/backBtnStyle"
+            android:layout_gravity="center_vertical" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/title_tv_merged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            app:viewType="color_static"
+            android:textSize="18sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+    </com.ns.view.layout.NSLinearLayout>
+
+    <com.ns.view.CustomTabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="fixed"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/bookmarkViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"/>
+
+</com.ns.view.layout.NSLinearLayout>

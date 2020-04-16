@@ -364,7 +364,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 //                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(MainActivity.this, getString(R.string.ga_action), getString(R.string.ga_bookmark_screen_button_clicked), "Home Fragment");
 
 
-                    Intent intent = new Intent(AppTabActivity.this, THP_BookmarkActivity.class);
+//                    Intent intent = new Intent(AppTabActivity.this, THP_BookmarkActivity.class);
+                    Intent intent = new Intent(AppTabActivity.this, BookmarkMergedActivity.class);
                     intent.putExtra("userId", mUserId);
                     startActivity(intent);
                 changeSortPopUp.dismiss();

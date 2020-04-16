@@ -71,6 +71,9 @@
         <activity android:name="com.ns.activity.CustomizeHomeScreenActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>
+        <activity android:name="com.ns.activity.BookmarkMergedActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"/>
         <activity android:name="com.ns.activity.IciciPGActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>

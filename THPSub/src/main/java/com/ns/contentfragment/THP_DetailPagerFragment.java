@@ -20,9 +20,12 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
+import com.ns.model.AppTabContentModel;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
 import com.ns.utils.THPFirebaseAnalytics;
@@ -143,12 +146,15 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        if(mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
             if(mIsSubsection) {
                 subSectionDataFromDB();
             } else {
                 sectionDataFromDB();
             }
+        }
+        else if(mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+            loadBookmarkData();
         }
         else {
             loadDataFromPremium();
@@ -346,6 +352,59 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 }, ()->{
                     Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB ");
                 }));
+
+    }
+
+
+    private void loadBookmarkData() {
+
+        Observable<List<ArticleBean>> observable = null;
+
+        if (mFrom != null && mFrom.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
+        } else if (mFrom != null && mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_DEFAULT_BOOKMARK);
+        } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+        }
+
+        mDisposable.add(
+                observable
+                        .map(value -> {
+
+                            return value;
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(value -> {
+                            if (value.size() > 0) {
+                                for (ArticleBean model : value) {
+                                    mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
+                                }
+
+                                // To Check the selected article Index
+                                if (mArticleId != null) {
+                                    ArticleBean bean = new ArticleBean();
+                                    bean.setArticleId(mArticleId);
+
+                                    int index = value.indexOf(bean);
+                                    if (index != -1) {
+                                        mClickedPosition = index;
+                                    }
+                                }
+
+                                // Setting current position of ViewPager
+                                setCurrentPage(mClickedPosition, false);
+                            }
+                        }, throwable -> {
+                            if (throwable instanceof ConnectException
+                                    || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException
+                                    || throwable instanceof NullPointerException) {
+
+                            }
+
+                        }, () -> {
+
+                        }));
 
     }
 

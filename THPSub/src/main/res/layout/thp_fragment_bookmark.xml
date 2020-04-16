@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="@dimen/baseLayoutLeftPadding"
-    android:paddingStart="@dimen/baseLayoutLeftPadding"
-    android:paddingRight="@dimen/baseLayoutRightPadding"
-    android:paddingEnd="@dimen/baseLayoutRightPadding"
     app:layoutType="Black_Dark"
     >
 
@@ -51,6 +47,7 @@
             app:emptyView="THP_Bookmark"
             />
         <com.ns.view.text.CustomTextView
+            android:id="@+id/emptyTitleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

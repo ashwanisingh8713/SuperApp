@@ -45,10 +45,10 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             getDetailToolbar().hideBookmark_Fav_Like();
         }
         else if (mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
-            getDetailToolbar().hide_Fav_Like();
+            getDetailToolbar().showBookmarkPremiumDetailIcons(true);
         }
 
-        if (mFrom.equals(NetConstants.RECO_GROUP_DEFAULT_SECTIONS)) {
+        if (mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             String sectionId = getIntent().getStringExtra("sectionId");
             String sectionType = getIntent().getStringExtra("sectionType");
             String sectionOrSubsectionName = getIntent().getStringExtra("sectionOrSubsectionName");
