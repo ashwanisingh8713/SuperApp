@@ -14,6 +14,7 @@ import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
+import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSubSectionArticle;
@@ -22,6 +23,7 @@ import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
+import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSubSectionArticle;
@@ -31,7 +33,7 @@ import com.netoperation.default_db.TableWidget;
         TableBreifing.class, TableUserProfile.class, TableMP.class,
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
-        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class},
+        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class},
         version = 5, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
@@ -52,6 +54,7 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoConfiguration daoConfiguration();
     public abstract DaoWidget daoWidget();
     public abstract DaoPersonaliseDefault daoPersonaliseDefault();
+    public abstract DaoRead daoRead();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {

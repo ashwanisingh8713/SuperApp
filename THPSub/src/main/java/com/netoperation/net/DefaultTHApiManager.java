@@ -8,6 +8,7 @@ import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
+import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSubSectionArticle;
@@ -15,6 +16,7 @@ import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
+import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
@@ -36,10 +38,12 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -113,12 +117,11 @@ public class DefaultTHApiManager {
                                     sections.add(0, homeBean);
 
 
-
                                     DaoPersonaliseDefault daoPersonaliseDefault = db.daoPersonaliseDefault();
                                     List<TablePersonaliseDefault> tablePersonaliseDefaults = daoPersonaliseDefault.getAllPersonalise();
-                                    if(tablePersonaliseDefaults == null || tablePersonaliseDefaults.size()==0) {
+                                    if (tablePersonaliseDefaults == null || tablePersonaliseDefaults.size() == 0) {
                                         final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
-                                        for(THDefaultPersonalizeBean personalizeBean : defaultPersonalizeBeans) {
+                                        for (THDefaultPersonalizeBean personalizeBean : defaultPersonalizeBeans) {
                                             TablePersonaliseDefault personaliseDefault = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, "0",
                                                     personalizeBean.getSecId(), null, personalizeBean.getSecName(), false, true);
                                             daoPersonaliseDefault.insertDefaultPersonalise(personaliseDefault);
@@ -133,8 +136,8 @@ public class DefaultTHApiManager {
                                                 section.isShow_on_burger(), section.isShow_on_explore(),
                                                 subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
 
-                                        if(section.getCustomScreen().equals("1")) {
-                                            Log.i("CustomScreen", ""+section.getSecName());
+                                        if (section.getCustomScreen().equals("1")) {
+                                            Log.i("CustomScreen", "" + section.getSecName());
                                         }
 
                                         // Adding Default selected persionlise news feed section
@@ -158,7 +161,7 @@ public class DefaultTHApiManager {
                     if (callback != null) {
                         callback.onError(throwable, "sectionList");
                     }
-                    Log.i(TAG, "sectionList :: throwable "+throwable);
+                    Log.i(TAG, "sectionList :: throwable " + throwable);
                 }, () -> {
                     Log.i(TAG, "");
                     if (callback != null) {
@@ -179,7 +182,7 @@ public class DefaultTHApiManager {
      */
     public static Disposable homeArticles(Context context, String from, RequestCallback callback) {
         if (context != null) {
-            Log.i(TAG, from+" :: HomeArticles :: Sent Server Request to get latest data");
+            Log.i(TAG, from + " :: HomeArticles :: Sent Server Request to get latest data");
             THPDB thpdb = THPDB.getInstance(context);
             Observable<TableBanner> bannerObservable = Observable.just("tableBanner").map(val -> {
                 final DaoBanner daoBanner = thpdb.daoBanner();
@@ -222,7 +225,7 @@ public class DefaultTHApiManager {
                             tableBanner1.setBeans(homeData.getNewsFeed().getBanner());
                             daoBanner.deleteAndInsertInBanner(tableBanner1);
 
-                            Log.i(TAG, "homeArticles :: Banner Article Added "+homeData.getNewsFeed().getBanner().size()+" Size");
+                            Log.i(TAG, "homeArticles :: Banner Article Added " + homeData.getNewsFeed().getBanner().size() + " Size");
 
                             DaoHomeArticle daoHomeArticle = db.daoHomeArticle();
                             // Delete All before Inserting New articles
@@ -231,23 +234,23 @@ public class DefaultTHApiManager {
                             for (HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
                                 TableHomeArticle tableHomeArticle = new TableHomeArticle(articlesBeans.getSec_id(), articlesBeans.getData());
                                 daoHomeArticle.insertHomeArticle(tableHomeArticle);
-                                Log.i(TAG, "homeArticles :: Home Article Added SEC-ID ::"+articlesBeans.getSec_id()+" :: "+articlesBeans.getData().size()+" Size");
+                                Log.i(TAG, "homeArticles :: Home Article Added SEC-ID ::" + articlesBeans.getSec_id() + " :: " + articlesBeans.getData().size() + " Size");
                             }
                         }
                         return "";
                     })
                     .subscribe(val -> {
-                        if(callback != null) {
+                        if (callback != null) {
                             callback.onNext("homeArticles");
                         }
                         Log.i(TAG, "homeArticles :: subscribe");
                     }, throwable -> {
-                        if(callback != null) {
+                        if (callback != null) {
                             callback.onError(throwable, "homeArticles");
                         }
-                        Log.i(TAG, "homeArticles :: throwable "+throwable);
+                        Log.i(TAG, "homeArticles :: throwable " + throwable);
                     }, () -> {
-                        if(callback != null) {
+                        if (callback != null) {
                             callback.onComplete("homeArticles");
                         }
                         Log.i(TAG, "homeArticles :: completed");
@@ -263,6 +266,7 @@ public class DefaultTHApiManager {
     /**
      * Making paraller request to get Widgets data.
      * For Example : https://proandroiddev.com/rxjava-2-parallel-multiple-network-call-made-easy-1e1f14163eef
+     *
      * @param context
      * @param sections
      * @return
@@ -276,7 +280,7 @@ public class DefaultTHApiManager {
                     .subscribeOn(Schedulers.newThread());
             count++;
         }
-        if(observables.length > 0) {
+        if (observables.length > 0) {
             return Observable.mergeArray(observables)
                     .map(value -> {
                         SectionContentFromServer sectionContent = (SectionContentFromServer) value;
@@ -317,12 +321,12 @@ public class DefaultTHApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
-                    if(value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
+                    if (value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
-                        if(page == 1) {
+                        if (page == 1) {
                             daoSectionArticle.deleteSection(secId);
-                            Log.i(TAG, "getSectionContent :: DELETED ALL ARTICLES OF SecId :: "+secId);
+                            Log.i(TAG, "getSectionContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
                         daoSectionArticle.insertSectionArticle(sectionArticles);
@@ -339,18 +343,18 @@ public class DefaultTHApiManager {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    if(requestCallback != null) {
+                    if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
                     Log.i(TAG, "getSectionContent :: subscribe");
                 }, throwable -> {
-                    Log.i(TAG, "getSectionContent :: throwable "+throwable);
-                    if(requestCallback != null) {
+                    Log.i(TAG, "getSectionContent :: throwable " + throwable);
+                    if (requestCallback != null) {
                         requestCallback.onError(throwable, "getSectionContent");
                     }
                 }, () -> {
                     Log.i(TAG, "getSectionContent :: completed");
-                    if(requestCallback != null) {
+                    if (requestCallback != null) {
                         requestCallback.onComplete("getSectionContent");
                     }
                 });
@@ -372,12 +376,12 @@ public class DefaultTHApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
-                    if(value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
+                    if (value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
-                        if(page == 1) {
+                        if (page == 1) {
                             daoSubSectionArticle.deleteSection(secId);
-                            Log.i(TAG, "getSubSectionContent :: DELETED ALL ARTICLES OF SecId :: "+secId);
+                            Log.i(TAG, "getSubSectionContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
                         daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
@@ -394,21 +398,87 @@ public class DefaultTHApiManager {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    if(requestCallback != null) {
+                    if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
                     Log.i(TAG, "getSectionContent :: subscribe");
                 }, throwable -> {
-                    Log.i(TAG, "getSectionContent :: throwable "+throwable);
-                    if(requestCallback != null) {
+                    Log.i(TAG, "getSectionContent :: throwable " + throwable);
+                    if (requestCallback != null) {
                         requestCallback.onError(throwable, "getSectionContent");
                     }
                 }, () -> {
                     Log.i(TAG, "getSectionContent :: completed");
-                    if(requestCallback != null) {
+                    if (requestCallback != null) {
                         requestCallback.onComplete("getSectionContent");
                     }
                 });
+    }
+
+    public static void readArticleId(Context context, final String articleId) {
+        if (context == null || articleId == null) {
+            return;
+        }
+        Maybe.just(articleId)
+                .subscribeOn(Schedulers.io())
+                .map(id -> {
+                    if (context == null) {
+                        return "";
+                    }
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoRead daoRead = thpdb.daoRead();
+                    TableRead read = new TableRead(id);
+                    daoRead.insertReadArticle(read);
+                    return "";
+                }).subscribe();
+
+    }
+
+    public static Maybe<TableRead> isReadArticleId(Context context, final String articleId) {
+        if (context == null) {
+            return null;
+        }
+        return Maybe.just(articleId)
+                .subscribeOn(Schedulers.io())
+                .map(id -> {
+                    if (context == null) {
+                        return null;
+                    }
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoRead daoRead = thpdb.daoRead();
+                    TableRead read = daoRead.getReadArticleId(id);
+                    return read;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    public static void readArticleDelete(Context context) {
+        if (context == null) {
+            return;
+        }
+
+        THPDB thpdb = THPDB.getInstance(context);
+        DaoRead daoRead = thpdb.daoRead();
+        daoRead.getAllReadArticleId()
+                .subscribeOn(Schedulers.io())
+                .map(ids -> {
+                    if (ids.size() > 200) {
+                        List<TableRead> subList = ids.subList(199, ids.size() - 1);
+                        List<String> subListId = new ArrayList<>();
+                        for (TableRead tableRead : subList) {
+                            subListId.add(tableRead.getArticleId());
+                        }
+
+                        if (context != null) {
+                            THPDB thpdbb = THPDB.getInstance(context);
+                            DaoRead daoReadd = thpdbb.daoRead();
+                            daoReadd.deleteMultiArticleId(subListId);
+                        }
+                    }
+
+                    return "";
+                }).subscribe();
     }
 
 

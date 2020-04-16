@@ -1,5 +1,7 @@
 package com.ns.adapter;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,14 +21,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.AppDateUtil;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
+import com.ns.utils.ContentUtil;
+import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class SectionContentAdapter extends BaseRecyclerViewAdapter {
@@ -48,6 +56,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     @Override
     public int getItemViewType(int position) {
         return adapterItems.get(position).getViewType();
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return adapterItems.size();
     }
 
     /*@Override
@@ -105,8 +119,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         SectionAdapterItem item = adapterItems.get(position);
         if(holder instanceof BannerViewHolder) {
-            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
+            fillBannerData((BannerViewHolder) holder, position);
+            /*bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
+            ArticleBean bean = item.getArticleBean();
+            bannerViewHolder.itemView.setOnClickListener(v->{
+                IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+            });*/
 
         }
         else if(holder instanceof WidgetsViewHolder) {
@@ -140,10 +158,98 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    @Override
-    public int getItemCount() {
-        return adapterItems.size();
+    /**
+     * Makes dim to read article's row
+     * @param context
+     * @param articleId
+     * @param view
+     */
+    private void dimReadArticle(Context context, String articleId, View view) {
+        DefaultTHApiManager.isReadArticleId(context, articleId)
+                .subscribe(tableRead -> {
+                    Log.i("", "");
+                    if (tableRead != null) {
+                        view.setAlpha(.4f);
+                    } else {
+                        view.setAlpha(1f);
+                    }
+                }, throwable -> {
+                    Log.i("", "");
+                });
     }
+
+    /**
+     * Fill Banner
+     * @param holder
+     * @param position
+     */
+    private void fillBannerData(final BannerViewHolder holder, final int position) {
+        final ArticleBean bean = adapterItems.get(position).getArticleBean();
+
+        dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mBannerTextView);
+
+            String imageUrl = null;
+            if (bean.getHi().equals("1")) {
+                imageUrl = bean.getMe().get(0).getIm_v2();
+            }
+            if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
+                imageUrl = ContentUtil.getBannerUrl(imageUrl);
+                GlideUtil.loadImage(holder.itemView.getContext(), holder.mBannerImageView, imageUrl, R.drawable.ph_topnews_th);
+            } else {
+                holder.mBannerImageView.setImageResource(R.drawable.ph_topnews_th);
+            }
+
+            articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
+
+            holder.mBannerTextView.setText(bean.getTi());
+
+            String publishTime = bean.getGmt();
+            String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.strToMlsForSearchedArticle(publishTime), Locale.ENGLISH);
+            holder.mArticleUpdateTime.setText(timeDiff);
+            holder.mArticleSectionName.setText(bean.getSname());
+
+            holder.mBannerLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
+                    FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
+
+                    IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom,
+                            bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+
+                }
+            });
+
+            holder.mMultimediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
+                    FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
+
+                }
+            });
+            holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
+                    FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");*/
+
+
+                }
+            });
+
+            holder.mShareArticleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharingArticleUtil.shareArticle(v.getContext(), bean);
+                }
+            });
+
+        //Enabling sliding for view pager
+        //new UniversalTouchListener(mBannerViewHolder.mBannerLayout, true);
+
+    }
+
 
     /**
      * Banner View Holder
@@ -266,6 +372,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             oldItem.setADID_300X250(item.getADID_300X250());
             oldItem.setArticleBean(item.getArticleBean());
             oldItem.setItemRowId(item.getItemRowId());
+            oldItem.setStaticPageUrlBean(item.getStaticPageUrlBean());
+            oldItem.setExploreAdapter(item.getExploreAdapter());
+            oldItem.setWidgetAdapter(item.getWidgetAdapter());
         }
 
     }

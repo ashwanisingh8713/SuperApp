@@ -82,6 +82,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         }
     }
 
+    public String getArticleId() {
+        return mArticleId;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -12,20 +12,22 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoBanner;
+import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
-import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
-import com.ns.model.AppTabContentModel;
-import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
 import com.ns.utils.THPFirebaseAnalytics;
@@ -40,6 +42,7 @@ import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -62,6 +65,8 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private DetailPagerAdapter mSectionsPagerAdapter;
 
     private THP_DetailActivity mActivity;
+
+    private List<ArticleBean> mHomeArticleList;
 
 
     public static final THP_DetailPagerFragment getInstance(String articleId,
@@ -137,20 +142,15 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewPager = view.findViewById(R.id.viewPager);
-
-        // This is smooth scroll of ViewPager
-        smoothPagerScroll();
-
-        // ViewPager Adapter Initialisation and Assiging
-        mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
             if(mIsSubsection) {
                 subSectionDataFromDB();
             } else {
-                sectionDataFromDB();
+                if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
+                    homeAndBannerArticleFromDB();
+                } else {
+                    sectionDataFromDB();
+                }
             }
         }
         else if(mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
@@ -160,50 +160,11 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             loadDataFromPremium();
         }
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                // It stops TTS if it's playing.
-                TTSManager.getInstance().stopTTS();
-                // It shows TTS Play view and hides Stop View
-                mActivity.getDetailToolbar().showTTSPlayView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
     }
-
-
-    private void setCurrentPage(int position, boolean smoothScroll) {
-        mViewPager.setCurrentItem(position, smoothScroll);
-    }
-
 
     /**
-     * This is ViewPager Page Scroll Animation
+     * Premium all articles from DB
      */
-    private void smoothPagerScroll() {
-        try {
-            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            mScroller.set(mViewPager, new ViewPagerScroller(getActivity(),
-                    new LinearInterpolator(), 250));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
     private void loadDataFromPremium() {
         Observable<List<ArticleBean>> observable = null;
         if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING)
@@ -220,32 +181,14 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    for(ArticleBean model : value) {
-                        // This happens if user clicks on any hyper link then we have to show only one detail page.
-                        if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
-                            if(model.getArticleId().equalsIgnoreCase(mArticleId)) {
-                                mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
-                                break;
-                            }
-                        }
-                        else {
-                            mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
-                        }
+                    if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST) && value.size() > 0) {
+                        ArrayList<ArticleBean> singleBean = new ArrayList<>();
+                        singleBean.add(value.get(0));
+                        viewPagerSetup(singleBean, mFrom);
                     }
-
-                    // To Check the selected article Index
-                    if (mArticleId != null) {
-                        ArticleBean bean = new ArticleBean();
-                        bean.setArticleId(mArticleId);
-
-                        int index = value.indexOf(bean);
-                        if (index != -1) {
-                            mClickedPosition = index;
-                        }
+                    else {
+                        viewPagerSetup(value, mFrom);
                     }
-
-                    // Setting current position of ViewPager
-                    setCurrentPage(mClickedPosition, false);
 
                 }, throwable -> {
                     if (throwable instanceof ConnectException
@@ -253,11 +196,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                         // TODO,
                     }
 
-
-
                 }, () -> {
-
-
 
                 }));
     }
@@ -267,9 +206,11 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     public void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Details Screen", THP_DetailPagerFragment.class.getSimpleName());
-        // Log.e("ARTICLE",""+mArticleId);
     }
 
+    /**
+     * Section all articles from DB
+     */
     private void sectionDataFromDB() {
         THPDB thpdb = THPDB.getInstance(getActivity());
         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
@@ -280,25 +221,13 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                     if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB");
                     } else {
-                        ArrayList<String> articleIds = new ArrayList<>();
                         for (TableSectionArticle sectionArticle : value) {
-                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
-                            for (ArticleBean model : articleBeanList) {
-                                articleIds.add(model.getArticleId());
-                                mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
+                            if(mHomeArticleList == null) {
+                                mHomeArticleList = new ArrayList<>();
                             }
+                            mHomeArticleList.addAll(sectionArticle.getBeans());
                         }
-                        // To Check the selected article Index
-                        if (mArticleId != null) {
-                            int index = articleIds.indexOf(mArticleId);
-                            if (index != -1) {
-                                mClickedPosition = index;
-                            }
-                        }
-
-                        // Setting current position of ViewPager
-                        setCurrentPage(mClickedPosition, false);
-
+                        viewPagerSetup(mHomeArticleList, mFrom);
                         Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from DB");
                     }
 
@@ -326,25 +255,14 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                     else {
                         ArrayList<String> articleIds = new ArrayList<>();
                         for (TableSubSectionArticle sectionArticle : value) {
-                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
-                            for (ArticleBean model : articleBeanList) {
-                                articleIds.add(model.getArticleId());
-                                mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
+                            if(mHomeArticleList == null) {
+                                mHomeArticleList = new ArrayList<>();
                             }
+                            mHomeArticleList.addAll(sectionArticle.getBeans());
+
                         }
 
-                        // To Check the selected article Index
-                        if (mArticleId != null) {
-                            int index = articleIds.indexOf(mArticleId);
-                            if (index != -1) {
-                                mClickedPosition = index;
-                            }
-                        }
-
-                        // Setting current position of ViewPager
-                        setCurrentPage(mClickedPosition, false);
-
-                        Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: Loaded from DB ::");
+                        viewPagerSetup(mHomeArticleList, mFrom);
                     }
 
                 }, throwable->{
@@ -356,8 +274,10 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     }
 
 
+    /**
+     * Bookmark all articles from DB
+     */
     private void loadBookmarkData() {
-
         Observable<List<ArticleBean>> observable = null;
 
         if (mFrom != null && mFrom.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
@@ -377,35 +297,133 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(value -> {
                             if (value.size() > 0) {
-                                for (ArticleBean model : value) {
-                                    mSectionsPagerAdapter.addFragment(THP_DetailFragment.getInstance(model, model.getArticleId(), mUserId, mFrom));
-                                }
-
-                                // To Check the selected article Index
-                                if (mArticleId != null) {
-                                    ArticleBean bean = new ArticleBean();
-                                    bean.setArticleId(mArticleId);
-
-                                    int index = value.indexOf(bean);
-                                    if (index != -1) {
-                                        mClickedPosition = index;
-                                    }
-                                }
-
-                                // Setting current position of ViewPager
-                                setCurrentPage(mClickedPosition, false);
+                                viewPagerSetup(value, mFrom);
                             }
                         }, throwable -> {
-                            if (throwable instanceof ConnectException
-                                    || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException
-                                    || throwable instanceof NullPointerException) {
-
-                            }
-
+                            Log.i("", "");
                         }, () -> {
-
                         }));
+    }
 
+
+    /**
+     * Home data from db
+     */
+    private void homeAndBannerArticleFromDB() {
+//        showProgressDialog("");
+        DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
+        DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
+        Single<TableBanner> bannerObservable = daoBanner.getBannersSingle().subscribeOn(Schedulers.io());
+        Single<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticlesSingle().subscribeOn(Schedulers.io());
+
+        mDisposable.add(Single.merge(bannerObservable, homeArticleObservable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    if (value instanceof TableBanner) {
+                        final TableBanner banner = (TableBanner) value;
+                        if(mHomeArticleList == null) {
+                            mHomeArticleList = new ArrayList<>();
+                        }
+                        mHomeArticleList.addAll(banner.getBeans());
+
+                    }
+                    else if (value instanceof ArrayList) {
+                        final ArrayList tableDatas = ((ArrayList) value);
+                        for (int i = 0; i < tableDatas.size(); i++) {
+                            // Home Articles
+                            if (tableDatas.get(i) instanceof TableHomeArticle) {
+                                TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
+                                if(mHomeArticleList == null) {
+                                    mHomeArticleList = new ArrayList<>();
+                                }
+                                mHomeArticleList.addAll(homeArticle.getBeans());
+                            }
+                        }
+
+                        viewPagerSetup(mHomeArticleList, mFrom);
+
+                        // Setting current position of ViewPager
+                        setCurrentPage(mClickedPosition, false);
+
+                        Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
+                    }
+
+                }, throwable -> {
+                    Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
+                }, () -> {
+                    Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
+
+                    hideProgressDialog();
+
+                }));
+    }
+
+    /**
+     * ViewPager Adapter Initialisation and Assiging
+     */
+    private void viewPagerSetup(List<ArticleBean> articleBeans, String from) {
+
+        mViewPager = getView().findViewById(R.id.viewPager);
+        // This is smooth scroll of ViewPager
+        smoothPagerScroll();
+
+        mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager(), articleBeans, mUserId, from);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // To Check the selected article Index
+        if (mArticleId != null) {
+            ArticleBean bean = new ArticleBean();
+            bean.setArticleId(mArticleId);
+
+            int index = articleBeans.indexOf(bean);
+            if (index != -1) {
+                mClickedPosition = index;
+            }
+        }
+
+        // Setting current position of ViewPager
+        setCurrentPage(mClickedPosition, false);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                // It stops TTS if it's playing.
+                TTSManager.getInstance().stopTTS();
+                // It shows TTS Play view and hides Stop View
+                mActivity.getDetailToolbar().showTTSPlayView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
+                THP_DetailFragment fragment = (THP_DetailFragment)mSectionsPagerAdapter.getRegisteredFragment(i);
+                DefaultTHApiManager.readArticleId(getActivity(), fragment.getArticleId());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    private void setCurrentPage(int position, boolean smoothScroll) {
+        mViewPager.setCurrentItem(position, smoothScroll);
+    }
+
+
+    /**
+     * This is ViewPager Page Scroll Animation
+     */
+    private void smoothPagerScroll() {
+        try {
+            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            mScroller.set(mViewPager, new ViewPagerScroller(getActivity(),
+                    new LinearInterpolator(), 250));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

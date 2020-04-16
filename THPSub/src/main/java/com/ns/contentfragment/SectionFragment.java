@@ -574,12 +574,12 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
                     mPullToRefreshLayout.setRefreshing(false);
                     hideProgressDialog();
-                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
 
                 }, throwable -> {
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
+                    addStaticPageBean();
                 }));
     }
 

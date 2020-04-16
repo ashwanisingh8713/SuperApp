@@ -22,6 +22,7 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.THPPreferences;
 import com.netoperation.util.UserPref;

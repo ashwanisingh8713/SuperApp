@@ -55,13 +55,6 @@ public class SplashActivity extends BaseAcitivityTHP {
                             Log.i(TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
                         });
 
-                       /* .subscribe(value->{
-                            Log.i(TAG, "SplashActivity :: Widget :: subscribe");
-                        }, throwable -> {
-                            Log.i(TAG, "SplashActivity :: Widget :: throwable");
-                        }, ()->{
-                            Log.i(TAG, "SplashActivity :: Widget :: completed");
-                        });*/
             }
 
             @Override
@@ -75,6 +68,10 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
 
         });
+
+
+        // Reduces Read article table
+        DefaultTHApiManager.readArticleDelete(this);
 
     }
 }
