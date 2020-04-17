@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.ns.utils.ResUtil;
 import com.ns.utils.TextUtil;
 
 import java.util.ArrayList;
@@ -471,6 +472,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public int getHasDescription() {
+        if((!ResUtil.isEmpty(description)) || (!ResUtil.isEmpty(description2)) || (!ResUtil.isEmpty(de))){
+            return 1;
+        }
         return hasDescription;
     }
 

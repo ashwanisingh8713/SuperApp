@@ -45,8 +45,8 @@ import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
-import com.ns.viewholder.DetailBannerViewHolder;
-import com.ns.viewholder.DetailDescriptionWebViewHolder;
+import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
+import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 
 import java.util.List;
 
@@ -131,10 +131,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewType == VT_LOADMORE) {
             return new BookmarkViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_loadmore, viewGroup, false));
-        } else if (viewType == VT_DETAIL_DESCRIPTION_WEBVIEW) {
-            return new DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_description_webview, viewGroup, false));
-        } else if (viewType == VT_DETAIL_IMAGE_BANNER) {
-            return new DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_banner_item, viewGroup, false));
+        } else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
+            return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_description_webview, viewGroup, false));
+        } else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
+            return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_banner_item, viewGroup, false));
         } else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
 
         } else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
@@ -149,23 +149,29 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         final ArticleBean bean = mContent.get(position).getBean();
 
         if (viewHolder instanceof DashboardViewHolder) {
-            ui_Dash_Tren_Populate(viewHolder, bean, position);
+            premium_ui_Dash_Tren_Row(viewHolder, bean, position);
         } else if (viewHolder instanceof BookmarkPremiumViewHolder) {
-            updateBookmarkPremiumPopulate(viewHolder, bean, position);
+            premium_ui_Bookmark_Row(viewHolder, bean, position);
         } else if (viewHolder instanceof BriefcaseViewHolder) {
-            ui_Briefing_Populate(viewHolder, bean, position);
-        } else if (viewHolder instanceof DetailBannerViewHolder) {
-            ui_detail_banner(viewHolder, bean);
-        } else if (viewHolder instanceof DetailDescriptionWebViewHolder) {
-            ui_detail_description(viewHolder, bean, position);
+            premium_ui_Briefing_Row(viewHolder, bean, position);
+        } else if (viewHolder instanceof PREMIUM_DetailBannerViewHolder) {
+            premium_ui_detail_banner(viewHolder, bean);
+        } else if (viewHolder instanceof PREMIUM_DetailDescriptionWebViewHolder) {
+            premium_ui_detail_description(viewHolder, bean, position);
         } else if (viewHolder instanceof BriefingHeaderViewHolder) {
-            BriefingHeader(viewHolder, bean);
+            premium_ui_BriefingHeader(viewHolder, bean);
         }
 
     }
 
 
-    private void ui_Dash_Tren_Populate(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
+    /**
+     * Shows content on UI of Listing
+     * @param viewHolder
+     * @param bean
+     * @param position
+     */
+    private void premium_ui_Dash_Tren_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         DashboardViewHolder holder = (DashboardViewHolder) viewHolder;
         if (mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
             holder.trendingIcon_Img.setVisibility(View.VISIBLE);
@@ -193,13 +199,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.bookmarkProgressBar.setVisibility(View.GONE);
         holder.toggleBtnProgressBar.setVisibility(View.GONE);
 
-        isFavOrLike(holder.like_Img.getContext(), bean, holder.like_Img, holder.toggleBtn_Img);
+        premium_isFavOrLike(holder.like_Img.getContext(), bean, holder.like_Img, holder.toggleBtn_Img);
 
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (NetUtils.isConnected(v.getContext())) {
-                        updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
+                        premium_updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
                     }
@@ -208,7 +214,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.like_Img.setOnClickListener(v -> {
                     if (NetUtils.isConnected(v.getContext())) {
-                        updateBookmarkFavLike(holder.likeProgressBar, holder.like_Img, holder.like_Img.getContext(), position, bean, "favourite");
+                        premium_updateBookmarkFavLike(holder.likeProgressBar, holder.like_Img, holder.like_Img.getContext(), position, bean, "favourite");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
                     }
@@ -217,7 +223,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.toggleBtn_Img.setOnClickListener(v -> {
                     if (NetUtils.isConnected(v.getContext())) {
-                        updateBookmarkFavLike(holder.toggleBtnProgressBar, holder.toggleBtn_Img, holder.toggleBtn_Img.getContext(), position, bean, "dislike");
+                        premium_updateBookmarkFavLike(holder.toggleBtnProgressBar, holder.toggleBtn_Img, holder.toggleBtn_Img.getContext(), position, bean, "dislike");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
                     }
@@ -241,7 +247,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         );
     }
 
-    private void updateBookmarkPremiumPopulate(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
+    /**
+     * Shows content on UI of Listing
+     * @param viewHolder
+     * @param bean
+     * @param position
+     */
+    private void premium_ui_Bookmark_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BookmarkPremiumViewHolder holder = (BookmarkPremiumViewHolder) viewHolder;
         GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
@@ -270,10 +282,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-                        removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position);
+                        local_removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position);
                     }
                     else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
-                        updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
+                        premium_updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
                     }
@@ -309,12 +321,11 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Briefing Listing Row UI
-     *
      * @param viewHolder
      * @param bean
      * @param position
      */
-    private void ui_Briefing_Populate(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
+    private void premium_ui_Briefing_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BriefcaseViewHolder holder = (BriefcaseViewHolder) viewHolder;
         GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
@@ -342,13 +353,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     /**
-     * Detail Page Banner UI
-     *
+     * Premium Detail Page Banner UI
      * @param viewHolder
      * @param bean
      */
-    private void ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
-        DetailBannerViewHolder holder = (DetailBannerViewHolder) viewHolder;
+    private void premium_ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        PREMIUM_DetailBannerViewHolder holder = (PREMIUM_DetailBannerViewHolder) viewHolder;
         final String articleType = bean.getArticletype();
         // To shows Article Type Image
         articleTypeImage(articleType, bean, holder.articleTypeimageView);
@@ -470,9 +480,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 .setDuration(animDuration);
 
     }
-
-    private void ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
-        DetailDescriptionWebViewHolder holder = (DetailDescriptionWebViewHolder) viewHolder;
+    /**
+     * Premium Detail Page Description UI
+     * @param viewHolder
+     * @param bean
+     */
+    private void premium_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
+        PREMIUM_DetailDescriptionWebViewHolder holder = (PREMIUM_DetailDescriptionWebViewHolder) viewHolder;
         mDescriptionTextSize = UserPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
@@ -504,8 +518,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
 
     }
-
-    private void BriefingHeader(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+    /**
+     * Premium Briefing Header UI
+     * @param viewHolder
+     * @param bean
+     */
+    private void premium_ui_BriefingHeader(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         BriefingHeaderViewHolder holder = (BriefingHeaderViewHolder) viewHolder;
         holder.userName_Txt.setText(bean.getTitle());
         if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
@@ -572,7 +590,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Checks, Visible Article is bookmarked or not.
-     *
      * @param context
      * @param articleBean
      * @param imageView1
@@ -598,7 +615,14 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 });
     }
 
-    private void isFavOrLike(Context context, ArticleBean articleBean, final ImageView favStartImg, final ImageView toggleLikeDisLikeImg) {
+    /**
+     * Checks, Whether article is Favorite or not
+     * @param context
+     * @param articleBean
+     * @param favStartImg
+     * @param toggleLikeDisLikeImg
+     */
+    private void premium_isFavOrLike(Context context, ArticleBean articleBean, final ImageView favStartImg, final ImageView toggleLikeDisLikeImg) {
         ApiManager.isExistFavNdLike(context, articleBean.getArticleId())
                 .subscribe(likeVal -> {
                     int like = (int) likeVal;
@@ -625,7 +649,16 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 });
     }
 
-    private void removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position) {
+    /**
+     * Removes Article from App, BookmarkTable in local DB
+     * @param context
+     * @param articleId
+     * @param bean
+     * @param bar
+     * @param imageView
+     * @param position
+     */
+    private void local_removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position) {
         // To Remove at App end
         ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
             if (bar != null) {
@@ -652,7 +685,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    private void updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean
+    private void premium_updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean
             , String from) {
         if (bar != null) {
             bar.setVisibility(View.VISIBLE);
@@ -774,7 +807,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                                                 public void onClick(View v) {
                                                                     //This is for UNDO functionality
                                                                     if (deletedContentModel != null && deletedContentModel.getBean() != null) {
-                                                                        updateBookmarkFavLike(null, null, context,
+                                                                        premium_updateBookmarkFavLike(null, null, context,
                                                                                 deletedPosition, deletedContentModel.getBean(), "dislike");
                                                                         CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "UNDO");
                                                                     }

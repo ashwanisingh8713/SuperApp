@@ -20,8 +20,8 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_ADD_NEW_ADDRESS = 6;
     public static final int VT_LOADMORE = 7;
 
-    public static final int VT_DETAIL_DESCRIPTION_WEBVIEW = 8;
-    public static final int VT_DETAIL_IMAGE_BANNER= 9;
+    public static final int VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW = 8;
+    public static final int VT_PREMIUM_DETAIL_IMAGE_BANNER = 9;
     public static final int VT_DETAIL_VIDEO_PLAYER= 10;
     public static final int VT_DETAIL_AUDIO_PLAYER= 11;
     public static final int VT_HEADER = 12;
@@ -43,6 +43,9 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
     public static final int VT_WEB_WIDGET = 26;
     public static final int VT_THD_SUB_SECTION = 27;
+
+    public static final int VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER = 28;
+    public static final int VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW = 29;
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 

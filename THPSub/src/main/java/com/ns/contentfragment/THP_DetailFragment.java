@@ -124,20 +124,23 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_IMAGE_BANNER);
-        bannerModel.setBean(mArticleBean);
+        if(mFrom.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if (mArticleBean.getHasDescription() == 0) {
+                loadDataFromServer();
+                AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
+                bannerModel.setBean(mArticleBean);
+                mRecyclerAdapter.addData(bannerModel);
 
-        mRecyclerAdapter.addData(bannerModel);
+                AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW);
+                descriptionModel.setBean(mArticleBean);
+                mRecyclerAdapter.addData(descriptionModel);
 
-        AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_DESCRIPTION_WEBVIEW);
-        descriptionModel.setBean(mArticleBean);
+            } else {
+                loadDataFromDB();
+            }
+        }
+        else if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
 
-        mRecyclerAdapter.addData(descriptionModel);
-
-        if(mArticleBean.getHasDescription() == 0) {
-            loadDataFromServer();
-        } else {
-            loadDataFromDB();
         }
 
         if(mActivity != null && mIsVisible) {
@@ -238,7 +241,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     private void loadDataFromDB() {
-        Observable<ArticleBean> observable =  ApiManager.articleDetailFromDB(getActivity(), mArticleId, mFrom);
+        Observable<ArticleBean> observable =  ApiManager.articleDetailFromPremiumDB(getActivity(), mArticleId, mFrom);
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{

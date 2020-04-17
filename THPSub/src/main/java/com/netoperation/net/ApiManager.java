@@ -1198,8 +1198,8 @@ public class ApiManager {
     }
 
 
-    public static final Observable<ArticleBean> articleDetailFromDB(Context context, String aid, String recoType) {
-        return Observable.just("articleDetailFromDB")
+    public static final Observable<ArticleBean> articleDetailFromPremiumDB(Context context, String aid, String recoType) {
+        return Observable.just("articleDetailFromPremiumDB")
                 .subscribeOn(Schedulers.newThread())
                 .map(new Function<String, ArticleBean>() {
                     @Override

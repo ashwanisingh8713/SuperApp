@@ -87,8 +87,7 @@ public abstract class BaseFragmentTHP extends Fragment {
                     else {
                         mIsOnline = false;
                         if(mIsVisible && rootview!=null) {
-                            //Alerts.noInternetSnackbar(rootview);
-                            noConnectionSnackBar(getView());
+//                            noConnectionSnackBar(getView());
                         }
                     }
 

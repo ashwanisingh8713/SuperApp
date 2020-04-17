@@ -13,7 +13,7 @@ import com.ns.thpremium.R;
  * Created by ashwanisingh on 25/09/18.
  */
 
-public class DetailBannerViewHolder extends RecyclerView.ViewHolder {
+public class PREMIUM_DetailBannerViewHolder extends RecyclerView.ViewHolder {
     public TextView tv_section;
     public TextView tv_time;
     public TextView tv_title;
@@ -25,7 +25,7 @@ public class DetailBannerViewHolder extends RecyclerView.ViewHolder {
     public TextView tv_caption;
     public View shadowOverlay;
 
-    public DetailBannerViewHolder(View itemView) {
+    public PREMIUM_DetailBannerViewHolder(View itemView) {
         super(itemView);
         tv_section = itemView.findViewById(R.id.tv_section);
         tv_time = itemView.findViewById(R.id.tv_time);
