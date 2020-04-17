@@ -140,7 +140,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             }
         }
         else if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER);
+            bannerModel.setBean(mArticleBean);
+            mRecyclerAdapter.addData(bannerModel);
         }
 
         if(mActivity != null && mIsVisible) {

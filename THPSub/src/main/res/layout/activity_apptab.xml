@@ -17,7 +17,7 @@
         <com.ns.view.DetailToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/toolbar_height"
             android:contentInsetLeft="0dp"
             android:contentInsetStart="0dp"
             app:contentInsetLeft="0dp"
@@ -26,7 +26,7 @@
             android:contentInsetEnd="0dp"
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"
-            android:background="@color/blueColor_1"/>
+            />
 
         <FrameLayout
             android:id="@+id/parentLayout"

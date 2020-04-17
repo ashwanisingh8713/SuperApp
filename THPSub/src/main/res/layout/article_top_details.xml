@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:lineSpacingExtra="@dimen/text_line_spacing"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/color_static_text"
+        android:textIsSelectable="true"
+        android:textSize="22sp"
+        app:font_path="@string/THP_TundraOffc"
+        app:viewType="color_static"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp"
+            app:textColor="@color/text_warm_grey"
+            app:font_path="@string/THP_TundraOffc"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/articleLocationTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            app:textColor="@color/text_warm_grey"
+            app:font_path="@string/THP_FiraSans_Regular"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/createdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:textSize="14sp"
+            app:textColor="@color/text_warm_grey"
+            app:font_path="@string/THP_FiraSans_Regular"
+            />
+
+    </LinearLayout>
+
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textSize="14sp"
+        app:textColor="@color/text_warm_grey"
+        app:font_path="@string/THP_FiraSans_Regular"/>
+
+    <FrameLayout
+        android:id="@+id/imageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ph_topnews_th"
+            android:clickable="true" />
+
+        <ImageButton
+            android:id="@+id/multimedia_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:padding="10dp" />
+
+
+    </FrameLayout>
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingTop="7dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="7dp"
+        android:textSize="10sp"
+        app:font_path="@string/THP_TundraOffc"
+        app:textColor="@color/text_caption_color" />
+
+    <View
+        android:id="@+id/captiondevider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/article_list_bottom" />
+
+
+</LinearLayout>

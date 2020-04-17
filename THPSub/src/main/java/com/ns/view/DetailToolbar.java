@@ -112,6 +112,31 @@ public class DetailToolbar extends Toolbar {
         mBackImageView.setOnClickListener(onClickListener);
     }
 
+    public void showGalleryIcons(OnClickListener onClickListener) {
+        overflowParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        mTitleTextView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+        mTitleTextView.setText("");
+        // In declare-styleable name="NSImageButton" enum arrow_back = 2
+        int arrow_back = 2;
+        mBackImageView.setIcon(arrow_back);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
     public void showPremiumDetailIcons(OnClickListener onClickListener) {
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);

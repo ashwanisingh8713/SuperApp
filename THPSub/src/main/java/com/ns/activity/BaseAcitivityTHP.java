@@ -37,17 +37,12 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public abstract int layoutRes();
 
     protected FragmentTools mFragmentTools;
-
-    /** This holds Toolbar object*/
-    private Toolbar mToolbar;
+    private DetailToolbar mToolbar;
 
     public DetailToolbar getDetailToolbar() {
-        return (DetailToolbar) mToolbar;
+        return  mToolbar;
     }
 
-    public Toolbar getToolbar() {
-        return mToolbar;
-    }
 
     protected boolean mIsDayTheme = true;
 

@@ -13,9 +13,13 @@ import org.joda.time.format.ISODateTimeFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class AppDateUtil {
+
+    public static final String MMM_dd_yyyy_hh_mm_a = "MMM dd, yyyy hh:mm a";
+    public final static String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
 
     public static final DateTime getDateTime(String source) {
         return DateTime.parse(source, ISODateTimeFormat.dateTimeParser());
@@ -71,6 +75,52 @@ public class AppDateUtil {
         String[] spl = val.split(":");
 
         return  builder.print(dateTime);
+    }
+
+    public static String getTopNewsFormattedDate(long date_updated) {
+        String result = "";
+        try {
+            Date time_updated = new Date(date_updated);
+            result = "Updated: "
+                    + new SimpleDateFormat(MMM_dd_yyyy_hh_mm_a).format(time_updated) + " IST";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String getPlaneTopNewsFormattedDate(long date_updated) {
+        String result = "";
+        try {
+            Date time_updated = new Date(date_updated);
+            result = new SimpleDateFormat(MMM_dd_yyyy_hh_mm_a).format(time_updated) + " IST";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static long changeStringToMillis(String dateInString) {
+        SimpleDateFormat formatter = new SimpleDateFormat(yyyy_MM_dd_HH_mm_ss);
+        try {
+            Date date = formatter.parse(dateInString);
+            return date.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static long changeStringToMillisGMT(String dateInString) {
+        SimpleDateFormat formatter = new SimpleDateFormat(yyyy_MM_dd_HH_mm_ss);
+        try {
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = formatter.parse(dateInString);
+            return date.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public static String getDurationFormattedDate(long date_created, Locale locale) {

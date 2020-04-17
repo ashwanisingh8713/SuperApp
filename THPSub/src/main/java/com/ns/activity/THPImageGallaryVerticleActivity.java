@@ -57,6 +57,10 @@ public class THPImageGallaryVerticleActivity extends BaseAcitivityTHP implements
 
         mProgressBar = findViewById(R.id.section_progress);
 
+        getDetailToolbar().showGalleryIcons(v->{
+            finish();
+        });
+
 
         // Check Permission
         int permission = ContextCompat.checkSelfPermission(THPImageGallaryVerticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);

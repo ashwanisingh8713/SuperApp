@@ -2,8 +2,10 @@ package com.ns.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.MeBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.THPPreferences;
 import com.netoperation.util.UserPref;
@@ -45,9 +49,11 @@ import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
+import com.ns.viewholder.DefaultGroup_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -115,29 +121,44 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         if (viewType == VT_HEADER) {
             return new BriefingHeaderViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_briefing_header, viewGroup, false));
-        } else if (viewType == VT_DASHBOARD) {
+                    .inflate(R.layout.premium_briefing_header, viewGroup, false));
+        }
+        else if (viewType == VT_DASHBOARD) {
             return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.apptab_item_dashboard, viewGroup, false));
-        } else if (viewType == VT_TRENDING) {
+                    .inflate(R.layout.premium_item_dashboard, viewGroup, false));
+        }
+        else if (viewType == VT_TRENDING) {
             return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.apptab_item_dashboard, viewGroup, false));
-        } else if (viewType == VT_BOOKMARK_PREMIUM) {
+                    .inflate(R.layout.premium_item_dashboard, viewGroup, false));
+        }
+        else if (viewType == VT_BOOKMARK_PREMIUM) {
             return new BookmarkPremiumViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.apptab_item_bookmark, viewGroup, false));
-        } else if (viewType == VT_BRIEFCASE) {
+                    .inflate(R.layout.premium_item_bookmark, viewGroup, false));
+        }
+        else if (viewType == VT_BRIEFCASE) {
             return new BriefcaseViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.apptab_item_briefcase, viewGroup, false));
-        } else if (viewType == VT_LOADMORE) {
+                    .inflate(R.layout.premium_apptab_item_briefcase, viewGroup, false));
+        }
+        else if (viewType == VT_LOADMORE) {
             return new BookmarkViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_loadmore, viewGroup, false));
-        } else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
-            return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_description_webview, viewGroup, false));
-        } else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
-            return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_detail_banner_item, viewGroup, false));
-        } else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
+        }
+        else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
+            return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_description, viewGroup, false));
+        }
+        else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
+            return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_banner, viewGroup, false));
+        }
+        else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
+//            return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_top_details, viewGroup, false));
+        }
+        else if (viewType == VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER) {
+            return new DefaultGroup_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_top_details, viewGroup, false));
+        }
+        else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
 
-        } else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
+        }
+        else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
 
         }
         return null;
@@ -161,7 +182,79 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewHolder instanceof BriefingHeaderViewHolder) {
             premium_ui_BriefingHeader(viewHolder, bean);
         }
+        else if(viewHolder instanceof DefaultGroup_DetailBannerViewHolder) {
+            DefaultGroup_DetailBannerViewHolder dg_banner_vh = (DefaultGroup_DetailBannerViewHolder) viewHolder;
+            boolean isAppExclusive = bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
 
+            dg_banner_vh.mTitleTextView.setText(bean.getTi());
+            dg_banner_vh.mArticleLocationView.setText(bean.getLocation());
+            String author = bean.getAu();
+            if (author != null && !TextUtils.isEmpty(author)) {
+                dg_banner_vh.mAuthorTextView.setVisibility(View.VISIBLE);
+                dg_banner_vh.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
+            } else {
+                dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
+            }
+
+            dg_banner_vh.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+            dg_banner_vh.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+            final ArrayList<MeBean> mImageList = bean.getMe();
+
+            if (mImageList != null && mImageList.size() > 0) {
+                String imageUrl = mImageList.get(0).getIm_v2();
+                GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                String caption = mImageList.get(0).getCa();
+                if (caption != null && !TextUtils.isEmpty(caption)) {
+                    dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
+                } else {
+                    dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
+                }
+
+                dg_banner_vh.mHeaderImageView.setOnClickListener(v -> {
+                    IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
+                });
+            }
+
+
+
+        }
+
+    }
+
+    /**
+     * Removes Article from App, BookmarkTable in local DB
+     * @param context
+     * @param articleId
+     * @param bean
+     * @param bar
+     * @param imageView
+     * @param position
+     */
+    private void local_removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position) {
+        // To Remove at App end
+        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
+            if (bar != null) {
+                bar.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setEnabled(true);
+            }
+            // If user is in bookmark then item should be removed.
+            if (mFrom.equals(NetConstants.RECO_bookmarks)) {
+                deletedContentModel = mContent.remove(position);
+                deletedPosition = position;
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mContent.size());
+
+                // Empty Check Call back
+                checkPageEmptyCallback();
+
+            } else {
+//                                                    notifyDataSetChanged();
+                notifyItemChanged(position);
+            }
+            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
+        });
     }
 
 
@@ -649,44 +742,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 });
     }
 
-    /**
-     * Removes Article from App, BookmarkTable in local DB
-     * @param context
-     * @param articleId
-     * @param bean
-     * @param bar
-     * @param imageView
-     * @param position
-     */
-    private void local_removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position) {
-        // To Remove at App end
-        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
-            if (bar != null) {
-                bar.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-                imageView.setEnabled(true);
-            }
-            // If user is in bookmark then item should be removed.
-            if (mFrom.equals(NetConstants.RECO_bookmarks)) {
-                deletedContentModel = mContent.remove(position);
-                deletedPosition = position;
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mContent.size());
-
-                // Empty Check Call back
-                checkPageEmptyCallback();
-
-            } else {
-//                                                    notifyDataSetChanged();
-                notifyItemChanged(position);
-            }
-            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
-        });
-    }
 
 
-    private void premium_updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean
-            , String from) {
+
+    private void premium_updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean, String from) {
         if (bar != null) {
             bar.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.INVISIBLE);
