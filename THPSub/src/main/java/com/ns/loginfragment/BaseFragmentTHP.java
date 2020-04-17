@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +21,13 @@ import androidx.fragment.app.Fragment;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.net.ApiManager;
+import com.netoperation.util.NetConstants;
 import com.netoperation.util.UserPref;
 import com.ns.activity.BaseAcitivityTHP;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
+import com.ns.view.RecyclerViewPullToRefresh;
+import com.ns.view.text.CustomTextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -150,6 +156,179 @@ public abstract class BaseFragmentTHP extends Fragment {
         });
         mSnackbarView.addView(snackView);
         mSnackbar.show();
+    }
+
+
+
+    private BaseFragmentListener mBaseFragmentListener;
+
+    public void setBaseFragmentListener(BaseFragmentListener baseFragmentListener) {
+        mBaseFragmentListener = baseFragmentListener;
+    }
+
+    public interface BaseFragmentListener {
+        void onEmptyRefreshBtnClick();
+        void onOtherStuffWork();
+    }
+
+
+    public void showEmptyLayout(LinearLayout emptyLayout, boolean isNoContent, BaseRecyclerViewAdapter mRecyclerAdapter, RecyclerViewPullToRefresh mPullToRefreshLayout, boolean isBriefingPage, @NonNull String mFrom) {
+        if(emptyLayout == null) {
+            return;
+        }
+        if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
+            emptyLayout.setVisibility(View.VISIBLE);
+            mPullToRefreshLayout.setVisibility(View.GONE);
+
+            ImageView emptyIcon = emptyLayout.findViewById(R.id.emptyIcon);
+            CustomTextView emptyTitleTxt = emptyLayout.findViewById(R.id.emptyTitleTxt);
+            CustomTextView emptySubTitleTxt = emptyLayout.findViewById(R.id.emptySubTitleTxt);
+            CustomTextView emptyBtnTxt = emptyLayout.findViewById(R.id.emptyBtnTxt);
+
+            if (isBriefingPage) {
+                if(isNoContent) {
+                    emptyIcon.setImageResource(R.drawable.ic_empty_breifing);
+                    emptyTitleTxt.setVisibility(View.INVISIBLE);
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptySubTitleTxt.setText("No content in Breifing. Please look \n back after sometime");
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+                else {
+                    if(!mIsOnline) {
+                        noConnectionSnackBar(getView());
+                    }
+                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
+                    emptyTitleTxt.setVisibility(View.VISIBLE);
+                    emptyTitleTxt.setText("Oops...");
+                    emptySubTitleTxt.setText("Something went wrong");
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+            }
+            else if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+                if(isNoContent) {
+                    emptyIcon.setImageResource(R.drawable.ic_empty_watermark);
+                    emptyTitleTxt.setVisibility(View.INVISIBLE);
+                    emptySubTitleTxt.setVisibility(View.INVISIBLE);
+                    emptyBtnTxt.setVisibility(View.INVISIBLE);
+                    emptyBtnTxt.setEnabled(false);
+                    if(mBaseFragmentListener != null) {
+                        mBaseFragmentListener.onOtherStuffWork();
+                    }
+
+                }
+                else {
+                    if(!mIsOnline) {
+                        noConnectionSnackBar(getView());
+                    }
+                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
+                    emptyTitleTxt.setText("Oops...");
+                    emptySubTitleTxt.setText("Something went wrong");
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(!mIsOnline) {
+                            noConnectionSnackBar(getView());
+                            return;
+                        }
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+            }
+            else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested)) {
+                if(isNoContent) {
+                    emptyIcon.setImageResource(R.drawable.ic_empty_suggestion);
+                    emptyTitleTxt.setVisibility(View.INVISIBLE);
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptySubTitleTxt.setText("No content in Suggestion. Please look \n back after sometime");
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+                else {
+                    if(!mIsOnline) {
+                        noConnectionSnackBar(getView());
+                    }
+                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
+                    emptyTitleTxt.setVisibility(View.VISIBLE);
+                    emptyTitleTxt.setText("Oops...");
+                    emptySubTitleTxt.setText("Something went wrong");
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(!mIsOnline) {
+                            noConnectionSnackBar(getView());
+                            return;
+                        }
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+            }
+            else {
+                if(isNoContent) {
+                    emptyIcon.setImageResource(R.drawable.ic_empty_breifing);
+                    emptyTitleTxt.setVisibility(View.INVISIBLE);
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptySubTitleTxt.setText("No content in Breifing. Please look \n back after sometime");
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setOnClickListener(v->{
+                        if(mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+                else {
+                    if (!mIsOnline) {
+                        noConnectionSnackBar(getView());
+                    }
+                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
+                    emptyTitleTxt.setVisibility(View.VISIBLE);
+                    emptyTitleTxt.setText("Oops...");
+                    emptySubTitleTxt.setText("Something went wrong");
+                    emptyBtnTxt.setVisibility(View.VISIBLE);
+                    emptySubTitleTxt.setVisibility(View.VISIBLE);
+                    emptyBtnTxt.setText("Refresh");
+                    emptyBtnTxt.setEnabled(true);
+                    emptyBtnTxt.setOnClickListener(v -> {
+                        if (mBaseFragmentListener != null) {
+                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        }
+                    });
+                }
+            }
+        } else {
+            mPullToRefreshLayout.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
+        }
     }
 
 

@@ -50,7 +50,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener
-        , OnEditionBtnClickListener, THP_AppEmptyPageListener {
+        , OnEditionBtnClickListener, THP_AppEmptyPageListener, BaseFragmentTHP.BaseFragmentListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private AppTabContentAdapter mRecyclerAdapter;
@@ -287,14 +287,12 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                             mPullToRefreshLayout.hideProgressBar();
                             mPullToRefreshLayout.setRefreshing(false);
                             // Showing Empty Msg.
-                            showEmptyLayout(isOnline);
+                            showEmptyLayout(emptyLayout, isOnline, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mFrom);
 
                         }));
 
     }
 
-
-    private Map<String, String> timeMap = new HashMap<>();
 
     @Override
     public void OnEditionBtnClickListener() {
@@ -426,7 +424,8 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
     }
 
-    private void showEmptyLayout(boolean isNoContent) {
+
+    /*private void showEmptyLayout(boolean isNoContent) {
         if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
             emptyLayout.setVisibility(View.VISIBLE);
             mPullToRefreshLayout.setVisibility(View.GONE);
@@ -533,7 +532,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
             mPullToRefreshLayout.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
         }
-    }
+    }*/
 
 
 
@@ -601,7 +600,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
         if(mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() == 1) {
             mRecyclerAdapter.deleteIndex(0);
-            showEmptyLayout(true);
+            showEmptyLayout(emptyLayout, true, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mFrom);
         }
 
     }
@@ -674,4 +673,14 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     }
 
 
+    @Override
+    public void onEmptyRefreshBtnClick() {
+        loadData();
+    }
+
+    @Override
+    public void onOtherStuffWork() {
+        // To set Empty Btn txt, if user has set preferences or not
+         getUserSavedPersonalise(mUserId);
+    }
 }

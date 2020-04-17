@@ -53,7 +53,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener {
+public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, BaseFragmentTHP.BaseFragmentListener {
 
     private static String TAG = NetConstants.UNIQUE_TAG;
 
@@ -70,7 +70,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private LinearLayout emptyLayout;
-
     private SectionContentAdapter mRecyclerAdapter;
 
     private StaticPageUrlBean mStaticPageBean;
@@ -281,14 +280,14 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             public void onError(Throwable throwable, String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
                 setLoading(false);
-                showEmptyLayout(false);
+                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
             }
 
             @Override
             public void onComplete(String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
                 setLoading(false);
-                showEmptyLayout(false);
+                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
 
             }
         };
@@ -620,58 +619,14 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPage = 1;
     }
 
-    private ImageView emptyIcon;
-    private CustomTextView emptyTitleTxt;
-    private CustomTextView emptySubTitleTxt;
-    private CustomTextView emptyBtnTxt;
 
-    private void showEmptyLayout(boolean isNoContent) {
-        if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            emptyLayout.setVisibility(View.VISIBLE);
-            mPullToRefreshLayout.setVisibility(View.GONE);
-
-            emptyIcon = getView().findViewById(R.id.emptyIcon);
-            emptyTitleTxt = getView().findViewById(R.id.emptyTitleTxt);
-            emptySubTitleTxt = getView().findViewById(R.id.emptySubTitleTxt);
-            emptyBtnTxt = getView().findViewById(R.id.emptyBtnTxt);
-            if (isNoContent) {
-                emptyIcon.setImageResource(R.drawable.ic_empty_suggestion);
-                emptyTitleTxt.setVisibility(View.INVISIBLE);
-                emptySubTitleTxt.setVisibility(View.VISIBLE);
-                emptySubTitleTxt.setText("No content in Suggestion. Please look \n back after sometime");
-                emptyBtnTxt.setVisibility(View.VISIBLE);
-                emptyBtnTxt.setEnabled(true);
-                emptyBtnTxt.setText("Refresh");
-                emptyBtnTxt.setOnClickListener(v -> {
-                    loadMoreItems();
-                });
-            } else {
-                if (!mIsOnline) {
-                    noConnectionSnackBar(getView());
-                    emptySubTitleTxt.setText(getString(R.string.no_internet_connection));
-                } else {
-                    emptySubTitleTxt.setText("Something went wrong");
-                }
-                emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
-                emptyTitleTxt.setVisibility(View.VISIBLE);
-                emptyTitleTxt.setText("Oops...");
-                emptySubTitleTxt.setVisibility(View.VISIBLE);
-                emptyBtnTxt.setVisibility(View.VISIBLE);
-                emptyBtnTxt.setText("Refresh");
-                emptyBtnTxt.setEnabled(true);
-                emptyBtnTxt.setOnClickListener(v -> {
-                    if (!mIsOnline) {
-                        noConnectionSnackBar(getView());
-                        return;
-                    }
-                    loadMoreItems();
-                });
-            }
-        } else {
-            mPullToRefreshLayout.setVisibility(View.VISIBLE);
-            emptyLayout.setVisibility(View.GONE);
-        }
+    @Override
+    public void onEmptyRefreshBtnClick() {
+        loadMoreItems();
     }
 
+    @Override
+    public void onOtherStuffWork() {
 
+    }
 }

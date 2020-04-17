@@ -3,16 +3,32 @@ package com.ns.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.ns.adapter.SectionContentAdapter;
+import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
+import com.ns.view.RecyclerViewPullToRefresh;
+import com.ns.view.text.CustomTextView;
 
 public class SearchActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
-    MaterialSearchBar searchBar;
+
+    private MaterialSearchBar searchBar;
+    private RecyclerViewPullToRefresh mPullToRefreshLayout;
+    private ImageView emptyIcon;
+    private CustomTextView emptyTitleTxt;
+    private CustomTextView emptySubTitleTxt;
+    private CustomTextView emptyBtnTxt;
+    private LinearLayout emptyLayout;
+
+    private SectionContentAdapter mRecyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +36,9 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         setContentView(R.layout.activity_search);
 
         searchBar = findViewById(R.id.searchBar);
+        mPullToRefreshLayout = findViewById(R.id.recyclerView);
+        emptyLayout = findViewById(R.id.emptyLayout);
+        mPullToRefreshLayout.hideProgressBar();
 
         // Setting Search Pop up option from Menu XML
          searchBar.inflateMenu(R.menu.search_option_menu);
@@ -34,6 +53,31 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         searchBar.openSearch();
         searchBar.setOnSearchActionListener(this);
 
+        registerEmptyView();
+
+    }
+
+    private void registerEmptyView() {
+        BaseFragmentTHP fragmentTHP = new BaseFragmentTHP() {
+            @Override
+            public int getLayoutRes() {
+                return 0;
+            }
+        };
+
+        fragmentTHP.showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, "");
+
+        fragmentTHP.setBaseFragmentListener(new BaseFragmentTHP.BaseFragmentListener() {
+            @Override
+            public void onEmptyRefreshBtnClick() {
+
+            }
+
+            @Override
+            public void onOtherStuffWork() {
+
+            }
+        });
     }
 
 
