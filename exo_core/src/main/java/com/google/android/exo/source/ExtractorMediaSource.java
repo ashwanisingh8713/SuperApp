@@ -17,7 +17,8 @@ package com.google.android.exo.source;
 
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.ExoPlayer;
@@ -110,7 +111,8 @@ public final class ExtractorMediaSource implements MediaSource, ExtractorMediaPe
 
     private final DataSource.Factory dataSourceFactory;
 
-    private @Nullable ExtractorsFactory extractorsFactory;
+    private @Nullable
+    ExtractorsFactory extractorsFactory;
     private @Nullable String customCacheKey;
     private int minLoadableRetryCount;
     private int continueLoadingCheckIntervalBytes;

@@ -15,7 +15,8 @@
  */
 package com.google.android.exo;
 
-import android.support.annotation.IntDef;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.util.Assertions;
 import com.google.android.exo.source.MediaSource;

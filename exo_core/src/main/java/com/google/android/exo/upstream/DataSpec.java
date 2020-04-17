@@ -16,8 +16,9 @@
 package com.google.android.exo.upstream;
 
 import android.net.Uri;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.util.Assertions;
@@ -82,7 +83,8 @@ public final class DataSpec {
    * A key that uniquely identifies the original stream. Used for cache indexing. May be null if the
    * {@link DataSpec} is not intended to be used in conjunction with a cache.
    */
-  @Nullable public final String key;
+  @Nullable
+  public final String key;
   /**
    * Request flags. Currently {@link #FLAG_ALLOW_GZIP} and
    * {@link #FLAG_ALLOW_CACHING_UNKNOWN_LENGTH} are the only supported flags.

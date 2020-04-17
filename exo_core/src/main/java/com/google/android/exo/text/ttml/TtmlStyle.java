@@ -16,8 +16,9 @@
 package com.google.android.exo.text.ttml;
 
 import android.graphics.Typeface;
-import android.support.annotation.IntDef;
 import android.text.Layout;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.util.Assertions;
 

@@ -39,6 +39,7 @@ import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
+import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
@@ -452,5 +453,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         changeSortPopUp.showAsDropDown(getDetailToolbar(), width, -(height/3));
     }
 
-
+    @Override
+    public void onSearchClickListener(ToolbarCallModel toolbarCallModel) {
+        IntentUtil.openSearchActivity(this);
+    }
 }

@@ -15,8 +15,10 @@
  */
 package com.google.android.exo.extractor.ts;
 
-import android.support.annotation.IntDef;
 import android.util.SparseArray;
+
+import androidx.annotation.IntDef;
+
 import com.google.android.exo.Format;
 import com.google.android.exo.util.MimeTypes;
 import com.google.android.exo.util.ParsableByteArray;

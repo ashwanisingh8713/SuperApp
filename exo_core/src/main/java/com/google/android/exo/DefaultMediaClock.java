@@ -15,7 +15,8 @@
  */
 package com.google.android.exo;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.util.Clock;
 import com.google.android.exo.util.MediaClock;
 import com.google.android.exo.util.StandaloneMediaClock;
@@ -43,7 +44,8 @@ import com.google.android.exo.util.StandaloneMediaClock;
   private final StandaloneMediaClock standaloneMediaClock;
   private final PlaybackParameterListener listener;
 
-  private @Nullable Renderer rendererClockSource;
+  private @Nullable
+  Renderer rendererClockSource;
   private @Nullable MediaClock rendererClock;
 
   /**

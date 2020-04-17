@@ -17,9 +17,10 @@ package com.google.android.exo.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.ash.ui.R;
 

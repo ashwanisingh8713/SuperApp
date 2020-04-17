@@ -21,8 +21,9 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
-import android.support.annotation.IntDef;
 import android.view.Surface;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.audio.AudioAttributes;
 import com.google.android.exo.PlayerMessage.Target;

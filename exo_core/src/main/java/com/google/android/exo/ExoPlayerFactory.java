@@ -16,7 +16,8 @@
 package com.google.android.exo;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.trackselection.TrackSelector;
 import com.google.android.exo.util.Clock;

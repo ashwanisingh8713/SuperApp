@@ -25,7 +25,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -35,6 +34,9 @@ import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
+
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.C;
 import com.google.android.ash.ui.R;
 import com.google.android.exo.util.Assertions;
@@ -373,7 +375,7 @@ public class DefaultTimeBar extends View implements TimeBar {
 
   @Override
   public void setAdGroupTimesMs(@Nullable long[] adGroupTimesMs, @Nullable boolean[] playedAdGroups,
-      int adGroupCount) {
+                                int adGroupCount) {
     Assertions.checkArgument(adGroupCount == 0
         || (adGroupTimesMs != null && playedAdGroups != null));
     this.adGroupCount = adGroupCount;

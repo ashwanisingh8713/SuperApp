@@ -15,7 +15,8 @@
  */
 package com.google.android.exo;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.decoder.DecoderInputBuffer;
 import com.google.android.exo.drm.DrmInitData;

@@ -16,7 +16,9 @@
 package com.google.android.exo;
 
 import android.os.Looper;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.audio.MediaCodecAudioRenderer;
 import com.google.android.exo.metadata.MetadataRenderer;
 import com.google.android.exo.source.ClippingMediaSource;

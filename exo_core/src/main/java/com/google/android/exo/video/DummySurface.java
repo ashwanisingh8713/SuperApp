@@ -30,9 +30,10 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.support.annotation.IntDef;
 import android.util.Log;
 import android.view.Surface;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.util.Assertions;
 import com.google.android.exo.util.Util;

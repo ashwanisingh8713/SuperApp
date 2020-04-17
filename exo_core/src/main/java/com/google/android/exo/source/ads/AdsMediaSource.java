@@ -18,9 +18,10 @@ package com.google.android.exo.source.ads;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.ExoPlayer;
@@ -58,7 +59,7 @@ public final class AdsMediaSource extends CompositeMediaSource<MediaPeriodId> {
      * @return The new media source.
      */
     MediaSource createMediaSource(
-        Uri uri, @Nullable Handler handler, @Nullable MediaSourceEventListener listener);
+            Uri uri, @Nullable Handler handler, @Nullable MediaSourceEventListener listener);
 
     /**
      * Returns the content types supported by media sources created by this factory. Each element

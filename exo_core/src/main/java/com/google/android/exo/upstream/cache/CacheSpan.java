@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.upstream.cache;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 
@@ -46,7 +47,8 @@ public class CacheSpan implements Comparable<CacheSpan> {
   /**
    * The file corresponding to this {@link CacheSpan}, or null if {@link #isCached} is false.
    */
-  public final @Nullable File file;
+  public final @Nullable
+  File file;
   /**
    * The last access timestamp, or {@link C#TIME_UNSET} if {@link #isCached} is false.
    */

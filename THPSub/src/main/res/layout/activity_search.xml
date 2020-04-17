@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mt_navIconEnabled="false"
+        app:mt_hint="Enter your keyword"
+        app:mt_hintColor="@android:color/holo_blue_light"
+        app:mt_maxSuggestionsCount="10"
+        app:mt_borderlessRippleEnabled="true"
+        app:mt_clearIconUseTint="true"
+        app:mt_backIconClickEnabled="true"
+        app:mt_menuDividerEnabled="true"
+        />
+
+
+</com.ns.view.layout.NSFrameLayout>

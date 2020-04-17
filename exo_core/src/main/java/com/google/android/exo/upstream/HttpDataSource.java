@@ -15,8 +15,10 @@
  */
 package com.google.android.exo.upstream;
 
-import android.support.annotation.IntDef;
 import android.text.TextUtils;
+
+import androidx.annotation.IntDef;
+
 import com.google.android.exo.util.Predicate;
 import com.google.android.exo.util.Util;
 import java.io.IOException;

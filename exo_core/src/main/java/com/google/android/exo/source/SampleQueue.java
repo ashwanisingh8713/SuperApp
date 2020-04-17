@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.source;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.FormatHolder;
@@ -674,7 +675,8 @@ public final class SampleQueue implements TrackOutput {
     /**
      * The {@link Allocation}, or {@code null} if the node is not initialized.
      */
-    @Nullable public Allocation allocation;
+    @Nullable
+    public Allocation allocation;
     /**
      * The next {@link AllocationNode} in the list, or {@code null} if the node has not been
      * initialized. Remains set after {@link #clear()}.

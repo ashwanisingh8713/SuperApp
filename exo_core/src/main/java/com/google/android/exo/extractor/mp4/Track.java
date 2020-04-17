@@ -15,8 +15,10 @@
  */
 package com.google.android.exo.extractor.mp4;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
+
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.Format;
@@ -82,7 +84,8 @@ public final class Track {
   /**
    * Durations of edit list segments in the movie timescale. Null if there is no edit list.
    */
-  @Nullable public final long[] editListDurations;
+  @Nullable
+  public final long[] editListDurations;
 
   /**
    * Media times for edit list segments in the track timescale. Null if there is no edit list.

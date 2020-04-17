@@ -15,11 +15,12 @@
  */
 package com.google.android.exo.extractor.mp4;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.ParserException;
@@ -144,7 +145,8 @@ public final class FragmentedMp4Extractor implements Extractor {
   private final byte[] extendedTypeScratch;
   private final Stack<Atom.ContainerAtom> containerAtoms;
   private final ArrayDeque<MetadataSampleInfo> pendingMetadataSampleInfos;
-  private final @Nullable TrackOutput additionalEmsgTrackOutput;
+  private final @Nullable
+  TrackOutput additionalEmsgTrackOutput;
 
   private int parserState;
   private int atomType;

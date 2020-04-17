@@ -17,7 +17,8 @@ package com.google.android.exo.source;
 
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.Format;
@@ -214,7 +215,8 @@ public interface MediaSourceEventListener {
   /** Dispatches events to a {@link MediaSourceEventListener}. */
   final class EventDispatcher {
 
-    @Nullable private final Handler handler;
+    @Nullable
+    private final Handler handler;
     @Nullable private final MediaSourceEventListener listener;
     private final long mediaTimeOffsetMs;
 

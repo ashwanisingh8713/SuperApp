@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.source;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.SeekParameters;
 import com.google.android.exo.source.MediaSource.MediaPeriodId;
 import com.google.android.exo.trackselection.TrackSelection;
@@ -47,7 +48,8 @@ public final class DeferredMediaPeriod implements MediaPeriod, MediaPeriod.Callb
   private MediaPeriod mediaPeriod;
   private Callback callback;
   private long preparePositionUs;
-  private @Nullable PrepareErrorListener listener;
+  private @Nullable
+  PrepareErrorListener listener;
   private boolean notifiedPrepareError;
 
   /**

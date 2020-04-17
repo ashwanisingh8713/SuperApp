@@ -23,8 +23,9 @@ import android.media.MediaDrm;
 import android.media.MediaDrmException;
 import android.media.NotProvisionedException;
 import android.media.UnsupportedSchemeException;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.util.Assertions;
@@ -76,7 +77,7 @@ public final class FrameworkMediaDrm implements ExoMediaDrm<FrameworkMediaCrypto
     mediaDrm.setOnEventListener(listener == null ? null : new MediaDrm.OnEventListener() {
       @Override
       public void onEvent(@NonNull MediaDrm md, @Nullable byte[] sessionId, int event, int extra,
-          byte[] data) {
+                          byte[] data) {
         listener.onEvent(FrameworkMediaDrm.this, sessionId, event, extra, data);
       }
     });

@@ -17,9 +17,10 @@ package com.google.android.exo.video;
 
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.view.Surface;
 import android.view.TextureView;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.Renderer;
 import com.google.android.exo.util.Assertions;
@@ -111,7 +112,8 @@ public interface VideoRendererEventListener {
    */
   final class EventDispatcher {
 
-    @Nullable private final Handler handler;
+    @Nullable
+    private final Handler handler;
     @Nullable private final VideoRendererEventListener listener;
 
     /**

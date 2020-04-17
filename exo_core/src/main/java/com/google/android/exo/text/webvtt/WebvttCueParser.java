@@ -16,7 +16,6 @@
 package com.google.android.exo.text.webvtt;
 
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.text.Layout.Alignment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -32,6 +31,8 @@ import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.exo.text.Cue;
 import com.google.android.exo.util.ParsableByteArray;

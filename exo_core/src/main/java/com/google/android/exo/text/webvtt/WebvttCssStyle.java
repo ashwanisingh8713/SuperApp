@@ -16,8 +16,10 @@
 package com.google.android.exo.text.webvtt;
 
 import android.graphics.Typeface;
-import android.support.annotation.IntDef;
 import android.text.Layout;
+
+import androidx.annotation.IntDef;
+
 import com.google.android.exo.util.Util;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

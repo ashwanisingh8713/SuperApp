@@ -15,12 +15,12 @@
  */
 package com.google.android.exo.text.cea;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.exo.C;
 import com.google.android.exo.text.Subtitle;
 import com.google.android.exo.text.SubtitleDecoder;
-import com.google.android.exo.text.SubtitleDecoderException;
 import com.google.android.exo.text.SubtitleInputBuffer;
 import com.google.android.exo.text.SubtitleOutputBuffer;
 import com.google.android.exo.util.Assertions;

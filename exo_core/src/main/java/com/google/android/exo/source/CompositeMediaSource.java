@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.source;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.ExoPlayer;
 import com.google.android.exo.Timeline;
 import com.google.android.exo.util.Assertions;
@@ -71,7 +72,7 @@ public abstract class CompositeMediaSource<T> implements MediaSource {
    * @param manifest The manifest of the child source.
    */
   protected abstract void onChildSourceInfoRefreshed(
-      @Nullable T id, MediaSource mediaSource, Timeline timeline, @Nullable Object manifest);
+          @Nullable T id, MediaSource mediaSource, Timeline timeline, @Nullable Object manifest);
 
   /**
    * Prepares a child source.

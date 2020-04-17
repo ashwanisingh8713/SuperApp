@@ -18,9 +18,11 @@ package com.google.android.exo.text;
 import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.IntDef;
 import android.view.accessibility.CaptioningManager;
 import android.view.accessibility.CaptioningManager.CaptionStyle;
+
+import androidx.annotation.IntDef;
+
 import com.google.android.exo.util.Util;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -17,8 +17,9 @@ package com.google.android.exo.trackselection;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.exo.C;
 import com.google.android.exo.RendererCapabilities;

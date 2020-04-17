@@ -16,8 +16,9 @@
 package com.google.android.exo.source.ads;
 
 import android.net.Uri;
-import android.support.annotation.CheckResult;
-import android.support.annotation.IntDef;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.C;
 import com.google.android.exo.util.Assertions;

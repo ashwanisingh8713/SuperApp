@@ -23,9 +23,10 @@ import android.media.AudioTimestamp;
 import android.media.AudioTrack;
 import android.os.ConditionVariable;
 import android.os.SystemClock;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.util.Util;
@@ -165,7 +166,8 @@ public final class DefaultAudioSink implements AudioSink {
    */
   public static boolean failOnSpuriousAudioTimestamp = false;
 
-  @Nullable private final AudioCapabilities audioCapabilities;
+  @Nullable
+  private final AudioCapabilities audioCapabilities;
   private final boolean enableConvertHighResIntPcmToFloat;
   private final ChannelMappingAudioProcessor channelMappingAudioProcessor;
   private final TrimmingAudioProcessor trimmingAudioProcessor;

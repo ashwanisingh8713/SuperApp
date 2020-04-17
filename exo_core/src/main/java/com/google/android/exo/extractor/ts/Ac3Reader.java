@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.extractor.ts;
 
-import android.support.annotation.IntDef;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.C;
 import com.google.android.exo.extractor.ExtractorOutput;

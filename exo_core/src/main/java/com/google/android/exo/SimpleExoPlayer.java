@@ -21,12 +21,13 @@ import android.media.MediaCodec;
 import android.media.PlaybackParams;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.audio.AudioAttributes;
 import com.google.android.exo.audio.AudioRendererEventListener;

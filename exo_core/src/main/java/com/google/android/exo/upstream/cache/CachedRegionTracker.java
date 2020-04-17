@@ -15,8 +15,10 @@
  */
 package com.google.android.exo.upstream.cache;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.google.android.exo.extractor.ChunkIndex;
 import java.util.Arrays;
 import java.util.Iterator;

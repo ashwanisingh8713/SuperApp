@@ -138,31 +138,31 @@ ext.deps = [
         multiDex : "com.android.support:multidex:$MULTIDEX_VERSION",
 
         PS_map : "com.google.android.gms:play-services-maps:$PLAY_SERVICE_MAP_VERSION",
-        PS_location : "com.google.android.gms:play-services-location:$PLAY_SERVICE_LOCATION_VERSION",
-        PS_Ads : "com.google.android.gms:play-services-ads:$PLAY_SERVICE_ADS",
-        PS_Analytics : "com.google.android.gms:play-services-analytics:$PLAY_SERVICE_ANALYTICS",
-        PS_Auth : "com.google.android.gms:play-services-auth:$PLAY_SERVICE_AUTH",
+        PS_location             : "com.google.android.gms:play-services-location:$PLAY_SERVICE_LOCATION_VERSION",
+        PS_Ads                  : "com.google.android.gms:play-services-ads:$PLAY_SERVICE_ADS",
+        PS_Analytics            : "com.google.android.gms:play-services-analytics:$PLAY_SERVICE_ANALYTICS",
+        PS_Auth                 : "com.google.android.gms:play-services-auth:$PLAY_SERVICE_AUTH",
 
         // For OTP Input
-        otpEntryEditText : project(':pinentryedittext'),
+        otpEntryEditText        : project(':pinentryedittext'),
 
         // For Network Connectivity
-        reactivenetwork  : project(':reactivenetwork'),
+        reactivenetwork         : project(':reactivenetwork'),
 
         // Photoview For Image Zooming
-        photoview : project(':photoview'),
+        photoview          : project(':photoview'),
         // THP Subscription Net Operation
-        thpSub : project(':THPSub'),
+        thpSub                  : project(':THPSub'),
 
         // For Date and Time
-        jodaTime : 'net.danlew:android.joda:2.9.9.3',
+        jodaTime                : 'net.danlew:android.joda:2.9.9.3',
 
         // ROOM components
-        room:"android.arch.persistence.room:runtime:$rootProject.ROOM_VERSION",
+        room                    :"android.arch.persistence.room:runtime:$rootProject.ROOM_VERSION",
         room_annotationProcessor:"android.arch.persistence.room:compiler:$rootProject.ROOM_VERSION",
 
-        room_compiler: "android.arch.persistence.room:compiler:$rootProject.ROOM_VERSION",
-        room_rxjava2 : "android.arch.persistence.room:rxjava2:$rootProject.ROOM_VERSION",
+        room_compiler           : "android.arch.persistence.room:compiler:$rootProject.ROOM_VERSION",
+        room_rxjava2            : "android.arch.persistence.room:rxjava2:$rootProject.ROOM_VERSION",
 
         // Lifecycle components
         archLifecycle:"android.arch.lifecycle:extensions:$rootProject.ARCH_LIFECYCLE_VERSION",

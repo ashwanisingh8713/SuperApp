@@ -18,9 +18,10 @@ package com.google.android.exo;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.audio.AudioCapabilities;
 import com.google.android.exo.audio.AudioProcessor;
@@ -83,7 +84,8 @@ public class DefaultRenderersFactory implements RenderersFactory {
   protected static final int MAX_DROPPED_VIDEO_FRAME_COUNT_TO_NOTIFY = 50;
 
   private final Context context;
-  @Nullable private final DrmSessionManager<FrameworkMediaCrypto> drmSessionManager;
+  @Nullable
+  private final DrmSessionManager<FrameworkMediaCrypto> drmSessionManager;
   private final @ExtensionRendererMode int extensionRendererMode;
   private final long allowedVideoJoiningTimeMs;
 

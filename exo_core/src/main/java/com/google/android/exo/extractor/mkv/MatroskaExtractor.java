@@ -15,10 +15,11 @@
  */
 package com.google.android.exo.extractor.mkv;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.extractor.ExtractorInput;
@@ -1666,7 +1667,8 @@ public final class MatroskaExtractor implements Extractor {
     public int sampleRate = 8000;
     public long codecDelayNs = 0;
     public long seekPreRollNs = 0;
-    @Nullable public TrueHdSampleRechunker trueHdSampleRechunker;
+    @Nullable
+    public TrueHdSampleRechunker trueHdSampleRechunker;
 
     // Text elements.
     public boolean flagForced;

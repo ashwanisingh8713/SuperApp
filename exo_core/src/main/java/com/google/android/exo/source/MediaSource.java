@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.source;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.ExoPlayer;

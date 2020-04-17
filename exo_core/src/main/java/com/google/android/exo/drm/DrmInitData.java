@@ -17,7 +17,8 @@ package com.google.android.exo.drm;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.drm.DrmInitData.SchemeData;
@@ -58,7 +59,8 @@ public final class DrmInitData implements Comparator<SchemeData>, Parcelable {
    * @param mediaData DRM session acquisition data obtained from the media.
    * @return A {@link DrmInitData} obtained from merging a media manifest and a media stream.
    */
-  public static @Nullable DrmInitData createSessionCreationData(
+  public static @Nullable
+  DrmInitData createSessionCreationData(
       @Nullable DrmInitData manifestData, @Nullable DrmInitData mediaData) {
     ArrayList<SchemeData> result = new ArrayList<>();
     String schemeType = null;

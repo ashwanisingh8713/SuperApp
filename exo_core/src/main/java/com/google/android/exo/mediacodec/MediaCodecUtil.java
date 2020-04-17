@@ -20,11 +20,13 @@ import android.annotation.TargetApi;
 import android.media.MediaCodecInfo.CodecCapabilities;
 import android.media.MediaCodecInfo.CodecProfileLevel;
 import android.media.MediaCodecList;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseIntArray;
+
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.util.MimeTypes;
 import com.google.android.exo.util.Util;
 import java.util.ArrayList;
@@ -121,7 +123,8 @@ public final class MediaCodecUtil {
    *     exists.
    * @throws DecoderQueryException If there was an error querying the available decoders.
    */
-  public static @Nullable MediaCodecInfo getDecoderInfo(String mimeType, boolean secure)
+  public static @Nullable
+  MediaCodecInfo getDecoderInfo(String mimeType, boolean secure)
       throws DecoderQueryException {
     List<MediaCodecInfo> decoderInfos = getDecoderInfos(mimeType, secure);
     return decoderInfos.isEmpty() ? null : decoderInfos.get(0);

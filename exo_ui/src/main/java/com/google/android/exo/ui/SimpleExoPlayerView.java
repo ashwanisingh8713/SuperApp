@@ -17,9 +17,11 @@ package com.google.android.exo.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.SimpleExoPlayer;
 
 /** @deprecated Use {@link PlayerView}. */

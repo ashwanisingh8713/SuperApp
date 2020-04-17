@@ -31,6 +31,7 @@ import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BecomeMemberActivity;
 import com.ns.activity.BookmarkMergedActivity;
 import com.ns.activity.DemoActivity;
+import com.ns.activity.SearchActivity;
 import com.ns.activity.SignInAndUpActivity;
 import com.ns.activity.THPImageGallaryActivity;
 import com.ns.activity.THPImageGallaryVerticleActivity;
@@ -744,6 +745,14 @@ public class IntentUtil {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    public static void openSearchActivity(AppCompatActivity context) {
+        Intent intent = new Intent(context, SearchActivity.class);
+//        context.startActivity(intent);
+        context.startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+    }
+
 
     public static void clearAllPreviousActivity(AppCompatActivity activity) {
         ActivityCompat.finishAffinity(activity);

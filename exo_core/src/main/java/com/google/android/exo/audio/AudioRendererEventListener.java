@@ -17,7 +17,8 @@ package com.google.android.exo.audio;
 
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.Renderer;
@@ -86,7 +87,8 @@ public interface AudioRendererEventListener {
    */
   final class EventDispatcher {
 
-    @Nullable private final Handler handler;
+    @Nullable
+    private final Handler handler;
     @Nullable private final AudioRendererEventListener listener;
 
     /**

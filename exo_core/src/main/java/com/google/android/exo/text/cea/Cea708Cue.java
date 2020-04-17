@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.text.cea;
 
-import android.support.annotation.NonNull;
 import android.text.Layout.Alignment;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.exo.text.Cue;
 

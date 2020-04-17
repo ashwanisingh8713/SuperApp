@@ -15,7 +15,8 @@
  */
  package com.google.android.exo;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+
 import com.google.android.exo.source.MediaSource.MediaPeriodId;
 import com.google.android.exo.trackselection.TrackSelectorResult;
 
@@ -24,7 +25,8 @@ import com.google.android.exo.trackselection.TrackSelectorResult;
  */
 /* package */ final class PlaybackInfo {
 
-  public final @Nullable Timeline timeline;
+  public final @Nullable
+  Timeline timeline;
   public final @Nullable Object manifest;
   public final MediaPeriodId periodId;
   public final long startPositionUs;

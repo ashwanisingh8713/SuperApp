@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.extractor.mp4;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.util.Assertions;
@@ -38,7 +39,8 @@ public final class TrackEncryptionBox {
   /**
    * The protection scheme type, as defined by the 'schm' box, or null if unknown.
    */
-  @Nullable public final String schemeType;
+  @Nullable
+  public final String schemeType;
 
   /**
    * A {@link TrackOutput.CryptoData} instance containing the encryption information from this

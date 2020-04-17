@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.upstream;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.google.android.exo.C;
 import com.google.android.exo.util.Assertions;
 import java.io.IOException;

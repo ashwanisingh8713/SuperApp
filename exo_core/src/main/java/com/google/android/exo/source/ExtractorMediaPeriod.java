@@ -17,7 +17,8 @@ package com.google.android.exo.source;
 
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.FormatHolder;
@@ -79,7 +80,8 @@ import java.util.Arrays;
   private final MediaSourceEventListener.EventDispatcher eventDispatcher;
   private final Listener listener;
   private final Allocator allocator;
-  @Nullable private final String customCacheKey;
+  @Nullable
+  private final String customCacheKey;
   private final long continueLoadingCheckIntervalBytes;
   private final Loader loader;
   private final ExtractorHolder extractorHolder;

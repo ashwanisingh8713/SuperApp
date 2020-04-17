@@ -17,7 +17,8 @@ package com.google.android.exo.source;
 
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.ExoPlayer;
 import com.google.android.exo.Timeline;

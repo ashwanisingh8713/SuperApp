@@ -19,9 +19,10 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.source.MediaSource;
 import com.google.android.exo.source.TrackGroupArray;

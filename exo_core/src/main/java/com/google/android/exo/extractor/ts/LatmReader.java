@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.extractor.ts;
 
-import android.support.annotation.Nullable;
 import android.util.Pair;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.ParserException;

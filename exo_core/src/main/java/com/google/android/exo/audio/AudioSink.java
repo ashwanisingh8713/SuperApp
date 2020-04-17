@@ -16,7 +16,8 @@
 package com.google.android.exo.audio;
 
 import android.media.AudioTrack;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.PlaybackParameters;
@@ -202,8 +203,8 @@ public interface AudioSink {
    * @throws ConfigurationException If an error occurs configuring the sink.
    */
   void configure(@C.Encoding int inputEncoding, int inputChannelCount, int inputSampleRate,
-      int specifiedBufferSize, @Nullable int[] outputChannels, int trimStartSamples,
-      int trimEndSamples) throws ConfigurationException;
+                 int specifiedBufferSize, @Nullable int[] outputChannels, int trimStartSamples,
+                 int trimEndSamples) throws ConfigurationException;
 
   /**
    * Starts or resumes consuming audio if initialized.

@@ -15,7 +15,8 @@
  */
 package com.google.android.exo.util;
 
-import android.support.annotation.IntDef;
+
+import androidx.annotation.IntDef;
 
 import com.google.android.exo.Player;
 

@@ -15,8 +15,9 @@
  */
 package com.google.android.exo.source.chunk;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.C;
 import com.google.android.exo.decoder.DecoderInputBuffer;
@@ -74,7 +75,8 @@ public class ChunkSampleStream<T extends ChunkSource> implements SampleStream, S
   private final BaseMediaChunkOutput mediaChunkOutput;
 
   private Format primaryDownstreamTrackFormat;
-  private @Nullable ReleaseCallback<T> releaseCallback;
+  private @Nullable
+  ReleaseCallback<T> releaseCallback;
   private long pendingResetPositionUs;
   private long lastSeekPositionUs;
   /* package */ long decodeOnlyUntilPositionUs;

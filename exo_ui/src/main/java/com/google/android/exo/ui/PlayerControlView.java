@@ -23,7 +23,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,6 +32,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.ControlDispatcher;
 import com.google.android.exo.DefaultControlDispatcher;
@@ -230,7 +231,8 @@ public class PlayerControlView extends FrameLayout implements OrientationDetecto
   private Player player;
   private ControlDispatcher controlDispatcher;
   private VisibilityListener visibilityListener;
-  private @Nullable PlaybackPreparer playbackPreparer;
+  private @Nullable
+  PlaybackPreparer playbackPreparer;
 
   private boolean isAttachedToWindow;
   private boolean showMultiWindowTimeBar;

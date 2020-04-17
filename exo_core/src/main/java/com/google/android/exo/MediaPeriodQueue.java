@@ -15,8 +15,9 @@
  */
 package com.google.android.exo;
 
-import android.support.annotation.Nullable;
 import android.util.Pair;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.exo.trackselection.TrackSelector;
 import com.google.android.exo.trackselection.TrackSelectorResult;
@@ -119,7 +120,8 @@ import com.google.android.exo.util.Assertions;
    * @return The {@link MediaPeriodInfo} for the next media period to load, or {@code null} if not
    *     yet known.
    */
-  public @Nullable MediaPeriodInfo getNextMediaPeriodInfo(
+  public @Nullable
+  MediaPeriodInfo getNextMediaPeriodInfo(
       long rendererPositionUs, PlaybackInfo playbackInfo) {
     return loading == null
         ? getFirstMediaPeriodInfo(playbackInfo)
