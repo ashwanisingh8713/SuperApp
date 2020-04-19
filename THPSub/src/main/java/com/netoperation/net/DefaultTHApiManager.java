@@ -233,7 +233,7 @@ public class DefaultTHApiManager {
      * @param context
      * @return
      */
-    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime) {
+    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime, RequestCallback callback) {
         String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().sectionListForJson(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
@@ -248,10 +248,40 @@ public class DefaultTHApiManager {
                 .subscribe(value -> {
                     long totalExecutionTime = System.currentTimeMillis() - executionTime;
                     Log.i("TotalExec", "Write Section String In Temp DB :: " + totalExecutionTime);
-
+                    if (callback != null) {
+                        callback.onNext(value);
+                    }
                 }, throwable -> {
+                    if (callback != null) {
+                        callback.onError(throwable, "writeSectionReponseInTempTable");
+                    }
                 }, () -> {
+
+                    if (callback != null) {
+                        callback.onComplete("writeSectionReponseInTempTable()");
+                    }
                 });
+    }
+
+    public static void test() {
+        String [] ids = {"12","13","7","6","52"};
+
+        final JsonArray personliseSectionIds = new JsonArray();
+        for (String personaliseDefault : ids) {
+            personliseSectionIds.add(personaliseDefault);
+        }
+        String url = "https://app.thehindu.com/hindu/service/api_v1.004/newsFeed.php";
+
+        ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, "43", System.currentTimeMillis()))
+                .subscribeOn(Schedulers.newThread())
+                .map(val->{
+                    Log.i("", "");
+                    return "";
+                })
+        .subscribe(val->{
+
+        });
+
     }
 
 
@@ -291,7 +321,7 @@ public class DefaultTHApiManager {
                                 personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
 
-                            return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
+                            return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, System.currentTimeMillis()));
                         });
 
                     })
@@ -304,9 +334,11 @@ public class DefaultTHApiManager {
                             THPDB db = THPDB.getInstance(context);
                             final DaoBanner daoBanner = thpdb.daoBanner();
                             // Banner Article Update
-                            TableBanner tableBanner1 = daoBanner.getBanners();
-                            tableBanner1.setBeans(homeData.getNewsFeed().getBanner());
-                            daoBanner.deleteAndInsertInBanner(tableBanner1);
+                            TableBanner banner = daoBanner.getBanners();
+                            List<ArticleBean> bannerArticles = homeData.getNewsFeed().getBanner();
+                            TableBanner tableBanner = new TableBanner(banner.getSecId(), banner.getSecName(), banner.getType(), banner.getLastUpdatedTime(), banner.getStaticPageBean());
+                            tableBanner.setBeans(bannerArticles);
+                            daoBanner.deleteAndInsertInBanner(tableBanner);
 
                             Log.i(TAG, "homeArticles :: Banner Article Added " + homeData.getNewsFeed().getBanner().size() + " Size");
 
@@ -315,6 +347,9 @@ public class DefaultTHApiManager {
                             daoHomeArticle.deleteAll();
                             // Insert articles in HomeArticle Table
                             for (HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
+                                if(articlesBeans.getData() == null || articlesBeans.getData().size() == 0) {
+                                    continue;
+                                }
                                 TableHomeArticle tableHomeArticle = new TableHomeArticle(articlesBeans.getSec_id(), articlesBeans.getData());
                                 daoHomeArticle.insertHomeArticle(tableHomeArticle);
                                 Log.i(TAG, "homeArticles :: Home Article Added SEC-ID ::" + articlesBeans.getSec_id() + " :: " + articlesBeans.getData().size() + " Size");
@@ -326,17 +361,17 @@ public class DefaultTHApiManager {
                         if (callback != null) {
                             callback.onNext("homeArticles");
                         }
-                        Log.i(TAG, "homeArticles :: subscribe");
+                        Log.i(TAG, "homeArticles() :: subscribe");
                     }, throwable -> {
                         if (callback != null) {
                             callback.onError(throwable, "homeArticles");
                         }
-                        Log.i(TAG, "homeArticles :: throwable " + throwable);
+                        Log.i(TAG, "homeArticles() :: throwable " + throwable);
                     }, () -> {
                         if (callback != null) {
                             callback.onComplete("homeArticles");
                         }
-                        Log.i(TAG, "homeArticles :: completed");
+                        Log.i(TAG, "homeArticles() :: completed");
                     });
         }
 

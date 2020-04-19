@@ -3,7 +3,6 @@ package com.ns.contentfragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -37,7 +36,6 @@ import com.ns.adapter.WidgetAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
-import com.ns.view.text.CustomTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,9 +144,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
             // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-            homeAndBannerArticleFromObservable();
+//            homeAndBannerArticleFromObservable();
+            homeAndBannerArticleFromDB();
             // Widget Observable
-            homeWidgetsFromDB();
+            homeWidgetsFromObservable();
         } else { // Other Sections or Sub-Section
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
@@ -348,25 +347,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             mPullToRefreshLayout.setRefreshing(true);
 
             if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
-                DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment", new RequestCallback() {
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable t, String str) {
-                        setLoading(false);
-                    }
-
-                    @Override
-                    public void onComplete(String str) {
-                        mRecyclerAdapter.deleteAllItems();
-                        homeAndBannerArticleFromDB();
-                    }
-                });
-
-                homeWidgetFromServer();
+                getHomeDataFromServer();
             } else {
                 sectionOrSubSectionFromServer(1);
             }
@@ -379,8 +360,30 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     }
 
+    private void getHomeDataFromServer() {
+        DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment", new RequestCallback() {
+            @Override
+            public void onNext(Object o) {
 
-    private void homeWidgetsFromDB() {
+            }
+
+            @Override
+            public void onError(Throwable t, String str) {
+                setLoading(false);
+            }
+
+            @Override
+            public void onComplete(String str) {
+                mRecyclerAdapter.deleteAllItems();
+                homeAndBannerArticleFromDB();
+            }
+        });
+
+        homeWidgetFromServer();
+    }
+
+
+    private void homeWidgetsFromObservable() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
         mDisposable.add(widgetObservable
@@ -393,6 +396,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         for (int i = 0; i < tableDatas.size(); i++) {
                             if (tableDatas.get(i) instanceof TableWidget) {
                                 TableWidget widget = (TableWidget) tableDatas.get(i);
+
+                                if(widget.getBeans() == null || widget.getBeans().size() == 0) {
+                                    continue;
+                                }
+
                                 final String itemRowId = "widget_" + widget.getSecId();
                                 SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
                                 int index = mRecyclerAdapter.indexOf(item);

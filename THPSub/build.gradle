@@ -76,7 +76,6 @@ android {
 
 
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api deps.appcompatv7
@@ -168,6 +167,16 @@ dependencies {
 
     // Material Search View
     implementation project(path: ':searchlibrary')
+
+    // Work Manager
+    implementation "android.arch.work:work-runtime:1.0.0"
+
+    // this is to fix following issue, cause by "Work Manager" dependency implementation,
+    //ExecutionException: java.lang.RuntimeException: Duplicate class com.google.common.util.concurrent.ListenableFuture found in modules guava-18.0.jar
+    // https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
 }
+
 
 
