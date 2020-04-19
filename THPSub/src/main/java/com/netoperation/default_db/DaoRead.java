@@ -15,11 +15,11 @@ public abstract class  DaoRead {
     @Insert
     public abstract void insertReadArticle(TableRead tableRead);
 
-    @Query("SELECT * FROM TableRead WHERE articleId = :articleId")
-    public abstract TableRead getReadArticleId(String articleId);
-
     @Query("SELECT * FROM TableRead")
     public abstract Single<List<TableRead>> getAllReadArticleId();
+
+    @Query("SELECT * FROM TableRead WHERE articleId = :articleId")
+    public abstract TableRead getReadArticleId(String articleId);
 
     @Query("DELETE FROM TableRead WHERE articleId = :articleId")
     public abstract int deleteReadArticleId(String articleId);

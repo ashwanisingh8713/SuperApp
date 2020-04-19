@@ -34,8 +34,34 @@ public class SplashActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        DefaultTHApiManager.writeSectionReponseInTempTable(this, System.currentTimeMillis());
 
-        DefaultTHApiManager.sectionList(this, new RequestCallback() {
+        DefaultTHApiManager.getSectionsFromTempTable(this, System.currentTimeMillis(), new RequestCallback() {
+            @Override
+            public void onNext(Object o) {
+
+            }
+
+            @Override
+            public void onError(Throwable t, String str) {
+                getSectionDirectFromServer();
+            }
+
+            @Override
+            public void onComplete(String str) {
+                IntentUtil.openMainTabPage(SplashActivity.this);
+            }
+        });
+
+
+        // Reduces Read article table
+        DefaultTHApiManager.readArticleDelete(this);
+
+    }
+
+
+    private void getSectionDirectFromServer() {
+        DefaultTHApiManager.sectionDirectFromServer(this, new RequestCallback() {
             @Override
             public void onNext(Object o) {
                 final THPDB thpdb = THPDB.getInstance(SplashActivity.this);
@@ -59,7 +85,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                IntentUtil.openMainTabPage(SplashActivity.this);
+
             }
 
             @Override
@@ -67,11 +93,6 @@ public class SplashActivity extends BaseAcitivityTHP {
                 IntentUtil.openMainTabPage(SplashActivity.this);
             }
 
-        });
-
-
-        // Reduces Read article table
-        DefaultTHApiManager.readArticleDelete(this);
-
+        }, System.currentTimeMillis());
     }
 }

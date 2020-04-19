@@ -18,6 +18,7 @@ import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.DaoTempWork;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
@@ -27,13 +28,14 @@ import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSubSectionArticle;
+import com.netoperation.default_db.TableTempWork;
 import com.netoperation.default_db.TableWidget;
 
 @Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
         TableBreifing.class, TableUserProfile.class, TableMP.class,
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
-        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class},
+        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class},
         version = 5, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
@@ -55,6 +57,7 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoWidget daoWidget();
     public abstract DaoPersonaliseDefault daoPersonaliseDefault();
     public abstract DaoRead daoRead();
+    public abstract DaoTempWork daoTempWork();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {

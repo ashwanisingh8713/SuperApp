@@ -3,7 +3,9 @@ package com.netoperation.net;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
@@ -12,6 +14,7 @@ import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.DaoTempWork;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
@@ -20,6 +23,7 @@ import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
+import com.netoperation.default_db.TableTempWork;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
@@ -37,6 +41,20 @@ import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,112 +80,177 @@ public class DefaultTHApiManager {
     }
 
     /**
+     * Inserts SectionAndWedget object response into respective table.
+     * @param context
+     * @param sectionAndWidget
+     * @return
+     */
+    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget) {
+        THPDB db = THPDB.getInstance(context);
+        DaoSection daoSection = db.daoSection();
+        DaoBanner daoBanner = db.daoBanner();
+        DaoWidget daoWidget = db.daoWidget();
+
+        SectionAndWidget.DataBean dataBean = sectionAndWidget.getData();
+        long date = dataBean.getDate();
+
+        if (daoBanner != null) {
+            TableBanner tableBanner = daoBanner.getBanners();
+            if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+
+                return sectionAndWidget;
+            } else {
+                daoSection.deleteAll();
+                daoBanner.deleteAll();
+                daoWidget.deleteAll();
+
+                // Table Banner
+                BannerBean bannerBean = dataBean.getHome().getBanner();
+                tableBanner = new TableBanner(bannerBean.getSecId(), bannerBean.getSecName(), bannerBean.getType(), "" + date, dataBean.getHome().getStaticPageUrl());
+                daoBanner.insertBanner(tableBanner);
+
+                // Table Widget
+                List<WidgetBean> widgetBeans = dataBean.getHome().getWidget();
+                for (WidgetBean widgetBean : widgetBeans) {
+                    TableWidget tableWidget = new TableWidget(widgetBean.getSecId(), widgetBean.getSecName(), widgetBean.getType(), widgetBean.isViewAllCTA());
+                    daoWidget.insertWidget(tableWidget);
+                }
+
+                // Table Section List
+                List<SectionBean> sections = dataBean.getSection();
+
+                // Home Section,
+                SectionBean homeBean = new SectionBean();
+                homeBean.setSecId(NetConstants.RECO_HOME_TAB);
+                homeBean.setSecName(NetConstants.RECO_HOME_TAB);
+                homeBean.setLink(NetConstants.RECO_HOME_TAB);
+                homeBean.setWebLink(NetConstants.RECO_HOME_TAB);
+                homeBean.setShow_on_burger(true);
+                homeBean.setShow_on_explore(true);
+                sections.add(0, homeBean);
+
+
+                DaoPersonaliseDefault daoPersonaliseDefault = db.daoPersonaliseDefault();
+                List<TablePersonaliseDefault> tablePersonaliseDefaults = daoPersonaliseDefault.getAllPersonalise();
+                if (tablePersonaliseDefaults == null || tablePersonaliseDefaults.size() == 0) {
+                    final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
+                    for (THDefaultPersonalizeBean personalizeBean : defaultPersonalizeBeans) {
+                        TablePersonaliseDefault personaliseDefault = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, "0",
+                                personalizeBean.getSecId(), null, personalizeBean.getSecName(), false, true);
+                        daoPersonaliseDefault.insertDefaultPersonalise(personaliseDefault);
+                    }
+                }
+
+                for (SectionBean section : sections) {
+                    List<SectionBean> subSections = new ArrayList<>(section.getSubSections());
+                    section.setSubSections(null);
+                    TableSection tableSection = new TableSection(section.getSecId(),
+                            section.getSecName(), section.getType(), section,
+                            section.isShow_on_burger(), section.isShow_on_explore(),
+                            subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
+
+                    if (section.getCustomScreen().equals("1")) {
+                        Log.i("CustomScreen", "" + section.getSecName());
+                    }
+
+                    // Adding Default selected persionlise news feed section
+                    THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
+                    personalizeBean.setSecId(section.getSecId());
+                    daoSection.insertSection(tableSection);
+                }
+            }
+        }
+
+        return sectionAndWidget;
+    }
+
+    /**
      * Fetch section and Sub-sections from server and saves in database
      *
      * @param context
      * @return
      */
-    public static Disposable sectionList(Context context, RequestCallback callback) {
+    public static Disposable sectionDirectFromServer(Context context, RequestCallback callback, final long executionTime) {
         String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
         Observable<SectionAndWidget> observable = ServiceFactory.getServiceAPIs().sectionList(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
                 .map(sectionAndWidget -> {
-                            THPDB db = THPDB.getInstance(context);
-                            DaoSection daoSection = db.daoSection();
-                            DaoBanner daoBanner = db.daoBanner();
-                            DaoWidget daoWidget = db.daoWidget();
-
-                            SectionAndWidget.DataBean dataBean = sectionAndWidget.getData();
-                            long date = dataBean.getDate();
-
-                            if (daoBanner != null) {
-                                TableBanner tableBanner = daoBanner.getBanners();
-                                if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
-
-                                    return "";
-                                } else {
-                                    daoSection.deleteAll();
-                                    daoBanner.deleteAll();
-                                    daoWidget.deleteAll();
-
-                                    // Table Banner
-                                    BannerBean bannerBean = dataBean.getHome().getBanner();
-                                    tableBanner = new TableBanner(bannerBean.getSecId(), bannerBean.getSecName(), bannerBean.getType(), "" + date, dataBean.getHome().getStaticPageUrl());
-                                    daoBanner.insertBanner(tableBanner);
-
-                                    // Table Widget
-                                    List<WidgetBean> widgetBeans = dataBean.getHome().getWidget();
-                                    for (WidgetBean widgetBean : widgetBeans) {
-                                        TableWidget tableWidget = new TableWidget(widgetBean.getSecId(), widgetBean.getSecName(), widgetBean.getType(), widgetBean.isViewAllCTA());
-                                        daoWidget.insertWidget(tableWidget);
-                                    }
-
-                                    // Table Section List
-                                    List<SectionBean> sections = dataBean.getSection();
-
-                                    // Home Section,
-                                    SectionBean homeBean = new SectionBean();
-                                    homeBean.setSecId(NetConstants.RECO_HOME_TAB);
-                                    homeBean.setSecName(NetConstants.RECO_HOME_TAB);
-                                    homeBean.setLink(NetConstants.RECO_HOME_TAB);
-                                    homeBean.setWebLink(NetConstants.RECO_HOME_TAB);
-                                    homeBean.setShow_on_burger(true);
-                                    homeBean.setShow_on_explore(true);
-                                    sections.add(0, homeBean);
-
-
-                                    DaoPersonaliseDefault daoPersonaliseDefault = db.daoPersonaliseDefault();
-                                    List<TablePersonaliseDefault> tablePersonaliseDefaults = daoPersonaliseDefault.getAllPersonalise();
-                                    if (tablePersonaliseDefaults == null || tablePersonaliseDefaults.size() == 0) {
-                                        final List<THDefaultPersonalizeBean> defaultPersonalizeBeans = dataBean.getHome().getPersonalize();
-                                        for (THDefaultPersonalizeBean personalizeBean : defaultPersonalizeBeans) {
-                                            TablePersonaliseDefault personaliseDefault = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, "0",
-                                                    personalizeBean.getSecId(), null, personalizeBean.getSecName(), false, true);
-                                            daoPersonaliseDefault.insertDefaultPersonalise(personaliseDefault);
-                                        }
-                                    }
-
-                                    for (SectionBean section : sections) {
-                                        List<SectionBean> subSections = new ArrayList<>(section.getSubSections());
-                                        section.setSubSections(null);
-                                        TableSection tableSection = new TableSection(section.getSecId(),
-                                                section.getSecName(), section.getType(), section,
-                                                section.isShow_on_burger(), section.isShow_on_explore(),
-                                                subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
-
-                                        if (section.getCustomScreen().equals("1")) {
-                                            Log.i("CustomScreen", "" + section.getSecName());
-                                        }
-
-                                        // Adding Default selected persionlise news feed section
-                                        THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
-                                        personalizeBean.setSecId(section.getSecId());
-                                        daoSection.insertSection(tableSection);
-                                    }
-                                }
-                            }
-                            return sectionAndWidget;
+                            return insertSectionResponseInDB(context, sectionAndWidget);
                         }
                 )
                 .subscribe(value -> {
                     if (callback != null) {
                         callback.onNext(value);
                     }
-                    Log.i(TAG, "sectionList :: subscribe");
+                    long totalExecutionTime = System.currentTimeMillis() - executionTime;
+                    Log.i("TotalExec", "sectionDirectFromServer() :: Get From Server, Insert into respective tables:: " + totalExecutionTime);
 
                 }, throwable -> {
-                    Log.i(TAG, "");
                     if (callback != null) {
-                        callback.onError(throwable, "sectionList");
+                        callback.onError(throwable, "sectionDirectFromServer");
                     }
-                    Log.i(TAG, "sectionList :: throwable " + throwable);
+                    Log.i(TAG, "sectionDirectFromServer() :: throwable " + throwable);
                 }, () -> {
-                    Log.i(TAG, "");
                     if (callback != null) {
-                        callback.onComplete("sectionList");
+                        callback.onComplete("sectionDirectFromServer");
                     }
-                    Log.i(TAG, "sectionList :: completed");
+                    Log.i(TAG, "sectionDirectFromServer() :: completed");
+                });
+    }
+
+    public static Disposable getSectionsFromTempTable(Context context, final long executionTime, RequestCallback callback) {
+        return Observable.just("sectionAndWidget")
+                .subscribeOn(Schedulers.io())
+                .map(val -> {
+                    THPDB db = THPDB.getInstance(context);
+                    DaoTempWork daoTempWork = db.daoTempWork();
+                    TableTempWork tempSection = daoTempWork.getTableTempWork(NetConstants.TEMP_SECTION_ID);
+                    Gson gson = new Gson();
+                    SectionAndWidget sectionAndWidget = gson.fromJson(tempSection.getJsonString(), SectionAndWidget.class);
+                    return insertSectionResponseInDB(context, sectionAndWidget);
+                })
+                .subscribe(value -> {
+                    if (callback != null) {
+                        callback.onNext(value);
+                    }
+                    long totalExecutionTime = System.currentTimeMillis() - executionTime;
+                    Log.i("TotalExec", "Read from Temp, Json String:: " + totalExecutionTime);
+
+                }, th -> {
+                    if (callback != null) {
+                        callback.onError(th, "getSectionsFromTempTable");
+                    }
+                }, () ->{
+                    if (callback != null) {
+                        callback.onComplete("getSectionsFromTempTable");
+                    }
+                });
+    }
+
+    /**
+     * Fetch section and Sub-sections from server and saves in Temp-Folder
+     * @param context
+     * @return
+     */
+    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime) {
+        String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().sectionListForJson(url, ReqBody.sectionList());
+        return observable.subscribeOn(Schedulers.newThread())
+                .timeout(15, TimeUnit.SECONDS)
+                .map(sectionAndWidget -> {
+                            THPDB db = THPDB.getInstance(context);
+                            TableTempWork sectionTemp = new TableTempWork(NetConstants.TEMP_SECTION_ID, sectionAndWidget.toString());
+                            db.daoTempWork().insertTempWork(sectionTemp);
+                            return "";
+                        }
+                )
+                .subscribe(value -> {
+                    long totalExecutionTime = System.currentTimeMillis() - executionTime;
+                    Log.i("TotalExec", "Write Section String In Temp DB :: " + totalExecutionTime);
+
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

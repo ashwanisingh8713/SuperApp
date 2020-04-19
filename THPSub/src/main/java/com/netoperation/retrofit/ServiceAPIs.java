@@ -176,6 +176,9 @@ public interface ServiceAPIs {
     @POST("") // sectionList_v4.php
     Observable<SectionAndWidget> sectionList(@Url String url, @Body JsonObject jsonObject);
 
+    @POST("") // sectionList_v4.php
+    Observable<JsonElement> sectionListForJson(@Url String url, @Body JsonObject jsonObject);
+
     @POST("") // newsFeed.php
     Observable<HomeData> homeContent(@Url String url, @Body JsonObject jsonObject);
 

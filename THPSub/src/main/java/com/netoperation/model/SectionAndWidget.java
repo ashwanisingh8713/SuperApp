@@ -1,5 +1,7 @@
 package com.netoperation.model;
 
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
 public class SectionAndWidget {
