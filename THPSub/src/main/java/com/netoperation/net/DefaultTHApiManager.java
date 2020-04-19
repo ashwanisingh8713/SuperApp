@@ -343,12 +343,28 @@ public class DefaultTHApiManager {
                             Log.i(TAG, "homeArticles :: Banner Article Added " + homeData.getNewsFeed().getBanner().size() + " Size");
 
                             DaoHomeArticle daoHomeArticle = db.daoHomeArticle();
-                            // Delete All before Inserting New articles
-                            daoHomeArticle.deleteAll();
+
+                            // Delete All before Inserting New articles, But it is conditional because sometimes getting empty list
+                            boolean needToDeleteAllHomeArticles = true;
+                            if(homeData.getNewsFeed().getArticles().size() > 0) {
+                                for (HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
+                                    if (articlesBeans.getData() == null || articlesBeans.getData().size() == 0) {
+                                        needToDeleteAllHomeArticles = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if(needToDeleteAllHomeArticles) {
+                                daoHomeArticle.deleteAll();
+                            }
                             // Insert articles in HomeArticle Table
                             for (HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
                                 if(articlesBeans.getData() == null || articlesBeans.getData().size() == 0) {
                                     continue;
+                                }
+                                // If DeleteAll is not done, then before inserting we have to deleting existing secId's articles
+                                if(!needToDeleteAllHomeArticles) {
+                                    daoHomeArticle.delete(articlesBeans.getSec_id());
                                 }
                                 TableHomeArticle tableHomeArticle = new TableHomeArticle(articlesBeans.getSec_id(), articlesBeans.getData());
                                 daoHomeArticle.insertHomeArticle(tableHomeArticle);

@@ -23,8 +23,8 @@ public interface DaoHomeArticle {
     @Query("SELECT * FROM TableHomeArticle")
     Single<List<TableHomeArticle>> getArticlesSingle();
 
-    @Query("UPDATE TableHomeArticle SET beans = :beans WHERE secId = :secId")
-    int updateHomeArticles(String secId, List<ArticleBean> beans);
+    @Query("DELETE FROM TableHomeArticle WHERE secId = :secId")
+    void delete(String secId);
 
     @Query("DELETE FROM TableHomeArticle")
     void deleteAll();
