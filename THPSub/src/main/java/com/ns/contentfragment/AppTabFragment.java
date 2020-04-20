@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -20,7 +22,9 @@ import com.netoperation.net.ApiManager;
 import com.netoperation.util.THPPreferences;
 import com.netoperation.util.UserPref;
 import com.ns.adapter.AppTabPagerAdapter;
+import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnSubscribeBtnClick;
+import com.ns.callbacks.TabClickListener;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
@@ -33,7 +37,7 @@ import java.lang.reflect.Field;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnClick {
+public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnClick, TabClickListener.OnTabClickListener {
 
     private ConstraintLayout subscribeLayout;
     private String mUserId, mFrom;
@@ -190,20 +194,34 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
         });
 
-        tabClicks();
+        tabClickHandling();
 
     }
 
+    @Override
+    public void onTabClick(int tabIndex, String tabGroup) {
+        Alerts.showToast(getActivity(), ""+tabIndex);
+        mViewPager.setCurrentItem(tabIndex);
+    }
 
-    private void tabClicks() {
+
+    private void tabClickHandling() {
+
+
         LinearLayout tabStrip = ((LinearLayout)mTabLayout.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
-            if(i==0 || i==4) {
-                continue;
-            }
+            final TabClickListener tabClickListener = new TabClickListener(i, ""+i, this);
+            GestureDetectorCompat gestureDetectorCompat = new GestureDetectorCompat(getContext(), tabClickListener);
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    return gestureDetectorCompat.onTouchEvent(event);
+                }
+            });
+
+            tabStrip.getChildAt(i).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     return true;
                 }
             });
@@ -274,5 +292,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void setCurrentTab(int tabIndex) {
         mViewPager.setCurrentItem(tabIndex);
     }
+
+
 
 }

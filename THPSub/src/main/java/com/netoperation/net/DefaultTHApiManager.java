@@ -289,7 +289,6 @@ public class DefaultTHApiManager {
      * Making request to get Home data.
      * For Example http://getgoingit.blogspot.com/2018/05/passing-value-from-one-observable-to.html
      * For Example https://medium.com/androiddevelopers/room-rxjava-acb0cd4f3757
-     *
      * @param context
      * @return
      */
@@ -321,7 +320,7 @@ public class DefaultTHApiManager {
                                 personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
 
-                            return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, System.currentTimeMillis()));
+                            return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
                         });
 
                     })
@@ -400,7 +399,6 @@ public class DefaultTHApiManager {
     /**
      * Making paraller request to get Widgets data.
      * For Example : https://proandroiddev.com/rxjava-2-parallel-multiple-network-call-made-easy-1e1f14163eef
-     *
      * @param context
      * @param sections
      * @return
