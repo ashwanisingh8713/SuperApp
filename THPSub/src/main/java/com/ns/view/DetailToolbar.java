@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.UserPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -110,6 +111,40 @@ public class DetailToolbar extends Toolbar {
         int arrow_back = 2;
         mBackImageView.setIcon(arrow_back);
         mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void showHomePeronsoliseIcons(String title, OnClickListener onClickListener) {
+        overflowParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mCommentBtn.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        mTitleTextView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(getContext()).isHomeArticleOptionScreenShown();
+
+        if(!isHomeArticleOptionScreenShown) {
+            mBackImageView.setVisibility(GONE);
+        } else {
+            // In declare-styleable name="NSImageButton" enum arrow_back = 2
+            int arrow_back = 2;
+            mBackImageView.setIcon(arrow_back);
+            mBackImageView.setOnClickListener(onClickListener);
+        }
+
+        mTitleTextView.setText(title);
+
+
     }
 
     public void showGalleryIcons(OnClickListener onClickListener) {

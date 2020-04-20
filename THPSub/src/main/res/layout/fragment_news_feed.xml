@@ -5,29 +5,45 @@
     android:gravity="center"
     app:layoutType="Black_Dark">
 
-    <com.ns.view.layout.NSFrameLayout
+    <com.ns.view.layout.NSLinearLayout
         android:id="@+id/selectTopicFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutType="Black_Dark"
-        >
-    <com.ns.view.text.ArticleTitleTextView
-        android:id="@+id/selectTopic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="@string/inital_setup_head_info"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:font_path="@string/THP_FiraSans_Regular"/>
-    </com.ns.view.layout.NSFrameLayout>
+        android:orientation="vertical"
+        app:layoutType="Black_Dark">
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/selectTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_home_widget_background"
+            android:gravity="start|center_vertical"
+            android:maxLines="1"
+            android:text="@string/intital_setup_customize"
+            android:textAllCaps="true"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:textColor="@color/color_custom_header_text" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/inital_setup_head_info"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:font_path="@string/THP_FiraSans_Regular" />
+    </com.ns.view.layout.NSLinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_below="@id/selectTopicFrame"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:scrollbars="none">
 

@@ -16,6 +16,7 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.UserPref;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 
@@ -39,11 +40,13 @@ public class SplashActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(this).isHomeArticleOptionScreenShown();
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //should check null because in airplane mode it will be null
         NetworkCapabilities nc = cm.getNetworkCapabilities(cm.getActiveNetwork());
-        if(nc != null) {
+        if(nc != null && isHomeArticleOptionScreenShown) {
             int downSpeed = nc.getLinkDownstreamBandwidthKbps();
             startTime = System.currentTimeMillis();
             Log.i("NSPEED", "downSpeed :: " + downSpeed);
@@ -92,10 +95,16 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onComplete(String str) {
+                boolean isHomeArticleOptionScreenShown = UserPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 // Opens Main Tab Screen
-                IntentUtil.openMainTabPage(SplashActivity.this);
-                long totalExecutionTime = System.currentTimeMillis() - startTime;
-                Log.i("NSPEED", "Direct Launched Main Tab Page:: "+totalExecutionTime);
+                if(isHomeArticleOptionScreenShown) {
+                    IntentUtil.openMainTabPage(SplashActivity.this);
+                    long totalExecutionTime = System.currentTimeMillis() - startTime;
+                    Log.i("NSPEED", "Direct Launched Main Tab Page:: " + totalExecutionTime);
+                }
+                else {
+                    IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+                }
             }
         });
     }
@@ -111,13 +120,19 @@ public class SplashActivity extends BaseAcitivityTHP {
             public void onNext(Object o) {
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
                 Log.i("NSPEED", "Loaded Section Page from Server :: "+totalExecutionTime);
-                // Get Home Article from server
-                getHomeDataFromServer();
+                boolean isHomeArticleOptionScreenShown = UserPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
+                if(isHomeArticleOptionScreenShown) {
+                    // Get Home Article from server
+                    getHomeDataFromServer();
+                }
+                else {
+                    IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+                }
             }
 
             @Override
             public void onError(Throwable t, String str) {
-                Log.i("NSPEED", "ERROR1");
+                Log.i("NSPEED", "ERROR1 :: "+t);
             }
 
             @Override

@@ -1,5 +1,4 @@
-package com.ns.thd_frag;
-
+package com.ns.thd_fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,13 +6,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -24,10 +22,10 @@ import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.UserPref;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
-import com.ns.model.SectionBasicData;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
@@ -38,7 +36,6 @@ import com.ns.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,15 +43,24 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by zhy on 15/9/10.
  */
-public class CitiesInterestFragment extends Fragment {
-
+public class CustomizeNewsFeedFragment extends Fragment {
     private TagFlowLayout mFlowLayout;
-    private TagAdapter<TablePersonaliseDefault> mAdapter;
     private List<TablePersonaliseDefault> mSectionList = new ArrayList<>();
-    private boolean isCity;
     private CustomizeHomeScreenActivity mMainActivity;
+
+    private ArrayList<String> mAlreadySelectionSecIds = new ArrayList<>();
+
+
+    public static CustomizeNewsFeedFragment newInstance(boolean isCity) {
+        CustomizeNewsFeedFragment fragment = new CustomizeNewsFeedFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(THPConstants.IS_CITY, isCity);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -62,37 +68,23 @@ public class CitiesInterestFragment extends Fragment {
         mMainActivity = (CustomizeHomeScreenActivity) activity;
     }
 
+
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mMainActivity = (CustomizeHomeScreenActivity) context;
     }
 
-    public static CitiesInterestFragment newInstance(boolean isCity) {
-        CitiesInterestFragment fragment = new CitiesInterestFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(THPConstants.IS_CITY, isCity);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            this.isCity = getArguments().getBoolean(THPConstants.IS_CITY);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View mRootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
+        mFlowLayout = mRootView.findViewById(R.id.id_flowlayout);
+
+        if(UserPref.getInstance(getActivity()).isHomeArticleOptionScreenShown()) {
+            mRootView.findViewById(R.id.selectTopic).setVisibility(View.GONE);
         }
-        setHasOptionsMenu(true);
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View mRootView = inflater.inflate(R.layout.fragment_cities_interest, container, false);
-
-        mFlowLayout = mRootView.findViewById(R.id.flowlayout_city_interest);
 
         Observable.just("")
                 .subscribeOn(Schedulers.newThread())
@@ -101,24 +93,28 @@ public class CitiesInterestFragment extends Fragment {
                     DaoSection daoSection = db.daoSection();
                     DaoPersonaliseDefault daoPersonaliseDefault = db.daoPersonaliseDefault();
                     List<TableSection> allList = daoSection.getSections();
-                    List<TablePersonaliseDefault> allPersonalised = daoPersonaliseDefault.getCategoryPersonalise(NetConstants.PERSONALISE_CATEGORY_CITY);
+                    List<TablePersonaliseDefault> allPersonalised = daoPersonaliseDefault.getCategoryPersonalise(NetConstants.PERSONALISE_CATEGORY_NEWS);
 
                     for(TableSection tableSection : allList) {
-                        if(tableSection.getCustomScreen().equals("2")) {
-                            TablePersonaliseDefault defaultSec = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_CITY, tableSection.getCustomScreenPri(),tableSection.getSecId(), null, tableSection.getSecName(), false, false);
+                        if(tableSection.getCustomScreen().equals("1")) {
+                            TablePersonaliseDefault defaultSec = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, tableSection.getCustomScreenPri(), tableSection.getSecId(), null, tableSection.getSecName(), false, false);
                             if(allPersonalised.contains(defaultSec)) {
                                 defaultSec.setUserPreffered(true);
+                                mAlreadySelectionSecIds.add(tableSection.getSecId());
                             }
                             mSectionList.add(defaultSec);
+
                         }
                         List<SectionBean> subSection = tableSection.getSubSections();
                         for(SectionBean bean : subSection) {
-                            if(bean.getCustomScreen().equals("2")) {
-                                TablePersonaliseDefault defaultSec = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_CITY, bean.getCustomScreenPri(), bean.getSecId(), tableSection.getSecId(), bean.getSecName(), true, false);
+                            if(bean.getCustomScreen().equals("1")) {
+                                TablePersonaliseDefault defaultSec = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, bean.getCustomScreenPri(), bean.getSecId(), tableSection.getSecId(), bean.getSecName(), true, false);
                                 if(allPersonalised.contains(defaultSec)) {
                                     defaultSec.setUserPreffered(true);
+                                    mAlreadySelectionSecIds.add(bean.getSecId());
                                 }
                                 mSectionList.add(defaultSec);
+
                             }
                         }
                     }
@@ -128,9 +124,8 @@ public class CitiesInterestFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(val->{
                     final LayoutInflater mInflater = LayoutInflater.from(getActivity());
-
                     if (mSectionList != null && mSectionList.size() > 0) {
-                        mFlowLayout.setAdapter(mAdapter = new TagAdapter<TablePersonaliseDefault>(mSectionList) {
+                        mFlowLayout.setAdapter(new TagAdapter<TablePersonaliseDefault>(mSectionList) {
 
                             @Override
                             public View getView(FlowLayout parent, int position, TablePersonaliseDefault section) {
@@ -149,9 +144,10 @@ public class CitiesInterestFragment extends Fragment {
                         });
                     }
                 });
+
+
         return mRootView;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -179,19 +175,17 @@ public class CitiesInterestFragment extends Fragment {
                 personaliseDefault.setUserPreffered(!personaliseDefault.isUserPreffered());
             }
         });
-    }
 
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        /*GoogleAnalyticsTracker.setGoogleAnalyticScreenName(getActivity(), "City Interest Screen");
-        AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "City Interest Screen", CitiesInterestFragment.class.getSimpleName());
-
-        FlurryAgent.logEvent("City interest screen");
+        /*GoogleAnalyticsTracker.setGoogleAnalyticScreenName(getActivity(), "Customize News Feed Screen");
+        AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Customize News Feed Screen", CustomizeNewsFeedFragment.class.getSimpleName());
+        FlurryAgent.logEvent("Customize News Feed Screen");
         FlurryAgent.onPageView();*/
     }
-
 
 
     private boolean isFragmentVisibleToUser;
@@ -201,9 +195,7 @@ public class CitiesInterestFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         isFragmentVisibleToUser = isVisibleToUser;
         if (isVisibleToUser && mMainActivity != null) {
-            mMainActivity.setNextButtonText("SAVE");
-            mMainActivity.setVisiblityOfPriviousButton(View.VISIBLE);
-            mMainActivity.setSkipButtonText("Previous");
+            mMainActivity.firstFragmentBtn();
         }
     }
 
@@ -211,19 +203,11 @@ public class CitiesInterestFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (isFragmentVisibleToUser && mMainActivity != null) {
-            mMainActivity.setNextButtonText("SAVE");
-            mMainActivity.setVisiblityOfPriviousButton(View.VISIBLE);
-            mMainActivity.setSkipButtonText("Previous");
+            mMainActivity.firstFragmentBtn();
         }
     }
 
-    public void saveButtonClicked() {
-        /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                getActivity(),
-                getString(R.string.ga_action),
-                "Cities of interest: Save button clicked",
-                getString(R.string.title_city_interest));
-        FlurryAgent.logEvent("Cities of interest: Save button clicked");*/
+    public void nextButtonClicked() {
 
         ArrayList<String> selectedSectionsName = new ArrayList<>();
 
@@ -233,13 +217,27 @@ public class CitiesInterestFragment extends Fragment {
             }
         }
 
+        if (selectedSectionsName.size() < 5) {
+            Toast.makeText(mMainActivity, getString(R.string.select_atleast_five_section), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //CleverTap
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_Topics, TextUtils.join(", ", selectedSectionsName));
+        CleverTapUtil.cleverTapEvent(getActivity(), THPConstants.CT_EVENT_PERSONALIZE_HOME_SCREEN,map);
+
         Observable.just("")
                 .subscribeOn(Schedulers.io())
                 .map(v->{
                     THPDB thpdb = THPDB.getInstance(getActivity());
                     DaoPersonaliseDefault daoPersonaliseDefault = thpdb.daoPersonaliseDefault();
-                    daoPersonaliseDefault.delete(NetConstants.PERSONALISE_CATEGORY_CITY);
+                    daoPersonaliseDefault.delete(NetConstants.PERSONALISE_CATEGORY_NEWS);
                     for(TablePersonaliseDefault personaliseDefault : mSectionList) {
+                        String secId = personaliseDefault.getPersonaliseSecId();
+                        if(!mAlreadySelectionSecIds.contains(secId)) {
+                            mMainActivity.setIsOptionsChanged(true);
+                        }
                         if(personaliseDefault.isUserPreffered()) {
                             daoPersonaliseDefault.insertDefaultPersonalise(personaliseDefault);
                         }
@@ -248,15 +246,19 @@ public class CitiesInterestFragment extends Fragment {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v->{
-                    Alerts.showToastAtCenter(getActivity(), "Saved");
-                    mMainActivity.finish();
+
                 });
 
-        //CleverTap
-        HashMap<String,Object> map = new HashMap<>();
-        map.put(THPConstants.CT_KEY_Cities,TextUtils.join(", ", selectedSectionsName));
-        CleverTapUtil.cleverTapEvent(getActivity(), THPConstants.CT_EVENT_PERSONALIZE_HOME_SCREEN,map);
 
+        /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
+                getActivity(),
+                getString(R.string.ga_action),
+                "Customize news feed: Save button clicked",
+                getString(R.string.custom_home_screen));
+        FlurryAgent.logEvent("Customize news feed: Save button clicked");*/
+        if (mMainActivity != null) {
+            mMainActivity.setViewPagerItem(1);
+        }
 
     }
 }

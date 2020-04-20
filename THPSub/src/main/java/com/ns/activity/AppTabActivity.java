@@ -396,7 +396,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         "Customise: Customise Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
-                startActivity(new Intent(AppTabActivity.this, CustomizeHomeScreenActivity.class));
+                IntentUtil.openHomeArticleOptionActivity(AppTabActivity.this);
                 changeSortPopUp.dismiss();
             }
         });

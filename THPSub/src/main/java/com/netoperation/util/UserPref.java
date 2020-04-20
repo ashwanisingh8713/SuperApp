@@ -41,6 +41,15 @@ public class UserPref {
         return mUser;
     }
 
+    public void setHomeArticleOptionScreenShown(boolean isHomeArticleOptionScreenShown) {
+        mEditor.putBoolean("isHomeArticleOptionScreenShown", isHomeArticleOptionScreenShown);
+        mEditor.apply();
+    }
+
+    public boolean isHomeArticleOptionScreenShown() {
+        return mPreferences.getBoolean("isHomeArticleOptionScreenShown", false);
+    }
+
     public void setLastUpdateTime(String sectionName) {
         mEditor.putLong(sectionName, System.currentTimeMillis());
         mEditor.apply();

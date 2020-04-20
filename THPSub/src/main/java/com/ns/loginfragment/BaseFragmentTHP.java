@@ -96,7 +96,7 @@ public abstract class BaseFragmentTHP extends Fragment {
     }
 
 
-    ProgressDialog progress;
+    private ProgressDialog progress;
     protected void showProgressDialog(String message) {
         if (progress == null) {
             progress = new ProgressDialog(getContext());

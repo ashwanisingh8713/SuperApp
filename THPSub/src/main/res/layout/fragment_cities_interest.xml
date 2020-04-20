@@ -5,14 +5,30 @@
     android:orientation="vertical"
     app:layoutType="Black_Dark">
 
-    <com.ns.view.layout.NSFrameLayout
+    <com.ns.view.layout.NSLinearLayout
         android:id="@+id/selectTopicFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layoutType="Black_Dark">
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.CustomTextView
             android:id="@+id/selectTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_home_widget_background"
+            android:gravity="start|center_vertical"
+            android:text="@string/intital_setup_localize"
+            android:textAllCaps="true"
+            app:textColor="@color/color_custom_header_text"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:font_path="@string/THP_FiraSans_Bold"/>
+
+        <com.ns.view.text.ArticleTitleTextView
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:gravity="center"
@@ -21,7 +37,7 @@
             android:textAllCaps="false"
             android:textSize="16sp"
             app:font_path="@string/THP_FiraSans_Regular" />
-    </com.ns.view.layout.NSFrameLayout>
+    </com.ns.view.layout.NSLinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

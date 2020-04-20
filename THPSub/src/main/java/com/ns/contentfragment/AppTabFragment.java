@@ -194,6 +194,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
         });
 
+        // Tabs custom click handling
         tabClickHandling();
 
     }
@@ -205,11 +206,13 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
 
+    /**
+     * Tabs Custom click
+     */
     private void tabClickHandling() {
-
-
         LinearLayout tabStrip = ((LinearLayout)mTabLayout.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            // Gesture Tab On-Click
             final TabClickListener tabClickListener = new TabClickListener(i, ""+i, this);
             GestureDetectorCompat gestureDetectorCompat = new GestureDetectorCompat(getContext(), tabClickListener);
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
@@ -218,7 +221,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     return gestureDetectorCompat.onTouchEvent(event);
                 }
             });
-
+            // Disable Long click
             tabStrip.getChildAt(i).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
