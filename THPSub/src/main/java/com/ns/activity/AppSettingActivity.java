@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 
 import com.main.DFPConsent;
 import com.netoperation.util.UserPref;
+import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
 import com.ns.tts.LanguageItem;
@@ -46,12 +47,12 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     private Switch mDayModeASwitch;
     private Switch mPushNotification;
     private Switch mTurnOffImages;
-    private DFPConsent mDfpConsent;
-    private ProgressDialog mProgressDialog;
 
     private TextToSpeech textToSpeech;
 
     private boolean isDayMode;
+
+    private DFPConsent dfpConsent;
 
 
     @Override
@@ -322,16 +323,25 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     }
 
     private void DFP_GDPR_CONSENT() {
-            final DFPConsent dfpConsent = new DFPConsent();
-            dfpConsent.GDPR_Testing(this);
-            dfpConsent.init(this, true, new DFPConsent.ConsentSelectionListener() {
-                @Override
-                public void isUserInEurope(boolean isInEurope) {
-                    if(isInEurope) {
-                        dfpConsent.initUserConsentForm(AppSettingActivity.this);
-                    }
+        if (dfpConsent != null) {
+            dfpConsent.initUserConsentForm(AppSettingActivity.this);
+            return;
+        }
+        dfpConsent = new DFPConsent();
+        dfpConsent.GDPR_Testing(this);
+        dfpConsent.init(this, true, new DFPConsent.ConsentSelectionListener() {
+            @Override
+            public void isUserInEurope(boolean isInEurope) {
+                if (isInEurope) {
+                    dfpConsent.initUserConsentForm(AppSettingActivity.this);
                 }
-            });
+            }
+
+            @Override
+            public void consentLoadingError(String errorDescription) {
+                Alerts.showToast(AppSettingActivity.this, "consentLoadingError :: " + errorDescription);
+            }
+        });
     }
 
     private void languageAvailableVerification(final Context context) {

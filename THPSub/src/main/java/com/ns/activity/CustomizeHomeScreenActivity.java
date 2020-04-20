@@ -47,6 +47,8 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     private final String  btn_skip = "SKIP";
     private final String  btn_next = "NEXT";
 
+    private DFPConsent dfpConsent;
+
     private boolean isOptionsChanged = false;
 
     public void setIsOptionsChanged(boolean isOptionsChanged) {
@@ -248,23 +250,6 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                        CustomizeHomeScreenActivity.this,
-                        getString(R.string.ga_action),
-                        "Customize news feed: Back button clicked",
-                        getString(R.string.custom_home_screen));
-                FlurryAgent.logEvent("Customize news feed: Back button clicked");*/
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
     private Fragment getCurrentFragmet() {
         int position = mCustomizeHomeScreenViewPager.getCurrentItem();
@@ -337,7 +322,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
     private void DFP_GDPR_CONSENT(boolean isHomeArticleOptionScreenShown) {
         if(!isHomeArticleOptionScreenShown) {
-            final DFPConsent dfpConsent = new DFPConsent();
+            if(dfpConsent != null) {
+                dfpConsent.initUserConsentForm(CustomizeHomeScreenActivity.this);
+                return;
+            }
+            dfpConsent = new DFPConsent();
             dfpConsent.GDPR_Testing(this);
             dfpConsent.init(this, true, new DFPConsent.ConsentSelectionListener() {
                 @Override
@@ -345,6 +334,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                     if(isInEurope) {
                         dfpConsent.initUserConsentForm(CustomizeHomeScreenActivity.this);
                     }
+                }
+
+                @Override
+                public void consentLoadingError(String errorDescription) {
+                    Alerts.showToast(CustomizeHomeScreenActivity.this, "consentLoadingError :: "+errorDescription);
                 }
             });
         }

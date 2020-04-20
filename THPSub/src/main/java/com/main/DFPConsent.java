@@ -56,6 +56,10 @@ public class DFPConsent {
                 // User's consent status failed to update.
                 Log.i("","");
                 consentInformation.reset();
+
+                if(mConsentSelectionListener != null) {
+                    mConsentSelectionListener.consentLoadingError(errorDescription);
+                }
             }
         });
     }
@@ -125,6 +129,7 @@ public class DFPConsent {
 
     public interface ConsentSelectionListener {
         void isUserInEurope(boolean isInEurope);
+        void consentLoadingError(String errorDescription);
     }
 
 

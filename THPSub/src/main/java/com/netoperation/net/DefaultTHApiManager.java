@@ -85,7 +85,7 @@ public class DefaultTHApiManager {
      * @param sectionAndWidget
      * @return
      */
-    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget) {
+    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget, int totalMin) {
         THPDB db = THPDB.getInstance(context);
         DaoSection daoSection = db.daoSection();
         DaoBanner daoBanner = db.daoBanner();
@@ -96,10 +96,20 @@ public class DefaultTHApiManager {
 
         if (daoBanner != null) {
             TableBanner tableBanner = daoBanner.getBanners();
-            if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+            long dataInsertTimeOfTable = 0;
+            if(tableBanner != null) {
+                dataInsertTimeOfTable = tableBanner.getDataInsertTimeOfTable();
+            }
 
+            long currentTime = System.currentTimeMillis();
+            long fiveMins = 1000*60*totalMin;
+            if(dataInsertTimeOfTable+fiveMins > currentTime) {
                 return sectionAndWidget;
-            } else {
+            }
+            else if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+                return sectionAndWidget;
+            }
+            else {
                 daoSection.deleteAll();
                 daoBanner.deleteAll();
                 daoWidget.deleteAll();
@@ -176,7 +186,7 @@ public class DefaultTHApiManager {
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
                 .map(sectionAndWidget -> {
-                            return insertSectionResponseInDB(context, sectionAndWidget);
+                            return insertSectionResponseInDB(context, sectionAndWidget, 5);
                         }
                 )
                 .subscribe(value -> {
@@ -208,7 +218,7 @@ public class DefaultTHApiManager {
                     TableTempWork tempSection = daoTempWork.getTableTempWork(NetConstants.TEMP_SECTION_ID);
                     Gson gson = new Gson();
                     SectionAndWidget sectionAndWidget = gson.fromJson(tempSection.getJsonString(), SectionAndWidget.class);
-                    return insertSectionResponseInDB(context, sectionAndWidget);
+                    return insertSectionResponseInDB(context, sectionAndWidget, 5);
                 })
                 .subscribe(value -> {
                     if (callback != null) {
@@ -320,6 +330,13 @@ public class DefaultTHApiManager {
                                 personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
 
+                            long dataInsertTimeOfTable = bannerVal.getDataInsertTimeOfTable();
+                            long currentTime = System.currentTimeMillis();
+                            long fiveMins = 1000*60*5;
+                            if(dataInsertTimeOfTable+fiveMins > currentTime) {
+                                return null;
+                            }
+
                             return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
                         });
 
@@ -335,9 +352,14 @@ public class DefaultTHApiManager {
                             // Banner Article Update
                             TableBanner banner = daoBanner.getBanners();
                             List<ArticleBean> bannerArticles = homeData.getNewsFeed().getBanner();
-                            TableBanner tableBanner = new TableBanner(banner.getSecId(), banner.getSecName(), banner.getType(), banner.getLastUpdatedTime(), banner.getStaticPageBean());
-                            tableBanner.setBeans(bannerArticles);
-                            daoBanner.deleteAndInsertInBanner(tableBanner);
+                            if(bannerArticles.size() > 0) {
+                                TableBanner tableBanner = new TableBanner(banner.getSecId(), banner.getSecName(), banner.getType(), banner.getLastUpdatedTime(), banner.getStaticPageBean());
+                                tableBanner.setBeans(bannerArticles);
+                                daoBanner.deleteAndInsertInBanner(tableBanner);
+                                Log.i("HomeData", "Banner :: Inserted");
+                            } else {
+                                Log.i("HomeData", "Banner :: Not Valid");
+                            }
 
                             Log.i(TAG, "homeArticles :: Banner Article Added " + homeData.getNewsFeed().getBanner().size() + " Size");
 
@@ -359,6 +381,7 @@ public class DefaultTHApiManager {
                             // Insert articles in HomeArticle Table
                             for (HomeData.NewsFeedBean.ArticlesBean articlesBeans : homeData.getNewsFeed().getArticles()) {
                                 if(articlesBeans.getData() == null || articlesBeans.getData().size() == 0) {
+                                    Log.i("HomeData", "Article :: Not Valid");
                                     continue;
                                 }
                                 // If DeleteAll is not done, then before inserting we have to deleting existing secId's articles
@@ -367,6 +390,7 @@ public class DefaultTHApiManager {
                                 }
                                 TableHomeArticle tableHomeArticle = new TableHomeArticle(articlesBeans.getSec_id(), articlesBeans.getData());
                                 daoHomeArticle.insertHomeArticle(tableHomeArticle);
+                                Log.i("HomeData", "Article :: Inserted");
                                 Log.i(TAG, "homeArticles :: Home Article Added SEC-ID ::" + articlesBeans.getSec_id() + " :: " + articlesBeans.getData().size() + " Size");
                             }
                         }
@@ -418,10 +442,16 @@ public class DefaultTHApiManager {
                         SectionContentFromServer sectionContent = (SectionContentFromServer) value;
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoWidget daoWidget = thpdb.daoWidget();
+                        if(sectionContent.getData().getArticle().size() > 0) {
+                            TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
+                            tableWidget.setBeans(sectionContent.getData().getArticle());
+                            daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
 
-                        TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
-                        tableWidget.setBeans(sectionContent.getData().getArticle());
-                        daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
+                            Log.i("HomeData", "widgetContent :: Inserted");
+                        }
+                        else {
+                            Log.i("HomeData", "widgetContent :: Not Valid");
+                        }
 
                         return sectionContent.getData().getSid() + "-" + sectionContent.getData().getSname();
                     })

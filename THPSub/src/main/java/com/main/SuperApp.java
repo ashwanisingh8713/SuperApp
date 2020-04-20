@@ -77,7 +77,7 @@ public class SuperApp extends Application implements LifecycleObserver {
      */
     private void getHomeDatafromServer() {
 
-        DefaultTHApiManager.homeArticles(SuperApp.this, "SplashActivity", new RequestCallback() {
+        DefaultTHApiManager.homeArticles(SuperApp.this, "SuperApp.java", new RequestCallback() {
             @Override
             public void onNext(Object o) {
 

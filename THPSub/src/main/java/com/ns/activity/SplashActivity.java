@@ -160,6 +160,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onError(Throwable t, String str) {
                 Log.i("NSPEED", "ERROR2");
+                IntentUtil.openMainTabPage(SplashActivity.this);
             }
 
             @Override
