@@ -167,4 +167,25 @@
     <string name="inital_setup_head_info">Select your favourite topics to see more stories you like on your Home Screen</string>
     <string name="select_atleast_five_section">You need to select atleast 5 sections</string>
 
+
+    <!-- Settings -->
+    <string name="info_article_size">Article Font Size</string>
+    <string name="info_location">Detect Location</string>
+    <string name="info_mode">Night Mode</string>
+    <string name="info_push_notification">Push Notification</string>
+    <string name="info_turn_off_image">Turn off Images</string>
+    <string name="info_article_small">Small</string>
+    <string name="info_article_large">Large</string>
+    <string name="info_article_medium">Medium</string>
+    <string name="info_article_xlarge">Extra Large</string>
+    <string name="info_article_s">S</string>
+    <string name="info_article_m">M</string>
+    <string name="info_article_l">L</string>
+    <string name="info_article_xl">XL</string>
+    <string name="read_aloud">Read Aloud</string>
+
+    <!-- Notifications -->
+    <string name="info_no_notifications">We don\'t have any notifications for you now</string>
+    <string name="info_unread_notifications">You have some unread articles in read later</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

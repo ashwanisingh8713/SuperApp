@@ -34,8 +34,8 @@ import com.ns.activity.BookmarkMergedActivity;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.activity.DemoActivity;
 import com.ns.activity.SearchActivity;
+import com.ns.activity.AppSettingActivity;
 import com.ns.activity.SignInAndUpActivity;
-import com.ns.activity.SplashActivity;
 import com.ns.activity.THPImageGallaryActivity;
 import com.ns.activity.THPImageGallaryVerticleActivity;
 import com.ns.activity.THPPersonaliseActivity;
@@ -43,7 +43,6 @@ import com.ns.activity.THPUserProfileActivity;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.activity.THP_WebActivity;
 import com.ns.activity.THP_YouTubeFullScreenActivity;
-import com.ns.adapter.MergedBookmarkPagerAdapter;
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -766,6 +765,13 @@ public class IntentUtil {
             context.startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
         }
+    }
+
+    public static void openSettingActivity(AppCompatActivity context) {
+        Intent intent = new Intent(context, AppSettingActivity.class);
+        context.startActivity(intent,
+                    ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+
     }
 
 

@@ -41,6 +41,15 @@ public class UserPref {
         return mUser;
     }
 
+    public void setNotificationEnable(boolean isNotificationEnable) {
+        mEditor.putBoolean("isNotificationEnable", isNotificationEnable);
+        mEditor.apply();
+    }
+
+    public boolean isNotificationEnable() {
+        return mPreferences.getBoolean("isNotificationEnable", true);
+    }
+
     public void setHomeArticleOptionScreenShown(boolean isHomeArticleOptionScreenShown) {
         mEditor.putBoolean("isHomeArticleOptionScreenShown", isHomeArticleOptionScreenShown);
         mEditor.apply();

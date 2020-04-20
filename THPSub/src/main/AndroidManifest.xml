@@ -75,6 +75,15 @@
         <activity android:name="com.ns.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>
+        <activity android:name="com.ns.activity.AppSettingActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"/>
+        <activity android:name="com.ns.tts.TTSSettingActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"/>
+        <activity android:name="com.ns.tts.TTSLanguageSettingActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"/>
         <activity android:name="com.ns.activity.IciciPGActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>

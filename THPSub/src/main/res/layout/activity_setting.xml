@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
+
+    <com.ns.view.DetailToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:elevation="5dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/layout_article_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:layout_gravity="center_horizontal"
+        android:padding="15dp">
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info_article_size"
+            app:font_path="@string/THP_TundraOffc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:viewType="M" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textView_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            app:font_path="@string/THP_TundraOffc"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:textColor="@color/text_warm_grey"
+            android:layout_alignLeft="@id/textView2"
+            android:layout_alignStart="@id/textView2"
+            android:layout_below="@id/textView2"/>
+
+        <ImageView
+            android:id="@+id/imageView_size"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/ic_arrow_drop_down" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_font_size"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include layout="@layout/layout_article_size" />
+
+        <SeekBar
+            android:id="@+id/seekbar_font_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp" />
+    </LinearLayout>
+
+
+    <View style="@style/dividerStyle"
+        android:visibility="gone"/>
+
+    <Switch
+        android:id="@+id/switch_location"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:padding="15dp"
+        android:text="@string/info_location"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"/>
+
+    <View style="@style/dividerStyle" />
+
+    <Switch
+        android:id="@+id/switch_daymode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:padding="15dp"
+        android:text="@string/info_mode"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <View style="@style/dividerStyle" />
+
+    <Switch
+        android:id="@+id/switch_push_notification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:padding="15dp"
+        android:text="@string/info_push_notification"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+    <!--/////////////////////////////////////////////////////////-->
+    <!--/////////////////////////////////////////////////////////-->
+
+    <View style="@style/dividerStyle" />
+
+    <RelativeLayout
+        android:id="@+id/ttsSettingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        >
+
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/tts1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/read_aloud"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:font_path="@string/THP_TundraOffc"
+            app:viewType="color_static"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/tts2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tts1"
+            android:text="English (india)"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:textColor="@color/text_warm_grey"
+            app:font_path="@string/THP_TundraOffc"/>
+
+        <ImageView
+            android:id="@+id/ttsArrowRight"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+
+    <View style="@style/dividerStyle" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/gdprSettingTxt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="GDPR Setting"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/color_static_text"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/gdprDivider"
+        android:visibility="gone"
+        style="@style/dividerStyle" />
+
+
+    <Switch
+        android:id="@+id/switch_turn_off_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:padding="15dp"
+        android:text="@string/info_turn_off_image"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"/>
+
+    <View
+        android:visibility="gone"
+        style="@style/dividerStyle"
+        />
+
+    <!-- Remove Reorder - as requested by Ranjith(THG)
+    <com.mobstac.thehindu.view.TundraOffcTextView
+        android:id="@+id/tabOrdering"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:paddingLeft="15dp"
+        android:gravity="center_vertical"
+        android:text="Reorder Tabs"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/color_static_text" />
+
+    <View
+        style="@style/dividerStyle"
+        android:visibility="gone"/>-->
+
+
+    <View
+        android:id="@+id/forTestingPurpose"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        />
+
+
+</com.ns.view.layout.NSLinearLayout>

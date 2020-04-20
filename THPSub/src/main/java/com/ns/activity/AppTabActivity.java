@@ -396,8 +396,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         "Customise: Customise Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
-                IntentUtil.openHomeArticleOptionActivity(AppTabActivity.this);
                 changeSortPopUp.dismiss();
+                IntentUtil.openHomeArticleOptionActivity(AppTabActivity.this);
             }
         });
 
@@ -416,8 +416,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
 
-                startActivity(new Intent(AppTabActivity.this, THPPersonaliseActivity.class));
                 changeSortPopUp.dismiss();
+                startActivity(new Intent(AppTabActivity.this, THPPersonaliseActivity.class));
             });
         } else {
             personaliseSubscription.setVisibility(View.GONE);
@@ -427,9 +427,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         mSettigsScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*SettingsFragment settingsFragment = new SettingsFragment();
-                pushFragmentToBackStack(settingsFragment);*/
                 changeSortPopUp.dismiss();
+                IntentUtil.openSettingActivity(AppTabActivity.this);
             }
         });
 

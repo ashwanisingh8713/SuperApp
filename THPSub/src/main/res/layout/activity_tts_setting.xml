@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark"
+    >
+
+    <com.ns.view.DetailToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:elevation="5dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        />
+
+    <View style="@style/dividerStyle" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <!--start Accent Selection-->
+
+        <RelativeLayout
+            android:id="@+id/accentSelectionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/accentSelectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Accent"
+                app:font_path="@string/THP_FiraSans_Regular"
+                android:textSize="16sp"
+                app:viewType="color_static"/>
+
+            <ImageView
+                android:id="@+id/accentSelectionVisibilityBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_alignParentRight="true"/>
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/ttsAccentVal"
+                android:layout_below="@id/accentSelectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="English (India)"
+                app:font_path="@string/THP_FiraSans_Regular"
+                app:textColor="@color/text_warm_grey"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+        <!--end Accent Selection-->
+
+
+        <View
+            style="@style/dividerStyle"
+            android:layout_marginTop="10dp" />
+
+        <!--Start Speed Seekbar-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/textToSpeechSpeedLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="Speed"
+                        app:font_path="@string/THP_FiraSans_Regular"
+                        android:textSize="16sp"
+                        app:viewType="color_static"/>
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:id="@+id/ttsSpeedVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="100%"
+                        app:font_path="@string/THP_FiraSans_Regular"
+                        app:textColor="@color/text_warm_grey"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/speedVisibilityBtn"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/speedSeekbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="top"
+                    android:visibility="gone">
+
+                    <com.ns.view.text.CustomTextView
+                        android:id="@+id/speedVal1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0.5x"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:textColor="@color/text_warm_grey"
+                        app:font_path="@string/THP_FiraSans_Regular"/>
+
+                    <com.ns.view.text.CustomTextView
+                        android:id="@+id/speedVal2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0.75x"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:textColor="@color/text_warm_grey"
+                        app:font_path="@string/THP_FiraSans_Regular"/>
+
+                    <com.ns.view.text.CustomTextView
+                        android:id="@+id/speedVal3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1x"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:textColor="@color/text_warm_grey"
+                        app:font_path="@string/THP_FiraSans_Regular"/>
+
+                    <com.ns.view.text.CustomTextView
+                        android:id="@+id/speedVal4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1.5x"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:textColor="@color/text_warm_grey"
+                        app:font_path="@string/THP_FiraSans_Regular"/>
+
+                    <com.ns.view.text.CustomTextView
+                        android:id="@+id/speedVal5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2x"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:textColor="@color/text_warm_grey"
+                        app:font_path="@string/THP_FiraSans_Regular"/>
+
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <com.ns.view.text.CustomTextView
+                            android:id="@+id/speedDot1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/speed_seekbar_dot_height"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
+                            android:text="."
+                            app:textColor="@color/customise_tag_background"
+                            android:textSize="@dimen/speed_seekbar_dot_size"
+                            app:font_path="@string/THP_TundraOffc"/>
+
+                        <com.ns.view.text.CustomTextView
+                            android:id="@+id/speedDot2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/speed_seekbar_dot_height"
+                            android:layout_weight="1"
+                            android:paddingLeft="15dp"
+                            android:paddingStart="15dp"
+                            android:text="."
+                            app:textColor="@color/customise_tag_background"
+                            android:textSize="@dimen/speed_seekbar_dot_size"
+                            app:font_path="@string/THP_TundraOffc"/>
+
+                        <com.ns.view.text.CustomTextView
+                            android:id="@+id/speedDot3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/speed_seekbar_dot_height"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
+                            android:text="."
+                            app:textColor="@color/customise_tag_background"
+                            android:textSize="@dimen/speed_seekbar_dot_size"
+                            app:font_path="@string/THP_TundraOffc"/>
+
+                        <com.ns.view.text.CustomTextView
+                            android:id="@+id/speedDot4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/speed_seekbar_dot_height"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
+                            android:text="."
+                            app:textColor="@color/customise_tag_background"
+                            android:textSize="@dimen/speed_seekbar_dot_size"
+                            app:font_path="@string/THP_TundraOffc"/>
+
+                        <com.ns.view.text.CustomTextView
+                            android:id="@+id/speedDot5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/speed_seekbar_dot_height"
+                            android:text="."
+                            app:textColor="@color/customise_tag_background"
+                            android:textSize="@dimen/speed_seekbar_dot_size"
+                            app:font_path="@string/THP_TundraOffc"/>
+
+                    </LinearLayout>
+
+
+                    <com.ns.tts.discreteSeekbar.DiscreteSeekBar
+                        android:id="@+id/speedSeekbar2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-10dp"
+                        android:layout_marginTop="@dimen/speed_seekbar_top_margin"
+                        app:dsb_indicatorColor="#006599"
+                        app:dsb_progressColor="#006599"
+                        app:dsb_rippleColor="#FF7788FF"
+                        app:dsb_indicatorFormatter="%d%%"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <!--End Speed Seekbar-->
+
+        <View
+            style="@style/dividerStyle"
+            android:layout_marginTop="5dp" />
+
+
+        <!--Start Pitch Seekbar-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_pitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="Pitch"
+                        app:font_path="@string/THP_FiraSans_Regular"
+                        android:textSize="16sp"
+                        app:viewType="color_static"/>
+
+                    <com.ns.view.text.ArticleTitleTextView
+                        android:id="@+id/ttsPitchVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1x"
+                        app:font_path="@string/THP_TundraOffc"
+                        app:textColor="@color/text_warm_grey"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/pitchVisibilityBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/pitchSeekbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pitch_seekbar_top_margin"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <com.ns.view.text.ArticleTitleTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="5dp"
+                                android:paddingStart="5dp"
+                                android:text="."
+                                app:textColor="@color/customise_tag_background"
+                                app:font_path="@string/THP_TundraOffc"
+                                android:textSize="@dimen/speed_seekbar_dot_size" />
+
+                            <com.ns.view.text.ArticleTitleTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="."
+                                app:textColor="@color/customise_tag_background"
+                                app:font_path="@string/THP_TundraOffc"
+                                android:textSize="@dimen/speed_seekbar_dot_size" />
+
+                        </LinearLayout>
+
+                        <com.ns.tts.discreteSeekbar.DiscreteSeekBar
+                            android:id="@+id/pitchSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pitch_seekbar_top_margin"
+                            android:layout_marginLeft="-10dp"
+                            android:layout_marginRight="-11dp"
+                            app:dsb_indicatorColor="#006599"
+                            app:dsb_floaterColor="#006599"
+                            app:dsb_progressColor="#006599"
+                            app:dsb_rippleColor="#FF7788FF"
+                            app:dsb_indicatorFormatter="%d%%"/>
+                    </FrameLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <!--End Pitch Seekbar-->
+
+        <View
+            style="@style/dividerStyle"
+             />
+
+    </LinearLayout>
+
+
+</com.ns.view.layout.NSLinearLayout>

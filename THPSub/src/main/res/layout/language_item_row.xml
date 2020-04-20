@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/accentLanguageRowClick"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="20dp"
+    app:layoutType="Black_Dark">
+
+        <ImageView
+            android:id="@+id/selection"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/ic_radio_checked"
+            android:scaleType="fitCenter"
+            android:padding="2dp"/>
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text to Speech"
+            app:font_path="@string/THP_TundraOffc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            app:viewType="color_static"
+            />
+
+
+        <ImageView
+            android:id="@+id/download"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_file_download"
+            />
+
+    </com.ns.view.layout.NSLinearLayout>
