@@ -188,4 +188,5 @@
     <string name="info_no_notifications">We don\'t have any notifications for you now</string>
     <string name="info_unread_notifications">You have some unread articles in read later</string>
     <string name="title_notifications">Notifications</string>
+    <string name="AdMob_App_ID">ca-app-pub-3940256099942544~3347511713</string>
 </resources>

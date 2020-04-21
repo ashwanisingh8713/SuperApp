@@ -18,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
@@ -30,6 +33,7 @@ import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.WebViewLinkClick;
+import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 
@@ -111,6 +115,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_home_explore, viewGroup, false));
         }
+        else if(viewType == VT_THD_300X250_ADS) {
+            return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.inline_ads_container, viewGroup, false));
+        }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
@@ -154,6 +162,29 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 // Enabling Weblink click on Lead Text
                 new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext());
             }
+        }
+        else if(holder instanceof InlineAdViewHolder) {
+            AdData adData = item.getAdData();
+            InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
+            inlineAdViewHolder.frameLayout.removeAllViews();
+            inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
+            final PublisherAdView adView = adData.getAdView();
+
+            if(adData.isReloadOnScroll()) {
+                // Create an ad request.
+                PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
+                // Start loading the ad.
+                adView.loadAd(publisherAdRequestBuilder.build());
+            }
+
+            inlineAdViewHolder.frameLayout.setBackground(null);
+            adView.removeView(inlineAdViewHolder.frameLayout);
+            // Just below is fix of Crashlytics #6509
+            if (adView != null && adView.getParent() != null) {
+                ((ViewGroup) adView.getParent()).removeView(adView);
+            }
+            inlineAdViewHolder.frameLayout.addView(adView);
+
         }
 
     }
@@ -349,12 +380,17 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         notifyItemRangeChanged(fromIndex, items.size());
     }
 
-    public void insertItem(SectionAdapterItem item, int index) {
+    public int insertItem(SectionAdapterItem item, int index) {
+        int updateIndex = 0;
         if(index >= adapterItems.size()) {
             adapterItems.add(item);
+            updateIndex = adapterItems.size()-1;
         } else if(index < adapterItems.size()){
             adapterItems.add(index, item);
+            updateIndex = index;
         }
+
+        return updateIndex;
     }
 
     public int indexOf(SectionAdapterItem item) {
@@ -365,19 +401,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         return adapterItems.get(index);
     }
 
-    public void updateItem(SectionAdapterItem item) {
-        int index = adapterItems.indexOf(item);
-        if(index != -1) {
-            final SectionAdapterItem oldItem = adapterItems.get(index);
-            oldItem.setADID_300X250(item.getADID_300X250());
-            oldItem.setArticleBean(item.getArticleBean());
-            oldItem.setItemRowId(item.getItemRowId());
-            oldItem.setStaticPageUrlBean(item.getStaticPageUrlBean());
-            oldItem.setExploreAdapter(item.getExploreAdapter());
-            oldItem.setWidgetAdapter(item.getWidgetAdapter());
-        }
-
-    }
 
     public void deleteAllItems() {
         if(adapterItems != null) {

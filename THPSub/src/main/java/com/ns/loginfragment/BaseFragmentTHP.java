@@ -171,7 +171,8 @@ public abstract class BaseFragmentTHP extends Fragment {
     }
 
 
-    public void showEmptyLayout(LinearLayout emptyLayout, boolean isNoContent, BaseRecyclerViewAdapter mRecyclerAdapter, RecyclerViewPullToRefresh mPullToRefreshLayout, boolean isBriefingPage, @NonNull String mFrom) {
+    public void showEmptyLayout(LinearLayout emptyLayout, boolean isNoContent, BaseRecyclerViewAdapter mRecyclerAdapter,
+                                RecyclerViewPullToRefresh mPullToRefreshLayout, boolean isBriefingPage, @NonNull String mFrom) {
         if(emptyLayout == null) {
             return;
         }

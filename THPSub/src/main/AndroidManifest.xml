@@ -118,6 +118,10 @@
             android:name="com.ns.service.FetchAddressIntentService"
             android:exported="false"/>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/AdMob_App_ID"/>
+
 <!--        <receiver-->
 <!--            android:name="com.ns.receiver.SmsBroadcastReceiver"-->
 <!--            android:exported="true">-->

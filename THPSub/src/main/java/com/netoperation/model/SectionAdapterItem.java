@@ -7,19 +7,26 @@ import com.ns.adapter.WidgetAdapter;
 
 public class SectionAdapterItem {
 
-    private int viewType;
+    private final int viewType;
+    private final String itemRowId;
     private ArticleBean articleBean;
-    private String ADID_300X250;
-    private String itemRowId;
     private WidgetAdapter widgetAdapter;
     private ExploreAdapter exploreAdapter;
     private StaticPageUrlBean staticPageUrlBean;
-
+    private AdData adData;
 
 
     public SectionAdapterItem(int viewType, String itemRowId) {
         this.viewType = viewType;
         this.itemRowId = itemRowId;
+    }
+
+    public AdData getAdData() {
+        return adData;
+    }
+
+    public void setAdData(AdData adData) {
+        this.adData = adData;
     }
 
     public ExploreAdapter getExploreAdapter() {
@@ -42,20 +49,8 @@ public class SectionAdapterItem {
         this.articleBean = articleBean;
     }
 
-    public String getADID_300X250() {
-        return ADID_300X250;
-    }
-
-    public void setADID_300X250(String ADID_300X250) {
-        this.ADID_300X250 = ADID_300X250;
-    }
-
     public String getItemRowId() {
         return itemRowId;
-    }
-
-    public void setItemRowId(String itemRowId) {
-        this.itemRowId = itemRowId;
     }
 
     public WidgetAdapter getWidgetAdapter() {

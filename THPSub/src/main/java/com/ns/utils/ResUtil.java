@@ -296,9 +296,6 @@ public class ResUtil {
     public static String getDeviceId(Context context) {
         String android_id = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-
-        Log.i("Ashwae ID", ""+android_id);
-
         return android_id;
     }
 

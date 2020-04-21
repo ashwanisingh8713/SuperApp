@@ -32,6 +32,8 @@ public class SuperApp extends Application implements LifecycleObserver {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        sAppContext = this;
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         startPeriodicWork();
@@ -107,7 +109,6 @@ public class SuperApp extends Application implements LifecycleObserver {
                         .subscribe(onSuccess -> {
                             Log.i(NetConstants.UNIQUE_TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
                         });
-
             }
         });
     }

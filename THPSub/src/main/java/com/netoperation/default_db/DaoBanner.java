@@ -31,13 +31,6 @@ public abstract class DaoBanner {
     @Query("UPDATE TableBanner SET beans = :beans WHERE secId = :secId")
     public abstract int updateBannerArticles(String secId, List<ArticleBean> beans);
 
-    @Transaction
-    public void deleteAndInsertInBanner(TableBanner tableBanner) {
-        deleteAll();
-        insertBanner(tableBanner);
-    }
-
-
     @Query("DELETE FROM TableBanner WHERE secId = :secId")
     public abstract int deleteBanner(String secId);
 

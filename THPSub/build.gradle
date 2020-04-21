@@ -178,6 +178,9 @@ dependencies {
 
     //GDPR
     implementation deps.GDPR
+    // DFP Advetisement
+    implementation deps.PS_Ads
+    implementation deps.Firebase_Ads
 
 }
 

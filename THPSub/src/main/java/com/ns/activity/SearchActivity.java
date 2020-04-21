@@ -14,6 +14,9 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
+import com.ns.utils.CommonUtil;
+import com.ns.utils.ContentUtil;
+import com.ns.utils.ResUtil;
 import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.text.CustomTextView;
 
@@ -102,6 +105,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
     public void onButtonClicked(int buttonCode) {
         Log.i("", "");
         if(buttonCode == MaterialSearchBar.BUTTON_BACK ) {
+            CommonUtil.hideKeyboard(searchBar);
             finishAfterTransition();
         } else {
             super.onBackPressed();

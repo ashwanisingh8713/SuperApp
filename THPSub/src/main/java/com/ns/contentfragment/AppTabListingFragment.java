@@ -659,8 +659,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-        Log.i("TabFragment", "onDestroyView() TabIndex = "+mTabIndex+" EventBus UnRegistered");
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)

@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdSize;
+import com.main.AppAds;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
@@ -22,6 +24,7 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableWidget;
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.SectionBean;
@@ -51,7 +54,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, BaseFragmentTHP.BaseFragmentListener {
+public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, BaseFragmentTHP.BaseFragmentListener, AppAds.OnAppAdLoadListener {
 
     private static String TAG = NetConstants.UNIQUE_TAG;
 
@@ -144,10 +147,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
             // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-//            homeAndBannerArticleFromObservable();
             homeAndBannerArticleFromDB();
-            // Widget Observable
-            homeWidgetsFromObservable();
+//            test();
+
         } else { // Other Sections or Sub-Section
             // Registering Scroll Listener to load more item
             mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
@@ -379,11 +381,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             }
         });
 
-        homeWidgetFromServer();
+        getHomeWidgetFromServer();
     }
 
 
-    private void homeWidgetsFromObservable() {
+    private void showHomeWidgets() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
         mDisposable.add(widgetObservable
@@ -419,10 +421,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         }
                     }
 
+
                 }));
     }
 
-    private void homeWidgetFromServer() {
+    private void getHomeWidgetFromServer() {
         final THPDB thpdb = THPDB.getInstance(getActivity());
         DaoWidget daoWidget = thpdb.daoWidget();
         daoWidget.getWidgetsSingle()
@@ -438,85 +441,23 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 .subscribe();
     }
 
-    /**
-     * Home data from db, observable based and in last of statement immediately it is being disposed
-     */
-    private void homeAndBannerArticleFromObservable() {
-
-        CompositeDisposable disposable = new CompositeDisposable();
-
-        DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
-        DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
-        Observable<TableBanner> bannerObservable = daoBanner.getBannersObservable().subscribeOn(Schedulers.io());
-        Observable<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticles().subscribeOn(Schedulers.io());
-
-        disposable.add(Observable.merge(bannerObservable, homeArticleObservable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-                    if (value instanceof TableBanner) {
-                        final TableBanner banner = (TableBanner) value;
-                        mStaticPageBean = banner.getStaticPageBean();
-
-                        int count = 0;
-                        for (ArticleBean bean : banner.getBeans()) {
-                            final String itemRowId = "banner_" + bean.getSid() + "_" + bean.getAid();
-                            if (count == 0) {
-                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
-                                int index = mRecyclerAdapter.indexOf(item);
-                                if (index == -1) {
-                                    item.setArticleBean(bean);
-                                    mRecyclerAdapter.insertItem(item, count);
-                                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: UI :: Banner Added :: " + itemRowId);
-                                } else {
-                                    item = mRecyclerAdapter.getItem(index);
-                                    item.setArticleBean(bean);
-                                    mRecyclerAdapter.notifyItemChanged(index);
-                                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: UI :: Banner Updated :: " + itemRowId);
-                                }
-                            } else {
-                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
-                                item.setArticleBean(bean);
-                                mRecyclerAdapter.insertItem(item, count);
-                                Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: UI :: Banner Row Added :: " + itemRowId);
-                            }
-                            count++;
-                        }
-                    } else if (value instanceof ArrayList) {
-                        ArrayList tableDatas = ((ArrayList) value);
-                        for (int i = 0; i < tableDatas.size(); i++) {
-                            // Home Articles
-                            if (tableDatas.get(i) instanceof TableHomeArticle) {
-                                final TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
-                                for (ArticleBean bean : homeArticle.getBeans()) {
-                                    final String itemRowId = "defaultRow_" + bean.getAid();
-                                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
-                                    int index = mRecyclerAdapter.indexOf(item);
-                                    if (index == -1) {
-                                        item.setArticleBean(bean);
-                                        mRecyclerAdapter.addSingleItem(item);
-                                        Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: UI :: Default Row Added :: " + itemRowId);
-                                    }
-                                }
-                            }
-                        }
-
-                        disposable.dispose();
-
-                        addStaticPageBean();
-                    }
-
-                    mPullToRefreshLayout.setRefreshing(false);
-                    hideProgressDialog();
-
-                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
-
+    private void test() {
+        Observable.just("ll")
+                .subscribeOn(Schedulers.io())
+                        .map(val->{
+                            DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
+                            TableBanner tableBanner = daoBanner.getBanners();
+                            List<ArticleBean> list = tableBanner.getBeans();
+                            return "";
+                        })
+                .subscribe(val->{
+                    Log.i("", "");
                 }, throwable -> {
-                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
-                }, () -> {
-                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
-
-                }));
+                    Log.i("", "");
+                });
     }
+
+
 
     /**
      * Home data from db
@@ -586,12 +527,15 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
-                    addStaticPageBean();
+                    // Widget Observable
+                    showHomeWidgets();
+                    addWebPagePageBean();
+                    loadAdvertisiment();
                 }));
     }
 
 
-    private void addStaticPageBean() {
+    private void addWebPagePageBean() {
         if (mStaticPageBean != null && mStaticPageBean.getPosition() > -1 && mIsOnline) {
             final String itemRowId = "staticWebpage_" + mStaticPageBean.getPosition();
             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
@@ -637,4 +581,57 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onOtherStuffWork() {
 
     }
+
+    private void loadAdvertisiment() {
+        if(!mIsOnline) {
+            return;
+        }
+        ArrayList<AdData> mAdsData = new ArrayList<>();
+        ArrayList<String> adsId = new ArrayList<>();
+        adsId.add(AppAds.firstInline);
+        adsId.add(AppAds.secondInline);
+        adsId.add(AppAds.thirdInline);
+
+        for(int i=0; i<adsId.size(); i++) {
+            int index = 0;
+            if(i == 0) {
+                index = 4;
+            }
+            else if(i == 1) {
+                index = 11;
+            }
+            else if(i == 2) {
+                index = 16;
+            }
+            AdData adData = new AdData(index, AdSize.MEDIUM_RECTANGLE, adsId.get(i), true);
+            mAdsData.add(adData);
+        }
+
+
+
+        AppAds appAds = new AppAds(mAdsData, this);
+        appAds.loadAds();
+    }
+
+
+    @Override
+    public void opnAppAdLoadSuccess(AdData adData) {
+        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
+        item.setAdData(adData);
+        int index = mRecyclerAdapter.indexOf(item);
+        if(index == -1) {
+            if(adData.getAdView() != null) {
+                int updateIndex = mRecyclerAdapter.insertItem(item, adData.getIndex());
+                mRecyclerAdapter.notifyItemChanged(updateIndex);
+            }
+        }
+
+    }
+
+    @Override
+    public void opnAppAdLoadFailure(AdData adData) {
+
+    }
+
+
 }

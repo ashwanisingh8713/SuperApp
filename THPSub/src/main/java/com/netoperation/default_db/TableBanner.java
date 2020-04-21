@@ -28,7 +28,7 @@ public class TableBanner {
     private String type;
     private String lastUpdatedTime;
 
-    private long dataInsertTimeOfTable;
+//    private long dataInsertTimeOfTable;
 
     private StaticPageUrlBean staticPageBean;
 
@@ -40,16 +40,16 @@ public class TableBanner {
         this.type = type;
         this.lastUpdatedTime = lastUpdatedTime;
         this.staticPageBean = staticPageBean;
-        this.dataInsertTimeOfTable = System.currentTimeMillis();
+//        this.dataInsertTimeOfTable = System.currentTimeMillis();
     }
 
-    public long getDataInsertTimeOfTable() {
-        return dataInsertTimeOfTable;
-    }
+//    public long getDataInsertTimeOfTable() {
+//        return dataInsertTimeOfTable;
+//    }
 
-    public void setDataInsertTimeOfTable(long dataInsertTimeOfTable) {
-        this.dataInsertTimeOfTable = dataInsertTimeOfTable;
-    }
+//    public void setDataInsertTimeOfTable(long dataInsertTimeOfTable) {
+//        this.dataInsertTimeOfTable = dataInsertTimeOfTable;
+//    }
 
     public String getType() {
         return type;

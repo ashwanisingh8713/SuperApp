@@ -91,18 +91,7 @@ ext {
     RXJAVA_VC = '2.1.0'
     RX_PERMISSION_VC = '0.10.2'
 
-    PLAY_SERVICE_VC = '11.8.0'
-    PLAY_SERVICE_MAP_VERSION = '16.1.0'
-    PLAY_SERVICE_LOCATION_VERSION = '16.0.0'
-    PLAY_SERVICE_ADS = '17.1.3'
-    PLAY_SERVICE_ANALYTICS = '16.0.7'
-    PLAY_SERVICE_AUTH = '15.0.1'
 
-    FIREBASE_CORE_VERSION='16.0.7'
-    FIREBASE_CRASH_VERSION='16.2.1'
-    FIREBASE_PREF_VERSION='16.2.3'
-    FIREBASE_MESSAGING_VERSION='17.3.4'
-    FIREBASE_DYNAMIC_LINK_VERSION='16.1.8'
 
     TABOOLA_VERSION="2.3.6"
     GDPR_VERSION="1.0.3"
@@ -137,11 +126,11 @@ ext.deps = [
 
         multiDex : "com.android.support:multidex:$MULTIDEX_VERSION",
 
-        PS_map : "com.google.android.gms:play-services-maps:$PLAY_SERVICE_MAP_VERSION",
-        PS_location             : "com.google.android.gms:play-services-location:$PLAY_SERVICE_LOCATION_VERSION",
-        PS_Ads                  : "com.google.android.gms:play-services-ads:$PLAY_SERVICE_ADS",
-        PS_Analytics            : "com.google.android.gms:play-services-analytics:$PLAY_SERVICE_ANALYTICS",
-        PS_Auth                 : "com.google.android.gms:play-services-auth:$PLAY_SERVICE_AUTH",
+        PS_map : "com.google.android.gms:play-services-maps:17.0.0",
+        PS_location             : "com.google.android.gms:play-services-location:17.0.0",
+        PS_Ads                  : "com.google.android.gms:play-services-ads:19.1.0",
+        Firebase_Ads                  : "com.google.firebase:firebase-ads:19.1.0",
+        PS_Auth                 : "com.google.android.gms:play-services-auth:18.0.0",
 
         // For OTP Input
         otpEntryEditText        : project(':pinentryedittext'),
@@ -185,11 +174,11 @@ ext.deps = [
         GDPR:"com.google.android.ads.consent:consent-library:$GDPR_VERSION",
 
         //FIREBASE
-        FIREBASE_CORE:"com.google.firebase:firebase-core:$FIREBASE_CORE_VERSION",
-        FIREBASE_CRASH:"com.google.firebase:firebase-crash:$FIREBASE_CRASH_VERSION",
-        FIREBASE_PREF:"com.google.firebase:firebase-perf:$FIREBASE_PREF_VERSION",
-        FIREBASE_MESSAGING:"com.google.firebase:firebase-messaging:$FIREBASE_MESSAGING_VERSION",
-        FIREBASE_DYNAMIC_LINK:"com.google.firebase:firebase-dynamic-links:$FIREBASE_DYNAMIC_LINK_VERSION",
+        FIREBASE_CORE:"com.google.firebase:firebase-core:17.3.0",
+        FIREBASE_CRASH:"com.google.firebase:firebase-crash:16.2.1",
+        FIREBASE_PREF:"com.google.firebase:firebase-perf:19.0.6",
+        FIREBASE_MESSAGING:"com.google.firebase:firebase-messaging:20.1.5",
+        FIREBASE_DYNAMIC_LINK:"com.google.firebase:firebase-dynamic-links:19.1.0",
 
         //SMOOTH_PROGRESS_HORIZONTAL = https://github.com/castorflex/SmoothProgressBar
         SMOOTH_PROGRESS_HORIZONTAL:"com.github.castorflex.smoothprogressbar:library:$SMOOTH_PROGRESS_HORIZONTAL",

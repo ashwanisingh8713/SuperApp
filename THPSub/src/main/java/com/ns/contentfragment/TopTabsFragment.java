@@ -153,8 +153,6 @@ public class TopTabsFragment extends BaseFragmentTHP {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-        Log.i("TabFragment", "onDestroyView() TabIndex = " + mTabIndex + " EventBus UnRegistered, isSubSection :: "+mIsSubsection);
     }
 
     @Override

@@ -96,7 +96,7 @@ public class DefaultTHApiManager {
 
         if (daoBanner != null) {
             TableBanner tableBanner = daoBanner.getBanners();
-            long dataInsertTimeOfTable = 0;
+            /*long dataInsertTimeOfTable = 0;
             if(tableBanner != null) {
                 dataInsertTimeOfTable = tableBanner.getDataInsertTimeOfTable();
             }
@@ -106,7 +106,7 @@ public class DefaultTHApiManager {
             if(dataInsertTimeOfTable+fiveMins > currentTime) {
                 return sectionAndWidget;
             }
-            else if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+            else*/ if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
                 return sectionAndWidget;
             }
             else {
@@ -159,9 +159,6 @@ public class DefaultTHApiManager {
                             section.isShow_on_burger(), section.isShow_on_explore(),
                             subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
 
-                    if (section.getCustomScreen().equals("1")) {
-                        Log.i("CustomScreen", "" + section.getSecName());
-                    }
 
                     // Adding Default selected persionlise news feed section
                     THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();
@@ -330,12 +327,12 @@ public class DefaultTHApiManager {
                                 personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
 
-                            long dataInsertTimeOfTable = bannerVal.getDataInsertTimeOfTable();
+                            /*long dataInsertTimeOfTable = bannerVal.getDataInsertTimeOfTable();
                             long currentTime = System.currentTimeMillis();
                             long fiveMins = 1000*60*5;
                             if(dataInsertTimeOfTable+fiveMins > currentTime) {
                                 return null;
-                            }
+                            }*/
 
                             return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
                         });
@@ -353,9 +350,10 @@ public class DefaultTHApiManager {
                             TableBanner banner = daoBanner.getBanners();
                             List<ArticleBean> bannerArticles = homeData.getNewsFeed().getBanner();
                             if(bannerArticles.size() > 0) {
+                                daoBanner.deleteAll();
                                 TableBanner tableBanner = new TableBanner(banner.getSecId(), banner.getSecName(), banner.getType(), banner.getLastUpdatedTime(), banner.getStaticPageBean());
                                 tableBanner.setBeans(bannerArticles);
-                                daoBanner.deleteAndInsertInBanner(tableBanner);
+                                daoBanner.insertBanner(tableBanner);
                                 Log.i("HomeData", "Banner :: Inserted");
                             } else {
                                 Log.i("HomeData", "Banner :: Not Valid");
