@@ -154,14 +154,12 @@ public class Alerts {
                 title = "Connection Error!";
             }
         }
-
         ErrorDialog calendarViewDialogFragment = ErrorDialog.newInstance(title, message);
         calendarViewDialogFragment.show(fm, "errorDialog");
-
     }
 
     public static void showAlertDialogOKBtn(final Context context, String title, String msg) {
-        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(context);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
         alertDialog.setPositiveButton("OK", (dialog, which) -> dialog.cancel());
@@ -169,7 +167,7 @@ public class Alerts {
     }
 
     public static void showAlertDialogOKListener(final Context context, String title, String msg, DialogInterface.OnClickListener onClickListener) {
-        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(context);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
         alertDialog.setPositiveButton("OK", onClickListener);

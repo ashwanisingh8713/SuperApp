@@ -142,7 +142,15 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         else if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER);
             bannerModel.setBean(mArticleBean);
+            AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW);
+            description_1Model.setBean(mArticleBean);
             mRecyclerAdapter.addData(bannerModel);
+            mRecyclerAdapter.addData(description_1Model);
+
+            AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA);
+            taboolaModel.setBean(mArticleBean);
+            mRecyclerAdapter.addData(taboolaModel);
+
         }
 
         if(mActivity != null && mIsVisible) {

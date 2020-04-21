@@ -223,14 +223,14 @@
     <!--outbrain item-->
 
     <!--Article Item  new changes-->
-    <dimen name="article_item_parent_height">100dp</dimen>
+    <dimen name="article_item_parent_height">120dp</dimen>
     <dimen name="article_item_parent_left_right_padding">10dp</dimen>
     <dimen name="article_item_parent_top_bottom_padding">7dp</dimen>
     <dimen name="article_item_image_height">75dp</dimen>
     <dimen name="article_item_image_width">85dp</dimen>
     <dimen name="article_item_title_height">60dp</dimen>
-    <dimen name="article_item_icon_height">28dp</dimen>
-    <dimen name="article_item_icon_width">25dp</dimen>
+    <dimen name="article_item_icon_height">35dp</dimen>
+    <dimen name="article_item_icon_width">35dp</dimen>
     <dimen name="article_item_margin_between_icons">10dp</dimen>
 
     <dimen name="article_item_image_square">80dp</dimen>

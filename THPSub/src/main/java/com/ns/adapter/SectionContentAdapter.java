@@ -24,8 +24,10 @@ import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
+import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
+import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
@@ -33,6 +35,7 @@ import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.WebViewLinkClick;
+import com.ns.view.IconImgView;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
@@ -88,6 +91,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         super.onViewDetachedFromWindow(holder);
     }*/
 
+
+
+
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -142,11 +149,13 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             ArticlesViewHolder articlesViewHolder = (ArticlesViewHolder) holder;
             articlesViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
 
-            ArticleBean bean = item.getArticleBean();
+            fillArticleData(articlesViewHolder, position);
+
+            /*ArticleBean bean = item.getArticleBean();
 
             articlesViewHolder.itemView.setOnClickListener(v->{
                 IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
-            });
+            });*/
         }
         else if(holder instanceof StaticItemWebViewHolder) {
             StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
@@ -189,25 +198,87 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    /**
-     * Makes dim to read article's row
-     * @param context
-     * @param articleId
-     * @param view
-     */
-    private void dimReadArticle(Context context, String articleId, View view) {
-        DefaultTHApiManager.isReadArticleId(context, articleId)
-                .subscribe(tableRead -> {
-                    Log.i("", "");
-                    if (tableRead != null) {
-                        view.setAlpha(.4f);
-                    } else {
-                        view.setAlpha(1f);
-                    }
-                }, throwable -> {
-                    Log.i("", "");
-                });
+    private void fillArticleData(final ArticlesViewHolder holder, final int position) {
+        final ArticleBean bean = adapterItems.get(position).getArticleBean();
+        if (bean != null) {
+
+            // Dims Read article given view
+            dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mArticlesLayout);
+
+            // Checks article's type
+            articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
+
+            // Checks whether article is bookmarked or not, If yes then it updates UI
+            isExistInBookmark(holder.itemView.getContext(), bean, holder.mBookmarkButton);
+
+            String imageUrl = bean.getIm_thumbnail_v2();
+
+            if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
+                imageUrl = bean.getIm_thumbnail();
+            }
+
+            if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
+                holder.mImageParentLayout.setVisibility(View.VISIBLE);
+                holder.mArticleImageView.setVisibility(View.VISIBLE);
+                imageUrl = ContentUtil.getThumbUrl(imageUrl);
+                GlideUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+
+            } else {
+                holder.mArticleImageView.setVisibility(View.GONE);
+                holder.mImageParentLayout.setVisibility(View.GONE);
+            }
+
+
+
+            holder.mArticleTextView.setText(bean.getTi());
+            String publishTime = bean.getGmt();
+            String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillisGMT(publishTime), Locale.ENGLISH);
+
+            holder.mArticleTimeTextView.setText(timeDiff);
+            holder.mArticleSectionName.setText(bean.getSname());
+
+            holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
+
+                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
+
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Article Clicked");
+
+                    IntentUtil.openNonPremiumDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                }
+            });
+
+            holder.mMultimediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Article Clicked");
+
+                }
+            });
+
+            holder.mShareArticleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharingArticleUtil.shareArticle(v.getContext(), bean);
+                }
+            });
+
+            //Enabling sliding for view pager
+            //new UniversalTouchListener(mArticleViewHolder.mArticlesLayout, true);
+        }
     }
+
 
     /**
      * Fill Banner
@@ -217,7 +288,14 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private void fillBannerData(final BannerViewHolder holder, final int position) {
         final ArticleBean bean = adapterItems.get(position).getArticleBean();
 
+        // Dims Read article given view
         dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mBannerTextView);
+
+        // Checks article's type
+        articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
+
+        // Checks whether article is bookmarked or not, If yes then it updates UI
+        isExistInBookmark(holder.itemView.getContext(), bean, holder.mBookmarkButton);
 
             String imageUrl = null;
             if (bean.getHi().equals("1")) {
@@ -235,7 +313,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mBannerTextView.setText(bean.getTi());
 
             String publishTime = bean.getGmt();
-            String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.strToMlsForSearchedArticle(publishTime), Locale.ENGLISH);
+            String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillisGMT(publishTime), Locale.ENGLISH);
             holder.mArticleUpdateTime.setText(timeDiff);
             holder.mArticleSectionName.setText(bean.getSname());
 
@@ -265,7 +343,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");*/
 
-
+                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
                 }
             });
 
@@ -292,8 +370,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         public LinearLayout mBannerLayout;
         public TextView mArticleUpdateTime;
         public TextView mArticleSectionName;
-        public Button mBookmarkButton;
-        public Button mShareArticleButton;
+        public IconImgView mBookmarkButton;
+        public IconImgView mShareArticleButton;
         public ImageButton mMultimediaButton;
 
         public BannerViewHolder(View itemView) {
@@ -321,8 +399,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         public TextView mArticleTimeTextView;
         public TextView mArticleSectionName;
         public LinearLayout mArticlesLayout;
-        public Button mBookmarkButton;
-        public Button mShareArticleButton;
+        public IconImgView mBookmarkButton;
+        public IconImgView mShareArticleButton;
         public ImageButton mMultimediaButton;
         public FrameLayout mImageParentLayout;
 

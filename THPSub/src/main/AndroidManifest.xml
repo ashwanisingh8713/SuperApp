@@ -119,8 +119,9 @@
             android:exported="false"/>
 
         <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/AdMob_App_ID"/>
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
+
 
 <!--        <receiver-->
 <!--            android:name="com.ns.receiver.SmsBroadcastReceiver"-->

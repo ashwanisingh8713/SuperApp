@@ -3,14 +3,24 @@ package com.ns.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.netoperation.util.UserPref;
+import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Locale;
 
 public class THP_AutoResizeWebview extends WebView {
 
@@ -78,7 +88,7 @@ public class THP_AutoResizeWebview extends WebView {
 
     }
 
-    public static String shoWebTextDescription(Context context, String description, boolean isItalic) {
+    public static String premium_WebTextDescription(Context context, String description, boolean isItalic) {
 
         if(description == null) {
             description = "";
@@ -119,6 +129,81 @@ public class THP_AutoResizeWebview extends WebView {
                 + "</body></html>";
 
 
+    }
+
+
+    public static String defaultgroup_showDescription(Context context, String leadText, String description) {
+        if (description != null) {
+            description = description.trim();
+        }
+
+        String fontPath = context.getResources().getString(R.string.THP_TundraOffc);
+
+        final boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        if (leadText != null && TextUtils.isEmpty(leadText)) {
+            if (isUserThemeDay) {
+                description = "<html><head>"
+                        + "<style type=\"text/css\">body{color: #000; background-color: #ffffff;}" +
+                        "@font-face {\n" +
+                        "   font-family: 'tundra';\n" +
+                        "   src: url('file:///android_asset/" +
+                        fontPath +
+                        "');" +
+                        "} " +
+                        "body {font-family: 'tundra';}"
+                        + "</style></head>"
+                        + "<body>"
+                        + description
+                        + "</body></html>";
+            } else {
+                description = "<html><head>"
+                        + "<style type=\"text/css\">body{color: #fff; background-color: #181818;}" +
+                        "@font-face {\n" +
+                        "   font-family: 'tundra';\n" +
+                        "   src: url('file:///android_asset/" +
+                        fontPath +
+                        "');" +
+                        "} " +
+                        "body {font-family: 'tundra';}"
+                        + "a {color: #ffffff;}a:visited {color: #ffffff;}</style></head>"
+                        + "<body>"
+                        + description
+                        + "</body></html>";
+            }
+        } else {
+            if (isUserThemeDay) {
+                description = "<html><head>"
+                        + "<style type=\"text/css\">body{color: #000; background-color: #ffffff;}" +
+                        "@font-face {\n" +
+                        "   font-family: 'tundra';\n" +
+                        "   src: url('file:///android_asset/" +
+                        fontPath +
+                        "');" +
+                        "} " +
+                        "body {font-family: 'tundra';}"
+                        + "</style></head>"
+                        + "<body>"
+                        + "<i> " + "<font color=\"#666666\">" + leadText + "</font></i>"
+                        + description
+                        + "</body></html>";
+            } else {
+                description = "<html><head>"
+                        + "<style type=\"text/css\">body{color: #fff; background-color: #181818;}" +
+                        "@font-face {\n" +
+                        "   font-family: 'tundra';\n" +
+                        "   src: url('file:///android_asset/" +
+                        fontPath +
+                        "');" +
+                        "} " +
+                        "body {font-family: 'tundra';}"
+                        + "a {color: #ffffff;}a:visited {color: #ffffff;}</style></head>"
+                        + "<body>"
+                        + "<i> " + "<font color=\"#E8EAEC\">" + leadText + "</font></i>"
+                        + description
+                        + "</body></html>";
+            }
+        }
+        return description;
     }
 
 

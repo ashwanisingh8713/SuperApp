@@ -1,12 +1,20 @@
 package com.ns.activity;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.ArticleBean;
+import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.NetConstants;
+import com.ns.callbacks.THP_AppEmptyPageListener;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 
@@ -46,8 +54,15 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
     public static final int VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER = 28;
     public static final int VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW = 29;
+    public static final int VT_TABOOLA = 30;
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
+
+    private THP_AppEmptyPageListener appEmptyPageListener;
+
+    public void setAppEmptyPageListener(THP_AppEmptyPageListener appEmptyPageListener) {
+        this.appEmptyPageListener = appEmptyPageListener;
+    }
 
 
 
@@ -103,4 +118,110 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
         return articleType != null && articleType.equalsIgnoreCase(THPConstants.ARTICLE_TYPE_YOUTUBE_VIDEO);
     }
 
+
+    /**
+     * Checks, Visible Article is bookmarked or not.
+     * @param context
+     * @param articleBean
+     * @param imageView1
+     */
+    protected void isExistInBookmark(Context context, ArticleBean articleBean, final ImageView imageView1) {
+        ApiManager.isExistInBookmark(context, articleBean.getArticleId())
+                .subscribe(bean -> {
+                    ArticleBean bean1 = bean;
+                    if (articleBean != null) {
+                        articleBean.setIsBookmark(bean1.getIsBookmark());
+                    }
+                    imageView1.setVisibility(View.VISIBLE);
+                    imageView1.setEnabled(true);
+                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
+                        imageView1.setImageResource(R.drawable.ic_bookmark_selected);
+                    } else {
+                        imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
+
+                    }
+
+                }, val -> {
+                    Log.i("", "");
+                });
+    }
+
+    /**
+     * Makes dim to read article's row
+     * @param context
+     * @param articleId
+     * @param view
+     */
+    protected void dimReadArticle(Context context, String articleId, View view) {
+        DefaultTHApiManager.isReadArticleId(context, articleId)
+                .subscribe(tableRead -> {
+                    Log.i("", "");
+                    if (tableRead != null) {
+                        view.setAlpha(.4f);
+                    } else {
+                        view.setAlpha(1f);
+                    }
+                }, throwable -> {
+                    Log.i("", "");
+                });
+    }
+
+    /**
+     * Removes Article from App, BookmarkTable in local DB
+     * @param context
+     * @param articleId
+     * @param bean
+     * @param bar
+     * @param imageView
+     * @param position
+     */
+    protected void local_removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position, String mFrom) {
+        // To Remove at App end
+        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
+            if (bar != null) {
+                bar.setVisibility(View.GONE);
+            }
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setEnabled(true);
+
+            notifyItemChanged(position);
+            // Empty Check Call back
+            checkPageEmptyCallback();
+
+            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
+        });
+    }
+
+
+    protected void local_createBookmarkFromApp(Context context, ArticleBean bean, ProgressBar bar, ImageView imageView, int position, String mFrom) {
+        // To Create at App end
+        ApiManager.createBookmark(context, bean).subscribe(boole -> {
+            if (bar != null) {
+                bar.setVisibility(View.GONE);
+            }
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setEnabled(true);
+            notifyItemChanged(position);
+            CleverTapUtil.cleverTapBookmarkFavLike(context, bean.getArticleId(), mFrom, "NetConstants.BOOKMARK_YES");
+        });
+    }
+
+
+    protected void local_bookmarkOperation(Context context, ArticleBean bean, ImageView imageView, int position, String from) {
+        ApiManager.isExistInBookmark(context, bean.getArticleId())
+                .subscribe(articleBean->{
+                    bean.setGroupType(from);
+                    if(bean.getArticleId().equals(articleBean.getArticleId())) {
+                        local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, from);
+                    } else {
+                        local_createBookmarkFromApp(context, bean, null, imageView, position, from);
+                    }
+                });
+    }
+
+    protected void checkPageEmptyCallback() {
+        if (appEmptyPageListener != null) {
+            appEmptyPageListener.checkPageEmpty();
+        }
+    }
 }

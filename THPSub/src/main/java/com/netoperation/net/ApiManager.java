@@ -967,10 +967,15 @@ public class ApiManager {
                     public Boolean apply(ArticleBean articleBean) {
                         ArticleBean bean = new ArticleBean();
                         bean.setArticleId(articleBean.getArticleId());
+                        bean.setIm_thumbnail_v2(articleBean.getIm_thumbnail_v2());
+                        bean.setIm_thumbnail(articleBean.getIm_thumbnail());
+                        bean.setAid(articleBean.getAid());
                         bean.setArticleSection(articleBean.getArticleSection());
                         bean.setArticletitle(articleBean.getArticletitle());
+                        bean.setTi(articleBean.getTi());
                         bean.setArticletype(articleBean.getArticletype());
                         bean.setAuthor(articleBean.getAuthor());
+                        bean.setAu(articleBean.getAu());
                         bean.setThumbnailUrl(articleBean.getThumbnailUrl());
                         bean.setPubDate(articleBean.getPubDate());
                         bean.setPubDateTime(articleBean.getPubDateTime());
@@ -983,6 +988,14 @@ public class ApiManager {
                         bean.setHasDescription(articleBean.getHasDescription());
                         bean.setMedia(articleBean.getMedia());
                         bean.setGroupType(articleBean.getGroupType());
+                        bean.setSid(articleBean.getSid());
+                        bean.setSectionName(articleBean.getSectionName());
+                        bean.setYoutube_video_id(articleBean.getYoutube_video_id());
+                        bean.setYoutubeVideoId(articleBean.getYoutubeVideoId());
+                        bean.setLe(articleBean.getLe());
+                        bean.setLeadText(articleBean.getLeadText());
+                        bean.setArticleRestricted(articleBean.isArticleRestricted());
+                        bean.setShort_de(articleBean.getShort_de());
 
                         THPDB thpdb = THPDB.getInstance(context);
                         TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean, articleBean.getGroupType());

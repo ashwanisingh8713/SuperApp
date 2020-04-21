@@ -91,11 +91,6 @@ ext {
     RXJAVA_VC = '2.1.0'
     RX_PERMISSION_VC = '0.10.2'
 
-
-
-    TABOOLA_VERSION="2.3.6"
-    GDPR_VERSION="1.0.3"
-
     ROOM_VERSION = '1.1.1'
     ARCH_LIFECYCLE_VERSION = '1.1.1'
     MINIFY_ENABLED = false
@@ -165,13 +160,13 @@ ext.deps = [
         //CONSTRAINT_LAYOUT
         CONSTRAINT_LAYOUT: "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_VERSION",
         // TABOOLA
-        TABOOLA:"com.taboola:android-sdk:$TABOOLA_VERSION",
+        TABOOLA:"com.taboola:android-sdk:2.3.6",
 
         // Exo Player
         EXO_CORE: project(':exo_core'),
         EXO_UI: project(':exo_ui'),
         //GDPR
-        GDPR:"com.google.android.ads.consent:consent-library:$GDPR_VERSION",
+        GDPR:"com.google.android.ads.consent:consent-library:1.0.3",
 
         //FIREBASE
         FIREBASE_CORE:"com.google.firebase:firebase-core:17.3.0",

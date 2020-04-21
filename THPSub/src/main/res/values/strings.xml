@@ -188,5 +188,22 @@
     <string name="info_no_notifications">We don\'t have any notifications for you now</string>
     <string name="info_unread_notifications">You have some unread articles in read later</string>
     <string name="title_notifications">Notifications</string>
-    <string name="AdMob_App_ID">ca-app-pub-3940256099942544~3347511713</string>
+
+    <!-- Taboola -->
+    <string name="taboola_pub">thehindu-hinduappandroid</string>
+    <string name="taboola_mode">thumbnails-a</string>
+    <string name="taboola_pagetype">article</string>
+    <string name="taboola_placement">Below Article Thumbnails</string>
+    <string name="dark_taboola_placement">Below Article Thumbnails Dark</string>
+    <string name="taboola_targetype">mix</string>
+    <bool name="taboola_scrollenabled">true</bool>
+    <bool name="taboola_autoresizeheight">true</bool>
+
+    <string name="taboola_publisher_id" translatable="false">thehindu-hinduappandroid</string>
+    <string name="taboola_publisher_apikey" translatable="false">65e50cbad5e7e156f110d188630a733c8054f54b</string>
+    <string name="taboola_placement_home" translatable="false">Below Home Stream</string>
+    <string name="taboola_placement_home_source_type" translatable="false">home</string>
+    <string name="taboola_placement_section" translatable="false">Below Section Stream</string>
+    <string name="taboola_placement_section_source_type" translatable="false">section</string>
+    <string name="taboola_placement_detail" translatable="false">Below Article Stream</string>
 </resources>

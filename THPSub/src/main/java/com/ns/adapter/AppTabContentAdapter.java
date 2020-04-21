@@ -2,16 +2,18 @@ package com.ns.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +30,6 @@ import com.netoperation.util.UserPref;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnEditionBtnClickListener;
-import com.ns.callbacks.THP_AppEmptyPageListener;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
@@ -50,10 +51,16 @@ import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
 import com.ns.viewholder.DefaultGroup_DetailBannerViewHolder;
+import com.ns.viewholder.DefaultGroup_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
+import com.ns.viewholder.ViewHolderTaboola;
+import com.taboola.android.TaboolaWidget;
+import com.taboola.android.listeners.TaboolaEventListener;
+import com.taboola.android.utils.SdkDetailsHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -70,7 +77,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     private int mDescriptionItemPosition;
     private int mDescriptionTextSize;
 
-    private THP_AppEmptyPageListener appEmptyPageListener;
+
 
     private Snackbar snackbar;
 
@@ -82,9 +89,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     private String mGroupType;
 
-    public void setAppEmptyPageListener(THP_AppEmptyPageListener appEmptyPageListener) {
-        this.appEmptyPageListener = appEmptyPageListener;
-    }
 
     public void setFrom(String from) {
         mFrom = from;
@@ -143,17 +147,23 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new BookmarkViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_loadmore, viewGroup, false));
         }
-        else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
-            return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_description, viewGroup, false));
-        }
         else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
             return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_banner, viewGroup, false));
         }
-        else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
-//            return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_top_details, viewGroup, false));
+        else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
+            return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_description, viewGroup, false));
         }
         else if (viewType == VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER) {
-            return new DefaultGroup_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_top_details, viewGroup, false));
+            return new DefaultGroup_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.defaultgroup_detail_banner, viewGroup, false));
+        }
+        else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
+            return new DefaultGroup_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.defaultgroup_detail_description, viewGroup, false));
+        }
+        else if (viewType == VT_TABOOLA) {
+            if (mInfiniteTaboolaView == null) {
+                mInfiniteTaboolaView = createTaboolaWidget(viewGroup.getContext(), false);
+            }
+            return new ViewHolderTaboola(mInfiniteTaboolaView);
         }
         else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
 
@@ -163,6 +173,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         }
         return null;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
@@ -183,80 +195,82 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             premium_ui_BriefingHeader(viewHolder, bean);
         }
         else if(viewHolder instanceof DefaultGroup_DetailBannerViewHolder) {
-            DefaultGroup_DetailBannerViewHolder dg_banner_vh = (DefaultGroup_DetailBannerViewHolder) viewHolder;
-            boolean isAppExclusive = bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
-
-            dg_banner_vh.mTitleTextView.setText(bean.getTi());
-            dg_banner_vh.mArticleLocationView.setText(bean.getLocation());
-            String author = bean.getAu();
-            if (author != null && !TextUtils.isEmpty(author)) {
-                dg_banner_vh.mAuthorTextView.setVisibility(View.VISIBLE);
-                dg_banner_vh.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
-            } else {
-                dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
+            defaultgroup_ui_detail_banner(viewHolder, bean);
+        }
+        else if(viewHolder instanceof DefaultGroup_DetailDescriptionWebViewHolder) {
+            defaultgroup_ui_detail_description(viewHolder, bean);
+        }
+        else if(viewHolder instanceof ViewHolderTaboola) {
+            if (mInfiniteTaboolaView.getTag() == null) {
+                mInfiniteTaboolaView.setTag(bean.getArticleLink());
+                buildBelowArticleWidget(mInfiniteTaboolaView, bean.getArticleLink());
             }
-
-            dg_banner_vh.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
-            dg_banner_vh.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
-
-            final ArrayList<MeBean> mImageList = bean.getMe();
-
-            if (mImageList != null && mImageList.size() > 0) {
-                String imageUrl = mImageList.get(0).getIm_v2();
-                GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
-                String caption = mImageList.get(0).getCa();
-                if (caption != null && !TextUtils.isEmpty(caption)) {
-                    dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
-                } else {
-                    dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
-                }
-
-                dg_banner_vh.mHeaderImageView.setOnClickListener(v -> {
-                    IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
-                });
-            }
-
-
-
         }
 
     }
 
-    /**
-     * Removes Article from App, BookmarkTable in local DB
-     * @param context
-     * @param articleId
-     * @param bean
-     * @param bar
-     * @param imageView
-     * @param position
-     */
-    private void local_removeBookmarkFromApp(Context context, String articleId, ArticleBean bean, ProgressBar bar, ImageView imageView, int position) {
-        // To Remove at App end
-        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
-            if (bar != null) {
-                bar.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-                imageView.setEnabled(true);
-            }
-            // If user is in bookmark then item should be removed.
-            if (mFrom.equals(NetConstants.RECO_bookmarks)) {
-                deletedContentModel = mContent.remove(position);
-                deletedPosition = position;
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mContent.size());
+    private TaboolaWidget mInfiniteTaboolaView;
 
-                // Empty Check Call back
-                checkPageEmptyCallback();
-
-            } else {
-//                                                    notifyDataSetChanged();
-                notifyItemChanged(position);
-            }
-            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
-        });
+    static TaboolaWidget createTaboolaWidget(Context context, boolean infiniteWidget) {
+        TaboolaWidget taboolaWidget = new TaboolaWidget(context);
+        int height = infiniteWidget ? SdkDetailsHelper.getDisplayHeight(context) * 2 : ViewGroup.LayoutParams.WRAP_CONTENT;
+        taboolaWidget.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        return taboolaWidget;
     }
 
+    private void buildBelowArticleWidget(TaboolaWidget taboolaWidget, String articleLink) {
+        Resources res = taboolaWidget.getResources();
+        taboolaWidget.setPublisher(res.getString(R.string.taboola_pub));
+        taboolaWidget.setPageType(res.getString(R.string.taboola_pagetype));
+        taboolaWidget.setMode(res.getString(R.string.taboola_mode));
+        boolean mIsDayTheme = UserPref.getInstance(taboolaWidget.getContext()).isUserThemeDay();
+        if (mIsDayTheme) {
+            taboolaWidget.setPlacement(res.getString(R.string.taboola_placement));
+        } else {
+            taboolaWidget.setPlacement(res.getString(R.string.dark_taboola_placement));
+        }
+        taboolaWidget.setTargetType(res.getString(R.string.taboola_targetype));
+        taboolaWidget.setPageUrl(articleLink);
+        taboolaWidget.setInterceptScroll(true);
+
+        //used for enable horizontal scroll
+        HashMap<String, String> optionalPageCommands = new HashMap<>();
+        optionalPageCommands.put("enableHorizontalScroll", "true");
+        optionalPageCommands.put("useOnlineTemplate", "true");
+        taboolaWidget.setExtraProperties(optionalPageCommands);
+        mInfiniteTaboolaView.setExtraProperties(optionalPageCommands);
+
+        mInfiniteTaboolaView.setTaboolaEventListener(new TaboolaEventListener() {
+            @Override
+            public boolean taboolaViewItemClickHandler(String url, boolean isOrganic) {
+
+                if (isOrganic) {
+                    int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
+                    IntentUtil.openPremiumDetailActivity(mInfiniteTaboolaView.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, url, 0, ""+articleId);
+
+                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
+                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
+                            getString(R.string.ga_article_taboola_organic_clicked),
+                            getString(R.string.ga_article_detail_lebel));*/
+                    return false;
+                } else {
+                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_nonorganic_clicked));
+                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
+                            getString(R.string.ga_article_taboola_nonorganic_clicked),
+                            getString(R.string.ga_article_detail_lebel));*/
+                }
+
+                return true;
+            }
+
+            @Override
+            public void taboolaViewResizeHandler(TaboolaWidget taboolaWidget, int i) {
+
+            }
+        });
+
+        taboolaWidget.fetchContent();
+    }
 
     /**
      * Shows content on UI of Listing
@@ -293,7 +307,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.toggleBtnProgressBar.setVisibility(View.GONE);
 
         premium_isFavOrLike(holder.like_Img.getContext(), bean, holder.like_Img, holder.toggleBtn_Img);
-
+        // Checks whether article is bookmarked or not, If yes then it updates UI
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
         holder.bookmark_Img.setOnClickListener(v -> {
@@ -375,7 +389,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-                        local_removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position);
+                        local_removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position, mFrom);
                     }
                     else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
                         premium_updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
@@ -585,7 +599,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         // Enabling Weblink click on Lead Text
         new WebViewLinkClick().linkClick(holder.mLeadTxt, holder.itemView.getContext(), bean.getArticleId());
 
-        holder.mLeadTxt.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.shoWebTextDescription(holder.webview.getContext(), bean.getArticletitle(), true),
+        holder.mLeadTxt.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getArticletitle(), true),
                 "text/html", "UTF-8", null);
         holder.mLeadTxt.setSize(mDescriptionTextSize);
 
@@ -594,23 +608,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         // Enabling Weblink click on Description
         new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), bean.getArticleId());
 
-        holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.shoWebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
+        holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
                 "text/html", "UTF-8", null);
 
         mDescriptionItemPosition = position;
 
-        holder.mLeadTxt.animate()
-                //.translationY(holder.mLeadTxt.getHeight())
-                .alpha(1.0f)
-                .setDuration(1000);
-
-        holder.webview.animate()
-                .translationY(holder.webview.getHeight())
-                .alpha(1.0f)
-                .setDuration(1000);
-
-
     }
+
     /**
      * Premium Briefing Header UI
      * @param viewHolder
@@ -644,7 +648,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     ResUtil.getBackgroundDrawable(holder.editionBtn_Txt.getContext().getResources(), R.drawable.ic_edition_dropdown_white), null);
         }
 
-
         holder.editionBtn_Txt.setOnClickListener(v -> {
             if (mOnEditionBtnClickListener != null) {
                 mOnEditionBtnClickListener.OnEditionBtnClickListener();
@@ -652,6 +655,68 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         });
 
     }
+
+
+    /**
+     * Group Default Detail Page Banner
+     * @param viewHolder
+     * @param bean
+     */
+    private void defaultgroup_ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DefaultGroup_DetailBannerViewHolder dg_banner_vh = (DefaultGroup_DetailBannerViewHolder) viewHolder;
+        boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
+
+        dg_banner_vh.mTitleTextView.setText(bean.getTi());
+        dg_banner_vh.mArticleLocationView.setText(bean.getLocation());
+        String author = bean.getAu();
+        if (author != null && !TextUtils.isEmpty(author)) {
+            dg_banner_vh.mAuthorTextView.setVisibility(View.VISIBLE);
+            dg_banner_vh.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
+        } else {
+            dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
+        }
+
+        dg_banner_vh.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+        dg_banner_vh.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+        final ArrayList<MeBean> mImageList = bean.getMe();
+
+        if (mImageList != null && mImageList.size() > 0) {
+            String imageUrl = mImageList.get(0).getIm_v2();
+            GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+            String caption = mImageList.get(0).getCa();
+            if (caption != null && !TextUtils.isEmpty(caption)) {
+                dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
+            } else {
+                dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
+            }
+
+            dg_banner_vh.mHeaderImageView.setOnClickListener(v -> {
+                IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
+            });
+        }
+    }
+
+    /**
+     * Premium Detail Page Description UI
+     * @param viewHolder
+     * @param bean
+     */
+    private void defaultgroup_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DefaultGroup_DetailDescriptionWebViewHolder holder = (DefaultGroup_DetailDescriptionWebViewHolder) viewHolder;
+        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+
+        holder.webview.setSize(mDescriptionTextSize);
+
+        // Enabling Weblink click on Description
+        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), bean.getArticleId());
+
+        holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), bean.getDescription()),
+                "text/html", "UTF-8", null);
+
+
+    }
+
 
 
     public void addData(List<AppTabContentModel> content) {
@@ -666,7 +731,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     public void addData(AppTabContentModel content) {
         mContent.add(content);
-        notifyDataSetChanged();
+        notifyItemChanged(mContent.size()-1);
     }
 
     public void replaceData(ArticleBean articleBean, int position) {
@@ -681,32 +746,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    /**
-     * Checks, Visible Article is bookmarked or not.
-     * @param context
-     * @param articleBean
-     * @param imageView1
-     */
-    private void isExistInBookmark(Context context, ArticleBean articleBean, final ImageView imageView1) {
-        ApiManager.isExistInBookmark(context, articleBean.getArticleId())
-                .subscribe(bean -> {
-                    ArticleBean bean1 = bean;
-                    if (articleBean != null) {
-                        articleBean.setIsBookmark(bean1.getIsBookmark());
-                    }
-                    imageView1.setVisibility(View.VISIBLE);
-                    imageView1.setEnabled(true);
-                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
-                        imageView1.setImageResource(R.drawable.ic_bookmark_selected);
-                    } else {
-                        imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
 
-                    }
-
-                }, val -> {
-                    Log.i("", "");
-                });
-    }
 
     /**
      * Checks, Whether article is Favorite or not
@@ -805,7 +845,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                                 imageView.setEnabled(true);
                                             }
                                             notifyItemChanged(position);
-//                                            notifyDataSetChanged();
                                             CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_YES");
                                         });
 
@@ -953,11 +992,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         snackbar.show();
     }
 
-    private void checkPageEmptyCallback() {
-        if (appEmptyPageListener != null) {
-            appEmptyPageListener.checkPageEmpty();
-        }
-    }
 
     public void deleteIndex(int index) {
         mContent.remove(index);

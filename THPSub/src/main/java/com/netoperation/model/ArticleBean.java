@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.ns.utils.ResUtil;
-import com.ns.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,6 @@ public class ArticleBean implements Parcelable {
     private String youtube_video_id;
     private String audioLink;
     private String weblink;
-    private String de;
     private String short_de;
     private String le;
     private String add_pos;
@@ -60,6 +58,68 @@ public class ArticleBean implements Parcelable {
     private String im_thumbnail_v2;
     private String comm_count;
     private String groupType;
+    private boolean isArticleRestricted;
+    /** This is for Article Description (Default, Article search by id) */
+    private String de;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Common Fields
+    private String location;
+    private String gmt;
+    private String articleType;
+    private boolean isRead;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /** This is for splitted description*/
+    private String description2;
+    /** This is for breifing*/
+    private String description;
+    private String articleId;
+    private String leadText;
+
+    private String commentCount;
+    private String AUDIO_URL;
+    private String VIDEO_URL;
+    private ArrayList<MeBean> IMAGES;
+
+    private String articletitle;
+    private String articleSection;
+    private String articleUrl;
+    private String pubDate;
+    private String pubDateTime;
+    private int rank;
+    private String recotype;
+    private String articletype;
+    private List<String> thumbnailUrl;
+    private List<String> author;
+    private int isFavourite;
+    private int isBookmark;
+    private int hasDescription;
+
+    private int isPremium;
+    private String sectionName;
+    private String publishedDate;
+    private String originalDate;
+    private String title;
+    private String articleLink;
+    private String youtubeVideoId;
+    private String shortDescription;
+    private String videoId;
+    private String timeToRead;
+    private ArrayList<MeBean> media;
+
+    private String timeForBriefing;
+
+    public boolean isArticleRestricted() {
+        return isArticleRestricted;
+    }
+
+    public void setArticleRestricted(boolean articleRestricted) {
+        isArticleRestricted = articleRestricted;
+    }
 
     public String getGroupType() {
         return groupType;
@@ -83,6 +143,9 @@ public class ArticleBean implements Parcelable {
 
 
     public String getAid() {
+        if(aid == null) {
+            return articleId;
+        }
         return aid;
     }
 
@@ -211,6 +274,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getWeblink() {
+        if(weblink == null) {
+            return articleLink;
+        }
         return weblink;
     }
 
@@ -219,6 +285,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getDe() {
+        if(de == null) {
+            return description;
+        }
         return de;
     }
 
@@ -227,6 +296,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getShort_de() {
+        if(short_de == null) {
+            return shortDescription;
+        }
         return short_de;
     }
 
@@ -235,6 +307,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getLe() {
+        if(le == null) {
+            return leadText;
+        }
         return le;
     }
 
@@ -315,57 +390,7 @@ public class ArticleBean implements Parcelable {
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Common Fields
-    private String location;
-    private String gmt;
-    private String articleType;
-    private boolean isRead;
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    private String description;
-    private String articleId;
-    private String leadText;
-
-    private String commentCount;
-    private String AUDIO_URL;
-    private String VIDEO_URL;
-    private ArrayList<MeBean> IMAGES;
-
-    private String articletitle;
-    private String articleSection;
-    private String articleUrl;
-    private String pubDate;
-    private String pubDateTime;
-    private int rank;
-    private String recotype;
-    private String articletype;
-    private List<String> thumbnailUrl;
-    private List<String> author;
-    private int isFavourite;
-    private int isBookmark;
-    private int hasDescription;
-
-
-    private int isPremium;
-    private int isRestricted;
-    private String description2;
-    private String sectionName;
-    private String publishedDate;
-    private String originalDate;
-    private String title;
-    private String articleLink;
-    private String youtubeVideoId;
-    private String shortDescription;
-    private String videoId;
-    private String timeToRead;
-    private ArrayList<MeBean> media;
-
-    private String timeForBriefing;
 
     public boolean isRead() {
         return isRead;
@@ -383,13 +408,6 @@ public class ArticleBean implements Parcelable {
         this.isPremium = isPremium;
     }
 
-    public int getIsRestricted() {
-        return isRestricted;
-    }
-
-    public void setIsRestricted(int isRestricted) {
-        this.isRestricted = isRestricted;
-    }
 
     public String getDescription2() {
         return description2;
@@ -448,6 +466,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getLeadText() {
+        if(leadText == null) {
+            return le;
+        }
         return leadText;
     }
 
@@ -602,6 +623,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getDescription() {
+        if(description == null) {
+            return de;
+        }
         return description;
     }
 
@@ -656,6 +680,12 @@ public class ArticleBean implements Parcelable {
 
     public String getArticleLink() {
         if(articleLink == null) {
+            if(articleUrl == null) {
+                if(weblink == null) {
+                    return al;
+                }
+                return weblink;
+            }
             return articleUrl;
         }
         return articleLink;
@@ -682,6 +712,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getShortDescription() {
+        if(shortDescription == null) {
+            return short_de;
+        }
         return shortDescription;
     }
 
@@ -736,6 +769,7 @@ public class ArticleBean implements Parcelable {
         return getArticleId().hashCode();
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -743,16 +777,48 @@ public class ArticleBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.description);
+        dest.writeString(this.aid);
+        dest.writeString(this.au);
+        dest.writeString(this.sid);
+        dest.writeString(this.sname);
+        dest.writeString(this.parentId);
+        dest.writeString(this.parentName);
+        dest.writeString(this.pid);
+        dest.writeString(this.opid);
+        dest.writeString(this.pd);
+        dest.writeString(this.od);
+        dest.writeString(this.ti);
+        dest.writeString(this.al);
+        dest.writeString(this.bk);
+        dest.writeString(this.hi);
+        dest.writeString(this.youtube_video_id);
+        dest.writeString(this.audioLink);
+        dest.writeString(this.weblink);
+        dest.writeString(this.short_de);
+        dest.writeString(this.le);
+        dest.writeString(this.add_pos);
+        dest.writeString(this.vid);
+        dest.writeString(this.parent_section_id);
+        dest.writeString(this.sub_section_id);
+        dest.writeString(this.sub_section_name);
+        dest.writeString(this.im_thumbnail);
+        dest.writeString(this.im_thumbnail_v2);
+        dest.writeString(this.comm_count);
+        dest.writeString(this.groupType);
+        dest.writeByte(this.isArticleRestricted ? (byte) 1 : (byte) 0);
+        dest.writeString(this.de);
+        dest.writeString(this.location);
+        dest.writeString(this.gmt);
+        dest.writeString(this.articleType);
+        dest.writeByte(this.isRead ? (byte) 1 : (byte) 0);
         dest.writeString(this.description2);
+        dest.writeString(this.description);
         dest.writeString(this.articleId);
         dest.writeString(this.leadText);
         dest.writeString(this.commentCount);
         dest.writeString(this.AUDIO_URL);
         dest.writeString(this.VIDEO_URL);
         dest.writeTypedList(this.IMAGES);
-        dest.writeTypedList(this.media);
-        dest.writeTypedList(this.me);
         dest.writeString(this.articletitle);
         dest.writeString(this.articleSection);
         dest.writeString(this.articleUrl);
@@ -765,35 +831,66 @@ public class ArticleBean implements Parcelable {
         dest.writeStringList(this.author);
         dest.writeInt(this.isFavourite);
         dest.writeInt(this.isBookmark);
-        dest.writeInt(this.isPremium);
-        dest.writeInt(this.isRestricted);
         dest.writeInt(this.hasDescription);
+        dest.writeInt(this.isPremium);
         dest.writeString(this.sectionName);
         dest.writeString(this.publishedDate);
         dest.writeString(this.originalDate);
-        dest.writeString(this.location);
         dest.writeString(this.title);
         dest.writeString(this.articleLink);
-        dest.writeString(this.gmt);
         dest.writeString(this.youtubeVideoId);
         dest.writeString(this.shortDescription);
         dest.writeString(this.videoId);
-        dest.writeString(this.articleType);
         dest.writeString(this.timeToRead);
+        dest.writeTypedList(this.media);
         dest.writeString(this.timeForBriefing);
+        dest.writeTypedList(this.me);
+        dest.writeList(this.rn);
     }
 
     protected ArticleBean(Parcel in) {
-        this.description = in.readString();
+        this.aid = in.readString();
+        this.au = in.readString();
+        this.sid = in.readString();
+        this.sname = in.readString();
+        this.parentId = in.readString();
+        this.parentName = in.readString();
+        this.pid = in.readString();
+        this.opid = in.readString();
+        this.pd = in.readString();
+        this.od = in.readString();
+        this.ti = in.readString();
+        this.al = in.readString();
+        this.bk = in.readString();
+        this.hi = in.readString();
+        this.youtube_video_id = in.readString();
+        this.audioLink = in.readString();
+        this.weblink = in.readString();
+        this.short_de = in.readString();
+        this.le = in.readString();
+        this.add_pos = in.readString();
+        this.vid = in.readString();
+        this.parent_section_id = in.readString();
+        this.sub_section_id = in.readString();
+        this.sub_section_name = in.readString();
+        this.im_thumbnail = in.readString();
+        this.im_thumbnail_v2 = in.readString();
+        this.comm_count = in.readString();
+        this.groupType = in.readString();
+        this.isArticleRestricted = in.readByte() != 0;
+        this.de = in.readString();
+        this.location = in.readString();
+        this.gmt = in.readString();
+        this.articleType = in.readString();
+        this.isRead = in.readByte() != 0;
         this.description2 = in.readString();
+        this.description = in.readString();
         this.articleId = in.readString();
         this.leadText = in.readString();
         this.commentCount = in.readString();
         this.AUDIO_URL = in.readString();
         this.VIDEO_URL = in.readString();
         this.IMAGES = in.createTypedArrayList(MeBean.CREATOR);
-        this.media = in.createTypedArrayList(MeBean.CREATOR);
-        this.me = in.createTypedArrayList(MeBean.CREATOR);
         this.articletitle = in.readString();
         this.articleSection = in.readString();
         this.articleUrl = in.readString();
@@ -806,25 +903,25 @@ public class ArticleBean implements Parcelable {
         this.author = in.createStringArrayList();
         this.isFavourite = in.readInt();
         this.isBookmark = in.readInt();
-        this.isPremium = in.readInt();
-        this.isRestricted = in.readInt();
         this.hasDescription = in.readInt();
+        this.isPremium = in.readInt();
         this.sectionName = in.readString();
         this.publishedDate = in.readString();
         this.originalDate = in.readString();
-        this.location = in.readString();
         this.title = in.readString();
         this.articleLink = in.readString();
-        this.gmt = in.readString();
         this.youtubeVideoId = in.readString();
         this.shortDescription = in.readString();
         this.videoId = in.readString();
-        this.articleType = in.readString();
         this.timeToRead = in.readString();
+        this.media = in.createTypedArrayList(MeBean.CREATOR);
         this.timeForBriefing = in.readString();
+        this.me = in.createTypedArrayList(MeBean.CREATOR);
+        this.rn = new ArrayList<ArticleBean>();
+        in.readList(this.rn, ArticleBean.class.getClassLoader());
     }
 
-    public static final Creator<ArticleBean> CREATOR = new Creator<ArticleBean>() {
+    public static final Parcelable.Creator<ArticleBean> CREATOR = new Parcelable.Creator<ArticleBean>() {
         @Override
         public ArticleBean createFromParcel(Parcel source) {
             return new ArticleBean(source);

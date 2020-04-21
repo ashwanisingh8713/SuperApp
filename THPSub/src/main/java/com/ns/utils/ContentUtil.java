@@ -61,6 +61,15 @@ public class ContentUtil {
         return "http://";
     }
 
+    public static String getThumbUrl(String imageUrl) {
+            if(imageUrl != null && imageUrl.contains("BINARY")) {
+                imageUrl = imageUrl.replace("BINARY/thumbnail", "alternates/SQUARE_170");
+            } else if(imageUrl != null) {
+                imageUrl = imageUrl.replace("FREE_660", THUMB_SIZE);
+            }
+            return imageUrl;
+    }
+
     public static String getBreifingImgUrl(List<String> urls) {
         if(urls != null && urls.size()>0) {
             String imageUrl = urls.get(0);

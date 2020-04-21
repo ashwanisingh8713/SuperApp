@@ -17,6 +17,9 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
+import com.ns.thpremium.R;
+import com.taboola.android.api.TaboolaApi;
+import com.taboola.android.js.TaboolaJs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +40,8 @@ public class SuperApp extends Application implements LifecycleObserver {
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         startPeriodicWork();
+
+        initTaboola();
     }
 
     public static Context getAppContext() {
@@ -68,10 +73,19 @@ public class SuperApp extends Application implements LifecycleObserver {
 
             @Override
             public void onComplete(String str) {
-                // getHomeDatafromServer();
+                 getHomeDatafromServer();
             }
         }, "SuperApp");
 
+    }
+
+    private void initTaboola() {
+        // Required when using TaboolaJS integration
+        TaboolaJs.getInstance().init(getApplicationContext());
+
+        // Required when using TaboolaApi (Native Android) integration
+        TaboolaApi.getInstance().init(getApplicationContext(), getResources().getString(R.string.taboola_publisher_id),
+                getResources().getString(R.string.taboola_publisher_apikey));
     }
 
     /**
