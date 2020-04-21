@@ -48,7 +48,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
-    private static String TAG = NetConstants.UNIQUE_TAG;
+    private static String TAG = NetConstants.TAG_UNIQUE;
 
     private String mSectionId;
     private String mSectionType;

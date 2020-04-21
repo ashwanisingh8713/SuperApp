@@ -52,9 +52,9 @@ public class PeriodicWork extends Worker {
             @Override
             public void onComplete(String str) {
                 Log.i("BackgroundWork", "Received Section Data from server");
-                getHomeDatafromServer();
+                //getHomeDatafromServer();
             }
-        });
+        }, "PeriodicWork");
     }
 
     // Get Home Article from server

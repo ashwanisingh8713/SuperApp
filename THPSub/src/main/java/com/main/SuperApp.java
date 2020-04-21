@@ -68,9 +68,9 @@ public class SuperApp extends Application implements LifecycleObserver {
 
             @Override
             public void onComplete(String str) {
-                getHomeDatafromServer();
+                // getHomeDatafromServer();
             }
-        });
+        }, "SuperApp");
 
     }
 
@@ -107,7 +107,7 @@ public class SuperApp extends Application implements LifecycleObserver {
                             return "";
                         })
                         .subscribe(onSuccess -> {
-                            Log.i(NetConstants.UNIQUE_TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
+                            Log.i(NetConstants.TAG_UNIQUE, "SplashActivity :: Widget :: Sent Server Request to get latest data");
                         });
             }
         });

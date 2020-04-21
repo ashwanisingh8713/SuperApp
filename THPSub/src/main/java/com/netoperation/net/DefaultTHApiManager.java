@@ -41,22 +41,7 @@ import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -69,7 +54,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DefaultTHApiManager {
 
-    private static String TAG = NetConstants.UNIQUE_TAG;
+    private static String TAG = NetConstants.TAG_UNIQUE;
 
 
     /**
@@ -85,7 +70,7 @@ public class DefaultTHApiManager {
      * @param sectionAndWidget
      * @return
      */
-    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget, int totalMin) {
+    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget, boolean isFromTempTable) {
         THPDB db = THPDB.getInstance(context);
         DaoSection daoSection = db.daoSection();
         DaoBanner daoBanner = db.daoBanner();
@@ -96,34 +81,28 @@ public class DefaultTHApiManager {
 
         if (daoBanner != null) {
             TableBanner tableBanner = daoBanner.getBanners();
-            /*long dataInsertTimeOfTable = 0;
-            if(tableBanner != null) {
-                dataInsertTimeOfTable = tableBanner.getDataInsertTimeOfTable();
-            }
 
-            long currentTime = System.currentTimeMillis();
-            long fiveMins = 1000*60*totalMin;
-            if(dataInsertTimeOfTable+fiveMins > currentTime) {
-                return sectionAndWidget;
-            }
-            else*/ if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+            if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
                 return sectionAndWidget;
             }
             else {
                 daoSection.deleteAll();
-                daoBanner.deleteAll();
-                daoWidget.deleteAll();
 
-                // Table Banner
-                BannerBean bannerBean = dataBean.getHome().getBanner();
-                tableBanner = new TableBanner(bannerBean.getSecId(), bannerBean.getSecName(), bannerBean.getType(), "" + date, dataBean.getHome().getStaticPageUrl());
-                daoBanner.insertBanner(tableBanner);
+                if(!isFromTempTable) {
+                    daoBanner.deleteAll();
+                    daoWidget.deleteAll();
 
-                // Table Widget
-                List<WidgetBean> widgetBeans = dataBean.getHome().getWidget();
-                for (WidgetBean widgetBean : widgetBeans) {
-                    TableWidget tableWidget = new TableWidget(widgetBean.getSecId(), widgetBean.getSecName(), widgetBean.getType(), widgetBean.isViewAllCTA());
-                    daoWidget.insertWidget(tableWidget);
+                    // Table Banner
+                    BannerBean bannerBean = dataBean.getHome().getBanner();
+                    tableBanner = new TableBanner(bannerBean.getSecId(), bannerBean.getSecName(), bannerBean.getType(), "" + date, dataBean.getHome().getStaticPageUrl());
+                    daoBanner.insertBanner(tableBanner);
+
+                    // Table Widget
+                    List<WidgetBean> widgetBeans = dataBean.getHome().getWidget();
+                    for (WidgetBean widgetBean : widgetBeans) {
+                        TableWidget tableWidget = new TableWidget(widgetBean.getSecId(), widgetBean.getSecName(), widgetBean.getType(), widgetBean.isViewAllCTA());
+                        daoWidget.insertWidget(tableWidget);
+                    }
                 }
 
                 // Table Section List
@@ -183,7 +162,7 @@ public class DefaultTHApiManager {
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
                 .map(sectionAndWidget -> {
-                            return insertSectionResponseInDB(context, sectionAndWidget, 5);
+                            return insertSectionResponseInDB(context, sectionAndWidget, false);
                         }
                 )
                 .subscribe(value -> {
@@ -197,7 +176,7 @@ public class DefaultTHApiManager {
                     if (callback != null) {
                         callback.onError(throwable, "sectionDirectFromServer");
                     }
-                    Log.i(TAG, "sectionDirectFromServer() :: throwable " + throwable);
+                    Log.i(NetConstants.TAG_ERROR, "sectionDirectFromServer() :: " + throwable);
                 }, () -> {
                     if (callback != null) {
                         callback.onComplete("sectionDirectFromServer");
@@ -215,7 +194,7 @@ public class DefaultTHApiManager {
                     TableTempWork tempSection = daoTempWork.getTableTempWork(NetConstants.TEMP_SECTION_ID);
                     Gson gson = new Gson();
                     SectionAndWidget sectionAndWidget = gson.fromJson(tempSection.getJsonString(), SectionAndWidget.class);
-                    return insertSectionResponseInDB(context, sectionAndWidget, 5);
+                    return insertSectionResponseInDB(context, sectionAndWidget, true);
                 })
                 .subscribe(value -> {
                     if (callback != null) {
@@ -224,10 +203,11 @@ public class DefaultTHApiManager {
                     long totalExecutionTime = System.currentTimeMillis() - executionTime;
                     Log.i("TotalExec", "Read from Temp, Json String:: " + totalExecutionTime);
 
-                }, th -> {
+                }, throwable -> {
                     if (callback != null) {
-                        callback.onError(th, "getSectionsFromTempTable");
+                        callback.onError(throwable, "getSectionsFromTempTable");
                     }
+                    Log.i(NetConstants.TAG_ERROR, "getSectionsFromTempTable() :: " + throwable);
                 }, () ->{
                     if (callback != null) {
                         callback.onComplete("getSectionsFromTempTable");
@@ -240,7 +220,7 @@ public class DefaultTHApiManager {
      * @param context
      * @return
      */
-    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime, RequestCallback callback) {
+    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime, RequestCallback callback, String from) {
         String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().sectionListForJson(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
@@ -262,6 +242,7 @@ public class DefaultTHApiManager {
                     if (callback != null) {
                         callback.onError(throwable, "writeSectionReponseInTempTable");
                     }
+                    Log.i(NetConstants.TAG_ERROR, from+" :: writeSectionReponseInTempTable() :: " + throwable);
                 }, () -> {
 
                     if (callback != null) {
@@ -317,10 +298,13 @@ public class DefaultTHApiManager {
 
 
             return bannerObservable
-                    .switchMap(bannerVal -> {
+                    .switchMap(tableBanner -> {
                         return sectionObservable.map(personaliseIdsTable -> {
+                            if(tableBanner == null) {
+                                return null;
+                            }
                             final String url = BuildConfig.DEFAULT_TH_BASE_URL + "newsFeed.php";
-                            String bannerId = bannerVal.getSecId();
+                            String bannerId = tableBanner.getSecId();
 
                             final JsonArray personliseSectionIds = new JsonArray();
                             for (TablePersonaliseDefault personaliseDefault : personaliseIdsTable) {
@@ -339,7 +323,6 @@ public class DefaultTHApiManager {
 
                     })
                     .switchMap(val -> {
-                        Log.i("", "");
                         return val.subscribeOn(Schedulers.newThread());
                     })
                     .map(homeData -> {
@@ -403,7 +386,7 @@ public class DefaultTHApiManager {
                         if (callback != null) {
                             callback.onError(throwable, "homeArticles");
                         }
-                        Log.i(TAG, "homeArticles() :: throwable " + throwable);
+                        Log.i(NetConstants.TAG_ERROR, "homeArticles() :: " + throwable);
                     }, () -> {
                         if (callback != null) {
                             callback.onComplete("homeArticles");
@@ -456,7 +439,7 @@ public class DefaultTHApiManager {
                     .subscribe(value -> {
                         Log.i(TAG, "widgetContent :: subscribe-" + value);
                     }, throwable -> {
-                        Log.i(TAG, "widgetContent :: throwable " + throwable);
+                        Log.i(NetConstants.TAG_ERROR, "writeContent() :: " + throwable);
                     }, () -> {
                         Log.i(TAG, "widgetContent :: completed");
                     });
@@ -507,11 +490,12 @@ public class DefaultTHApiManager {
                         requestCallback.onNext(value);
                     }
                     Log.i(TAG, "getSectionContent :: subscribe");
-                }, throwable -> {
-                    Log.i(TAG, "getSectionContent :: throwable " + throwable);
+                },
+                        throwable -> {
                     if (requestCallback != null) {
                         requestCallback.onError(throwable, "getSectionContent");
                     }
+                            Log.i(NetConstants.TAG_ERROR, "getSectionContent() :: " + throwable);
                 }, () -> {
                     Log.i(TAG, "getSectionContent :: completed");
                     if (requestCallback != null) {
@@ -561,16 +545,16 @@ public class DefaultTHApiManager {
                     if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
-                    Log.i(TAG, "getSectionContent :: subscribe");
+                    Log.i(TAG, "getSubSectionContent :: subscribe");
                 }, throwable -> {
-                    Log.i(TAG, "getSectionContent :: throwable " + throwable);
                     if (requestCallback != null) {
-                        requestCallback.onError(throwable, "getSectionContent");
+                        requestCallback.onError(throwable, "getSubSectionContent");
                     }
+                    Log.i(NetConstants.TAG_ERROR, "getSubSectionContent() :: " + throwable);
                 }, () -> {
-                    Log.i(TAG, "getSectionContent :: completed");
+                    Log.i(TAG, "getSubSectionContent :: completed");
                     if (requestCallback != null) {
-                        requestCallback.onComplete("getSectionContent");
+                        requestCallback.onComplete("getSubSectionContent");
                     }
                 });
     }

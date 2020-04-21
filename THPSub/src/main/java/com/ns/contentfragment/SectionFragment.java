@@ -50,13 +50,12 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
 public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, BaseFragmentTHP.BaseFragmentListener, AppAds.OnAppAdLoadListener {
 
-    private static String TAG = NetConstants.UNIQUE_TAG;
+    private static String TAG = NetConstants.TAG_UNIQUE;
 
     private String mFrom;
     private String mSectionId;
@@ -147,6 +146,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
             // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
+            test();
             homeAndBannerArticleFromDB();
 //            test();
 
@@ -163,6 +163,24 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         }
 
+    }
+
+    private void test() {
+        Observable.just("ll")
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
+                    TableBanner tableBanner = daoBanner.getBanners();
+                    List<ArticleBean> list = tableBanner.getBeans();
+                    return ""+list.size();
+                })
+                .subscribe(val->{
+                    Log.i("", "");
+                    Log.i(NetConstants.TAG_ERROR, "test() :: banner article list size " + val);
+                }, throwable -> {
+                    Log.i("", "");
+                    Log.i(NetConstants.TAG_ERROR, "test() :: " + throwable);
+                });
     }
 
 
@@ -216,6 +234,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
                 }, throwable -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mPage + " :: throwable - " + throwable);
+                    Log.i(NetConstants.TAG_ERROR, "sectionDataFromDB() :: " + throwable);
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mPage - 1));
                 }));
@@ -249,6 +268,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
                 }, throwable -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mPage + " :: throwable - " + throwable);
+                    Log.i(NetConstants.TAG_ERROR, "subSectionDataFromDB() :: " + throwable);
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mPage - 1));
                 }));
@@ -280,6 +300,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             @Override
             public void onError(Throwable throwable, String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
+                Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
                 setLoading(false);
                 showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
             }
@@ -370,7 +391,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             }
 
             @Override
-            public void onError(Throwable t, String str) {
+            public void onError(Throwable throwable, String str) {
+                Log.i(NetConstants.TAG_ERROR, "getHomeDataFromServer() :: " + throwable);
                 setLoading(false);
             }
 
@@ -422,6 +444,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     }
 
 
+                }, throwable -> {
+                    Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
                 }));
     }
 
@@ -441,21 +465,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 .subscribe();
     }
 
-    private void test() {
-        Observable.just("ll")
-                .subscribeOn(Schedulers.io())
-                        .map(val->{
-                            DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
-                            TableBanner tableBanner = daoBanner.getBanners();
-                            List<ArticleBean> list = tableBanner.getBeans();
-                            return "";
-                        })
-                .subscribe(val->{
-                    Log.i("", "");
-                }, throwable -> {
-                    Log.i("", "");
-                });
-    }
+
 
 
 
@@ -524,7 +534,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     hideProgressDialog();
 
                 }, throwable -> {
-                    Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
+                    Log.i(NetConstants.TAG_ERROR, "homeAndBannerArticleFromDB() :: " + throwable);
+                    //Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
                     // Widget Observable

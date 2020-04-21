@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SplashActivity extends BaseAcitivityTHP {
 
-    private static String TAG = NetConstants.UNIQUE_TAG;
+    private static String TAG = NetConstants.TAG_UNIQUE;
     private long startTime;
 
 
@@ -46,6 +46,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //should check null because in airplane mode it will be null
         NetworkCapabilities nc = cm.getNetworkCapabilities(cm.getActiveNetwork());
+
         if(nc != null && isHomeArticleOptionScreenShown) {
             int downSpeed = nc.getLinkDownstreamBandwidthKbps();
             startTime = System.currentTimeMillis();
@@ -61,7 +62,6 @@ public class SplashActivity extends BaseAcitivityTHP {
             // For low net speed, it will launch directly
             else {
                 directLaunch();
-//                DefaultTHApiManager.test();
             }
 
         } else {
