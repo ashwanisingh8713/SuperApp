@@ -22,6 +22,11 @@ import com.netoperation.db.TableMP;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.DaoUserProfile;
 import com.netoperation.db.TableUserProfile;
+import com.netoperation.default_db.DaoSectionArticle;
+import com.netoperation.default_db.DaoSubSectionArticle;
+import com.netoperation.default_db.TableSectionArticle;
+import com.netoperation.default_db.TableSubSectionArticle;
+import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.KeyValueModel;
@@ -906,8 +911,7 @@ public class ApiManager {
 
     }
 
-    public static Observable<List<ArticleBean>> getRecommendationFromDB(final Context context,
-                                                                        final @RetentionDef.Recomendation String recotype, String aid) {
+    public static Observable<List<ArticleBean>> premium_allArticleFromDB(final Context context, final @RetentionDef.Recomendation String recotype) {
         Observable<RecomendationData> observable = Observable.just(new RecomendationData());
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -923,14 +927,8 @@ public class ApiManager {
                                         beans.add(dash.getBean());
                                     }
                                 }
-                            } else if (aid != null && recotype.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
-                                TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
-                                if (tableSubscriptionArticle != null) {
-                                    List<ArticleBean> tempArticleBean = new ArrayList<>();
-                                    tempArticleBean.add(tableSubscriptionArticle.getBean());
-                                    return tempArticleBean;
-                                }
-                            } else {
+                            }
+                            else {
                                 List<TableSubscriptionArticle> tableSubscriptionArticle = thp.dashboardDao().getAllDashboardBean(recotype);
                                 if (tableSubscriptionArticle != null) {
                                     for (TableSubscriptionArticle dash : tableSubscriptionArticle) {
@@ -944,20 +942,22 @@ public class ApiManager {
 
     }
 
+    public static Observable<ArticleBean> getFromTemperoryArticle(final Context context, String aid) {
+        return Observable.just("").subscribeOn(Schedulers.newThread())
+                .map(value -> {
 
-    public static Observable<ArticleBean> isExistInBookmark(Context context, final String aid) {
-        return Observable.just(aid)
-                .subscribeOn(Schedulers.io())
-                .map(articleId -> {
-                    TableBookmark tableBookmark = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticle(articleId);
-                    if (tableBookmark != null) {
-                        return tableBookmark.getBean();
-                    }
-                    return new ArticleBean();
-                })
-                .observeOn(AndroidSchedulers.mainThread());
+                            THPDB thp = THPDB.getInstance(context);
+                            if (aid != null) {
+                                return thp.daoTemperoryArticle().getSingleTemperoryBean(aid).getBean();
 
+                            }
+                            return new ArticleBean();
+                        }
+                );
     }
+
+
+
 
     public static Observable createBookmark(Context context, final ArticleBean articleBean) {
         return Observable.just(articleBean)
@@ -1071,6 +1071,20 @@ public class ApiManager {
                 });
     }
 
+    public static Observable<ArticleBean> isExistInBookmark(Context context, final String aid) {
+        return Observable.just(aid)
+                .subscribeOn(Schedulers.io())
+                .map(articleId -> {
+                    TableBookmark tableBookmark = THPDB.getInstance(context).bookmarkTableDao().getBookmarkArticle(articleId);
+                    if (tableBookmark != null) {
+                        return tableBookmark.getBean();
+                    }
+                    return new ArticleBean();
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
     public static Observable isExistFavNdLike(Context context, final String aid) {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
@@ -1087,19 +1101,16 @@ public class ApiManager {
     }
 
 
-    public static Observable isExistInAllArticle(Context context, final String aid) {
+    public static Observable isExistInTableSubscriptionArticle(Context context, final String aid) {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
                 .map(new Function<String, Boolean>() {
                     @Override
                     public Boolean apply(String aid) {
                         boolean isContain = false;
-
                         THPDB thp = THPDB.getInstance(context);
-
                         ArticleBean articleBean = new ArticleBean();
                         articleBean.setArticleId(aid);
-
                         TableSubscriptionArticle tableSubscriptionArticle = thp.dashboardDao().getSingleDashboardBean(aid);
                         if (tableSubscriptionArticle != null) {
                             if (tableSubscriptionArticle.getAid().equals(aid)) {
@@ -1117,7 +1128,7 @@ public class ApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url, String recoType) {
+    public static final Observable<ArticleBean> premiumArticleDetailFromServer(Context context, String aid, String url, String recoType) {
         url = url + aid;
         Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
         return observable.subscribeOn(Schedulers.newThread())
@@ -1210,9 +1221,32 @@ public class ApiManager {
 
     }
 
+    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url, String recoTypee) {
+        url = url + aid;
+        Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
+        return observable.subscribeOn(Schedulers.newThread())
+                .map(new Function<SearchedArticleModel, ArticleBean>() {
+                    @Override
+                    public ArticleBean apply(SearchedArticleModel model) {
 
-    public static final Observable<ArticleBean> articleDetailFromPremiumDB(Context context, String aid, String recoType) {
-        return Observable.just("articleDetailFromPremiumDB")
+                        THPDB thp = THPDB.getInstance(context);
+
+                        if (model.getData().size() > 0) {
+                            TableTemperoryArticle temperoryArticle = new TableTemperoryArticle(aid, model.getData().get(0));
+                            thp.daoTemperoryArticle().insertTemperoryArticle(temperoryArticle);
+                            return model.getData().get(0);
+                        }
+
+
+                        return new ArticleBean();
+                    }
+                });
+
+    }
+
+
+    public static final Observable<ArticleBean> premium_singleArticleFromDB(Context context, String aid, String recoType) {
+        return Observable.just("premium_singleArticleFromDB")
                 .subscribeOn(Schedulers.newThread())
                 .map(new Function<String, ArticleBean>() {
                     @Override

@@ -25,6 +25,10 @@ public class AppTabContentModel {
         return bean;
     }
 
+    public String getUniqueIdForView() {
+        return uniqueIdForView;
+    }
+
     public void setBean(ArticleBean bean) {
         this.bean = bean;
     }
@@ -34,7 +38,7 @@ public class AppTabContentModel {
         super.equals(obj);
         if(obj != null & obj instanceof AppTabContentModel) {
             AppTabContentModel model = (AppTabContentModel) obj ;
-            if(uniqueIdForView != null) {
+            if(model.getUniqueIdForView() != null) {
                 return uniqueIdForView != null && model.uniqueIdForView != null && uniqueIdForView.equals(model.uniqueIdForView);
             }
             else if(bean != null) {

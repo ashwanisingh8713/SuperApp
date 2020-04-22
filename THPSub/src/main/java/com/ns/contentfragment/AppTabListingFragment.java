@@ -44,7 +44,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -243,7 +242,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                 observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
                         mFrom, ""+mSize, BuildConfig.SITEID);
             } else {
-                observable = ApiManager.getRecommendationFromDB(getActivity(), mFrom, null);
+                observable = ApiManager.premium_allArticleFromDB(getActivity(), mFrom);
             }
         }
 

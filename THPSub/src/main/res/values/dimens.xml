@@ -157,11 +157,6 @@
     <dimen name="subscribe_plan_btn_margintop">20dp</dimen>
     <dimen name="marging_end_author_name">6dp</dimen>
 
-    <dimen name="webview_shadow_SMALLER">67dp</dimen>
-    <dimen name="webview_shadow_NORMAL">77dp</dimen>
-    <dimen name="webview_shadow_LARGER">89dp</dimen>
-    <dimen name="webview_shadow_LARGEST">110dp</dimen>
-
 
     <!--Below is Default-->
     <!--Below is Default-->
@@ -260,6 +255,9 @@
     <dimen name="speed_seekbar_dot_height">35dp</dimen>
     <dimen name="setting_item_height">70dp</dimen>
 
-    <dimen name="taboola_height">600dp</dimen>
+    <dimen name="webview_shadow_SMALLER">67dp</dimen>
+    <dimen name="webview_shadow_NORMAL">77dp</dimen>
+    <dimen name="webview_shadow_LARGER">89dp</dimen>
+    <dimen name="webview_shadow_LARGEST">110dp</dimen>
 
 </resources>

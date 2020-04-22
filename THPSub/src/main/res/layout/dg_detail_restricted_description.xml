@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="7dp"
+    android:paddingStart="7dp"
+    android:paddingRight="4dp"
+    android:paddingEnd="4dp"
+    app:layoutType="Black_Dark">
+
+    <com.ns.view.THP_AutoResizeWebview
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- Start Content Blocker XML -->
+
+    <View
+        android:id="@+id/shadowView_Mp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/top_shadow_gradient_light"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:id="@+id/contentBlockerLayout_Mp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_web_view"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/baseLayoutLeftPadding"
+        android:paddingRight="@dimen/baseLayoutRightPadding"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="-5dp"
+        android:visibility="visible">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textMpBlockerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:gravity="center"
+            app:viewType="color_static"
+            tools:text="You have reached your free article limit"
+            android:layout_marginTop="6dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            android:alpha="0.8"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textMPBlockerDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            app:viewType="color_static"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0.8"
+            tools:text="Subscribe to The Hindu now and get unlimited access to all articles"
+            android:layout_marginTop="13dp"
+            />
+
+        <com.ns.view.text.CustomTextView
+            android:id="@+id/getFullAccess_Txt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/signInAndUp_editText_height"
+            android:layout_gravity="center"
+            android:background="@drawable/yellow_backgraoud"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:layout_marginTop="14dp"
+            android:text="Get Full Access"
+            android:layout_marginLeft="@dimen/baseLayoutLeftPadding"
+            android:layout_marginRight="@dimen/baseLayoutRightPadding"
+            app:font_path="@string/THP_FiraSans_Bold"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/signIn_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="bottom"
+            android:letterSpacing="0.02"
+            tools:text="Already have an account? Sign In"
+            app:viewType="color_static"
+            android:textSize="15sp"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:layout_marginTop="6dp"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/signUp_Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="bottom"
+            android:letterSpacing="0.02"
+            tools:text="Sign up now and 30-days free trial"
+            app:viewType="color_static"
+            android:textSize="15sp"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:layout_marginTop="6dp"
+            />
+
+        <include layout="@layout/divider"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            />
+
+    </LinearLayout>
+
+    <!-- END Content Blocker XML -->
+
+</com.ns.view.layout.NSRelativeLayout>

@@ -1,13 +1,9 @@
 package com.ns.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,8 +20,6 @@ import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
-import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -138,7 +132,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             /*bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
             ArticleBean bean = item.getArticleBean();
             bannerViewHolder.itemView.setOnClickListener(v->{
-                IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
             });*/
 
         }
@@ -154,7 +148,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             /*ArticleBean bean = item.getArticleBean();
 
             articlesViewHolder.itemView.setOnClickListener(v->{
-                IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
             });*/
         }
         else if(holder instanceof StaticItemWebViewHolder) {
@@ -254,7 +248,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
 
-                    IntentUtil.openNonPremiumDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                    IntentUtil.openDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
             });
 
@@ -323,7 +317,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
-                    IntentUtil.openNonPremiumDetailActivity(holder.itemView.getContext(), mFrom,
+                    IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                             bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
 
                 }

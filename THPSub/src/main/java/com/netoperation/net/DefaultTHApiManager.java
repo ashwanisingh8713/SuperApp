@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.netoperation.db.DaoTemperoryArticle;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
@@ -24,6 +25,7 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableTempWork;
+import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
@@ -50,6 +52,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class DefaultTHApiManager {
@@ -310,13 +313,6 @@ public class DefaultTHApiManager {
                             for (TablePersonaliseDefault personaliseDefault : personaliseIdsTable) {
                                 personliseSectionIds.add(personaliseDefault.getPersonaliseSecId());
                             }
-
-                            /*long dataInsertTimeOfTable = bannerVal.getDataInsertTimeOfTable();
-                            long currentTime = System.currentTimeMillis();
-                            long fiveMins = 1000*60*5;
-                            if(dataInsertTimeOfTable+fiveMins > currentTime) {
-                                return null;
-                            }*/
 
                             return ServiceFactory.getServiceAPIs().homeContent(url, ReqBody.homeFeed(personliseSectionIds, bannerId, 0));
                         });
@@ -623,6 +619,83 @@ public class DefaultTHApiManager {
 
                     return "";
                 }).subscribe();
+    }
+
+    public static Observable<ArticleBean> isExistInDGnArticle(Context context, final String aid) {
+        return Observable.just(aid)
+                .subscribeOn(Schedulers.io())
+                .map(new Function<String, ArticleBean>() {
+                    @Override
+                    public ArticleBean apply(String aid) {
+                        ArticleBean requiredBean = new ArticleBean();
+                        requiredBean.setArticleId(aid);
+
+                        THPDB thp = THPDB.getInstance(context);
+
+                        // Check in Sections
+                        DaoSectionArticle daoSectionArticle = thp.daoSectionArticle();
+                        List<TableSectionArticle> getAllArticles = daoSectionArticle.getAllArticles();
+                        List<ArticleBean> allArticle = new ArrayList<>();
+
+                        for(TableSectionArticle sectionArticle : getAllArticles) {
+                            allArticle.addAll(sectionArticle.getBeans());
+                        }
+                        int index = allArticle.indexOf(requiredBean);
+
+                        if(index == -1) {
+                            // Check in Sub - Sections
+                            DaoSubSectionArticle daoSubSectionArticle = thp.daoSubSectionArticle();
+                            List<TableSubSectionArticle> getSubAllArticles = daoSubSectionArticle.getAllArticles();
+                            List<ArticleBean> allSubArticle = new ArrayList<>();
+
+                            for(TableSubSectionArticle subSectionArticle : getSubAllArticles) {
+                                allSubArticle.addAll(subSectionArticle.getBeans());
+                            }
+                            index = allSubArticle.indexOf(requiredBean);
+                            if(index != -1) {
+                                return   allArticle.get(index);
+                            }
+                        }
+
+                        else if (index != -1) {
+                            return   allArticle.get(index);
+                        }
+                        return new ArticleBean();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public static Observable<ArticleBean> isExistInTempArticleArticle(Context context, final String aid) {
+        return Observable.just(aid)
+                .subscribeOn(Schedulers.io())
+                .map(new Function<String, ArticleBean>() {
+                    @Override
+                    public ArticleBean apply(String aid) {
+                        ArticleBean requiredBean = new ArticleBean();
+                        requiredBean.setArticleId(aid);
+
+                        THPDB thp = THPDB.getInstance(context);
+
+                        // Check in TableTemperoryArticle
+                        DaoTemperoryArticle daoTableTemperoryArticle = thp.daoTemperoryArticle();
+                        List<TableTemperoryArticle> getAllArticles = daoTableTemperoryArticle.getAllTempBean();
+                        List<ArticleBean> allArticle = new ArrayList<>();
+
+                        for(TableTemperoryArticle tempArticle : getAllArticles) {
+                            allArticle.add(tempArticle.getBean());
+                        }
+
+                        int index = allArticle.indexOf(requiredBean);
+
+                        if (index != -1) {
+                            return allArticle.get(index);
+                        }
+                        return new ArticleBean();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 

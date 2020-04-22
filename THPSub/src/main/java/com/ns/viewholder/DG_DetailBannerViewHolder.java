@@ -13,7 +13,7 @@ import com.ns.thpremium.R;
 
 
 
-public class DefaultGroup_DetailBannerViewHolder extends RecyclerView.ViewHolder {
+public class DG_DetailBannerViewHolder extends RecyclerView.ViewHolder {
     public TextView mTitleTextView;
     public TextView mArticleLocationView;
     public TextView mUpdatedTextView;
@@ -25,7 +25,7 @@ public class DefaultGroup_DetailBannerViewHolder extends RecyclerView.ViewHolder
     public View mCaptionDevider;
     public ImageButton mMultiMediaButton;
 
-    public DefaultGroup_DetailBannerViewHolder(View itemView) {
+    public DG_DetailBannerViewHolder(View itemView) {
         super(itemView);
         mTitleTextView = itemView.findViewById(R.id.title);
         mArticleLocationView = itemView.findViewById(R.id.articleLocationTxt);

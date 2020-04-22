@@ -109,7 +109,7 @@
     <string name="CLEVERTAP_ACCOUNT_TOKEN_LIVE" tools:ignore="TypographyDashes">3b2-0b0</string>
     <string name="default_notification_channel_id" translatable="false">TheHindu</string>
 
-    <string name="alpha_detail">0.0</string>
+    <string name="alpha_detail">1.0</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

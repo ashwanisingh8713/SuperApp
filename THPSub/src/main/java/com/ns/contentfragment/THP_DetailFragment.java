@@ -124,33 +124,17 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        if(mFrom.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
-            if (mArticleBean.getHasDescription() == 0) {
-                loadDataFromServer();
-                AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
-                bannerModel.setBean(mArticleBean);
-                mRecyclerAdapter.addData(bannerModel);
-
-                AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW);
-                descriptionModel.setBean(mArticleBean);
-                mRecyclerAdapter.addData(descriptionModel);
-
-            } else {
-                loadDataFromDB();
-            }
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
+            dgCreateRows(mArticleBean);
         }
-        else if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER);
-            bannerModel.setBean(mArticleBean);
-            AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW);
-            description_1Model.setBean(mArticleBean);
-            mRecyclerAdapter.addData(bannerModel);
-            mRecyclerAdapter.addData(description_1Model);
-
-            AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA);
-            taboolaModel.setBean(mArticleBean);
-            mRecyclerAdapter.addData(taboolaModel);
-
+        else {
+            if (mArticleBean.getHasDescription() == 0) {
+                loadDataPremiumFromServer();
+            } else {
+                premium_loadDataFromDB();
+            }
         }
 
         if(mActivity != null && mIsVisible) {
@@ -169,37 +153,33 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    public void onResume() {
+        super.onResume();
+        mPageStartTime = System.currentTimeMillis();
+        // Set Toolbar Item Click Listener
+        mActivity.setOnFragmentTools(this);
 
-        if(mActivity != null && mIsVisible) {
-            mPageStartTime = System.currentTimeMillis();
-            // Set Toolbar Item Click Listener
-            mActivity.setOnFragmentTools(this);
+        // Checking Visible Article is bookmarked or not.
+        isExistInBookmark(mArticleBean.getArticleId());
 
-            // Checking Visible Article is bookmarked or not.
-            isExistInBookmark(mArticleBean.getArticleId());
+        // Checking Visible Article is Like and Fav or not.
+        isFavOrLike();
 
-            // Checking Visible Article is Like and Fav or not.
-            isFavOrLike();
 
-            //sendEventCapture();
-        }
-
-        if(!isVisibleToUser) {
-            if(mPageStartTime > 1000) {
-                mPageEndTime = System.currentTimeMillis();
-                sendEventCapture(mPageStartTime, mPageEndTime);
-                mPageStartTime = -1l;
-                mPageEndTime = -1l;
-            }
-        }
     }
+
 
     @Override
     public void onPause() {
         super.onPause();
+        if(mPageStartTime > 1000) {
+            mPageEndTime = System.currentTimeMillis();
+            sendEventCapture(mPageStartTime, mPageEndTime);
+            mPageStartTime = -1l;
+            mPageEndTime = -1l;
+        }
     }
+
 
     /**
      * Adding Pull To Refresh Listener
@@ -224,8 +204,45 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
-    private void loadDataFromServer() {
+    /**
+     * Creates Premium Detail Page
+     * @param bean
+     */
+    private void premiumCreateRows(ArticleBean bean) {
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
+        bannerModel.setBean(bean);
+        mRecyclerAdapter.addData(bannerModel);
 
+        AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW);
+        descriptionModel.setBean(bean);
+        mRecyclerAdapter.addData(descriptionModel);
+
+        mArticleBean = bean;
+    }
+
+    /**
+     * Creates Default Group Detail Page
+     * @param bean
+     */
+    private void dgCreateRows(ArticleBean bean) {
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+        bannerModel.setBean(bean);
+        mRecyclerAdapter.addData(bannerModel);
+
+            /*AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
+            description_1Model.setBean(mArticleBean);
+            mRecyclerAdapter.addData(description_1Model);*/
+
+        AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, "description_restricted");
+        description_restricted.setBean(bean);
+        mRecyclerAdapter.addData(description_restricted);
+
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
+        taboolaModel.setBean(bean);
+        mRecyclerAdapter.addData(taboolaModel);
+    }
+
+    private void loadDataPremiumFromServer() {
         String SEARCH_BY_ARTICLE_ID_URL = "";
         if(BuildConfig.IS_PRODUCTION) {
             SEARCH_BY_ARTICLE_ID_URL = BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_ID_URL;
@@ -233,16 +250,12 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             SEARCH_BY_ARTICLE_ID_URL = BuildConfig.STATGGING_SEARCH_BY_ARTICLE_ID_URL;
         }
 
-        Observable<ArticleBean> observable =  ApiManager.articleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+        Observable<ArticleBean> observable =  ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recoBean->{
-                            mRecyclerAdapter.replaceData(recoBean, 0);
-                            mRecyclerAdapter.replaceData(recoBean, 1);
-                            mArticleBean = recoBean;
-                            if(mIsVisible) {
-                                //sendEventCapture();
-                            }
+                            premiumCreateRows(recoBean);
+
                         },
                         throwable->{
                             Log.i("", "");
@@ -250,17 +263,26 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         );
     }
 
-    private void loadDataFromDB() {
-        Observable<ArticleBean> observable =  ApiManager.articleDetailFromPremiumDB(getActivity(), mArticleId, mFrom);
+    private void premium_loadDataFromDB() {
+        Observable<ArticleBean> observable = ApiManager.premium_singleArticleFromDB(getActivity(), mArticleId, mFrom);
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{
-                                    mRecyclerAdapter.replaceData(recoBean, 0);
-                                    mRecyclerAdapter.replaceData(recoBean, 1);
-                                    mArticleBean = recoBean;
-                                    if(mIsVisible) {
-                                        //sendEventCapture();
-                                    }
+                                    premiumCreateRows(recoBean);
+                                },
+                                throwable->{
+                                    Log.i("", "");
+                                })
+        );
+    }
+
+    private void tempArticle_loadDataFromDB() {
+        Observable<ArticleBean> observable =  ApiManager.getFromTemperoryArticle(getActivity(), mArticleId);
+
+        mDisposable.add(
+                observable.observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(recoBean->{
+                                    premiumCreateRows(recoBean);
                                 },
                                 throwable->{
                                     Log.i("", "");
@@ -286,7 +308,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)|| mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
             mArticleBean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
             mArticleBean.setIsBookmark(1);
             // To Create at App end
@@ -343,6 +366,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     //////////////////////////////////////////////////////////////////////////////////
     private void updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
 
+        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+
         if(!mIsOnline) {
             noConnectionSnackBar(getView());
             return;
@@ -396,7 +421,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 if(from.equals("bookmark")) {
                                     if(book == NetConstants.BOOKMARK_YES) {
                                         // To Create at App end
-                                        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
 
                                         ApiManager.createBookmark(context, bean).subscribe(boole -> {
                                             mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);

@@ -597,7 +597,7 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openPremiumDetailActivity(Context context, String from, String url, int clickedPosition, String articleId) {
+    public static void openDetailActivity(Context context, String from, String url, int clickedPosition, String articleId) {
         Intent intent = new Intent(context, THP_DetailActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("url", url);
@@ -606,7 +606,15 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openNonPremiumDetailActivity(Context context, String from, String articleId, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
+    public static void openSingleDetailActivity(Context context, String from, ArticleBean articleBean, String url) {
+        Intent intent = new Intent(context, THP_DetailActivity.class);
+        intent.putExtra("from", from);
+        intent.putExtra("url", url);
+        intent.putExtra("ArticleBean", articleBean);
+        context.startActivity(intent);
+    }
+
+    public static void openDetailActivity(Context context, String from, String articleId, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
         Intent intent = new Intent(context, THP_DetailActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("articleId", articleId);

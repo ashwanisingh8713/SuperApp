@@ -18,6 +18,9 @@ public interface DaoSectionArticle {
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId")
     List<TableSectionArticle> getAllArticles(String secId);
 
+    @Query("SELECT * FROM TableSectionArticle")
+    List<TableSectionArticle> getAllArticles();
+
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId AND page = :page")
     Observable<TableSectionArticle> getPageArticlesObservable(String secId, int page);
 

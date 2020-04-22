@@ -153,6 +153,9 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 }
             }
         }
+        else if(mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
+            loadDataFromTemp();
+        }
         else if(mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             loadBookmarkData();
         }
@@ -162,44 +165,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
     }
 
-    /**
-     * Premium all articles from DB
-     */
-    private void loadDataFromPremium() {
-        Observable<List<ArticleBean>> observable = null;
-        if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING)
-        || mFrom.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
-            observable = ApiManager.getBreifingFromDB(getActivity(), mFrom);
-        }
-        else {
-            observable = ApiManager.getRecommendationFromDB(getActivity(), mFrom, mArticleId);
-        }
-
-        mDisposable.add(
-                observable.map(value->{
-                    return value;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-                    if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST) && value.size() > 0) {
-                        ArrayList<ArticleBean> singleBean = new ArrayList<>();
-                        singleBean.add(value.get(0));
-                        viewPagerSetup(singleBean, mFrom);
-                    }
-                    else {
-                        viewPagerSetup(value, mFrom);
-                    }
-
-                }, throwable -> {
-                    if (throwable instanceof ConnectException
-                            || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException) {
-                        // TODO,
-                    }
-
-                }, () -> {
-
-                }));
-    }
 
 
     @Override
@@ -207,6 +172,76 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Details Screen", THP_DetailPagerFragment.class.getSimpleName());
     }
+
+
+
+    /**
+     * Premium all articles from DB
+     */
+    private void loadDataFromPremium() {
+        Observable<List<ArticleBean>> observable = null;
+        if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING)
+                || mFrom.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
+            observable = ApiManager.getBreifingFromDB(getActivity(), mFrom);
+        }
+        else {
+            observable = ApiManager.premium_allArticleFromDB(getActivity(), mFrom);
+        }
+
+        mDisposable.add(
+                observable.map(value->{
+                    return value;
+                })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(value -> {
+                            if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST) && value.size() > 0) {
+                                ArrayList<ArticleBean> singleBean = new ArrayList<>();
+                                singleBean.add(value.get(0));
+                                viewPagerSetup(singleBean, mFrom);
+                            }
+                            else {
+                                viewPagerSetup(value, mFrom);
+                            }
+
+                        }, throwable -> {
+                            if (throwable instanceof ConnectException
+                                    || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException) {
+                                // TODO,
+                            }
+
+                        }, () -> {
+
+                        }));
+    }
+
+
+    /**
+     * Articles from TableTemperoryArticle DB
+     */
+    private void loadDataFromTemp() {
+        Observable<ArticleBean> observable = ApiManager.getFromTemperoryArticle(getActivity(), mArticleId);
+
+        mDisposable.add(
+                observable.map(value->{
+                    return value;
+                })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(articleBean -> {
+                            ArrayList<ArticleBean> singleBean = new ArrayList<>();
+                            singleBean.add(articleBean);
+                            viewPagerSetup(singleBean, mFrom);
+
+                        }, throwable -> {
+                            if (throwable instanceof ConnectException
+                                    || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException) {
+                                // TODO,
+                            }
+
+                        }, () -> {
+
+                        }));
+    }
+
 
     /**
      * Section all articles from DB

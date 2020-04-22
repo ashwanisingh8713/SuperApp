@@ -27,8 +27,8 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
     private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
     public DetailPagerAdapter(@NonNull FragmentManager fm, List<ArticleBean> articleList, String usedId, String from) {
-        super(fm);
-//        super(fm, FragmentPagerAdapter.POSITION_NONE);
+//        super(fm);
+        super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.articleList = articleList;
         this.mFrom = from;
         this.mUserId = usedId;

@@ -29,14 +29,16 @@ import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableTempWork;
+import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 
 @Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
         TableBreifing.class, TableUserProfile.class, TableMP.class,
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
-        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class},
-        version = 5, exportSchema = false)
+        TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class,
+        TableTemperoryArticle.class},
+        version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
 
@@ -58,12 +60,13 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoPersonaliseDefault daoPersonaliseDefault();
     public abstract DaoRead daoRead();
     public abstract DaoTempWork daoTempWork();
+    public abstract DaoTemperoryArticle daoTemperoryArticle();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (THPDB.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), THPDB.class, "THPDB.db")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), THPDB.class, "THPDBB.db")
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)

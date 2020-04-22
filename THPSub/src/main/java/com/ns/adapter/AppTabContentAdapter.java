@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,9 +49,10 @@ import com.ns.viewholder.BookmarkPremiumViewHolder;
 import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
+import com.ns.viewholder.DG_Restricted_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
-import com.ns.viewholder.DefaultGroup_DetailBannerViewHolder;
-import com.ns.viewholder.DefaultGroup_DetailDescriptionWebViewHolder;
+import com.ns.viewholder.DG_DetailBannerViewHolder;
+import com.ns.viewholder.DG_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.ViewHolderTaboola;
@@ -89,6 +90,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     private String mGroupType;
 
+    private TaboolaWidget mInfiniteTaboolaView;
 
     public void setFrom(String from) {
         mFrom = from;
@@ -154,10 +156,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_description, viewGroup, false));
         }
         else if (viewType == VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER) {
-            return new DefaultGroup_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.defaultgroup_detail_banner, viewGroup, false));
+            return new DG_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
         }
         else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
-            return new DefaultGroup_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.defaultgroup_detail_description, viewGroup, false));
+            return new DG_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_description, viewGroup, false));
+        }
+        else if (viewType == VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW) {
+            return new DG_Restricted_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_restricted_description, viewGroup, false));
         }
         else if (viewType == VT_TABOOLA) {
             if (mInfiniteTaboolaView == null) {
@@ -194,11 +199,11 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewHolder instanceof BriefingHeaderViewHolder) {
             premium_ui_BriefingHeader(viewHolder, bean);
         }
-        else if(viewHolder instanceof DefaultGroup_DetailBannerViewHolder) {
-            defaultgroup_ui_detail_banner(viewHolder, bean);
+        else if(viewHolder instanceof DG_DetailBannerViewHolder) {
+            dg_ui_detail_banner(viewHolder, bean);
         }
-        else if(viewHolder instanceof DefaultGroup_DetailDescriptionWebViewHolder) {
-            defaultgroup_ui_detail_description(viewHolder, bean);
+        else if(viewHolder instanceof DG_DetailDescriptionWebViewHolder) {
+            dg_ui_detail_description(viewHolder, bean);
         }
         else if(viewHolder instanceof ViewHolderTaboola) {
             if (mInfiniteTaboolaView.getTag() == null) {
@@ -206,71 +211,13 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 buildBelowArticleWidget(mInfiniteTaboolaView, bean.getArticleLink());
             }
         }
-
-    }
-
-    private TaboolaWidget mInfiniteTaboolaView;
-
-    static TaboolaWidget createTaboolaWidget(Context context, boolean infiniteWidget) {
-        TaboolaWidget taboolaWidget = new TaboolaWidget(context);
-        int height = infiniteWidget ? SdkDetailsHelper.getDisplayHeight(context) * 2 : ViewGroup.LayoutParams.WRAP_CONTENT;
-        taboolaWidget.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        return taboolaWidget;
-    }
-
-    private void buildBelowArticleWidget(TaboolaWidget taboolaWidget, String articleLink) {
-        Resources res = taboolaWidget.getResources();
-        taboolaWidget.setPublisher(res.getString(R.string.taboola_pub));
-        taboolaWidget.setPageType(res.getString(R.string.taboola_pagetype));
-        taboolaWidget.setMode(res.getString(R.string.taboola_mode));
-        boolean mIsDayTheme = UserPref.getInstance(taboolaWidget.getContext()).isUserThemeDay();
-        if (mIsDayTheme) {
-            taboolaWidget.setPlacement(res.getString(R.string.taboola_placement));
-        } else {
-            taboolaWidget.setPlacement(res.getString(R.string.dark_taboola_placement));
+        else if(viewHolder instanceof DG_Restricted_DetailDescriptionWebViewHolder) {
+            dg_ui_restricted_detail_description(viewHolder, bean);
         }
-        taboolaWidget.setTargetType(res.getString(R.string.taboola_targetype));
-        taboolaWidget.setPageUrl(articleLink);
-        taboolaWidget.setInterceptScroll(true);
 
-        //used for enable horizontal scroll
-        HashMap<String, String> optionalPageCommands = new HashMap<>();
-        optionalPageCommands.put("enableHorizontalScroll", "true");
-        optionalPageCommands.put("useOnlineTemplate", "true");
-        taboolaWidget.setExtraProperties(optionalPageCommands);
-        mInfiniteTaboolaView.setExtraProperties(optionalPageCommands);
-
-        mInfiniteTaboolaView.setTaboolaEventListener(new TaboolaEventListener() {
-            @Override
-            public boolean taboolaViewItemClickHandler(String url, boolean isOrganic) {
-
-                if (isOrganic) {
-                    int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-                    IntentUtil.openPremiumDetailActivity(mInfiniteTaboolaView.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, url, 0, ""+articleId);
-
-                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
-                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
-                            getString(R.string.ga_article_taboola_organic_clicked),
-                            getString(R.string.ga_article_detail_lebel));*/
-                    return false;
-                } else {
-                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_nonorganic_clicked));
-                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
-                            getString(R.string.ga_article_taboola_nonorganic_clicked),
-                            getString(R.string.ga_article_detail_lebel));*/
-                }
-
-                return true;
-            }
-
-            @Override
-            public void taboolaViewResizeHandler(TaboolaWidget taboolaWidget, int i) {
-
-            }
-        });
-
-        taboolaWidget.fetchContent();
     }
+
+
 
     /**
      * Shows content on UI of Listing
@@ -339,7 +286,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.itemView.setOnClickListener(v -> {
                     if (THPPreferences.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
-                        IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), mFrom,
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     } else {
                         IntentUtil.openSubscriptionActivity(holder.itemView.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -407,11 +354,11 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.itemView.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-                        IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     }
                     else if (THPPreferences.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
-                        IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), mFrom,
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     } else {
                         IntentUtil.openSubscriptionActivity(holder.itemView.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -452,7 +399,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.description_Txt.setText(ResUtil.htmlText(bean.getDescription()));
 
         holder.itemView.setOnClickListener(v -> {
-            IntentUtil.openPremiumDetailActivity(holder.itemView.getContext(), mFrom,
+            IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                     bean.getArticleUrl(), position, bean.getArticleId());
             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Briefing clicked : " + bean.getArticleId() + " : " + bean.getTitle(), "Briefing List Screen");
 
@@ -662,8 +609,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      * @param viewHolder
      * @param bean
      */
-    private void defaultgroup_ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
-        DefaultGroup_DetailBannerViewHolder dg_banner_vh = (DefaultGroup_DetailBannerViewHolder) viewHolder;
+    private void dg_ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_DetailBannerViewHolder dg_banner_vh = (DG_DetailBannerViewHolder) viewHolder;
         boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
 
         dg_banner_vh.mTitleTextView.setText(bean.getTi());
@@ -698,12 +645,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     /**
-     * Premium Detail Page Description UI
+     * Default Group Detail Page Description UI
      * @param viewHolder
      * @param bean
      */
-    private void defaultgroup_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
-        DefaultGroup_DetailDescriptionWebViewHolder holder = (DefaultGroup_DetailDescriptionWebViewHolder) viewHolder;
+    private void dg_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_DetailDescriptionWebViewHolder holder = (DG_DetailDescriptionWebViewHolder) viewHolder;
         mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
 
         holder.webview.setSize(mDescriptionTextSize);
@@ -714,7 +661,111 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), bean.getDescription()),
                 "text/html", "UTF-8", null);
 
+    }
 
+    /**
+     * Default Group Restricted Detail Page Description UI
+     * @param viewHolder
+     * @param bean
+     */
+    private void dg_ui_restricted_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_Restricted_DetailDescriptionWebViewHolder holder = (DG_Restricted_DetailDescriptionWebViewHolder) viewHolder;
+        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+
+        holder.webview.setSize(mDescriptionTextSize);
+
+        holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), bean.getDescription()),
+                "text/html", "UTF-8", null);
+
+        RelativeLayout.LayoutParams part1WebviewParam = (RelativeLayout.LayoutParams) holder.webview.getLayoutParams();
+        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        if (part1WebviewParam != null) {
+            switch (mDescriptionTextSize) {
+                case 0:
+                    part1WebviewParam.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                    break;
+                case 1:
+                    part1WebviewParam.height = holder.itemView.getResources().getDimensionPixelSize(R.dimen.webview_shadow_SMALLER);
+                    break;
+                case 2:
+                    part1WebviewParam.height = holder.itemView.getResources().getDimensionPixelSize(R.dimen.webview_shadow_NORMAL);
+                    break;
+                case 3:
+                    part1WebviewParam.height = holder.itemView.getResources().getDimensionPixelSize(R.dimen.webview_shadow_LARGER);
+                    break;
+                case 4:
+                    part1WebviewParam.height = holder.itemView.getResources().getDimensionPixelSize(R.dimen.webview_shadow_LARGEST);
+                    break;
+            }
+
+            holder.webview.setLayoutParams(part1WebviewParam);
+
+            if(holder.shadowView_Mp != null) {
+                holder.shadowView_Mp.setLayoutParams(part1WebviewParam);
+            }
+        }
+
+    }
+
+    private static TaboolaWidget createTaboolaWidget(Context context, boolean infiniteWidget) {
+        TaboolaWidget taboolaWidget = new TaboolaWidget(context);
+        int height = infiniteWidget ? SdkDetailsHelper.getDisplayHeight(context) * 2 : ViewGroup.LayoutParams.WRAP_CONTENT;
+        taboolaWidget.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        return taboolaWidget;
+    }
+
+    private void buildBelowArticleWidget(TaboolaWidget taboolaWidget, String articleLink) {
+        Resources res = taboolaWidget.getResources();
+        taboolaWidget.setPublisher(res.getString(R.string.taboola_pub));
+        taboolaWidget.setPageType(res.getString(R.string.taboola_pagetype));
+        taboolaWidget.setMode(res.getString(R.string.taboola_mode));
+        boolean mIsDayTheme = UserPref.getInstance(taboolaWidget.getContext()).isUserThemeDay();
+        if (mIsDayTheme) {
+            taboolaWidget.setPlacement(res.getString(R.string.taboola_placement));
+        } else {
+            taboolaWidget.setPlacement(res.getString(R.string.dark_taboola_placement));
+        }
+        taboolaWidget.setTargetType(res.getString(R.string.taboola_targetype));
+        taboolaWidget.setPageUrl(articleLink);
+        taboolaWidget.setInterceptScroll(true);
+
+        //used for enable horizontal scroll
+        HashMap<String, String> optionalPageCommands = new HashMap<>();
+        optionalPageCommands.put("enableHorizontalScroll", "true");
+        optionalPageCommands.put("useOnlineTemplate", "true");
+        taboolaWidget.setExtraProperties(optionalPageCommands);
+        mInfiniteTaboolaView.setExtraProperties(optionalPageCommands);
+
+        mInfiniteTaboolaView.setTaboolaEventListener(new TaboolaEventListener() {
+            @Override
+            public boolean taboolaViewItemClickHandler(String url, boolean isOrganic) {
+
+                if (isOrganic) {
+                    int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
+                    IntentUtil.openDetailActivity(mInfiniteTaboolaView.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, url, 0, ""+articleId);
+
+                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
+                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
+                            getString(R.string.ga_article_taboola_organic_clicked),
+                            getString(R.string.ga_article_detail_lebel));*/
+                    return false;
+                } else {
+                    /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_nonorganic_clicked));
+                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
+                            getString(R.string.ga_article_taboola_nonorganic_clicked),
+                            getString(R.string.ga_article_detail_lebel));*/
+                }
+
+                return true;
+            }
+
+            @Override
+            public void taboolaViewResizeHandler(TaboolaWidget taboolaWidget, int i) {
+
+            }
+        });
+
+        taboolaWidget.fetchContent();
     }
 
 
