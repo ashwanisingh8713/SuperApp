@@ -30,6 +30,7 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
 import com.netoperation.model.HomeData;
+import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
@@ -696,6 +697,38 @@ public class DefaultTHApiManager {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url) {
+        url = url + aid;
+        Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
+        return observable.subscribeOn(Schedulers.newThread())
+                .map(new Function<SearchedArticleModel, ArticleBean>() {
+                    @Override
+                    public ArticleBean apply(SearchedArticleModel model) {
+                        THPDB thp = THPDB.getInstance(context);
+                        if (model.getData().size() > 0) {
+                            TableTemperoryArticle temperoryArticle = new TableTemperoryArticle(aid, model.getData().get(0));
+                            thp.daoTemperoryArticle().insertTemperoryArticle(temperoryArticle);
+                            return model.getData().get(0);
+                        }
+                        return new ArticleBean();
+                    }
+                });
+
+    }
+
+    public static final Observable<List<ArticleBean>> articleFromServer(String aid, String url) {
+        url = url + aid;
+        Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
+        return observable.subscribeOn(Schedulers.newThread())
+                .map(searchedArticleModel -> {
+                    if (searchedArticleModel.getData().size() > 0) {
+                        return searchedArticleModel.getData();
+                    }
+                    return new ArrayList<ArticleBean>();
+                });
+
     }
 
 

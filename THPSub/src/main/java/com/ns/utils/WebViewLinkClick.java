@@ -155,7 +155,7 @@ public class WebViewLinkClick {
                                                        }
                                                        // Making Server request to get Article from server
                                                        // and Saving into DB, with SectionName = "tempSec"
-                                                       Observable<ArticleBean> observable =  ApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL, NetConstants.RECO_TEMP_NOT_EXIST);
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL);
                                                        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
                                                                .subscribe(new Consumer<ArticleBean>() {
                                                                               @Override

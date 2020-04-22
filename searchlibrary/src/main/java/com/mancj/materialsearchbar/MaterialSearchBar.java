@@ -92,21 +92,10 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
     private int textColor;
     private int hintColor;
     private int placeholderColor;
-    private int navIconTint;
-    private int menuIconTint;
-    private int searchIconTint;
-    private int arrowIconTint;
-    private int clearIconTint;
 
-    private boolean navIconTintEnabled;
-    private boolean menuIconTintEnabled;
-    private boolean searchIconTintEnabled;
-    private boolean arrowIconTintEnabled;
-    private boolean clearIconTintEnabled;
     private boolean borderlessRippleEnabled = false;
     private boolean backIconClickEnabled = false;
 
-    private int textCursorColor;
     private int highlightedTextColor;
 
     public MaterialSearchBar(Context context, AttributeSet attrs) {
@@ -144,16 +133,6 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         speechIconRes = array.getResourceId(R.styleable.MaterialSearchBar_mt_speechIconDrawable, R.drawable.ic_microphone_black_48dp);
         arrowIconRes = array.getResourceId(R.styleable.MaterialSearchBar_mt_backIconDrawable, R.drawable.ic_arrow_left_black_48dp);
         clearIconRes = array.getResourceId(R.styleable.MaterialSearchBar_mt_clearIconDrawable, R.drawable.ic_close_black_48dp);
-        navIconTint = array.getColor(R.styleable.MaterialSearchBar_mt_navIconTint, ContextCompat.getColor(getContext(), R.color.searchBarNavIconTintColor));
-        menuIconTint = array.getColor(R.styleable.MaterialSearchBar_mt_menuIconTint, ContextCompat.getColor(getContext(), R.color.searchBarMenuIconTintColor));
-        searchIconTint = array.getColor(R.styleable.MaterialSearchBar_mt_searchIconTint, ContextCompat.getColor(getContext(), R.color.searchBarSearchIconTintColor));
-        arrowIconTint = array.getColor(R.styleable.MaterialSearchBar_mt_backIconTint, ContextCompat.getColor(getContext(), R.color.searchBarBackIconTintColor));
-        clearIconTint = array.getColor(R.styleable.MaterialSearchBar_mt_clearIconTint, ContextCompat.getColor(getContext(), R.color.searchBarClearIconTintColor));
-        navIconTintEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_navIconUseTint, true);
-        menuIconTintEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_menuIconUseTint, true);
-        searchIconTintEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_searchIconUseTint, true);
-        arrowIconTintEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_backIconUseTint, true);
-        clearIconTintEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_clearIconUseTint, true);
         borderlessRippleEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_borderlessRippleEnabled, false);
         backIconClickEnabled = array.getBoolean(R.styleable.MaterialSearchBar_mt_backIconClickEnabled, false);
 
@@ -163,7 +142,6 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         textColor = array.getColor(R.styleable.MaterialSearchBar_mt_textColor, ContextCompat.getColor(getContext(), R.color.searchBarTextColor));
         hintColor = array.getColor(R.styleable.MaterialSearchBar_mt_hintColor, ContextCompat.getColor(getContext(), R.color.searchBarHintColor));
         placeholderColor = array.getColor(R.styleable.MaterialSearchBar_mt_placeholderColor, ContextCompat.getColor(getContext(), R.color.searchBarPlaceholderColor));
-        textCursorColor = array.getColor(R.styleable.MaterialSearchBar_mt_textCursorTint, ContextCompat.getColor(getContext(), R.color.searchBarCursorColor));
         highlightedTextColor = array.getColor(R.styleable.MaterialSearchBar_mt_highlightedTextColor, ContextCompat.getColor(getContext(), R.color.searchBarTextHighlightColor));
 
         destiny = getResources().getDisplayMetrics().density;
@@ -279,6 +257,12 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         setupDividerColor();
     }
 
+    public void setSearchBarColor(int searchBarColor) {
+        this.searchBarColor = searchBarColor;
+        searchBarCardView.setCardBackgroundColor(searchBarColor);
+        setupDividerColor();
+    }
+
     private void setupDividerColor() {
         suggestionDivider.setBackgroundColor(dividerColor);
     }
@@ -293,7 +277,6 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
      * Setup editText coloring and drawables
      */
     private void setupSearchEditText() {
-        setupCursorColor();
         searchEdit.setHighlightColor(highlightedTextColor);
 
         if (hintText != null)
@@ -304,27 +287,6 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         }
     }
 
-    private void setupCursorColor() {
-        try {
-            Field field = TextView.class.getDeclaredField("mEditor");
-            field.setAccessible(true);
-            Object editor = field.get(searchEdit);
-
-            field = TextView.class.getDeclaredField("mCursorDrawableRes");
-            field.setAccessible(true);
-            int cursorDrawableRes = field.getInt(searchEdit);
-            Drawable cursorDrawable = ContextCompat.getDrawable(getContext(), cursorDrawableRes).mutate();
-            cursorDrawable.setColorFilter(textCursorColor, PorterDuff.Mode.SRC_IN);
-            Drawable[] drawables = {cursorDrawable, cursorDrawable};
-            field = editor.getClass().getDeclaredField("mCursorDrawable");
-            field.setAccessible(true);
-            field.set(editor, drawables);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
 
     //Setup Icon Colors And Drawables
     private void setupIcons() {
@@ -343,77 +305,17 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         setSpeechMode(speechMode);
 
         //Arrow
-        this.arrowIcon.setImageResource(arrowIconRes);
+        //this.arrowIcon.setImageResource(arrowIconRes);
 
         //Clear
         this.clearIcon.setImageResource(clearIconRes);
 
-        //Colors
-        setupNavIconTint();
-        setupMenuIconTint();
-        setupSearchIconTint();
-        setupArrowIconTint();
-        setupClearIconTint();
-        setupIconRippleStyle();
     }
 
-    private void setupNavIconTint() {
-        if (navIconTintEnabled) {
-            navIcon.setColorFilter(navIconTint, PorterDuff.Mode.SRC_IN);
-        } else {
-            navIcon.clearColorFilter();
-        }
-    }
 
-    private void setupMenuIconTint() {
-        if (menuIconTintEnabled) {
-            menuIcon.setColorFilter(menuIconTint, PorterDuff.Mode.SRC_IN);
-        } else {
-            menuIcon.clearColorFilter();
-        }
-    }
 
-    private void setupSearchIconTint() {
-        if (searchIconTintEnabled) {
-            searchIcon.setColorFilter(searchIconTint, PorterDuff.Mode.SRC_IN);
-        } else {
-            searchIcon.clearColorFilter();
-        }
-    }
 
-    private void setupArrowIconTint() {
-        if (arrowIconTintEnabled) {
-            arrowIcon.setColorFilter(arrowIconTint, PorterDuff.Mode.SRC_IN);
-        } else {
-            arrowIcon.clearColorFilter();
-        }
-    }
 
-    private void setupClearIconTint() {
-        if (clearIconTintEnabled) {
-            clearIcon.setColorFilter(clearIconTint, PorterDuff.Mode.SRC_IN);
-        } else {
-            clearIcon.clearColorFilter();
-        }
-    }
-
-    private void setupIconRippleStyle() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            TypedValue rippleStyle = new TypedValue();
-            if (borderlessRippleEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, rippleStyle, true);
-            } else {
-                getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, rippleStyle, true);
-            }
-            navIcon.setBackgroundResource(rippleStyle.resourceId);
-            searchIcon.setBackgroundResource(rippleStyle.resourceId);
-            menuIcon.setBackgroundResource(rippleStyle.resourceId);
-            arrowIcon.setBackgroundResource(rippleStyle.resourceId);
-            clearIcon.setBackgroundResource(rippleStyle.resourceId);
-        } else {
-            Log.w(TAG, "setupIconRippleStyle() Only Available On SDK Versions Higher Than 16!");
-        }
-    }
 
     /**
      * Register listener for search bar callbacks.
@@ -580,66 +482,6 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         this.clearIcon.setImageResource(clearIconRes);
     }
 
-    /**
-     * Set the tint color of the navigation icon
-     *
-     * @param navIconTint nav icon color
-     */
-    public void setNavIconTint(int navIconTint) {
-        this.navIconTint = navIconTint;
-        setupNavIconTint();
-    }
-
-    /**
-     * Set the tint color of the menu icon
-     *
-     * @param menuIconTint menu icon color
-     */
-    public void setMenuIconTint(int menuIconTint) {
-        this.menuIconTint = menuIconTint;
-        setupMenuIconTint();
-    }
-
-    /**
-     * Set the tint color of the search/speech icon
-     *
-     * @param searchIconTint search icon color
-     */
-    public void setSearchIconTint(int searchIconTint) {
-        this.searchIconTint = searchIconTint;
-        setupSearchIconTint();
-    }
-
-    /**
-     * Set the tint color of the back arrow icon
-     *
-     * @param arrowIconTint arrow icon color
-     */
-    public void setArrowIconTint(int arrowIconTint) {
-        this.arrowIconTint = arrowIconTint;
-        setupArrowIconTint();
-    }
-
-    /**
-     * Set the tint color of the clear icon
-     *
-     * @param clearIconTint clear icon tint
-     */
-    public void setClearIconTint(int clearIconTint) {
-        this.clearIconTint = clearIconTint;
-        setupClearIconTint();
-    }
-
-    /**
-     * Show a borderless ripple(circular) when icon is pressed
-     * Borderless only available on SDK V21+
-     *
-     * @param borderlessRippleEnabled true for borderless, false for default
-     */
-    public void setIconRippleStyle(boolean borderlessRippleEnabled) {
-        this.borderlessRippleEnabled = borderlessRippleEnabled;
-        setupIconRippleStyle();
-    }
 
     /**
      * Sets search bar hintText

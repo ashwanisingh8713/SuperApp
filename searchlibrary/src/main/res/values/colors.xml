@@ -13,13 +13,6 @@
     <color name="searchBarCursorColor">#8000a1ff</color>
     <color name="searchBarDividerColor">#1F000000</color>
 
-    //Icons
-    <color name="searchBarNavIconTintColor">@color/searchBarIconColor</color>
-    <color name="searchBarMenuIconTintColor">@color/searchBarIconColor</color>
-    <color name="searchBarSearchIconTintColor">@color/searchBarIconColor</color>
-    <color name="searchBarClearIconTintColor">@color/searchBarIconColor</color>
-    <color name="searchBarBackIconTintColor">@color/searchBarIconColor</color>
-
     //Text
     <color name="searchBarTextColor">#DE000000</color>
     <color name="searchBarHintColor">#42000000</color>

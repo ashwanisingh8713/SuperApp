@@ -1221,28 +1221,6 @@ public class ApiManager {
 
     }
 
-    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url, String recoTypee) {
-        url = url + aid;
-        Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
-        return observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<SearchedArticleModel, ArticleBean>() {
-                    @Override
-                    public ArticleBean apply(SearchedArticleModel model) {
-
-                        THPDB thp = THPDB.getInstance(context);
-
-                        if (model.getData().size() > 0) {
-                            TableTemperoryArticle temperoryArticle = new TableTemperoryArticle(aid, model.getData().get(0));
-                            thp.daoTemperoryArticle().insertTemperoryArticle(temperoryArticle);
-                            return model.getData().get(0);
-                        }
-
-
-                        return new ArticleBean();
-                    }
-                });
-
-    }
 
 
     public static final Observable<ArticleBean> premium_singleArticleFromDB(Context context, String aid, String recoType) {

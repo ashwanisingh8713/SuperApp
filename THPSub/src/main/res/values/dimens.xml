@@ -10,6 +10,7 @@
     <dimen name="backBtnWidthHeight">45dp</dimen>
 
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="searchview_margintop">48dp</dimen>
 
     <dimen name="signInAndUp_editText_height">45dp</dimen>
     <dimen name="signInAndUp_signin_top_margin">24dp</dimen>

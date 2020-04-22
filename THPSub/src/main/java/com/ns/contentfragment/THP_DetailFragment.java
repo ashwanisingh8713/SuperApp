@@ -204,43 +204,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
-    /**
-     * Creates Premium Detail Page
-     * @param bean
-     */
-    private void premiumCreateRows(ArticleBean bean) {
-        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
-        bannerModel.setBean(bean);
-        mRecyclerAdapter.addData(bannerModel);
-
-        AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW);
-        descriptionModel.setBean(bean);
-        mRecyclerAdapter.addData(descriptionModel);
-
-        mArticleBean = bean;
-    }
-
-    /**
-     * Creates Default Group Detail Page
-     * @param bean
-     */
-    private void dgCreateRows(ArticleBean bean) {
-        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
-        bannerModel.setBean(bean);
-        mRecyclerAdapter.addData(bannerModel);
-
-            /*AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
-            description_1Model.setBean(mArticleBean);
-            mRecyclerAdapter.addData(description_1Model);*/
-
-        AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, "description_restricted");
-        description_restricted.setBean(bean);
-        mRecyclerAdapter.addData(description_restricted);
-
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
-        taboolaModel.setBean(bean);
-        mRecyclerAdapter.addData(taboolaModel);
-    }
 
     private void loadDataPremiumFromServer() {
         String SEARCH_BY_ARTICLE_ID_URL = "";
@@ -255,7 +218,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recoBean->{
                             premiumCreateRows(recoBean);
-
                         },
                         throwable->{
                             Log.i("", "");
@@ -282,7 +244,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{
-                                    premiumCreateRows(recoBean);
+                                    dgCreateRows(recoBean);
                                 },
                                 throwable->{
                                     Log.i("", "");
@@ -362,7 +324,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    ////////////////// Start For Bookmark, Fav, Like & Dislike ////////////////////////
+    ////////////////// Start For Premium Bookmark, Fav, Like & Dislike ////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
     private void updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
 
@@ -422,31 +384,31 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                     if(book == NetConstants.BOOKMARK_YES) {
                                         // To Create at App end
 
-                                        ApiManager.createBookmark(context, bean).subscribe(boole -> {
+                                        mDisposable.add(ApiManager.createBookmark(context, bean).subscribe(boole -> {
                                             mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
-                                        });
+                                        }));
                                         Alerts.showToastAtCenter(context, "Added to Read Later");
                                         THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Added Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
                                         CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_YES");
                                     }
                                     else if(book == NetConstants.BOOKMARK_NO) {
                                         // To Remove at App end
-                                        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
+                                        mDisposable.add(ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
                                             mActivity.getDetailToolbar().setIsBookmarked(!(Boolean)boole);
                                             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Removed Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
                                             CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
-                                        });
+                                        }));
                                     }
                                 }
                                 else if(from.equals("dislike") || from.equals("favourite")) {
                                     if(book == NetConstants.BOOKMARK_YES) {
                                         // To Update at App end
-                                        ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
+                                        mDisposable.add(ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
                                                 Log.i("updateBookmark", "true")
-                                        );
+                                        ));
                                     }
                                     // To Update at App end
-                                    ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
+                                    mDisposable.add(ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
                                         // notifyItemChanged(position);
                                         Log.i("updateLIKE", "true");
                                         mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
@@ -461,7 +423,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                             Alerts.showToastAtCenter(context, "Show fewer stories like this.");
                                             THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Dislike Article : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
                                         }
-                                    });
+                                    }));
                                 }
 
                             }
@@ -473,9 +435,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                             if(getActivity() != null && getView() != null) {
                                 mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
                                 isExistInBookmark(bean.getArticleId());
-                                /*Alerts.showAlertDialogOKBtn(getActivity(),
-                                        getActivity().getResources().getString(R.string.failed_to_connect),
-                                        getActivity().getResources().getString(R.string.please_check_ur_connectivity));*/
                                 Alerts.showSnackbar(getActivity(), getActivity().getResources().getString(R.string.something_went_wrong));
                             }
                         }
@@ -483,12 +442,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    //////////////////End For Bookmark, Fav, Like & Dislike ////////////////////////
+    //////////////////End For Premium Bookmark, Fav, Like & Dislike ////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
 
     @Override
@@ -591,7 +546,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      * @param aid
      */
     private void isExistInBookmark(String aid) {
-        if(isBriefingDetail() || isTempArticle()) {
+        if(isBriefingDetail()) {
             return;
         }
         mDisposable.add(
@@ -613,11 +568,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      * Checking Visible Article is Like and Fav or not.
      */
     private void isFavOrLike() {
-        if(isBriefingDetail() || isTempArticle() || isBookmarkDetailPage()) {
-            return;
-        }
         mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleId);
-
     }
 
     private boolean isBriefingDetail() {
@@ -627,16 +578,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)));
     }
 
-    private boolean isTempArticle() {
-        /*if(mFrom != null && (NetConstants.RECO_TEMP_NOT_EXIST.equalsIgnoreCase(mFrom))) {
-            return true;
-        }*/
-        return false;
-    }
-
-    private boolean isBookmarkDetailPage() {
-        return mFrom != null && (NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom));
-    }
 
 
     private void sendEventCapture(long pageStartTime, long pageEndTime) {
@@ -667,6 +608,44 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         }
         mPageEndTime = System.currentTimeMillis();
         sendEventCapture(mPageStartTime, mPageEndTime);
+    }
+
+    /**
+     * Creates Premium Detail Page
+     * @param bean
+     */
+    private void premiumCreateRows(ArticleBean bean) {
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
+        bannerModel.setBean(bean);
+        mRecyclerAdapter.addData(bannerModel);
+
+        AppTabContentModel descriptionModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW);
+        descriptionModel.setBean(bean);
+        mRecyclerAdapter.addData(descriptionModel);
+
+        mArticleBean = bean;
+    }
+
+    /**
+     * Creates Default Group Detail Page
+     * @param bean
+     */
+    private void dgCreateRows(ArticleBean bean) {
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+        bannerModel.setBean(bean);
+        mRecyclerAdapter.addData(bannerModel);
+
+            /*AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
+            description_1Model.setBean(mArticleBean);
+            mRecyclerAdapter.addData(description_1Model);*/
+
+        AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, "description_restricted");
+        description_restricted.setBean(bean);
+        mRecyclerAdapter.addData(description_restricted);
+
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
+        taboolaModel.setBean(bean);
+        mRecyclerAdapter.addData(taboolaModel);
     }
 
 }

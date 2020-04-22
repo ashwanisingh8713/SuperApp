@@ -48,6 +48,7 @@ android {
 
         buildConfigField "String", "STATGGING_SEARCH_BY_ARTICLE_ID_URL", "\"https://alphath.thehindu.co.in/app/getArticleByIds.json?articleIds=\""
         buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_ID_URL", "\"https://thehindu.com/app/getArticleByIds.json?articleIds=\""
+        buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
 
         buildConfigField "String", "LOCALE", "\"en\""
         buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""

@@ -30,8 +30,10 @@ import com.ns.utils.IntentUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.view.IconImgView;
+import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
+import com.ns.viewholder.SearchRecyclerHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 
 import java.util.ArrayList;
@@ -104,6 +106,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_article_list, viewGroup, false));
         }
+        else if(viewType == VT_THD_SEARCH_ROW) {
+            return new SearchRecyclerHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.search_recycler_item, viewGroup, false));
+        }
         else if(viewType == VT_THD_WIDGET_DEFAULT) {
             return new WidgetsViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_home_widgets, viewGroup, false));
@@ -140,16 +146,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             fillWidgetData((WidgetsViewHolder)holder, position);
         }
         else if(holder instanceof ArticlesViewHolder) {
-            ArticlesViewHolder articlesViewHolder = (ArticlesViewHolder) holder;
-            articlesViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
-
-            fillArticleData(articlesViewHolder, position);
-
-            /*ArticleBean bean = item.getArticleBean();
-
-            articlesViewHolder.itemView.setOnClickListener(v->{
-                IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
-            });*/
+            fillArticleData(holder, position);
+        }
+        else if(holder instanceof SearchRecyclerHolder) {
+            fillSearchedArticleData(holder, position);
         }
         else if(holder instanceof StaticItemWebViewHolder) {
             StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
@@ -187,12 +187,30 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 ((ViewGroup) adView.getParent()).removeView(adView);
             }
             inlineAdViewHolder.frameLayout.addView(adView);
-
         }
+    }
+
+    private void fillSearchedArticleData(final RecyclerView.ViewHolder holder, final int position) {
+        SearchRecyclerHolder searchHolder = (SearchRecyclerHolder)holder;
+        final ArticleBean bean = adapterItems.get(position).getArticleBean();
+        searchHolder.title.setText(bean.getTi());
+        searchHolder.sname.setText(bean.getSname());
+        String publishDate = bean.getPd();
+        String formatedDate = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillis(publishDate), Locale.ENGLISH);
+        searchHolder.publishDate.setText(formatedDate);
+        searchHolder.mParentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Searched ", "Searched: Article Clicked", "Search Fragment");
+                    FlurryAgent.logEvent("Searched: " + "Article Clicked");*/
+                    IntentUtil.openSingleDetailActivity(v.getContext(), NetConstants.GROUP_DEFAULT_SECTIONS, bean, bean.getArticleLink());
+            }
+        });
 
     }
 
-    private void fillArticleData(final ArticlesViewHolder holder, final int position) {
+    private void fillArticleData(final RecyclerView.ViewHolder articlesViewHolder, final int position) {
+        ArticlesViewHolder holder = (ArticlesViewHolder) articlesViewHolder;
         final ArticleBean bean = adapterItems.get(position).getArticleBean();
         if (bean != null) {
 
@@ -383,35 +401,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    /**
-     * Normal Row Item View Holder
-     */
-    public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView mArticleImageView;
-        public TextView mArticleTextView;
-        public TextView mArticleTimeTextView;
-        public TextView mArticleSectionName;
-        public LinearLayout mArticlesLayout;
-        public IconImgView mBookmarkButton;
-        public IconImgView mShareArticleButton;
-        public ImageButton mMultimediaButton;
-        public FrameLayout mImageParentLayout;
-
-        public ArticlesViewHolder(View itemView) {
-            super(itemView);
-            mMultimediaButton = itemView.findViewById(R.id.multimedia_button);
-            mImageParentLayout = itemView.findViewById(R.id.imageParentLayout);
-            mArticlesLayout = itemView.findViewById(R.id.layout_articles_root);
-            mArticleImageView = itemView.findViewById(R.id.imageview_article_list_image);
-            mArticleTextView = itemView.findViewById(R.id.textview_article_list_header);
-            mShareArticleButton = itemView.findViewById(R.id.button_article_share);
-            mArticleTimeTextView = itemView.findViewById(R.id.textview_time);
-            mBookmarkButton = itemView.findViewById(R.id.button_bookmark);
-            mArticleSectionName = itemView.findViewById(R.id.section_name);
-            mArticleSectionName.setVisibility(View.VISIBLE);
-        }
-    }
 
     /**
      * Default Widget View Holder
