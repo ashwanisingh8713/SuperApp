@@ -11,6 +11,8 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.comscore.Analytics;
+import com.comscore.PublisherConfiguration;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableWidget;
@@ -52,6 +54,18 @@ public class SuperApp extends Application implements LifecycleObserver {
     public void onMoveToForeground() {
         // app moved to foreground
         isInBackground =false;
+
+        /*Comscore integration*/
+        if(!NetConstants.IS_HOLD) {
+            PublisherConfiguration publisher = new PublisherConfiguration.Builder()
+                    .publisherSecret(getResources().getString(R.string.comscore_publisher_secret))
+                    .publisherId(getResources().getString(R.string.comscore_customer_c2))
+                    .build();
+
+            Analytics.getConfiguration().addClient(publisher);
+            Analytics.start(getApplicationContext());
+        }
+        /*Comscore ends*/
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

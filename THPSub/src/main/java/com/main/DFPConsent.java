@@ -5,21 +5,20 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.clevertap.android.sdk.CleverTapAPI;
-import com.google.ads.consent.AdProvider;
 import com.google.ads.consent.ConsentForm;
 import com.google.ads.consent.ConsentFormListener;
 import com.google.ads.consent.ConsentInfoUpdateListener;
 import com.google.ads.consent.ConsentInformation;
 import com.google.ads.consent.ConsentStatus;
 import com.google.ads.consent.DebugGeography;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.thpremium.BuildConfig;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 
 public class DFPConsent {
 
@@ -33,13 +32,13 @@ public class DFPConsent {
             public void onConsentInfoUpdated(ConsentStatus consentStatus) {
                 // User's consent status successfully updated.
                 boolean isInEurope = ConsentInformation.getInstance(context).isRequestLocationInEeaOrUnknown();
-                boolean isUserFromEurope = UserPref.getInstance(context).isUserFromEurope();
+                boolean isUserFromEurope = DefaultPref.getInstance(context).isUserFromEurope();
 
-                UserPref.getInstance(context).setDfpConsentExecuted(true);
-                UserPref.getInstance(context).setUserFromEurope(isInEurope);
-                boolean isUserPreferAdsFree = UserPref.getInstance(context).isUserPreferAdsFree();
+                DefaultPref.getInstance(context).setDfpConsentExecuted(true);
+                DefaultPref.getInstance(context).setUserFromEurope(isInEurope);
+                boolean isUserPreferAdsFree = PremiumPref.getInstance(context).isUserPreferAdsFree();
                 if(!isInEurope && !isUserPreferAdsFree) {
-                    UserPref.getInstance(context).setUserPreferAdsFree(false);
+                    PremiumPref.getInstance(context).setUserPreferAdsFree(false);
                 }
 
                 // MO-ENGAGE GDPR
@@ -105,8 +104,8 @@ public class DFPConsent {
                     public void onConsentFormClosed(
                             ConsentStatus consentStatus, Boolean userPrefersAdFree) {
                         // Consent form was closed.
-                        UserPref.getInstance(context).setUserSelectedDfpConsent(true);
-                        UserPref.getInstance(context).setUserPreferAdsFree(userPrefersAdFree);
+                        DefaultPref.getInstance(context).setUserSelectedDfpConsent(true);
+                        PremiumPref.getInstance(context).setUserPreferAdsFree(userPrefersAdFree);
 
                     }
 

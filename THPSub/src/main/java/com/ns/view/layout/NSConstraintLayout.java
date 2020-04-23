@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -32,7 +32,7 @@ public class NSConstraintLayout extends ConstraintLayout {
 
     void init(Context context, @Nullable AttributeSet attrs) {
 
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSLayout);

@@ -10,18 +10,18 @@ import java.util.Set;
  * Created by ashwanisingh on 22/09/18.
  */
 
-public class UserPref {
+public class DefaultPref {
 
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
-    private static UserPref mUser;
+    private static DefaultPref mUser;
 
 
-    private UserPref(Context context) {
+    private DefaultPref(Context context) {
         try {
-            mPreferences = context.getSharedPreferences("userPref.xml", Context.MODE_PRIVATE);
+            mPreferences = context.getSharedPreferences("DefaultPref.xml", Context.MODE_PRIVATE);
             mEditor = mPreferences.edit();
         } catch (NumberFormatException e) {
 
@@ -29,10 +29,10 @@ public class UserPref {
 
     }
 
-    public static final UserPref getInstance(Context context) {
+    public static final DefaultPref getInstance(Context context) {
         if(mUser == null) {
             try {
-                mUser = new UserPref(context);
+                mUser = new DefaultPref(context);
             } catch (Exception e) {
 
             }
@@ -40,6 +40,26 @@ public class UserPref {
 
         return mUser;
     }
+
+
+    public void setIsIntersAdLoaded(boolean isFirstTap) {
+        mEditor.putBoolean("first_tap", isFirstTap);
+        mEditor.apply();
+    }
+
+    public boolean getIsIntersAdLoaded() {
+        return mPreferences.getBoolean("first_tap", false);
+    }
+
+    public void setInterstetial_Ads_Shown(boolean Interstetial_Ads_Shown) {
+        mEditor.putBoolean("Interstetial_Ads_Shown", Interstetial_Ads_Shown);
+        mEditor.commit();
+    }
+
+    public boolean getInterstetial_Ads_Shown() {
+        return mPreferences.getBoolean("Interstetial_Ads_Shown", false);
+    }
+
 
     public void setNotificationEnable(boolean isNotificationEnable) {
         mEditor.putBoolean("isNotificationEnable", isNotificationEnable);
@@ -83,15 +103,6 @@ public class UserPref {
         return differenceTimeInMilli > 1 * 1000 * 60 * minuts;
     }
 
-    public void setBannerId(String bannerId) {
-        mEditor.putString("bannerId", bannerId);
-        mEditor.apply();
-    }
-
-    public int getBannerId() {
-        return mPreferences.getInt("bannerId", 43);
-    }
-
     public void setDescriptionSize(int size) {
         mEditor.putInt("current_size", size);
         mEditor.commit();
@@ -101,16 +112,6 @@ public class UserPref {
         return mPreferences.getInt("current_size", 2);
     }
 
-    public void setTheme(int themeVal) {
-        mEditor.putInt("themeVal", themeVal);
-        mEditor.commit();
-    }
-
-
-    public int getThemeVal() {
-        return mPreferences.getInt("themeVal", 1);
-    }
-
 
     public boolean isUserSelectedDfpConsent() {
         return mPreferences.getBoolean("isUserSelectedDfpConsent", false);
@@ -118,10 +119,6 @@ public class UserPref {
 
     public boolean isDfpConsentExecuted() {
         return mPreferences.getBoolean("isDfpConsentExecuted", false);
-    }
-
-    public boolean isUserPreferAdsFree() {
-        return mPreferences.getBoolean("isUserPreferAdsFree", false) && mPreferences.getBoolean("isUserFromEurope", false);
     }
 
     public boolean isUserFromEurope() {
@@ -136,11 +133,6 @@ public class UserPref {
 
     public void setDfpConsentExecuted(boolean isDfpConsentExecuted) {
         mEditor.putBoolean("isDfpConsentExecuted", isDfpConsentExecuted);
-        mEditor.apply();
-    }
-
-    public void setUserPreferAdsFree(boolean isUserPreferAdsFree) {
-        mEditor.putBoolean("isUserPreferAdsFree", isUserPreferAdsFree);
         mEditor.apply();
     }
 

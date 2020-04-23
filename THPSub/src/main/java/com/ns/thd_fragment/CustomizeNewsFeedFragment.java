@@ -22,9 +22,8 @@ import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.CustomizeHomeScreenActivity;
-import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
@@ -82,7 +81,7 @@ public class CustomizeNewsFeedFragment extends Fragment {
         View mRootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         mFlowLayout = mRootView.findViewById(R.id.id_flowlayout);
 
-        if(UserPref.getInstance(getActivity()).isHomeArticleOptionScreenShown()) {
+        if(DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown()) {
             mRootView.findViewById(R.id.selectTopic).setVisibility(View.GONE);
         }
 

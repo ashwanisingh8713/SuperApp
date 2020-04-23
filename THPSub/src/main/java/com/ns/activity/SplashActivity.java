@@ -10,13 +10,14 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.main.SuperApp;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 
@@ -40,7 +41,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(this).isHomeArticleOptionScreenShown();
+        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -69,12 +70,10 @@ public class SplashActivity extends BaseAcitivityTHP {
             directLaunch();
         }
 
-
-
-
-
         // Reduces Read article table
         DefaultTHApiManager.readArticleDelete(this);
+
+        DefaultPref.getInstance(SuperApp.getAppContext()).setIsIntersAdLoaded(false);
 
     }
 
@@ -95,7 +94,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onComplete(String str) {
-                boolean isHomeArticleOptionScreenShown = UserPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
+                boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 // Opens Main Tab Screen
                 if(isHomeArticleOptionScreenShown) {
                     IntentUtil.openMainTabPage(SplashActivity.this);
@@ -120,7 +119,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             public void onNext(Object o) {
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
                 Log.i("NSPEED", "Loaded Section Page from Server :: "+totalExecutionTime);
-                boolean isHomeArticleOptionScreenShown = UserPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
+                boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 if(isHomeArticleOptionScreenShown) {
                     // Get Home Article from server
                     getHomeDataFromServer();

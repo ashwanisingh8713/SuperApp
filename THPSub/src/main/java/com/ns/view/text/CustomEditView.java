@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 import com.ns.view.FontCache;
@@ -45,7 +45,7 @@ public class CustomEditView extends AppCompatEditText {
     }
 
     public void init(Context context, @Nullable AttributeSet attrs) {
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextView);

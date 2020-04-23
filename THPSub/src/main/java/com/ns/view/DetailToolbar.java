@@ -18,7 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -158,7 +158,7 @@ public class DetailToolbar extends Toolbar {
         mTitleTextView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
 
-        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(getContext()).isHomeArticleOptionScreenShown();
+        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getContext()).isHomeArticleOptionScreenShown();
 
         if(!isHomeArticleOptionScreenShown) {
             mBackImageView.setVisibility(GONE);

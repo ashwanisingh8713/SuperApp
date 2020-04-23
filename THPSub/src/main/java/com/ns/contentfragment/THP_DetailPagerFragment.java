@@ -24,7 +24,7 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -430,7 +430,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 // It stops TTS if it's playing.
                 TTSManager.getInstance().stopTTS();
                 // It shows TTS Play view and hides Stop View
-                mActivity.getDetailToolbar().showTTSPlayView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
+                mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
                 THP_DetailFragment fragment = (THP_DetailFragment)mSectionsPagerAdapter.getRegisteredFragment(i);
                 DefaultTHApiManager.readArticleId(getActivity(), fragment.getArticleId());
             }

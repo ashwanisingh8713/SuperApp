@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -17,10 +16,12 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.main.AppAds;
+import com.netoperation.model.AdData;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.PremiumPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.adapter.AppTabPagerAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnSubscribeBtnClick;
@@ -96,7 +97,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             mFrom = getArguments().getString("from");
         }
 
-        mIsUserThemeDay = UserPref.getInstance(getActivity()).isUserThemeDay();
+        mIsUserThemeDay = DefaultPref.getInstance(getActivity()).isUserThemeDay();
     }
 
     public void updateTabIndex() {
@@ -190,12 +191,14 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         });
 
         view.findViewById(R.id.subsCloseImg).setOnClickListener(v -> {
-            THPPreferences.getInstance(getActivity()).setIsSubscribeClose(true);
+            PremiumPref.getInstance(getActivity()).setIsSubscribeClose(true);
             view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
         });
 
         // Tabs custom click handling
         tabClickHandling();
+
+        createAndShowBannerAds();
 
     }
 
@@ -251,7 +254,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
                     if (hasSubscriptionPlan) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
-                    } else if (THPPreferences.getInstance(getActivity()).isSubscribeClose()) {
+                    } else if (PremiumPref.getInstance(getActivity()).isSubscribeClose()) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
                     } else {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.VISIBLE);
@@ -297,5 +300,36 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
 
+    private void createAndShowBannerAds() {
+        AppAds appAds = new AppAds();
+        appAds.createBannerAdRequest(true);
+        appAds.setOnAppAdLoadListener(new AppAds.OnAppAdLoadListener() {
+            @Override
+            public void onAppAdLoadSuccess(AdData adData) {
+                LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
+                banner_Ad_layout.setVisibility(View.VISIBLE);
+                banner_Ad_layout.addView(adData.getAdView());
+            }
+
+            @Override
+            public void onAppAdLoadFailure(AdData adData) {
+                Log.i("", "");
+
+            }
+        });
+    }
+
+
+    private void updateUserStatus() {
+        ApiManager.getUserProfile(getActivity())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userProfile -> {
+                    boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
+
+                    PremiumPref.getInstance(getActivity()).isUserPreferAdsFree();
+                    //PremiumPref.getInstance(getActivity())
+
+                });
+    }
 
 }

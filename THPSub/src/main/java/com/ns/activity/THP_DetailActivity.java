@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.main.AppAds;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
@@ -13,7 +14,11 @@ import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class THP_DetailActivity extends BaseAcitivityTHP {
 
@@ -75,12 +80,25 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
         }
 
-
+        // To Create Full Screen Ad
+        Observable.just("")
+                .subscribeOn(Schedulers.newThread())
+                .delay(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(val->{
+                    new AppAds().loadFullScreenAds();
+                });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "THP_DetailActivity Screen", THP_DetailActivity.class.getSimpleName());
+    }
+
+    @Override
+    protected void onDestroy() {
+        new AppAds().showFullScreenAds();
+        super.onDestroy();
     }
 }

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -29,7 +29,7 @@ public class CustomRecyclerView extends RecyclerView {
 
 
     void init(Context context) {
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         if(isUserThemeDay) {
             setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
         }

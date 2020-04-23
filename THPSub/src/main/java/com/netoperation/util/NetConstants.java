@@ -2,6 +2,8 @@ package com.netoperation.util;
 
 public class NetConstants {
 
+    public static final boolean IS_HOLD = true;
+
     public static final String TAG_UNIQUE = "Ashwani";
     public static final String TAG_ERROR = "ERRORAshwani";
 

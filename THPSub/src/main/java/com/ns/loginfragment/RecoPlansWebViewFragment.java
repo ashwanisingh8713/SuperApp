@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.THPUserProfileActivity;
 import com.ns.alerts.Alerts;
@@ -284,7 +284,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
                     ApiManager.getUserProfile(getActivity())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(userProfile -> {
-                                if (!THPPreferences.getInstance(getContext()).isUserLoggedIn() || userProfile.getUserId() == null ) {
+                                if (!PremiumPref.getInstance(getContext()).isUserLoggedIn() || userProfile.getUserId() == null ) {
                                     IntentUtil.openSignInOrUpActivity(getContext(), THPConstants.FROM_START_30_DAYS_TRAIL);
                                 } else if (userProfile.isHasFreePlan()) {
                                     Alerts.showAlertDialogOKBtn(getContext(), "Already Signed up", "You have already signed up and availing 30 days free trial.");
@@ -371,7 +371,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
                     boolean mHasFreePlan = userProfile.isHasFreePlan();
                     boolean mHasSubscriptionPlan = userProfile.isHasSubscribedPlan();
                     if (getActivity() != null) {
-                        boolean isUserLoggedIn = THPPreferences.getInstance(getActivity()).isUserLoggedIn();
+                        boolean isUserLoggedIn = PremiumPref.getInstance(getActivity()).isUserLoggedIn();
                         if (isUserLoggedIn && !mHasFreePlan && !mHasSubscriptionPlan) {
                             Alerts.showAlertDialogOKBtn(getActivity(), "Kindly Subscribe", "Your active plans has expired. Please subscribe.");
                         }

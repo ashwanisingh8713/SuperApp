@@ -1,5 +1,6 @@
 package com.ns.model;
 
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 
 public class AppTabContentModel {
@@ -7,6 +8,7 @@ public class AppTabContentModel {
     private int viewType;
     private ArticleBean bean;
     private String uniqueIdForView;
+    private AdData adData;
 
     public AppTabContentModel(int viewType) {
         this.viewType = viewType;
@@ -31,6 +33,14 @@ public class AppTabContentModel {
 
     public void setBean(ArticleBean bean) {
         this.bean = bean;
+    }
+
+    public AdData getAdData() {
+        return adData;
+    }
+
+    public void setAdData(AdData adData) {
+        this.adData = adData;
     }
 
     @Override

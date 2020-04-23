@@ -3,24 +3,16 @@ package com.ns.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 
 public class THP_AutoResizeWebview extends WebView {
 
@@ -93,7 +85,7 @@ public class THP_AutoResizeWebview extends WebView {
         if(description == null) {
             description = "";
         }
-        final boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        final boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         String bodyCSS = "color: #000; background-color: #ffffff;";
         String urlColor = "";
         if(isUserThemeDay) {
@@ -139,7 +131,7 @@ public class THP_AutoResizeWebview extends WebView {
 
         String fontPath = context.getResources().getString(R.string.THP_TundraOffc);
 
-        final boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        final boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         if (leadText != null && TextUtils.isEmpty(leadText)) {
             if (isUserThemeDay) {
                 description = "<html><head>"

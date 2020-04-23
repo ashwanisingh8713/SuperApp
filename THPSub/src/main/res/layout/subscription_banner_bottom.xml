@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/subscribeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/subscribeLayoutHeight"
+    android:layout_marginBottom=".2dp"
+    android:background="#b49443"
+    android:clickable="true"
+    android:paddingStart="13dp"
+    android:paddingLeft="13dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/subsCrownImg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_crown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/subsTitle1"
+        app:font_path="@string/THP_FiraSans_Bold"
+        app:layout_constraintLeft_toRightOf="@+id/subsCrownImg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="Become a Premium member now!"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/subscription_bottom_title" />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/subsTitle12"
+        app:font_path="@string/THP_FiraSans_Regular"
+        app:layout_constraintLeft_toRightOf="@+id/subsCrownImg"
+        app:layout_constraintTop_toBottomOf="@+id/subsTitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="Enjoy member benefits and more…"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/subscription_bottom_sub_title" />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/subscribeBtn_Txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/subsCloseImg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/apptab_subscription_bg"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Subscribe"
+        android:textColor="#ad8b41"
+        android:textSize="@dimen/subscription_bottom_sub_title" />
+
+    <ImageView
+        android:id="@+id/subsCloseImg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_subscrible_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

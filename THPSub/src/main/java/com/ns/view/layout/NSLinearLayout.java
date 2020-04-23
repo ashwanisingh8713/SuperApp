@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -41,7 +41,7 @@ public class NSLinearLayout extends LinearLayout {
             }
         }
 
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         // 0 = Opinion
         if(viewType == 0) {

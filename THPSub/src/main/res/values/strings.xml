@@ -206,4 +206,8 @@
     <string name="taboola_placement_section" translatable="false">Below Section Stream</string>
     <string name="taboola_placement_section_source_type" translatable="false">section</string>
     <string name="taboola_placement_detail" translatable="false">Below Article Stream</string>
+
+    <string name="comscore_customer_c2">11398210</string>
+    <string name="comscore_publisher_secret">7374b487c7c1a5f24aab4967f9818dec</string>
+
 </resources>

@@ -19,14 +19,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.material.snackbar.Snackbar;
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.PremiumPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnEditionBtnClickListener;
@@ -53,6 +56,7 @@ import com.ns.viewholder.DG_Restricted_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
 import com.ns.viewholder.DG_DetailBannerViewHolder;
 import com.ns.viewholder.DG_DetailDescriptionWebViewHolder;
+import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.ViewHolderTaboola;
@@ -121,6 +125,23 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         return mContent.get(position).getViewType();
     }
 
+    public int indexOf(AppTabContentModel item) {
+        return mContent.indexOf(item);
+    }
+
+    public int insertItem(AppTabContentModel item, int index) {
+        int updateIndex = 0;
+        if(index >= mContent.size()) {
+            mContent.add(item);
+            updateIndex = mContent.size()-1;
+        } else if(index < mContent.size()){
+            mContent.add(index, item);
+            updateIndex = index;
+        }
+
+        return updateIndex;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -170,6 +191,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             }
             return new ViewHolderTaboola(mInfiniteTaboolaView);
         }
+        else if(viewType == VT_THD_300X250_ADS) {
+            return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.inline_ads_container, viewGroup, false));
+        }
         else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
 
         }
@@ -203,7 +228,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             dg_ui_detail_banner(viewHolder, bean);
         }
         else if(viewHolder instanceof DG_DetailDescriptionWebViewHolder) {
-            dg_ui_detail_description(viewHolder, bean);
+            dg_ui_detail_description(viewHolder, mContent.get(position));
         }
         else if(viewHolder instanceof ViewHolderTaboola) {
             if (mInfiniteTaboolaView.getTag() == null) {
@@ -214,10 +239,35 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         else if(viewHolder instanceof DG_Restricted_DetailDescriptionWebViewHolder) {
             dg_ui_restricted_detail_description(viewHolder, bean);
         }
+        else if(viewHolder instanceof InlineAdViewHolder) {
+            fillInlineAdView(viewHolder, mContent.get(position));
+        }
 
     }
 
 
+    private void fillInlineAdView(final RecyclerView.ViewHolder holder, AppTabContentModel item) {
+        AdData adData = item.getAdData();
+        InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
+        inlineAdViewHolder.frameLayout.removeAllViews();
+        inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
+        final PublisherAdView adView = adData.getAdView();
+
+        if(adData.isReloadOnScroll()) {
+            // Create an ad request.
+            PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
+            // Start loading the ad.
+            adView.loadAd(publisherAdRequestBuilder.build());
+        }
+
+        inlineAdViewHolder.frameLayout.setBackground(null);
+        adView.removeView(inlineAdViewHolder.frameLayout);
+        // Just below is fix of Crashlytics #6509
+        if (adView != null && adView.getParent() != null) {
+            ((ViewGroup) adView.getParent()).removeView(adView);
+        }
+        inlineAdViewHolder.frameLayout.addView(adView);
+    }
 
     /**
      * Shows content on UI of Listing
@@ -285,7 +335,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         );
 
         holder.itemView.setOnClickListener(v -> {
-                    if (THPPreferences.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
+                    if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
                         IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     } else {
@@ -357,7 +407,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     }
-                    else if (THPPreferences.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
+                    else if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
                         IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     } else {
@@ -541,7 +591,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         PREMIUM_DetailDescriptionWebViewHolder holder = (PREMIUM_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = UserPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
+        mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
         new WebViewLinkClick().linkClick(holder.mLeadTxt, holder.itemView.getContext(), bean.getArticleId());
@@ -586,7 +636,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             holder.editionBtn_Txt.setVisibility(View.GONE);
         }
 
-        boolean isDayTheme = UserPref.getInstance(holder.editionBtn_Txt.getContext()).isUserThemeDay();
+        boolean isDayTheme = DefaultPref.getInstance(holder.editionBtn_Txt.getContext()).isUserThemeDay();
         if (isDayTheme) {
             holder.editionBtn_Txt.setCompoundDrawablesWithIntrinsicBounds(null, null,
                     ResUtil.getBackgroundDrawable(holder.editionBtn_Txt.getContext().getResources(), R.drawable.ic_edition_dropdown), null);
@@ -647,19 +697,30 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     /**
      * Default Group Detail Page Description UI
      * @param viewHolder
-     * @param bean
+     * @param item
      */
-    private void dg_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+    private void dg_ui_detail_description(RecyclerView.ViewHolder viewHolder, AppTabContentModel item) {
+        ArticleBean bean = item.getBean();
         DG_DetailDescriptionWebViewHolder holder = (DG_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+
+        String fullDescription = bean.getDescription();
+
+        if(item.getUniqueIdForView().equals("description_1Model")) {
+            holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription.substring(0, bean.getAdd_pos() - 1)),
+                    "text/html", "UTF-8", null);
+        }
+        else if(item.getUniqueIdForView().equals("description_2Model")) {
+            holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), "", fullDescription.substring(bean.getAdd_pos() - 1)),
+                    "text/html", "UTF-8", null);
+        }
 
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
         new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), bean.getArticleId());
 
-        holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), bean.getDescription()),
-                "text/html", "UTF-8", null);
+
 
     }
 
@@ -670,7 +731,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void dg_ui_restricted_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_Restricted_DetailDescriptionWebViewHolder holder = (DG_Restricted_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
 
         holder.webview.setSize(mDescriptionTextSize);
 
@@ -678,7 +739,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 "text/html", "UTF-8", null);
 
         RelativeLayout.LayoutParams part1WebviewParam = (RelativeLayout.LayoutParams) holder.webview.getLayoutParams();
-        mDescriptionTextSize = UserPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
         if (part1WebviewParam != null) {
             switch (mDescriptionTextSize) {
                 case 0:
@@ -719,7 +780,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         taboolaWidget.setPublisher(res.getString(R.string.taboola_pub));
         taboolaWidget.setPageType(res.getString(R.string.taboola_pagetype));
         taboolaWidget.setMode(res.getString(R.string.taboola_mode));
-        boolean mIsDayTheme = UserPref.getInstance(taboolaWidget.getContext()).isUserThemeDay();
+        boolean mIsDayTheme = DefaultPref.getInstance(taboolaWidget.getContext()).isUserThemeDay();
         if (mIsDayTheme) {
             taboolaWidget.setPlacement(res.getString(R.string.taboola_placement));
         } else {

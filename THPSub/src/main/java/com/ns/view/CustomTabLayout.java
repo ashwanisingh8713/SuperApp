@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -35,7 +35,7 @@ public class CustomTabLayout extends TabLayout {
     }
 
     private void init(Context context) {
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         if(isUserThemeDay) {
             setTabTextColors(ResUtil.getColor(getResources(), R.color.text_warm_grey), ResUtil.getColor(getResources(), R.color.color_banner_text));
             setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_titlestrip_background));

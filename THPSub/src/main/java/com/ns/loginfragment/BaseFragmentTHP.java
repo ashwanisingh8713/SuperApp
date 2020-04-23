@@ -22,7 +22,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
@@ -53,7 +53,7 @@ public abstract class BaseFragmentTHP extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIsDayTheme = UserPref.getInstance(getActivity()).isUserThemeDay();
+        mIsDayTheme = DefaultPref.getInstance(getActivity()).isUserThemeDay();
     }
 
     @Nullable

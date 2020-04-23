@@ -20,7 +20,7 @@
     <!-- Start Logo Icon-->
     <com.ns.view.LogoImgView
         android:id="@+id/action_logo"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"

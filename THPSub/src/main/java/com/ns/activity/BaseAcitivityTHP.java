@@ -10,13 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.retrofit.ServiceFactory;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.PremiumPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarClickListener;
@@ -50,7 +49,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        mIsDayTheme = UserPref.getInstance(this).isUserThemeDay();
+        mIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
         // Dialog Theme change
         if(mIsDayTheme) {
@@ -229,6 +228,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     }
 
     protected boolean isUserLoggedIn() {
-        return THPPreferences.getInstance(this).isUserLoggedIn();
+        return PremiumPref.getInstance(this).isUserLoggedIn();
     }
 }

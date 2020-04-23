@@ -11,11 +11,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.ads.AdSize;
+import com.main.AppAds;
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.AppTabContentAdapter;
@@ -31,6 +34,7 @@ import com.ns.tts.TTSCallbacks;
 import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
@@ -41,7 +45,7 @@ import java.util.ArrayList;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools {
+public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, AppAds.OnAppAdLoadListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private AppTabContentAdapter mRecyclerAdapter;
@@ -127,7 +131,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
-            dgCreateRows(mArticleBean);
+            dgPage(mArticleBean);
         }
         else {
             if (mArticleBean.getHasDescription() == 0) {
@@ -217,7 +221,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recoBean->{
-                            premiumCreateRows(recoBean);
+                            premiumPage(recoBean);
                         },
                         throwable->{
                             Log.i("", "");
@@ -230,7 +234,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{
-                                    premiumCreateRows(recoBean);
+                                    premiumPage(recoBean);
                                 },
                                 throwable->{
                                     Log.i("", "");
@@ -244,7 +248,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mDisposable.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(recoBean->{
-                                    dgCreateRows(recoBean);
+                                    dgPage(recoBean);
                                 },
                                 throwable->{
                                     Log.i("", "");
@@ -448,22 +452,22 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onFontSizeClickListener(ToolbarCallModel toolbarCallModel) {
-        final int currentSize = UserPref.getInstance(getActivity()).getDescriptionSize();
+        final int currentSize = DefaultPref.getInstance(getActivity()).getDescriptionSize();
         switch (currentSize) {
             case THPConstants.DESCRIPTION_SMALL:
-                UserPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_NORMAL);
+                DefaultPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_NORMAL);
                 break;
 
             case THPConstants.DESCRIPTION_NORMAL:
-                UserPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_LARGE);
+                DefaultPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_LARGE);
                 break;
 
             case THPConstants.DESCRIPTION_LARGE:
-                UserPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_LARGEST);
+                DefaultPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_LARGEST);
                 break;
 
             case THPConstants.DESCRIPTION_LARGEST:
-                UserPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_SMALL);
+                DefaultPref.getInstance(getActivity()).setDescriptionSize(THPConstants.DESCRIPTION_SMALL);
                 break;
         }
 
@@ -510,13 +514,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                         break;
 
                 }
-                mActivity.getDetailToolbar().showTTSPlayView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
+                mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
             }
 
             @Override
             public void onTTSPlayStarted(int loopCount) {
                 if(loopCount == 0) {
-                    mActivity.getDetailToolbar().showTTSPauseView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
+                    mActivity.getDetailToolbar().showTTSPauseView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
                 }
             }
         });
@@ -525,7 +529,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void onTTSStopClickListener(ToolbarCallModel toolbarCallModel) {
         TTSManager.getInstance().stopTTS();
-        mActivity.getDetailToolbar().showTTSPlayView(UserPref.getInstance(getActivity()).isLanguageSupportTTS());
+        mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
     }
 
     /**
@@ -533,7 +537,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      */
     private void updateDescriptionTextSize() {
         if(mRecyclerAdapter != null) {
-            int descriptionSize = UserPref.getInstance(getActivity()).getDescriptionSize();
+            int descriptionSize = DefaultPref.getInstance(getActivity()).getDescriptionSize();
             if(mRecyclerAdapter.getLastDescriptionTextSize() != descriptionSize) {
                 mRecyclerAdapter.notifyItemChanged(mRecyclerAdapter.getDescriptionItemPosition());
             }
@@ -614,7 +618,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      * Creates Premium Detail Page
      * @param bean
      */
-    private void premiumCreateRows(ArticleBean bean) {
+    private void premiumPage(ArticleBean bean) {
         AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_PREMIUM_DETAIL_IMAGE_BANNER);
         bannerModel.setBean(bean);
         mRecyclerAdapter.addData(bannerModel);
@@ -630,14 +634,32 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      * Creates Default Group Detail Page
      * @param bean
      */
-    private void dgCreateRows(ArticleBean bean) {
+    private void dgPage(ArticleBean bean) {
         AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
         bannerModel.setBean(bean);
         mRecyclerAdapter.addData(bannerModel);
 
-            /*AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
-            description_1Model.setBean(mArticleBean);
-            mRecyclerAdapter.addData(description_1Model);*/
+        AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
+        description_1Model.setBean(mArticleBean);
+        mRecyclerAdapter.addData(description_1Model);
+
+        AppTabContentModel description_2Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_2Model");
+        description_2Model.setBean(mArticleBean);
+        mRecyclerAdapter.addData(description_2Model);
+
+
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
+        taboolaModel.setBean(bean);
+        mRecyclerAdapter.addData(taboolaModel);
+
+        loadAdvertisiment();
+    }
+
+
+    private void dgRestrictedPage(ArticleBean bean) {
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+        bannerModel.setBean(bean);
+        mRecyclerAdapter.addData(bannerModel);
 
         AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, "description_restricted");
         description_restricted.setBean(bean);
@@ -648,4 +670,49 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mRecyclerAdapter.addData(taboolaModel);
     }
 
+
+    private void loadAdvertisiment() {
+        if(!NetUtils.isConnected(getActivity())) {
+            return;
+        }
+        ArrayList<AdData> mAdsData = new ArrayList<>();
+        ArrayList<String> adsId = new ArrayList<>();
+        adsId.add(AppAds.firstInline);
+        adsId.add(AppAds.secondInline);
+
+        for(int i=0; i<adsId.size(); i++) {
+            int index = 0;
+            if(i == 0) {
+                index = 2;
+            }
+            else if(i == 1) {
+                index = 4;
+            }
+
+            AdData adData = new AdData(index, AdSize.MEDIUM_RECTANGLE, adsId.get(i), false);
+            mAdsData.add(adData);
+        }
+
+        AppAds appAds = new AppAds(mAdsData, this);
+        appAds.loadAds();
+    }
+
+
+    @Override
+    public void onAppAdLoadSuccess(AdData adData) {
+        AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
+        item.setAdData(adData);
+        int index = mRecyclerAdapter.indexOf(item);
+        if(index == -1) {
+            if(adData.getAdView() != null) {
+                int updateIndex = mRecyclerAdapter.insertItem(item, adData.getIndex());
+                mRecyclerAdapter.notifyItemChanged(updateIndex);
+            }
+        }
+    }
+
+    @Override
+    public void onAppAdLoadFailure(AdData adData) {
+
+    }
 }

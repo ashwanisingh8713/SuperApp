@@ -23,7 +23,7 @@ import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.RequestCallback;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
@@ -360,7 +360,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                             intent.putExtra("isRequestPayment", true);
                         } else {
                             // When user logged in then we need this to refresh the default TH listing page.
-                            THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                            PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                             //Always open Briefing screen - Requirement 14 Sept,2019
                             IntentUtil.openContentListingActivity(getActivity(), THPConstants.FROM_USER_SignUp);
                         }
@@ -463,21 +463,21 @@ public class SetPasswordFragment extends BaseFragmentTHP {
 
     private void openContentListingActivity(UserProfile userProfile) {
         //Always set True if Successful Login
-        THPPreferences.getInstance(getContext()).setIsRelogginSuccess(true);
+        PremiumPref.getInstance(getContext()).setIsRelogginSuccess(true);
         Intent intent = new Intent();
         intent.putExtra("isKillToBecomeMemberActivity", true);
         //CleverTap
-        THPPreferences.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
+        PremiumPref.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
         CleverTapUtil.cleverTapUpdateProfile(getActivity(), true, userProfile, userProfile.isHasSubscribedPlan(), userProfile.isHasFreePlan());
 
         if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT) || SignInFragment.IS_FORGOT_PASSWORD_REDIRECT_PAYMENT) {
             intent.putExtra("isRequestPayment", true);
-            THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+            PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
         } else {
             if (userProfile != null && (userProfile.isHasFreePlan() || userProfile.isHasSubscribedPlan())) {
                 // Process for user sign - In
                 // When user logged in then we need this to refresh the default TH listing page.
-                THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                 if (THPConstants.IS_FROM_MP_BLOCKER) {
                     //Disable the MP constant
                     THPConstants.IS_FROM_MP_BLOCKER = false;
@@ -488,7 +488,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                 }
             } else if (userProfile != null && !(userProfile.isHasFreePlan() && userProfile.isHasSubscribedPlan())) {
                 // When user logged in then we need this to refresh the default TH listing page.
-                THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                 if (THPConstants.IS_FROM_MP_BLOCKER) {
                     //Disable the MP constant
                     THPConstants.IS_FROM_MP_BLOCKER = false;
@@ -522,7 +522,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                                     if (userProfile == null) {
                                         return "";
                                     }
-                                    THPPreferences.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
+                                    PremiumPref.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
                                     userProfile.setHasFreePlan(true);
                                     CleverTapUtil.cleverTapUpdateProfile(getActivity(), true, userProfile, userProfile.isHasSubscribedPlan(), userProfile.isHasFreePlan());
                                     return "";
@@ -532,9 +532,9 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                                     Log.i("", "" + t);
                                 }));
                         //Always set True if Successful Login
-                        THPPreferences.getInstance(getContext()).setIsRelogginSuccess(true);
+                        PremiumPref.getInstance(getContext()).setIsRelogginSuccess(true);
                         // When user logged in then we need this to refresh the default TH listing page.
-                        THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                        PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                         Intent intent = new Intent();
                         intent.putExtra("isKillToBecomeMemberActivity", true);
                         if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {
@@ -562,7 +562,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // When user logged in then we need this to refresh the default TH listing page.
-                                THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                                PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                                 Intent intent = new Intent();
                                 intent.putExtra("isKillToBecomeMemberActivity", true);
                                 if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {
@@ -588,7 +588,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // When user logged in then we need this to refresh the default TH listing page.
-                            THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                            PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                             Intent intent = new Intent();
                             intent.putExtra("isKillToBecomeMemberActivity", true);
                             if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {

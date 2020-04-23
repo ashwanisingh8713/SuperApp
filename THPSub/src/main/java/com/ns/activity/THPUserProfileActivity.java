@@ -16,7 +16,7 @@ import com.netoperation.model.PaytmModel;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnPlanInfoLoad;
 import com.ns.callbacks.OnSubscribeBtnClick;
@@ -167,8 +167,8 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 showProgressDialog("\nVerifying transaction status ...");
                 ApiManager.getUserInfo(this, BuildConfig.SITEID,
                         ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                        THPPreferences.getInstance(this).getLoginId(),
-                        THPPreferences.getInstance(this).getLoginPasswd())
+                        PremiumPref.getInstance(this).getLoginId(),
+                        PremiumPref.getInstance(this).getLoginPasswd())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(val -> {
                             hideProgressDialog();
@@ -217,7 +217,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     @Override
     public void onSubscribeBtnClick(TxnDataBean bean) { /*Not using anymore*/
         mSelectedPlanId = bean.getPlanId();
-        if (!THPPreferences.getInstance(this).isUserLoggedIn()/*mUserProfile == null || mUserProfile.getUserId() == null || TextUtils.isEmpty(mUserProfile.getUserId())*/) {
+        if (!PremiumPref.getInstance(this).isUserLoggedIn()/*mUserProfile == null || mUserProfile.getUserId() == null || TextUtils.isEmpty(mUserProfile.getUserId())*/) {
             IntentUtil.openSignInOrUpActivity(this, THPConstants.FROM_SignUpAndPayment);
 
             return;
@@ -404,18 +404,18 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     //Paytm Checksum
     private void generateChecksumHashForPaytm(int planId) {
         if (BuildConfig.DEBUG){
-            THPPreferences.getInstance(this).setStatusTest("");
-            if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("success")) {
+            PremiumPref.getInstance(this).setStatusTest("");
+            if (PremiumPref.getInstance(this).getStatus().equalsIgnoreCase("success")) {
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("success", "");
                 FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
-            } else if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("failed")){
+            } else if (PremiumPref.getInstance(this).getStatus().equalsIgnoreCase("failed")){
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("failed", "");
                 FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
-            } else if (THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("pending")){
+            } else if (PremiumPref.getInstance(this).getStatus().equalsIgnoreCase("pending")){
                 TxnStatusFragment fragment = TxnStatusFragment.getInstance("pending", "");
                 FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             }
-            if (!THPPreferences.getInstance(this).getStatus().equalsIgnoreCase("")) {
+            if (!PremiumPref.getInstance(this).getStatus().equalsIgnoreCase("")) {
                 return;
             }
         }
@@ -473,8 +473,8 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                     //getUserInfoApiCall();
                     ApiManager.getUserInfo(this, BuildConfig.SITEID,
                             ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                            THPPreferences.getInstance(this).getLoginId(),
-                            THPPreferences.getInstance(this).getLoginPasswd())
+                            PremiumPref.getInstance(this).getLoginId(),
+                            PremiumPref.getInstance(this).getLoginPasswd())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(val -> {
                                 hideProgressDialog();
@@ -527,8 +527,8 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     private void getUserInfoApiCall() {
         ApiManager.getUserInfo(this, BuildConfig.SITEID,
                 ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                THPPreferences.getInstance(this).getLoginId(),
-                THPPreferences.getInstance(this).getLoginPasswd())
+                PremiumPref.getInstance(this).getLoginId(),
+                PremiumPref.getInstance(this).getLoginPasswd())
                 .subscribe();
     }
 
@@ -610,7 +610,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
         mpackValue = packValue;
         mpackValidity = packValidity;
 
-        if (!THPPreferences.getInstance(this).isUserLoggedIn()) {
+        if (!PremiumPref.getInstance(this).isUserLoggedIn()) {
             IntentUtil.openSignInOrUpActivity(this, THPConstants.FROM_SignUpAndPayment);
             return;
         }

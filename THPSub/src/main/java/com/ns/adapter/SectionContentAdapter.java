@@ -152,41 +152,49 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             fillSearchedArticleData(holder, position);
         }
         else if(holder instanceof StaticItemWebViewHolder) {
-            StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
-            StaticPageUrlBean pageUrlBean = item.getStaticPageUrlBean();
-            staticItemHolder.webView.loadUrl(pageUrlBean.getUrl());
-            if(!pageUrlBean.getSectionId().equals("0")) {
-                staticItemHolder.mDummyView.setVisibility(View.VISIBLE);
-                // DummyView Click Listener
-                // TODO, redirect on particular section or sub-section
-//                staticItemHolder.mDummyView.setOnClickListener(new StaticItemDummyViewClick(url, mContext, null, false, -1));
-            } else {
-                staticItemHolder.mDummyView.setVisibility(View.GONE);
-                // Enabling Weblink click on Lead Text
-                new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext());
-            }
+            fillStaticWebview(holder, item);
         }
         else if(holder instanceof InlineAdViewHolder) {
-            AdData adData = item.getAdData();
-            InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
-            inlineAdViewHolder.frameLayout.removeAllViews();
-            inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
-            final PublisherAdView adView = adData.getAdView();
+            fillInlineAdView(holder, item);
+        }
+    }
 
-            if(adData.isReloadOnScroll()) {
-                // Create an ad request.
-                PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
-                // Start loading the ad.
-                adView.loadAd(publisherAdRequestBuilder.build());
-            }
+    private void fillInlineAdView(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+        AdData adData = item.getAdData();
+        InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
+        inlineAdViewHolder.frameLayout.removeAllViews();
+        inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
+        final PublisherAdView adView = adData.getAdView();
 
-            inlineAdViewHolder.frameLayout.setBackground(null);
-            adView.removeView(inlineAdViewHolder.frameLayout);
-            // Just below is fix of Crashlytics #6509
-            if (adView != null && adView.getParent() != null) {
-                ((ViewGroup) adView.getParent()).removeView(adView);
-            }
-            inlineAdViewHolder.frameLayout.addView(adView);
+        if(adData.isReloadOnScroll()) {
+            // Create an ad request.
+            PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
+            // Start loading the ad.
+            adView.loadAd(publisherAdRequestBuilder.build());
+        }
+
+        inlineAdViewHolder.frameLayout.setBackground(null);
+        adView.removeView(inlineAdViewHolder.frameLayout);
+        // Just below is fix of Crashlytics #6509
+        if (adView != null && adView.getParent() != null) {
+            ((ViewGroup) adView.getParent()).removeView(adView);
+        }
+        inlineAdViewHolder.frameLayout.addView(adView);
+    }
+
+    private void fillStaticWebview(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+        StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
+        StaticPageUrlBean pageUrlBean = item.getStaticPageUrlBean();
+        staticItemHolder.webView.loadUrl(pageUrlBean.getUrl());
+        if(!pageUrlBean.getSectionId().equals("0")) {
+            staticItemHolder.mDummyView.setVisibility(View.VISIBLE);
+            // DummyView Click Listener
+            // TODO, redirect on particular section or sub-section
+            // staticItemHolder.mDummyView.setOnClickListener(new StaticItemDummyViewClick(url, mContext, null, false, -1));
+        } else {
+            staticItemHolder.mDummyView.setVisibility(View.GONE);
+            // Enabling Weblink click on Lead Text
+            new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext());
         }
     }
 

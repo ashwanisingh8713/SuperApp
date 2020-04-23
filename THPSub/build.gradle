@@ -20,7 +20,11 @@ android {
         buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
         buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
 
+        // TH Base URL
         buildConfigField "String", "DEFAULT_TH_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
+
+        // BL Base URL
+        buildConfigField "String", "DEFAULT_BL_BASE_URL", "\"http:/18.141.72.8/hinduBL/service/api_v2/\""
 
         buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
         buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
@@ -185,6 +189,17 @@ dependencies {
 
     // Taboola
     implementation deps.TABOOLA
+
+    // Comscore SDK
+    implementation 'com.comscore:android-analytics:5.+'
+
+    // Facebook Ads
+    implementation 'com.facebook.android:audience-network-sdk:5.1.0'
+    implementation 'com.google.ads.mediation:facebook:5.1.0.0'
+
+    //InMobi Ads
+    implementation 'com.inmobi.monetization:inmobi-ads:7.0.4'
+    implementation files('libs/libadapterinmobi.jar')
 
 }
 

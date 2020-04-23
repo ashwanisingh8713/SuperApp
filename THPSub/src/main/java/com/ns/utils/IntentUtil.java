@@ -25,8 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.PremiumPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BecomeMemberActivity;
@@ -78,9 +78,9 @@ public class IntentUtil {
      */
     public static void loginApiCall(Activity context) {
 
-        String loginId = THPPreferences.getInstance(context).getLoginId();
-        String loginPasswd = THPPreferences.getInstance(context).getLoginPasswd();
-        String userName = THPPreferences.getInstance(context).getUserLoggedName();
+        String loginId = PremiumPref.getInstance(context).getLoginId();
+        String loginPasswd = PremiumPref.getInstance(context).getLoginPasswd();
+        String userName = PremiumPref.getInstance(context).getUserLoggedName();
         String deviceId = ResUtil.getDeviceId(context);
 
         String email = "";
@@ -107,7 +107,7 @@ public class IntentUtil {
         }
 
         if(isFacebookLogin) {
-            /*THPPreferences.getInstance(context).clearPref();
+            /*PremiumPref.getInstance(context).clearPref();
             // Facebook Logout
             if(AccessToken.getCurrentAccessToken() != null) {
                 AccessToken.setCurrentAccessToken(null);
@@ -121,19 +121,19 @@ public class IntentUtil {
                     .subscribe(keyValueModel -> {
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
                             // Facebook Logout
                             if(AccessToken.getCurrentAccessToken() != null) {
                                 AccessToken.setCurrentAccessToken(null);
                             }
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
 
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        THPPreferences.getInstance(context).clearPref();
+                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        PremiumPref.getInstance(context).clearPref();
                         // Facebook Logout
                         if(AccessToken.getCurrentAccessToken() != null) {
                             AccessToken.setCurrentAccessToken(null);
@@ -141,7 +141,7 @@ public class IntentUtil {
                     });
         }
         else if(isTwitterLogin) {
-            /*THPPreferences.getInstance(context).clearPref();
+            /*PremiumPref.getInstance(context).clearPref();
             try {
                 // Twitter Logout
                 if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null) {
@@ -163,8 +163,8 @@ public class IntentUtil {
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
 
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
                             try {
                                 // Twitter Logout
                                 if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null) {
@@ -177,11 +177,11 @@ public class IntentUtil {
                                 Log.i("", "");
                             }
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        THPPreferences.getInstance(context).clearPref();
+                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        PremiumPref.getInstance(context).clearPref();
                         try {
                             // Twitter Logout
                             if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null) {
@@ -196,7 +196,7 @@ public class IntentUtil {
                     });
         }
         else if(isGoogleLogin) {
-            /*THPPreferences.getInstance(context).clearPref();
+            /*PremiumPref.getInstance(context).clearPref();
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(context.getResources().getString(com.ns.thpremium.R.string.default_web_client_id))
@@ -226,8 +226,8 @@ public class IntentUtil {
                     .subscribe(keyValueModel -> {
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
 
                             //logout
                             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -250,11 +250,11 @@ public class IntentUtil {
 
                             }
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        THPPreferences.getInstance(context).clearPref();
+                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        PremiumPref.getInstance(context).clearPref();
 
                         //logout
                         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -291,20 +291,20 @@ public class IntentUtil {
                                 }
 
                                 if (TextUtils.isEmpty(userId)) { // Fail
-                                    THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                    PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                 } else { // Success
                                     // Making server request to get User Info
-                                    THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                                    PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                                 }
                             }, throwable -> {
-                                THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                             },
                             () -> {
 
                             });
         }
         else {
-            THPPreferences.getInstance(context).clearPref();
+            PremiumPref.getInstance(context).clearPref();
         }
     }
 
@@ -312,9 +312,9 @@ public class IntentUtil {
      * Similar to @loginApiCall(), Do not clear preferences, and sessions of social profiles if api connection fails
      * */
     public static void loginApiCall2(Activity context, CallBackRelogin callBackReloginListener) {
-        String loginId = THPPreferences.getInstance(context).getLoginId();
-        String loginPasswd = THPPreferences.getInstance(context).getLoginPasswd();
-        String userName = THPPreferences.getInstance(context).getUserLoggedName();
+        String loginId = PremiumPref.getInstance(context).getLoginId();
+        String loginPasswd = PremiumPref.getInstance(context).getLoginPasswd();
+        String userName = PremiumPref.getInstance(context).getUserLoggedName();
         String deviceId = ResUtil.getDeviceId(context);
 
         String email = "";
@@ -348,25 +348,25 @@ public class IntentUtil {
             ApiManager.socialLogin(context, deviceId, BuildConfig.ORIGIN_URL, "Facebook", socialId, userEmail, userName, BuildConfig.SITEID)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(keyValueModel -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(true);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(true);
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
                             // Facebook Logout
                             if (AccessToken.getCurrentAccessToken() != null) {
                                 AccessToken.setCurrentAccessToken(null);
                             }
                             callBackReloginListener.OnFailure();
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                             callBackReloginListener.OnSuccess();
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(false);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(false);
                         callBackReloginListener.OnFailure();
-                        //THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        //THPPreferences.getInstance(context).clearPref();
+                        //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        //PremiumPref.getInstance(context).clearPref();
                         // Facebook Logout
                         /*if(AccessToken.getCurrentAccessToken() != null) {
                             AccessToken.setCurrentAccessToken(null);
@@ -380,12 +380,12 @@ public class IntentUtil {
             ApiManager.socialLogin(context, deviceId, BuildConfig.ORIGIN_URL, "Twitter", socialId, userEmail, userName, BuildConfig.SITEID)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(keyValueModel -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(true);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(true);
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
 
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
                             try {
                                 // Twitter Logout
                                 if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null) {
@@ -399,14 +399,14 @@ public class IntentUtil {
                             }
                             callBackReloginListener.OnFailure();
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                             callBackReloginListener.OnSuccess();
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(false);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(false);
                         callBackReloginListener.OnFailure();
-                        //THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        //THPPreferences.getInstance(context).clearPref();
+                        //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        //PremiumPref.getInstance(context).clearPref();
                         /*try {
                             // Twitter Logout
                             if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null) {
@@ -427,11 +427,11 @@ public class IntentUtil {
             ApiManager.socialLogin(context, deviceId, BuildConfig.ORIGIN_URL, "Google", socialId, userEmail, userName, BuildConfig.SITEID)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(keyValueModel -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(true);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(true);
                         String userId = keyValueModel.getUserId();
                         if (ResUtil.isEmpty(userId)) {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                            THPPreferences.getInstance(context).clearPref();
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                            PremiumPref.getInstance(context).clearPref();
 
                             //logout
                             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -455,14 +455,14 @@ public class IntentUtil {
                             }
                             callBackReloginListener.OnFailure();
                         } else {
-                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                             callBackReloginListener.OnSuccess();
                         }
                     }, throwable -> {
-                        THPPreferences.getInstance(context).setIsRelogginSuccess(false);
+                        PremiumPref.getInstance(context).setIsRelogginSuccess(false);
                         callBackReloginListener.OnFailure();
-                        //THPPreferences.getInstance(context).setIsUserLoggedIn(false);
-                        //THPPreferences.getInstance(context).clearPref();
+                        //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                        //PremiumPref.getInstance(context).clearPref();
 
                         //logout
                         /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -490,7 +490,7 @@ public class IntentUtil {
             ApiManager.userLogin(null, email, mobile, BuildConfig.SITEID, loginPasswd, deviceId, BuildConfig.ORIGIN_URL, false)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(keyValueModel -> {
-                                THPPreferences.getInstance(context).setIsRelogginSuccess(true);
+                                PremiumPref.getInstance(context).setIsRelogginSuccess(true);
                                 String userId = "";
 
                                 if (keyValueModel.getState() != null && keyValueModel.getState().equalsIgnoreCase("success")) {
@@ -498,24 +498,24 @@ public class IntentUtil {
                                 }
 
                                 if (TextUtils.isEmpty(userId)) { // Fail
-                                    THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                    PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                     callBackReloginListener.OnFailure();
                                 } else { // Success
                                     // Making server request to get User Info
-                                    THPPreferences.getInstance(context).setIsUserLoggedIn(true);
+                                    PremiumPref.getInstance(context).setIsUserLoggedIn(true);
                                     callBackReloginListener.OnSuccess();
                                 }
                             }, throwable -> {
-                                THPPreferences.getInstance(context).setIsRelogginSuccess(false);
+                                PremiumPref.getInstance(context).setIsRelogginSuccess(false);
                                 callBackReloginListener.OnFailure();
-                                //THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                             },
                             () -> {
 
                             });
         } else {
-            THPPreferences.getInstance(context).setIsRelogginSuccess(true); //Consider as true, in case of FRESH LAUNCH or, User not Logged in
-            //THPPreferences.getInstance(context).clearPref();
+            PremiumPref.getInstance(context).setIsRelogginSuccess(true); //Consider as true, in case of FRESH LAUNCH or, User not Logged in
+            //PremiumPref.getInstance(context).clearPref();
         }
     }
 
@@ -764,7 +764,7 @@ public class IntentUtil {
 
     public static void openHomeArticleOptionActivity(AppCompatActivity context) {
         Intent intent = new Intent(context, CustomizeHomeScreenActivity.class);
-        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(context).isHomeArticleOptionScreenShown();
+        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(context).isHomeArticleOptionScreenShown();
         if(!isHomeArticleOptionScreenShown) {
             context.startActivity(intent);
             context.finish();

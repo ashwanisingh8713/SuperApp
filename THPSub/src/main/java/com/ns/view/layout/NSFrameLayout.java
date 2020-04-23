@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -32,7 +32,7 @@ public class NSFrameLayout extends FrameLayout {
 
     void init(Context context, AttributeSet attrs) {
 
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSLayout);

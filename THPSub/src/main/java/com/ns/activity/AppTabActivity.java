@@ -22,10 +22,9 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.PremiumPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.BackPressCallback;
@@ -173,8 +172,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         // Fetch latest userinfo from server
                         mDisposable.add(ApiManager.getUserInfo(this, BuildConfig.SITEID,
                                 ResUtil.getDeviceId(this), mUserId,
-                                THPPreferences.getInstance(this).getLoginId(),
-                                THPPreferences.getInstance(this).getLoginPasswd())
+                                PremiumPref.getInstance(this).getLoginId(),
+                                PremiumPref.getInstance(this).getLoginPasswd())
                                 .subscribe(val->{
                                     Log.i("", "");
                                 }, thr->{
@@ -356,7 +355,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             mNotificationsCountTextView.setVisibility(View.GONE);
         }*/
 
-        final boolean isUserFromEurope = UserPref.getInstance(this).isUserFromEurope();
+        final boolean isUserFromEurope = DefaultPref.getInstance(this).isUserFromEurope();
 
         LinearLayout mReadLayout = layout.findViewById(R.id.layout_readlater);
         mReadLayout.setOnClickListener(new View.OnClickListener() {

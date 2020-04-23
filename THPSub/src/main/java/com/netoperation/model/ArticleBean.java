@@ -49,7 +49,7 @@ public class ArticleBean implements Parcelable {
     private String weblink;
     private String short_de;
     private String le;
-    private String add_pos;
+    private int add_pos;
     private String vid;
     private String parent_section_id;
     private String sub_section_id;
@@ -317,11 +317,11 @@ public class ArticleBean implements Parcelable {
         this.le = le;
     }
 
-    public String getAdd_pos() {
+    public int getAdd_pos() {
         return add_pos;
     }
 
-    public void setAdd_pos(String add_pos) {
+    public void setAdd_pos(int add_pos) {
         this.add_pos = add_pos;
     }
 
@@ -796,7 +796,7 @@ public class ArticleBean implements Parcelable {
         dest.writeString(this.weblink);
         dest.writeString(this.short_de);
         dest.writeString(this.le);
-        dest.writeString(this.add_pos);
+        dest.writeInt(this.add_pos);
         dest.writeString(this.vid);
         dest.writeString(this.parent_section_id);
         dest.writeString(this.sub_section_id);
@@ -868,7 +868,7 @@ public class ArticleBean implements Parcelable {
         this.weblink = in.readString();
         this.short_de = in.readString();
         this.le = in.readString();
-        this.add_pos = in.readString();
+        this.add_pos = in.readInt();
         this.vid = in.readString();
         this.parent_section_id = in.readString();
         this.sub_section_id = in.readString();

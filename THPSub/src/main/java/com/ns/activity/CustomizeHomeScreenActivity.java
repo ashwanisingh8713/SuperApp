@@ -1,17 +1,13 @@
 package com.ns.activity;
 
-import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -20,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.main.DFPConsent;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.thd_fragment.CitiesInterestFragment;
 import com.ns.thd_fragment.CustomizeNewsFeedFragment;
@@ -68,7 +64,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        isHomeArticleOptionScreenShown = UserPref.getInstance(this).isHomeArticleOptionScreenShown();
+        isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
         if(isHomeArticleOptionScreenShown) {
             getDetailToolbar().showHomePeronsoliseIcons(getString(R.string.custom_home_screen), backBtn -> {
@@ -105,9 +101,9 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                         break;
                     case 1:
                         // // "Save or Done" Title Button Click
-                        boolean isUserSelectedDfpConsent = UserPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
-                        boolean isDfpConsentExecuted = UserPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
-                        boolean isUserFromEurope = UserPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
+                        boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
+                        boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
+                        boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
 
                         if(!isUserFromEurope && isDfpConsentExecuted) {
                             Fragment fragment1 = getCurrentFragmet();
@@ -150,9 +146,9 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                         return;
                     }
 
-                    boolean isUserSelectedDfpConsent = UserPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
-                    boolean isDfpConsentExecuted = UserPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
-                    boolean isUserFromEurope = UserPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
+                    boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
+                    boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
+                    boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
 
                     if(!isUserFromEurope && isDfpConsentExecuted) {
                         getHomeDataFromServer();
@@ -353,7 +349,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         DefaultTHApiManager.homeArticles(this, "SplashActivity", new RequestCallback() {
             @Override
             public void onNext(Object o) {
-                UserPref.getInstance(CustomizeHomeScreenActivity.this).setHomeArticleOptionScreenShown(true);
+                DefaultPref.getInstance(CustomizeHomeScreenActivity.this).setHomeArticleOptionScreenShown(true);
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
                 Log.i("NSPEED", "Home Article Loaded from server, Launched Main Tab Page :: "+totalExecutionTime);
             }

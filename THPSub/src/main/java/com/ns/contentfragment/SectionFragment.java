@@ -626,7 +626,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
     @Override
-    public void opnAppAdLoadSuccess(AdData adData) {
+    public void onAppAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         int index = mRecyclerAdapter.indexOf(item);
@@ -640,7 +640,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
     @Override
-    public void opnAppAdLoadFailure(AdData adData) {
+    public void onAppAdLoadFailure(AdData adData) {
 
     }
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.adapter.SubscriptionPlanAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
@@ -250,8 +250,8 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
 
     // Fetch latest userinfo from server
     private void fetchLatestUserInfo() {
-        String loginId = THPPreferences.getInstance(getActivity()).getLoginId();
-        String loginPasswd = THPPreferences.getInstance(getActivity()).getLoginPasswd();
+        String loginId = PremiumPref.getInstance(getActivity()).getLoginId();
+        String loginPasswd = PremiumPref.getInstance(getActivity()).getLoginPasswd();
         ApiManager.getUserInfoObject(getActivity(), BuildConfig.SITEID,
                 ResUtil.getDeviceId(getActivity()), mUserId, loginId, loginPasswd)
                 .observeOn(AndroidSchedulers.mainThread())

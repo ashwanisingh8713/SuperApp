@@ -1,6 +1,5 @@
 package com.ns.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.main.DFPConsent;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
@@ -88,7 +87,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
         mDayModeASwitch.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_TundraOffc)));
         mPushNotification.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_TundraOffc)));
 
-        isDayMode = UserPref.getInstance(AppSettingActivity.this).isUserThemeDay();
+        isDayMode = DefaultPref.getInstance(AppSettingActivity.this).isUserThemeDay();
 
         if(isDayMode) {
             mPushNotification.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.article_list_text));
@@ -133,7 +132,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                         break;
 
                 }
-                UserPref.getInstance(AppSettingActivity.this).setDescriptionSize(progress + 1);
+                DefaultPref.getInstance(AppSettingActivity.this).setDescriptionSize(progress + 1);
             }
 
             @Override
@@ -169,7 +168,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
 
 
         // GDPR Setting Option
-        boolean isUserFromEurope = UserPref.getInstance(this).isUserFromEurope();
+        boolean isUserFromEurope = DefaultPref.getInstance(this).isUserFromEurope();
         if(isUserFromEurope) {
             findViewById(R.id.gdprSettingTxt).setVisibility(View.VISIBLE);
             findViewById(R.id.gdprDivider).setVisibility(View.VISIBLE);
@@ -237,7 +236,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     }
 
     private void setUserPreferences() {
-        int progress = UserPref.getInstance(this).getDescriptionSize();
+        int progress = DefaultPref.getInstance(this).getDescriptionSize();
         mSeekBar.setProgress(progress - 1);
         switch (progress - 1) {
             case 0:
@@ -259,8 +258,8 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
 
         }
 
-        boolean notificationEnabled = UserPref.getInstance(this).isNotificationEnable();
-        boolean daymode = UserPref.getInstance(this).isUserThemeDay();
+        boolean notificationEnabled = DefaultPref.getInstance(this).isNotificationEnable();
+        boolean daymode = DefaultPref.getInstance(this).isUserThemeDay();
         mLocationASwitch.setOnCheckedChangeListener(this);
         mDayModeASwitch.setChecked(!daymode);
         mDayModeASwitch.setOnCheckedChangeListener(this);
@@ -285,7 +284,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                         "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Night mode button clicked");*/
 
-                UserPref.getInstance(this).setUserTheme(!isDayMode);
+                DefaultPref.getInstance(this).setUserTheme(!isDayMode);
 
                 if (!isDayMode) {
                     //Clever Tap Event
@@ -305,7 +304,7 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
             case R.id.switch_push_notification:
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(this, "Setting", "Setting Screen: Push Notification  button clicked", "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Push Notification button clicked");*/
-                UserPref.getInstance(this).setNotificationEnable(checked);
+                DefaultPref.getInstance(this).setNotificationEnable(checked);
                 //Clever Tap Event
                 if (checked) {
                     CleverTapUtil.cleverTapEventSettings(this, THPConstants.CT_KEY_Push_Notification, "Yes");
@@ -382,7 +381,6 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                     selectedItem.displayName = ttsPreference.getDisplayName();
 
                     final int selectedIndex = languageList.indexOf(selectedItem);
-
                     if (selectedIndex != -1) {
                         selectedItem.isSelected = true;
                         selectedItem.isExist = true;
@@ -412,5 +410,14 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
 
             }
         }, 500);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if(textToSpeech != null) {
+            textToSpeech.stop();
+        }
+        super.onDestroy();
     }
 }

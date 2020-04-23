@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
@@ -98,7 +98,7 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
             String sectionIdEpaper = "159";
             if (getGroup(groupPosition).getSecId().equals(sectionIdEpaper)) {
                 mGroupViewHolder.mNewTagImageView.setVisibility(View.VISIBLE);
-                boolean isUserThemeDay = UserPref.getInstance(mGroupViewHolder.textView.getContext()).isUserThemeDay();
+                boolean isUserThemeDay = DefaultPref.getInstance(mGroupViewHolder.textView.getContext()).isUserThemeDay();
                 if (isUserThemeDay) {
                     mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.epaper_day));
                     mGroupViewHolder.mNewTagImageView.setImageResource(R.drawable.ic_epaper_day_24x24);
@@ -109,7 +109,7 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
             } else {
                 //Reset Text Colors and Drawables
                 mGroupViewHolder.mNewTagImageView.setVisibility(View.GONE);
-                boolean isUserThemeDay = UserPref.getInstance(mGroupViewHolder.textView.getContext()).isUserThemeDay();
+                boolean isUserThemeDay = DefaultPref.getInstance(mGroupViewHolder.textView.getContext()).isUserThemeDay();
                 if (isUserThemeDay) {
                     mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(),R.color.color_static_text));
                 } else {

@@ -3,15 +3,19 @@ package com.ns.contentfragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.main.AppAds;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
+import com.netoperation.model.AdData;
 import com.netoperation.model.SectionBean;
 import com.ns.adapter.TopTabsAdapter;
 import com.ns.callbacks.BackPressCallback;
@@ -126,6 +130,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
                     mViewPager.setCurrentItem(mSelectedPagerIndex);
                 }));
 
+
     }
 
 
@@ -189,6 +194,8 @@ public class TopTabsFragment extends BaseFragmentTHP {
         EventBus.getDefault().post(backPressCallback);
 
     }
+
+
 
 
 }

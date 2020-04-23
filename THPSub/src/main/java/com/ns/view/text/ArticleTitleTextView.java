@@ -3,7 +3,7 @@ package com.ns.view.text;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -30,7 +30,7 @@ public class ArticleTitleTextView extends CustomTextView {
             return;
         }
 
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         // 0 = "L", Large
         if(getViewType() == 0) {
             if (isUserThemeDay) {

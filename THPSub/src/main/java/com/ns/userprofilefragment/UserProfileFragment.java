@@ -26,7 +26,7 @@ import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -121,7 +121,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
             });
             view.findViewById(R.id.subsCloseImg).setOnClickListener(v -> {
-                THPPreferences.getInstance(getActivity()).setIsSubscribeClose(true);
+                PremiumPref.getInstance(getActivity()).setIsSubscribeClose(true);
                 view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
             });
 
@@ -315,7 +315,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
         observable.map(v->{
 
             // Clear THP Preference
-            THPPreferences.getInstance(getActivity()).clearPref();
+            PremiumPref.getInstance(getActivity()).clearPref();
 
             // Facebook Logout
             if(AccessToken.getCurrentAccessToken() != null) {
@@ -367,7 +367,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
                     progressDialog.dismiss();
 
                     // Need to refresh the Default Hindu Screens for Ads
-                    THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                    PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                 });
 
     }
@@ -409,7 +409,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
 
                     if(hasSubscriptionPlan) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
-                    } else if(THPPreferences.getInstance(getActivity()).isSubscribeClose()) {
+                    } else if(PremiumPref.getInstance(getActivity()).isSubscribeClose()) {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
                     } else {
                         getView().findViewById(R.id.subscribeLayout).setVisibility(View.VISIBLE);

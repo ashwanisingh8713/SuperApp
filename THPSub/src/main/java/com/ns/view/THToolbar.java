@@ -11,7 +11,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -37,7 +37,7 @@ public class THToolbar extends Toolbar {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSLayout);

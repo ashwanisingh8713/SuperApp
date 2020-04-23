@@ -7,7 +7,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 
 import java.lang.reflect.Field;
@@ -31,7 +31,7 @@ public class NSTextInputLayout extends TextInputLayout {
 
 
     private void init(Context context, AttributeSet attrs) {
-        boolean isDayTheme = UserPref.getInstance(context).isUserThemeDay();
+        boolean isDayTheme = DefaultPref.getInstance(context).isUserThemeDay();
 
 
         if(isDayTheme) {

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 
@@ -54,7 +54,7 @@ public class NSEditText extends AppCompatEditText {
             return;
         }
 
-        boolean isUserThemeDay = UserPref.getInstance(context).isUserThemeDay();
+        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if (isUserThemeDay) {
             setTextColor(ResUtil.getColor(getResources(), R.color.color_banner_text));

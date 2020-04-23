@@ -10,7 +10,7 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.netoperation.model.UserProfile;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
@@ -70,7 +70,7 @@ public class CleverTapUtil {
 
 
                     profileUpdate.put(THPConstants.CT_KEY_Gender, userProfile.getGender());
-                    profileUpdate.put(THPConstants.CT_KEY_Login_Source, THPPreferences.getInstance(context).getLoginSource());
+                    profileUpdate.put(THPConstants.CT_KEY_Login_Source, PremiumPref.getInstance(context).getLoginSource());
                     profileUpdate.put(THPConstants.CT_KEY_isSubscribedUser, isHasSubscriptionPlan);
                     profileUpdate.put(THPConstants.CT_KEY_isFreeUser, isHasFreePlan);
 
@@ -461,7 +461,7 @@ public class CleverTapUtil {
     private static String sUserId ="";
     private static String getUserId(Context context){
         if(ResUtil.isEmpty(sUserId)) {
-            sUserId = THPPreferences.getInstance(context).getUserId();
+            sUserId = PremiumPref.getInstance(context).getUserId();
         }
         return sUserId;
     }

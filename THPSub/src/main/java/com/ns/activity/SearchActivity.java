@@ -1,14 +1,10 @@
 package com.ns.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -20,25 +16,21 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
-import com.ns.utils.ContentUtil;
-import com.ns.utils.IntentUtil;
-import com.ns.utils.ResUtil;
+import com.ns.utils.NetUtils;
 import com.ns.view.RecyclerViewPullToRefresh;
-import com.ns.view.text.CustomTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 public class SearchActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
 
@@ -64,7 +56,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
 
         searchBar.setHint("Enter your keyword...");
 
-        boolean isDayTheme = UserPref.getInstance(this).isUserThemeDay();
+        boolean isDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
         if(isDayTheme) {
             searchBar.setTextColor(getResources().getColor(R.color.Black));
             searchBar.setTextHintColor(getResources().getColor(R.color.search_hint));
@@ -131,16 +123,15 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         Observable<List<ArticleBean>> observable = DefaultTHApiManager.articleFromServer(query, BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(articleBeans -> {
-                            if(articleBeans.size() > 0) {
+                            mRecyclerAdapter.deleteAllItems();
+                            if (articleBeans.size() > 0) {
                                 for (ArticleBean bean : articleBeans) {
                                     final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
                                     SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_SEARCH_ROW, itemRowId);
                                     item.setArticleBean(bean);
                                     mRecyclerAdapter.addSingleItem(item);
                                 }
-                            }
-                            else {
-                                mRecyclerAdapter.deleteAllItems();
+                            } else {
                                 registerEmptyView();
                             }
                         }, throwable -> {
@@ -166,8 +157,12 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
-        Log.i("", "");
-        searchArticleByText(text.toString());
+        if(NetUtils.isConnected(this)) {
+            searchArticleByText(text.toString());
+        }
+        else {
+            Alerts.noConnectionSnackBar(mPullToRefreshLayout, this);
+        }
     }
 
     @Override

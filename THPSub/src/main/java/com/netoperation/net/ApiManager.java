@@ -22,11 +22,6 @@ import com.netoperation.db.TableMP;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.DaoUserProfile;
 import com.netoperation.db.TableUserProfile;
-import com.netoperation.default_db.DaoSectionArticle;
-import com.netoperation.default_db.DaoSubSectionArticle;
-import com.netoperation.default_db.TableSectionArticle;
-import com.netoperation.default_db.TableSubSectionArticle;
-import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.KeyValueModel;
@@ -47,9 +42,9 @@ import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.PremiumPref;
 import com.netoperation.util.RetentionDef;
-import com.netoperation.util.THPPreferences;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -227,12 +222,12 @@ public class ApiManager {
                                             } else if (contact != null && !TextUtils.isEmpty(contact)) {
                                                 loginId = contact;
                                             }
-                                            THPPreferences.getInstance(context).setIsUserLoggedIn(true);
-                                            THPPreferences.getInstance(context).saveLoginId(loginId);
-                                            THPPreferences.getInstance(context).saveLoginPasswd(password);
-                                            THPPreferences.getInstance(context).setIsRefreshRequired(true);
-                                            THPPreferences.getInstance(context).setIsUserAdsFree(true);
-                                            THPPreferences.getInstance(context).saveUserId(userId);
+                                            PremiumPref.getInstance(context).setIsUserLoggedIn(true);
+                                            PremiumPref.getInstance(context).saveLoginId(loginId);
+                                            PremiumPref.getInstance(context).saveLoginPasswd(password);
+                                            PremiumPref.getInstance(context).setIsRefreshRequired(true);
+                                            PremiumPref.getInstance(context).setIsUserAdsFree(true);
+                                            PremiumPref.getInstance(context).saveUserId(userId);
 
                                             keyValueModel.setContact(loginId);
                                         }
@@ -374,9 +369,9 @@ public class ApiManager {
                                 if (status.equalsIgnoreCase("success")) {
 
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(true);
-                                        THPPreferences.getInstance(context).saveLoginId(loginId);
-                                        THPPreferences.getInstance(context).saveLoginPasswd(loginPasswd);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(true);
+                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).saveLoginPasswd(loginPasswd);
                                     }
 
                                     String userInfo = ((JsonObject) responseFromServer).get("userInfo").getAsString();
@@ -573,16 +568,16 @@ public class ApiManager {
                                     if (context != null) {
                                         boolean hasFreePlan = userProfile.isHasFreePlan();
                                         boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-                                        THPPreferences.getInstance(context).setUserLoggedName(mUserLoggedName);
-                                        THPPreferences.getInstance(context).setIsUserAdsFree(hasFreePlan || hasSubscriptionPlan);
-                                        THPPreferences.getInstance(context).saveUserId(userId);
+                                        PremiumPref.getInstance(context).setUserLoggedName(mUserLoggedName);
+                                        PremiumPref.getInstance(context).setIsUserAdsFree(hasFreePlan || hasSubscriptionPlan);
+                                        PremiumPref.getInstance(context).saveUserId(userId);
                                     }
 
                                     return true;
 
                                 } else if (status.equalsIgnoreCase("Fail")) {
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                     }
                                 }
 
@@ -614,9 +609,9 @@ public class ApiManager {
                                 if (status.equalsIgnoreCase("success")) {
 
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(true);
-                                        THPPreferences.getInstance(context).saveLoginId(loginId);
-                                        THPPreferences.getInstance(context).saveLoginPasswd(loginPasswd);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(true);
+                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).saveLoginPasswd(loginPasswd);
                                     }
 
                                     String userInfo = ((JsonObject) responseFromServer).get("userInfo").getAsString();
@@ -811,9 +806,9 @@ public class ApiManager {
                                     if (context != null) {
                                         boolean hasFreePlan = userProfile.isHasFreePlan();
                                         boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-                                        THPPreferences.getInstance(context).setUserLoggedName(mUserLoggedName);
-                                        THPPreferences.getInstance(context).setIsUserAdsFree(hasFreePlan || hasSubscriptionPlan);
-                                        THPPreferences.getInstance(context).saveUserId(userId);
+                                        PremiumPref.getInstance(context).setUserLoggedName(mUserLoggedName);
+                                        PremiumPref.getInstance(context).setIsUserAdsFree(hasFreePlan || hasSubscriptionPlan);
+                                        PremiumPref.getInstance(context).saveUserId(userId);
 
                                     }
 
@@ -821,7 +816,7 @@ public class ApiManager {
 
                                 } else if (status.equalsIgnoreCase("Fail")) {
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(false);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                     }
                                 }
 
@@ -2056,11 +2051,11 @@ public class ApiManager {
                                     }
 
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(true);
-                                        THPPreferences.getInstance(context).saveLoginId(userEmail);
-                                        THPPreferences.getInstance(context).saveLoginPasswd(socialId);
-                                        THPPreferences.getInstance(context).setUserLoggedName(userName);
-                                        THPPreferences.getInstance(context).saveUserId(userId);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(true);
+                                        PremiumPref.getInstance(context).saveLoginId(userEmail);
+                                        PremiumPref.getInstance(context).saveLoginPasswd(socialId);
+                                        PremiumPref.getInstance(context).setUserLoggedName(userName);
+                                        PremiumPref.getInstance(context).saveUserId(userId);
                                     }
 
                                     if (isNew.equalsIgnoreCase("1")) {
@@ -2120,11 +2115,11 @@ public class ApiManager {
                                     }
 
                                     if (context != null) {
-                                        THPPreferences.getInstance(context).setIsUserLoggedIn(true);
-                                        THPPreferences.getInstance(context).saveLoginId(loginId);
-                                        THPPreferences.getInstance(context).setIsRefreshRequired(true);
-                                        THPPreferences.getInstance(context).setIsUserAdsFree(true);
-                                        THPPreferences.getInstance(context).saveUserId(userId);
+                                        PremiumPref.getInstance(context).setIsUserLoggedIn(true);
+                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).setIsRefreshRequired(true);
+                                        PremiumPref.getInstance(context).setIsUserAdsFree(true);
+                                        PremiumPref.getInstance(context).saveUserId(userId);
                                     }
                                     keyValueModel.setContact(loginId);
 
@@ -2228,7 +2223,7 @@ public class ApiManager {
         Observable.just("nowNotRefreshRequired")
                 .delay(3000, TimeUnit.MILLISECONDS)
                 .map(v -> {
-                    THPPreferences.getInstance(context).setIsRefreshRequired(false);
+                    PremiumPref.getInstance(context).setIsRefreshRequired(false);
                     return "";
                 })
                 .subscribe();
@@ -2250,7 +2245,7 @@ public class ApiManager {
         db.breifingDao().deleteAll();
         db.userProfileDao().deleteAll();
         db.dashboardDao().deleteAll();
-        THPPreferences.getInstance(context).setIsRefreshRequired(true);
+        PremiumPref.getInstance(context).setIsRefreshRequired(true);
     }
 
     public static void freePlan(String userId, String contact, String siteid) {
@@ -2334,7 +2329,7 @@ public class ApiManager {
                     boolean isMpFeatureEnabled = configurationModel.isSTATUS();
                     tableMP.setMpFeatureEnabled(isMpFeatureEnabled);
                     //Update MP preferences
-                    UserPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
+                    DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
                     if (isMpFeatureEnabled) {
                         boolean isTaboolaNeeded = configurationModel.getDATA().getConfigs().isIsTaboolaNeeded();
                         boolean isMpBannerNeeded = configurationModel.getDATA().getConfigs().isIsMpBannerNeeded();
@@ -2423,7 +2418,7 @@ public class ApiManager {
                                 boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
                                 TableMP table = new TableMP();
                                 table.setMpFeatureEnabled(isMpFeatureEnabled);
-                                UserPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
+                                DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
                                 if (isMpFeatureEnabled) {
                                     String cycleName = cycleDurationModel.getDATA().getCycleName();
                                     int numOfAllowedArticles = cycleDurationModel.getDATA().getNumOfAllowedArticles();
@@ -2445,7 +2440,7 @@ public class ApiManager {
                                     daoMP.deleteAll();
                                     daoMP.insertMpTableData(table);
                                     //Clear close Ids Preferences
-                                    UserPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
+                                    DefaultPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
                                 } else if (localTableMP != null){
                                     localTableMP.setMpFeatureEnabled(isMpFeatureEnabled);
                                     if (isMpFeatureEnabled) {

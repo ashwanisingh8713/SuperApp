@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.R;
 
 public class NSImageButton extends AppCompatImageButton {
@@ -30,7 +30,7 @@ public class NSImageButton extends AppCompatImageButton {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        isDayTheme = UserPref.getInstance(context).isUserThemeDay();
+        isDayTheme = DefaultPref.getInstance(context).isUserThemeDay();
         setBackground(null);
 
         if (attrs != null) {

@@ -8,33 +8,23 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoSection;
-import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableSection;
-import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.SectionBean;
-import com.netoperation.net.DefaultTHApiManager;
-import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
-import com.netoperation.util.UserPref;
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.CustomizeHomeScreenActivity;
-import com.ns.activity.SplashActivity;
-import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
-import com.ns.utils.IntentUtil;
-import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.flowlayout.FlowLayout;
@@ -44,7 +34,6 @@ import com.ns.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -94,7 +83,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        if(UserPref.getInstance(getActivity()).isHomeArticleOptionScreenShown()) {
+        if(DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown()) {
             view.findViewById(R.id.selectTopic).setVisibility(View.GONE);
         }
 
@@ -254,7 +243,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                 .subscribe(v-> {
 
                     if (mIsOnline) {
-                        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
+                        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
                         if(mMainActivity.isOptionsChanged() && isHomeArticleOptionScreenShown) {
                             mMainActivity.getHomeDataFromServer();
                         }
@@ -267,7 +256,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                     }
                     else if (!mIsOnline) {
                         noConnectionSnackBar(getView());
-                        boolean isHomeArticleOptionScreenShown = UserPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
+                        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {
                             getActivity().finish();
                         }

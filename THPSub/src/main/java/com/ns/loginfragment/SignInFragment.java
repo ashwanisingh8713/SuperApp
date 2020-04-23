@@ -26,7 +26,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
-import com.netoperation.util.THPPreferences;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.SignInAndUpActivity;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
@@ -572,12 +572,12 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
     private void openContentListingActivity(boolean isKillToBecomeMemberActivity, UserProfile userProfile, String from, boolean isNewAccount) {
         //Always set True if Successful Login
-        THPPreferences.getInstance(getContext()).setIsRelogginSuccess(true);
+        PremiumPref.getInstance(getContext()).setIsRelogginSuccess(true);
         Intent intent = new Intent();
         intent.putExtra("isKillToBecomeMemberActivity", isKillToBecomeMemberActivity);
         if (mActivity.mFrom != null && !TextUtils.isEmpty(mActivity.mFrom) && mActivity.mFrom.contains(THPConstants.PAYMENT)) {
             intent.putExtra("isRequestPayment", true);
-            THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+            PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
         } else {
             if(from != null) {
                 if(from.equalsIgnoreCase("facebook")) {
@@ -592,7 +592,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
             if (userProfile != null && (userProfile.isHasFreePlan() || userProfile.isHasSubscribedPlan())) {
                 // TODO, process for user sign - In
                 // When user logged in then we need this to refresh the default TH listing page.
-                THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                 if (THPConstants.IS_FROM_MP_BLOCKER) {
                     //Disable the MP constant
                     THPConstants.IS_FROM_MP_BLOCKER = false;
@@ -611,7 +611,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 }
             } else if (userProfile != null && !(userProfile.isHasFreePlan() && userProfile.isHasSubscribedPlan())) {
                 // When user logged in then we need this to refresh the default TH listing page.
-                THPPreferences.getInstance(getActivity()).setIsRefreshRequired(true);
+                PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
                 if (THPConstants.IS_FROM_MP_BLOCKER) {
                     //Disable the MP constant
                     THPConstants.IS_FROM_MP_BLOCKER = false;
@@ -635,7 +635,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                     loginSource = THPConstants.TWITTER_LOGIN;
                 }
             }
-            THPPreferences.getInstance(getContext()).setLoginSource(loginSource);
+            PremiumPref.getInstance(getContext()).setLoginSource(loginSource);
             CleverTapUtil.cleverTapUpdateProfile(getActivity(), true, userProfile, userProfile.isHasSubscribedPlan(), userProfile.isHasFreePlan());
         }
 
@@ -660,7 +660,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
         //CleverTap
         HashMap<String,Object> map = new HashMap<>();
         map.put(THPConstants.CT_Custom_KEY_Email,userProfile.getEmailId());
-        map.put(THPConstants.CT_KEY_Login_Source,THPPreferences.getInstance(getContext()).getLoginSource());
+        map.put(THPConstants.CT_KEY_Login_Source, PremiumPref.getInstance(getContext()).getLoginSource());
         CleverTapUtil.cleverTapEvent(getActivity(),THPConstants.CT_EVENT_SIGN_IN,map);
 
         //Send CleverTap Event for Free Trial Subscription
