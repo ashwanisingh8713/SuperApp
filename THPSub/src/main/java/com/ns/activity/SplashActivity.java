@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
@@ -18,6 +19,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 
@@ -30,6 +32,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
     private static String TAG = NetConstants.TAG_UNIQUE;
     private long startTime;
+    private ImageView appIconImg;
 
 
     @Override
@@ -40,6 +43,8 @@ public class SplashActivity extends BaseAcitivityTHP {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        appIconImg = findViewById(R.id.appIconImg);
 
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
@@ -132,6 +137,19 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onError(Throwable t, String str) {
                 Log.i("NSPEED", "ERROR1 :: "+t);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
+                        if(isHomeArticleOptionScreenShown) {
+                            IntentUtil.openMainTabPage(SplashActivity.this);
+                        }
+                        else {
+                            Alerts.noConnectionSnackBar(appIconImg, SplashActivity.this);
+                        }
+                    }
+                });
+
             }
 
             @Override

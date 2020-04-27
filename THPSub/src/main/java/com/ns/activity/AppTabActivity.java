@@ -49,6 +49,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -119,13 +121,18 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         // Show Expandable List Content from Database
         DaoSection section = THPDB.getInstance(this).daoSection();
-//        mDisposable.add(section.getSectionsOfBurger(true)
-        mDisposable.add(section.getSectionsObs()
+        mDisposable.add(section.getSectionsOfBurger()
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(sectionList -> {
+                    /*List<TableSection> updatedList = new ArrayList<>();
+                    for(TableSection section1 : sectionList) {
+                        if(!ResUtil.isEmpty(section1.getParentId()) && section1.getParentId().equals("0")) {
+
+                        }
+                    }*/
                     return sectionList;
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sectionList -> {
                     mNavigationExpandableListViewAdapter = new NavigationExpandableListViewAdapter(this, sectionList, this);
                     mNavigationExpandableListView.setAdapter(mNavigationExpandableListViewAdapter);

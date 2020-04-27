@@ -98,7 +98,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
 
         final DaoSection section = THPDB.getInstance(getActivity()).daoSection();
 
-        mDisposable.add(section.getSectionsOfBurger(true)
+        mDisposable.add(section.getSectionsOfTopBar()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sectionList -> {
