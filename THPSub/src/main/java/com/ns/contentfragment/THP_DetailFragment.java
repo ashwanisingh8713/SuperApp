@@ -7,6 +7,7 @@ import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSCallbacks;
 import com.ns.tts.TTSManager;
+import com.ns.utils.AppAudioManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
@@ -107,6 +109,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     public int getLayoutRes() {
         return R.layout.fragment_detail_thp_1;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -715,4 +718,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     public void onAppAdLoadFailure(AdData adData) {
 
     }
+
+
+
 }
