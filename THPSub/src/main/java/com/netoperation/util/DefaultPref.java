@@ -42,13 +42,13 @@ public class DefaultPref {
     }
 
 
-    public void setIsIntersAdLoaded(boolean isFirstTap) {
-        mEditor.putBoolean("first_tap", isFirstTap);
+    public void setIsFullScreenAdLoaded(boolean isFullScreenAdLoaded) {
+        mEditor.putBoolean("isFullScreenAdLoaded", isFullScreenAdLoaded);
         mEditor.apply();
     }
 
-    public boolean getIsIntersAdLoaded() {
-        return mPreferences.getBoolean("first_tap", false);
+    public boolean isFullScreenAdLoaded() {
+        return mPreferences.getBoolean("isFullScreenAdLoaded", false);
     }
 
     public void setInterstetial_Ads_Shown(boolean Interstetial_Ads_Shown) {

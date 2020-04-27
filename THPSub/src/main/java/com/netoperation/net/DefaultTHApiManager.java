@@ -6,8 +6,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.mindorks.scheduler.Priority;
+import com.mindorks.scheduler.RxPS;
+import com.netoperation.db.DaoMP;
 import com.netoperation.db.DaoTemperoryArticle;
 import com.netoperation.db.THPDB;
+import com.netoperation.db.TableMP;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
@@ -30,6 +34,8 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
 import com.netoperation.model.HomeData;
+import com.netoperation.model.MPConfigurationModel;
+import com.netoperation.model.MPCycleDurationModel;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.SectionAndWidget;
@@ -39,12 +45,14 @@ import com.netoperation.model.THDefaultPersonalizeBean;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -729,6 +737,148 @@ public class DefaultTHApiManager {
                     return new ArrayList<ArticleBean>();
                 });
 
+    }
+
+
+
+    public static void mpConfigurationAPI(Context context, String urlConfigAPI) {
+        Observable<MPConfigurationModel> observable = ServiceFactory.getServiceAPIs().mpConfigurationAPI(urlConfigAPI);
+
+        observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+                .subscribeOn(Schedulers.newThread())
+                .map(configurationModel -> {
+                    THPDB db = THPDB.getInstance(context);
+                    DaoMP mpTableDao = db.mpTableDao();
+                    TableMP mpTable = mpTableDao.getMPTable();
+                    if (mpTable == null) {
+                        mpTable = new TableMP();
+                    }
+                    boolean isMpFeatureEnabled = configurationModel.isSTATUS();
+                    mpTable.setMpFeatureEnabled(isMpFeatureEnabled);
+                    //Update MP preferences
+                    DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
+                    if (isMpFeatureEnabled) {
+                        boolean isTaboolaNeeded = configurationModel.getDATA().getConfigs().isIsTaboolaNeeded();
+                        boolean isMpBannerNeeded = configurationModel.getDATA().getConfigs().isIsMpBannerNeeded();
+
+                        String mpBannerMsg = configurationModel.getDATA().getConfigs().getMpBannerMsg();
+
+                        String fullAccessBtnName = configurationModel.getDATA().getConfigs().getFullAccessBtnName();
+                        boolean showFullAccessBtn = configurationModel.getDATA().getConfigs().isShowFullAccessBtn();
+
+                        boolean showSignInBtn = configurationModel.getDATA().getConfigs().isShowSignInBtn();
+                        String signInBtnName = configurationModel.getDATA().getConfigs().getSignInBtnName();
+                        String signInBtnNameBoldWord = configurationModel.getDATA().getConfigs().getSignInBtnNameBoldWord();
+
+                        boolean showSignUpBtn = configurationModel.getDATA().getConfigs().isShowSignUpBtn();
+                        String signUpBtnName = configurationModel.getDATA().getConfigs().getSignUpBtnName();
+                        String signUpBtnNameBoldWord = configurationModel.getDATA().getConfigs().getSignUpBtnNameBoldWord();
+
+                        String nonSignInBlockerTitle = configurationModel.getDATA().getConfigs().getNonSignInBlockerTitle();
+                        String nonSignInBlockerDescription = configurationModel.getDATA().getConfigs().getNonSignInBlockerDescription();
+
+                        String expiredUserBlockerTitle = configurationModel.getDATA().getConfigs().getExpiredUserBlockerTitle();
+                        String expiredUserBlockerDescription = configurationModel.getDATA().getConfigs().getExpiredUserBlockerDescription();
+
+                        mpTable.setTaboolaNeeded(isTaboolaNeeded);
+                        mpTable.setMpBannerNeeded(isMpBannerNeeded);
+
+                        mpTable.setMpBannerMsg(mpBannerMsg);
+
+                        mpTable.setFullAccessBtnName(fullAccessBtnName);
+                        mpTable.setShowFullAccessBtn(showFullAccessBtn);
+
+                        mpTable.setShowSignInBtn(showSignInBtn);
+                        mpTable.setSignInBtnName(signInBtnName);
+                        mpTable.setSignInBtnNameBoldWord(signInBtnNameBoldWord);
+
+                        mpTable.setShowSignUpBtn(showSignUpBtn);
+                        mpTable.setSignUpBtnName(signUpBtnName);
+                        mpTable.setSignUpBtnNameBoldWord(signUpBtnNameBoldWord);
+
+                        mpTable.setNonSignInBlockerTitle(nonSignInBlockerTitle);
+                        mpTable.setNonSignInBlockerDescription(nonSignInBlockerDescription);
+                        mpTable.setExpiredUserBlockerTitle(expiredUserBlockerTitle);
+                        mpTable.setExpiredUserBlockerDescription(expiredUserBlockerDescription);
+                    }
+                    if (mpTable.getId() > 0) {
+                        mpTableDao.updateMPTable(mpTable);
+                    } else {
+                        mpTableDao.insertMpTableData(mpTable);
+                    }
+                    Log.i("ApiManager", "MP Cyle END "+System.currentTimeMillis());
+                    return "";
+                }).subscribe(val -> {
+
+        }, throwable -> {
+            Log.i("", "");
+        });
+    }
+
+    public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI) {
+        return Observable.just("mpTable")
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    Log.i("ApiManager", "MP Cyle START "+System.currentTimeMillis());
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMP mpTableDAO = thpdb.mpTableDao();
+                    if (mpTableDAO != null && mpTableDAO.getMPTable() != null) {
+                        //Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle
+                        long startTimeInMillis = mpTableDAO.getStartTimeInMillis();
+                        if (startTimeInMillis > 0) {
+                            long currentTimeInMillis = System.currentTimeMillis();
+                            long difference = currentTimeInMillis - startTimeInMillis;
+                            long expiryTimeInMillis = mpTableDAO.getExpiryTimeInMillis();
+                            if (difference < expiryTimeInMillis /*|| difference > (expiryTimeInMillis + 86400000)*/) {
+                                // It calls configuration api, whenever cycle api is called.
+                                mpConfigurationAPI(context, urlConfigAPI);
+                                return "";
+                            }
+                        }
+                    }
+                    Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
+                    observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+                            .subscribeOn(Schedulers.newThread())
+                            .map(cycleDurationModel -> {
+                                THPDB db = THPDB.getInstance(context);
+                                DaoMP mpTableDao = db.mpTableDao();
+                                boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
+                                TableMP table = new TableMP();
+                                table.setMpFeatureEnabled(isMpFeatureEnabled);
+                                DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
+                                if (isMpFeatureEnabled) {
+                                    String cycleName = cycleDurationModel.getDATA().getCycleName();
+                                    int numOfAllowedArticles = cycleDurationModel.getDATA().getNumOfAllowedArticles();
+                                    long totalAllowedTimeInSec = cycleDurationModel.getDATA().getExpiryInSeconds();
+                                    long mpServerTimeInMillis = cycleDurationModel.getDATA().getGmtInMillis();
+                                    String uniqueId = cycleDurationModel.getDATA().getUniqueId();
+                                    table.setAllowedArticleCounts(numOfAllowedArticles);
+                                    table.setCycleName(cycleName);
+                                    table.setAllowedTimeInSecs(totalAllowedTimeInSec);
+                                    long allowedTimeInMillis = TimeUnit.SECONDS.toMillis(totalAllowedTimeInSec);
+                                    table.setExpiryTimeInMillis(allowedTimeInMillis);
+                                    table.setCycleUniqueId(uniqueId);
+                                    table.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
+                                }
+                                //Insert new record into Table in this case, when any Cycle name is found
+                                mpTableDao.deleteAll();
+                                mpTableDao.insertMpTableData(table);
+                                //Clear close Ids Preferences
+                                DefaultPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
+
+                                // It calls configuration api, whenever cycle api is called.
+                                mpConfigurationAPI(context, urlConfigAPI);
+
+                                return "";
+                            }).subscribe(val -> {
+                    }, throwable -> {
+                        Log.i("ApiManager", throwable.getMessage());
+                    });
+                    return "";
+                }).subscribe(val -> {
+        }, throwable -> {
+            Log.i("ApiManager", throwable.getMessage());
+        });
     }
 
 

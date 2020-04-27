@@ -326,7 +326,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 .subscribe(userProfile -> {
                     boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
 
-                    PremiumPref.getInstance(getActivity()).isUserPreferAdsFree();
+                    PremiumPref.getInstance(getActivity()).isUserLoggedIn();
                     //PremiumPref.getInstance(getActivity())
 
                 });

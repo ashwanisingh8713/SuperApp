@@ -73,7 +73,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         // Reduces Read article table
         DefaultTHApiManager.readArticleDelete(this);
 
-        DefaultPref.getInstance(SuperApp.getAppContext()).setIsIntersAdLoaded(false);
+        DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(false);
 
     }
 

@@ -187,7 +187,7 @@ public class AppAds {
 
         String dfp_interstitial_ad = "/22390678/Hindu_Android_Interstitial";
 
-        if (DefaultPref.getInstance(SuperApp.getAppContext()).getIsIntersAdLoaded()) {
+        if (DefaultPref.getInstance(SuperApp.getAppContext()).isFullScreenAdLoaded()) {
             if(DefaultPref.getInstance(SuperApp.getAppContext()).getInterstetial_Ads_Shown()) {
                 return;
             } else {
@@ -215,7 +215,7 @@ public class AppAds {
 
             @Override
             public void onAppAdLoadSuccess(AdData adData) {
-                DefaultPref.getInstance(SuperApp.getAppContext()).setIsIntersAdLoaded(true);
+                DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(true);
             }
 
             @Override
