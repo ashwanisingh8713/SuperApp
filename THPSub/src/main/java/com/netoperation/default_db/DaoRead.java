@@ -21,6 +21,9 @@ public abstract class  DaoRead {
     @Query("SELECT * FROM TableRead WHERE articleId = :articleId")
     public abstract TableRead getReadArticleId(String articleId);
 
+    @Query("UPDATE TableRead SET commentCount = :commentCount, lutOfCommentCount =:lutOfCommentCount WHERE articleId = :articleId")
+    public abstract int updateReadTable(String articleId, String commentCount, long lutOfCommentCount);
+
     @Query("DELETE FROM TableRead WHERE articleId = :articleId")
     public abstract int deleteReadArticleId(String articleId);
 

@@ -18,6 +18,10 @@ public class TableRead {
 
     private String articleId;
 
+    private String commentCount;
+
+    private long lutOfCommentCount;
+
     public TableRead(String articleId) {
         this.articleId = articleId;
     }
@@ -28,5 +32,21 @@ public class TableRead {
 
     public void setArticleId(String articleId) {
         this.articleId = articleId;
+    }
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public long getLutOfCommentCount() {
+        return lutOfCommentCount;
+    }
+
+    public void setLutOfCommentCount(long lutOfCommentCount) {
+        this.lutOfCommentCount = lutOfCommentCount;
     }
 }

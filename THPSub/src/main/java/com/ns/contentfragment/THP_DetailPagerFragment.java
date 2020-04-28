@@ -444,6 +444,8 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         });
     }
 
+
+
     private void setCurrentPage(int position, boolean smoothScroll) {
         mViewPager.setCurrentItem(position, smoothScroll);
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
@@ -25,6 +27,7 @@ import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.btn.NSImageButton;
 
@@ -62,6 +65,7 @@ public class DetailToolbar extends Toolbar {
     private FrameLayout bookmarkParent;
     private FrameLayout favouriteParent;
     private FrameLayout ttsParent;
+    private RelativeLayout commentParent;
 
 
     public void showSectionIcons(OnClickListener onClickListener) {
@@ -74,7 +78,7 @@ public class DetailToolbar extends Toolbar {
         toggleLikeDisLikeTHPIC.setVisibility(GONE);
         mTitleTextView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
 
         mBackImageView.setVisibility(VISIBLE);
         mLogoImageView.setVisibility(VISIBLE);
@@ -99,7 +103,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
@@ -125,7 +129,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
         premiumLogoBtn.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
@@ -152,7 +156,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
         premiumLogoBtn.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
@@ -183,7 +187,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
         mTitleTextView.setVisibility(GONE);
         premiumLogoBtn.setVisibility(GONE);
 
@@ -209,7 +213,7 @@ public class DetailToolbar extends Toolbar {
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
         premiumLogoBtn.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
@@ -234,7 +238,7 @@ public class DetailToolbar extends Toolbar {
         mTextSizeImageView.setVisibility(GONE);
         overflowParent.setVisibility(GONE);
         mSearchImageView.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
 
         mBackImageView.setVisibility(VISIBLE);
         mLogoImageView.setVisibility(VISIBLE);
@@ -255,7 +259,7 @@ public class DetailToolbar extends Toolbar {
         toggleLikeDisLikeTHPIC.setVisibility(GONE);
         favouriteParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
-        mCommentBtn.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
 
         if(hasSubscriptionPlan) {
@@ -292,7 +296,7 @@ public class DetailToolbar extends Toolbar {
             premiumLogoBtn.setVisibility(VISIBLE);
         }
 
-        mCommentBtn.setVisibility(VISIBLE);
+        commentParent.setVisibility(VISIBLE);
         ttsParent.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
         bookmarkParent.setVisibility(VISIBLE);
@@ -357,6 +361,7 @@ public class DetailToolbar extends Toolbar {
         bookmarkParent = findViewById(R.id.bookmarkParent);
         favouriteParent = findViewById(R.id.favouriteParent);
         ttsParent = findViewById(R.id.ttsParent);
+        commentParent = findViewById(R.id.commentParent);
 
         premiumLogoBtn = findViewById(R.id.action_premiumLogoBtn);
 
@@ -572,6 +577,31 @@ public class DetailToolbar extends Toolbar {
 
                 }, val -> {
                     Log.i("", "");
+                });
+    }
+
+    public void showCommentCount(Context context, String articleId) {
+        DefaultTHApiManager.isReadArticleId(context, articleId)
+                .subscribe(tableRead -> {
+                    Log.i("", "");
+                    if (tableRead != null && tableRead.getArticleId().equals(articleId)) {
+                        String count = tableRead.getCommentCount();
+                        if(!ResUtil.isEmpty(count) && !count.equals("0")) {
+                            TextView countTV = commentParent.findViewById(R.id.textview_comment_count);
+                            countTV.setVisibility(VISIBLE);
+                            countTV.setText(count);
+                        }
+                        else {
+                            commentParent.findViewById(R.id.textview_comment_count).setVisibility(GONE);
+                        }
+
+                    }
+                    else {
+                        commentParent.findViewById(R.id.textview_comment_count).setVisibility(GONE);
+                    }
+                }, throwable -> {
+                    Log.i("", "");
+                    commentParent.findViewById(R.id.textview_comment_count).setVisibility(GONE);
                 });
     }
 

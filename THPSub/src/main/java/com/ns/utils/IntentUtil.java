@@ -2,6 +2,7 @@ package com.ns.utils;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +49,7 @@ import com.ns.activity.THPUserProfileActivity;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.activity.THP_WebActivity;
 import com.ns.activity.THP_YouTubeFullScreenActivity;
+import com.ns.alerts.Alerts;
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -58,8 +60,12 @@ import org.greenrobot.eventbus.EventBus;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 
 public class IntentUtil {
@@ -622,6 +628,104 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
+    public static void openDetailAfterSearchInActivity(Context context, String aid, String url) {
+        CompositeDisposable disposable = new CompositeDisposable();
+        final ProgressDialog progress = Alerts.showProgressDialog(context);
+        disposable.add(DefaultTHApiManager.isExistInTempArticleArticle(context, aid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ArticleBean>() {
+                               @Override
+                               public void accept(ArticleBean bean) {
+                                   if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
+                                       IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, bean, url);
+                                       progress.dismiss();
+                                       disposable.clear();
+                                       disposable.dispose();
+                                   }
+                                   else {
+                                       disposable.add(DefaultTHApiManager.isExistInDGnArticle(context, aid)
+                                               .observeOn(AndroidSchedulers.mainThread())
+                                               .subscribe(articleBean->{
+                                                   if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
+                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.GROUP_DEFAULT_SECTIONS, bean, url);
+                                                       progress.dismiss();
+                                                       disposable.clear();
+                                                       disposable.dispose();
+                                                   }
+                                                   else  {
+                                                       String SEARCH_BY_ARTICLE_ID_URL = "";
+                                                       if(BuildConfig.IS_PRODUCTION) {
+                                                           SEARCH_BY_ARTICLE_ID_URL = BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_ID_URL;
+                                                       } else {
+                                                           SEARCH_BY_ARTICLE_ID_URL = BuildConfig.STATGGING_SEARCH_BY_ARTICLE_ID_URL;
+                                                       }
+                                                       // Making Server request to get Article from server
+                                                       // and Saving into DB, with SectionName = "tempSec"
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL);
+                                                       disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
+                                                               .subscribe(new Consumer<ArticleBean>() {
+                                                                              @Override
+                                                                              public void accept(ArticleBean articleBean)  {
+                                                                                  if(context == null) {
+                                                                                      return;
+                                                                                  }
+                                                                                  if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
+                                                                                      IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, articleBean, url);
+                                                                                  }
+                                                                                  else {
+                                                                                      // Opening Article In Web Page
+                                                                                      IntentUtil.openWebActivity(context, aid, url);
+                                                                                  }
+
+                                                                                  if(progress != null && context != null) {
+                                                                                      progress.dismiss();
+                                                                                      disposable.clear();
+                                                                                      disposable.dispose();
+                                                                                  }
+                                                                              }
+                                                                          },
+                                                                       new Consumer<Throwable>() {
+                                                                           @Override
+                                                                           public void accept(Throwable throwable)  {
+                                                                               Log.i("", "");
+                                                                               if(progress != null && context != null) {
+                                                                                   progress.dismiss();
+                                                                                   disposable.clear();
+                                                                                   disposable.dispose();
+                                                                               }
+                                                                               if(context != null && context instanceof Activity) {
+                                                                                   Alerts.showSnackbar((Activity) context, context.getResources().getString(R.string.something_went_wrong));
+                                                                               }
+                                                                           }
+                                                                       }));
+
+                                                   }
+                                               }));
+                                   }
+
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) {
+                                if(progress != null && context != null) {
+                                    progress.dismiss();
+                                    disposable.clear();
+                                    disposable.dispose();
+                                }
+                                if(context != null && context instanceof Activity) {
+                                    Alerts.showSnackbar((Activity) context, context.getResources().getString(R.string.something_went_wrong));
+                                }
+                            }
+                        },
+                        new Action() {
+                            @Override
+                            public void run() {
+
+                            }
+                        }));
+    }
+
     public static void openDetailActivity(Context context, String from, String articleId, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
         Intent intent = new Intent(context, THP_DetailActivity.class);
         intent.putExtra("from", from);
@@ -650,6 +754,8 @@ public class IntentUtil {
 
                 });
     }
+
+
 
     public static void openWebActivity(Context context, String from, String url) {
         Intent intent = new Intent(context, THP_WebActivity.class);
@@ -812,5 +918,7 @@ public class IntentUtil {
     public static void clearAllPreviousActivity(AppCompatActivity activity) {
         ActivityCompat.finishAffinity(activity);
     }
+
+
 
 }

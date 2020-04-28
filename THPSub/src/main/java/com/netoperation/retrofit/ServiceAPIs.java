@@ -191,4 +191,5 @@ public interface ServiceAPIs {
     @GET("") // newsLetter.php
     Observable<JsonElement> DailyDigestApi(@Url String url);
 
+
 }

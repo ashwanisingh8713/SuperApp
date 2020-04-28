@@ -255,18 +255,42 @@
     <!-- End Share Icon -->
 
     <!-- Start Comment Icon -->
-    <com.ns.view.IconImgView
-        app:iconType="comment"
-        android:id="@+id/action_commentTHP"
-        android:layout_width="@dimen/toolbar_ic_width"
-        android:layout_height="@dimen/toolbar_ic_height"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
-        android:scaleType="center"
-        android:src="@drawable/ic_comment"
+
+    <RelativeLayout
+        android:id="@+id/commentParent"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/action_shareTHP"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap">
+
+        <com.ns.view.IconImgView
+            app:iconType="comment"
+            android:id="@+id/action_commentTHP"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_comment"
+            />
+
+        <TextView
+            android:id="@+id/textview_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignTop="@id/action_commentTHP"
+            android:layout_alignRight="@id/action_commentTHP"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:background="@drawable/ic_notify_day_mode"/>
+    </RelativeLayout>
+
+
     <!-- End Comment Icon -->
 
     <!-- Start TTS Icon -->
@@ -277,7 +301,7 @@
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/action_commentTHP"
+        app:layout_constraintRight_toLeftOf="@+id/commentParent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.ns.view.IconImgView

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mindorks.scheduler.Priority;
 import com.mindorks.scheduler.RxPS;
 import com.netoperation.db.DaoMP;
@@ -579,8 +580,19 @@ public class DefaultTHApiManager {
                     }
                     THPDB thpdb = THPDB.getInstance(context);
                     DaoRead daoRead = thpdb.daoRead();
-                    TableRead read = new TableRead(id);
-                    daoRead.insertReadArticle(read);
+                    TableRead read = daoRead.getReadArticleId(articleId);
+                    if(read == null) {
+                        read = new TableRead(id);
+                        daoRead.insertReadArticle(read);
+                        DefaultTHApiManager.getCommentCount(articleId, context);
+                    }
+                    else {
+                        long lut = read.getLutOfCommentCount();
+                        long interval = 1000*60*10;
+                        if(lut+interval < System.currentTimeMillis()) {
+                            DefaultTHApiManager.getCommentCount(articleId, context);
+                        }
+                    }
                     return "";
                 }).subscribe();
 
@@ -921,6 +933,46 @@ public class DefaultTHApiManager {
                     return tableSectionNew;
 
                 });
+    }
+
+
+
+
+    public static void getCommentCount(final String articleId, Context context) {
+
+        String url = "https://api.vuukle.com/api/v1/Comments/getCommentCountListByHost?host=thehindu.com&articleIds="+articleId;
+
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().getCommentCount(url);
+        observable.timeout(5, TimeUnit.SECONDS);
+        observable.subscribeOn(Schedulers.newThread())
+                .map(new Function<JsonElement, JsonElement>() {
+                    @Override
+                    public JsonElement apply(JsonElement jsonElement) {
+                        return jsonElement;
+                    }
+                })
+                .map(new Function<JsonElement, String>() {
+                    @Override
+                    public String apply(JsonElement jsonElement) {
+                        JsonObject object = jsonElement.getAsJsonObject();
+                        boolean isSuccess = object.get("success").getAsBoolean();
+                        if(isSuccess) {
+                            JsonObject data = object.get("data").getAsJsonObject();
+                            int commentCount = data.get("" + articleId).getAsInt();
+                            String countStr = ""+commentCount;
+                            THPDB thpdb = THPDB.getInstance(context);
+                            DaoRead daoRead = thpdb.daoRead();
+                            if(daoRead != null) {
+                                daoRead.updateReadTable(articleId, countStr, System.currentTimeMillis());
+                            }
+                            return countStr;
+                        }
+                        return "0";
+                    }
+                }).subscribe();
+
+
+
     }
 
 

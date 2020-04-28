@@ -17,6 +17,7 @@ import com.main.AppAds;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
@@ -46,6 +47,8 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, AppAds.OnAppAdLoadListener {
 
@@ -144,19 +147,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             }
         }
 
-        if(mActivity != null && mIsVisible) {
-            mPageStartTime = System.currentTimeMillis();
-            // Set Toolbar Item Click Listener
-            mActivity.setOnFragmentTools(this);
-
-            // Checking Visible Article is bookmarked or not.
-            isExistInBookmark(mArticleId);
-            // Checking Visible Article is Like and Fav or not.
-            isFavOrLike();
-
-        }
-
-
     }
 
     @Override
@@ -171,6 +161,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         // Checking Visible Article is Like and Fav or not.
         isFavOrLike();
+
+        showCommentCount();
 
 
     }
@@ -576,6 +568,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      */
     private void isFavOrLike() {
         mActivity.getDetailToolbar().isFavOrLike(getActivity(), mArticleBean, mArticleId);
+    }
+
+    private void showCommentCount() {
+        mActivity.getDetailToolbar().showCommentCount(getActivity(), mArticleId);
     }
 
     private boolean isBriefingDetail() {

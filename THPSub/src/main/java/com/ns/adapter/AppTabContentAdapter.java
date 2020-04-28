@@ -808,7 +808,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
                 if (isOrganic) {
                     int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-                    IntentUtil.openDetailActivity(mInfiniteTaboolaView.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, url, 0, ""+articleId);
+
+                    IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), ""+articleId, url);
 
                     /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
                     GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
