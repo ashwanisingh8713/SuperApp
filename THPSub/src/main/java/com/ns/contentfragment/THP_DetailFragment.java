@@ -16,6 +16,7 @@ import com.google.android.gms.ads.AdSize;
 import com.main.AppAds;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.MeBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
@@ -634,9 +635,26 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      * @param bean
      */
     private void dgPage(ArticleBean bean) {
-        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
-        bannerModel.setBean(bean);
-        mRecyclerAdapter.addData(bannerModel);
+        if(!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_PHOTO)) {
+            /*ArrayList<MeBean> mediaBeans = bean.getMe();
+            for(MeBean media : mediaBeans) {
+                AppTabContentModel meModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_PHOTO_VIEW, media.getIm_v2());
+                meModel.setMeBean(media);
+                mRecyclerAdapter.addData(meModel);
+            }
+            return;*/
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_PHOTO_VIEW, "photoModel");
+            bannerModel.setBean(bean);
+            mRecyclerAdapter.addData(bannerModel);
+        } else if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_VIDEO)) {
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_VIDEO_PLAYER, "videoModel");
+            bannerModel.setBean(bean);
+            mRecyclerAdapter.addData(bannerModel);
+        } else {
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+            bannerModel.setBean(bean);
+            mRecyclerAdapter.addData(bannerModel);
+        }
 
         AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
         description_1Model.setBean(mArticleBean);

@@ -2,6 +2,7 @@ package com.ns.model;
 
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.MeBean;
 
 public class AppTabContentModel {
 
@@ -9,6 +10,7 @@ public class AppTabContentModel {
     private ArticleBean bean;
     private String uniqueIdForView;
     private AdData adData;
+    private MeBean meBean;
 
     public AppTabContentModel(int viewType) {
         this.viewType = viewType;
@@ -17,6 +19,14 @@ public class AppTabContentModel {
     public AppTabContentModel(int viewType, String uniqueIdForView) {
         this.viewType = viewType;
         this.uniqueIdForView = uniqueIdForView;
+    }
+
+    public MeBean getMeBean() {
+        return meBean;
+    }
+
+    public void setMeBean(MeBean meBean) {
+        this.meBean = meBean;
     }
 
     public int getViewType() {

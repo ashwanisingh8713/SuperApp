@@ -57,6 +57,9 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_TABOOLA = 30;
     public static final int VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW = 31;
     public static final int VT_THD_SEARCH_ROW = 32;
+    public static final int VT_THD_PHOTO_VIEW = 33;
+    public static final int VT_THD_VIDEO_VIEW = 34;
+    public static final int VT_THD_AUDIO_VIEW = 35;
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 
@@ -90,8 +93,9 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
                 articleTypeimageView.setVisibility(View.VISIBLE);
                 if(articleBean.getVIDEO_URL() != null && !TextUtils.isEmpty(articleBean.getVIDEO_URL())) {
                     articleTypeimageView.setImageResource(R.drawable.video);
-                }
-                else {
+                } else if (articleBean.getVid() != null && !TextUtils.isEmpty(articleBean.getVid())) {
+                    articleTypeimageView.setImageResource(R.drawable.video);
+                } else {
                     articleTypeimageView.setImageResource(R.drawable.yt_play_big);
                 }
             }

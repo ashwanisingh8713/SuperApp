@@ -91,7 +91,11 @@
             android:configChanges="uiMode|keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-
+        <activity
+            android:name="com.ns.activity.VideoPlayerActivity"
+            android:configChanges="uiMode|keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <!--Activities provided by Facebook-->
         <activity android:name="com.facebook.FacebookActivity"

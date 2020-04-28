@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,8 @@ import com.ns.viewholder.BookmarkPremiumViewHolder;
 import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
+import com.ns.viewholder.DG_DetailPhotoViewHolder;
+import com.ns.viewholder.DG_DetailVideoViewHolder;
 import com.ns.viewholder.DG_Restricted_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.DashboardViewHolder;
 import com.ns.viewholder.DG_DetailBannerViewHolder;
@@ -195,8 +198,11 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.inline_ads_container, viewGroup, false));
         }
+        else if(viewType == VT_THD_PHOTO_VIEW) {
+            return new DG_DetailPhotoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
+        }
         else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
-
+            return new DG_DetailVideoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
         }
         else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
 
@@ -241,6 +247,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         }
         else if(viewHolder instanceof InlineAdViewHolder) {
             fillInlineAdView(viewHolder, mContent.get(position));
+        } else if (viewHolder instanceof DG_DetailPhotoViewHolder) {
+            dg_ui_detail_photoview_banner(viewHolder, bean);
+        } else if (viewHolder instanceof DG_DetailVideoViewHolder) {
+            dg_ui_detail_video_type_banner(viewHolder, bean);
         }
 
     }
@@ -661,35 +671,164 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void dg_ui_detail_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_DetailBannerViewHolder dg_banner_vh = (DG_DetailBannerViewHolder) viewHolder;
+        dg_banner_vh.mMultiMediaButton.setVisibility(View.GONE);
         boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
-
-        dg_banner_vh.mTitleTextView.setText(bean.getTi());
-        dg_banner_vh.mArticleLocationView.setText(bean.getLocation());
-        String author = bean.getAu();
-        if (author != null && !TextUtils.isEmpty(author)) {
-            dg_banner_vh.mAuthorTextView.setVisibility(View.VISIBLE);
-            dg_banner_vh.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
-        } else {
+        if (isAppExclusive) {
+            dg_banner_vh.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            dg_banner_vh.mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
-        }
-
-        dg_banner_vh.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
-        dg_banner_vh.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
-
-        final ArrayList<MeBean> mImageList = bean.getMe();
-
-        if (mImageList != null && mImageList.size() > 0) {
-            String imageUrl = mImageList.get(0).getIm_v2();
-            GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
-            String caption = mImageList.get(0).getCa();
-            if (caption != null && !TextUtils.isEmpty(caption)) {
-                dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
+            dg_banner_vh.mUpdatedTextView.setVisibility(View.GONE);
+            dg_banner_vh.mCreatedDateTextView.setVisibility(View.GONE);
+            dg_banner_vh.mHeaderImageView.setVisibility(View.GONE);
+            dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
+            dg_banner_vh.mCaptionDevider.setVisibility(View.GONE);
+        } else {
+            dg_banner_vh.mTitleTextView.setText(bean.getTi());
+            dg_banner_vh.mArticleLocationView.setText(bean.getLocation());
+            String author = bean.getAu();
+            if (author != null && !TextUtils.isEmpty(author)) {
+                dg_banner_vh.mAuthorTextView.setVisibility(View.VISIBLE);
+                dg_banner_vh.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
             } else {
-                dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
+                dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
             }
 
-            dg_banner_vh.mHeaderImageView.setOnClickListener(v -> {
+            dg_banner_vh.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+            dg_banner_vh.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+            final ArrayList<MeBean> mImageList = bean.getMe();
+
+            if (mImageList != null && mImageList.size() > 0) {
+                String imageUrl = mImageList.get(0).getIm_v2();
+                GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                String caption = mImageList.get(0).getCa();
+                if (caption != null && !TextUtils.isEmpty(caption)) {
+                    dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
+                } else {
+                    dg_banner_vh.mCaptionTextView.setVisibility(View.GONE);
+                }
+            }
+            dg_banner_vh.mHeaderImageView.setOnClickListener(v -> IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom));
+        }
+    }
+
+    /**
+     * Photo view type banner
+     * @param viewHolder view holder for Photo type views
+     * @param bean  for Article
+     */
+    private void dg_ui_detail_photoview_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_DetailPhotoViewHolder db_photo_banner_holder = (DG_DetailPhotoViewHolder) viewHolder;
+        boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
+        if (isAppExclusive) {
+            db_photo_banner_holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            db_photo_banner_holder.mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            db_photo_banner_holder.mAuthorTextView.setVisibility(View.GONE);
+            db_photo_banner_holder.mUpdatedTextView.setVisibility(View.GONE);
+            db_photo_banner_holder.mCreatedDateTextView.setVisibility(View.GONE);
+            db_photo_banner_holder.mHeaderImageView.setVisibility(View.GONE);
+            db_photo_banner_holder.mMultiMediaButton.setVisibility(View.GONE);
+            db_photo_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+            db_photo_banner_holder.mCaptionDevider.setVisibility(View.GONE);
+        } else {
+            db_photo_banner_holder.mTitleTextView.setText(bean.getTi());
+            db_photo_banner_holder.mArticleLocationView.setText(bean.getLocation());
+            String author = bean.getAu();
+            if (author != null && !TextUtils.isEmpty(author)) {
+                db_photo_banner_holder.mAuthorTextView.setVisibility(View.VISIBLE);
+                db_photo_banner_holder.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
+            } else {
+                db_photo_banner_holder.mAuthorTextView.setVisibility(View.GONE);
+            }
+
+            db_photo_banner_holder.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+            db_photo_banner_holder.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+            final ArrayList<MeBean> mImageList = bean.getMe();
+            if (mImageList != null && mImageList.size() > 0) {
+                String imageUrl = mImageList.get(0).getIm_v2();
+                GlideUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                String caption = mImageList.get(0).getCa();
+                if (caption != null && !TextUtils.isEmpty(caption)) {
+                    db_photo_banner_holder.mCaptionTextView.setText(Html.fromHtml(caption));
+                } else {
+                    db_photo_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+                }
+            }
+            db_photo_banner_holder.mHeaderImageView.setOnClickListener(v -> {
                 IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
+            });
+            // To shows Article Type Image
+            articleTypeImage(bean.getArticleType(), bean, db_photo_banner_holder.mMultiMediaButton);
+            db_photo_banner_holder.mMultiMediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
+                }
+            });
+        }
+    }
+    /**
+     * Photo view type banner
+     * @param viewHolder view holder for Photo type views
+     * @param bean  for Article
+     */
+    private void dg_ui_detail_video_type_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_DetailVideoViewHolder db_video_banner_holder = (DG_DetailVideoViewHolder) viewHolder;
+        boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
+        if (isAppExclusive) {
+            db_video_banner_holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            db_video_banner_holder.mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            db_video_banner_holder.mAuthorTextView.setVisibility(View.GONE);
+            db_video_banner_holder.mUpdatedTextView.setVisibility(View.GONE);
+            db_video_banner_holder.mCreatedDateTextView.setVisibility(View.GONE);
+            db_video_banner_holder.mHeaderImageView.setVisibility(View.GONE);
+            db_video_banner_holder.mMultiMediaButton.setVisibility(View.GONE);
+            db_video_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+            db_video_banner_holder.mCaptionDevider.setVisibility(View.GONE);
+        } else {
+            db_video_banner_holder.mTitleTextView.setText(bean.getTi());
+            db_video_banner_holder.mArticleLocationView.setText(bean.getLocation());
+            String author = bean.getAu();
+            if (author != null && !TextUtils.isEmpty(author)) {
+                db_video_banner_holder.mAuthorTextView.setVisibility(View.VISIBLE);
+                db_video_banner_holder.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
+            } else {
+                db_video_banner_holder.mAuthorTextView.setVisibility(View.GONE);
+            }
+
+            db_video_banner_holder.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+            db_video_banner_holder.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+            final ArrayList<MeBean> mImageList = bean.getMe();
+            if (mImageList != null && mImageList.size() > 0) {
+                String imageUrl = mImageList.get(0).getIm_v2();
+                GlideUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                String caption = mImageList.get(0).getCa();
+                if (caption != null && !TextUtils.isEmpty(caption)) {
+                    db_video_banner_holder.mCaptionTextView.setText(Html.fromHtml(caption));
+                } else {
+                    db_video_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+                }
+            }
+            db_video_banner_holder.mHeaderImageView.setOnClickListener(v -> {
+                if (bean.getVid() != null && !TextUtils.isEmpty(bean.getVid())) {
+                    IntentUtil.openJWVideoPayerActivity(v.getContext(), bean.getVid());
+                } else {
+                    IntentUtil.openYoutubeActivity(v.getContext(), bean.getYoutube_video_id());
+                }
+            });
+            // To shows Article Type Image
+            articleTypeImage(bean.getArticleType(), bean, db_video_banner_holder.mMultiMediaButton);
+            db_video_banner_holder.mMultiMediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bean.getVid() != null && !TextUtils.isEmpty(bean.getVid())) {
+                        IntentUtil.openJWVideoPayerActivity(v.getContext(), bean.getVid());
+                    } else {
+                        IntentUtil.openYoutubeActivity(v.getContext(), bean.getYoutube_video_id());
+                    }
+                }
             });
         }
     }

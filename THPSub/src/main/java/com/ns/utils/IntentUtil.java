@@ -49,6 +49,7 @@ import com.ns.activity.THPUserProfileActivity;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.activity.THP_WebActivity;
 import com.ns.activity.THP_YouTubeFullScreenActivity;
+import com.ns.activity.VideoPlayerActivity;
 import com.ns.alerts.Alerts;
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.BuildConfig;
@@ -862,6 +863,12 @@ public class IntentUtil {
             Intent intent = new Intent(context, THP_YouTubeFullScreenActivity.class);
             intent.putExtra("videoId", videoId);
             context.startActivity(intent);
+    }
+
+    public static void openJWVideoPayerActivity(Context context, String vidUrl) {
+        Intent intent = new Intent(context, VideoPlayerActivity.class);
+        intent.putExtra("videoId", vidUrl);
+        context.startActivity(intent);
     }
 
     public static void openTheHinduMainActivity(Context context) {

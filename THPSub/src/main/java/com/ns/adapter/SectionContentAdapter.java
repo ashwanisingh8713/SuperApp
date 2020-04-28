@@ -283,7 +283,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-
+                    IntentUtil.openDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
             });
 
