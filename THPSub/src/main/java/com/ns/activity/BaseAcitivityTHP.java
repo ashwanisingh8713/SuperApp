@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +15,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.main.AppAds;
+import com.netoperation.model.AdData;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
@@ -229,5 +233,27 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     protected boolean isUserLoggedIn() {
         return PremiumPref.getInstance(this).isUserLoggedIn();
+    }
+
+
+    protected void createAndShowBannerAds() {
+        AppAds appAds = new AppAds();
+        appAds.createBannerAdRequest(false);
+        appAds.setOnAppAdLoadListener(new AppAds.OnAppAdLoadListener() {
+            @Override
+            public void onAppAdLoadSuccess(AdData adData) {
+                LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);
+                if(banner_Ad_layout != null) {
+                    banner_Ad_layout.setVisibility(View.VISIBLE);
+                    banner_Ad_layout.addView(adData.getAdView());
+                }
+            }
+
+            @Override
+            public void onAppAdLoadFailure(AdData adData) {
+                Log.i("", "");
+
+            }
+        });
     }
 }

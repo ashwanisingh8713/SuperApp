@@ -108,24 +108,5 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         super.onDestroy();
     }
 
-    private void createAndShowBannerAds() {
-        AppAds appAds = new AppAds();
-        appAds.createBannerAdRequest(false);
-        appAds.setOnAppAdLoadListener(new AppAds.OnAppAdLoadListener() {
-            @Override
-            public void onAppAdLoadSuccess(AdData adData) {
-                LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);
-                if(banner_Ad_layout != null) {
-                    banner_Ad_layout.setVisibility(View.VISIBLE);
-                    banner_Ad_layout.addView(adData.getAdView());
-                }
-            }
 
-            @Override
-            public void onAppAdLoadFailure(AdData adData) {
-                Log.i("", "");
-
-            }
-        });
-    }
 }
