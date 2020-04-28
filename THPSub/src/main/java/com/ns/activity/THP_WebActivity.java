@@ -64,6 +64,8 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
         new WebViewLinkClick().linkClick(mWebView, this, mProgressBar);
 
+        createAndShowBannerAds();
+
     }
 
     @Override

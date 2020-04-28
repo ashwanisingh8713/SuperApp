@@ -1,10 +1,14 @@
 package com.ns.activity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
 import com.main.AppAds;
+import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
@@ -88,6 +92,8 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 .subscribe(val->{
                     new AppAds().loadFullScreenAds();
                 });
+
+        createAndShowBannerAds();
     }
 
     @Override
@@ -101,4 +107,6 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         new AppAds().showFullScreenAds();
         super.onDestroy();
     }
+
+
 }

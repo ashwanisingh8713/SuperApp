@@ -17,4 +17,10 @@ public class TableConfiguration {
         this.id = id;
     }
 
+
+
+
+
+
+
 }

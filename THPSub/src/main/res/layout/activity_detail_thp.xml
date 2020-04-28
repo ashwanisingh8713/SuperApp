@@ -40,9 +40,19 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintBottom_toTopOf="@id/banner_Ad_layout"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         />
+
+    <!--Bottom Ads Banner Layout-->
+    <include
+        android:id="@+id/banner_Ad_layout"
+        layout="@layout/banner_ad_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     // Comment Out this code to start Parallax of Toolbar
     // Use the coordinator layout as a parent Layout
