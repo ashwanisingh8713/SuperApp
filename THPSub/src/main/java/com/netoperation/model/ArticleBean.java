@@ -163,6 +163,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getSid() {
+        if(sid == null) {
+            return parent_section_id;
+        }
         return sid;
     }
 
@@ -343,6 +346,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getParent_section_id() {
+        if(parent_section_id == null) {
+            return sid;
+        }
         return parent_section_id;
     }
 

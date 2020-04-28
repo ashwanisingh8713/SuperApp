@@ -414,6 +414,8 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             if (index != -1) {
                 mClickedPosition = index;
             }
+
+            DefaultTHApiManager.readArticleId(getActivity(), mArticleId);
         }
 
         // Setting current position of ViewPager

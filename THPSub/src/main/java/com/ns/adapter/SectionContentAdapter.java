@@ -25,6 +25,7 @@ import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
+import com.ns.utils.FragmentUtil;
 import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.SharingArticleUtil;
@@ -273,7 +274,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-
                     IntentUtil.openDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
             });
@@ -523,6 +523,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
             mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + dataBean.getWidgetAdapter().getSectionName());
         }
+
+        mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(v->{
+            FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+dataBean.getWidgetAdapter().getSectionId());
+        });
 
         /*mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(new View.OnClickListener() {
             @Override

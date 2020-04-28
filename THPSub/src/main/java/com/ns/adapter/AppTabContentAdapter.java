@@ -706,12 +706,17 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         String fullDescription = bean.getDescription();
 
-        if(item.getUniqueIdForView().equals("description_1Model")) {
-            holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription.substring(0, bean.getAdd_pos() - 1)),
-                    "text/html", "UTF-8", null);
+        if(bean.getAdd_pos() > 1) {
+            if (item.getUniqueIdForView().equals("description_1Model")) {
+                holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription.substring(0, bean.getAdd_pos() - 1)),
+                        "text/html", "UTF-8", null);
+            } else if (item.getUniqueIdForView().equals("description_2Model")) {
+                holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), "", fullDescription.substring(bean.getAdd_pos() - 1)),
+                        "text/html", "UTF-8", null);
+            }
         }
-        else if(item.getUniqueIdForView().equals("description_2Model")) {
-            holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), "", fullDescription.substring(bean.getAdd_pos() - 1)),
+        else {
+            holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription),
                     "text/html", "UTF-8", null);
         }
 

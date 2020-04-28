@@ -22,6 +22,7 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
@@ -226,8 +227,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onGroupClick(int groupPostion, TableSection tableSection, boolean isExpanded) {
-        // Sending Event in TopTabsFragment.java => handleEvent()
-        EventBus.getDefault().post(tableSection);
+        FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
         mDrawerLayout.closeDrawers();
 
         // CleverTap Hamburger Event Tracking
@@ -237,18 +237,19 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onChildClick(int groupPostion, int childPosition, TableSection groupSection, SectionBean childSection) {
-
+        FragmentUtil.redirectionOnSectionAndSubSection(this, childSection.getSecId());
         // Setting Group Section name, It will be used to show in Toolbar title
-        childSection.setParentSecName(groupSection.getSecName());
+        /*childSection.setParentSecName(groupSection.getSecName());
         childSection.setParentSecId(groupSection.getSecId());
         // Sending Event in TopTabsFragment.java => handleEvent()
-        EventBus.getDefault().post(childSection);
+        EventBus.getDefault().post(childSection);*/
         // Closing Left Drawer
         mDrawerLayout.closeDrawers();
 
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, groupSection.getSecName(), childSection.getSecName());
     }
+
 
     /**
      * Lock drawer

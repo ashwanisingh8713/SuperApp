@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -22,9 +23,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
+import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.AppTabActivity;
@@ -48,10 +53,13 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.twitter.sdk.android.core.TwitterCore;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 
 public class IntentUtil {
@@ -623,6 +631,24 @@ public class IntentUtil {
         intent.putExtra("sectionType", sectionType);
         intent.putExtra("isSubsection", isSubsection);
         context.startActivity(intent);
+    }
+
+    public static void openSectionOrSubSectionDetailActivity(Context context, String secId, String articleId, String from, View view) {
+        if (view != null) {
+            view.setClickable(false);
+        }
+        DefaultTHApiManager.isSectionOrSubsection(context, secId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    if (value instanceof SectionBean) {
+                        SectionBean sectionBean = (SectionBean) value;
+                        IntentUtil.openDetailActivity(context, from, articleId, sectionBean.getSecId(), sectionBean.getType(), sectionBean.getSecName(), true);
+                    } else if (value instanceof TableSection) {
+                        TableSection tableSection = (TableSection) value;
+                        IntentUtil.openDetailActivity(context, from, articleId, tableSection.getSecId(), tableSection.getType(), tableSection.getSecName(), false);
+                    }
+
+                });
     }
 
     public static void openWebActivity(Context context, String from, String url) {

@@ -137,32 +137,44 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPullToRefreshLayout.setTryAgainBtnClickListener(this);
         mPullToRefreshLayout.hideProgressBar();
 
-        mRecyclerAdapter = new SectionContentAdapter(mFrom, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
+
+
+        if(mRecyclerAdapter == null) {
+            mRecyclerAdapter = new SectionContentAdapter(mFrom, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
+            if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
+                // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
+                test();
+                homeAndBannerArticleFromDB();
+//            test();
+
+            } else { // Other Sections or Sub-Section
+                // Registering Scroll Listener to load more item
+                mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
+
+                // If it is section
+                if (!mIsSubsection) {
+                    getSubsections();
+                }
+
+                loadMoreItems();
+
+            }
+
+        }
+
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
         // Pull To Refresh Listener
         registerPullToRefresh();
 
+    }
 
-        if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
-            // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-            test();
-            homeAndBannerArticleFromDB();
-//            test();
-
-        } else { // Other Sections or Sub-Section
-            // Registering Scroll Listener to load more item
-            mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
-
-            // If it is section
-            if (!mIsSubsection) {
-                getSubsections();
-            }
-
-            loadMoreItems();
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mRecyclerAdapter != null) {
+            mRecyclerAdapter.notifyDataSetChanged();
         }
-
     }
 
     private void test() {
@@ -432,12 +444,12 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                     WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
                                     item.setWidgetAdapter(widgetAdapter);
                                     mRecyclerAdapter.addSingleItem(item);
-                                    Log.i(TAG, "SECTION :: " + mSectionId + " :: UI :: Widget Added :: " + itemRowId);
+                                    Log.i(TAG, "Home Page Widget Added :: " + widget.getSecName() + " :: " + widget.getSecId());
                                 } else {
                                     item = mRecyclerAdapter.getItem(index);
                                     item.getWidgetAdapter().updateArticleList(widget.getBeans());
                                     mRecyclerAdapter.notifyItemChanged(index);
-                                    Log.i(TAG, "SECTION :: " + mSectionId + " :: UI :: Widget Updated :: " + itemRowId);
+                                    Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
                                 }
                             }
                         }

@@ -2,6 +2,7 @@ package com.netoperation.default_db;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.model.SectionBean;
@@ -38,6 +39,11 @@ public class TableSection {
     private StaticPageUrlBean staticPageUrlBean;
 
     private List<SectionBean> subSections;
+
+    @Ignore
+    public TableSection() {
+
+    }
 
     public TableSection(String secId, String secName, String type, SectionBean section,
                          boolean show_on_burger, boolean show_on_explore, List<SectionBean> subSections, StaticPageUrlBean staticPageUrlBean, String customScreen, String customScreenPri) {

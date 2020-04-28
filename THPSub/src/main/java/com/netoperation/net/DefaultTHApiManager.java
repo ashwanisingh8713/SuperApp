@@ -885,4 +885,43 @@ public class DefaultTHApiManager {
     }
 
 
+    public static Observable isSectionOrSubsection(Context context, String sectionId) {
+        return Observable.just(sectionId)
+                .subscribeOn(Schedulers.io())
+                .map(secId->{
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoSection daoSection = thpdb.daoSection();
+                    SectionBean subSectionBean = new SectionBean();
+                    subSectionBean.setSecId(secId);
+
+                    TableSection tableSectionNew = null;
+
+
+                    List<TableSection> sectionList = daoSection.getSections();
+
+                    for(TableSection tableSection : sectionList) {
+                        if(sectionId.equals(tableSection.getSecId())) {
+                            tableSectionNew = tableSection;
+                            return tableSectionNew;
+                        }
+                        List<SectionBean> subSectionList = tableSection.getSubSections();
+                        int mSelectedPagerIndex = subSectionList.indexOf(subSectionBean);
+                        if(mSelectedPagerIndex != -1) {
+                            // Setting Group Section name, It will be used to show in Toolbar title
+                            SectionBean subSection = subSectionList.get(mSelectedPagerIndex);
+                            subSection.setParentSecName(tableSection.getSecName());
+
+                            subSection.setParentSecId(tableSection.getSecId());
+                            return subSection;
+                        }
+                    }
+                    if(tableSectionNew == null) {
+                        tableSectionNew = new TableSection();
+                    }
+                    return tableSectionNew;
+
+                });
+    }
+
+
 }

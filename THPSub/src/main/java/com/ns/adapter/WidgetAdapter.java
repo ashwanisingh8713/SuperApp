@@ -3,6 +3,7 @@ package com.ns.adapter;
 import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.ArticleBean;
 import com.netoperation.util.AppDateUtil;
+import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
+import com.ns.utils.FragmentUtil;
 import com.ns.utils.GlideUtil;
+import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
 
 import java.util.List;
@@ -144,19 +148,14 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
 //                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
 //                    FlurryAgent.logEvent("Widget: " + " Article Clicked");
-//                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-//                            position, bean.getSid(), false);
-//                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();
-                    Alerts.showToast(view.getContext(), "fillAppExclusiveData");
+
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, appExclusiveViewHolder.mRootLayout);
                 }
             });
 
-            if (bean.isRead()) {
-                appExclusiveViewHolder.mRootLayout.setAlpha(.8f);
-            } else {
-                appExclusiveViewHolder.mRootLayout.setAlpha(1f);
-            }
+            // Dims Read article given view
+            dimReadArticle(appExclusiveViewHolder.mRootLayout.getContext(), bean.getArticleId(), appExclusiveViewHolder.mRootLayout);
         }
     }
 
@@ -175,23 +174,18 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             }
             mWidgetViewHolder.mWidgetTextView.setText(bean.getTi());
 
+            // Dims Read article given view
+            dimReadArticle(mWidgetViewHolder.mWidgetLayout.getContext(), bean.getArticleId(), mWidgetViewHolder.mWidgetLayout);
 
-            if (bean.isRead()) {
-                mWidgetViewHolder.mWidgetLayout.setAlpha(.8f);
-            } else {
-                mWidgetViewHolder.mWidgetLayout.setAlpha(1f);
-            }
 
             mWidgetViewHolder.mWidgetLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-                            position, bean.getSid(), false);
-                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(view.getContext(), "fillWidgetData");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mWidgetViewHolder.mWidgetLayout);
                 }
             });
         }
@@ -212,22 +206,17 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 }
             }
 
-            if (bean.isRead()) {
-                mCartoonViewHolder.mRootLayout.setAlpha(.8f);
-            } else {
-                mCartoonViewHolder.mRootLayout.setAlpha(1f);
-            }
+            // Dims Read article given view
+            dimReadArticle(mCartoonViewHolder.mRootLayout.getContext(), bean.getArticleId(), mCartoonViewHolder.mRootLayout);
 
             mCartoonViewHolder.mRootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-                            position, bean.getSid(), false);
-                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(view.getContext(), "fillCartoonData");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mCartoonViewHolder.mRootLayout);
                 }
             });
         }
@@ -246,22 +235,17 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 mOpinionViewHolder.mWidgetDescripitionTextView.setText("");
             }
 
-            if (bean.isRead()) {
-                mOpinionViewHolder.mRootLayout.setAlpha(.8f);
-            } else {
-                mOpinionViewHolder.mRootLayout.setAlpha(1f);
-            }
+            // Dims Read article given view
+            dimReadArticle(mOpinionViewHolder.mRootLayout.getContext(), bean.getArticleId(), mOpinionViewHolder.mRootLayout);
 
             mOpinionViewHolder.mRootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Openion", "Widget Openion: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Openion: " + " Article Clicked");
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-                            position, bean.getSid(), false);
-                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(view.getContext(), "fillOpinionData");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mOpinionViewHolder.mRootLayout);
                 }
             });
         }
@@ -288,11 +272,8 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             }
 
 
-            if (bean.isRead()) {
-                mMultiMediaViewHolder.mParentView.setAlpha(.8f);
-            } else {
-                mMultiMediaViewHolder.mParentView.setAlpha(1f);
-            }
+            // Dims Read article given view
+            dimReadArticle(mMultiMediaViewHolder.mParentView.getContext(), bean.getArticleId(), mMultiMediaViewHolder.mParentView);
 
             articleTypeImage(bean.getArticleType(), bean, mMultiMediaViewHolder.mPlayButton);
 
@@ -300,14 +281,11 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             mMultiMediaViewHolder.mParentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-                            position, bean.getSid(), false);
-                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(view.getContext(), "fillMultiMediaData 1");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mParentView);
                 }
             });
 
@@ -316,11 +294,9 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(
-                            position, bean.getSid(), false);
-                    ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();*/
-                    Alerts.showToast(view.getContext(), "fillMultiMediaData 2");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mPlayButton);
                 }
             });
         }
