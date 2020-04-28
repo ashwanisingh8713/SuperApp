@@ -36,9 +36,9 @@ public class DFPConsent {
 
                 DefaultPref.getInstance(context).setDfpConsentExecuted(true);
                 DefaultPref.getInstance(context).setUserFromEurope(isInEurope);
-                boolean isUserPreferAdsFree = PremiumPref.getInstance(context).isUserPreferAdsFree();
+                boolean isUserPreferAdsFree = PremiumPref.getInstance(context).isUserAdsFree();
                 if(!isInEurope && !isUserPreferAdsFree) {
-                    PremiumPref.getInstance(context).setUserPreferAdsFree(false);
+                    PremiumPref.getInstance(context).setIsUserAdsFree(false);
                 }
 
                 // MO-ENGAGE GDPR
@@ -105,7 +105,7 @@ public class DFPConsent {
                             ConsentStatus consentStatus, Boolean userPrefersAdFree) {
                         // Consent form was closed.
                         DefaultPref.getInstance(context).setUserSelectedDfpConsent(true);
-                        PremiumPref.getInstance(context).setUserPreferAdsFree(userPrefersAdFree);
+                        PremiumPref.getInstance(context).setIsUserAdsFree(userPrefersAdFree);
 
                     }
 

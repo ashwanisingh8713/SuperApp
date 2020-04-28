@@ -35,15 +35,6 @@ public class PremiumPref {
         mEditor.commit();
     }
 
-    public void setUserPreferAdsFree(boolean isUserPreferAdsFree) {
-        mEditor.putBoolean("isUserPreferAdsFree", isUserPreferAdsFree);
-        mEditor.apply();
-    }
-
-    public boolean isUserPreferAdsFree() {
-        return mPreferences.getBoolean("isUserPreferAdsFree", false) && mPreferences.getBoolean("isUserFromEurope", false);
-    }
-
     /**
      * It saves either email or mobile no.
      */
@@ -108,6 +99,15 @@ public class PremiumPref {
 
     public void setUserLoggedName(String userLoggedName) {
         mEditor.putString("userLoggedName", userLoggedName);
+        mEditor.commit();
+    }
+
+    public boolean isHasSubscription() {
+        return mPreferences.getBoolean("isHasSubscription", false);
+    }
+
+    public void setHasSubscription(boolean isHasSubscription) {
+        mEditor.putBoolean("isHasSubscription", isHasSubscription);
         mEditor.commit();
     }
 

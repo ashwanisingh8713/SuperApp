@@ -519,7 +519,7 @@ public class IntentUtil {
         }
     }
 
-    private static Bundle startActivityAnim(Context context) {
+    public static Bundle startActivityAnim(Context context) {
         Bundle bndlAnimation = ActivityOptions.makeCustomAnimation(context,
                 R.anim.activity_in, R.anim.activity_out).toBundle();
         return bndlAnimation;

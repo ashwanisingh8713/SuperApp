@@ -1,6 +1,7 @@
 package com.ns.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -293,7 +294,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                     CleverTapUtil.cleverTapEventSettings(this, THPConstants.CT_KEY_Night_mode, "Yes");
                 }
 
-                IntentUtil.openMainTabPage(this);
+                Intent intent = new Intent(AppSettingActivity.this, AppTabActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
 
                 break;
             case R.id.switch_location:

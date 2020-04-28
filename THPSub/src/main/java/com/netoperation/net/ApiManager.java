@@ -481,6 +481,9 @@ public class ApiManager {
                                                 final Date nextRenewalPlanDateObj = dateFormat.parse(nextRenewal);
                                                 if (nextRenewalDateObj.after(nextRenewalPlanDateObj)) {
                                                     userProfile.setHasSubscribedPlan(true);
+                                                    if (context != null) {
+                                                        PremiumPref.getInstance(context).setHasSubscription(true);
+                                                    }
                                                 }
                                             }
 
@@ -493,6 +496,9 @@ public class ApiManager {
                                             // If user free plan is not available then this will check for subscribed user
                                             if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
+                                                if (context != null) {
+                                                    PremiumPref.getInstance(context).setHasSubscription(true);
+                                                }
                                             }
 
                                             TxnDataBean bean = new TxnDataBean();
@@ -720,6 +726,9 @@ public class ApiManager {
                                                 if (nextRenewalDateObj.after(nextRenewalPlanDateObj)) {
                                                     userProfile.setHasSubscribedPlan(true);
                                                 }
+                                                if (context != null) {
+                                                    PremiumPref.getInstance(context).setHasSubscription(true);
+                                                }
                                             }
 
                                             final String freeTrialPlanId = "10";
@@ -731,6 +740,9 @@ public class ApiManager {
                                             // If user free plan is not available then this will check for subscribed user
                                             if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
+                                                if (context != null) {
+                                                    PremiumPref.getInstance(context).setHasSubscription(true);
+                                                }
                                             }
 
                                             TxnDataBean bean = new TxnDataBean();

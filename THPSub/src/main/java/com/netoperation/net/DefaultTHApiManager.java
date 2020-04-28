@@ -94,10 +94,10 @@ public class DefaultTHApiManager {
         if (daoBanner != null) {
             TableBanner tableBanner = daoBanner.getBanners();
 
-            if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
+            /*if (tableBanner != null && !ResUtil.isEmpty(tableBanner.getLastUpdatedTime()) && tableBanner.getLastUpdatedTime().equals("" + date)) {
                 return sectionAndWidget;
             }
-            else {
+            else */{
                 daoSection.deleteAll();
 
                 if(!isFromTempTable) {
@@ -126,6 +126,10 @@ public class DefaultTHApiManager {
                 homeBean.setSecName(NetConstants.RECO_HOME_TAB);
                 homeBean.setLink(NetConstants.RECO_HOME_TAB);
                 homeBean.setWebLink(NetConstants.RECO_HOME_TAB);
+                homeBean.setType("GN");
+
+                homeBean.setOverridePriority(0);
+                homeBean.setOverridePriority(0);
                 homeBean.setShow_on_burger(true);
                 homeBean.setShow_on_explore(true);
                 sections.add(0, homeBean);
@@ -149,7 +153,6 @@ public class DefaultTHApiManager {
                             section.getSecName(), section.getType(), section,
                             section.isShow_on_burger(), section.isShow_on_explore(),
                             subSections, section.getStaticPageUrl(), section.getCustomScreen(), section.getCustomScreenPri());
-
 
                     // Adding Default selected persionlise news feed section
                     THDefaultPersonalizeBean personalizeBean = new THDefaultPersonalizeBean();

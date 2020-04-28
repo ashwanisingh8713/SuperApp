@@ -77,6 +77,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        THPConstants.FLOW_TAB_CLICK = null;
+
         // Section Navigation
         showSectionToolbar();
 

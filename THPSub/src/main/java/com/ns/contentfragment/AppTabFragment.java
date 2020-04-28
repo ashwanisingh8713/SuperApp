@@ -176,6 +176,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         // Subscribe Button Click Listener
         view.findViewById(R.id.subscribeBtn_Txt).setOnClickListener(v -> {
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAP_BANNER_SUBSCRIPTION;
             if (mIsOnline) {
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
             } else {
@@ -187,6 +188,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 noConnectionSnackBar(getView());
                 return;
             }
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAP_BANNER_SUBSCRIPTION;
             IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
         });
 
@@ -204,8 +206,42 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     @Override
     public void onTabClick(int tabIndex, String tabGroup) {
-        Alerts.showToast(getActivity(), ""+tabIndex);
-        mViewPager.setCurrentItem(tabIndex);
+        boolean isUserLoggedIn = PremiumPref.getInstance(getActivity()).isUserLoggedIn();
+        boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
+        boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
+
+        if (tabIndex == 1) {
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_1;
+        }
+        else if (tabIndex == 2) {
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_2;
+        }
+        else if (tabIndex == 3) {
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_3;
+        }
+        else if (tabIndex == 4) {
+            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_4;
+        }
+
+        if(!isUserLoggedIn) {
+            IntentUtil.openMemberActivity(getActivity(), "");
+        }
+        else if(tabIndex == 4 && isUserLoggedIn) {
+            IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
+        }
+        else if(isUserLoggedIn && (isUserAdsFree || isHasSubscription)) {
+                mViewPager.setCurrentItem(tabIndex);
+        }
+        else if(!isUserAdsFree && !isHasSubscription) {
+            if (mIsOnline) {
+                IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+            } else {
+                noConnectionSnackBar(getView());
+            }
+            return;
+        }
+
+
     }
 
 

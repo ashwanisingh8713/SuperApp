@@ -82,7 +82,7 @@ public class AppAds {
      * Loads Listing and Detail Ads
      */
     public void loadAds() {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserPreferAdsFree()) {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
         if (mAdsData != null && mAdsData.size() > mLoadedCount) {
@@ -124,7 +124,7 @@ public class AppAds {
     }
 
     public void createBannerAdRequest(boolean isHomePage) {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserPreferAdsFree()) {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
         String unitId = "";
@@ -181,7 +181,7 @@ public class AppAds {
      * Loads Full Screen Ads
      */
     public void loadFullScreenAds() {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserPreferAdsFree()) {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
 

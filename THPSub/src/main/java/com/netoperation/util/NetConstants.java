@@ -18,8 +18,6 @@ public class NetConstants {
 
     public static final String TEMP_SECTION_ID = "tempSectionId";
 
-//    public static final String SEARCH_BY_ARTICLE_ID_URL = "https://hinduappserver1.ninestars.in/hindu/service/api_v3/mobiles/search.php?guid=";
-
     public static final String RECO_suggested = "suggested";
     public static final String RECO_Mystories = "mystories";
     public static final String RECO_trending = "trending";
