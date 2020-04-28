@@ -594,7 +594,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
-        new WebViewLinkClick().linkClick(holder.mLeadTxt, holder.itemView.getContext(), bean.getArticleId());
+        new WebViewLinkClick().linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
 
         holder.mLeadTxt.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getArticletitle(), true),
                 "text/html", "UTF-8", null);
@@ -603,7 +603,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), bean.getArticleId());
+        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), null);
 
         holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
                 "text/html", "UTF-8", null);
@@ -723,7 +723,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), bean.getArticleId());
+        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), null);
 
 
 

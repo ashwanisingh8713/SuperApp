@@ -229,10 +229,6 @@ public class ArticleBean implements Parcelable {
         this.od = od;
     }
 
-    public String getTi() {
-        return ti;
-    }
-
     public void setTi(String ti) {
         this.ti = ti;
     }
@@ -373,6 +369,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getIm_thumbnail() {
+        if(im_thumbnail == null) {
+            return im_thumbnail_v2;
+        }
         return im_thumbnail;
     }
 
@@ -381,6 +380,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getIm_thumbnail_v2() {
+        if(im_thumbnail_v2 == null) {
+            return im_thumbnail;
+        }
         return im_thumbnail_v2;
     }
 
@@ -531,9 +533,22 @@ public class ArticleBean implements Parcelable {
 
     public String getArticletitle() {
         if(articletitle == null || TextUtils.isEmpty(articletitle)) {
+            if(title == null) {
+                return ti;
+            }
             return title;
         }
         return articletitle;
+    }
+
+    public String getTi() {
+        if(ti == null || TextUtils.isEmpty(ti)) {
+            if(title == null) {
+                return articletitle;
+            }
+            return title;
+        }
+        return ti;
     }
 
     public String getTitle() {
@@ -622,6 +637,10 @@ public class ArticleBean implements Parcelable {
     }
 
     public List<String> getThumbnailUrl() {
+        if(thumbnailUrl == null) {
+            thumbnailUrl = new ArrayList<>();
+            thumbnailUrl.add(getIm_thumbnail());
+        }
         return thumbnailUrl;
     }
 

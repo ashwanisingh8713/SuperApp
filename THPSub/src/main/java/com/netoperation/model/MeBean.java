@@ -51,6 +51,9 @@ public class MeBean implements Parcelable {
     public String getListingImgUrl() {
         if(listingImgUrl == null) {
             if(im_v2 == null) {
+                if(image == null) {
+                    return im;
+                }
                 return image;
             }
             return im_v2;

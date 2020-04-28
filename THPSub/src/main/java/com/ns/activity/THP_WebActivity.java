@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.ns.thpremium.R;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.ns.utils.WebViewLinkClick;
 import com.ns.view.THP_AutoResizeWebview;
 
 public class THP_WebActivity extends BaseAcitivityTHP {
@@ -61,44 +62,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
         mWebView.loadUrl(mUrl);
 
 
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                mProgressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onReceivedError(WebView webView, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(webView, request, error);
-                webView.loadUrl("about:blank");
-                webView.loadUrl("file:///android_asset/web/web_error.html");
-                mProgressBar.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onReceivedError(WebView webView, int errorCode, String description, String failingUrl) {
-                super.onReceivedError(webView, errorCode, description, failingUrl);
-                webView.loadUrl("about:blank");
-                webView.loadUrl("file:///android_asset/web/web_error.html");
-                mProgressBar.setVisibility(View.GONE);
-
-            }
-        });
+        new WebViewLinkClick().linkClick(mWebView, this, mProgressBar);
 
     }
 
@@ -117,5 +81,12 @@ public class THP_WebActivity extends BaseAcitivityTHP {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        if(mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

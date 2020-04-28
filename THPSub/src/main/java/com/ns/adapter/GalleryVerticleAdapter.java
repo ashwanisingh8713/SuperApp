@@ -16,6 +16,7 @@ import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.R;
 import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,8 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
 //            viewHolder.imgView.setImageResource(R.mipmap.ph_topnews_th);
         }
 
+        viewHolder.tv_photoCount.setVisibility(View.GONE);
+
         /*if(getItemCount() == 1) {
             viewHolder.tv_photoCount.setVisibility(View.GONE);
         } else {
@@ -81,9 +84,12 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
         viewHolder.tv_photoCount.setVisibility(View.VISIBLE);
 
         String capton = item.getCaption();
-        if (capton != null) {
+        if (capton != null && !ResUtil.isEmpty(capton)) {
+            viewHolder.tv_caption.setVisibility(View.GONE);
             capton = replaceSpecialChar(capton);
             viewHolder.tv_caption.setText(Html.fromHtml(capton));
+        } else {
+            viewHolder.tv_caption.setVisibility(View.GONE);
         }
 
 

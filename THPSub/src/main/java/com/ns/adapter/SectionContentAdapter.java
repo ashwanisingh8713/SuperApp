@@ -195,7 +195,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             staticItemHolder.mDummyView.setVisibility(View.GONE);
             // Enabling Weblink click on Lead Text
-            new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext());
+            new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext(), null);
         }
     }
 
