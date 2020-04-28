@@ -1003,6 +1003,8 @@ public class ApiManager {
                         bean.setLeadText(articleBean.getLeadText());
                         bean.setArticleRestricted(articleBean.isArticleRestricted());
                         bean.setShort_de(articleBean.getShort_de());
+                        bean.setAdd_pos(articleBean.getAdd_pos());
+                        bean.setP4_pos(articleBean.getP4_pos());
 
                         THPDB thpdb = THPDB.getInstance(context);
                         TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean, articleBean.getGroupType());
