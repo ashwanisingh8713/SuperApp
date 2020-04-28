@@ -343,8 +343,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             @Override
             public void onAppAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
-                banner_Ad_layout.setVisibility(View.VISIBLE);
-                banner_Ad_layout.addView(adData.getAdView());
+                if(banner_Ad_layout != null) {
+                    banner_Ad_layout.setVisibility(View.VISIBLE);
+                    banner_Ad_layout.addView(adData.getAdView());
+                }
             }
 
             @Override
