@@ -38,6 +38,7 @@ import com.ns.clevertap.CleverTapUtil;
 import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.AppAudioManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.GlideUtil;
@@ -53,6 +54,7 @@ import com.ns.viewholder.BookmarkPremiumViewHolder;
 import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
+import com.ns.viewholder.DG_DetailAudioViewHolder;
 import com.ns.viewholder.DG_DetailPhotoViewHolder;
 import com.ns.viewholder.DG_DetailVideoViewHolder;
 import com.ns.viewholder.DG_Restricted_DetailDescriptionWebViewHolder;
@@ -206,7 +208,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new DG_DetailVideoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
         }
         else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
-
+            return new DG_DetailAudioViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
         }
         else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
             return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
@@ -261,7 +263,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         else if(viewHolder instanceof DG_PostCommentBtnViewHolder) {
             dg_ui_post_comment_btn(viewHolder, mContent.get(position));
         }
-
+        else if(viewHolder instanceof DG_DetailAudioViewHolder) {
+            dg_ui_detail_audio_type_banner(viewHolder,bean);
+        }
     }
 
     private void dg_ui_post_comment_btn(final RecyclerView.ViewHolder holder, AppTabContentModel item) {
@@ -784,7 +788,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         }
     }
     /**
-     * Photo view type banner
+     * Video view type banner
      * @param viewHolder view holder for Photo type views
      * @param bean  for Article
      */
@@ -843,6 +847,65 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     } else {
                         IntentUtil.openYoutubeActivity(v.getContext(), bean.getYoutube_video_id());
                     }
+                }
+            });
+        }
+    }
+
+    /**
+     * Audio view type banner
+     * @param viewHolder view holder for Photo type views
+     * @param bean  for Article
+     */
+    private void dg_ui_detail_audio_type_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
+        DG_DetailAudioViewHolder dg_detailAudioViewHolder = (DG_DetailAudioViewHolder) viewHolder;
+        boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
+        if (isAppExclusive) {
+            dg_detailAudioViewHolder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            dg_detailAudioViewHolder.mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            dg_detailAudioViewHolder.mAuthorTextView.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mUpdatedTextView.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mCreatedDateTextView.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mHeaderImageView.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mMultiMediaButton.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mCaptionTextView.setVisibility(View.GONE);
+            dg_detailAudioViewHolder.mCaptionDevider.setVisibility(View.GONE);
+        } else {
+            dg_detailAudioViewHolder.mTitleTextView.setText(bean.getTi());
+            dg_detailAudioViewHolder.mArticleLocationView.setText(bean.getLocation());
+            String author = bean.getAu();
+            if (author != null && !TextUtils.isEmpty(author)) {
+                dg_detailAudioViewHolder.mAuthorTextView.setVisibility(View.VISIBLE);
+                dg_detailAudioViewHolder.mAuthorTextView.setText(author.replace(",\n", " | ").replace(",", " | "));
+            } else {
+                dg_detailAudioViewHolder.mAuthorTextView.setVisibility(View.GONE);
+            }
+
+            dg_detailAudioViewHolder.mUpdatedTextView.setText(AppDateUtil.getTopNewsFormattedDate(AppDateUtil.changeStringToMillisGMT(bean.getPd())));
+            dg_detailAudioViewHolder.mCreatedDateTextView.setText(AppDateUtil.getPlaneTopNewsFormattedDate(AppDateUtil.changeStringToMillis(bean.getOd())));
+
+            final ArrayList<MeBean> mImageList = bean.getMe();
+            if (mImageList != null && mImageList.size() > 0) {
+                String imageUrl = mImageList.get(0).getIm_v2();
+                GlideUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                String caption = mImageList.get(0).getCa();
+                if (caption != null && !TextUtils.isEmpty(caption)) {
+                    dg_detailAudioViewHolder.mCaptionTextView.setText(Html.fromHtml(caption));
+                } else {
+                    dg_detailAudioViewHolder.mCaptionTextView.setVisibility(View.GONE);
+                }
+            }
+            dg_detailAudioViewHolder.mHeaderImageView.setOnClickListener(v -> {
+                //Play or Pause Audio
+                AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
+            });
+            // To shows Article Type Image
+            articleTypeImage(bean.getArticleType(), bean, dg_detailAudioViewHolder.mMultiMediaButton);
+            dg_detailAudioViewHolder.mMultiMediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Play or Pause Audio
+                    AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
                 }
             });
         }
