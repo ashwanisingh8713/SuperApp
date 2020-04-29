@@ -62,6 +62,7 @@ import com.ns.viewholder.DG_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
+import com.ns.viewholder.DG_PostCommentBtnViewHolder;
 import com.ns.viewholder.ViewHolderTaboola;
 import com.taboola.android.TaboolaWidget;
 import com.taboola.android.listeners.TaboolaEventListener;
@@ -207,6 +208,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
 
         }
+        else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
+            return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
+        }
         return null;
     }
 
@@ -247,14 +251,25 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         }
         else if(viewHolder instanceof InlineAdViewHolder) {
             fillInlineAdView(viewHolder, mContent.get(position));
-        } else if (viewHolder instanceof DG_DetailPhotoViewHolder) {
+        }
+        else if (viewHolder instanceof DG_DetailPhotoViewHolder) {
             dg_ui_detail_photoview_banner(viewHolder, bean);
-        } else if (viewHolder instanceof DG_DetailVideoViewHolder) {
+        }
+        else if (viewHolder instanceof DG_DetailVideoViewHolder) {
             dg_ui_detail_video_type_banner(viewHolder, bean);
+        }
+        else if(viewHolder instanceof DG_PostCommentBtnViewHolder) {
+            dg_ui_post_comment_btn(viewHolder, mContent.get(position));
         }
 
     }
 
+    private void dg_ui_post_comment_btn(final RecyclerView.ViewHolder holder, AppTabContentModel item) {
+        DG_PostCommentBtnViewHolder viewHolder = (DG_PostCommentBtnViewHolder)holder;
+        viewHolder.post_comment_detail.setOnClickListener(v->{
+            IntentUtil.openCommentActivity(v.getContext(), item.getBean());
+        });
+    }
 
     private void fillInlineAdView(final RecyclerView.ViewHolder holder, AppTabContentModel item) {
         AdData adData = item.getAdData();

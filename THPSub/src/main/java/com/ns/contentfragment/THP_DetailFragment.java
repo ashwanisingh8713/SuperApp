@@ -664,6 +664,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         description_2Model.setBean(mArticleBean);
         mRecyclerAdapter.addData(description_2Model);
 
+        AppTabContentModel postCommentBtnModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_POST_COMMENT_BTN_VIEW, "postCommentBtn");
+        postCommentBtnModel.setBean(bean);
+        mRecyclerAdapter.addData(postCommentBtnModel);
 
         AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
         taboolaModel.setBean(bean);

@@ -58,8 +58,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW = 31;
     public static final int VT_THD_SEARCH_ROW = 32;
     public static final int VT_THD_PHOTO_VIEW = 33;
-    public static final int VT_THD_VIDEO_VIEW = 34;
-    public static final int VT_THD_AUDIO_VIEW = 35;
+    public static final int VT_POST_COMMENT_BTN_VIEW = 34;
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 
