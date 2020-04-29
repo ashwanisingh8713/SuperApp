@@ -17,7 +17,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         app:font_path="@string/THP_FiraSans_Regular"
-        app:viewType="White"
+        app:viewType="WigetText"
         android:textSize="9sp"
         />
 
@@ -30,7 +30,7 @@
         android:lineSpacingExtra="@dimen/text_line_spacing"
         android:maxLines="3"
         app:font_path="@string/THP_TundraOffc"
-        app:viewType="White"
+        app:viewType="WigetText"
         android:textSize="@dimen/widget_opinion_title_size" />
 
 </com.ns.view.layout.NSLinearLayout>

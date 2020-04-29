@@ -19,7 +19,7 @@
         android:textIsSelectable="true"
         android:textSize="22sp"
         app:font_path="@string/THP_TundraOffc"
-        app:viewType="color_static"/>
+        app:viewType="M"/>
 
     <LinearLayout
         android:layout_width="match_parent"

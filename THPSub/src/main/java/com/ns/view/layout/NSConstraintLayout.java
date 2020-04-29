@@ -46,9 +46,9 @@ public class NSConstraintLayout extends ConstraintLayout {
         // 5 = Black_Light
         if(viewType == 5){
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light));
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131));
             }
         }
         // 6 = Black_Dark
@@ -57,7 +57,7 @@ public class NSConstraintLayout extends ConstraintLayout {
                 setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background));
             }
             else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_home_banner_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark));
             }
         }
         // 7 = Black_Full
@@ -71,9 +71,9 @@ public class NSConstraintLayout extends ConstraintLayout {
         }
         else {
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light));
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131));
             }
         }
     }

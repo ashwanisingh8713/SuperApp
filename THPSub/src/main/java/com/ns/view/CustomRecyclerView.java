@@ -31,10 +31,10 @@ public class CustomRecyclerView extends RecyclerView {
     void init(Context context) {
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         if(isUserThemeDay) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light));
         }
         else {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_background));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131));
         }
     }
 }

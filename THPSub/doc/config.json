@@ -1,0 +1,218 @@
+{
+  "lastServerUpdateTime": "UTC-TIME",
+  "vokkleId": "1234",
+  "refreshIntervalInMins": "value",
+  "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
+  "taboola": {
+    "publisher": "value",
+    "pageType": "value",
+    "mode": "value",
+    "placementDark": "value",
+    "placementLight": "value",
+    "taboolaNativeAd": {
+      "showTaboolaNativAd": "boolean",
+      "showTaboolaWidget": "boolean",
+      "taboola_placement_home": "value",
+      "taboola_placement_home_source_type": "value",
+      "taboola_placement_section": "value",
+      "taboola_placement_section_source_type": "value",
+      "taboola_placement_detail": "value"
+    }
+  },
+  "staticItem": [
+    {
+      "title": "Name",
+      "urlDark": "value",
+      "urlLight": "value"
+    },
+    {
+      "title": "Name",
+      "urlDark": "value",
+      "urlLight": "value"
+    }
+  ],
+  "tabs": [
+    {
+      "title": "Home",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "GROUP_DEFAULT_SECTIONS"
+    },
+    {
+      "title": "Briefing",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Briefing"
+    },
+    {
+      "title": "My Stories",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "My Stories"
+    },
+    {
+      "title": "Suggested",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Suggested"
+    },
+    {
+      "title": "Profile",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Profile"
+    },
+    {
+      "title": "Tab Title",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "Url",
+      "value": "webLink"
+    },
+    {
+      "title": "Tab Title",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "SENSEX"
+    },
+    {
+      "title": "Tab Title",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "ADD_ON_SECTION",
+      "section": {
+        "parentId": 0,
+        "secId": 43,
+        "secName": "Top News",
+        "link": "",
+        "secColorRgb": "255,255,255",
+        "type": "TN",
+        "priority": 1,
+        "overridePriority": 0,
+        "explorePriority": 1,
+        "overrideExplore": 0,
+        "image": "https://www.thehindu.com/news/cities/Vijayawada/uqsi40/article31443448.ece/ALTERNATES/FREE_660/vijayawada-migrant-workersjpg",
+        "image_v2": "https://www.thehindu.com/news/cities/Vijayawada/uqsi40/article31443448.ece/ALTERNATES/FREE_660/vijayawada-migrant-workersjpg",
+        "show_on_burger": false,
+        "show_on_explore": false,
+        "custom": false,
+        "webLink": "",
+        "customScreen": 0,
+        "customScreenPri": 0,
+        "subSections": [],
+        "staticPageUrl": {
+          "url": "",
+          "isEnabled": false,
+          "position": "0",
+          "sectionId": 0
+        }
+      }
+    }
+  ],
+  "appTheme": {
+    "textColors": {
+      "dark": {
+        "XL": "#000000",
+        "L": "#000000",
+        "M": "#000000",
+        "S": "#818181",
+        "XS": "#818181",
+        "detailpageText": "#000000",
+        "WigetText": "#ffffff",
+        "breadcrumSelect": "ffffff",
+        "breadcrumUnSelect": "818181"
+      },
+      "light": {
+        "XL": "#ffffff",
+        "L": "#ffffff",
+        "M": "#ffffff",
+        "S": "#818181",
+        "XS": "#818181",
+        "detailpageText": "#ffffff",
+        "WigetText": "#ffffff",
+        "breadcrumSelect": "ffffff",
+        "breadcrumUnSelect": "818181"
+      }
+    },
+    "tilesBg": {
+      "dark": "#191919",
+      "light": "#ffffff"
+    },
+    "screenBg": {
+      "dark": "#191919",
+      "light": "#ffffff"
+    },
+    "topBarBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    },
+    "bottomBarBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    },
+    "widgetBg" : {
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      }
+    },
+    "breadcrumBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    }
+  },
+  "Ads": {
+    "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
+    "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
+    "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
+    "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
+    "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
+    "bannerAdIds": [
+      {
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "4"
+      },
+      {
+        "adId": "/22390678/Hindu_Android_HP_Footer",
+        "index": "8"
+      },
+      {
+        "adId": "/22390678/Hindu_Android_HP_Bottom",
+        "index": "12"
+      }
+    ]
+  },
+  "subSectionsIndex": "3",
+  "searchOption": {
+    "url": "value",
+    "types": [
+      "article",
+      "sensex"
+    ]
+  },
+  "otherIconsDownloadUrls": "url tomm get all other icons"
+}

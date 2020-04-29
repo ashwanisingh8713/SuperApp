@@ -43,68 +43,11 @@ public class NSLinearLayout extends LinearLayout {
 
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
-        // 0 = Opinion
-        if(viewType == 0) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.widget_opinion_background));
-        }
-        // 1 = Multimedia
-        else if(viewType == 1) {
-            if(isUserThemeDay) {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_border));
-            }
-            else {
-                setBackground(getResources().getDrawable(R.drawable.dark_drawable_explore_border));
-            }
-        }
-        // 2 = Cartoon
-        else if(viewType == 2) {
-            setBackground(getResources().getDrawable(R.drawable.cartoon_border));
-        }
-        // 3 = APPEXCLUSIVE
-        else if(viewType == 3) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.widget_app_exclusive_background));
-        }
-        // 4 = Normal Widget
-        else if(viewType == 4) {
-            if(isUserThemeDay) {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_border));
-            }
-            else {
-                setBackground(getResources().getDrawable(R.drawable.dark_drawable_explore_border));
-            }
-        }
-        // 5 = Black_Light
-        else if(viewType == 5){
-            if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
-            } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_background));
-            }
-        }
-        // 6 = Black_Dark
-        else if(viewType == 6){
-            if(isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background));
-            }
-            else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_home_banner_background));
-            }
-        }
-        // 7 = Black_Full
-        else if(viewType == 7) {
-            if(isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_white));
-            }
-            else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_dark));
-            }
+        if(isUserThemeDay) {
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background)); //ffffff
         }
         else {
-            if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_background));
-            } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_background));
-            }
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark)); // 191919
         }
 
     }

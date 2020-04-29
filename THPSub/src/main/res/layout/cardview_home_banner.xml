@@ -51,7 +51,7 @@
             android:paddingTop="10dp"
             app:font_path="@string/THP_TundraOffc"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            app:viewType="color_static" />
+            app:viewType="M" />
 
         <include
             layout="@layout/layout_article_list_bottom"

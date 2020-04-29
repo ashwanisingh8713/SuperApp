@@ -27,7 +27,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            app:viewType="color_static"
+            app:viewType="M"
             android:textSize="18sp"
             app:font_path="@string/THP_FiraSans_Regular" />
     </com.ns.view.layout.NSLinearLayout>

@@ -90,7 +90,7 @@
     <color name="widget_app_exclusive_background">#CF4939</color>
     <!-- App Wise Colors-->
 
-    <color name="color_background">#ffffff</color>
+    <color name="background_light">#ffffff</color>
     <color name="color_primary_dark_black">#000000</color>
 
     <!--<color name="text_peacock_blue">#006599</color>-->
@@ -176,7 +176,7 @@
 
     <!--Banner -->
     <color name="dark_color_banner_text">#ededed</color>
-    <color name="dark_color_home_banner_background">#191919</color>
+    <color name="background_dark">#191919</color>
 
     <!-- Explore -->
     <color name="dark_color_home_explore_background">#191919</color>
@@ -192,7 +192,7 @@
 
     <!-- widgets -->
 
-    <color name="dark_color_background">#313131</color>
+    <color name="background_dark_313131">#313131</color>
 
 
 

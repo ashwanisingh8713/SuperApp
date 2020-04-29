@@ -34,7 +34,8 @@
         android:layout_toLeftOf="@id/button_bookmark"
         android:orientation="horizontal">
 
-        <com.ns.view.text.CustomTextView
+        <com.ns.view.text.ArticleTitleTextView
+            app:viewType="XS"
             android:id="@+id/section_name"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"
@@ -51,7 +52,8 @@
             android:textSize="10sp"
             android:visibility="gone" />
 
-        <com.ns.view.text.CustomTextView
+        <com.ns.view.text.ArticleTitleTextView
+            app:viewType="XS"
             android:id="@+id/textview_time"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"

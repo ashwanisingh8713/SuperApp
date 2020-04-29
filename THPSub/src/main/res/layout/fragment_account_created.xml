@@ -48,7 +48,7 @@
                 android:textSize="14sp"
                 android:gravity="center_horizontal"
                 android:alpha="0.6"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:letterSpacing="0.03"
                 android:text="You have unlocked 30 days free trial for The Hindu Premium"
                 app:font_path="@string/THP_FiraSans_Regular"

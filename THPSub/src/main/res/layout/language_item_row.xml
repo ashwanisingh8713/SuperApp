@@ -30,7 +30,7 @@
             app:font_path="@string/THP_TundraOffc"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_weight="1"
-            app:viewType="color_static"
+            app:viewType="M"
             />
 
 

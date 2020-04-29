@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="16sp"
             android:text="TH1987F635"
-            app:viewType="color_static"
+            app:viewType="M"
             android:alpha="0.8"
             app:font_path="@string/THP_FiraSans_Bold"
             />
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/orderId_Txt"
             android:textSize="13sp"
             android:layout_marginTop="6dp"
-            app:viewType="color_static"
+            app:viewType="M"
             android:text="Feb 15, 2019 at 8:05 pm"
             android:alpha="0.6"
             app:font_path="@string/THP_FiraSans_Regular"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/planName_Txt"
             android:textSize="16sp"
             android:layout_marginTop="10dp"
-            app:viewType="color_static"
+            app:viewType="M"
             android:text="Rs. 399"
             app:font_path="@string/THP_FiraSans_Regular"
             />
@@ -98,7 +98,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider2"
             android:textSize="13sp"
             android:layout_marginTop="14dp"
-            app:viewType="color_static"
+            app:viewType="M"
             android:text="Status"
             app:font_path="@string/THP_FiraSans_Regular"
             />
@@ -111,7 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider2"
             android:textSize="13sp"
             android:layout_marginTop="14dp"
-            app:viewType="color_static"
+            app:viewType="M"
             android:text="Payment Mode"
             app:font_path="@string/THP_FiraSans_Regular"
             />

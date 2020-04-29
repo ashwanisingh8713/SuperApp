@@ -27,14 +27,6 @@ public class AppAds {
     public static String secondInline = "/22390678/Hindu_Android_HP_Footer";
     public static String thirdInline = "/22390678/Hindu_Android_HP_Bottom";
 
-    /*public static String firstInline = "ca-app-pub-3940256099942544/1033173712";
-    public static String secondInline = "ca-app-pub-3940256099942544/1033173712";
-    public static String thirdInline = "ca-app-pub-3940256099942544/1033173712";*/
-
-    public static String firstNative = "/22390678/Hindu_Android_Native01";
-    public static String secondNative = "/22390678/Hindu_Android_Native02";
-    public static String thirdNative = "/22390678/Hindu_Android_Native03";
-
     private ArrayList<AdData> mAdsData;
 
     private int mLoadedCount;

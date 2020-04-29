@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/explore_column_margin_right"
     android:layout_marginRight="@dimen/explore_column_margin_right"
-    android:background="@drawable/dark_drawable_explore_border"
+    android:background="@drawable/drawable_explore_dark"
     app:layoutType="Black_Dark">
 
     <LinearLayout

@@ -7,6 +7,7 @@
 
 
     <com.ns.view.text.ArticleTitleTextView
+        app:viewType="L"
         android:id="@+id/textview_article_list_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/article_item_title_height"
@@ -15,7 +16,6 @@
         android:maxLines="2"
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:font_path="@string/THP_TundraOffc"
-        app:viewType="M"
         android:textSize="17sp" />
 
     <include layout="@layout/layout_article_list_bottom" />

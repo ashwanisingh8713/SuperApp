@@ -33,7 +33,7 @@
             android:text="@string/info_article_size"
             app:font_path="@string/THP_TundraOffc"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            app:viewType="M" />
+            app:viewType="L" />
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/textView_size"
@@ -137,7 +137,7 @@
             android:text="@string/read_aloud"
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:font_path="@string/THP_TundraOffc"
-            app:viewType="color_static"
+            app:viewType="M"
             />
 
         <com.ns.view.text.ArticleTitleTextView

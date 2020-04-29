@@ -25,7 +25,7 @@
             android:layout_marginBottom="@dimen/banner_title_margin"
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:font_path="@string/THP_FiraSans_Regular"
-            app:viewType="color_static"
+            app:viewType="M"
             />
 
         <androidx.recyclerview.widget.RecyclerView

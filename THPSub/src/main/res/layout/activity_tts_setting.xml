@@ -50,7 +50,7 @@
                 android:text="Accent"
                 app:font_path="@string/THP_FiraSans_Regular"
                 android:textSize="16sp"
-                app:viewType="color_static"/>
+                app:viewType="M"/>
 
             <ImageView
                 android:id="@+id/accentSelectionVisibilityBtn"
@@ -112,7 +112,7 @@
                         android:text="Speed"
                         app:font_path="@string/THP_FiraSans_Regular"
                         android:textSize="16sp"
-                        app:viewType="color_static"/>
+                        app:viewType="M"/>
 
                     <com.ns.view.text.ArticleTitleTextView
                         android:id="@+id/ttsSpeedVal"
@@ -329,7 +329,7 @@
                         android:text="Pitch"
                         app:font_path="@string/THP_FiraSans_Regular"
                         android:textSize="16sp"
-                        app:viewType="color_static"/>
+                        app:viewType="M"/>
 
                     <com.ns.view.text.ArticleTitleTextView
                         android:id="@+id/ttsPitchVal"

@@ -103,7 +103,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="@dimen/become_member_margintop"
                     android:text="Subscribe now for exclusive feature "
-                    app:viewType="color_static"
+                    app:viewType="M"
                     android:textSize="@dimen/textSize_20sp"
                     app:font_path="@string/THP_TundraOffc_Bold"/>
 
@@ -137,7 +137,7 @@
                 android:gravity="bottom"
                 android:letterSpacing="0.02"
                 android:text="Already have an account? Sign In"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="15sp"
                 app:font_path="@string/THP_FiraSans_Regular"
                 />

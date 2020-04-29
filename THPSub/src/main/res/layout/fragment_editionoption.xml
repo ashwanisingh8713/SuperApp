@@ -31,7 +31,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="All Editions"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="16sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -49,7 +49,7 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="Morning Editions"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="16sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="Noon Editions"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="16sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:text="Evening Editions"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="16sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 

@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:maxEms="11"
                 android:text="Personal Info "
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="@dimen/personal_info_textSize_18sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit your personal details"
-                app:viewType="color_static"
+                app:viewType="M"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
         </LinearLayout>
@@ -220,7 +220,7 @@
             android:gravity="center_vertical"
             android:maxEms="14"
             android:text="Use my current location"
-            app:viewType="color_static"
+            app:viewType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_Regular"
             android:drawableLeft="@drawable/ic_location_wrapper" />
@@ -272,7 +272,7 @@
             android:layout_height="wrap_content"
             android:maxEms="11"
             android:text="Additional UID"
-            app:viewType="color_static"
+            app:viewType="M"
             android:textSize="@dimen/personal_info_textSize_18sp"
             app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -325,7 +325,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="Why The Hindu group needs your personal information?"
-        app:viewType="color_static"
+        app:viewType="M"
         android:drawableLeft="@drawable/ic_info_wrapper"
         android:focusable="false"
         android:drawablePadding="15dp"
@@ -338,7 +338,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/part4Layout"
-        android:background="@color/dark_color_home_banner_background"/>
+        android:background="@color/background_dark"/>
 
     <!--End Part 4 Layout-->
 
