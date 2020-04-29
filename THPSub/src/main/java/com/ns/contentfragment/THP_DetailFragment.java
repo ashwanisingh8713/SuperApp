@@ -178,6 +178,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             mPageStartTime = -1l;
             mPageEndTime = -1l;
         }
+        //Stop Media Player if Playing
+        if (AppAudioManager.getInstance().isPlaying()){
+            AppAudioManager.getInstance().pausePlayer();
+        }
     }
 
 
@@ -648,6 +652,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             mRecyclerAdapter.addData(bannerModel);
         } else if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_VIDEO)) {
             AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_VIDEO_PLAYER, "videoModel");
+            bannerModel.setBean(bean);
+            mRecyclerAdapter.addData(bannerModel);
+        } if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_AUDIO)) {
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_AUDIO_PLAYER, "audioModel");
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
         } else {
