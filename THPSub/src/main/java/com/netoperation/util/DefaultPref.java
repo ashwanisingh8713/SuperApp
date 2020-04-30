@@ -196,7 +196,7 @@ public class DefaultPref {
         return mPreferences.getBoolean("userDialogPreference",false );
     }
 
-    /*MP Preferences start*/
+//    MP Preferences start
     public void setMeteredPaywallEnabled(boolean isMpFeatureEnabled) {
         mEditor.putBoolean("isMeteredPaywallEnabled", isMpFeatureEnabled);
         mEditor.commit();
@@ -214,5 +214,37 @@ public class DefaultPref {
     public Set<String> getMPBannerClosedIdsPrefs(){
         return mPreferences.getStringSet("mpBannerCloseIds",new HashSet<>());
     }
-    /*MP Preferences end*/
+
+    /* Store Start time after reading first article*/
+    public void setMPStartTimeInMillis(long startTimeInMillis) {
+        mEditor.putLong("mpStartTimeInMillis", startTimeInMillis);
+        mEditor.apply();
+    }
+    /*Get Start time in Millis*/
+    private long getMPStartTimeInMillis() {
+        return mPreferences.getLong("mpStartTimeInMillis", 0);
+    }
+    /*Store expiry of MP duration in Millis*/
+    public void setMPExpiryTimeInMillis(long expiryTimeInMillis) {
+        mEditor.putLong("mpExpiryTimeInMillis", expiryTimeInMillis);
+        mEditor.apply();
+    }
+    /*Get expiry time in Millis*/
+    private long getMPExpiryTimeInMillis() {
+        return mPreferences.getLong("mpExpiryTimeInMillis", 0);
+    }
+    /*Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle*/
+    public boolean isMPDurationExpiredOrNotStarted() {
+        long startTimeInMillis = getMPStartTimeInMillis();
+        if (startTimeInMillis > 0) {
+            long currentTimeInMillis = System.currentTimeMillis();
+            long difference = currentTimeInMillis - startTimeInMillis;
+            long expiryTimeInMillis = getMPExpiryTimeInMillis();
+            return difference >= expiryTimeInMillis;
+        } else {
+            //As startTimeInMillis = 0, so return true, considering it's expired and fresh cycle will be cached.
+            return true;
+        }
+    }
+//    MP Preferences end
 }

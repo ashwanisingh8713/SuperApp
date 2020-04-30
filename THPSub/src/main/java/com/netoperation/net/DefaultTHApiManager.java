@@ -1,6 +1,7 @@
 package com.netoperation.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -49,18 +50,21 @@ import com.netoperation.model.THDefaultPersonalizeBean;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
-import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -833,65 +837,43 @@ public class DefaultTHApiManager {
         });
     }
 
-    public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI) {
-        return Observable.just("mpTable")
+    public static void mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI) {
+        Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
+        observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
                 .subscribeOn(Schedulers.newThread())
-                .map(value -> {
-                    Log.i("ApiManager", "MP Cyle START "+System.currentTimeMillis());
-                    THPDB thpdb = THPDB.getInstance(context);
-                    DaoMP mpTableDAO = thpdb.mpTableDao();
-                    if (mpTableDAO != null && mpTableDAO.getMPTable() != null) {
-                        //Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle
-                        long startTimeInMillis = mpTableDAO.getStartTimeInMillis();
-                        if (startTimeInMillis > 0) {
-                            long currentTimeInMillis = System.currentTimeMillis();
-                            long difference = currentTimeInMillis - startTimeInMillis;
-                            long expiryTimeInMillis = mpTableDAO.getExpiryTimeInMillis();
-                            if (difference < expiryTimeInMillis /*|| difference > (expiryTimeInMillis + 86400000)*/) {
-                                // It calls configuration api, whenever cycle api is called.
-                                mpConfigurationAPI(context, urlConfigAPI);
-                                return "";
-                            }
-                        }
+                .map(cycleDurationModel -> {
+                    Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());
+                    THPDB db = THPDB.getInstance(context);
+                    DaoMP mpTableDao = db.mpTableDao();
+                    boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
+                    TableMP table = new TableMP();
+                    table.setMpFeatureEnabled(isMpFeatureEnabled);
+                    DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
+                    if (isMpFeatureEnabled) {
+                        String cycleName = cycleDurationModel.getDATA().getCycleName();
+                        int numOfAllowedArticles = cycleDurationModel.getDATA().getNumOfAllowedArticles();
+                        long totalAllowedTimeInSec = cycleDurationModel.getDATA().getExpiryInSeconds();
+                        long mpServerTimeInMillis = cycleDurationModel.getDATA().getGmtInMillis();
+                        String uniqueId = cycleDurationModel.getDATA().getUniqueId();
+                        table.setAllowedArticleCounts(numOfAllowedArticles);
+                        table.setCycleName(cycleName);
+                        table.setAllowedTimeInSecs(totalAllowedTimeInSec);
+                        long allowedTimeInMillis = TimeUnit.SECONDS.toMillis(totalAllowedTimeInSec);
+                        table.setExpiryTimeInMillis(allowedTimeInMillis);
+                        //Save in Preferences
+                        DefaultPref.getInstance(context).setMPExpiryTimeInMillis(allowedTimeInMillis);
+                        table.setCycleUniqueId(uniqueId);
+                        table.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
                     }
-                    Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
-                    observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
-                            .subscribeOn(Schedulers.newThread())
-                            .map(cycleDurationModel -> {
-                                THPDB db = THPDB.getInstance(context);
-                                DaoMP mpTableDao = db.mpTableDao();
-                                boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
-                                TableMP table = new TableMP();
-                                table.setMpFeatureEnabled(isMpFeatureEnabled);
-                                DefaultPref.getInstance(context).setMeteredPaywallEnabled(isMpFeatureEnabled);
-                                if (isMpFeatureEnabled) {
-                                    String cycleName = cycleDurationModel.getDATA().getCycleName();
-                                    int numOfAllowedArticles = cycleDurationModel.getDATA().getNumOfAllowedArticles();
-                                    long totalAllowedTimeInSec = cycleDurationModel.getDATA().getExpiryInSeconds();
-                                    long mpServerTimeInMillis = cycleDurationModel.getDATA().getGmtInMillis();
-                                    String uniqueId = cycleDurationModel.getDATA().getUniqueId();
-                                    table.setAllowedArticleCounts(numOfAllowedArticles);
-                                    table.setCycleName(cycleName);
-                                    table.setAllowedTimeInSecs(totalAllowedTimeInSec);
-                                    long allowedTimeInMillis = TimeUnit.SECONDS.toMillis(totalAllowedTimeInSec);
-                                    table.setExpiryTimeInMillis(allowedTimeInMillis);
-                                    table.setCycleUniqueId(uniqueId);
-                                    table.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
-                                }
-                                //Insert new record into Table in this case, when any Cycle name is found
-                                mpTableDao.deleteAll();
-                                mpTableDao.insertMpTableData(table);
-                                //Clear close Ids Preferences
-                                DefaultPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
+                    //Insert new record into Table in this case, when any Cycle name is found
+                    mpTableDao.deleteAll();
+                    mpTableDao.insertMpTableData(table);
+                    //Clear close Ids Preferences
+                    DefaultPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
 
-                                // It calls configuration api, whenever cycle api is called.
-                                mpConfigurationAPI(context, urlConfigAPI);
+                    // It calls configuration api, whenever cycle api is called.
+                    mpConfigurationAPI(context, urlConfigAPI);
 
-                                return "";
-                            }).subscribe(val -> {
-                    }, throwable -> {
-                        Log.i("ApiManager", throwable.getMessage());
-                    });
                     return "";
                 }).subscribe(val -> {
         }, throwable -> {
@@ -1005,6 +987,119 @@ public class DefaultTHApiManager {
                     if(requestCallback != null) {
                         Log.i("", "");
                     }
+                });
+
+    }
+
+    public static Flowable<HashMap> readArticleCount(Context context) {
+        THPDB thpdb = THPDB.getInstance(context);
+        DaoMP daoMP = thpdb.mpTableDao();
+        return daoMP.getArticleIdsFlowable()
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    Log.i("", "");
+                    HashMap<String, Object> valueMap = new HashMap<>();
+                    String mpBannerMsg = daoMP.getMpBannerMsg();
+                    int allowedArticleCounts = daoMP.getAllowedArticleCounts();
+                    long allowedTimeInSecs = daoMP.getAllowedArticleTimesInSecs();
+                    String cycleName = daoMP.getCycleName();
+                    int totalReadSize = value.size();
+                    boolean isAllowedToRead = totalReadSize <= allowedArticleCounts;
+                    //Calculate Time Difference
+                    long startTimeInMillis = daoMP.getStartTimeInMillis();
+                    if (startTimeInMillis > 0) {
+                        long currentTimeInMillis = System.currentTimeMillis();
+                        long difference = currentTimeInMillis - startTimeInMillis;
+                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
+                        if (difference >= expiryTimeInMillis) {
+                            isAllowedToRead = false;
+                        }
+                    }
+                    String durationUnit = AppDateUtil.calculateDurationAndUnit(allowedTimeInSecs);
+                    if (mpBannerMsg != null) {
+                        String bannerMsg = mpBannerMsg.replaceAll("<readCount>", "" + totalReadSize);
+                        bannerMsg = bannerMsg.replaceAll("<totalCount>", "" + allowedArticleCounts);
+                        bannerMsg = bannerMsg + (TextUtils.isEmpty(durationUnit) ? "" : " for " + durationUnit);
+                        valueMap.put("bannerMsg", bannerMsg);
+                    } else {
+                        //You have read 0 articles out of 0 free articles for 0 days/months
+                        String bannerMsg = "You have read "+totalReadSize+" articles out of "+allowedArticleCounts+" free articles";
+                        bannerMsg = bannerMsg + (TextUtils.isEmpty(durationUnit) ? "" : " for " + durationUnit);
+                        valueMap.put("bannerMsg", bannerMsg);
+                    }
+                    valueMap.put("isAllowedToRead", "" + isAllowedToRead);
+                    valueMap.put("articleCount", totalReadSize);
+                    valueMap.put("cycleName", "" + cycleName);
+                    valueMap.put("allowedArticleCounts", allowedArticleCounts);
+                    return valueMap;
+                });
+
+    }
+
+    /*Returns boolean to show/hide Content Blocker*/
+    public static Observable insertReadArticleId(Context context, String readArticleId) {
+        return Observable.just("readCount")
+                .subscribeOn(Schedulers.newThread())
+                //.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+                .map(value -> {
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    TableMP tableMP = daoMP.getMPTable();
+                    int allowedArticleCounts = tableMP.getAllowedArticleCounts();
+                    //Get readArticles Set size, if it's 0, then save currentTimeInMillis as startTimeInMillis
+                    int size = tableMP.getReadArticleIds().size();
+                    if (size == 0) {
+                        long currentTimeInMillis = System.currentTimeMillis();
+                        tableMP.setStartTimeInMillis(currentTimeInMillis);
+                    }
+                    tableMP.addReadArticleId(readArticleId);
+                    //Calculate Time Difference
+                    long startTimeInMillis = daoMP.getStartTimeInMillis();
+                    if (startTimeInMillis > 0) {
+                        long currentTimeInMillis = System.currentTimeMillis();
+                        long difference = currentTimeInMillis - startTimeInMillis;
+                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
+                        if (difference >= expiryTimeInMillis) {
+                            Set readArticleIds = daoMP.getArticleIds();
+                            return !readArticleIds.contains(readArticleId);
+                        }
+                    }
+                    if (tableMP.getReadArticleIds().size() < allowedArticleCounts) {
+                        daoMP.updateMPTable(tableMP);
+                        return false;
+                    } else if (tableMP.getReadArticleIds().size() == allowedArticleCounts) {
+                        daoMP.updateMPTable(tableMP);
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+    }
+
+    public static Observable clearArticleCounts(Context context) {
+        return Observable.just("readCount")
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    TableMP tableMP = daoMP.getMPTable();
+                    tableMP.clearArticleCounts();
+                    tableMP.setStartTimeInMillis(0);
+                    daoMP.updateMPTable(tableMP);
+                    TableMP tableMPNew = thpdb.mpTableDao().getMPTable();
+                    return tableMPNew.getReadArticleIds().size();
+                });
+
+    }
+
+    public static Observable<TableMP> getMPTableObject(Context context) {
+        return Observable.just("mpTable")
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMP daoMP = thpdb.mpTableDao();
+                    return daoMP.getMPTable();
                 });
 
     }

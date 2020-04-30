@@ -16,6 +16,7 @@ import com.netoperation.model.PaytmModel;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnPlanInfoLoad;
@@ -176,7 +177,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
                             //MP Firebase & CleverTap events
                             if (THPConstants.IS_FROM_MP_BLOCKER) {
-                                ApiManager.getMPTableObject(THPUserProfileActivity.this)
+                                DefaultTHApiManager.getMPTableObject(THPUserProfileActivity.this)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(mpTable -> {
                                             CleverTapUtil.cleverTapConversionFromMP(THPUserProfileActivity.this, mpTable.getCycleName());
@@ -493,7 +494,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
 
                                     //MP Firebase & CleverTap events
                                     if (THPConstants.IS_FROM_MP_BLOCKER) {
-                                        ApiManager.getMPTableObject(THPUserProfileActivity.this)
+                                        DefaultTHApiManager.getMPTableObject(THPUserProfileActivity.this)
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(mpTable -> {
                                                     CleverTapUtil.cleverTapConversionFromMP(THPUserProfileActivity.this, mpTable.getCycleName());
