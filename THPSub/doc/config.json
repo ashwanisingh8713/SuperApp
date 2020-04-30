@@ -158,7 +158,7 @@
       "dark": "#313131",
       "light": "#ffffff"
     },
-    "widgetBg" : {
+    "widgetBg": {
       "background": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -169,56 +169,77 @@
       "light": "#ffffff"
     }
   },
+  "WidgetIndex": [
+    {
+      "secId": "142",
+      "index": "5"
+    },
+    {
+      "secId": "88",
+      "index": "8"
+    },
+    {
+      "secId": "5",
+      "index": "10"
+    },
+    {
+      "secId": "138",
+      "index": "12"
+    },
+    {
+      "secId": "69",
+      "index": "15"
+    }
+  ],
   "Ads": {
     "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
     "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
     "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
     "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
     "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
-    "listingPageAds" : [
-        {
-          "type": "DFP",
-          "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "4"
-        },
-        {
-          "type": "taboola",
-          "index": "6"
-        },
-        {
-          "type": "DFP",
-          "adId": "/22390678/Hindu_Android_HP_Footer",
-          "index": "8"
-        },
-        {
-          "type": "taboola",
-          "index": "10"
-        },
-        {
-          "type": "DFP",
-          "adId": "/22390678/Hindu_Android_HP_Bottom",
-          "index": "12"
-        },
-        {
-          "type": "taboola",
-          "index": "13"
-        },
-        {
-          "type": "DFP",
-          "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "16"
-        },
-        {
-          "type": "taboola",
-          "index": "18"
-        },
-        {
-          "type": "DFP",
-          "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "20"
-        }
-      ]
-
+    "listingPageAds": [
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "4"
+      },
+      {
+        "type": "taboola",
+        "index": "6"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Footer",
+        "index": "8"
+      },
+      {
+        "type": "taboola",
+        "index": "10"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Bottom",
+        "index": "12"
+      },
+      {
+        "type": "taboola",
+        "index": "13"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "16"
+      },
+      {
+        "type": "taboola",
+        "index": "18"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "20"
+      }
+    ]
   },
   "taboola": {
     "id": "thehindu-hinduappandroid",
@@ -245,5 +266,68 @@
       "sensex"
     ]
   },
-  "otherIconsDownloadUrls": "url tomm get all other icons"
+  "otherIconsDownloadUrls": {
+    "dark" : {
+      "Logo" : "url",
+      "Listing" : {
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+      },
+      "topbar" : {
+        "left_slider_three_line" : "url",
+        "logo" : "url",
+        "search" : "url",
+        "overflow_verticle_dot" : "url",
+        "back" : "url",
+        "ttsPlay" : "url",
+        "ttsPause" : "url",
+        "comment" : "url",
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "textSize" : "url",
+        "share" : "url",
+        "crown" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+
+      }
+    },
+    "light" : {
+      "Logo" : "url",
+      "Listing" : {
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+      },
+      "topbar" : {
+        "left_slider_three_line" : "url",
+        "logo" : "url",
+        "search" : "url",
+        "overflow_verticle_dot" : "url",
+        "back" : "url",
+        "ttsPlay" : "url",
+        "ttsPause" : "url",
+        "comment" : "url",
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "textSize" : "url",
+        "share" : "url",
+        "crown" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+
+      }
+    }
+  }
 }

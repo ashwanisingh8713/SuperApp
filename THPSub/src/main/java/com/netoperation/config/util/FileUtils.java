@@ -5,10 +5,15 @@ import java.io.IOException;
 
 public class FileUtils {
 
-    public static final String TAB_ICONs = "TAB";
-    public static final String TOOLBAR_ICONs = "Toolbar";
-    public static final String LISTING_ICONs = "Listing";
-    public static final String LOGOs = "Logo";
+    public static final String TAB_ICONs_LIGHT = "TAB_LIGHT";
+    public static final String TOOLBAR_ICONs_LIGHT = "Toolbar_LIGHT";
+    public static final String LISTING_ICONs_LIGHT = "Listing_LIGHT";
+    public static final String LOGOs_LIGHT = "Logo_LIGHT";
+
+    public static final String TAB_ICONs_DARK = "TAB_DARK";
+    public static final String TOOLBAR_ICONs_DARK = "Toolbar_DARK";
+    public static final String LISTING_ICONs_DARK = "Listing_DARK";
+    public static final String LOGOs_DARK = "Logo_DARK";
 
     public static String getFileNameFromUrl(String url) {
         try {
