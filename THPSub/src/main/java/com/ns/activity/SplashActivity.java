@@ -20,6 +20,7 @@ import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 
@@ -43,6 +44,13 @@ public class SplashActivity extends BaseAcitivityTHP {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Metered Paywall Configs API calls.
+        if (DefaultPref.getInstance(this).isMPDurationExpiredOrNotStarted()) {
+            DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+        } else {
+            DefaultTHApiManager.mpConfigurationAPI(this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+        }
 
         appIconImg = findViewById(R.id.appIconImg);
 
