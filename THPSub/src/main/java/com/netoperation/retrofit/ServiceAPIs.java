@@ -1,7 +1,9 @@
 package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.BreifingModelNew;
+import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.MPConfigurationModel;
@@ -190,6 +192,9 @@ public interface ServiceAPIs {
 
     @GET("") // newsLetter.php
     Observable<JsonElement> DailyDigestApi(@Url String url);
+
+    @GET("") // newsLetter.php
+    Observable<ConfigurationData> config(@Url String url);
 
 
 }

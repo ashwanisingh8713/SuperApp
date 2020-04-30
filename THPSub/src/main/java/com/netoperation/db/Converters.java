@@ -9,6 +9,12 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.model.UserProfile;
+import com.netoperation.config.model.AdsBean;
+import com.netoperation.config.model.AppThemeBean;
+import com.netoperation.config.model.SearchOptionBean;
+import com.netoperation.config.model.TaboolaBean;
+import com.netoperation.config.model.TabsBean;
+import com.netoperation.config.model.UrlBean;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -121,6 +127,92 @@ public class Converters {
         String json = gson.toJson(list);
         return json;
     }
+
+
+    //////////////////////////// Start Configuration's Bean
+
+    @TypeConverter
+    public static String appThemeBeanToString(AppThemeBean userProfile) {
+        Gson gson = new Gson();
+        String json = gson.toJson(userProfile);
+        return json;
+    }
+
+    @TypeConverter
+    public static AppThemeBean stringToAppThemeBean(String value) {
+        Type listType = new TypeToken<AppThemeBean>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+
+    @TypeConverter
+    public static String adsBeanToString(AdsBean userProfile) {
+        Gson gson = new Gson();
+        String json = gson.toJson(userProfile);
+        return json;
+    }
+
+    @TypeConverter
+    public static AdsBean stringToAdsBean(String value) {
+        Type listType = new TypeToken<AdsBean>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+
+    @TypeConverter
+    public static String taboolaBeanToString(TaboolaBean userProfile) {
+        Gson gson = new Gson();
+        String json = gson.toJson(userProfile);
+        return json;
+    }
+
+    @TypeConverter
+    public static TaboolaBean stringToTaboolaBean(String value) {
+        Type listType = new TypeToken<TaboolaBean>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String searchOptionBeanToString(SearchOptionBean userProfile) {
+        Gson gson = new Gson();
+        String json = gson.toJson(userProfile);
+        return json;
+    }
+
+    @TypeConverter
+    public static SearchOptionBean stringToSearchOptionBean(String value) {
+        Type listType = new TypeToken<SearchOptionBean>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static List<UrlBean> stringToUrlBeanList(String value) {
+        Type listType = new TypeToken<List<UrlBean>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String urlBeanListToString(List<UrlBean> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    @TypeConverter
+    public static List<TabsBean> stringToTabsBeanList(String value) {
+        Type listType = new TypeToken<List<TabsBean>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String tabsBeanListToString(List<TabsBean> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+
+    //////////////////////////// Start Configuration's Bean
 
 
 }

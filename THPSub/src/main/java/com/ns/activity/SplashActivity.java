@@ -44,6 +44,26 @@ public class SplashActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+       DefaultTHApiManager.appConfiguration(this, new RequestCallback() {
+            @Override
+            public void onNext(Object o) {
+
+            }
+
+            @Override
+            public void onError(Throwable t, String str) {
+
+            }
+
+            @Override
+            public void onComplete(String str) {
+
+            }
+        });
+
+
+
         appIconImg = findViewById(R.id.appIconImg);
 
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();

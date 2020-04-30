@@ -3,22 +3,6 @@
   "vokkleId": "1234",
   "refreshIntervalInMins": "value",
   "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
-  "taboola": {
-    "publisher": "value",
-    "pageType": "value",
-    "mode": "value",
-    "placementDark": "value",
-    "placementLight": "value",
-    "taboolaNativeAd": {
-      "showTaboolaNativAd": "boolean",
-      "showTaboolaWidget": "boolean",
-      "taboola_placement_home": "value",
-      "taboola_placement_home_source_type": "value",
-      "taboola_placement_section": "value",
-      "taboola_placement_section_source_type": "value",
-      "taboola_placement_detail": "value"
-    }
-  },
   "staticItem": [
     {
       "title": "Name",
@@ -97,7 +81,7 @@
       "pageSource": "SENSEX"
     },
     {
-      "title": "Tab Title",
+      "title": "Top News",
       "iconUrl": {
         "urlDark": "value",
         "urlLight": "value"
@@ -191,24 +175,71 @@
     "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
     "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
     "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
-    "bannerAdIds": [
-      {
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "4"
-      },
-      {
-        "adId": "/22390678/Hindu_Android_HP_Footer",
-        "index": "8"
-      },
-      {
-        "adId": "/22390678/Hindu_Android_HP_Bottom",
-        "index": "12"
-      }
-    ]
+    "listingPageAds" : [
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "4"
+        },
+        {
+          "type": "taboola",
+          "index": "6"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Footer",
+          "index": "8"
+        },
+        {
+          "type": "taboola",
+          "index": "10"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Bottom",
+          "index": "12"
+        },
+        {
+          "type": "taboola",
+          "index": "13"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "16"
+        },
+        {
+          "type": "taboola",
+          "index": "18"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "20"
+        }
+      ]
+
+  },
+  "taboola": {
+    "id": "thehindu-hinduappandroid",
+    "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
+    "publisher": "thehindu-hinduappandroid",
+    "pageType": "article",
+    "mode": "thumbnails-a",
+    "placementLight": "Below Article Thumbnails",
+    "placementDark": "Below Article Thumbnails Dark",
+    "taboolaNativeAd": {
+      "placement_home": "Below Home Stream",
+      "placement_home_source_type": "home",
+      "placement_section": "Below Section Stream",
+      "placement_section_source_type": "section",
+      "placement_detail": "Below Article Stream"
+    }
   },
   "subSectionsIndex": "3",
   "searchOption": {
-    "url": "value",
+    "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+    "urlText": "https://www.thehindu.com/app/search.json?term=",
     "types": [
       "article",
       "sensex"

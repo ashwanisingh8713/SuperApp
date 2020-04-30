@@ -204,6 +204,9 @@ dependencies {
     implementation 'com.inmobi.monetization:inmobi-ads:7.0.4'
     implementation files('libs/libadapterinmobi.jar')
 
+    // OK HTTP
+    implementation 'com.squareup.okhttp3:okhttp:3.0.1'
+
 }
 
 

@@ -14,6 +14,7 @@ import com.netoperation.db.DaoTemperoryArticle;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.TableMP;
 import com.netoperation.default_db.DaoBanner;
+import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
@@ -23,6 +24,7 @@ import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoTempWork;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
@@ -34,6 +36,7 @@ import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
+import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
@@ -971,7 +974,38 @@ public class DefaultTHApiManager {
                     }
                 }).subscribe();
 
+    }
 
+
+    public static void appConfiguration(Context context, RequestCallback requestCallback) {
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get";
+        ServiceFactory.getServiceAPIs().config(url)
+        .subscribeOn(Schedulers.newThread())
+                .map(config->{
+                    if(config.isSTATUS()) {
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
+                        TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
+                        if(tableConfiguration == null) {
+                            daoConfiguration.insertConfiguration(config.getDATA());
+                        }
+                    }
+
+                    return "";
+                })
+                .subscribe(value->{
+                    if(requestCallback != null) {
+                        Log.i("", "");
+                    }
+                }, throwable -> {
+                    if(requestCallback != null) {
+                        Log.i("", "");
+                    }
+                }, ()->{
+                    if(requestCallback != null) {
+                        Log.i("", "");
+                    }
+                });
 
     }
 
