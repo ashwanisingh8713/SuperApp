@@ -1,6 +1,7 @@
 package com.ns.loginfragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.NetworkInfo;
@@ -20,7 +21,9 @@ import androidx.fragment.app.Fragment;
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
+import com.netoperation.db.THPDB;
 import com.netoperation.net.ApiManager;
+import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
@@ -29,6 +32,7 @@ import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.text.CustomTextView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -54,6 +58,7 @@ public abstract class BaseFragmentTHP extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mIsDayTheme = DefaultPref.getInstance(getActivity()).isUserThemeDay();
+        meteredPaywallAllowedCount(getActivity());
     }
 
     @Nullable
@@ -329,6 +334,48 @@ public abstract class BaseFragmentTHP extends Fragment {
             mPullToRefreshLayout.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
         }
+    }
+
+    private static int allowedCount = -1;
+    private static String mpBannerMsg;
+    private static String cycleName;
+    private static String durationUnit;
+
+    protected static void meteredPaywallAllowedCount(Context context) {
+        if(cycleName == null) {
+            Observable.just("")
+                    .observeOn(Schedulers.io())
+                    .map(va -> {
+                        if(context != null) {
+                            THPDB thpdb = THPDB.getInstance(context);
+                            allowedCount = thpdb.daoMp().getAllowedArticleCounts();
+                            mpBannerMsg = thpdb.daoMp().getMpBannerMsg();
+                            cycleName = thpdb.daoMp().getCycleName();
+                            durationUnit = AppDateUtil.calculateDurationAndUnit(thpdb.daoMp().getAllowedArticleTimesInSecs());
+                        }
+                        return "";
+                    })
+                    .subscribe();
+        }
+    }
+
+    public static int getAllowedCount(Context context) {
+        if(cycleName == null) {
+            meteredPaywallAllowedCount(context);
+        }
+        return allowedCount;
+    }
+
+    public static String getMpBannerMsg() {
+        return mpBannerMsg;
+    }
+
+    public static String getCycleName() {
+        return cycleName;
+    }
+
+    public static String getDurationUnit() {
+        return durationUnit;
     }
 
 

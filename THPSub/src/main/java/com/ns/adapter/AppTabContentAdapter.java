@@ -243,7 +243,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             dg_ui_detail_description(viewHolder, mContent.get(position));
         }
         else if(viewHolder instanceof ViewHolderTaboola) {
-            if (mInfiniteTaboolaView.getTag() == null) {
+            if (mInfiniteTaboolaView != null && mInfiniteTaboolaView.getTag() == null) {
                 mInfiniteTaboolaView.setTag(bean.getArticleLink());
                 buildBelowArticleWidget(mInfiniteTaboolaView, bean.getArticleLink());
             }
@@ -1077,6 +1077,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     public void clearData() {
+        if(mInfiniteTaboolaView != null) {
+            mInfiniteTaboolaView.clearCache(true);
+            mInfiniteTaboolaView = null;
+        }
         mContent.clear();
     }
 

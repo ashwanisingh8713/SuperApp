@@ -413,9 +413,11 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             int index = articleBeans.indexOf(bean);
             if (index != -1) {
                 mClickedPosition = index;
+                DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), mArticleId, articleBeans.get(mClickedPosition).isArticleRestricted(), getAllowedCount(getActivity()));
+                DefaultTHApiManager.readArticleId(getActivity(), mArticleId);
             }
 
-            DefaultTHApiManager.readArticleId(getActivity(), mArticleId);
+
         }
 
         // Setting current position of ViewPager
@@ -434,7 +436,10 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 // It shows TTS Play view and hides Stop View
                 mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
                 THP_DetailFragment fragment = (THP_DetailFragment)mSectionsPagerAdapter.getRegisteredFragment(i);
-                DefaultTHApiManager.readArticleId(getActivity(), fragment.getArticleId());
+                if(fragment != null) {
+                    DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), fragment.getArticleId(), fragment.isArticleRestricted(), getAllowedCount(getActivity()));
+                    DefaultTHApiManager.readArticleId(getActivity(), fragment.getArticleId());
+                }
             }
 
             @Override

@@ -13,6 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoHomeArticle;
+import com.netoperation.default_db.DaoMPReadArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSectionArticle;
@@ -23,6 +24,7 @@ import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
+import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSectionArticle;
@@ -33,11 +35,11 @@ import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 
 @Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
-        TableBreifing.class, TableUserProfile.class, TableMP.class,
+        TableBreifing.class, TableUserProfile.class,
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
         TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class,
-        TableTemperoryArticle.class},
+        TableTemperoryArticle.class, TableMP.class, TableMPReadArticle.class},
         version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
@@ -48,7 +50,8 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoBookmark bookmarkTableDao();
     public abstract DaoBreifing breifingDao();
     public abstract DaoUserProfile userProfileDao();
-    public abstract DaoMP mpTableDao();
+    public abstract DaoMP daoMp();
+    public abstract DaoMPReadArticle daoMPReadArticle();
 
     public abstract DaoHomeArticle daoHomeArticle();
     public abstract DaoBanner daoBanner();

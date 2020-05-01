@@ -7,18 +7,18 @@ import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.ads.AdSize;
 import com.main.AppAds;
+import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoMPReadArticle;
+import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
-import com.netoperation.model.MeBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
@@ -44,12 +44,14 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, AppAds.OnAppAdLoadListener {
 
@@ -96,6 +98,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         return mArticleId;
     }
 
+    public boolean isArticleRestricted() {
+        if(mArticleBean != null) {
+            return mArticleBean.isArticleRestricted();
+        }
+        return false;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,20 +144,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
-                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
-                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
-            dgPage(mArticleBean);
-        }
-        else {
-            if (mArticleBean.getHasDescription() == 0) {
-                loadDataPremiumFromServer();
-            } else {
-                premium_loadDataFromDB();
-            }
-        }
-
     }
+
+    private int maintainRefreshStateForOnResume = -1;
 
     @Override
     public void onResume() {
@@ -158,13 +156,55 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mActivity.setOnFragmentTools(this);
 
         // Checking Visible Article is bookmarked or not.
-        isExistInBookmark(mArticleBean.getArticleId());
+        isExistInBookmark(mArticleId);
 
         // Checking Visible Article is Like and Fav or not.
         isFavOrLike();
 
         showCommentCount();
 
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
+            THPDB thpdb = THPDB.getInstance(getActivity());
+            DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
+            mDisposable.add(daoRead.isArticleRestricted(mArticleId)
+                    .subscribeOn(Schedulers.io())
+                    .map(tableMPReadArticle->{
+                        List<String> allRestrictedArticleIds = daoRead.getAllRestrictedArticleIds();
+                        if(tableMPReadArticle != null && tableMPReadArticle.getArticleId().equals(mArticleId)) {
+                            tableMPReadArticle.setTotalReadCount(allRestrictedArticleIds.size());
+                            return tableMPReadArticle;
+                        } else {
+                            TableMPReadArticle tableMPReadArticle1 = new TableMPReadArticle();
+                            tableMPReadArticle1.setTotalReadCount(allRestrictedArticleIds.size());
+                            return tableMPReadArticle1;
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(tableMPReadArticle->{
+                        EventBus.getDefault().post(tableMPReadArticle);
+                        mRecyclerAdapter.clearData();
+                        if(tableMPReadArticle.isUserCanReRead()) {
+                            if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
+                                dgRestrictedPage(mArticleBean);
+                                maintainRefreshStateForOnResume = 1;
+                            }
+                        } else {
+                            if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1) {
+                                dgPage(mArticleBean);
+                                maintainRefreshStateForOnResume = 0;
+                            }
+                        }
+                    }));
+        }
+        else {
+            if (mArticleBean.getHasDescription() == 0) {
+                loadDataPremiumFromServer();
+            } else {
+                premium_loadDataFromDB();
+            }
+        }
 
     }
 
@@ -743,6 +783,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     public void onAppAdLoadFailure(AdData adData) {
 
     }
+
+
 
 
 

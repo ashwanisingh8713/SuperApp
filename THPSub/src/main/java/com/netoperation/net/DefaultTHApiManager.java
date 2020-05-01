@@ -17,6 +17,7 @@ import com.netoperation.db.TableMP;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoHomeArticle;
+import com.netoperation.default_db.DaoMPReadArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSection;
@@ -27,6 +28,7 @@ import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
+import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSection;
@@ -37,7 +39,6 @@ import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
-import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
@@ -766,7 +767,7 @@ public class DefaultTHApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(configurationModel -> {
                     THPDB db = THPDB.getInstance(context);
-                    DaoMP mpTableDao = db.mpTableDao();
+                    DaoMP mpTableDao = db.daoMp();
                     TableMP mpTable = mpTableDao.getMPTable();
                     if (mpTable == null) {
                         mpTable = new TableMP();
@@ -840,7 +841,7 @@ public class DefaultTHApiManager {
                 .map(cycleDurationModel -> {
                     Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());
                     THPDB db = THPDB.getInstance(context);
-                    DaoMP mpTableDao = db.mpTableDao();
+                    DaoMP mpTableDao = db.daoMp();
                     boolean isMpFeatureEnabled = cycleDurationModel.isSTATUS();
                     TableMP table = new TableMP();
                     table.setMpFeatureEnabled(isMpFeatureEnabled);
@@ -987,9 +988,9 @@ public class DefaultTHApiManager {
 
     }
 
-    public static Flowable<HashMap> readArticleCount(Context context) {
+    public static Flowable<HashMap> meteredPaywallReadArticleCount(Context context) {
         THPDB thpdb = THPDB.getInstance(context);
-        DaoMP daoMP = thpdb.mpTableDao();
+        DaoMP daoMP = thpdb.daoMp();
         return daoMP.getArticleIdsFlowable()
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -1027,14 +1028,18 @@ public class DefaultTHApiManager {
 
     }
 
-    /*Returns boolean to show/hide Content Blocker*/
-    public static Observable insertReadArticleId(Context context, String readArticleId) {
+    /**
+     * Returns boolean to show/hide Content Blocker
+     * @param context
+     * @param readArticleId
+     * @return
+     */
+    public static Observable meteredPaywallInsertReadArticleId(Context context, String readArticleId) {
         return Observable.just("readCount")
                 .subscribeOn(Schedulers.newThread())
-                //.subscribeOn(RxPS.get(Priority.IMMEDIATE))
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    DaoMP daoMP = thpdb.mpTableDao();
+                    DaoMP daoMP = thpdb.daoMp();
                     TableMP tableMP = daoMP.getMPTable();
                     int allowedArticleCounts = tableMP.getAllowedArticleCounts();
                     //Get readArticles Set size, if it's 0, then save currentTimeInMillis as startTimeInMillis
@@ -1065,19 +1070,23 @@ public class DefaultTHApiManager {
 
     }
 
+
+
+
+
     public static Observable clearArticleCounts(Context context) {
         return Observable.just("readCount")
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    DaoMP daoMP = thpdb.mpTableDao();
+                    DaoMP daoMP = thpdb.daoMp();
                     TableMP tableMP = daoMP.getMPTable();
                     tableMP.clearArticleCounts();
                     tableMP.setStartTimeInMillis(0);
                     //Save startTime in DefaultPref
                     DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
                     daoMP.updateMPTable(tableMP);
-                    TableMP tableMPNew = thpdb.mpTableDao().getMPTable();
+                    TableMP tableMPNew = thpdb.daoMp().getMPTable();
                     return tableMPNew.getReadArticleIds().size();
                 });
 
@@ -1088,9 +1097,39 @@ public class DefaultTHApiManager {
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    DaoMP daoMP = thpdb.mpTableDao();
+                    DaoMP daoMP = thpdb.daoMp();
                     return daoMP.getMPTable();
                 });
+
+    }
+
+    public static void insertMeteredPaywallArticleId(Context context, final String articleId, final boolean isRestricted, final int allowedCount) {
+        if (context == null || articleId == null) {
+            return;
+        }
+        Maybe.just(articleId)
+                .subscribeOn(Schedulers.io())
+                .map(id -> {
+                    if (context == null || allowedCount == -1) {
+                        return "";
+                    }
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
+                    String existingId = daoRead.getMPReadArticleId(id);
+                    List<String> allRestrictedArticleIds = daoRead.getAllRestrictedArticleIds();
+                    if(existingId == null) {
+                        boolean isUserCanReRead = false;
+                        if(allRestrictedArticleIds.size() <= allowedCount) {
+                            isUserCanReRead = true;
+                        }
+                        TableMPReadArticle mpReadArticle = new TableMPReadArticle(id, isRestricted, isUserCanReRead);
+                        daoRead.insertReadArticle(mpReadArticle);
+                    }
+                    else {
+                        daoRead.updateMpReadArticle(id, isRestricted);
+                    }
+                    return "";
+                }).subscribe();
 
     }
 

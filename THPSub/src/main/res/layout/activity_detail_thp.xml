@@ -40,19 +40,20 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/parentMpLayout"
+        app:layout_constraintBottom_toTopOf="@id/subscribeLayout_Mp"
         app:layout_constraintTop_toBottomOf="@id/divider"
         />
 
     <!--    Metered Paywall banner layout-->
     <include
-        android:id="@+id/parentMpLayout"
+        android:id="@+id/subscribeLayout_Mp"
         layout="@layout/mp_bottom_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/banner_Ad_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
         />
 
     <!--Bottom Ads Banner Layout-->
@@ -65,8 +66,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    // Comment Out this code to start Parallax of Toolbar
-    // Use the coordinator layout as a parent Layout
+    <!--Comment Out this code to start Parallax of Toolbar
+    Use the coordinator layout as a parent Layout-->
     <!--<android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
