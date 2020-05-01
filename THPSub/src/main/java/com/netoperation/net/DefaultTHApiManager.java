@@ -1001,15 +1001,10 @@ public class DefaultTHApiManager {
                     String cycleName = daoMP.getCycleName();
                     int totalReadSize = value.size();
                     boolean isAllowedToRead = totalReadSize <= allowedArticleCounts;
-                    //Calculate Time Difference
-                    long startTimeInMillis = daoMP.getStartTimeInMillis();
-                    if (startTimeInMillis > 0) {
-                        long currentTimeInMillis = System.currentTimeMillis();
-                        long difference = currentTimeInMillis - startTimeInMillis;
-                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
-                        if (difference >= expiryTimeInMillis) {
-                            isAllowedToRead = false;
-                        }
+                    //Calculate Time Difference, check if exceeds
+                    long startTimeInMillis = DefaultPref.getInstance(context).getMPStartTimeInMillis();
+                    if (startTimeInMillis > 0 && DefaultPref.getInstance(context).isMPDurationExpired()) {
+                        isAllowedToRead = false;
                     }
                     String durationUnit = AppDateUtil.calculateDurationAndUnit(allowedTimeInSecs);
                     if (mpBannerMsg != null) {
@@ -1047,18 +1042,15 @@ public class DefaultTHApiManager {
                     if (size == 0) {
                         long currentTimeInMillis = System.currentTimeMillis();
                         tableMP.setStartTimeInMillis(currentTimeInMillis);
+                        //Save startTime in DefaultPref
+                        DefaultPref.getInstance(context).setMPStartTimeInMillis(currentTimeInMillis);
                     }
                     tableMP.addReadArticleId(readArticleId);
                     //Calculate Time Difference
-                    long startTimeInMillis = daoMP.getStartTimeInMillis();
-                    if (startTimeInMillis > 0) {
-                        long currentTimeInMillis = System.currentTimeMillis();
-                        long difference = currentTimeInMillis - startTimeInMillis;
-                        long expiryTimeInMillis = daoMP.getExpiryTimeInMillis();
-                        if (difference >= expiryTimeInMillis) {
-                            Set readArticleIds = daoMP.getArticleIds();
-                            return !readArticleIds.contains(readArticleId);
-                        }
+                    long startTimeInMillis = DefaultPref.getInstance(context).getMPStartTimeInMillis();
+                    if (startTimeInMillis > 0 && DefaultPref.getInstance(context).isMPDurationExpired()) {
+                        Set readArticleIds = daoMP.getArticleIds();
+                        return !readArticleIds.contains(readArticleId);
                     }
                     if (tableMP.getReadArticleIds().size() < allowedArticleCounts) {
                         daoMP.updateMPTable(tableMP);
@@ -1082,6 +1074,8 @@ public class DefaultTHApiManager {
                     TableMP tableMP = daoMP.getMPTable();
                     tableMP.clearArticleCounts();
                     tableMP.setStartTimeInMillis(0);
+                    //Save startTime in DefaultPref
+                    DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
                     daoMP.updateMPTable(tableMP);
                     TableMP tableMPNew = thpdb.mpTableDao().getMPTable();
                     return tableMPNew.getReadArticleIds().size();

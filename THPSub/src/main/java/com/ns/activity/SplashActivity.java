@@ -46,7 +46,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         super.onCreate(savedInstanceState);
 
         //Metered Paywall Configs API calls.
-        if (DefaultPref.getInstance(this).isMPDurationExpiredOrNotStarted()) {
+        if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
             DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
         } else {
             DefaultTHApiManager.mpConfigurationAPI(this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);

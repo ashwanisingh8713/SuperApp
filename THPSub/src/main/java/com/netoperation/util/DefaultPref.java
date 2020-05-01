@@ -221,7 +221,7 @@ public class DefaultPref {
         mEditor.apply();
     }
     /*Get Start time in Millis*/
-    private long getMPStartTimeInMillis() {
+    public long getMPStartTimeInMillis() {
         return mPreferences.getLong("mpStartTimeInMillis", 0);
     }
     /*Store expiry of MP duration in Millis*/
@@ -234,17 +234,12 @@ public class DefaultPref {
         return mPreferences.getLong("mpExpiryTimeInMillis", 0);
     }
     /*Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle*/
-    public boolean isMPDurationExpiredOrNotStarted() {
+    public boolean isMPDurationExpired() {
         long startTimeInMillis = getMPStartTimeInMillis();
-        if (startTimeInMillis > 0) {
-            long currentTimeInMillis = System.currentTimeMillis();
-            long difference = currentTimeInMillis - startTimeInMillis;
-            long expiryTimeInMillis = getMPExpiryTimeInMillis();
-            return difference >= expiryTimeInMillis;
-        } else {
-            //As startTimeInMillis = 0, so return true, considering it's expired and fresh cycle will be cached.
-            return true;
-        }
+        long currentTimeInMillis = System.currentTimeMillis();
+        long difference = currentTimeInMillis - startTimeInMillis;
+        long expiryTimeInMillis = getMPExpiryTimeInMillis();
+        return difference >= expiryTimeInMillis;
     }
 //    MP Preferences end
 }
