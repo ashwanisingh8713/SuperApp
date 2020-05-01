@@ -319,13 +319,9 @@ public class DefaultTHApiManager {
                 return personaliseIdsTable;
             }).subscribeOn(Schedulers.io());
 
-
             return bannerObservable
                     .switchMap(tableBanner -> {
                         return sectionObservable.map(personaliseIdsTable -> {
-                            if(tableBanner == null) {
-                                return null;
-                            }
                             final String url = BuildConfig.DEFAULT_TH_BASE_URL + "newsFeed.php";
                             String bannerId = tableBanner.getSecId();
 
