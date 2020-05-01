@@ -35,6 +35,7 @@ import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnEditionBtnClickListener;
 import com.ns.clevertap.CleverTapUtil;
+import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -986,6 +987,40 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             if(holder.shadowView_Mp != null) {
                 holder.shadowView_Mp.setLayoutParams(part1WebviewParam);
             }
+            holder.textMpBlockerTitle.setText(BaseFragmentTHP.getMpNonSignInTitleBlocker());
+            holder.textMPBlockerDescription.setText(BaseFragmentTHP.getMpNonSignInDescBlocker());
+            ResUtil.doClickSpanForString(holder.signIn_Txt.getContext(), BaseFragmentTHP.getMpSignInButtonName(), "Sign In",
+                    holder.signIn_Txt,
+                    R.color.blueColor_1,
+                    () -> {
+                        THPConstants.IS_FROM_MP_BLOCKER = true;
+                        IntentUtil.openSignInOrUpActivity(holder.signIn_Txt.getContext(), "signIn");
+                        //CleverTap and Firebase Events
+                        //THPFirebaseAnalytics.firebaseMP_SignIn(getActivity(),mpConfigs.getCycleName());
+                        //CleverTapUtil.cleverTapMP_SignIn(getActivity(),mpConfigs.getCycleName());
+
+                    });
+            ResUtil.doClickSpanForString(holder.signUp_Txt.getContext(), BaseFragmentTHP.getMpSignUpButtonName(), "Sign Up",
+                    holder.signUp_Txt, R.color.blueColor_1, () -> {
+                        THPConstants.IS_FROM_MP_BLOCKER = true;
+                        IntentUtil.openSignInOrUpActivity(holder.signUp_Txt.getContext(), "signUp");
+                        //CleverTap and Firebase Events
+                        //THPFirebaseAnalytics.firebaseMP_SignIn(getActivity(),mpConfigs.getCycleName());
+                        //CleverTapUtil.cleverTapMP_SignIn(getActivity(),mpConfigs.getCycleName());
+                    });
+            holder.getFullAccess_Txt.setText(BaseFragmentTHP.getMpGetFullAccessButtonName());
+            // Get Full Access Click Listener
+            holder.getFullAccess_Txt.setOnClickListener(v -> {
+                if(!NetUtils.isConnected(holder.getFullAccess_Txt.getContext())) {
+                    Alerts.noConnectionSnackBar(holder.getFullAccess_Txt, (AppCompatActivity) holder.getFullAccess_Txt.getContext());
+                }else {
+                    IntentUtil.openSubscriptionActivity(holder.getFullAccess_Txt.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    THPConstants.IS_FROM_MP_BLOCKER = true;
+                    //MP Firebase & CleverTap events
+                    //THPFirebaseAnalytics.firebaseGetFullAccessButtonClick(getActivity(), mpTable.getCycleName());
+                    //CleverTapUtil.cleverTapGetFullAccessButtonClick(getActivity(), mpTable.getCycleName());
+                }
+            });
         }
 
     }

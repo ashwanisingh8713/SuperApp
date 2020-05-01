@@ -340,6 +340,11 @@ public abstract class BaseFragmentTHP extends Fragment {
     private static String mpBannerMsg;
     private static String cycleName;
     private static String durationUnit;
+    private static String mpNonSignInTitleBlocker, mpSignInButtonName;
+    private static String mpExpiredUserTitleBlocker, mpSignUpButtonName;
+    private static String mpNonSignInDescBlocker;
+    private static String mpExpiredUserDescBlocker;
+    private static String mpGetFullAccessButtonName;
 
     protected static void meteredPaywallAllowedCount(Context context) {
         if(cycleName == null) {
@@ -352,6 +357,13 @@ public abstract class BaseFragmentTHP extends Fragment {
                             mpBannerMsg = thpdb.daoMp().getMpBannerMsg();
                             cycleName = thpdb.daoMp().getCycleName();
                             durationUnit = AppDateUtil.calculateDurationAndUnit(thpdb.daoMp().getAllowedArticleTimesInSecs());
+                            mpNonSignInTitleBlocker = thpdb.daoMp().getNonSignInMPTitleBlocker();
+                            mpNonSignInDescBlocker = thpdb.daoMp().getNonSignInBlockerDescription();
+                            mpExpiredUserTitleBlocker = thpdb.daoMp().getExpiredUserBlockerTitle();
+                            mpExpiredUserDescBlocker = thpdb.daoMp().getExpiredUserBlockerDescription();
+                            mpSignInButtonName = thpdb.daoMp().getSignInButtonName();
+                            mpSignUpButtonName = thpdb.daoMp().getSignUpButtonName();
+                            mpGetFullAccessButtonName = thpdb.daoMp().getFullAccessButtonName();
                         }
                         return "";
                     })
@@ -378,5 +390,32 @@ public abstract class BaseFragmentTHP extends Fragment {
         return durationUnit;
     }
 
+    public static String getMpNonSignInTitleBlocker() {
+        return mpNonSignInTitleBlocker;
+    }
+
+    public static String getMpExpiredUserTitleBlocker() {
+        return mpExpiredUserTitleBlocker;
+    }
+
+    public static String getMpNonSignInDescBlocker() {
+        return mpNonSignInDescBlocker;
+    }
+
+    public static String getMpExpiredUserDescBlocker() {
+        return mpExpiredUserDescBlocker;
+    }
+
+    public static String getMpSignInButtonName() {
+        return mpSignInButtonName;
+    }
+
+    public static String getMpSignUpButtonName() {
+        return mpSignUpButtonName;
+    }
+
+    public static String getMpGetFullAccessButtonName() {
+        return mpGetFullAccessButtonName;
+    }
 
 }

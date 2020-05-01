@@ -53,6 +53,27 @@ public interface DaoMP {
     @Query("SELECT expiryTimeInMillis from TableMP")
     long getExpiryTimeInMillis();
 
+    @Query("SELECT nonSignInBlockerTitle from TableMP")
+    String getNonSignInMPTitleBlocker();
+
+    @Query("SELECT nonSignInBlockerDescription from TableMP")
+    String getNonSignInBlockerDescription();
+
+    @Query("SELECT expiredUserBlockerTitle from TableMP")
+    String getExpiredUserBlockerTitle();
+
+    @Query("SELECT expiredUserBlockerDescription from TableMP")
+    String getExpiredUserBlockerDescription();
+
+    @Query("SELECT signInBtnName from TableMP")
+    String getSignInButtonName();
+
+    @Query("SELECT signUpBtnName from TableMP")
+    String getSignUpButtonName();
+
+    @Query("SELECT fullAccessBtnName from TableMP")
+    String getFullAccessButtonName();
+
 //    @Query("UPDATE TableMP SET readArticleIds = :newReadArticleIds WHERE id = :id")
 //    int updateArticleIds(Set<String> newReadArticleIds, int id);
 
