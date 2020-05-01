@@ -3,6 +3,7 @@ package com.ns.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -11,12 +12,15 @@ import com.main.AppAds;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.THP_DetailFragment;
 import com.ns.contentfragment.THP_DetailPagerFragment;
 import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.ns.view.text.CustomTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +35,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     private String articleId;
     private String url;
     private ArticleBean mArticleBean;
+    private CustomTextView msgCountTxt_Mp;
+    private CustomTextView subscribeBtn_Txt_Mp;
+    private ImageView subsCloseImg_Mp;
 
 
     @Override
@@ -93,7 +100,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                     new AppAds().loadFullScreenAds();
                 });
 
+        meteredPaywallReadArticleCountUpdate();
         createAndShowBannerAds();
+
     }
 
     @Override
@@ -108,5 +117,46 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         super.onDestroy();
     }
 
+
+    private void meteredPaywallReadArticleCountUpdate() {
+
+        subsCloseImg_Mp = findViewById(R.id.subsCloseImg_Mp);
+        msgCountTxt_Mp = findViewById(R.id.msgCountTxt_Mp);
+        subscribeBtn_Txt_Mp = findViewById(R.id.subscribeBtn_Txt_Mp);
+
+        subsCloseImg_Mp.setOnClickListener(v->{
+
+        });
+
+        subscribeBtn_Txt_Mp.setOnClickListener(v->{
+
+        });
+
+        mDisposable.add(DefaultTHApiManager.readArticleCount(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(valueMap->{
+
+                    boolean isAllowedToRead = Boolean.parseBoolean("" + valueMap.get("isAllowedToRead"));
+                    if (!isAllowedToRead) {
+                        //hideMeteredPaywallCounterBanner();
+                    }
+                    if (valueMap.get("bannerMsg") != null)
+                        msgCountTxt_Mp.setText("" + valueMap.get("bannerMsg"));
+                    else
+                        msgCountTxt_Mp.setText("You have read this article");
+                    //CleverTap and Firebase Events Start
+                    int articleCount = (int) valueMap.get("articleCount");
+                    /*if (articleCount > 0 ) {
+                        String cycleName = (String) valueMap.get("cycleName");
+                        int allowedArticleCounts = (int) valueMap.get("allowedArticleCounts");
+                        //Article Count
+                        AppFirebaseAnalytics.firebaseMP_ArticleCount(AdsBaseActivity.this,cycleName,articleCount, allowedArticleCounts);
+                        CleverTapUtil.cleverTapMP_ArticleCount(AdsBaseActivity.this,cycleName, articleCount, allowedArticleCounts);
+                        //Metered Paywall
+                        AppFirebaseAnalytics.firebaseMetered_Paywall(AdsBaseActivity.this,cycleName,articleCount, allowedArticleCounts);
+                        CleverTapUtil.cleverTapMetered_Paywall(AdsBaseActivity.this,cycleName, articleCount, allowedArticleCounts);
+                    }*/
+                }));
+    }
 
 }
