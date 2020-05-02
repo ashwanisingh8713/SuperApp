@@ -1,6 +1,8 @@
 package com.main;
 
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
@@ -15,6 +17,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.schedulers.Schedulers;
@@ -32,9 +35,11 @@ public class PeriodicWork extends Worker {
     @Override
     public Result doWork() {
         Log.i("BackgroundWork","Started");
-        getSectionData();
-        return Result.success();
-//        return Result.retry();
+        if(isApplicationBackground(mContext)) {
+            getSectionData();
+            return Result.success();
+        }
+        return Result.failure();
     }
 
     private void getSectionData() {
@@ -93,5 +98,24 @@ public class PeriodicWork extends Worker {
 
             }
         });
+    }
+
+    /**
+     * Checks whether app is in background or not.
+     * Need <uses-permission android:name="android.permission.GET_TASKS"/>
+     * @param context
+     * @return boolean
+     */
+    private   boolean isApplicationBackground(final Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        @SuppressWarnings("deprecation")
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

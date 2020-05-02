@@ -8,6 +8,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -145,8 +147,17 @@ public class SuperApp extends Application implements LifecycleObserver {
      * THis is workmanager implementation to sync Section and Home data from server.
      */
     private void startPeriodicWork() {
-        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PeriodicWork.class, 15, TimeUnit.MINUTES, 5, TimeUnit.MINUTES)
-                .addTag("periodicWorkRequest").build();
+
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresDeviceIdle(true)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PeriodicWork.class, 45, TimeUnit.MINUTES, 10, TimeUnit.MINUTES)
+                .addTag("periodicWorkRequest")
+                .setConstraints(constraints)
+                .build();
+
 
         /*PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PeriodicWork.class,
                 5, TimeUnit.MINUTES)

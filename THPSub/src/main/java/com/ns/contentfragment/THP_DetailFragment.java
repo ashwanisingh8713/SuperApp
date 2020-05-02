@@ -144,6 +144,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         // Pull To Refresh Listener
         registerPullToRefresh();
 
+        loadRecyclerData();
+
     }
 
     private int maintainRefreshStateForOnResume = -1;
@@ -163,6 +165,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         showCommentCount();
 
+        loadRecyclerData();
+
+    }
+
+    private void loadRecyclerData() {
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
@@ -184,28 +191,31 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(tableMPReadArticle->{
                         EventBus.getDefault().post(tableMPReadArticle);
-                        mRecyclerAdapter.clearData();
+
                         if(tableMPReadArticle.isUserCanReRead()) {
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
-                                dgRestrictedPage(mArticleBean);
                                 maintainRefreshStateForOnResume = 1;
+                                mRecyclerAdapter.clearData();
+                                dgRestrictedPage(mArticleBean);
                             }
                         } else {
                             if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1) {
-                                dgPage(mArticleBean);
                                 maintainRefreshStateForOnResume = 0;
+                                mRecyclerAdapter.clearData();
+                                dgPage(mArticleBean);
                             }
                         }
                     }));
         }
         else {
-            if (mArticleBean.getHasDescription() == 0) {
-                loadDataPremiumFromServer();
-            } else {
-                premium_loadDataFromDB();
+            if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount()==0) {
+                if (mArticleBean.getHasDescription() == 0) {
+                    loadDataPremiumFromServer();
+                } else {
+                    premium_loadDataFromDB();
+                }
             }
         }
-
     }
 
 
