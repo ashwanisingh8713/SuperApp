@@ -218,5 +218,28 @@ public class Alerts {
         mSnackbar.show();
     }
 
+    public static void noConnectionSnackBarInfinite(View view, AppCompatActivity context) {
+        if(view == null) {
+            return;
+        }
+        Snackbar mSnackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE);
+        Snackbar.SnackbarLayout mSnackbarView = (Snackbar.SnackbarLayout) mSnackbar.getView();
+        mSnackbarView.setBackgroundColor(Color.BLACK);
+        TextView textView = mSnackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView1 = mSnackbarView.findViewById(com.google.android.material.R.id.snackbar_action);
+        textView.setVisibility(View.INVISIBLE);
+        textView1.setVisibility(View.INVISIBLE);
+        View snackView = context.getLayoutInflater().inflate(R.layout.thp_noconnection_snackbar, null);
+        snackView.findViewById(R.id.action_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                context.startActivity(intent);
+            }
+        });
+        mSnackbarView.addView(snackView);
+        mSnackbar.show();
+    }
+
 
 }

@@ -20,6 +20,7 @@ import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.thd_fragment.CitiesInterestFragment;
 import com.ns.thd_fragment.CustomizeNewsFeedFragment;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.view.CustomProgressBar;
@@ -33,7 +34,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     private Button mNextButton;
     private CustomProgressBar mProgressBar;
     private CustomizePagerAdapter mCustomizePagerAdapter;
-    private final int NUMBER_OF_SCREENS = 2;
+    private int NUMBER_OF_SCREENS = 1;
 
     private boolean isHomeArticleOptionScreenShown;
 
@@ -60,9 +61,71 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         return R.layout.activity_customize_home_screen;
     }
 
+    public void skipOrPreviousButtonFunctionality() {
+        if (mCustomizeHomeScreenViewPager != null) {
+
+            if(isHomeArticleOptionScreenShown || mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
+                mCustomizeHomeScreenViewPager.setCurrentItem(0, true);
+                return;
+            }
+
+            boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
+            boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
+            boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
+
+            if(!isUserFromEurope && isDfpConsentExecuted) {
+                getHomeDataFromServer();
+            }
+            else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
+                DFP_GDPR_CONSENT(true);
+                Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
+            }
+            else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
+                getHomeDataFromServer();
+            }
+        }
+    }
+
+    private void saveODoneButtonFunctionality() {
+        boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
+        boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
+        boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
+
+        if(!isUserFromEurope && isDfpConsentExecuted) {
+            Fragment fragment1 = getCurrentFragmet();
+            CitiesInterestFragment citiesInterestFragment = null;
+            if (fragment1 instanceof CitiesInterestFragment) {
+                citiesInterestFragment = (CitiesInterestFragment) fragment1;
+            }
+            if (citiesInterestFragment != null) {
+                citiesInterestFragment.saveButtonClicked();
+            }
+        }
+        else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
+            DFP_GDPR_CONSENT(isHomeArticleOptionScreenShown);
+            Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
+        }
+        else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
+            Fragment fragment1 = getCurrentFragmet();
+            CitiesInterestFragment citiesInterestFragment = null;
+            if (fragment1 instanceof CitiesInterestFragment) {
+                citiesInterestFragment = (CitiesInterestFragment) fragment1;
+            }
+            if (citiesInterestFragment != null) {
+                citiesInterestFragment.saveButtonClicked();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(BuildConfig.IS_BL) {
+            NUMBER_OF_SCREENS = 1;
+        } else {
+            NUMBER_OF_SCREENS = 2;
+        }
 
         isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
@@ -85,13 +148,16 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         mCustomizeHomeScreenViewPager.beginFakeDrag();
         mNextButton.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_FiraSans_Regular)));
         mSkipButton.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_FiraSans_Regular)));
+
+        // Next, Save or Done Button
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = mCustomizeHomeScreenViewPager.getCurrentItem();
                 switch (position) {
                     case 0: //
-                        // "Next" Title Button Click
+                        // If two pages then, "Next" Title Button Click
+                        // If single pages then, "Done" Title Button Click
                         Fragment fragment = getCurrentFragmet();
                         CustomizeNewsFeedFragment mCustomizeNewsFeedFragment = null;
                         if (fragment instanceof CustomizeNewsFeedFragment) {
@@ -101,66 +167,18 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                         break;
                     case 1:
                         // // "Save or Done" Title Button Click
-                        boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
-                        boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
-                        boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
-
-                        if(!isUserFromEurope && isDfpConsentExecuted) {
-                            Fragment fragment1 = getCurrentFragmet();
-                            CitiesInterestFragment citiesInterestFragment = null;
-                            if (fragment1 instanceof CitiesInterestFragment) {
-                                citiesInterestFragment = (CitiesInterestFragment) fragment1;
-                            }
-                            if (citiesInterestFragment != null) {
-                                citiesInterestFragment.saveButtonClicked();
-                            }
-                        }
-                        else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
-                            DFP_GDPR_CONSENT(isHomeArticleOptionScreenShown);
-                            Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
-                        }
-                        else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
-                            Fragment fragment1 = getCurrentFragmet();
-                            CitiesInterestFragment citiesInterestFragment = null;
-                            if (fragment1 instanceof CitiesInterestFragment) {
-                                citiesInterestFragment = (CitiesInterestFragment) fragment1;
-                            }
-                            if (citiesInterestFragment != null) {
-                                citiesInterestFragment.saveButtonClicked();
-                            }
-                        }
-
-
+                        saveODoneButtonFunctionality();
                         break;
                 }
             }
         });
 
+        // Skip Btton
         mSkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCustomizeHomeScreenViewPager != null) {
+                skipOrPreviousButtonFunctionality();
 
-                    if(isHomeArticleOptionScreenShown || mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
-                        mCustomizeHomeScreenViewPager.setCurrentItem(0, true);
-                        return;
-                    }
-
-                    boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
-                    boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
-                    boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
-
-                    if(!isUserFromEurope && isDfpConsentExecuted) {
-                        getHomeDataFromServer();
-                    }
-                    else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
-                        DFP_GDPR_CONSENT(true);
-                        Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
-                    }
-                    else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
-                        getHomeDataFromServer();
-                    }
-                }
             }
         });
         /**
@@ -292,14 +310,21 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     }
 
     public void firstFragmentBtn() {
-        if(isHomeArticleOptionScreenShown) {
-            setNextButtonText(btn_next);
-            setVisiblityOfPriviousButton(View.GONE);
+
+        if(BuildConfig.IS_BL) {
+            setSkipButtonText(btn_skip);
+            setNextButtonText(btn_done);
+            setVisiblityOfPriviousButton(View.VISIBLE);
         }
         else {
-            setSkipButtonText(btn_skip);
-            setNextButtonText(btn_next);
-            setVisiblityOfPriviousButton(View.VISIBLE);
+            if (isHomeArticleOptionScreenShown) {
+                setNextButtonText(btn_next);
+                setVisiblityOfPriviousButton(View.GONE);
+            } else {
+                setSkipButtonText(btn_skip);
+                setNextButtonText(btn_next);
+                setVisiblityOfPriviousButton(View.VISIBLE);
+            }
         }
     }
 

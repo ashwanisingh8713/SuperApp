@@ -78,7 +78,7 @@ public class THToolbar extends Toolbar {
         if(isUserThemeDay) {
                 setNavigationIcon(R.drawable.arrow_back);
             } else {
-                setNavigationIcon(R.drawable.ic_arrow_back_w);
+                setNavigationIcon(R.drawable.ic_arrow_back_dark);
             }
     }
 

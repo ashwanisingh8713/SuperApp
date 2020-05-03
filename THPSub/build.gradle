@@ -4,6 +4,109 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+//        debug{
+//            minifyEnabled false
+//            debuggable true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Specifies one flavor dimension.
+    flavorDimensions "version"
+
+    productFlavors {
+        BusinessLine {
+            dimension "version"
+            versionCode 6
+            versionName "1.0"
+
+            // BL Base URL
+            buildConfigField "String", "DEFAULT_BASE_URL", "\"http:/18.141.72.8/hinduBL/service/api_v2/\""
+            buildConfigField "boolean", "IS_BL", "true"
+
+            buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
+            buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
+
+            buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
+            buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
+
+            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
+
+            buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
+            buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
+
+            buildConfigField "String", "STATGGING_PAYMENT_VERIFY", "\"https://myaccount.thehindu.co.in/payTm-verify\""
+            buildConfigField "String", "PRODUCTION_PAYMENT_VERIFY", "\"https://subscription.thehindu.com/payTm-verify\""
+
+            buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
+            buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
+
+            buildConfigField "String", "STATGGING_SEARCH_BY_ARTICLE_ID_URL", "\"https://alphath.thehindu.co.in/app/getArticleByIds.json?articleIds=\""
+            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_ID_URL", "\"https://thehindu.com/app/getArticleByIds.json?articleIds=\""
+            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
+
+
+            buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
+            buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
+            buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
+        }
+        TheHindu {
+            dimension "version"
+            versionCode 6
+            versionName "1.0"
+
+
+            // TH Base URL
+            buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
+            buildConfigField "boolean", "IS_BL", "false"
+
+            buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
+            buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
+
+            buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
+            buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
+
+            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
+
+            buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
+            buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
+
+            buildConfigField "String", "STATGGING_PAYMENT_VERIFY", "\"https://myaccount.thehindu.co.in/payTm-verify\""
+            buildConfigField "String", "PRODUCTION_PAYMENT_VERIFY", "\"https://subscription.thehindu.com/payTm-verify\""
+
+            buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
+            buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
+
+            buildConfigField "String", "STATGGING_SEARCH_BY_ARTICLE_ID_URL", "\"https://alphath.thehindu.co.in/app/getArticleByIds.json?articleIds=\""
+            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_ID_URL", "\"https://thehindu.com/app/getArticleByIds.json?articleIds=\""
+            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
+
+            buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
+            buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
+            buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
+        }
+    }
+
     defaultConfig {
         minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
         targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
@@ -19,68 +122,12 @@ android {
 
         buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
         buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
-
-        // TH Base URL
-        buildConfigField "String", "DEFAULT_TH_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
-
-        // BL Base URL
-        buildConfigField "String", "DEFAULT_BL_BASE_URL", "\"http:/18.141.72.8/hinduBL/service/api_v2/\""
-
-        buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
-        buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
-
-        buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
-        buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
-
-        buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
-        buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
-
-        //Use this during staging environment. Given by Vijay
-//        buildConfigField "String", "BASE_URL", "\"https://hindumysqlstaging.ninestars.in/hindu/subscription/api/\""
-
-        buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
-        buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
-
-        buildConfigField "String", "STATGGING_PAYMENT_VERIFY", "\"https://myaccount.thehindu.co.in/payTm-verify\""
-        buildConfigField "String", "PRODUCTION_PAYMENT_VERIFY", "\"https://subscription.thehindu.com/payTm-verify\""
-
-        buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
-        buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
-
-        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
-        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
-
-        buildConfigField "String", "STATGGING_SEARCH_BY_ARTICLE_ID_URL", "\"https://alphath.thehindu.co.in/app/getArticleByIds.json?articleIds=\""
-        buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_ID_URL", "\"https://thehindu.com/app/getArticleByIds.json?articleIds=\""
-        buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
-
-        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
-        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
-
         buildConfigField "String", "LOCALE", "\"en\""
-        buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
-        buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
-        buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
-        buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
 
-    }
-    buildTypes {
-        release {
-            //minifyEnabled MINIFY_ENABLED
-            minifyEnabled false
-            debuggable false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
+        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
     }
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
 
 }
@@ -206,6 +253,7 @@ dependencies {
 
     // OK HTTP
     implementation 'com.squareup.okhttp3:okhttp:3.0.1'
+
 
 }
 

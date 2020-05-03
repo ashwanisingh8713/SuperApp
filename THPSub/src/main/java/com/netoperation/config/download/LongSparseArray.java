@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.netoperation.config.util;
+package com.netoperation.config.download;
 
 /**
  * SparseArray mapping longs to Objects, a version of the platform's

@@ -7,13 +7,17 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
 import com.main.SuperApp;
+import com.netoperation.config.download.IconDownload;
+import com.netoperation.config.model.TabsBean;
+import com.netoperation.config.download.FileUtils;
+import com.netoperation.config.download.RxDownloader;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
@@ -23,6 +27,8 @@ import com.ns.alerts.Alerts;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.NetUtils;
+import com.ns.view.LogoImgView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,27 +39,14 @@ public class SplashActivity extends BaseAcitivityTHP {
 
     private static String TAG = NetConstants.TAG_UNIQUE;
     private long startTime;
-    private ImageView appIconImg;
-
+    private LogoImgView appIconImg;
 
     @Override
     public int layoutRes() {
         return R.layout.activity_splash;
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Metered Paywall Configs API calls.
-        if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
-            DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
-        } else {
-            DefaultTHApiManager.mpConfigurationAPI(this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
-        }
-
-        appIconImg = findViewById(R.id.appIconImg);
-
+    private void routeToAppropriateAction() {
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -81,6 +74,74 @@ public class SplashActivity extends BaseAcitivityTHP {
         } else {
             Log.i("NSPEED", "downSpeed :: is NULL" );
             directLaunch();
+        }
+    }
+
+
+    private void appConfigApi() {
+        DefaultTHApiManager.appConfiguration(this, new RequestCallback<TableConfiguration>() {
+            @Override
+            public void onNext(TableConfiguration configuration) {
+
+                if(configuration != null) {
+
+                    IconDownload iconDownload = new IconDownload(configuration, SplashActivity.this);
+                    iconDownload.startDownloading();
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable t, String str) {
+
+            }
+
+            @Override
+            public void onComplete(String str) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        appIconImg = findViewById(R.id.appIconImg);
+
+        if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
+            //Metered Paywall Cycle API calls.
+            mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL,
+                    BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
+                        @Override
+                        public void onNext(Object o) {
+                            routeToAppropriateAction();
+                        }
+
+                        @Override
+                        public void onError(Throwable t, String str) {
+                            if(DefaultPref.getInstance(SplashActivity.this).isMpCycleOnceLoaded()) {
+                                routeToAppropriateAction();
+                            }
+                            else {
+                                if(!NetUtils.isConnected(SplashActivity.this)) {
+                                    Alerts.noConnectionSnackBarInfinite(appIconImg, SplashActivity.this);
+                                } else {
+                                    Alerts.showSnackbar(SplashActivity.this, SplashActivity.this.getResources().getString(R.string.something_went_wrong));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onComplete(String str) {
+
+                        }
+                    }));
+        }
+        else {
+            routeToAppropriateAction();
+
         }
 
         // Reduces Read article table
@@ -117,6 +178,9 @@ public class SplashActivity extends BaseAcitivityTHP {
                 else {
                     IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
                 }
+
+                //Metered Paywall Configs API calls.
+                mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL));
             }
         });
     }
@@ -153,7 +217,11 @@ public class SplashActivity extends BaseAcitivityTHP {
                             IntentUtil.openMainTabPage(SplashActivity.this);
                         }
                         else {
-                            Alerts.noConnectionSnackBar(appIconImg, SplashActivity.this);
+                            if(!NetUtils.isConnected(SplashActivity.this)) {
+                                Alerts.noConnectionSnackBarInfinite(appIconImg, SplashActivity.this);
+                            } else {
+                                Alerts.showSnackbar(SplashActivity.this, SplashActivity.this.getResources().getString(R.string.something_went_wrong));
+                            }
                         }
                     }
                 });
@@ -206,9 +274,18 @@ public class SplashActivity extends BaseAcitivityTHP {
                         })
                         .subscribe(onSuccess -> {
                             Log.i(TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
+
+                            //Metered Paywall Configs API calls.
+                            mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL));
                         });
 
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

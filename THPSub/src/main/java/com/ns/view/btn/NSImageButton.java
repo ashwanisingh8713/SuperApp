@@ -66,9 +66,9 @@ public class NSImageButton extends AppCompatImageButton {
         // arrow_back
         else if(btnType == 2) {
             if(isDayTheme) {
-                setImageResource(R.drawable.arrow_back);
+                setImageResource(R.drawable.ic_arrow_back_light);
             } else {
-                setImageResource(R.drawable.ic_arrow_back_w);
+                setImageResource(R.drawable.ic_arrow_back_dark);
             }
         }
         // cross_circle

@@ -1,4 +1,4 @@
-package com.netoperation.config.util;
+package com.netoperation.config.download;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -21,7 +21,7 @@ import io.reactivex.subjects.PublishSubject;
  */
 public class RxDownloader {
 
-    private static final String DEFAULT_MIME_TYPE = "*/*";
+    public static final String DEFAULT_MIME_TYPE = "*/*";
 
     private Context context;
     private LongSparseArray<PublishSubject<String>> subjectMap = new LongSparseArray<>();

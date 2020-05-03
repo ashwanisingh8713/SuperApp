@@ -1,4 +1,4 @@
-package com.netoperation.config.util;
+package com.netoperation.config.download;
 
 class ContainerHelpers {
     static final int[] EMPTY_INTS = new int[0];

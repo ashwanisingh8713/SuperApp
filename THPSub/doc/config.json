@@ -169,7 +169,7 @@
       "light": "#ffffff"
     }
   },
-  "WidgetIndex": [
+  "widgetIndex": [
     {
       "secId": "142",
       "index": "5"
@@ -266,6 +266,7 @@
       "sensex"
     ]
   },
+  "totalIcons" : "54",
   "otherIconsDownloadUrls": {
     "dark" : {
       "Logo" : "url",

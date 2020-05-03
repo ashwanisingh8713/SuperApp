@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.layout.NSRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
 
 
-    <ImageView
-        android:id="@+id/appIconImg"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-</LinearLayout>
+        <com.ns.view.LogoImgView
+            android:id="@+id/appIconImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:logoType="Splash" />
+
+        <com.ns.view.CustomProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:viewType="XL"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="7dp"
+            android:text="Thanks for your patience"
+            android:paddingTop="5dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/blue_outline_backgraoud"/>
+
+    </LinearLayout>
+</com.ns.view.layout.NSRelativeLayout>
