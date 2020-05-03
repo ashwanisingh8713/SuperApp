@@ -986,6 +986,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
             if(holder.shadowView_Mp != null) {
                 holder.shadowView_Mp.setLayoutParams(part1WebviewParam);
+                boolean mIsDayTheme = DefaultPref.getInstance(holder.shadowView_Mp.getContext()).isUserThemeDay();
+                if (mIsDayTheme) {
+                    holder.shadowView_Mp.setBackground(ResUtil.getBackgroundDrawable(holder.shadowView_Mp.getContext().getResources(), R.drawable.top_shadow_gradient_light));
+                } else {
+                    holder.shadowView_Mp.setBackground(ResUtil.getBackgroundDrawable(holder.shadowView_Mp.getContext().getResources(), R.drawable.top_shadow_gradient_dark));
+                }
             }
             holder.textMpBlockerTitle.setText(BaseFragmentTHP.getMpNonSignInTitleBlocker());
             holder.textMPBlockerDescription.setText(BaseFragmentTHP.getMpNonSignInDescBlocker());

@@ -161,13 +161,13 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(TableMPReadArticle mpReadArticle) {
-        if(!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted()) {
+        if(!mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
             return;
         }
         mReadingArticleId = mpReadArticle.getArticleId();
         int totalReadSize = mpReadArticle.getTotalReadCount();
-        boolean isNeedToShowMpBanner = true;
+        boolean isNeedToShowMpBanner = false;
         //Calculate Time Difference, check if exceeds
         long startTimeInMillis = DefaultPref.getInstance(THP_DetailActivity.this).getMPStartTimeInMillis();
         if ((totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) || (startTimeInMillis > 0 && DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired())) {
