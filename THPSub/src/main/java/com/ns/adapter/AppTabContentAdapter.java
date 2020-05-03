@@ -996,8 +996,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signIn_Txt.getContext(), "signIn");
                         //CleverTap and Firebase Events
-                        //THPFirebaseAnalytics.firebaseMP_SignIn(getActivity(),mpConfigs.getCycleName());
-                        //CleverTapUtil.cleverTapMP_SignIn(getActivity(),mpConfigs.getCycleName());
+                        THPFirebaseAnalytics.firebaseMP_SignIn(holder.signIn_Txt.getContext(),BaseFragmentTHP.getCycleName());
+                        CleverTapUtil.cleverTapMP_SignIn(holder.signIn_Txt.getContext(),BaseFragmentTHP.getCycleName());
 
                     });
             ResUtil.doClickSpanForString(holder.signUp_Txt.getContext(), BaseFragmentTHP.getMpSignUpButtonName(), "Sign Up",
@@ -1005,8 +1005,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signUp_Txt.getContext(), "signUp");
                         //CleverTap and Firebase Events
-                        //THPFirebaseAnalytics.firebaseMP_SignIn(getActivity(),mpConfigs.getCycleName());
-                        //CleverTapUtil.cleverTapMP_SignIn(getActivity(),mpConfigs.getCycleName());
+                        THPFirebaseAnalytics.firebaseMP_SignUp(holder.signUp_Txt.getContext(),BaseFragmentTHP.getCycleName());
+                        CleverTapUtil.cleverTapMP_SignUp(holder.signUp_Txt.getContext(),BaseFragmentTHP.getCycleName());
                     });
             holder.getFullAccess_Txt.setText(BaseFragmentTHP.getMpGetFullAccessButtonName());
             // Get Full Access Click Listener
@@ -1017,8 +1017,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     IntentUtil.openSubscriptionActivity(holder.getFullAccess_Txt.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     THPConstants.IS_FROM_MP_BLOCKER = true;
                     //MP Firebase & CleverTap events
-                    //THPFirebaseAnalytics.firebaseGetFullAccessButtonClick(getActivity(), mpTable.getCycleName());
-                    //CleverTapUtil.cleverTapGetFullAccessButtonClick(getActivity(), mpTable.getCycleName());
+                    THPFirebaseAnalytics.firebaseGetFullAccessButtonClick(holder.getFullAccess_Txt.getContext(), BaseFragmentTHP.getCycleName());
+                    CleverTapUtil.cleverTapGetFullAccessButtonClick(holder.getFullAccess_Txt.getContext(), BaseFragmentTHP.getCycleName());
                 }
             });
         }

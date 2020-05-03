@@ -100,5 +100,61 @@ public class THPFirebaseAnalytics {
         mFirebaseAnalytics.logEvent(THPConstants.Conversion_From_MP_Firebase, bundle);
     }
 
+    //MP Events Article Count
+    public static void firebaseMP_ArticleCount(Context context, String mpCycle, int articleCount, int allowedArticleCounts) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        bundle.putInt(THPConstants.ArticleCount_Firebase, articleCount);
+        bundle.putInt(THPConstants.Allowed_Counts_Firebase, allowedArticleCounts);
+        mFirebaseAnalytics.logEvent(THPConstants.MP_Article_Count_Firebase, bundle);
+    }
 
+    //MP Events Metered Paywall
+    public static void firebaseMetered_Paywall(Context context, String mpCycle, int articleCount, int allowedArticleCounts) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        bundle.putString(THPConstants.ArticleCount_Firebase,""+articleCount);
+        bundle.putString(THPConstants.Allowed_Counts_Firebase,""+allowedArticleCounts);
+        mFirebaseAnalytics.logEvent(THPConstants.Metered_Paywall_Firebase, bundle);
+    }
+
+    //MP Banner Subscribe
+    public static void firebaseMPBannerSubscribe(Context context, String mpCycle) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        if (!ResUtil.isEmpty(mpCycle))
+            bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        mFirebaseAnalytics.logEvent(THPConstants.MP_Banner_Subscribe_Firebase, bundle);
+    }
+
+
+
+    //Get Full Access Button Click
+    public static void firebaseGetFullAccessButtonClick(Context context, String mpCycle) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        if (!ResUtil.isEmpty(mpCycle))
+            bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        mFirebaseAnalytics.logEvent(THPConstants.Get_Full_Access_Button_Click_Firebase, bundle);
+    }
+
+    //MP SignIn
+    public static void firebaseMP_SignIn(Context context, String mpCycle) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        if (!ResUtil.isEmpty(mpCycle))
+            bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        mFirebaseAnalytics.logEvent(THPConstants.MP_SignIn_Firebase, bundle);
+    }
+
+    //MP SignUp
+    public static void firebaseMP_SignUp(Context context, String mpCycle) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        if (!ResUtil.isEmpty(mpCycle))
+            bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        mFirebaseAnalytics.logEvent(THPConstants.MP_SignUp_Firebase, bundle);
+    }
 }

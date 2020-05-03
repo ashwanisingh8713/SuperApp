@@ -30,7 +30,7 @@
         android:id="@+id/contentBlockerLayout_Mp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/main_web_view"
+        android:layout_below="@+id/shadowView_Mp"
         android:orientation="vertical"
         android:paddingLeft="@dimen/baseLayoutLeftPadding"
         android:paddingRight="@dimen/baseLayoutRightPadding"

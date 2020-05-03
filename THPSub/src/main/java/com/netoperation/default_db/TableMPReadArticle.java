@@ -25,6 +25,8 @@ public class TableMPReadArticle {
 
     private int totalReadCount;
 
+    private boolean isBannerCloseClick;
+
     @Ignore
     public TableMPReadArticle() {
 
@@ -67,5 +69,13 @@ public class TableMPReadArticle {
 
     public void setUserCanReRead(boolean userCanReRead) {
         isUserCanReRead = userCanReRead;
+    }
+
+    public boolean isBannerCloseClick() {
+        return isBannerCloseClick;
+    }
+
+    public void setBannerCloseClick(boolean bannerCloseClick) {
+        isBannerCloseClick = bannerCloseClick;
     }
 }
