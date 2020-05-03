@@ -130,7 +130,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
 
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
+        if(mRecyclerAdapter == null) {
+            mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
+        }
 
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 

@@ -233,6 +233,10 @@ public class DefaultPref {
     private long getMPExpiryTimeInMillis() {
         return mPreferences.getLong("mpExpiryTimeInMillis", 0);
     }
+
+    public boolean isMpCycleOnceLoaded() {
+        return mPreferences.getLong("mpExpiryTimeInMillis", 0)>0;
+    }
     /*Calculate Time Difference - If Duration of uses Exhausted then stop hitting API for Cycle*/
     public boolean isMPDurationExpired() {
         long startTimeInMillis = getMPStartTimeInMillis();

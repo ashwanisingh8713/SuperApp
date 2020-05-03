@@ -181,7 +181,7 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable sectionDirectFromServer(Context context, RequestCallback callback, final long executionTime) {
-        String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
+        String url = BuildConfig.DEFAULT_BASE_URL + "sectionList_v4.php";
         Observable<SectionAndWidget> observable = ServiceFactory.getServiceAPIs().sectionList(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
@@ -245,7 +245,7 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime, RequestCallback callback, String from) {
-        String url = BuildConfig.DEFAULT_TH_BASE_URL + "sectionList_v4.php";
+        String url = BuildConfig.DEFAULT_BASE_URL + "sectionList_v4.php";
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().sectionListForJson(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
@@ -323,7 +323,7 @@ public class DefaultTHApiManager {
             return bannerObservable
                     .switchMap(tableBanner -> {
                         return sectionObservable.map(personaliseIdsTable -> {
-                            final String url = BuildConfig.DEFAULT_TH_BASE_URL + "newsFeed.php";
+                            final String url = BuildConfig.DEFAULT_BASE_URL + "newsFeed.php";
                             String bannerId = tableBanner.getSecId();
 
                             final JsonArray personliseSectionIds = new JsonArray();
@@ -422,7 +422,7 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable widgetContent(Context context, Map<String, String> sections) {
-        final String url = BuildConfig.DEFAULT_TH_BASE_URL + "section-content.php";
+        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
         final Observable[] observables = new Observable[sections.size()];
         int count = 0;
         for (Map.Entry<String, String> entry : sections.entrySet()) {
@@ -472,7 +472,7 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable getSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
-        final String url = BuildConfig.DEFAULT_TH_BASE_URL + "section-content.php";
+        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -528,7 +528,7 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable getSubSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
-        final String url = BuildConfig.DEFAULT_TH_BASE_URL + "section-content.php";
+        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -760,10 +760,10 @@ public class DefaultTHApiManager {
 
 
 
-    public static void mpConfigurationAPI(Context context, String urlConfigAPI) {
+    public static Disposable mpConfigurationAPI(Context context, String urlConfigAPI) {
         Observable<MPConfigurationModel> observable = ServiceFactory.getServiceAPIs().mpConfigurationAPI(urlConfigAPI);
 
-        observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+        return observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
                 .subscribeOn(Schedulers.newThread())
                 .map(configurationModel -> {
                     THPDB db = THPDB.getInstance(context);
@@ -834,9 +834,9 @@ public class DefaultTHApiManager {
         });
     }
 
-    public static void mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI) {
+    public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI, RequestCallback requestCallback) {
         Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
-        observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+        return observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
                 .subscribeOn(Schedulers.newThread())
                 .map(cycleDurationModel -> {
                     Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());
@@ -872,10 +872,17 @@ public class DefaultTHApiManager {
                     mpConfigurationAPI(context, urlConfigAPI);
 
                     return "";
-                }).subscribe(val -> {
-        }, throwable -> {
-            Log.i("ApiManager", throwable.getMessage());
-        });
+                })
+                .subscribe(val -> {
+                    if(requestCallback != null) {
+                        requestCallback.onNext("mpCycleDurationAPI");
+                    }
+                }, throwable -> {
+                    Log.i("ApiManager", throwable.getMessage());
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "mpCycleDurationAPI");
+                    }
+                });
     }
 
 
@@ -951,12 +958,17 @@ public class DefaultTHApiManager {
                         }
                         return "0";
                     }
-                }).subscribe();
+                })
+                .subscribe(val->{
+
+                }, throwable -> {
+
+                });
 
     }
 
 
-    public static void appConfiguration(Context context, RequestCallback requestCallback) {
+    public static void appConfiguration(Context context, RequestCallback<TableConfiguration> requestCallback) {
         String url = "http://3.0.22.177/hindu/subscription/coreAPI/get";
         ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
@@ -970,7 +982,7 @@ public class DefaultTHApiManager {
                         }
                     }
 
-                    return "";
+                    return config.getDATA();
                 })
                 .subscribe(value->{
                     if(requestCallback != null) {

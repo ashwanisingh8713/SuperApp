@@ -5,6 +5,8 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.netoperation.config.model.OtherIconsDownloadUrls;
+import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.StaticPageUrlBean;
@@ -182,6 +184,32 @@ public class Converters {
     @TypeConverter
     public static SearchOptionBean stringToSearchOptionBean(String value) {
         Type listType = new TypeToken<SearchOptionBean>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String WidgetIndexBeanToString(WidgetIndex widgetIndex) {
+        Gson gson = new Gson();
+        String json = gson.toJson(widgetIndex);
+        return json;
+    }
+
+    @TypeConverter
+    public static WidgetIndex stringToWidgetIndexBean(String value) {
+        Type listType = new TypeToken<WidgetIndex>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String OtherIconsDownloadUrlsBeanToString(OtherIconsDownloadUrls otherIconsDownloadUrls) {
+        Gson gson = new Gson();
+        String json = gson.toJson(otherIconsDownloadUrls);
+        return json;
+    }
+
+    @TypeConverter
+    public static OtherIconsDownloadUrls stringToOtherIconsDownloadUrlsBean(String value) {
+        Type listType = new TypeToken<OtherIconsDownloadUrls>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 

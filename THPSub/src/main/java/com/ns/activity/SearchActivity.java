@@ -69,7 +69,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
             searchBar.setTextColor(getResources().getColor(R.color.white));
             searchBar.setTextHintColor(getResources().getColor(R.color.search_hint));
             searchBar.setSearchBarColor(Color.BLACK);
-            searchBar.setArrowIcon(R.drawable.ic_arrow_back_w);
+            searchBar.setArrowIcon(R.drawable.ic_arrow_back_dark);
             searchBar.setClearIcon(R.drawable.ic_close_search);
             searchBar.setMenuIcon(R.drawable.ic_more_w);
         }

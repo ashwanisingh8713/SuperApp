@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
@@ -18,20 +19,23 @@ import java.util.List;
 import java.util.TreeMap;
 
 
-public class DetailPagerAdapter extends FragmentPagerAdapter {
+public class DetailPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<ArticleBean> articleList;
     private String mFrom;
     private String mUserId;
 
-    private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    //private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
     public DetailPagerAdapter(@NonNull FragmentManager fm, List<ArticleBean> articleList, String usedId, String from) {
-//        super(fm);
         super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.articleList = articleList;
         this.mFrom = from;
         this.mUserId = usedId;
+    }
+
+    public ArticleBean getArticleBean(int position) {
+        return articleList.get(position);
     }
 
     @NonNull
@@ -45,6 +49,11 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
         return articleList.size();
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "";
+    }
+
     /**
      * On each Fragment instantiation we are saving the reference of that Fragment in a Map
      * It will help us to retrieve the Fragment by position
@@ -53,12 +62,12 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
      * @param position
      * @return
      */
-    @Override
+    /*@Override
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
         registeredFragments.put(position, fragment);
         return fragment;
-    }
+    }*/
 
     /**
      * Remove the saved reference from our Map on the Fragment destroy
@@ -67,11 +76,11 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
      * @param position
      * @param object
      */
-    @Override
+    /*@Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         registeredFragments.remove(position);
         super.destroyItem(container, position, object);
-    }
+    }*/
 
 
     /**
@@ -80,35 +89,8 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
      * @param position tab position of the fragment
      * @return
      */
-    public Fragment getRegisteredFragment(int position) {
+    /*public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
-    }
-
-
-    /*private final List<Fragment> mFragmentList = new ArrayList<>();
-
-    public DetailPagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
-
-
-    @Override
-    public Fragment getItem(int position) {
-        return mFragmentList.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return mFragmentList.size();
-    }
-
-    public void addFragment(Fragment fragment) {
-        mFragmentList.add(fragment);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "";
     }*/
+
 }

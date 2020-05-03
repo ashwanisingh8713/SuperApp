@@ -3,6 +3,8 @@ package com.netoperation.default_db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.netoperation.config.model.OtherIconsDownloadUrls;
+import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.config.model.AdsBean;
 import com.netoperation.config.model.AppThemeBean;
 import com.netoperation.config.model.SearchOptionBean;
@@ -35,9 +37,28 @@ public class TableConfiguration {
     private TaboolaBean taboola;
     private String subSectionsIndex;
     private SearchOptionBean searchOption;
-    private String otherIconsDownloadUrls;
+    private OtherIconsDownloadUrls otherIconsDownloadUrls;
     private List<UrlBean> staticItem;
     private List<TabsBean> tabs;
+    private int totalIcons;
+
+    public int getTotalIcons() {
+        return totalIcons;
+    }
+
+    public void setTotalIcons(int totalIcons) {
+        this.totalIcons = totalIcons;
+    }
+
+    private WidgetIndex widgetIndex;
+
+    public WidgetIndex getWidgetIndex() {
+        return widgetIndex;
+    }
+
+    public void setWidgetIndex(WidgetIndex widgetIndex) {
+        this.widgetIndex = widgetIndex;
+    }
 
     public String getLastServerUpdateTime() {
         return lastServerUpdateTime;
@@ -103,11 +124,11 @@ public class TableConfiguration {
         this.searchOption = searchOption;
     }
 
-    public String getOtherIconsDownloadUrls() {
+    public OtherIconsDownloadUrls getOtherIconsDownloadUrls() {
         return otherIconsDownloadUrls;
     }
 
-    public void setOtherIconsDownloadUrls(String otherIconsDownloadUrls) {
+    public void setOtherIconsDownloadUrls(OtherIconsDownloadUrls otherIconsDownloadUrls) {
         this.otherIconsDownloadUrls = otherIconsDownloadUrls;
     }
 

@@ -25,6 +25,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.clevertap.CleverTapUtil;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
@@ -246,6 +247,10 @@ public class CustomizeNewsFeedFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v->{
 
+                    if(BuildConfig.IS_BL) {
+                        mMainActivity.skipOrPreviousButtonFunctionality();
+                    }
+
                 });
 
 
@@ -255,7 +260,7 @@ public class CustomizeNewsFeedFragment extends Fragment {
                 "Customize news feed: Save button clicked",
                 getString(R.string.custom_home_screen));
         FlurryAgent.logEvent("Customize news feed: Save button clicked");*/
-        if (mMainActivity != null) {
+        if (mMainActivity != null && !BuildConfig.IS_BL) {
             mMainActivity.setViewPagerItem(1);
         }
 

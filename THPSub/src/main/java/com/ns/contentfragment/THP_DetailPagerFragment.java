@@ -347,50 +347,46 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private void homeAndBannerArticleFromDB() {
 //        showProgressDialog("");
         DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
-        DaoHomeArticle daoHomeArticle = THPDB.getInstance(getActivity()).daoHomeArticle();
-        Single<TableBanner> bannerObservable = daoBanner.getBannersSingle().subscribeOn(Schedulers.io());
-        Single<List<TableHomeArticle>> homeArticleObservable = daoHomeArticle.getArticlesSingle().subscribeOn(Schedulers.io());
 
-        mDisposable.add(Single.merge(bannerObservable, homeArticleObservable)
+        mDisposable.add(daoBanner.getBannersSingle().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-                    if (value instanceof TableBanner) {
-                        final TableBanner banner = (TableBanner) value;
-                        if(mHomeArticleList == null) {
-                            mHomeArticleList = new ArrayList<>();
-                        }
-                        mHomeArticleList.addAll(banner.getBeans());
-
+                .subscribe(banner -> {
+                    if (mHomeArticleList == null) {
+                        mHomeArticleList = new ArrayList<>();
                     }
-                    else if (value instanceof ArrayList) {
-                        final ArrayList tableDatas = ((ArrayList) value);
-                        for (int i = 0; i < tableDatas.size(); i++) {
-                            // Home Articles
-                            if (tableDatas.get(i) instanceof TableHomeArticle) {
-                                TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
-                                if(mHomeArticleList == null) {
-                                    mHomeArticleList = new ArrayList<>();
+                    mHomeArticleList.addAll(banner.getBeans());
+
+                    mDisposable.add(THPDB.getInstance(getActivity()).daoHomeArticle().getArticlesSingle()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(tableDatas->{
+                                for (int i = 0; i < tableDatas.size(); i++) {
+                                    // Home Articles
+                                    if (tableDatas.get(i) instanceof TableHomeArticle) {
+                                        TableHomeArticle homeArticle = (TableHomeArticle) tableDatas.get(i);
+                                        if (mHomeArticleList == null) {
+                                            mHomeArticleList = new ArrayList<>();
+                                        }
+                                        mHomeArticleList.addAll(homeArticle.getBeans());
+                                    }
                                 }
-                                mHomeArticleList.addAll(homeArticle.getBeans());
-                            }
-                        }
 
-                        viewPagerSetup(mHomeArticleList, mFrom);
-
-                        // Setting current position of ViewPager
-                        setCurrentPage(mClickedPosition, false);
-
-                        Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
-                    }
+                                viewPagerSetup(mHomeArticleList, mFrom);
+                                // Setting current position of ViewPager
+                                setCurrentPage(mClickedPosition, false);
+                                        hideProgressDialog();
+                                Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
+                            },
+                                    throwable -> {
+                                        hideProgressDialog();
+                                        Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - Home Article");
+                            }));
 
                 }, throwable -> {
-                    Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - DB");
-                }, () -> {
-                    Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
-
                     hideProgressDialog();
-
+                    Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: throwable - Banner");
                 }));
+
     }
 
     /**
@@ -430,16 +426,15 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             }
 
             @Override
-            public void onPageSelected(int i) {
+            public void onPageSelected(int position) {
                 // It stops TTS if it's playing.
                 TTSManager.getInstance().stopTTS();
                 // It shows TTS Play view and hides Stop View
                 mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
-                THP_DetailFragment fragment = (THP_DetailFragment)mSectionsPagerAdapter.getRegisteredFragment(i);
-                if(fragment != null) {
-                    DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), fragment.getArticleId(), fragment.isArticleRestricted(), getAllowedCount(getActivity()));
-                    DefaultTHApiManager.readArticleId(getActivity(), fragment.getArticleId());
-                }
+                ArticleBean bean = mSectionsPagerAdapter.getArticleBean(position);
+                DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), bean.getArticleId(), bean.isArticleRestricted(), getAllowedCount(getActivity()));
+                DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId());
+
             }
 
             @Override

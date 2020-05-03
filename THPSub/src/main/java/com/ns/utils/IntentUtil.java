@@ -56,15 +56,12 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.twitter.sdk.android.core.TwitterCore;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
@@ -73,7 +70,7 @@ public class IntentUtil {
 
     public static void openMainTabPage(Activity context) {
         Intent intent = new Intent(context, AppTabActivity.class);
-        context.startActivity(intent);
+        context.startActivity(intent, startHoldActivity(context));
         context.finish();
     }
 
@@ -534,9 +531,15 @@ public class IntentUtil {
         }
     }
 
-    public static Bundle startActivityAnim(Context context) {
+    public static Bundle startSlideActivity(Context context) {
         Bundle bndlAnimation = ActivityOptions.makeCustomAnimation(context,
-                R.anim.activity_in, R.anim.activity_out).toBundle();
+                R.anim.activity_slide_in, R.anim.activity_slide_out).toBundle();
+        return bndlAnimation;
+    }
+
+    public static Bundle startHoldActivity(Context context) {
+        Bundle bndlAnimation = ActivityOptions.makeCustomAnimation(context,
+                R.anim.hold, R.anim.hold).toBundle();
         return bndlAnimation;
     }
 
@@ -567,7 +570,7 @@ public class IntentUtil {
         Intent intent = new Intent(context, AppTabActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("tabIndex", tabIndex);
-        context.startActivity(intent, startActivityAnim(context));
+        context.startActivity(intent, startSlideActivity(context));
     }
 
     public static void openContentListingActivity(Context context, String from) {
@@ -905,19 +908,17 @@ public class IntentUtil {
         Intent intent = new Intent(context, CustomizeHomeScreenActivity.class);
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(context).isHomeArticleOptionScreenShown();
         if(!isHomeArticleOptionScreenShown) {
-            context.startActivity(intent);
+            context.startActivity(intent, startHoldActivity(context));
             context.finish();
         }
         else {
-            context.startActivity(intent,
-                    ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+            context.startActivity(intent, startSlideActivity(context));
         }
     }
 
     public static void openSettingActivity(AppCompatActivity context) {
         Intent intent = new Intent(context, AppSettingActivity.class);
-        context.startActivity(intent,
-                    ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+        context.startActivity(intent, startSlideActivity(context));
 
     }
 
