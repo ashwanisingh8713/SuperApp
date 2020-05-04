@@ -968,6 +968,11 @@ public class DefaultTHApiManager {
     }
 
 
+    /**
+     * It is App Configuration, gets configuration data from server
+     * @param context
+     * @param requestCallback
+     */
     public static void appConfiguration(Context context, RequestCallback<TableConfiguration> requestCallback) {
         String url = "http://3.0.22.177/hindu/subscription/coreAPI/get";
         ServiceFactory.getServiceAPIs().config(url)
