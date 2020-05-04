@@ -1137,8 +1137,8 @@ public class DefaultTHApiManager {
                     String existingId = daoRead.getMPReadArticleId(id);
                     List<String> allRestrictedArticleIds = daoRead.getAllRestrictedArticleIds();
                     if(existingId == null) {
-                        boolean isUserCanReRead = false;
-                        if(allRestrictedArticleIds.size() <= allowedCount) {
+                        boolean isUserCanReRead = false; //allRestrictedArticleIds.size() >= allowedCount
+                        if(allRestrictedArticleIds.size() < allowedCount) {
                             isUserCanReRead = true;
                         }
                         int size = allRestrictedArticleIds.size();

@@ -323,8 +323,8 @@ public class DetailToolbar extends Toolbar {
         ttsParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
-        mBackImageView.setVisibility(GONE);
 
+        mBackImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
         // In declare-styleable name="NSImageButton" enum arrow_back = 2

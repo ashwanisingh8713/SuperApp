@@ -194,7 +194,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     .subscribe(tableMPReadArticle->{
                         EventBus.getDefault().post(tableMPReadArticle);
 
-                        if(tableMPReadArticle.isUserCanReRead()) {
+                        if(!tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
                                 maintainRefreshStateForOnResume = 1;
                                 mRecyclerAdapter.clearData();
@@ -737,9 +737,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
 
     private void dgRestrictedPage(ArticleBean bean) {
-        //Hide Menu Icons - TTS, Comment, ReadLater, TextSize
-        mActivity.getDetailToolbar().showNonPremiumRestrictedDetailIcons();
-
         AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
         bannerModel.setBean(bean);
         mRecyclerAdapter.addData(bannerModel);

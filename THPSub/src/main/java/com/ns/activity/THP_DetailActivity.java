@@ -90,9 +90,8 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             ApiManager.getUserProfile(this)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userProfile -> {
-                        boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
+                        hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
                         getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
-
                     });
         }
 
@@ -163,17 +162,25 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     public void handleEvent(TableMPReadArticle mpReadArticle) {
         if(!mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
+            if (!mpReadArticle.isArticleRestricted()) {
+                //Show Menu Icons
+                getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
+            } else {
+                //Hide Some Menu Icons
+                getDetailToolbar().showNonPremiumRestrictedDetailIcons();
+            }
             return;
         }
         mReadingArticleId = mpReadArticle.getArticleId();
         int totalReadSize = mpReadArticle.getTotalReadCount();
-        boolean isNeedToShowMpBanner = false;
-        //Calculate Time Difference, check if exceeds
-        long startTimeInMillis = DefaultPref.getInstance(THP_DetailActivity.this).getMPStartTimeInMillis();
-        if ((totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) || (startTimeInMillis > 0 && DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired())) {
-            isNeedToShowMpBanner = false;
-        }
-        String bannerMsg = new String(BaseFragmentTHP.getMpBannerMsg());
+        boolean isNeedToShowMpBanner = (DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired() && mpReadArticle.isUserCanReRead())
+                || totalReadSize <= BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)
+                || (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) && mpReadArticle.isUserCanReRead());
+        String bannerMsg = BaseFragmentTHP.getMpBannerMsg();
+        //For Display in UI, total read size should not exceed allowed counts.
+        /*if (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) {
+            totalReadSize = BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this);
+        }*/
         if (bannerMsg != null) {
             bannerMsg = bannerMsg.replaceAll("<readCount>", "" + totalReadSize);
             bannerMsg = bannerMsg.replaceAll("<totalCount>", "" + BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
@@ -192,6 +199,13 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         }
         else {
             subscribeLayout_Mp.setVisibility(View.GONE);
+        }
+        if (isNeedToShowMpBanner) {
+            //Show Menu Icons
+            getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
+        } else {
+            //Hide Some Menu Icons
+            getDetailToolbar().showNonPremiumRestrictedDetailIcons();
         }
     }
 
