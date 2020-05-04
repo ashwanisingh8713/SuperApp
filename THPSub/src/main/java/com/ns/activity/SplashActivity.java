@@ -69,11 +69,11 @@ public class SplashActivity extends BaseAcitivityTHP {
         loadingMsg = findViewById(R.id.loadingMsg);
         progressBar = findViewById(R.id.progressBar);
 
-        if(!DefaultPref.getInstance(this).isConfigurationOnceLoaded()) {
+        /*if(!DefaultPref.getInstance(this).isConfigurationOnceLoaded()) {
             sendHandlerMsg(WHAT_CONFIG);
             appConfigApi();
         }
-        else if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
+        else */if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
             sendHandlerMsg(WHAT_MP);
             //Metered Paywall Cycle API calls.
             mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL,
