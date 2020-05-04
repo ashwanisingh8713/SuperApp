@@ -309,8 +309,27 @@ public class DetailToolbar extends Toolbar {
         mBackImageView.setIcon(arrow_back);
     }
 
-    public void showDetailIcons() {
+    public void showNonPremiumRestrictedDetailIcons() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
 
+        mBackImageView.setVisibility(VISIBLE);
+        premiumLogoBtn.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        // In declare-styleable name="NSImageButton" enum arrow_back = 2
+        int arrow_back = 2;
+        mBackImageView.setIcon(arrow_back);
     }
 
     private View mView;

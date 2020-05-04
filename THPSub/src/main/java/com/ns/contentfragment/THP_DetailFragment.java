@@ -194,7 +194,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     .subscribe(tableMPReadArticle->{
                         EventBus.getDefault().post(tableMPReadArticle);
 
-                        if(tableMPReadArticle.isUserCanReRead()) {
+                        if(!tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
                                 maintainRefreshStateForOnResume = 1;
                                 mRecyclerAdapter.clearData();

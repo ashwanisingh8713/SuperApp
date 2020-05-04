@@ -720,7 +720,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
-                GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                if (!ResUtil.isEmpty(imageUrl)) {
+                    GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                } else {
+                    dg_banner_vh.mHeaderImageView.setVisibility(View.GONE);
+                }
+
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
                     dg_banner_vh.mCaptionTextView.setText(Html.fromHtml(caption));
@@ -767,7 +772,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             final ArrayList<MeBean> mImageList = bean.getMe();
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
-                GlideUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                if (!ResUtil.isEmpty(imageUrl)) {
+                    GlideUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
                     db_photo_banner_holder.mCaptionTextView.setText(Html.fromHtml(caption));
@@ -823,7 +830,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             final ArrayList<MeBean> mImageList = bean.getMe();
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
-                GlideUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                if (!ResUtil.isEmpty(imageUrl)) {
+                    GlideUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
                     db_video_banner_holder.mCaptionTextView.setText(Html.fromHtml(caption));
@@ -888,7 +897,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             final ArrayList<MeBean> mImageList = bean.getMe();
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
-                GlideUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                if (!ResUtil.isEmpty(imageUrl)) {
+                    GlideUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
                     dg_detailAudioViewHolder.mCaptionTextView.setText(Html.fromHtml(caption));
@@ -986,6 +997,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
             if(holder.shadowView_Mp != null) {
                 holder.shadowView_Mp.setLayoutParams(part1WebviewParam);
+                boolean mIsDayTheme = DefaultPref.getInstance(holder.shadowView_Mp.getContext()).isUserThemeDay();
+                if (mIsDayTheme) {
+                    holder.shadowView_Mp.setBackground(ResUtil.getBackgroundDrawable(holder.shadowView_Mp.getContext().getResources(), R.drawable.top_shadow_gradient_light));
+                } else {
+                    holder.shadowView_Mp.setBackground(ResUtil.getBackgroundDrawable(holder.shadowView_Mp.getContext().getResources(), R.drawable.top_shadow_gradient_dark));
+                }
             }
             holder.textMpBlockerTitle.setText(BaseFragmentTHP.getMpNonSignInTitleBlocker());
             holder.textMPBlockerDescription.setText(BaseFragmentTHP.getMpNonSignInDescBlocker());

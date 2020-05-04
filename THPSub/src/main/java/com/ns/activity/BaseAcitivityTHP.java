@@ -48,7 +48,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
 
     protected boolean mIsDayTheme = true;
-
+    protected boolean hasSubscriptionPlan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
