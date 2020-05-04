@@ -10,6 +10,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mindorks.scheduler.Priority;
 import com.mindorks.scheduler.RxPS;
+import com.netoperation.config.download.FileUtils;
+import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.DaoMP;
 import com.netoperation.db.DaoTemperoryArticle;
 import com.netoperation.db.THPDB;
@@ -57,6 +59,7 @@ import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,10 +67,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
@@ -977,9 +982,9 @@ public class DefaultTHApiManager {
      * @param context
      * @param requestCallback
      */
-    public static void appConfiguration(Context context, RequestCallback<TableConfiguration> requestCallback) {
+    public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
         String url = "http://3.0.22.177/hindu/subscription/coreAPI/get";
-        ServiceFactory.getServiceAPIs().config(url)
+        return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{
                     if(config.isSTATUS()) {
@@ -989,23 +994,62 @@ public class DefaultTHApiManager {
                         if(tableConfiguration == null) {
                             daoConfiguration.insertConfiguration(config.getDATA());
                         }
+                        else if(!config.getDATA().getLastServerUpdateTime().equals(tableConfiguration.getLastServerUpdateTime())) {
+                            daoConfiguration.deleteAll();
+                            daoConfiguration.insertConfiguration(config.getDATA());
+                        }
                     }
 
                     return config.getDATA();
                 })
                 .subscribe(value->{
                     if(requestCallback != null) {
-                        Log.i("", "");
+                        requestCallback.onNext(value);
                     }
                 }, throwable -> {
                     if(requestCallback != null) {
-                        Log.i("", "");
+                        requestCallback.onError(throwable, "appConfigurationFromServer");
                     }
                 }, ()->{
                     if(requestCallback != null) {
-                        Log.i("", "");
+                        requestCallback.onComplete("appConfigurationFromServer");
                     }
                 });
+
+    }
+
+    public static Single<List<TabsBean>> appConfigurationFromDB(Context context, boolean isDayTheme) {
+            return THPDB.getInstance(context).daoConfiguration().getTabsConfiguration()
+                    .subscribeOn(Schedulers.io())
+                    .map(tableConfiguration -> {
+                        List<TabsBean> tabsBeans = tableConfiguration.getTabs();
+                        int limit;
+                        if(tabsBeans.size() > 5) {
+                            limit = 5;
+                        } else {
+                            limit = tabsBeans.size();
+                        }
+
+                        File destinationFolder;
+                        if (isDayTheme) {
+                            destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT);
+                        } else {
+                            destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK);
+                        }
+
+                        List<TabsBean> tabsBeanList = tabsBeans.stream().limit(limit).collect(Collectors.toList());
+                        for(TabsBean tab : tabsBeanList) {
+                            if (isDayTheme) {
+                                String fileName = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlLight());
+                                String selectedPath = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlSelectedLight());
+                                tab.getIconUrl().setLocalFilePath(destinationFolder+"/"+fileName);
+                                tab.getIconUrl().setLocalFileSelectedPath(destinationFolder+"/"+selectedPath);
+                            }
+                        }
+                        return tabsBeanList;
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    ;
 
     }
 

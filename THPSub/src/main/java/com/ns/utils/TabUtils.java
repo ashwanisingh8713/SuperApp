@@ -36,6 +36,7 @@ public class TabUtils {
     public void SetOnSelectView(Context context, TabLayout tabLayout, int position) {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         View selected = tab.getCustomView();
+        if(selected == null) {return;}
         TextView iv_text = selected.findViewById(R.id.tab_Txt);
         ImageView tabIcon = selected.findViewById(R.id.tab_Icon);
         tabIcon.setImageResource(tabSelectedIcons[position]);
@@ -49,6 +50,7 @@ public class TabUtils {
     public void SetUnSelectView(Context context, TabLayout tabLayout,int position) {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         View selected = tab.getCustomView();
+        if(selected == null) {return;}
         TextView iv_text = selected.findViewById(R.id.tab_Txt);
         ImageView tabIcon = selected.findViewById(R.id.tab_Icon);
         tabIcon.setImageResource(tabUnSelectedIcons[position]);

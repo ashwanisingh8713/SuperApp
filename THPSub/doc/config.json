@@ -20,7 +20,9 @@
       "title": "Home",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -29,7 +31,9 @@
       "title": "Briefing",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "Briefing"
@@ -38,7 +42,9 @@
       "title": "My Stories",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "My Stories"
@@ -47,7 +53,9 @@
       "title": "Suggested",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "Suggested"
@@ -56,7 +64,9 @@
       "title": "Profile",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "Profile"
@@ -65,7 +75,9 @@
       "title": "Tab Title",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "Url",
@@ -75,7 +87,9 @@
       "title": "Tab Title",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "SENSEX"
@@ -84,7 +98,9 @@
       "title": "Top News",
       "iconUrl": {
         "urlDark": "value",
-        "urlLight": "value"
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -297,6 +313,12 @@
         "favorite" : "url",
         "unfavorite" : "url"
 
+      },
+      "placeHolder" : {
+        "banner" : "url",
+        "thumb" : "url",
+        "widget" : "url",
+        "ads": "url"
       }
     },
     "light" : {
@@ -328,6 +350,12 @@
         "favorite" : "url",
         "unfavorite" : "url"
 
+      },
+      "placeHolder" : {
+        "banner" : "url",
+        "thumb" : "url",
+        "widget" : "url",
+        "ads": "url"
       }
     }
   }

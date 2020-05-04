@@ -96,20 +96,23 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             ServiceFactory.BASE_URL = BuildConfig.STATGGING_BASE_URL;
         }
 
+
+        String taIn = THPConstants.FLOW_TAB_CLICK;
+        int tabIndex = getIntent().getIntExtra("tabIndex", 0);
+        mAppTabFragment = AppTabFragment.getInstance(mFrom,  tabIndex);
+
+        FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+
+        // THis below condition will be executed when user creates normal Sign-UP
+        if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
+            AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
+            FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+        }
+
         mDisposable.add(ApiManager.getUserProfile(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
-                    String taIn = THPConstants.FLOW_TAB_CLICK;
-                    int tabIndex = getIntent().getIntExtra("tabIndex", 0);
-                    mAppTabFragment = AppTabFragment.getInstance(mFrom, userProfile.getUserId(), tabIndex);
 
-                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
-
-                    // THis below condition will be executed when user creates normal Sign-UP
-                    if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
-                        AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
-                        FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
-                    }
                 }));
 
 

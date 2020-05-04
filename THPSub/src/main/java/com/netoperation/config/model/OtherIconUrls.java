@@ -10,6 +10,15 @@ public class OtherIconUrls {
     private String Logo;
     private ListingIconUrl Listing;
     private TopbarIconUrl topbar;
+    private PlaceHolder placeHolder;
+
+    public PlaceHolder getPlaceHolder() {
+        return placeHolder;
+    }
+
+    public void setPlaceHolder(PlaceHolder placeHolder) {
+        this.placeHolder = placeHolder;
+    }
 
     public String getLogo() {
         return Logo;

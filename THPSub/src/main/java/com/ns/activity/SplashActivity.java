@@ -15,9 +15,6 @@ import androidx.annotation.Nullable;
 
 import com.main.SuperApp;
 import com.netoperation.config.download.IconDownload;
-import com.netoperation.config.model.TabsBean;
-import com.netoperation.config.download.FileUtils;
-import com.netoperation.config.download.RxDownloader;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
@@ -52,8 +49,13 @@ public class SplashActivity extends BaseAcitivityTHP {
     private final int WHAT_DOWNLOADING = 2;
     private final int WHAT_MP = 3;
     private final int WHAT_SECTION = 4;
-    private final int WHAT_HOME_CONTENT = 5;
-    private final int WHAT_LAUNCH_TAB = 6;
+    private final int WHAT_SERVER_HOME_CONTENT = 5;
+    private final int WHAT_ACTIIVTY_TAB = 6;
+    private final int WHAT_ERROR = 7;
+    private final int WHAT_TEMP_SECTION = 8;
+    private final int WHAT_Server_Section = 9;
+
+    private boolean isErrorOccured = false;
 
     @Override
     public int layoutRes() {
@@ -69,39 +71,12 @@ public class SplashActivity extends BaseAcitivityTHP {
         loadingMsg = findViewById(R.id.loadingMsg);
         progressBar = findViewById(R.id.progressBar);
 
-        /*if(!DefaultPref.getInstance(this).isConfigurationOnceLoaded()) {
+        if(!DefaultPref.getInstance(this).isConfigurationOnceLoaded()) {
             sendHandlerMsg(WHAT_CONFIG);
-            appConfigApi();
+            callAppConfigApi();
         }
-        else */if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
+        else if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
             sendHandlerMsg(WHAT_MP);
-            //Metered Paywall Cycle API calls.
-            mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL,
-                    BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
-                        @Override
-                        public void onNext(Object o) {
-                            routeToAppropriateAction();
-                        }
-
-                        @Override
-                        public void onError(Throwable t, String str) {
-                            if(DefaultPref.getInstance(SplashActivity.this).isMpCycleOnceLoaded()) {
-                                routeToAppropriateAction();
-                            }
-                            else {
-                                if(!NetUtils.isConnected(SplashActivity.this)) {
-                                    Alerts.noConnectionSnackBarInfinite(appIconImg, SplashActivity.this);
-                                } else {
-                                    Alerts.showSnackbar(SplashActivity.this, SplashActivity.this.getResources().getString(R.string.something_went_wrong));
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onComplete(String str) {
-
-                        }
-                    }));
         }
         else {
             routeToAppropriateAction();
@@ -137,19 +112,37 @@ public class SplashActivity extends BaseAcitivityTHP {
                     showProgressBar("Initializing App Configuration.");
                     break;
                 case WHAT_DOWNLOADING:
-                    showProgressBar("Downloading App Configuration.");
+                    showProgressBar("Downloading App Configurations.");
                     break;
                 case WHAT_MP:
                     showProgressBar("Configuring Articles.");
+                    callMpApi();
                     break;
                 case WHAT_SECTION:
                     showProgressBar("Checking Topics.");
                     break;
-                case WHAT_HOME_CONTENT:
-                    showProgressBar("Updating News.");
+                case WHAT_SERVER_HOME_CONTENT:
+                    getHomeDataFromServer();
+                    showProgressBar("Fetching News.");
                     break;
-                case WHAT_LAUNCH_TAB:
+                case WHAT_ACTIIVTY_TAB:
                     launchTabScreen();
+                    break;
+                case WHAT_TEMP_SECTION:
+                    tempSection();
+                    break;
+                case WHAT_Server_Section:
+                    getSectionDirectFromServer();
+                    break;
+                case WHAT_ERROR:
+                    if(!NetUtils.isConnected(SplashActivity.this)) {
+                        Alerts.noConnectionSnackBarInfinite(appIconImg, SplashActivity.this);
+                    }
+                    else {
+                        showProgressBar(getResources().getString(R.string.something_went_wrong));
+                        Alerts.showSnackbar(SplashActivity.this, getResources().getString(R.string.something_went_wrong));
+                    }
+                    isErrorOccured = true;
                     break;
             }
         }
@@ -175,34 +168,69 @@ public class SplashActivity extends BaseAcitivityTHP {
             Log.i("NSPEED", "downSpeed :: " + downSpeed);
             // On Good 4G or Good Wifi
             if(downSpeed > 102100) {
-                getSectionDirectFromServer();
+                sendHandlerMsg(WHAT_Server_Section);
             }
             // For Moderate Net Speed
             else if(downSpeed > 5000 && downSpeed < 102100) {
-                getHomeDataFromServer();
+                sendHandlerMsg(WHAT_SERVER_HOME_CONTENT);
             }
             // For low net speed, it will launch directly
             else {
-                directLaunch();
+                sendHandlerMsg(WHAT_TEMP_SECTION);
             }
 
         } else {
             Log.i("NSPEED", "downSpeed :: is NULL" );
-            directLaunch();
+            sendHandlerMsg(WHAT_TEMP_SECTION);
         }
     }
 
+    private void callMpApi() {
+        mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL,
+                BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
+                    @Override
+                    public void onNext(Object o) {
+                        routeToAppropriateAction();
+                    }
 
-    private void appConfigApi() {
-        DefaultTHApiManager.appConfiguration(this, new RequestCallback<TableConfiguration>() {
+                    @Override
+                    public void onError(Throwable t, String str) {
+                        if(DefaultPref.getInstance(SplashActivity.this).isMpCycleOnceLoaded()) {
+                            routeToAppropriateAction();
+                        }
+                        else {
+                            sendHandlerMsg(WHAT_ERROR);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete(String str) {
+
+                    }
+                }));
+    }
+
+
+    private void callAppConfigApi() {
+        DefaultTHApiManager.appConfigurationFromServer(this, new RequestCallback<TableConfiguration>() {
             @Override
             public void onNext(TableConfiguration configuration) {
 
                 if(configuration != null) {
                     // Saves, App configuration is loaded once.
-                    DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
+                    //DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
 
-                    IconDownload iconDownload = new IconDownload(configuration, SplashActivity.this);
+                    IconDownload iconDownload = new IconDownload(configuration, SplashActivity.this, new IconDownload.DownloadStatusCallback() {
+                        @Override
+                        public void success(String filePath) {
+                            Log.i("", "");
+                        }
+
+                        @Override
+                        public void fail(String url) {
+                            Log.i("", "");
+                        }
+                    });
                     iconDownload.startDownloading();
 
                 }
@@ -211,18 +239,24 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-
+                sendHandlerMsg(WHAT_ERROR);
+                if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
+                    sendHandlerMsg(WHAT_MP);
+                }
             }
 
             @Override
             public void onComplete(String str) {
-
+                sendHandlerMsg(WHAT_DOWNLOADING);
+                if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
+                    sendHandlerMsg(WHAT_MP);
+                }
             }
         });
     }
 
 
-    private void directLaunch() {
+    private void tempSection() {
         Log.i("NSPEED", "Direct Launch calling...." );
         startTime = System.currentTimeMillis();
         DefaultTHApiManager.getSectionsFromTempTable(this, System.currentTimeMillis(), new RequestCallback() {
@@ -233,7 +267,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                getSectionDirectFromServer();
+                sendHandlerMsg(WHAT_Server_Section);
             }
 
             @Override
@@ -241,7 +275,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 // Opens Main Tab Screen
                 if(isHomeArticleOptionScreenShown) {
-                    sendHandlerMsg(WHAT_LAUNCH_TAB);
+                    sendHandlerMsg(WHAT_ACTIIVTY_TAB);
                     long totalExecutionTime = System.currentTimeMillis() - startTime;
                     Log.i("NSPEED", "Direct Launched Main Tab Page:: " + totalExecutionTime);
                 }
@@ -269,7 +303,8 @@ public class SplashActivity extends BaseAcitivityTHP {
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 if(isHomeArticleOptionScreenShown) {
                     // Get Home Article from server
-                    getHomeDataFromServer();
+                    //getHomeDataFromServer();
+                    sendHandlerMsg(WHAT_SERVER_HOME_CONTENT);
                 }
                 else {
                     IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
@@ -284,14 +319,10 @@ public class SplashActivity extends BaseAcitivityTHP {
                     public void run() {
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {
-                            sendHandlerMsg(WHAT_LAUNCH_TAB);
+                            sendHandlerMsg(WHAT_ACTIIVTY_TAB);
                         }
                         else {
-                            if(!NetUtils.isConnected(SplashActivity.this)) {
-                                Alerts.noConnectionSnackBarInfinite(appIconImg, SplashActivity.this);
-                            } else {
-                                Alerts.showSnackbar(SplashActivity.this, SplashActivity.this.getResources().getString(R.string.something_went_wrong));
-                            }
+                            sendHandlerMsg(WHAT_ERROR);
                         }
                     }
                 });
@@ -315,7 +346,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onNext(Object o) {
                 // Opens Main Tab Screen
-                sendHandlerMsg(WHAT_LAUNCH_TAB);
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB);
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
                 Log.i("NSPEED", "Home Article Loaded from server, Launched Main Tab Page :: "+totalExecutionTime);
             }
@@ -323,7 +354,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onError(Throwable t, String str) {
                 Log.i("NSPEED", "ERROR2");
-                sendHandlerMsg(WHAT_LAUNCH_TAB);
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB);
             }
 
             @Override
@@ -356,6 +387,8 @@ public class SplashActivity extends BaseAcitivityTHP {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        if(isErrorOccured) {
+            super.onBackPressed();
+        }
     }
 }

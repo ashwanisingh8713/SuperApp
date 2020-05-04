@@ -19,6 +19,8 @@ public class TabsBean {
     private String value;
     private SectionBean section;
 
+
+
     public String getTitle() {
         return title;
     }

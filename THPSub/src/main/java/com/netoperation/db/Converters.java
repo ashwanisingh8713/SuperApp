@@ -6,6 +6,7 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.netoperation.config.model.OtherIconsDownloadUrls;
+import com.netoperation.config.model.PlaceHolder;
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionBean;
@@ -188,15 +189,15 @@ public class Converters {
     }
 
     @TypeConverter
-    public static String WidgetIndexBeanToString(WidgetIndex widgetIndex) {
+    public static String PlaceHolderToString(PlaceHolder widgetIndex) {
         Gson gson = new Gson();
         String json = gson.toJson(widgetIndex);
         return json;
     }
 
     @TypeConverter
-    public static WidgetIndex stringToWidgetIndexBean(String value) {
-        Type listType = new TypeToken<WidgetIndex>() {}.getType();
+    public static PlaceHolder stringToPlaceHolder(String value) {
+        Type listType = new TypeToken<PlaceHolder>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
@@ -221,6 +222,19 @@ public class Converters {
 
     @TypeConverter
     public static String urlBeanListToString(List<UrlBean> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    @TypeConverter
+    public static List<WidgetIndex> stringToWidgetIndexList(String value) {
+        Type listType = new TypeToken<List<WidgetIndex>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String widgetIndexListToString(List<WidgetIndex> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;

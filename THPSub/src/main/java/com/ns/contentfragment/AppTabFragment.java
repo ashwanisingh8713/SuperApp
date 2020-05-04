@@ -17,9 +17,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.main.AppAds;
+import com.netoperation.config.model.TabsBean;
 import com.netoperation.model.AdData;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.AppTabPagerAdapter;
@@ -41,13 +43,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnClick, TabClickListener.OnTabClickListener {
 
     private ConstraintLayout subscribeLayout;
-    private String mUserId, mFrom;
+    private String mFrom;
     private TabUtils mTabUtils;
 
-    public static AppTabFragment getInstance(String from, String userId, int tabIndex) {
+    public static AppTabFragment getInstance(String from, int tabIndex) {
         AppTabFragment fragment = new AppTabFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("userId", userId);
         bundle.putInt("tabIndex", tabIndex);
         bundle.putString("from", from);
         fragment.setArguments(bundle);
@@ -130,25 +131,46 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         mTabLayout = view.findViewById(R.id.appTabsTabLayout);
         mViewPager = view.findViewById(R.id.appTabsViewPager);
 
-        mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), mUserId, tabNames);
-
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setOffscreenPageLimit(4);
-
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
 
-        mTabLayout.setupWithViewPager(mViewPager, true);
 
-        mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
 
-        // Iterate over all tabs and set the custom view
-        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            tab.setCustomView(mTabUtils.getTabView(i, getActivity()));
-        }
+        mDisposable.add(DefaultTHApiManager.appConfigurationFromDB(getActivity(), mIsUserThemeDay)
+                .subscribe(tabsBeans -> {
+                    String[] tabNames = new String[tabsBeans.size()];
+                    String[] tabUnSelectedIcon = new String[tabsBeans.size()];
+                    String[] tabSelectedIcon = new String[tabsBeans.size()];
 
-        updateTabIndex();
+                    for (int i = 0; i < tabsBeans.size(); i++) {
+                        TabsBean tab = tabsBeans.get(i);
+                        tabNames[i] = tab.getTitle();
+                        tabUnSelectedIcon[i] = tab.getIconUrl().getLocalFilePath();
+                        tabSelectedIcon[i] = tab.getIconUrl().getLocalFileSelectedPath();
+                    }
+
+                    mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
+
+                    mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), mUserId, tabNames);
+
+                    mViewPager.setAdapter(mPagerAdapter);
+                    mViewPager.setOffscreenPageLimit(4);
+                    mTabLayout.setupWithViewPager(mViewPager, true);
+
+                    // Iterate over all tabs and set the custom view
+                    for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+                        TabLayout.Tab tab = mTabLayout.getTabAt(i);
+                        tab.setCustomView(mTabUtils.getTabView(i, getActivity()));
+                    }
+
+                }, throwable -> {
+                    Log.i("", "");
+                }));
+
+
+        //mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
+
+        //updateTabIndex();
 
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

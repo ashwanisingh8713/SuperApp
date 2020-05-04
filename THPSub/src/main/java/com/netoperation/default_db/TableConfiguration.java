@@ -1,5 +1,6 @@
 package com.netoperation.default_db;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -29,18 +30,25 @@ public class TableConfiguration {
     }
 
 
+    private int totalIcons;
     private String lastServerUpdateTime;
     private String vokkleId;
     private String refreshIntervalInMins;
-    private AppThemeBean appTheme;
-    private AdsBean Ads;
-    private TaboolaBean taboola;
     private String subSectionsIndex;
+    @ColumnInfo
+    private AdsBean Ads;
+    @ColumnInfo
+    private AppThemeBean appTheme;
+    @ColumnInfo
+    private TaboolaBean taboola;
+    @ColumnInfo
     private SearchOptionBean searchOption;
+    @ColumnInfo
     private OtherIconsDownloadUrls otherIconsDownloadUrls;
+    @ColumnInfo
     private List<UrlBean> staticItem;
+    @ColumnInfo
     private List<TabsBean> tabs;
-    private int totalIcons;
 
     public int getTotalIcons() {
         return totalIcons;
@@ -50,13 +58,13 @@ public class TableConfiguration {
         this.totalIcons = totalIcons;
     }
 
-    private WidgetIndex widgetIndex;
+    private List<WidgetIndex> widgetIndex;
 
-    public WidgetIndex getWidgetIndex() {
+    public List<WidgetIndex> getWidgetIndex() {
         return widgetIndex;
     }
 
-    public void setWidgetIndex(WidgetIndex widgetIndex) {
+    public void setWidgetIndex(List<WidgetIndex> widgetIndex) {
         this.widgetIndex = widgetIndex;
     }
 

@@ -101,12 +101,10 @@ public class RxDownloader {
             destinationPath = Environment.DIRECTORY_DOWNLOADS;
         }
 
-        File destinationFolder = inPublicDir
-                ? Environment.getExternalStoragePublicDirectory(destinationPath)
-                : new File(context.getFilesDir(), destinationPath);
+        File destinationFolder = FileUtils.destinationFolder(inPublicDir, context, destinationPath);
 
-        createFolderIfNeeded(destinationFolder);
-        removeDuplicateFileIfExist(destinationFolder, filename);
+        FileUtils.createFolderIfNeeded(destinationFolder);
+        FileUtils.removeDuplicateFileIfExist(destinationFolder, filename);
 
         if (inPublicDir) {
             request.setDestinationInExternalPublicDir(destinationPath, filename);
@@ -121,18 +119,6 @@ public class RxDownloader {
         return request;
     }
 
-    private void createFolderIfNeeded(@NonNull File folder) {
-        if (!folder.exists() && !folder.mkdirs()) {
-            throw new RuntimeException("Can't create directory");
-        }
-    }
-
-    private void removeDuplicateFileIfExist(@NonNull File folder, @NonNull String fileName) {
-        File file = new File(folder, fileName);
-        if (file.exists() && !file.delete()) {
-            throw new RuntimeException("Can't delete file");
-        }
-    }
 
     private class DownloadStatusReceiver extends BroadcastReceiver {
 
