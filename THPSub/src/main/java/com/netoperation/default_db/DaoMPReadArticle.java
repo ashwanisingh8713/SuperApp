@@ -23,6 +23,9 @@ public abstract class DaoMPReadArticle {
     @Query("UPDATE TableMPReadArticle SET isArticleRestricted = :isArticleRestricted WHERE articleId = :articleId")
     public abstract int updateMpReadArticle(String articleId, boolean isArticleRestricted);
 
+    @Query("UPDATE TableMPReadArticle SET isBannerCloseClick = :isBannerCloseClick WHERE articleId = :articleId")
+    public abstract int updateIsBannerCloseForArticle(String articleId, boolean isBannerCloseClick);
+
     @Query("SELECT * FROM TableMPReadArticle WHERE articleId = :articleId")
     public abstract Maybe<TableMPReadArticle> isArticleRestricted(String articleId);
 

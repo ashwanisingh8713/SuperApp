@@ -17,15 +17,20 @@ import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.alerts.Alerts;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.THP_DetailFragment;
 import com.ns.contentfragment.THP_DetailPagerFragment;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
+import com.ns.utils.IntentUtil;
+import com.ns.utils.NetUtils;
+import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.text.CustomTextView;
 
@@ -50,6 +55,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     private CustomTextView subscribeBtn_Txt_Mp;
     private ImageView subsCloseImg_Mp;
     private ConstraintLayout subscribeLayout_Mp;
+    private String mReadingArticleId;
 
 
     @Override
@@ -120,7 +126,23 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         msgCountTxt_Mp = findViewById(R.id.msgCountTxt_Mp);
         subscribeBtn_Txt_Mp = findViewById(R.id.subscribeBtn_Txt_Mp);
         subscribeLayout_Mp = findViewById(R.id.subscribeLayout_Mp);
-
+        subscribeBtn_Txt_Mp.setOnClickListener(view -> {
+            if(NetUtils.isConnected(THP_DetailActivity.this)) {
+                //Redirect on subscription plan page
+                IntentUtil.openSubscriptionActivity(THP_DetailActivity.this, THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                THPConstants.IS_FROM_MP_BLOCKER = true;
+                //CT and Firebase MP Banner Events
+                THPFirebaseAnalytics.firebaseMPBannerSubscribe(THP_DetailActivity.this, BaseFragmentTHP.getCycleName());
+                CleverTapUtil.cleverTapMPBannerSubscribe(THP_DetailActivity.this, BaseFragmentTHP.getCycleName());
+            } else {
+                Alerts.noConnectionSnackBar(subscribeLayout_Mp, THP_DetailActivity.this);
+            }
+        });
+        subsCloseImg_Mp.setOnClickListener(view -> {
+            //Save close click for article
+            DefaultTHApiManager.insertCloseBannerClick(THP_DetailActivity.this, mReadingArticleId, true);
+            subscribeLayout_Mp.setVisibility(View.GONE);
+        });
     }
 
     @Override
@@ -143,11 +165,12 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             subscribeLayout_Mp.setVisibility(View.GONE);
             return;
         }
+        mReadingArticleId = mpReadArticle.getArticleId();
         int totalReadSize = mpReadArticle.getTotalReadCount();
         boolean isNeedToShowMpBanner = true;
         //Calculate Time Difference, check if exceeds
         long startTimeInMillis = DefaultPref.getInstance(THP_DetailActivity.this).getMPStartTimeInMillis();
-        if ((totalReadSize >= BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) || (startTimeInMillis < 0 && DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired())) {
+        if ((totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) || (startTimeInMillis > 0 && DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired())) {
             isNeedToShowMpBanner = false;
         }
         String bannerMsg = new String(BaseFragmentTHP.getMpBannerMsg());
@@ -161,7 +184,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             bannerMsg = bannerMsg + (TextUtils.isEmpty(BaseFragmentTHP.getDurationUnit()) ? "" : " for " + BaseFragmentTHP.getDurationUnit());
         }
 
-        if(isNeedToShowMpBanner) {
+        //Check Is Banner close button click TRUE/FALSE
+        boolean isBannerCloseClick = mpReadArticle.isBannerCloseClick();
+        if(isNeedToShowMpBanner && !isBannerCloseClick) {
             msgCountTxt_Mp.setText(bannerMsg);
             subscribeLayout_Mp.setVisibility(View.VISIBLE);
         }

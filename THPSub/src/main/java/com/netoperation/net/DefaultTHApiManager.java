@@ -864,9 +864,13 @@ public class DefaultTHApiManager {
                     }
                     //Insert new record into Table in this case, when any Cycle name is found
                     mpTableDao.deleteAll();
+                    //Delete startTime
+                    DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
+                    //Delete TableMPReadArticle MP
+                    if (db.daoMPReadArticle() != null) {
+                        db.daoMPReadArticle().DELETE();
+                    }
                     mpTableDao.insertMpTableData(table);
-                    //Clear close Ids Preferences
-                    DefaultPref.getInstance(context).setMPBannerCloseIdsPrefs(new HashSet<>());
 
                     // It calls configuration api, whenever cycle api is called.
                     mpConfigurationAPI(context, urlConfigAPI);
@@ -1091,20 +1095,18 @@ public class DefaultTHApiManager {
 
 
 
-    public static Observable clearArticleCounts(Context context) {
-        return Observable.just("readCount")
+    public static Observable clearMPUserRecords(Context context) {
+        return Observable.just("Clear")
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
-                    DaoMP daoMP = thpdb.daoMp();
-                    TableMP tableMP = daoMP.getMPTable();
-                    tableMP.clearArticleCounts();
-                    tableMP.setStartTimeInMillis(0);
-                    //Save startTime in DefaultPref
+                    //Delete startTime
                     DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
-                    daoMP.updateMPTable(tableMP);
-                    TableMP tableMPNew = thpdb.daoMp().getMPTable();
-                    return tableMPNew.getReadArticleIds().size();
+                    //Delete TableMPReadArticle MP
+                    if (thpdb.daoMPReadArticle() != null) {
+                        thpdb.daoMPReadArticle().DELETE();
+                    }
+                    return true;
                 });
 
     }
@@ -1139,6 +1141,12 @@ public class DefaultTHApiManager {
                         if(allRestrictedArticleIds.size() <= allowedCount) {
                             isUserCanReRead = true;
                         }
+                        int size = allRestrictedArticleIds.size();
+                        if (size == 0) {
+                            long currentTimeInMillis = System.currentTimeMillis();
+                            //Save startTime in DefaultPref
+                            DefaultPref.getInstance(context).setMPStartTimeInMillis(currentTimeInMillis);
+                        }
                         TableMPReadArticle mpReadArticle = new TableMPReadArticle(id, isRestricted, isUserCanReRead);
                         daoRead.insertReadArticle(mpReadArticle);
                     }
@@ -1150,5 +1158,22 @@ public class DefaultTHApiManager {
 
     }
 
+    public static void insertCloseBannerClick(Context context, final String articleId, final boolean isClosed) {
+        if (context == null || articleId == null) {
+            return;
+        }
+        Observable.just(articleId)
+                .subscribeOn(Schedulers.io())
+                .map(id -> {
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
+                    String existingId = daoRead.getMPReadArticleId(id);
+                    if(existingId != null) {
+                        daoRead.updateIsBannerCloseForArticle(id, isClosed);
+                    }
+                    return "";
+                }).subscribe();
+
+    }
 
 }

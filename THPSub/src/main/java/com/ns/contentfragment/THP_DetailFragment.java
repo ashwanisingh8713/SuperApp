@@ -198,13 +198,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
                                 maintainRefreshStateForOnResume = 1;
                                 mRecyclerAdapter.clearData();
-                                dgRestrictedPage(mArticleBean);
+                                dgPage(mArticleBean);
                             }
                         } else {
                             if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1) {
                                 maintainRefreshStateForOnResume = 0;
                                 mRecyclerAdapter.clearData();
-                                dgPage(mArticleBean);
+                                dgRestrictedPage(mArticleBean);
                             }
                         }
                     }));
