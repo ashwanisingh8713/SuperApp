@@ -43,9 +43,9 @@ public class LogoImgView extends AppCompatImageView {
         // 0 = app:logoType="Splash"
         if(imgType == 0) {
             if (isUserThemeDay) {
-                setImageResource(R.drawable.about_us_logo);
+                setImageResource(R.drawable.splash_logo);
             } else {
-                setImageResource(R.drawable.about_us_logo_white);
+                setImageResource(R.drawable.splash_logo_dark);
             }
         }
         // 1 = app:logoType="Section"
@@ -53,23 +53,15 @@ public class LogoImgView extends AppCompatImageView {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.logo_actionbar);
             } else {
-                setImageResource(R.drawable.logo_actionbar_white);
+                setImageResource(R.drawable.logo_actionbar_dark);
             }
         }
-        // 2 = app:logoType="SubSection"
+        // 2 = app:logoType="ToolbarTHP"
         else if(imgType == 2) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.about_us_logo);
-            } else {
-                setImageResource(R.drawable.about_us_logo_white);
-            }
-        }
-        // 3 = app:logoType="ToolbarTHP"
-        else if(imgType == 3) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.logo_actionbar);
             } else {
-                setImageResource(R.drawable.logo_actionbar_white);
+                setImageResource(R.drawable.logo_actionbar_dark);
             }
         }
 

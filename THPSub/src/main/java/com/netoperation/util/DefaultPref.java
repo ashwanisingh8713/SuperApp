@@ -246,4 +246,13 @@ public class DefaultPref {
         return difference >= expiryTimeInMillis;
     }
 //    MP Preferences end
+
+    public void setConfigurationOnceLoaded(boolean isConfigurationOnceLoaded) {
+        mEditor.putBoolean("isConfigurationOnceLoaded", isConfigurationOnceLoaded);
+        mEditor.apply();
+    }
+
+    public boolean isConfigurationOnceLoaded() {
+        return mPreferences.getBoolean("isConfigurationOnceLoaded", false);
+    }
 }

@@ -20,6 +20,7 @@
     <!-- Start Logo Icon-->
     <com.ns.view.LogoImgView
         android:id="@+id/action_logo"
+        app:logoType="Section"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -30,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/action_back"
         app:layout_constraintTop_toTopOf="parent"
-        app:logoType="Section" />
+         />
     <!-- End Logo Icon-->
 
     <!-- Start Title TextView-->

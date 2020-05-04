@@ -20,12 +20,14 @@
             app:logoType="Splash" />
 
         <com.ns.view.CustomProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"/>
 
         <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/loadingMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:viewType="XL"
