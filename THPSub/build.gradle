@@ -241,7 +241,7 @@ dependencies {
     implementation deps.TABOOLA
 
     // Comscore SDK
-    implementation 'com.comscore:android-analytics:5.+'
+    implementation 'com.comscore:android-analytics:5.7.3'
 
     // Facebook Ads
     implementation 'com.facebook.android:audience-network-sdk:5.1.0'

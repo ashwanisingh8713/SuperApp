@@ -398,9 +398,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
 
-        mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager(), articleBeans, mUserId, from);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
         // To Check the selected article Index
         if (mArticleId != null) {
             ArticleBean bean = new ArticleBean();
@@ -412,10 +409,10 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), mArticleId, articleBeans.get(mClickedPosition).isArticleRestricted(), getAllowedCount(getActivity()));
                 DefaultTHApiManager.readArticleId(getActivity(), mArticleId);
             }
-
-
         }
 
+        mSectionsPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager(), articleBeans, mUserId, from);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
         // Setting current position of ViewPager
         setCurrentPage(mClickedPosition, false);
 

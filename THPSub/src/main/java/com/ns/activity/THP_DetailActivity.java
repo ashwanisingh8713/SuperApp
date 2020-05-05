@@ -160,9 +160,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(TableMPReadArticle mpReadArticle) {
-        if(!mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {
+        if(!shouldShowMeteredPaywall() || !mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
-            if (!mpReadArticle.isArticleRestricted()) {
+            if (!shouldShowMeteredPaywall() || !mpReadArticle.isArticleRestricted()) {
                 //Show Menu Icons
                 getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
             } else {
@@ -178,9 +178,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 || (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) && mpReadArticle.isUserCanReRead());
         String bannerMsg = BaseFragmentTHP.getMpBannerMsg();
         //For Display in UI, total read size should not exceed allowed counts.
-        /*if (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) {
+        if (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) {
             totalReadSize = BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this);
-        }*/
+        }
         if (bannerMsg != null) {
             bannerMsg = bannerMsg.replaceAll("<readCount>", "" + totalReadSize);
             bannerMsg = bannerMsg.replaceAll("<totalCount>", "" + BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
