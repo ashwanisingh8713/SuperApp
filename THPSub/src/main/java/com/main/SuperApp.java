@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
+import androidx.work.Configuration;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
@@ -31,21 +32,30 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
 
-public class SuperApp extends Application implements LifecycleObserver {
+public class SuperApp extends Application implements LifecycleObserver  {
 
     private static Context sAppContext;
     public static boolean isInBackground;
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-
         sAppContext = this;
+
+        /*// provide custom configuration
+        Configuration myConfig = new Configuration.Builder()
+                .setMinimumLoggingLevel(android.util.Log.INFO)
+                .build();
+
+        //initialize WorkManager
+        WorkManager.initialize(this, myConfig);*/
+
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         startPeriodicWork();
 
-        initTaboola();
     }
 
     public static Context getAppContext() {
@@ -93,15 +103,6 @@ public class SuperApp extends Application implements LifecycleObserver {
             }
         }, "SuperApp");
 
-    }
-
-    private void initTaboola() {
-        // Required when using TaboolaJS integration
-        TaboolaJs.getInstance().init(getApplicationContext());
-
-        // Required when using TaboolaApi (Native Android) integration
-        TaboolaApi.getInstance().init(getApplicationContext(), getResources().getString(R.string.taboola_publisher_id),
-                getResources().getString(R.string.taboola_publisher_apikey));
     }
 
     /**

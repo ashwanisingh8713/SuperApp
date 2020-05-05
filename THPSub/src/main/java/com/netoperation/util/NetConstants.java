@@ -54,5 +54,14 @@ public class NetConstants {
     public static final String PERSONALISE_CATEGORY_CITY = "city";
     public static final String PERSONALISE_CATEGORY_NEWS = "news";
 
+    public static final String PS_GROUP_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
+    public static final String PS_Briefing = "Briefing";
+    public static final String PS_My_Stories = "My Stories";
+    public static final String PS_Suggested = "Suggested";
+    public static final String PS_Profile = "Profile";
+    public static final String PS_Url = "Url";
+    public static final String PS_ADD_ON_SECTION = "ADD_ON_SECTION";
+    public static final String PS_SENSEX = "SENSEX";
+
 
 }

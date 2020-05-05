@@ -990,14 +990,8 @@ public class DefaultTHApiManager {
                     if(config.isSTATUS()) {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
-                        TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
-                        if(tableConfiguration == null) {
-                            daoConfiguration.insertConfiguration(config.getDATA());
-                        }
-                        else if(!config.getDATA().getLastServerUpdateTime().equals(tableConfiguration.getLastServerUpdateTime())) {
-                            daoConfiguration.deleteAll();
-                            daoConfiguration.insertConfiguration(config.getDATA());
-                        }
+                        daoConfiguration.deleteAll();
+                        daoConfiguration.insertConfiguration(config.getDATA());
                     }
 
                     return config.getDATA();
@@ -1018,38 +1012,61 @@ public class DefaultTHApiManager {
 
     }
 
-    public static Single<List<TabsBean>> appConfigurationFromDB(Context context, boolean isDayTheme) {
-            return THPDB.getInstance(context).daoConfiguration().getTabsConfiguration()
-                    .subscribeOn(Schedulers.io())
-                    .map(tableConfiguration -> {
-                        List<TabsBean> tabsBeans = tableConfiguration.getTabs();
-                        int limit;
-                        if(tabsBeans.size() > 5) {
-                            limit = 5;
-                        } else {
-                            limit = tabsBeans.size();
+    public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/checkUpdates";
+        return ServiceFactory.getServiceAPIs().configUpdateCheck(url)
+                .subscribeOn(Schedulers.io())
+                .map(jsonElement -> {
+                    if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
+                        String lastUpdatedTime = ((JsonObject) jsonElement).get("lastUpdatedTime").getAsString();
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
+                        TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
+                        if(tableConfiguration == null) {
+                            return true;
                         }
+                        String dbLut = tableConfiguration.getLastServerUpdateTime();
+                        if (lastUpdatedTime.equalsIgnoreCase(dbLut)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
 
-                        File destinationFolder;
+    }
+
+    public static Single<List<TabsBean>> appConfigurationTabs(Context context, boolean isDayTheme) {
+        return THPDB.getInstance(context).daoConfiguration().getTabsConfiguration()
+                .subscribeOn(Schedulers.io())
+                .map(tableConfiguration -> {
+                    List<TabsBean> tabsBeans = tableConfiguration.getTabs();
+                    int limit;
+                    if(tabsBeans.size() > 5) {
+                        limit = 5;
+                    } else {
+                        limit = tabsBeans.size();
+                    }
+
+                    File destinationFolder;
+                    if (isDayTheme) {
+                        destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT);
+                    } else {
+                        destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK);
+                    }
+
+                    List<TabsBean> tabsBeanList = tabsBeans.stream().limit(limit).collect(Collectors.toList());
+                    for(TabsBean tab : tabsBeanList) {
                         if (isDayTheme) {
-                            destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT);
-                        } else {
-                            destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK);
+                            String fileName = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlLight());
+                            String selectedPath = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlSelectedLight());
+                            tab.getIconUrl().setLocalFilePath(destinationFolder+"/"+fileName);
+                            tab.getIconUrl().setLocalFileSelectedPath(destinationFolder+"/"+selectedPath);
                         }
-
-                        List<TabsBean> tabsBeanList = tabsBeans.stream().limit(limit).collect(Collectors.toList());
-                        for(TabsBean tab : tabsBeanList) {
-                            if (isDayTheme) {
-                                String fileName = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlLight());
-                                String selectedPath = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlSelectedLight());
-                                tab.getIconUrl().setLocalFilePath(destinationFolder+"/"+fileName);
-                                tab.getIconUrl().setLocalFileSelectedPath(destinationFolder+"/"+selectedPath);
-                            }
-                        }
-                        return tabsBeanList;
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    ;
+                    }
+                    return tabsBeanList;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                ;
 
     }
 

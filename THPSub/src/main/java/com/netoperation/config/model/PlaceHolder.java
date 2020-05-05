@@ -1,5 +1,7 @@
 package com.netoperation.config.model;
 
+import android.webkit.URLUtil;
+
 public class PlaceHolder {
 
     private String banner;

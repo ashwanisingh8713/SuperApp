@@ -22,7 +22,6 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
@@ -45,13 +44,13 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.taboola.android.api.TaboolaApi;
+import com.taboola.android.js.TaboolaJs;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -77,6 +76,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initTaboola();
 
         THPConstants.FLOW_TAB_CLICK = null;
 
@@ -322,7 +323,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION)) {
             showSubSectionToolbar(toolbarChangeRequired.getTitle());
         }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM)) {
+
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.Other_Tabs)) {
             showPremiumToolbar();
         }
     }
@@ -467,5 +469,14 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     @Override
     public void onSearchClickListener(ToolbarCallModel toolbarCallModel) {
         IntentUtil.openSearchActivity(this);
+    }
+
+    private void initTaboola() {
+        // Required when using TaboolaJS integration
+        TaboolaJs.getInstance().init(this);
+
+        // Required when using TaboolaApi (Native Android) integration
+        TaboolaApi.getInstance().init(this, getResources().getString(R.string.taboola_publisher_id),
+                getResources().getString(R.string.taboola_publisher_apikey));
     }
 }

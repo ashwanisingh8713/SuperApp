@@ -1,7 +1,10 @@
 package com.ns.activity;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -12,9 +15,11 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.main.SuperApp;
-import com.netoperation.config.download.IconDownload;
+import com.netoperation.config.download.Download;
+import com.netoperation.config.download.IconDownloadService;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
@@ -45,17 +50,21 @@ public class SplashActivity extends BaseAcitivityTHP {
     private ArticleTitleTextView loadingMsg;
     private CustomProgressBar progressBar;
 
-    private final int WHAT_CONFIG = 1;
-    private final int WHAT_DOWNLOADING = 2;
-    private final int WHAT_MP = 3;
-    private final int WHAT_SECTION = 4;
-    private final int WHAT_SERVER_HOME_CONTENT = 5;
-    private final int WHAT_ACTIIVTY_TAB = 6;
-    private final int WHAT_ERROR = 7;
-    private final int WHAT_TEMP_SECTION = 8;
-    private final int WHAT_Server_Section = 9;
+    private final int WHAT_CONFIG_UPDATE_CHECK = 1;
+    private final int WHAT_CONFIG_FETCH_SERVER = 2;
+    private final int WHAT_DOWNLOADING_CHECK = 3;
+    private final int WHAT_MP = 4;
+    private final int WHAT_SECTION = 5;
+    private final int WHAT_SERVER_HOME_CONTENT = 6;
+    private final int WHAT_ACTIIVTY_TAB = 7;
+    private final int WHAT_ERROR = 8;
+    private final int WHAT_TEMP_SECTION = 9;
+    private final int WHAT_Server_Section = 10;
 
     private boolean isErrorOccured = false;
+    private int totalIcons;
+    private int downloadingIconCount;
+
 
     @Override
     public int layoutRes() {
@@ -71,36 +80,18 @@ public class SplashActivity extends BaseAcitivityTHP {
         loadingMsg = findViewById(R.id.loadingMsg);
         progressBar = findViewById(R.id.progressBar);
 
-        if(!DefaultPref.getInstance(this).isConfigurationOnceLoaded()) {
-            sendHandlerMsg(WHAT_CONFIG);
-            callAppConfigApi();
-        }
-        else if (DefaultPref.getInstance(this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(this).isMPDurationExpired()) {
-            sendHandlerMsg(WHAT_MP);
-        }
-        else {
-            routeToAppropriateAction();
+        registerReceiver();
 
-        }
+        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK);
 
         // Reduces Read article table
         DefaultTHApiManager.readArticleDelete(this);
-
         DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(false);
 
 
-
     }
 
-    private void sendHandlerMsg(int what) {
-        mHandler.sendEmptyMessage(what);
-    }
 
-    private void showProgressBar(String msg) {
-        progressBar.setVisibility(View.VISIBLE);
-        loadingMsg.setVisibility(View.VISIBLE);
-        loadingMsg.setText(msg);
-    }
 
     private Handler mHandler = new Handler() {
 
@@ -108,15 +99,28 @@ public class SplashActivity extends BaseAcitivityTHP {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case WHAT_CONFIG:
-                    showProgressBar("Initializing App Configuration.");
+                case WHAT_CONFIG_UPDATE_CHECK:
+                    showProgressBar("Checking App Configuration.");
+                    isConfigurationUpdateAvailable();
                     break;
-                case WHAT_DOWNLOADING:
+                case WHAT_CONFIG_FETCH_SERVER:
+                    showProgressBar("Initializing App Configuration.");
+                    callAppConfigApi();
+                    break;
+                case WHAT_DOWNLOADING_CHECK:
                     showProgressBar("Downloading App Configurations.");
+                    Intent downloadIntent = new Intent(SplashActivity.this, IconDownloadService.class);
+                    downloadIntent.putExtra(IconDownloadService.STATE, IconDownloadService.STATE_CHECK);
+                    startService(downloadIntent);
                     break;
                 case WHAT_MP:
                     showProgressBar("Configuring Articles.");
-                    callMpApi();
+                    if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
+                        callMpApi();
+                    }
+                    else {
+                        routeToAppropriateAction();
+                    }
                     break;
                 case WHAT_SECTION:
                     showProgressBar("Checking Topics.");
@@ -147,6 +151,16 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
         }
     };
+
+    private void sendHandlerMsg(int what) {
+        mHandler.sendEmptyMessage(what);
+    }
+
+    private void showProgressBar(String msg) {
+        progressBar.setVisibility(View.VISIBLE);
+        loadingMsg.setVisibility(View.VISIBLE);
+        loadingMsg.setText(msg);
+    }
 
     private void launchTabScreen() {
         IntentUtil.openMainTabPage(SplashActivity.this);
@@ -210,47 +224,45 @@ public class SplashActivity extends BaseAcitivityTHP {
                 }));
     }
 
+    private void isConfigurationUpdateAvailable() {
+        mDisposable.add(DefaultTHApiManager.isConfigurationUpdateAvailable(this)
+                .subscribe(isAvailable->{
+                    if(isAvailable) {
+                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER);
+                    } else {
+                        sendHandlerMsg(WHAT_MP);
+                    }
+                }, throwable -> {
+                    if(DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
+                        sendHandlerMsg(WHAT_MP);
+                    }
+                    else {
+                        sendHandlerMsg(WHAT_ERROR);
+                    }
+                }));
+    }
+
+
 
     private void callAppConfigApi() {
         DefaultTHApiManager.appConfigurationFromServer(this, new RequestCallback<TableConfiguration>() {
             @Override
             public void onNext(TableConfiguration configuration) {
-
                 if(configuration != null) {
-                    // Saves, App configuration is loaded once.
-                    //DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
-
-                    IconDownload iconDownload = new IconDownload(configuration, SplashActivity.this, new IconDownload.DownloadStatusCallback() {
-                        @Override
-                        public void success(String filePath) {
-                            Log.i("", "");
-                        }
-
-                        @Override
-                        public void fail(String url) {
-                            Log.i("", "");
-                        }
-                    });
-                    iconDownload.startDownloading();
-
+                    DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
+                    totalIcons = configuration.getTotalIcons();
                 }
-
             }
 
             @Override
             public void onError(Throwable t, String str) {
                 sendHandlerMsg(WHAT_ERROR);
-                if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
-                    sendHandlerMsg(WHAT_MP);
-                }
+
             }
 
             @Override
             public void onComplete(String str) {
-                sendHandlerMsg(WHAT_DOWNLOADING);
-                if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
-                    sendHandlerMsg(WHAT_MP);
-                }
+                sendHandlerMsg(WHAT_DOWNLOADING_CHECK);
             }
         });
     }
@@ -379,11 +391,27 @@ public class SplashActivity extends BaseAcitivityTHP {
                             //Metered Paywall Configs API calls.
                             mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL));
                         });
-
             }
         });
     }
 
+
+
+    private boolean isBroadCastRegistered = false;
+
+
+    private void registerReceiver() {
+        if(!isBroadCastRegistered) {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(IconDownloadService.MESSAGE_STATUS);
+            intentFilter.addAction(IconDownloadService.MESSAGE_PROGRESS);
+            intentFilter.addAction(IconDownloadService.MESSAGE_FAILED);
+            intentFilter.addAction(IconDownloadService.MESSAGE_SUCCESS);
+            isBroadCastRegistered = true;
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -391,4 +419,48 @@ public class SplashActivity extends BaseAcitivityTHP {
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        if(isBroadCastRegistered) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+            isBroadCastRegistered = false;
+        }
+        super.onDestroy();
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Download download = intent.getParcelableExtra("download");
+
+            if(intent.getAction().equals(IconDownloadService.MESSAGE_STATUS)) {
+                if(download.getStatus() == IconDownloadService.STATUS_NOT_RUNNING) {
+                    Intent downloadIntent = new Intent(SplashActivity.this, IconDownloadService.class);
+                    downloadIntent.putExtra(IconDownloadService.STATE, IconDownloadService.STATE_START);
+                    startService(downloadIntent);
+                }
+            }
+            else if(intent.getAction().equals(IconDownloadService.MESSAGE_PROGRESS)) {
+
+            }
+            else if(intent.getAction().equals(IconDownloadService.MESSAGE_FAILED)) {
+                downloadingIconCount++;
+                if(downloadingIconCount == totalIcons) {
+                    sendHandlerMsg(WHAT_MP);
+                }
+
+                Log.i("Downloading", "Fail :: "+downloadingIconCount);
+
+            }
+            else if(intent.getAction().equals(IconDownloadService.MESSAGE_SUCCESS)){
+                downloadingIconCount++;
+                if(downloadingIconCount == totalIcons) {
+                    sendHandlerMsg(WHAT_MP);
+                }
+                Log.i("Downloading", "Success :: "+downloadingIconCount);
+            }
+        }
+    };
 }

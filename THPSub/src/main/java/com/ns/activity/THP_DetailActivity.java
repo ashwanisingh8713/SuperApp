@@ -97,6 +97,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
 
         if(mArticleBean != null) {
+            DefaultTHApiManager.insertMeteredPaywallArticleId(this, mArticleBean.getArticleId(), mArticleBean.isArticleRestricted(), BaseFragmentTHP.getAllowedCount(this));
             THP_DetailFragment fragment = THP_DetailFragment.getInstance(mArticleBean, mArticleBean.getArticleId(), "", mFrom);
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
         } else {

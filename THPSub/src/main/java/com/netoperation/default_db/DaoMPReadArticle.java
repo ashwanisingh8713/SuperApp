@@ -27,7 +27,7 @@ public abstract class DaoMPReadArticle {
     public abstract int updateIsBannerCloseForArticle(String articleId, boolean isBannerCloseClick);
 
     @Query("SELECT * FROM TableMPReadArticle WHERE articleId = :articleId")
-    public abstract Maybe<TableMPReadArticle> isArticleRestricted(String articleId);
+    public abstract Single<TableMPReadArticle> isArticleRestricted(String articleId);
 
     @Query("SELECT articleId from TableMPReadArticle WHERE articleId = :articleId AND isArticleRestricted =1")
     public abstract Flowable<String> getRestrictedArticleId(String articleId);

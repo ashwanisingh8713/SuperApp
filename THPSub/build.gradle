@@ -11,11 +11,11 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-//        debug{
-//            minifyEnabled false
-//            debuggable true
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
+        debug{
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     dexOptions {
@@ -37,7 +37,7 @@ android {
             versionName "1.0"
 
             // BL Base URL
-            buildConfigField "String", "DEFAULT_BASE_URL", "\"http:/18.141.72.8/hinduBL/service/api_v2/\""
+            buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
             buildConfigField "boolean", "IS_BL", "true"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
@@ -253,6 +253,9 @@ dependencies {
 
     // OK HTTP
     implementation 'com.squareup.okhttp3:okhttp:3.0.1'
+
+    // Local Broadcast Manager
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 
 
 }

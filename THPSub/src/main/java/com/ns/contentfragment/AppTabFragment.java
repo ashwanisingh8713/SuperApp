@@ -22,10 +22,10 @@ import com.netoperation.model.AdData;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.AppTabPagerAdapter;
-import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -37,6 +37,7 @@ import com.ns.utils.TabUtils;
 import com.ns.view.ViewPagerScroller;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -93,7 +94,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUserId = getArguments().getString("userId");
             tabIndex = getArguments().getInt("tabIndex");
             mFrom = getArguments().getString("from");
         }
@@ -134,9 +134,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
 
-
-
-        mDisposable.add(DefaultTHApiManager.appConfigurationFromDB(getActivity(), mIsUserThemeDay)
+        mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
                 .subscribe(tabsBeans -> {
                     String[] tabNames = new String[tabsBeans.size()];
                     String[] tabUnSelectedIcon = new String[tabsBeans.size()];
@@ -151,7 +149,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
                     mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
 
-                    mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), mUserId, tabNames);
+                    mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), tabsBeans);
 
                     mViewPager.setAdapter(mPagerAdapter);
                     mViewPager.setOffscreenPageLimit(4);
@@ -163,14 +161,16 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                         tab.setCustomView(mTabUtils.getTabView(i, getActivity()));
                     }
 
+                    // To select default tab
+                    mTabUtils.SetOnSelectView(getActivity(), mTabLayout, tabIndex);
+                    mViewPager.setCurrentItem(tabIndex);
+
+                    // Tabs custom click handling
+                    tabClickHandling(tabsBeans);
+
                 }, throwable -> {
                     Log.i("", "");
                 }));
-
-
-        //mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
-
-        //updateTabIndex();
 
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -219,20 +219,170 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
         });
 
-        // Tabs custom click handling
-        tabClickHandling();
+
 
         createAndShowBannerAds();
 
     }
 
     @Override
-    public void onTabClick(int tabIndex, String tabGroup) {
+    public void onTabClick(int tabIndex, TabsBean tabsBean) {
         boolean isUserLoggedIn = PremiumPref.getInstance(getActivity()).isUserLoggedIn();
         boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
         boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
 
-        if (tabIndex == 1) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+            mViewPager.setCurrentItem(tabIndex);
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if(isUserLoggedIn) {
+                mViewPager.setCurrentItem(tabIndex);
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+            mViewPager.setCurrentItem(tabIndex);
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_My_Stories)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Suggested)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+        // URL
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+            mViewPager.setCurrentItem(tabIndex);
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+
+        // ADD_ON_SECTION
+        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+            mViewPager.setCurrentItem(tabIndex);
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+
+        // SENSEX
+        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+            mViewPager.setCurrentItem(tabIndex);
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+            if(isUserLoggedIn) {
+                if(!isUserAdsFree && !isHasSubscription) {
+                    if (mIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        noConnectionSnackBar(getView());
+                    }
+                } else {
+                    mViewPager.setCurrentItem(tabIndex);
+                }
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Profile)) {
+            if(isUserLoggedIn) {
+                IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
+            } else {
+                IntentUtil.openMemberActivity(getActivity(), "");
+            }
+            return;
+        }
+
+
+        /*if (tabIndex == 1) {
             THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_1;
         }
         else if (tabIndex == 2) {
@@ -248,7 +398,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(!isUserLoggedIn) {
             IntentUtil.openMemberActivity(getActivity(), "");
         }
-        else if(tabIndex == 4 && isUserLoggedIn) {
+        else if(tabsBean.getPageSource().equals(NetConstants.PS_Profile) && isUserLoggedIn) {
             IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
         }
         else if(isUserLoggedIn && (isUserAdsFree || isHasSubscription)) {
@@ -261,8 +411,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 noConnectionSnackBar(getView());
             }
             return;
-        }
-
+        }*/
 
     }
 
@@ -270,11 +419,11 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     /**
      * Tabs Custom click
      */
-    private void tabClickHandling() {
+    private void tabClickHandling(List<TabsBean> tabsBeans) {
         LinearLayout tabStrip = ((LinearLayout)mTabLayout.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
             // Gesture Tab On-Click
-            final TabClickListener tabClickListener = new TabClickListener(i, ""+i, this);
+            final TabClickListener tabClickListener = new TabClickListener(i, tabsBeans.get(i), this);
             GestureDetectorCompat gestureDetectorCompat = new GestureDetectorCompat(getContext(), tabClickListener);
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override

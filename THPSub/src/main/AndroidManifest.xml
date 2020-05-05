@@ -114,17 +114,30 @@
             </intent-filter>
         </activity>
 
-        <!--Meta data For facebook login-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <service android:name="com.netoperation.config.download.IconDownloadService"
+            android:exported="false"
+            />
+
+        <!--<provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="com.superapp.workmanager-init"
+            android:enabled="false"/>-->
 
         <service
             android:name="com.ns.service.FetchAddressIntentService"
             android:exported="false"/>
 
+
+        <!--Meta data For facebook login-->
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
+
+
 
 
 <!--        <receiver-->

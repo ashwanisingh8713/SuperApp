@@ -16,12 +16,11 @@ public class ToolbarChangeRequired {
 
     public static final String SECTION = "section";
     public static final String SUB_SECTION = "subSection";
-    public static final String DETAIL = "detail";
-    public static final String PREMIUM = "premium";
+    public static final String Other_Tabs = "otherTabs";
 
     @Retention(SOURCE)
     @StringDef({
-            SECTION, SUB_SECTION, DETAIL, PREMIUM
+            SECTION, SUB_SECTION, Other_Tabs
     })
     public @interface ChangeType {}
 

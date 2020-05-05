@@ -212,7 +212,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             public void onClick(View v) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Searched ", "Searched: Article Clicked", "Search Fragment");
                     FlurryAgent.logEvent("Searched: " + "Article Clicked");*/
-                    IntentUtil.openSingleDetailActivity(v.getContext(), NetConstants.GROUP_DEFAULT_SECTIONS, bean, bean.getArticleLink());
+                    IntentUtil.openSingleDetailActivity(v.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, bean, bean.getArticleLink());
             }
         });
 

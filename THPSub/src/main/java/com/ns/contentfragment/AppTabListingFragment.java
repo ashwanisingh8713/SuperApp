@@ -68,10 +68,9 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
     private int mTabIndex;
 
-    public static AppTabListingFragment getInstance(int tabIndex, String userId, String from) {
+    public static AppTabListingFragment getInstance(int tabIndex, String from) {
         AppTabListingFragment fragment = new AppTabListingFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("userId", userId);
         bundle.putString("from", from);
         bundle.putInt("tabIndex", tabIndex);
         fragment.setArguments(bundle);
@@ -126,7 +125,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         super.onResume();
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, null, ToolbarChangeRequired.Other_Tabs));
 
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);

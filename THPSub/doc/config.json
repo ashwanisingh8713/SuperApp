@@ -39,6 +39,343 @@
       "pageSource": "Briefing"
     },
     {
+      "title": "Url Tab",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "Url",
+      "value": "https://www.google.com/"
+    },
+    {
+      "title": "Portfolio Section ",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "ADD_ON_SECTION",
+      "section": {
+        "parentId": 0,
+        "secId": 5,
+        "secName": "Portfolio",
+        "link": "https://www.thehindubusinessline.com/portfolio/",
+        "secColorRgb": "255,255,255",
+        "type": "GN",
+        "priority": 14,
+        "overridePriority": 0,
+        "explorePriority": 1,
+        "overrideExplore": 0,
+        "image_v2": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+        "image": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+        "show_on_burger": false,
+        "show_on_explore": false,
+        "custom": false,
+        "webLink": "",
+        "customScreen": 0,
+        "customScreenPri": 0,
+        "subSections": [
+          {
+            "parentId": 5,
+            "secId": 86,
+            "secName": "Big Story",
+            "link": "https://www.thehindubusinessline.com/portfolio/big-story/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 1,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/big-story/xzoeww/article31488024.ece/ALTERNATES/FREE_660/PO04Bouncingfinpiggy",
+            "image": "https://www.thehindubusinessline.com/portfolio/big-story/xzoeww/article31488024.ece/ALTERNATES/FREE_660/PO04Bouncingfinpiggy",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 41,
+            "secName": "Personal Finance",
+            "link": "https://www.thehindubusinessline.com/portfolio/personal-finance/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 2,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+            "image": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 57,
+            "secName": "India Economy",
+            "link": "https://www.thehindubusinessline.com/portfolio/india-economy/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 3,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/economy/agri-business/leqzst/article31166181.ece/ALTERNATES/FREE_660/BL26COMMUSTARDHARVESTING",
+            "image": "https://www.thehindubusinessline.com/economy/agri-business/leqzst/article31166181.ece/ALTERNATES/FREE_660/BL26COMMUSTARDHARVESTING",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 43,
+            "secName": "Commodity Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/commodity-analysis/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 5,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/news/62mqha/article31415740.ece/ALTERNATES/FREE_660/BL24STATESPOKHRIYAL",
+            "image": "https://www.thehindubusinessline.com/news/62mqha/article31415740.ece/ALTERNATES/FREE_660/BL24STATESPOKHRIYAL",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 38,
+            "secName": "Stock Fundamentals",
+            "link": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 7,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/i9tfhk/article31494259.ece/ALTERNATES/FREE_660/0305IndusIndcolcol",
+            "image": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/i9tfhk/article31494259.ece/ALTERNATES/FREE_660/0305IndusIndcolcol",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 39,
+            "secName": "Mutual Funds",
+            "link": "https://www.thehindubusinessline.com/portfolio/mutual-funds/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 8,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/mutual-funds/jaf2v9/article31494170.ece/ALTERNATES/FREE_660/PO04Goldweightscale",
+            "image": "https://www.thehindubusinessline.com/portfolio/mutual-funds/jaf2v9/article31494170.ece/ALTERNATES/FREE_660/PO04Goldweightscale",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 87,
+            "secName": "Day Trading Guide",
+            "link": "https://www.thehindubusinessline.com/portfolio/day-trading-guide/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 9,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "",
+            "image": "",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 40,
+            "secName": "Technical Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/technical-analysis/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 10,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/markets/stock-markets/rh844z/article31046825.ece/ALTERNATES/FREE_660/NIFTY",
+            "image": "https://www.thehindubusinessline.com/markets/stock-markets/rh844z/article31046825.ece/ALTERNATES/FREE_660/NIFTY",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 58,
+            "secName": "People",
+            "link": "https://www.thehindubusinessline.com/portfolio/people/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 11,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/people/rabqfn/article25020623.ece/ALTERNATES/FREE_660/PO24manish",
+            "image": "https://www.thehindubusinessline.com/portfolio/people/rabqfn/article25020623.ece/ALTERNATES/FREE_660/PO24manish",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 89,
+            "secName": "News Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/news-analysis/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 12,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/money-and-banking/wf5x6e/article28589841.ece/ALTERNATES/FREE_660/ICICI-Lombard-General-Insurance",
+            "image": "https://www.thehindubusinessline.com/money-and-banking/wf5x6e/article28589841.ece/ALTERNATES/FREE_660/ICICI-Lombard-General-Insurance",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 90,
+            "secName": "Research Reports",
+            "link": "https://www.thehindubusinessline.com/portfolio/research-reports/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 13,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "",
+            "image": "",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          }
+        ],
+        "staticPageUrl": {
+          "url": "",
+          "isEnabled": false,
+          "position": "0",
+          "sectionId": 0
+        }
+      }
+    },
+    {
       "title": "My Stories",
       "iconUrl": {
         "urlDark": "value",
@@ -80,58 +417,9 @@
         "urlSelectedLight": "value"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "Url",
-      "value": "webLink"
-    },
-    {
-      "title": "Tab Title",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "SENSEX"
-    },
-    {
-      "title": "Top News",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "ADD_ON_SECTION",
-      "section": {
-        "parentId": 0,
-        "secId": 43,
-        "secName": "Top News",
-        "link": "",
-        "secColorRgb": "255,255,255",
-        "type": "TN",
-        "priority": 1,
-        "overridePriority": 0,
-        "explorePriority": 1,
-        "overrideExplore": 0,
-        "image": "https://www.thehindu.com/news/cities/Vijayawada/uqsi40/article31443448.ece/ALTERNATES/FREE_660/vijayawada-migrant-workersjpg",
-        "image_v2": "https://www.thehindu.com/news/cities/Vijayawada/uqsi40/article31443448.ece/ALTERNATES/FREE_660/vijayawada-migrant-workersjpg",
-        "show_on_burger": false,
-        "show_on_explore": false,
-        "custom": false,
-        "webLink": "",
-        "customScreen": 0,
-        "customScreenPri": 0,
-        "subSections": [],
-        "staticPageUrl": {
-          "url": "",
-          "isEnabled": false,
-          "position": "0",
-          "sectionId": 0
-        }
-      }
     }
+
   ],
   "appTheme": {
     "textColors": {
@@ -282,7 +570,7 @@
       "sensex"
     ]
   },
-  "totalIcons" : "54",
+  "totalIcons" : "88",
   "otherIconsDownloadUrls": {
     "dark" : {
       "Logo" : "url",

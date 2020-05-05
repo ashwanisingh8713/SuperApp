@@ -207,6 +207,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 dgRestrictedPage(mArticleBean);
                             }
                         }
+                    }, throwable -> {
+                        Log.i("", "");
                     }));
         }
         else {

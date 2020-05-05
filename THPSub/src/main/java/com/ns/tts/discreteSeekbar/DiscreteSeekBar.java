@@ -888,7 +888,7 @@ public class DiscreteSeekBar extends View {
         int right = getWidth() - (getPaddingRight() + halfThumb + addedThumb);
         int available = right - left;
         int progress = Math.round((scale * (mMax - mMin)) + mMin);
-        //we don't want to just call setProgress here to avoid the animation being cancelled,
+        //we don't want to just call setStatus here to avoid the animation being cancelled,
         //and this position is not bound to a real progress value but interpolated
         if (progress != getProgress()) {
             mValue = progress;

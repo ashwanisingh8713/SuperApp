@@ -164,16 +164,15 @@ public interface ServiceAPIs {
     Observable<JsonElement> freePlan(@Body JsonObject recommendationBody);
 
 
+    // ######################################################################################################## //
+    // ##################################### DEFAULT TH APIS ################################################## //
+    // ######################################################################################################## //
+
     @GET("")
     Observable<MPConfigurationModel> mpConfigurationAPI(@Url String url);
 
     @GET("")
     Observable<MPCycleDurationModel> mpCycleDurationAPI(@Url String url);
-
-
-    // ######################################################################################################## //
-    // ##################################### DEFAULT TH APIS ################################################## //
-    // ######################################################################################################## //
 
     @POST("") // sectionList_v4.php
     Observable<SectionAndWidget> sectionList(@Url String url, @Body JsonObject jsonObject);
@@ -193,8 +192,11 @@ public interface ServiceAPIs {
     @GET("") // newsLetter.php
     Observable<JsonElement> DailyDigestApi(@Url String url);
 
-    @GET("") // newsLetter.php
+    @GET("") // configuration api
     Observable<ConfigurationData> config(@Url String url);
+
+    @GET("") // configuration api
+    Observable<JsonElement> configUpdateCheck(@Url String url);
 
 
 }

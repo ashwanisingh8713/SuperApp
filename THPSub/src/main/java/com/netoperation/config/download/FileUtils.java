@@ -7,6 +7,7 @@ import androidx.core.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,20 +29,21 @@ public class FileUtils {
 
     public static void createFolderIfNeeded(@NonNull File folder) {
         if (!folder.exists() && !folder.mkdirs()) {
-            throw new RuntimeException("Can't create directory");
+            //throw new RuntimeException("Can't create directory");
         }
     }
 
     public static void deleteFolderIfNeeded(@NonNull File folder) {
         if (folder.exists() && !folder.delete()) {
-            throw new RuntimeException("Can't delete folder");
+            //throw new RuntimeException("Can't delete folder");
         }
+
     }
 
     public static void removeDuplicateFileIfExist(@NonNull File folder, @NonNull String fileName) {
         File file = new File(folder, fileName);
         if (file.exists() && !file.delete()) {
-            throw new RuntimeException("Can't delete file");
+            //throw new RuntimeException("Can't delete file");
         }
     }
 

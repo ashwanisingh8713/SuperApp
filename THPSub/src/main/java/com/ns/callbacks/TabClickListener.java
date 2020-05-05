@@ -6,10 +6,12 @@ import android.view.MotionEvent;
 
 import androidx.core.view.GestureDetectorCompat;
 
+import com.netoperation.config.model.TabsBean;
+
 public class TabClickListener  implements GestureDetector.OnGestureListener {
 
     public interface OnTabClickListener {
-        void onTabClick(int tabIndex, String tabGroup);
+        void onTabClick(int tabIndex, TabsBean tabsBean);
     }
 
     private OnTabClickListener mTabClickListener;
@@ -19,10 +21,10 @@ public class TabClickListener  implements GestureDetector.OnGestureListener {
     }
 
     private int tabIndex;
-    private String tabGroup;
+    private TabsBean tabsBean;
 
-    public TabClickListener(int tabIndex, String tabGroup, OnTabClickListener tabClickListener){
-        this.tabGroup = tabGroup;
+    public TabClickListener(int tabIndex, TabsBean tabsBean, OnTabClickListener tabClickListener){
+        this.tabsBean = tabsBean;
         this.tabIndex = tabIndex;
         mTabClickListener = tabClickListener;
     }
@@ -43,7 +45,7 @@ public class TabClickListener  implements GestureDetector.OnGestureListener {
     public boolean onSingleTapUp(MotionEvent e) {
         Log.i("Gesture", "onSingleTapUp");
         if(mTabClickListener != null) {
-            mTabClickListener.onTabClick(tabIndex, tabGroup);
+            mTabClickListener.onTabClick(tabIndex, tabsBean);
         }
         return true;
     }

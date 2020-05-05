@@ -8,6 +8,8 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
+import android.webkit.URLUtil;
 
 import java.io.File;
 
@@ -161,4 +163,6 @@ public class RxDownloader {
             subjectMap.remove(id);
         }
     }
+
+
 }

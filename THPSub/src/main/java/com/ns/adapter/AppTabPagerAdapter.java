@@ -8,42 +8,74 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.netoperation.config.model.TabsBean;
 import com.netoperation.util.NetConstants;
 import com.ns.contentfragment.AppTabListingFragment;
 import com.ns.contentfragment.TopTabsFragment;
+import com.ns.contentfragment.WebFragment;
+import com.ns.thpremium.R;
+
+import java.util.List;
 
 public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private String mUserId;
-    private String[] tabNames;
+
+
+    //private String[] tabNames;
+    private List<TabsBean> mTabsBean;
 
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-    public AppTabPagerAdapter(FragmentManager fm, String userId, String[] tabNames) {
+    public AppTabPagerAdapter(FragmentManager fm, List<TabsBean> tabsBean ) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mUserId = userId;
-        this.tabNames = tabNames;
+        this.mTabsBean = tabsBean;
     }
 
     @Override
     public Fragment getItem(int i) {
-        if(i==0) {
+
+        return getPageSourceTypeFragment(mTabsBean.get(i), i);
+
+        /*if(i==0) {
             return TopTabsFragment.getInstance(i, NetConstants.GROUP_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
         }
         else if(i==1) {
-            return AppTabListingFragment.getInstance(i, mUserId, NetConstants.BREIFING_ALL);
+            return AppTabListingFragment.getInstance(i,  NetConstants.BREIFING_ALL);
         }
         else if(i==2) {
-            return AppTabListingFragment.getInstance(i, mUserId, NetConstants.RECO_Mystories);
+            return AppTabListingFragment.getInstance(i, NetConstants.RECO_Mystories);
         }
         else {
-            return AppTabListingFragment.getInstance(i, mUserId, NetConstants.RECO_suggested);
+            return AppTabListingFragment.getInstance(i, NetConstants.RECO_suggested);
+        }*/
+    }
+
+    private Fragment getPageSourceTypeFragment(TabsBean tabsBean, int tabIndex) {
+        switch (tabsBean.getPageSource()) {
+            case NetConstants.GROUP_DEFAULT_SECTIONS:
+                return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_GROUP_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
+            case NetConstants.PS_Briefing:
+                return AppTabListingFragment.getInstance(tabIndex, NetConstants.BREIFING_ALL);
+            case NetConstants.PS_My_Stories:
+                return AppTabListingFragment.getInstance(tabIndex, NetConstants.RECO_Mystories);
+            case NetConstants.PS_Suggested:
+                return AppTabListingFragment.getInstance(tabIndex, NetConstants.RECO_suggested);
+            case NetConstants.PS_Profile:
+                return new Fragment();
+            case NetConstants.PS_Url:
+                return WebFragment.getInstance(tabIndex, tabsBean);
+            case NetConstants.PS_ADD_ON_SECTION:
+                return new Fragment();
+            case NetConstants.PS_SENSEX:
+                return new Fragment();
         }
+
+        return new Fragment();
     }
 
     @Override
     public int getCount() {
-        return tabNames.length;
+        return mTabsBean.size();
     }
 
 
@@ -51,7 +83,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabNames[position];
+        return mTabsBean.get(position).getTitle();
     }
 
     /**
@@ -92,6 +124,8 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
     }
+
+
 
 
 }
