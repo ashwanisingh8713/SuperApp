@@ -22,6 +22,7 @@ import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.AppTabContentAdapter;
@@ -194,17 +195,27 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     .subscribe(tableMPReadArticle->{
                         EventBus.getDefault().post(tableMPReadArticle);
 
-                        if(!tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
-                            if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
-                                maintainRefreshStateForOnResume = 1;
+                        if(!mActivity.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
+                            if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1 || PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
+                                if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
+                                    maintainRefreshStateForOnResume = 1;
+                                }
                                 mRecyclerAdapter.clearData();
                                 dgPage(mArticleBean);
+                                if (PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
+                                    ApiManager.nowNotRefreshRequired(getActivity());
+                                }
                             }
                         } else {
-                            if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1) {
-                                maintainRefreshStateForOnResume = 0;
+                            if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1 || PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
+                                if(maintainRefreshStateForOnResume == 1 || maintainRefreshStateForOnResume == -1) {
+                                    maintainRefreshStateForOnResume = 0;
+                                }
                                 mRecyclerAdapter.clearData();
                                 dgRestrictedPage(mArticleBean);
+                                if (PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
+                                    ApiManager.nowNotRefreshRequired(getActivity());
+                                }
                             }
                         }
                     }, throwable -> {
@@ -708,7 +719,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_VIDEO_PLAYER, "videoModel");
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
-        } if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_AUDIO)) {
+        } else if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_AUDIO)) {
             AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_AUDIO_PLAYER, "audioModel");
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);

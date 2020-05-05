@@ -1004,8 +1004,24 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     holder.shadowView_Mp.setBackground(ResUtil.getBackgroundDrawable(holder.shadowView_Mp.getContext().getResources(), R.drawable.top_shadow_gradient_dark));
                 }
             }
-            holder.textMpBlockerTitle.setText(BaseFragmentTHP.getMpNonSignInTitleBlocker());
-            holder.textMPBlockerDescription.setText(BaseFragmentTHP.getMpNonSignInDescBlocker());
+            boolean isUserLoggedIn = PremiumPref.getInstance(holder.itemView.getContext()).isUserLoggedIn();
+            boolean isHasSubscription = PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree();
+            String mpBlockerTitleText = BaseFragmentTHP.getMpNonSignInTitleBlocker();
+            String mpBlockerDescText = BaseFragmentTHP.getMpNonSignInDescBlocker();
+            if (isUserLoggedIn && !isHasSubscription) {
+                mpBlockerTitleText = BaseFragmentTHP.getMpExpiredUserTitleBlocker();
+                mpBlockerDescText = BaseFragmentTHP.getMpExpiredUserDescBlocker();
+            }
+            holder.textMpBlockerTitle.setText(mpBlockerTitleText);
+            holder.textMPBlockerDescription.setText(mpBlockerDescText);
+
+            if (isUserLoggedIn) {
+                holder.signIn_Txt.setVisibility(View.GONE);
+                holder.signUp_Txt.setVisibility(View.GONE);
+            } else {
+                holder.signIn_Txt.setVisibility(View.VISIBLE);
+                holder.signUp_Txt.setVisibility(View.VISIBLE);
+            }
             ResUtil.doClickSpanForString(holder.signIn_Txt.getContext(), BaseFragmentTHP.getMpSignInButtonName(), "Sign In",
                     holder.signIn_Txt,
                     R.color.blueColor_1,
@@ -1050,6 +1066,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void buildBelowArticleWidget(TaboolaWidget taboolaWidget, String articleLink) {
+        if(PremiumPref.getInstance(taboolaWidget.getContext()).isUserAdsFree()) {
+            return;
+        }
         Resources res = taboolaWidget.getResources();
         taboolaWidget.setPublisher(res.getString(R.string.taboola_pub));
         taboolaWidget.setPageType(res.getString(R.string.taboola_pagetype));

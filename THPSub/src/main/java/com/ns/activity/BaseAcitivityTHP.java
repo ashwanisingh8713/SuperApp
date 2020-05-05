@@ -256,4 +256,22 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             }
         });
     }
+
+    /*
+     * Check shall MP should show
+     * */
+    public boolean shouldShowMeteredPaywall() {
+        if (DefaultPref.getInstance(this).isMeteredPaywallEnabled()) {
+            if (isUserLoggedIn() && !PremiumPref.getInstance(this).isUserAdsFree())
+                return true;
+            else if (isUserLoggedIn() && PremiumPref.getInstance(this).isUserAdsFree())
+                return false;
+            else if (!isUserLoggedIn())
+                return true;
+            else
+                return true;
+        } else {
+            return false;
+        }
+    }
 }
