@@ -71,10 +71,7 @@
     <string name="location_not_enabled">It seems your location service is disabled. Please enable from your device settings.</string>
     <string name="settings">Settings</string>
 
-<!-- Test Credentials
-    <string name="default_web_client_id">853251516072-115fgpvlg675347qbomllk77ojksam9f.apps.googleusercontent.com</string>
--->
-    <string name="default_web_client_id">617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com</string>
+    <!--<string name="default_web_client_id">617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com</string>-->
 
     <string name="youtube_api_key">AIzaSyBENdg9kEoEsb8WrOWIUk7cS0HPgU0BztQ</string>
     <string name="users_from_outside_india">Users from outside India, please provide email address</string>
