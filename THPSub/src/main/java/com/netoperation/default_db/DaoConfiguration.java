@@ -18,7 +18,7 @@ public interface DaoConfiguration {
     void insertConfiguration(TableConfiguration tableConfiguration);
 
     @Query("SELECT * FROM TableConfiguration")
-    Single<TableConfiguration> getTabsConfiguration();
+    Single<TableConfiguration> getConfigurationSingle();
 
     @Query("SELECT * FROM TableConfiguration")
     TableConfiguration getConfiguration();

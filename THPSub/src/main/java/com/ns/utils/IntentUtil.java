@@ -24,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.netoperation.db.THPDB;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -64,6 +66,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class IntentUtil {
@@ -632,7 +635,7 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openDetailAfterSearchInActivity(Context context, String aid, String url) {
+    public static void openDetailAfterSearchInActivity(Context context, String aid, String clickedUrl) {
         CompositeDisposable disposable = new CompositeDisposable();
         final ProgressDialog progress = Alerts.showProgressDialog(context);
         disposable.add(DefaultTHApiManager.isExistInTempArticleArticle(context, aid)
@@ -641,7 +644,7 @@ public class IntentUtil {
                                @Override
                                public void accept(ArticleBean bean) {
                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                       IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, bean, url);
+                                       IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, bean, clickedUrl);
                                        progress.dismiss();
                                        disposable.clear();
                                        disposable.dispose();
@@ -651,21 +654,20 @@ public class IntentUtil {
                                                .observeOn(AndroidSchedulers.mainThread())
                                                .subscribe(articleBean->{
                                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.GROUP_DEFAULT_SECTIONS, bean, url);
+                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.GROUP_DEFAULT_SECTIONS, bean, clickedUrl);
                                                        progress.dismiss();
                                                        disposable.clear();
                                                        disposable.dispose();
                                                    }
                                                    else  {
-                                                       String SEARCH_BY_ARTICLE_ID_URL = "";
-                                                       if(BuildConfig.IS_PRODUCTION) {
-                                                           SEARCH_BY_ARTICLE_ID_URL = BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_ID_URL;
-                                                       } else {
-                                                           SEARCH_BY_ARTICLE_ID_URL = BuildConfig.STATGGING_SEARCH_BY_ARTICLE_ID_URL;
-                                                       }
+
+                                                       // Fetching Search Url from Configuration Table
+                                                       disposable.add(THPDB.getInstance(context).daoConfiguration().getConfigurationSingle()
+                                                       .subscribeOn(Schedulers.io())
+                                                       .subscribe((tableConfiguration, throwable) -> {
                                                        // Making Server request to get Article from server
                                                        // and Saving into DB, with SectionName = "tempSec"
-                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, SEARCH_BY_ARTICLE_ID_URL);
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId());
                                                        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
                                                                .subscribe(new Consumer<ArticleBean>() {
                                                                               @Override
@@ -674,11 +676,11 @@ public class IntentUtil {
                                                                                       return;
                                                                                   }
                                                                                   if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
-                                                                                      IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, articleBean, url);
+                                                                                      IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, articleBean, clickedUrl);
                                                                                   }
                                                                                   else {
                                                                                       // Opening Article In Web Page
-                                                                                      IntentUtil.openWebActivity(context, aid, url);
+                                                                                      IntentUtil.openWebActivity(context, aid, clickedUrl);
                                                                                   }
 
                                                                                   if(progress != null && context != null) {
@@ -702,6 +704,7 @@ public class IntentUtil {
                                                                                }
                                                                            }
                                                                        }));
+                                                       }));
 
                                                    }
                                                }));

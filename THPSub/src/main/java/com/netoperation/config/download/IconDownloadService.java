@@ -96,7 +96,7 @@ public class IconDownloadService extends Service {
         }
         else if(state.equals(STATE_START)) {
             mStatus = STATUS_RUNNING;
-            THPDB.getInstance(this).daoConfiguration().getTabsConfiguration()
+            THPDB.getInstance(this).daoConfiguration().getConfigurationSingle()
                     .subscribeOn(Schedulers.io())
                     .map(tableConfiguration -> {
 

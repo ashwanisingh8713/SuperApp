@@ -273,25 +273,40 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
+    private String SEARCH_BY_ARTICLE_ID_URL = null;
 
     private void loadDataPremiumFromServer() {
-        String SEARCH_BY_ARTICLE_ID_URL = "";
-        if(BuildConfig.IS_PRODUCTION) {
-            SEARCH_BY_ARTICLE_ID_URL = BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_ID_URL;
-        } else {
-            SEARCH_BY_ARTICLE_ID_URL = BuildConfig.STATGGING_SEARCH_BY_ARTICLE_ID_URL;
-        }
 
-        Observable<ArticleBean> observable =  ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
-        mDisposable.add(
-                observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(recoBean->{
-                            premiumPage(recoBean);
-                        },
-                        throwable->{
-                            Log.i("", "");
-                        })
-        );
+        if (SEARCH_BY_ARTICLE_ID_URL == null) {
+            mDisposable.add(THPDB.getInstance(getActivity()).daoConfiguration().getConfigurationSingle()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe((tableConfiguration, throwable) -> {
+                                SEARCH_BY_ARTICLE_ID_URL = tableConfiguration.getSearchOption().getUrlId();
+                                Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+                                mDisposable.add(
+                                        observable.observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(recoBean -> {
+                                                            premiumPage(recoBean);
+                                                        },
+                                                        throwabl -> {
+                                                            Log.i("", "");
+                                                        })
+                                );
+                            }
+                    ));
+        }
+        else {
+            Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+            mDisposable.add(
+                    observable.observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(recoBean -> {
+                                        premiumPage(recoBean);
+                                    },
+                                    throwable -> {
+                                        Log.i("", "");
+                                    })
+            );
+        }
     }
 
     private void premium_loadDataFromDB() {

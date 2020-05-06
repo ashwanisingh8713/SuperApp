@@ -62,7 +62,6 @@ import com.ns.thpremium.BuildConfig;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -983,7 +982,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{
@@ -1036,7 +1035,7 @@ public class DefaultTHApiManager {
     }
 
     public static Single<List<TabsBean>> appConfigurationTabs(Context context, boolean isDayTheme) {
-        return THPDB.getInstance(context).daoConfiguration().getTabsConfiguration()
+        return THPDB.getInstance(context).daoConfiguration().getConfigurationSingle()
                 .subscribeOn(Schedulers.io())
                 .map(tableConfiguration -> {
                     List<TabsBean> tabsBeans = tableConfiguration.getTabs();

@@ -447,7 +447,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_FAILED)) {
                 downloadingIconCount++;
-                if(downloadingIconCount == totalIcons) {
+                if(downloadingIconCount >= totalIcons) {
                     sendHandlerMsg(WHAT_MP);
                 }
 
@@ -456,7 +456,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_SUCCESS)){
                 downloadingIconCount++;
-                if(downloadingIconCount == totalIcons) {
+                if(downloadingIconCount >= totalIcons) {
                     sendHandlerMsg(WHAT_MP);
                 }
                 Log.i("Downloading", "Success :: "+downloadingIconCount);
