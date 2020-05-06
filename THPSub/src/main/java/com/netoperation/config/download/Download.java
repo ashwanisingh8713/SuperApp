@@ -15,6 +15,15 @@ public class Download implements Parcelable {
     private int totalFileSize;
     private String url;
     private String localFilePath;
+    private int requestNumber;
+
+    public int getRequestNumber() {
+        return requestNumber;
+    }
+
+    public void setRequestNumber(int requestNumber) {
+        this.requestNumber = requestNumber;
+    }
 
     public String getLocalFilePath() {
         return localFilePath;
@@ -68,6 +77,7 @@ public class Download implements Parcelable {
         dest.writeInt(this.totalFileSize);
         dest.writeString(this.url);
         dest.writeString(this.localFilePath);
+        dest.writeInt(this.requestNumber);
     }
 
     protected Download(Parcel in) {
@@ -76,6 +86,7 @@ public class Download implements Parcelable {
         this.totalFileSize = in.readInt();
         this.url = in.readString();
         this.localFilePath = in.readString();
+        this.requestNumber = in.readInt();
     }
 
     public static final Creator<Download> CREATOR = new Creator<Download>() {

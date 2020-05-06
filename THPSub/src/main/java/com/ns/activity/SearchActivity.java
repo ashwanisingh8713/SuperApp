@@ -28,6 +28,7 @@ import com.ns.view.RecyclerViewPullToRefresh;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -121,7 +122,8 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         // Making Server request to get Article from server
         // and Saving into DB, with SectionName = "tempSec"
         Observable<List<ArticleBean>> observable = DefaultTHApiManager.articleFromServer(query, BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL);
-        observable.observeOn(AndroidSchedulers.mainThread())
+        observable.timeout(15, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(articleBeans -> {
                             mRecyclerAdapter.deleteAllItems();
                             if (articleBeans.size() > 0) {

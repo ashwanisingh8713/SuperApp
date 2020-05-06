@@ -771,6 +771,16 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
+    public static void openUrlInBrowser(Context context, String url) {
+        try {
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            context.startActivity(myIntent);
+        } catch (ActivityNotFoundException e) {
+            Alerts.showToast(context, "No application can handle this request."
+                    + " Please install a Web Browser");
+        }
+    }
+
 
     public static void openCommentActivity(Context context, ArticleBean articlesBean) {
         String Vukkle_API_KEY = BuildConfig.VUUKLE_API_KEY;

@@ -50,6 +50,7 @@ public class IconDownloadService extends Service {
     public static final String MESSAGE_PROGRESS = "MESSAGE_PROGRESS";
     public static final String MESSAGE_FAILED = "MESSAGE_FAILED";
     public static final String MESSAGE_SUCCESS = "MESSAGE_SUCCESS";
+    public static final String MESSAGE_REQUEST_SENT = "MESSAGE_REQUEST_SENT";
 
     public static final String STATE = "STATE";
     public static final String STATE_CHECK = "STATE_CHECK";
@@ -59,6 +60,7 @@ public class IconDownloadService extends Service {
     public static final int STATUS_RUNNING = 1;
 
     private int mStatus = STATUS_NOT_RUNNING;
+    private int mRequestCount = 0;
 
     @Override
     public void onCreate() {
@@ -222,13 +224,14 @@ public class IconDownloadService extends Service {
     }
 
     private void downloadRequest(String url, File destinationFolder) {
-        if(!URLUtil.isValidUrl(url)) {
+        sendRequestCountNotification();
+        /*if(!URLUtil.isValidUrl(url)) {
             Download download = new Download();
-            download.setUrl("Nor valid url :: "+url);
+            download.setUrl("Not valid url :: "+url);
             download.setLocalFilePath(destinationFolder.getPath());
             sendFailedNotification(download);
             return;
-        }
+        }*/
         Call<ResponseBody> request = retrofitInterface.downloadFile(url);
 
 
@@ -330,6 +333,15 @@ public class IconDownloadService extends Service {
         Download download = new Download();
         download.setStatus(mStatus);
         Intent intent = new Intent(IconDownloadService.MESSAGE_STATUS);
+        intent.putExtra("download",download);
+        LocalBroadcastManager.getInstance(IconDownloadService.this).sendBroadcast(intent);
+    }
+
+    private void sendRequestCountNotification() {
+        mRequestCount++;
+        Download download = new Download();
+        download.setRequestNumber(mRequestCount);
+        Intent intent = new Intent(IconDownloadService.MESSAGE_REQUEST_SENT);
         intent.putExtra("download",download);
         LocalBroadcastManager.getInstance(IconDownloadService.this).sendBroadcast(intent);
     }

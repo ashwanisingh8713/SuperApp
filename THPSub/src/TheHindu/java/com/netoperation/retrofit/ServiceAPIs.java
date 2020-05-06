@@ -190,7 +190,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> getCommentCount(@Url String url);
 
     @GET("") // newsLetter.php
-    Observable<JsonElement> DailyDigestApi(@Url String url);
+    Observable<SectionContentFromServer> newsDigest(@Url String url);
 
     @GET("") // configuration api
     Observable<ConfigurationData> config(@Url String url);

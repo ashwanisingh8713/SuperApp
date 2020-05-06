@@ -39,7 +39,7 @@
         android:id="@+id/action_titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:font_path="@string/THP_FiraSans_Bold"
+        app:font_path="@string/THP_FiraSans_Regular"
         app:viewType="M"
         android:textSize="20sp"
         android:layout_centerVertical="true"
@@ -331,5 +331,12 @@
             android:visibility="gone" />
     </FrameLayout>
     <!-- End TTS Icon -->
+
+    <include layout="@layout/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </com.ns.view.layout.NSConstraintLayout>

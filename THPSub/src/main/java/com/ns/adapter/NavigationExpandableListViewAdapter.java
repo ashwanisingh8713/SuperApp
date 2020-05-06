@@ -191,4 +191,11 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
         public Button mExpandButton;
         public ImageView mNewTagImageView;
     }
+
+
+    public void addStaticItemGroup(List<TableSection> staticItemList) {
+        mSectionList.addAll(staticItemList);
+        notifyDataSetChanged();
+
+    }
 }

@@ -48,9 +48,14 @@ public class THP_WebActivity extends BaseAcitivityTHP {
             return;
         }
 
-        if(mFrom.equalsIgnoreCase(getString(R.string.comments))) {
+        /*if(mFrom.equalsIgnoreCase(getString(R.string.comments))) {
+            mTitleView.setText(mFrom);
+        }*/
+
+        if(mFrom != null) {
             mTitleView.setText(mFrom);
         }
+
 
         // Back Button Click Listener
         findViewById(R.id.backBtn).setOnClickListener(v->

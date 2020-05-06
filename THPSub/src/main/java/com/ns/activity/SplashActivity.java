@@ -62,8 +62,8 @@ public class SplashActivity extends BaseAcitivityTHP {
     private final int WHAT_Server_Section = 10;
 
     private boolean isErrorOccured = false;
-    private int totalIcons;
-    private int downloadingIconCount;
+    private int totalSentRequestIcons;
+    private int totalReceivedRequestIcons;
 
 
     @Override
@@ -250,7 +250,6 @@ public class SplashActivity extends BaseAcitivityTHP {
             public void onNext(TableConfiguration configuration) {
                 if(configuration != null) {
                     DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
-                    totalIcons = configuration.getTotalIcons();
                 }
             }
 
@@ -407,6 +406,7 @@ public class SplashActivity extends BaseAcitivityTHP {
             intentFilter.addAction(IconDownloadService.MESSAGE_PROGRESS);
             intentFilter.addAction(IconDownloadService.MESSAGE_FAILED);
             intentFilter.addAction(IconDownloadService.MESSAGE_SUCCESS);
+            intentFilter.addAction(IconDownloadService.MESSAGE_REQUEST_SENT);
             isBroadCastRegistered = true;
             LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
         }
@@ -429,6 +429,8 @@ public class SplashActivity extends BaseAcitivityTHP {
         super.onDestroy();
     }
 
+    private boolean isMpRequestSentFromBroadcastReceiver;
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -445,21 +447,30 @@ public class SplashActivity extends BaseAcitivityTHP {
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_PROGRESS)) {
 
             }
+            else if(intent.getAction().equals(IconDownloadService.MESSAGE_REQUEST_SENT)) {
+                totalSentRequestIcons = download.getRequestNumber();
+            }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_FAILED)) {
-                downloadingIconCount++;
-                if(downloadingIconCount >= totalIcons) {
-                    sendHandlerMsg(WHAT_MP);
+                totalReceivedRequestIcons++;
+                if(totalReceivedRequestIcons >= totalSentRequestIcons) {
+                    if(!isMpRequestSentFromBroadcastReceiver) {
+                        isMpRequestSentFromBroadcastReceiver = true;
+                        sendHandlerMsg(WHAT_MP);
+                    }
                 }
 
-                Log.i("Downloading", "Fail :: "+downloadingIconCount);
+                Log.i("Downloading", "Fail :: "+ totalReceivedRequestIcons);
 
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_SUCCESS)){
-                downloadingIconCount++;
-                if(downloadingIconCount >= totalIcons) {
-                    sendHandlerMsg(WHAT_MP);
+                totalReceivedRequestIcons++;
+                if(totalReceivedRequestIcons >= totalSentRequestIcons) {
+                    if(!isMpRequestSentFromBroadcastReceiver) {
+                        isMpRequestSentFromBroadcastReceiver = true;
+                        sendHandlerMsg(WHAT_MP);
+                    }
                 }
-                Log.i("Downloading", "Success :: "+downloadingIconCount);
+                Log.i("Downloading", "Success :: "+ totalReceivedRequestIcons);
             }
         }
     };

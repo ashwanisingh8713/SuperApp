@@ -466,7 +466,7 @@ public class DefaultTHApiManager {
 
 
     /**
-     * Making request to get Section or sub-section articles from server
+     * Making request to get Section Articles from server
      *
      * @param context
      * @param secId
@@ -522,7 +522,7 @@ public class DefaultTHApiManager {
     }
 
     /**
-     * Making request to get Section or sub-section articles from server
+     * Making request to get Sub-section articles from server
      *
      * @param context
      * @param secId
@@ -544,7 +544,7 @@ public class DefaultTHApiManager {
                             daoSubSectionArticle.deleteSection(secId);
                             Log.i(TAG, "getSubSectionContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
-                        TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
+                        TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
                         daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
@@ -572,6 +572,57 @@ public class DefaultTHApiManager {
                     Log.i(TAG, "getSubSectionContent :: completed");
                     if (requestCallback != null) {
                         requestCallback.onComplete("getSubSectionContent");
+                    }
+                });
+    }
+
+    /**
+     * Making request to get News Digest articles from server
+     *
+     * @param context
+     * @param secId
+     * @param page
+     * @return
+     */
+    public static Disposable getNewsDigestContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page) {
+        final String url = BuildConfig.NEWS_DIGEST_URL;
+        return ServiceFactory.getServiceAPIs().newsDigest(url)
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                    final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
+                    if (value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
+                        THPDB thpdb = THPDB.getInstance(context);
+                        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
+                        daoSubSectionArticle.deleteSection(secId);
+                        Log.i(TAG, "getNewsDigestContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
+                        TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
+                        daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
+
+                        for (ArticleBean bean : value.getData().getArticle()) {
+                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                            item.setArticleBean(bean);
+                            uiRowItem.add(item);
+                        }
+                    }
+
+                    return uiRowItem;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    if (requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
+                    Log.i(TAG, "getNewsDigestContent :: subscribe");
+                }, throwable -> {
+                    if (requestCallback != null) {
+                        requestCallback.onError(throwable, "getNewsDigestContent");
+                    }
+                    Log.i(NetConstants.TAG_ERROR, "getNewsDigestContent() :: " + throwable);
+                }, () -> {
+                    Log.i(TAG, "getNewsDigestContent :: completed");
+                    if (requestCallback != null) {
+                        requestCallback.onComplete("getNewsDigestContent");
                     }
                 });
     }

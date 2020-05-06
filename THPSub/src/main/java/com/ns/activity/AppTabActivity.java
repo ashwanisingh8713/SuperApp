@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.netoperation.config.model.UrlBean;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
@@ -33,6 +34,7 @@ import com.ns.callbacks.OnExpandableListViewItemClickListener;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.AppTabFragment;
+import com.ns.contentfragment.TopTabsFragment;
 import com.ns.loginfragment.AccountCreatedFragment;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
@@ -51,6 +53,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -104,12 +108,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
-        // THis below condition will be executed when user creates normal Sign-UP
-        if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
-            AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
-            FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
-        }
-
         mDisposable.add(ApiManager.getUserProfile(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
@@ -129,22 +127,51 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         // Show Expandable List Content from Database
         DaoSection section = THPDB.getInstance(this).daoSection();
         mDisposable.add(section.getSectionsOfBurger()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map(sectionList -> {
-                    /*List<TableSection> updatedList = new ArrayList<>();
-                    for(TableSection section1 : sectionList) {
-                        if(!ResUtil.isEmpty(section1.getParentId()) && section1.getParentId().equals("0")) {
-
-                        }
-                    }*/
                     return sectionList;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sectionList -> {
                     mNavigationExpandableListViewAdapter = new NavigationExpandableListViewAdapter(this, sectionList, this);
                     mNavigationExpandableListView.setAdapter(mNavigationExpandableListViewAdapter);
+
+                    getDrawerStaticItem();
+
                 }));
 
+    }
+
+
+    private void getDrawerStaticItem() {
+        mDisposable.add(THPDB.getInstance(this).daoConfiguration()
+                .getConfigurationSingle()
+                .subscribeOn(Schedulers.io())
+                .map(tableConfiguration -> {
+
+                    List<TableSection> staticItemList = new ArrayList<>();
+                    List<UrlBean> configStaticItems = tableConfiguration.getStaticItem();
+                    for(UrlBean bean: configStaticItems) {
+                        TableSection staticItem = new TableSection();
+                        staticItem.setSecName(bean.getTitle());
+                        staticItem.setType("staticUrlPage");
+                        staticItem.setSecId("staticUrlPage");
+                        if(mIsDayTheme) {
+                            staticItem.setWebLink(bean.getUrlLight());
+                        }
+                        else {
+                            staticItem.setWebLink(bean.getUrlLight());
+                        }
+                        staticItemList.add(staticItem);
+                    }
+                    return staticItemList;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(staticItem->{
+                    mNavigationExpandableListViewAdapter.addStaticItemGroup(staticItem);
+                }, throwable -> {
+
+                }));
     }
 
     @Override
@@ -158,6 +185,12 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 mAppTabFragment.updateTabIndex();
             }
             Log.i("", "");
+
+            // THis below condition will be executed when user creates normal Sign-UP
+            if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
+                AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
+                FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+            }
         }
     }
 
@@ -220,8 +253,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onExpandButtonClick(int groupPostion, boolean isExpanded) {
-        Alerts.showToast(this, ""+groupPostion);
-
         if (isExpanded) {
             mNavigationExpandableListView.collapseGroup(groupPostion);
         } else {
@@ -231,9 +262,21 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onGroupClick(int groupPostion, TableSection tableSection, boolean isExpanded) {
-        FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
+        if(tableSection.getType().equalsIgnoreCase("staticUrlPage")) {
+            IntentUtil.openWebActivity(this, tableSection.getSecName(), tableSection.getWebLink());
+        }
+        // News Digest
+        else if(tableSection.getType().equalsIgnoreCase("static")
+                && tableSection.getSecId().equalsIgnoreCase("998")) {
+            FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
+        }
+        else if(tableSection.getType().equalsIgnoreCase("static")) {
+            IntentUtil.openUrlInBrowser(this, tableSection.getSection().getWebLink());
+        }
+        else {
+            FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
+        }
         mDrawerLayout.closeDrawers();
-
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), null);
 

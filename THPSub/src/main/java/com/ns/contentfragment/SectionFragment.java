@@ -73,7 +73,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     private SectionContentAdapter mRecyclerAdapter;
 
     private StaticPageUrlBean mStaticPageBean;
-    private List<SectionBean> mSubSections;
 
 
     public static SectionFragment getInstance(String from, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
@@ -141,22 +140,24 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         if(mRecyclerAdapter == null) {
             mRecyclerAdapter = new SectionContentAdapter(mFrom, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
-            if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
-                // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-                test();
-                homeAndBannerArticleFromDB();
-//            test();
 
-            } else { // Other Sections or Sub-Section
+            if(mSectionId.equals("998")) { // Opens News-Digest
+                sectionOrSubSectionFromServer(mPage);
+            }
+            else if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
+                // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
+                homeAndBannerArticleFromDB();
+            }
+            else { // Other Sections or Sub-Section
                 // Registering Scroll Listener to load more item
                 mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
+
+                loadMoreItems();
 
                 // If it is section
                 if (!mIsSubsection) {
                     getSubsections();
                 }
-
-                loadMoreItems();
 
             }
 
@@ -177,25 +178,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         }
     }
 
-    private void test() {
-        Observable.just("ll")
-                .subscribeOn(Schedulers.io())
-                .map(val->{
-                    DaoBanner daoBanner = THPDB.getInstance(getActivity()).daoBanner();
-                    TableBanner tableBanner = daoBanner.getBanners();
-                    List<ArticleBean> list = tableBanner.getBeans();
-                    return ""+list.size();
-                })
-                .subscribe(val->{
-                    Log.i("", "");
-                    Log.i(NetConstants.TAG_ERROR, "test() :: banner article list size " + val);
-                }, throwable -> {
-                    Log.i("", "");
-                    Log.i(NetConstants.TAG_ERROR, "test() :: " + throwable);
-                });
-    }
-
-
     private void loadMoreItems() {
         if (mIsSubsection) {
             subSectionDataFromDB();
@@ -205,18 +187,19 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
     private void getSubsections() {
-        Observable.just(mSectionId)
+        mDisposable.add(Observable.just(mSectionId)
                 .subscribeOn(Schedulers.io())
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(getActivity());
                     DaoSection daoSection = thpdb.daoSection();
-                    TableSection section = daoSection.getSubSections(value);
-                    if (section != null) {
-                        mSubSections = section.getSubSections();
-                    }
-                    return value;
+                    return daoSection.getSubSections(value).getSubSections();
                 })
-                .subscribe();
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(val->{
+                    addSubsectionUI(val);
+                }, throwable -> {
+
+                }));
     }
 
 
@@ -256,13 +239,19 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     private void subSectionDataFromDB() {
         final THPDB thpdb = THPDB.getInstance(getActivity());
         DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
-        Maybe<List<TableSubSectionArticle>> sectionArticlesMaybe = daoSubSectionArticle.getPageArticlesMaybe(mSectionId, mPage).subscribeOn(Schedulers.io());
-        mDisposable.add(sectionArticlesMaybe
+        mDisposable.add(daoSubSectionArticle.getPageArticlesMaybe(mSectionId, mPage)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
                     if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB :: Page - " + mPage);
-                        sectionOrSubSectionFromServer(mPage);
+                        if(mSectionId.equals("998")) {// Opens News-Digest
+                            showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
+                        }
+                        else {
+                            sectionOrSubSectionFromServer(mPage);
+                        }
+
                     } else {
                         for (TableSubSectionArticle sectionArticle : value) {
                             List<ArticleBean> articleBeanList = sectionArticle.getBeans();
@@ -311,10 +300,15 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
             @Override
             public void onError(Throwable throwable, String str) {
-                Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
+                if(mSectionId.equals("998")) {// Opens News-Digest
+                    subSectionDataFromDB();
+                }
+                else {
+                    showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
+                }
                 Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
+                Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
                 setLoading(false);
-                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
             }
 
             @Override
@@ -325,15 +319,18 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
             }
         };
-        if (mIsSubsection) {
+        if(mSectionId.equals("998")) {// Opens News-Digest
+            DefaultTHApiManager.getNewsDigestContent(getActivity(), requestCallback, mSectionId, page);
+        }
+        else if (mIsSubsection) {
             DefaultTHApiManager.getSubSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
         } else {
             DefaultTHApiManager.getSectionContent(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
         }
     }
 
-    private void addSubsectionUI() {
-        if (mSubSections != null) {
+    private void addSubsectionUI(List<SectionBean> mSubSections) {
+        if (mSubSections != null && mSubSections.size()>0) {
             String rowItemId = "subsection_" + mSectionId;
             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_SUB_SECTION, rowItemId);
             ExploreAdapter exploreAdapter = new ExploreAdapter(mSubSections, mSectionId);
@@ -344,7 +341,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
     private void addLoadMoreUI() {
-        if (mSubSections != null) {
             String rowItemId = "loadMore_" + mSectionId;
             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_LOADMORE, rowItemId);
             int index = mRecyclerAdapter.indexOf(item);
@@ -355,7 +351,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             }
 
         }
-    }
 
     private void removeLoadMoreUI() {
         String rowItemId = "loadMore_" + mSectionId;

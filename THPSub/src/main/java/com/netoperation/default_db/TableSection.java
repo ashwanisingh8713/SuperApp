@@ -36,6 +36,7 @@ public class TableSection {
     private String customScreenPri;
     private String secName;
     private String type;
+    private String webLink;
     private StaticPageUrlBean staticPageUrlBean;
 
     private List<SectionBean> subSections;
@@ -57,6 +58,14 @@ public class TableSection {
         this.staticPageUrlBean = staticPageUrlBean;
         this.customScreen = customScreen;
         this.customScreenPri = customScreenPri;
+    }
+
+    public String getWebLink() {
+        return webLink;
+    }
+
+    public void setWebLink(String webLink) {
+        this.webLink = webLink;
     }
 
     public StaticPageUrlBean getStaticPageUrlBean() {
