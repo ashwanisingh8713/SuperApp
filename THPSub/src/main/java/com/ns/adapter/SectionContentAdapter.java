@@ -1,10 +1,11 @@
 package com.ns.adapter;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -119,8 +120,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_webview, viewGroup, false));
         }
-        else if(viewType == VT_THD_SUB_SECTION) {
-            return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
+        else if(viewType == VT_THD_HORIZONTAL_LIST) {
+            return new ExploreViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_home_explore, viewGroup, false));
         }
         else if(viewType == VT_THD_300X250_ADS) {
@@ -158,6 +159,18 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         else if(holder instanceof InlineAdViewHolder) {
             fillInlineAdView(holder, item);
         }
+        else if(holder instanceof ExploreViewHolder) {
+            fillExploreData(holder, item);
+        }
+    }
+
+    private void fillExploreData(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+        ExploreViewHolder exploreHolder = (ExploreViewHolder) holder;
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(exploreHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        exploreHolder.mExploreRecyclerView.setLayoutManager(mLayoutManager);
+        exploreHolder.mExploreRecyclerView.setHasFixedSize(true);
+        exploreHolder.mExploreRecyclerView.setAdapter(item.getExploreAdapter());
+
     }
 
     private void fillInlineAdView(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
@@ -186,6 +199,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private void fillStaticWebview(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
         StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
         StaticPageUrlBean pageUrlBean = item.getStaticPageUrlBean();
+        if(pageUrlBean == null) {
+            return;
+        }
         staticItemHolder.webView.loadUrl(pageUrlBean.getUrl());
         if(!pageUrlBean.getSectionId().equals("0")) {
             staticItemHolder.mDummyView.setVisibility(View.VISIBLE);
@@ -414,7 +430,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     /**
      * Default Widget View Holder
      */
-    public class WidgetsViewHolder extends RecyclerView.ViewHolder {
+    private static class WidgetsViewHolder extends RecyclerView.ViewHolder {
 
         public RecyclerView mWidgetsRecyclerView;
         public TextView mWidgetTitleTextView, mWidgetFooterTextView;
@@ -426,6 +442,20 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             mWidgetTitleTextView = itemView.findViewById(R.id.textview_widget_title);
             mWidgetFooterTextView = itemView.findViewById(R.id.textview_widget_viewAll);
 
+        }
+    }
+
+    /**
+     * Horizontal RecyclerView for Sub-sections
+     */
+    private static class ExploreViewHolder extends RecyclerView.ViewHolder {
+
+        public RecyclerView mExploreRecyclerView;
+
+        public ExploreViewHolder(View itemView) {
+            super(itemView);
+
+            mExploreRecyclerView = itemView.findViewById(R.id.recyclerview_explore);
         }
     }
 
@@ -454,6 +484,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         int updateIndex = 0;
         if(index >= adapterItems.size()) {
             adapterItems.add(item);
+            notifyItemChanged(adapterItems.size());
             updateIndex = adapterItems.size()-1;
         } else if(index < adapterItems.size()){
             adapterItems.add(index, item);

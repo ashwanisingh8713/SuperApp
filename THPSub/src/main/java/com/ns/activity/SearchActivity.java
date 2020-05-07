@@ -104,7 +104,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
 
         fragmentTHP.showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, "");
 
-        fragmentTHP.setBaseFragmentListener(new BaseFragmentTHP.BaseFragmentListener() {
+        fragmentTHP.setEmptyViewClickListener(new BaseFragmentTHP.EmptyViewClickListener() {
             @Override
             public void onEmptyRefreshBtnClick() {
 

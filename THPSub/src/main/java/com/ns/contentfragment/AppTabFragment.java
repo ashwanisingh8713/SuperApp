@@ -25,6 +25,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.adapter.AppTabPagerAdapter;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
@@ -35,6 +36,7 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.TabUtils;
 import com.ns.view.ViewPagerScroller;
+import com.ns.view.text.ArticleTitleTextView;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -60,6 +62,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private AppTabPagerAdapter mPagerAdapter;
+
     private int tabIndex = 0;
 
     /**
@@ -133,6 +136,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
+        //mViewPager.setOffscreenPageLimit(4);
 
         mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
                 .subscribe(tabsBeans -> {
@@ -152,7 +156,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), tabsBeans);
 
                     mViewPager.setAdapter(mPagerAdapter);
-                    mViewPager.setOffscreenPageLimit(4);
+
                     mTabLayout.setupWithViewPager(mViewPager, true);
 
                     // Iterate over all tabs and set the custom view
@@ -199,14 +203,14 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         // Subscribe Button Click Listener
         view.findViewById(R.id.subscribeBtn_Txt).setOnClickListener(v -> {
             THPConstants.FLOW_TAB_CLICK = THPConstants.TAP_BANNER_SUBSCRIPTION;
-            if (mIsOnline) {
+            if (BaseAcitivityTHP.sIsOnline) {
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
             } else {
                 noConnectionSnackBar(getView());
             }
         });
         view.findViewById(R.id.subscribeLayout).setOnClickListener(v -> {
-            if (!mIsOnline) {
+            if (!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -253,7 +257,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -270,7 +274,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_My_Stories)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -287,7 +291,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_Suggested)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -310,7 +314,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -334,7 +338,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -358,7 +362,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     } else {
                         noConnectionSnackBar(getView());
@@ -405,7 +409,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 mViewPager.setCurrentItem(tabIndex);
         }
         else if(!isUserAdsFree && !isHasSubscription) {
-            if (mIsOnline) {
+            if (sIsOnline) {
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
             } else {
                 noConnectionSnackBar(getView());

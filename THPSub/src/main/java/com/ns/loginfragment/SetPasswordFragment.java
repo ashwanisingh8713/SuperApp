@@ -107,7 +107,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
 
         LinearLayout shadowLayout = view.findViewById(R.id.shadowLayout);
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_white_r12_s6_wh200_ltr));
         } else {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_dark_r12_s6_wh200_ltr));
@@ -145,7 +145,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
             }
         });
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             passwordVisible_Btn.setImageResource(R.drawable.ic_show_password);
         } else {
             passwordVisible_Btn.setImageResource(R.drawable.ic_show_password_dark);
@@ -155,7 +155,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
         passwordVisible_Btn.setOnClickListener(v -> {
             if (mIsPasswdVisible) {
                 password_Et.setTransformationMethod(new PasswordTransformationMethod());
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_show_password);
                 } else {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_show_password_dark);
@@ -165,7 +165,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                 password_Et.setSelection(password_Et.getText().length());
             } else {
                 password_Et.setTransformationMethod(null);
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_hide_password);
                 } else {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_hide_password_dark);

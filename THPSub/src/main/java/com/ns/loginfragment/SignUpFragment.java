@@ -27,6 +27,7 @@ import com.netoperation.net.ApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.SignInAndUpActivity;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
@@ -147,7 +148,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         //Focus change listener
         faq_Txt.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -163,7 +164,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 tc_Txt, R.color.blueColor_1, new TextSpanCallback() {
                     @Override
                     public void onTextSpanClick() {
-                        if(!mIsOnline) {
+                        if(!BaseAcitivityTHP.sIsOnline) {
                             noConnectionSnackBar(getView());
                             return;
                         }
@@ -175,7 +176,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 });
 
         signUp_Txt.setOnClickListener( v-> {
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -319,7 +320,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Google Sign in click listener
         googleBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -332,7 +333,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Facebook Sign in click listener
         facebookBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -346,7 +347,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         //Twitter Sign in click listener
         tweeterBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }

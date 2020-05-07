@@ -33,21 +33,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-
         return getPageSourceTypeFragment(mTabsBean.get(i), i);
-
-        /*if(i==0) {
-            return TopTabsFragment.getInstance(i, NetConstants.GROUP_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
-        }
-        else if(i==1) {
-            return AppTabListingFragment.getInstance(i,  NetConstants.BREIFING_ALL);
-        }
-        else if(i==2) {
-            return AppTabListingFragment.getInstance(i, NetConstants.RECO_Mystories);
-        }
-        else {
-            return AppTabListingFragment.getInstance(i, NetConstants.RECO_suggested);
-        }*/
     }
 
     private Fragment getPageSourceTypeFragment(TabsBean tabsBean, int tabIndex) {
@@ -65,7 +51,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
             case NetConstants.PS_Url:
                 return WebFragment.getInstance(tabIndex, tabsBean);
             case NetConstants.PS_ADD_ON_SECTION:
-                return new Fragment();
+                return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_ADD_ON_SECTION, tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
             case NetConstants.PS_SENSEX:
                 return new Fragment();
         }

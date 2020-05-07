@@ -17,6 +17,7 @@ import com.netoperation.model.KeyValueModel;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
@@ -125,7 +126,7 @@ public class ForgotPasswordFragment extends BaseFragmentTHP {
     }
 
     private void forgotPassword() {
-        if(!mIsOnline) {
+        if(!BaseAcitivityTHP.sIsOnline) {
             noConnectionSnackBar(getView());
             return;
         }

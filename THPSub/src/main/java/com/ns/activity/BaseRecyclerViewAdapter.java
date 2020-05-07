@@ -50,7 +50,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_BLD_DEFAULT_ROW = 25;
 
     public static final int VT_WEB_WIDGET = 26;
-    public static final int VT_THD_SUB_SECTION = 27;
+    public static final int VT_THD_HORIZONTAL_LIST = 27;
 
     public static final int VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER = 28;
     public static final int VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW = 29;

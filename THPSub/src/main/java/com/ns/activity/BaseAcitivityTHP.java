@@ -2,6 +2,7 @@ package com.ns.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
 import com.main.AppAds;
 import com.netoperation.model.AdData;
@@ -30,8 +32,11 @@ import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.DetailToolbar;
+import com.ns.view.text.ArticleTitleTextView;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseAcitivityTHP extends AppCompatActivity implements ToolbarClickListener {
 
@@ -49,9 +54,13 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     protected boolean mIsDayTheme = true;
     protected boolean hasSubscriptionPlan;
+    private ArticleTitleTextView mNoConnectionTabText;
+
+    public static boolean sIsOnline;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
@@ -67,9 +76,11 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         } else {
             ServiceFactory.BASE_URL = BuildConfig.STATGGING_BASE_URL;
         }
-        super.onCreate(savedInstanceState);
+
         setContentView(layoutRes());
 
+        mNoConnectionTabText = findViewById(R.id.noConnectionTabText);
+        internetAvailibilityCheck();
         mToolbar = findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -85,6 +96,36 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
         }
     }
+
+
+
+    private void internetAvailibilityCheck() {
+        ReactiveNetwork
+                .observeNetworkConnectivity(this)
+                .subscribeOn(Schedulers.io())
+                .map(connectivity->{
+                    if(connectivity.state() == NetworkInfo.State.CONNECTED) {
+                        sIsOnline = true;
+                    }
+                    else {
+                        sIsOnline = false;
+                    }
+                    return sIsOnline;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sIsOnline -> {
+                    if(sIsOnline && mNoConnectionTabText != null) {
+                        mNoConnectionTabText.setVisibility(View.GONE);
+                    }
+                    else if( mNoConnectionTabText != null) {
+                        mNoConnectionTabText.setVisibility(View.VISIBLE);
+                    }
+
+                    Log.i("", "");
+                });
+    }
+
+
 
     @Override
     protected void onStop() {

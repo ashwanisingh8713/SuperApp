@@ -34,7 +34,7 @@ public class AccountInfoFragment extends BaseFragmentTHP {
 
     @Override
     public int getLayoutRes() {
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             return R.layout.fragment_account_info;
         } else {
             return R.layout.fragment_account_info_dark;

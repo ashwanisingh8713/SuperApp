@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.adapter.SubscriptionPlanAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
@@ -92,7 +93,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
         );
 
         view.findViewById(R.id.exploreSubscriptionPlans_Txt).setOnClickListener(view1 -> {
-            if(mIsOnline) {
+            if(BaseAcitivityTHP.sIsOnline) {
                 RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("");
                 FragmentUtil.addFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 //CleverTap
@@ -363,7 +364,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
         emptyBtnTxt.setText("Refresh");
         emptyBtnTxt.setEnabled(true);
         emptyBtnTxt.setOnClickListener(v -> {
-            if (!mIsOnline) {
+            if (!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }

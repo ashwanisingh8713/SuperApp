@@ -1,6 +1,5 @@
 package com.ns.userprofilefragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,6 +26,7 @@ import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -107,14 +107,14 @@ public class UserProfileFragment extends BaseFragmentTHP {
 
             // Subscribe Button Click Listener
             view.findViewById(R.id.subscribeBtn_Txt).setOnClickListener(v -> {
-                if(!mIsOnline) {
+                if(!BaseAcitivityTHP.sIsOnline) {
                     noConnectionSnackBar(getView());
                     return;
                 }
                 IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
             });
             view.findViewById(R.id.subscribeLayout).setOnClickListener(v -> {
-                if(!mIsOnline) {
+                if(!BaseAcitivityTHP.sIsOnline) {
                     noConnectionSnackBar(getView());
                     return;
                 }
@@ -136,7 +136,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
 
         // Change Button click listener
         view.findViewById(R.id.viewAllBtn_Txt).setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -147,7 +147,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
 
         //View All
         view.findViewById(R.id.part2Layout).setOnClickListener(view12 -> {
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -281,7 +281,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
     }
 
     private void confirmedToSignOut() {
-        if(!mIsOnline) {
+        if(!BaseAcitivityTHP.sIsOnline) {
             noConnectionSnackBar(getView());
             return;
         }

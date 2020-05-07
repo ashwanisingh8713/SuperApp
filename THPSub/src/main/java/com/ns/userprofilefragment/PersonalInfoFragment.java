@@ -26,6 +26,7 @@ import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.THPUserProfileActivity;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.AppLocationListener;
@@ -90,7 +91,7 @@ public class PersonalInfoFragment extends BaseFragmentTHP {
 
     @Override
     public int getLayoutRes() {
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             return R.layout.fragment_personal_info;
         } else {
             return R.layout.fragment_personal_info_dark;
@@ -146,7 +147,7 @@ public class PersonalInfoFragment extends BaseFragmentTHP {
         dobLayout = view.findViewById(R.id.dobLayout);
         dobLayoutET = view.findViewById(R.id.dobLayoutET);
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             dobLayoutET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_dob_wrapper, 0);
         } else {
             dobLayoutET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_dob_wrapper_dark, 0);
@@ -248,7 +249,7 @@ public class PersonalInfoFragment extends BaseFragmentTHP {
         });
 
         TextView infoTextView = view.findViewById(R.id.info_Txt);
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             infoTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_wrapper, 0, 0, 0);
         } else {
             infoTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_wrapper_white, 0, 0, 0);
@@ -266,7 +267,7 @@ public class PersonalInfoFragment extends BaseFragmentTHP {
                 Alerts.showAlertDialogOKBtn(getActivity(), getResources().getString(R.string.empty_fields), "Required(*) fields are mandatory.");
                 return;
             }*/
-            if(mIsOnline) {
+            if(BaseAcitivityTHP.sIsOnline) {
                 disableAllView(false);
                 progressBarWhite.setVisibility(View.VISIBLE);
                 updateBtn_Txt.setText("");

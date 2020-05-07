@@ -66,13 +66,13 @@ public class TCFragment extends BaseFragmentTHP {
         backBtn = view.findViewById(R.id.backBtn);
 
         if(mFrom != null && mFrom.equalsIgnoreCase("crossBackImg")) {
-            if(mIsDayTheme) {
+            if(sIsDayTheme) {
                 backBtn.setImageResource(R.drawable.ic_close_ss);
             } else {
                 backBtn.setImageResource(R.drawable.ic_close_ss_dark);
             }
         } else if(mFrom != null && mFrom.equalsIgnoreCase("arrowBackImg")) {
-            if(mIsDayTheme) {
+            if(sIsDayTheme) {
                 backBtn.setImageResource(R.drawable.ic_back_copy_42);
             } else {
                 backBtn.setImageResource(R.drawable.ic_back_copy_42_dark);
