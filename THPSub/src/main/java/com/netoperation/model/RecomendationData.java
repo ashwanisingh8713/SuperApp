@@ -4,7 +4,6 @@ import java.util.List;
 
 public class RecomendationData {
 
-
     private List<ArticleBean> reco;
 
     public List<ArticleBean> getReco() {
@@ -14,6 +13,8 @@ public class RecomendationData {
     public void setReco(List<ArticleBean> reco) {
         this.reco = reco;
     }
+
+
 
 
 }

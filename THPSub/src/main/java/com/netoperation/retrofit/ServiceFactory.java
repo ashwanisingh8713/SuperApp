@@ -1,6 +1,10 @@
 package com.netoperation.retrofit;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.ns.thpremium.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -18,7 +22,6 @@ public class ServiceFactory {
 
     private static ServiceAPIs sServiceAPIs;
 
-    public static String BASE_URL = "";
 
     public static ServiceAPIs getServiceAPIs() {
         if(sServiceAPIs == null) {
@@ -54,7 +57,7 @@ public class ServiceFactory {
      */
     private static Retrofit createRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.THP_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
                 .client(createOkHttpClient())

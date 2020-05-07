@@ -17,6 +17,7 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.AppTabContentAdapter;
@@ -56,7 +57,8 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     private AppTabContentAdapter mRecyclerAdapter;
     private String mBreifingType = NetConstants.BREIFING_ALL;
     private AppTabContentModel mProfileNameModel;
-    private String mFrom;
+    private String mPageType;
+    private String mPageSource;
 
     private LinearLayout emptyLayout;
     private ImageView emptyIcon;
@@ -72,7 +74,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     public static AppTabListingFragment getInstance(int tabIndex, String from) {
         AppTabListingFragment fragment = new AppTabListingFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("from", from);
+        bundle.putString("pageSource", from);
         bundle.putInt("tabIndex", tabIndex);
         fragment.setArguments(bundle);
         return fragment;
@@ -87,10 +89,23 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
-            mUserId = getArguments().getString("userId");
-            mFrom = getArguments().getString("from");
+            mPageSource = getArguments().getString("pageSource");
             mTabIndex = getArguments().getInt("tabIndex");
+
+            if(mPageSource.equals(NetConstants.PS_Briefing)) {
+                mPageType = NetConstants.BREIFING_ALL;
+            }
+            else if(mPageSource.equals(NetConstants.PS_My_Stories)) {
+                mPageType = NetConstants.RECO_Mystories;
+            }
+            else if(mPageSource.equals(NetConstants.PS_Suggested)) {
+                mPageType = NetConstants.RECO_suggested;
+            }
         }
+
+
+
+        mUserId = PremiumPref.getInstance(getActivity()).getUserId();
     }
 
     @Override
@@ -100,12 +115,12 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
 
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
+        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mPageType, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setOnEditionBtnClickListener(this::OnEditionBtnClickListener);
         mRecyclerAdapter.setAppEmptyPageListener(this :: checkPageEmpty);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
-        mPullToRefreshLayout.setTryAgainBtnClickListener(this);
+        setEmptyViewClickListener(this);
 
         mPullToRefreshLayout.showSmoothProgressBar();
 
@@ -126,7 +141,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         super.onResume();
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mTabIndex, null, ToolbarChangeRequired.Other_Tabs));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.Other_Tabs));
 
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);
@@ -222,7 +237,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
     private void loadData(boolean isOnline ) {
         Observable<List<ArticleBean>> observable = null;
-        if(mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL)) {
+        if(mPageType.equalsIgnoreCase(NetConstants.BREIFING_ALL)) {
             if (isOnline) {
 
                 String BREIGINE_URL = "";
@@ -240,9 +255,9 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         else {
             if (isOnline) {
                 observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
-                        mFrom, ""+mSize, BuildConfig.SITEID);
+                        mPageType, ""+mSize, BuildConfig.SITEID);
             } else {
-                observable = ApiManager.premium_allArticleFromDB(getActivity(), mFrom);
+                observable = ApiManager.premium_allArticleFromDB(getActivity(), mPageType);
             }
         }
 
@@ -272,7 +287,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                             if (isBriefingPage()) {
                                 mRecyclerAdapter.setFrom(mBreifingType);
                             } else {
-                                mRecyclerAdapter.setFrom(mFrom);
+                                mRecyclerAdapter.setFrom(mPageType);
                             }
                             mRecyclerAdapter.setData(value);
                         }, throwable -> {
@@ -286,7 +301,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                             mPullToRefreshLayout.hideProgressBar();
                             mPullToRefreshLayout.setRefreshing(false);
                             // Showing Empty Msg.
-                            showEmptyLayout(emptyLayout, isOnline, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mFrom);
+                            showEmptyLayout(emptyLayout, isOnline, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mPageType);
 
                         }));
 
@@ -351,8 +366,8 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
     }
 
     private boolean isBriefingPage() {
-        return mFrom.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_MORNING)
-                || mFrom.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mFrom.equalsIgnoreCase(NetConstants.BREIFING_EVENING);
+        return mPageType.equalsIgnoreCase(NetConstants.BREIFING_ALL) || mPageType.equalsIgnoreCase(NetConstants.BREIFING_MORNING)
+                || mPageType.equalsIgnoreCase(NetConstants.BREIFING_NOON) || mPageType.equalsIgnoreCase(NetConstants.BREIFING_EVENING);
     }
 
 
@@ -360,13 +375,13 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         ArticleBean profileArticleBean = new ArticleBean();
         if (isBriefingPage()) {
             profileArticleBean.setSectionName("All Editions");
-        } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
             profileArticleBean.setSectionName("Yours personalised stories");
-        } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested)) {
+        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_suggested)) {
             profileArticleBean.setSectionName("Your suggested stories");
 //            title = "Your suggested stories";
             profileArticleBean.setSectionName("Your suggested stories");
-        } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
+        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_trending)) {
             profileArticleBean.setSectionName("Trending now");
             title = "Trending now";
         }
@@ -463,7 +478,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                         loadData();
                     });
                 }
-            } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+            } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
                 if(isNoContent) {
                     emptyIcon.setImageResource(R.drawable.ic_empty_watermark);
                     emptyTitleTxt.setVisibility(View.INVISIBLE);
@@ -493,7 +508,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                         loadData();
                     });
                 }
-            } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested)) {
+            } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_suggested)) {
                 if(isNoContent) {
                     emptyIcon.setImageResource(R.drawable.ic_empty_suggestion);
                     emptyTitleTxt.setVisibility(View.INVISIBLE);
@@ -599,7 +614,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
         if(mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() == 1) {
             mRecyclerAdapter.deleteIndex(0);
-            showEmptyLayout(emptyLayout, true, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mFrom);
+            showEmptyLayout(emptyLayout, true, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mPageType);
         }
 
     }
@@ -636,10 +651,10 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         if(isBriefingPage()) {
             from = "Briefing";
             briefingEventCapture(pageStartTime, pageEndTime);
-        } else if(mFrom != null && mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        } else if(mPageType != null && mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
             from = "My Stories";
         } else {
-            from = mFrom;
+            from = mPageType;
         }
         final String totalTime = AppDateUtil.millisToMinAndSec(pageEndTime - pageStartTime);
         final long timeInSeconds = AppDateUtil.millisToSecs(pageEndTime - pageStartTime);
@@ -666,7 +681,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         Log.i("handleEvent", "Back Button Pressed :: TabIndex = "+mTabIndex);
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
-        BackPressCallback backPressCallback = new BackPressImpl(this, mFrom, mTabIndex).onBackPressed();
+        BackPressCallback backPressCallback = new BackPressImpl(this, mPageType, mTabIndex).onBackPressed();
         EventBus.getDefault().post(backPressCallback);
     }
 

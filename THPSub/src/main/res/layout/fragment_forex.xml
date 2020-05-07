@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/last_update_date"
+        app:font_path="@string/THP_FiraSans_Bold"
+        android:paddingLeft="10dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/greyColor_1"
+        android:textSize="12sp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/forex_background_color"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            app:font_path="@string/THP_FiraSans_Bold"
+            android:background="@color/forex_background_color"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/exchange_rates"
+            android:textColor="@color/forex_header_text_color"
+            android:textSize="18sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/categories_nse_bse_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_background_color"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    android:layout_weight="1.5"
+                    android:padding="5dp"
+                    android:paddingRight="2dp"
+                    android:text="@string/currency_inr"
+                    android:textSize="13sp" />
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingRight="2dp"
+                    android:text="@string/tt_selling"
+                    android:textSize="13sp" />
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingRight="2dp"
+                    android:text="@string/tt_buying"
+                    android:textSize="13sp" />
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingRight="2dp"
+                    android:text="@string/bill_selling"
+                    android:textSize="13sp" />
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:font_path="@string/THP_FiraSans_Bold"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingRight="2dp"
+                    android:text="@string/bill_buying"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/forex_row_background_second" />
+
+            <com.ns.view.CustomProgressBar
+                android:id="@+id/progress_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <ListView
+                android:id="@+id/forex_list"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:visibility="gone"></ListView>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
+

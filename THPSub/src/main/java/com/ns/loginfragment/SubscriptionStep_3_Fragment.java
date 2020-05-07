@@ -251,7 +251,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
 
     // Fetch latest userinfo from server
     private void fetchLatestUserInfo() {
-        String loginId = PremiumPref.getInstance(getActivity()).getLoginId();
+        String loginId = PremiumPref.getInstance(getActivity()).getLoginTypeId();
         String loginPasswd = PremiumPref.getInstance(getActivity()).getLoginPasswd();
         ApiManager.getUserInfoObject(getActivity(), BuildConfig.SITEID,
                 ResUtil.getDeviceId(getActivity()), mUserId, loginId, loginPasswd)

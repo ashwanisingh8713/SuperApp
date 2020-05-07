@@ -47,6 +47,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     private ConstraintLayout subscribeLayout;
     private String mFrom;
+    private int tabIndex = 0;
     private TabUtils mTabUtils;
 
     public static AppTabFragment getInstance(String from, int tabIndex) {
@@ -63,7 +64,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     private ViewPager mViewPager;
     private AppTabPagerAdapter mPagerAdapter;
 
-    private int tabIndex = 0;
+
 
     /**
      * Holds String value of User Name, to know whether user has logged in or not
@@ -386,36 +387,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
 
-        /*if (tabIndex == 1) {
-            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_1;
-        }
-        else if (tabIndex == 2) {
-            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_2;
-        }
-        else if (tabIndex == 3) {
-            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_3;
-        }
-        else if (tabIndex == 4) {
-            THPConstants.FLOW_TAB_CLICK = THPConstants.TAB_4;
-        }
-
-        if(!isUserLoggedIn) {
-            IntentUtil.openMemberActivity(getActivity(), "");
-        }
-        else if(tabsBean.getPageSource().equals(NetConstants.PS_Profile) && isUserLoggedIn) {
-            IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
-        }
-        else if(isUserLoggedIn && (isUserAdsFree || isHasSubscription)) {
-                mViewPager.setCurrentItem(tabIndex);
-        }
-        else if(!isUserAdsFree && !isHasSubscription) {
-            if (sIsOnline) {
-                IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
-            } else {
-                noConnectionSnackBar(getView());
-            }
-            return;
-        }*/
 
     }
 

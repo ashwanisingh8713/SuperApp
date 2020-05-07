@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:maxEms="11"
                 android:text="Transactions"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="20sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
                 android:text="All your transactions done with us"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="15sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
         </LinearLayout>

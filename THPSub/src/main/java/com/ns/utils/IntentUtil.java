@@ -25,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.netoperation.db.THPDB;
-import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -93,7 +92,7 @@ public class IntentUtil {
      */
     public static void loginApiCall(Activity context) {
 
-        String loginId = PremiumPref.getInstance(context).getLoginId();
+        String loginId = PremiumPref.getInstance(context).getLoginTypeId();
         String loginPasswd = PremiumPref.getInstance(context).getLoginPasswd();
         String userName = PremiumPref.getInstance(context).getUserLoggedName();
         String deviceId = ResUtil.getDeviceId(context);
@@ -327,7 +326,7 @@ public class IntentUtil {
      * Similar to @loginApiCall(), Do not clear preferences, and sessions of social profiles if api connection fails
      * */
     public static void loginApiCall2(Activity context, CallBackRelogin callBackReloginListener) {
-        String loginId = PremiumPref.getInstance(context).getLoginId();
+        String loginId = PremiumPref.getInstance(context).getLoginTypeId();
         String loginPasswd = PremiumPref.getInstance(context).getLoginPasswd();
         String userName = PremiumPref.getInstance(context).getUserLoggedName();
         String deviceId = ResUtil.getDeviceId(context);

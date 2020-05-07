@@ -168,7 +168,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 showProgressDialog("\nVerifying transaction status ...");
                 ApiManager.getUserInfo(this, BuildConfig.SITEID,
                         ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                        PremiumPref.getInstance(this).getLoginId(),
+                        PremiumPref.getInstance(this).getLoginTypeId(),
                         PremiumPref.getInstance(this).getLoginPasswd())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(val -> {
@@ -474,7 +474,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                     //getUserInfoApiCall();
                     ApiManager.getUserInfo(this, BuildConfig.SITEID,
                             ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                            PremiumPref.getInstance(this).getLoginId(),
+                            PremiumPref.getInstance(this).getLoginTypeId(),
                             PremiumPref.getInstance(this).getLoginPasswd())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(val -> {
@@ -528,7 +528,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     private void getUserInfoApiCall() {
         ApiManager.getUserInfo(this, BuildConfig.SITEID,
                 ResUtil.getDeviceId(this), mUserProfile.getUserId(),
-                PremiumPref.getInstance(this).getLoginId(),
+                PremiumPref.getInstance(this).getLoginTypeId(),
                 PremiumPref.getInstance(this).getLoginPasswd())
                 .subscribe();
     }

@@ -54,7 +54,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     private static String TAG = NetConstants.TAG_UNIQUE;
 
-    private String mFrom;
+    private String mPageSource;
     private String mSectionId;
     private String mSectionType;
     private String sectionOrSubsectionName;
@@ -72,10 +72,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     private StaticPageUrlBean mStaticPageBean;
 
 
-    public static SectionFragment getInstance(String from, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
+    public static SectionFragment getInstance(String pageSource, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
         SectionFragment fragment = new SectionFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("from", from);
+        bundle.putString("pageSource", pageSource);
         bundle.putString("sectionId", sectionId);
         bundle.putString("sectionOrSubsectionName", sectionOrSubsectionName);
         bundle.putString("sectionType", sectionType);
@@ -116,7 +116,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mFrom = getArguments().getString("from");
+            mPageSource = getArguments().getString("pageSource");
             mSectionId = getArguments().getString("sectionId");
             mSectionType = getArguments().getString("sectionType");
             sectionOrSubsectionName = getArguments().getString("sectionOrSubsectionName");
@@ -137,7 +137,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
         if(mRecyclerAdapter == null) {
-            mRecyclerAdapter = new SectionContentAdapter(mFrom, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
+            mRecyclerAdapter = new SectionContentAdapter(mPageSource, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
 
             if(mSectionId.equals("998")) { // Opens News-Digest
                 sectionOrSubSectionFromServer(mPage);
@@ -213,7 +213,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
                         Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB :: Page - " + mPage);
                         if(mSectionId.equals("998")) {// Opens News-Digest
-                            showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
+                            showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
                         }
                         else {
                             sectionOrSubSectionFromServer(mPage);
@@ -238,6 +238,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }, throwable -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mPage + " :: throwable - " + throwable);
                     Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionDataFromDB() :: " + throwable);
+                    setLoading(false);
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mPage - 1));
                     setLoading(false);
@@ -246,7 +247,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
     private void sectionOrSubSectionFromServer(int page) {
-
+        mPullToRefreshLayout.showSmoothProgressBar();
         setLoading(true);
 
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
@@ -259,6 +260,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 if (articleBeans.size() > 0) {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from Server :: Page - " + page);
                     mRecyclerAdapter.addMultiItems(articleBeans);
+                    if(mPage == 1) {
+                        getSubsections();
+                    }
                     incrementPageCount();
                 } else {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO MORE ARTICLE On Server :: Page - " + page);
@@ -272,7 +276,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     sectionOrSubSectionDataFromDB();
                 }
                 else {
-                    showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
+                    showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
                 }
                 Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
@@ -284,7 +288,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
                 setLoading(false);
                 mPullToRefreshLayout.hideProgressBar();
-                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mFrom);
+                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
 
             }
         };

@@ -43,7 +43,7 @@ android {
             buildConfigField "boolean", "IS_BL", "true"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
-            buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
+            buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
@@ -80,7 +80,7 @@ android {
             buildConfigField "boolean", "IS_BL", "false"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
-            buildConfigField "String", "PRODUCTION_BASE_URL", "\"https://tai.thehindu.com\""
+            buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
@@ -251,7 +251,9 @@ dependencies {
     implementation files('libs/libadapterinmobi.jar')
 
     // OK HTTP
-    implementation 'com.squareup.okhttp3:okhttp:3.0.1'
+    //implementation 'com.squareup.okhttp3:okhttp:3.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
 
     // Local Broadcast Manager
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'

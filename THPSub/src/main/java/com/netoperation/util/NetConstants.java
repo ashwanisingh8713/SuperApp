@@ -19,7 +19,7 @@ public class NetConstants {
     public static final String TEMP_SECTION_ID = "tempSectionId";
 
     public static final String RECO_suggested = "suggested";
-    public static final String RECO_Mystories = "mystories";
+    public static final String RECO_Mystories = "personalised";
     public static final String RECO_trending = "trending";
     public static final String RECO_bookmarks = "bookmarks";
     public static final String RECO_briefcase = "briefcase";

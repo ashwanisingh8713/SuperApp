@@ -52,7 +52,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
     private final int WHAT_CONFIG_UPDATE_CHECK = 1;
     private final int WHAT_CONFIG_FETCH_SERVER = 2;
-    private final int WHAT_DOWNLOADING_CHECK = 3;
+    private final int WHAT_DOWNLOADING_ICONS = 3;
     private final int WHAT_MP = 4;
     private final int WHAT_SECTION = 5;
     private final int WHAT_SERVER_HOME_CONTENT = 6;
@@ -60,10 +60,12 @@ public class SplashActivity extends BaseAcitivityTHP {
     private final int WHAT_ERROR = 8;
     private final int WHAT_TEMP_SECTION = 9;
     private final int WHAT_Server_Section = 10;
+    private final int WHAT_ROUTE_FOR_SCREEN = 11;
 
     private boolean isErrorOccured = false;
     private int totalSentRequestIcons;
-    private int totalReceivedRequestIcons;
+    private int totalReceivedFailRequestIcons;
+    private int totalReceivedSuccessRequestIcons;
 
 
     @Override
@@ -82,7 +84,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
         registerReceiver();
 
-        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK);
+        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
 
         // Reduces Read article table
         DefaultTHApiManager.readArticleDelete(this);
@@ -98,6 +100,10 @@ public class SplashActivity extends BaseAcitivityTHP {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            String from = bundle.getString("from");
+            Log.i("SplashPage", from);
+
             switch (msg.what) {
                 case WHAT_CONFIG_UPDATE_CHECK:
                     showProgressBar("Checking App Configuration.");
@@ -107,7 +113,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     showProgressBar("Initializing App Configuration.");
                     callAppConfigApi();
                     break;
-                case WHAT_DOWNLOADING_CHECK:
+                case WHAT_DOWNLOADING_ICONS:
                     showProgressBar("Downloading App Configurations.");
                     Intent downloadIntent = new Intent(SplashActivity.this, IconDownloadService.class);
                     downloadIntent.putExtra(IconDownloadService.STATE, IconDownloadService.STATE_CHECK);
@@ -119,8 +125,11 @@ public class SplashActivity extends BaseAcitivityTHP {
                         callMpApi();
                     }
                     else {
-                        routeToAppropriateAction();
+                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is not expired");
                     }
+                    break;
+                case WHAT_ROUTE_FOR_SCREEN:
+                    routeToAppropriateAction();
                     break;
                 case WHAT_SECTION:
                     showProgressBar("Checking Topics.");
@@ -152,8 +161,14 @@ public class SplashActivity extends BaseAcitivityTHP {
         }
     };
 
-    private void sendHandlerMsg(int what) {
-        mHandler.sendEmptyMessage(what);
+    private void sendHandlerMsg(int what, String from) {
+        Message message = new Message();
+        message.what = what;
+        Bundle bundle = new Bundle();
+        bundle.putString("from", from);
+        message.setData(bundle);
+        mHandler.sendMessage(message);
+        //mHandler.sendEmptyMessage(what);
     }
 
     private void showProgressBar(String msg) {
@@ -179,23 +194,21 @@ public class SplashActivity extends BaseAcitivityTHP {
         if(nc != null && isHomeArticleOptionScreenShown) {
             int downSpeed = nc.getLinkDownstreamBandwidthKbps();
             startTime = System.currentTimeMillis();
-            Log.i("NSPEED", "downSpeed :: " + downSpeed);
-            // On Good 4G or Good Wifi
+            // On Good 4G or Good Wifi or Good Network
             if(downSpeed > 102100) {
-                sendHandlerMsg(WHAT_Server_Section);
+                sendHandlerMsg(WHAT_Server_Section, "Good Network, going to fetch Section data from server");
             }
-            // For Moderate Net Speed
+            // For Moderate Network Speed
             else if(downSpeed > 5000 && downSpeed < 102100) {
-                sendHandlerMsg(WHAT_SERVER_HOME_CONTENT);
+                sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Moderate Network, going to fetch Home Page data from server");
             }
-            // For low net speed, it will launch directly
+            // For Low network speed, it will launch directly
             else {
-                sendHandlerMsg(WHAT_TEMP_SECTION);
+                sendHandlerMsg(WHAT_TEMP_SECTION, "Low network, going to fetch Temprory Section");
             }
 
         } else {
-            Log.i("NSPEED", "downSpeed :: is NULL" );
-            sendHandlerMsg(WHAT_TEMP_SECTION);
+            sendHandlerMsg(WHAT_TEMP_SECTION, "NO Network, going to fetch Temprory Section");
         }
     }
 
@@ -204,16 +217,16 @@ public class SplashActivity extends BaseAcitivityTHP {
                 BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
                     @Override
                     public void onNext(Object o) {
-                        routeToAppropriateAction();
+                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is updated from server");
                     }
 
                     @Override
                     public void onError(Throwable t, String str) {
                         if(DefaultPref.getInstance(SplashActivity.this).isMpCycleOnceLoaded()) {
-                            routeToAppropriateAction();
+                            sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall was expired and trying to update but got ERROR");
                         }
                         else {
-                            sendHandlerMsg(WHAT_ERROR);
+                            sendHandlerMsg(WHAT_ERROR, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR");
                         }
                     }
 
@@ -228,16 +241,16 @@ public class SplashActivity extends BaseAcitivityTHP {
         mDisposable.add(DefaultTHApiManager.isConfigurationUpdateAvailable(this)
                 .subscribe(isAvailable->{
                     if(isAvailable) {
-                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER);
+                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER, "App Configuration update is available");
                     } else {
-                        sendHandlerMsg(WHAT_MP);
+                        sendHandlerMsg(WHAT_MP, "NO, App Configuration update is Not available ");
                     }
                 }, throwable -> {
                     if(DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
-                        sendHandlerMsg(WHAT_MP);
+                        sendHandlerMsg(WHAT_MP, "App Configuration update check failed but already once loaded");
                     }
                     else {
-                        sendHandlerMsg(WHAT_ERROR);
+                        sendHandlerMsg(WHAT_ERROR, "App Configuration update is not loaded yet");
                     }
                 }));
     }
@@ -255,20 +268,19 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                sendHandlerMsg(WHAT_ERROR);
+                sendHandlerMsg(WHAT_ERROR, "App Configuration data fetch is failed from server");
 
             }
 
             @Override
             public void onComplete(String str) {
-                sendHandlerMsg(WHAT_DOWNLOADING_CHECK);
+                sendHandlerMsg(WHAT_DOWNLOADING_ICONS, "App Configuration data is received from server");
             }
         });
     }
 
 
     private void tempSection() {
-        Log.i("NSPEED", "Direct Launch calling...." );
         startTime = System.currentTimeMillis();
         DefaultTHApiManager.getSectionsFromTempTable(this, System.currentTimeMillis(), new RequestCallback() {
             @Override
@@ -278,7 +290,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                sendHandlerMsg(WHAT_Server_Section);
+                sendHandlerMsg(WHAT_Server_Section, "Temperory Section has thrown ERROR so fetching section data from server");
             }
 
             @Override
@@ -286,9 +298,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 // Opens Main Tab Screen
                 if(isHomeArticleOptionScreenShown) {
-                    sendHandlerMsg(WHAT_ACTIIVTY_TAB);
-                    long totalExecutionTime = System.currentTimeMillis() - startTime;
-                    Log.i("NSPEED", "Direct Launched Main Tab Page:: " + totalExecutionTime);
+                    sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Temperory Section is launching AppTabActivity");
                 }
                 else {
                     IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
@@ -305,17 +315,14 @@ public class SplashActivity extends BaseAcitivityTHP {
      * Gets Section and Home Data from server, It launches "MainTab" page from getHomeDataFromServer();
      */
     private void getSectionDirectFromServer() {
-        Log.i("NSPEED", "Calling Section List API, Next Home Article APIs will be called " );
         DefaultTHApiManager.sectionDirectFromServer(this, new RequestCallback() {
             @Override
             public void onNext(Object o) {
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
-                Log.i("NSPEED", "Loaded Section Page from Server :: "+totalExecutionTime);
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 if(isHomeArticleOptionScreenShown) {
                     // Get Home Article from server
-                    //getHomeDataFromServer();
-                    sendHandlerMsg(WHAT_SERVER_HOME_CONTENT);
+                    sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Section data from server, it's send request server to get Home page data");
                 }
                 else {
                     IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
@@ -324,16 +331,15 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                Log.i("NSPEED", "ERROR1 :: "+t);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {
-                            sendHandlerMsg(WHAT_ACTIIVTY_TAB);
+                            sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Section fetch is failed from server, and OnBoarding Screen is already loaded, So it's launching AppTabActivity");
                         }
                         else {
-                            sendHandlerMsg(WHAT_ERROR);
+                            sendHandlerMsg(WHAT_ERROR, "Section fetch is failed from server, and thrown ERROR");
                         }
                     }
                 });
@@ -352,20 +358,17 @@ public class SplashActivity extends BaseAcitivityTHP {
      * Gets Home Data from server, launches "MainTab" Page
      */
     private void getHomeDataFromServer() {
-        Log.i("NSPEED", "Home Article APIs are called " );
         DefaultTHApiManager.homeArticles(SplashActivity.this, "SplashActivity", new RequestCallback() {
             @Override
             public void onNext(Object o) {
                 // Opens Main Tab Screen
-                sendHandlerMsg(WHAT_ACTIIVTY_TAB);
-                long totalExecutionTime = System.currentTimeMillis() - startTime;
-                Log.i("NSPEED", "Home Article Loaded from server, Launched Main Tab Page :: "+totalExecutionTime);
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Received latest data of Home Page from server, launching AppTabActivity");
             }
 
             @Override
             public void onError(Throwable t, String str) {
                 Log.i("NSPEED", "ERROR2");
-                sendHandlerMsg(WHAT_ACTIIVTY_TAB);
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Failed to received data of Home Page from server, launching AppTabActivity");
             }
 
             @Override
@@ -451,26 +454,26 @@ public class SplashActivity extends BaseAcitivityTHP {
                 totalSentRequestIcons = download.getRequestNumber();
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_FAILED)) {
-                totalReceivedRequestIcons++;
-                if(totalReceivedRequestIcons >= totalSentRequestIcons) {
+                totalReceivedFailRequestIcons++;
+                if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
-                        sendHandlerMsg(WHAT_MP);
+                        sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
                     }
                 }
 
-                Log.i("Downloading", "Fail :: "+ totalReceivedRequestIcons);
+                Log.i("Downloading", "Fail :: "+ totalReceivedFailRequestIcons);
 
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_SUCCESS)){
-                totalReceivedRequestIcons++;
-                if(totalReceivedRequestIcons >= totalSentRequestIcons) {
+                totalReceivedSuccessRequestIcons++;
+                if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
-                        sendHandlerMsg(WHAT_MP);
+                        sendHandlerMsg(WHAT_MP, totalReceivedSuccessRequestIcons+" Icons are downloaded successfully, making request for metered paywall");
                     }
                 }
-                Log.i("Downloading", "Success :: "+ totalReceivedRequestIcons);
+                Log.i("Downloading", "Success :: "+ totalReceivedFailRequestIcons);
             }
         }
     };

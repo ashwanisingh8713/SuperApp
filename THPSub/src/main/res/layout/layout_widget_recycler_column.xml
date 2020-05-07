@@ -35,6 +35,6 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="@dimen/widget_recyclerView_text_size"
             app:font_path="@string/THP_TundraOffc"
-            app:viewType="M"/>
+            app:textType="M"/>
     </LinearLayout>
 </com.ns.view.layout.NSLinearLayout>

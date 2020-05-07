@@ -1,9 +1,7 @@
 package com.ns.adapter;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -45,13 +43,13 @@ import java.util.Locale;
 public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     private ArrayList<SectionAdapterItem> adapterItems;
-    private String mFrom;
+    private String mPageSource;
     private boolean mIsSubSection;
     private String mSectionId;
     private String mSectionType;
 
-    public SectionContentAdapter(String from, ArrayList<SectionAdapterItem> adapterItems, boolean isSubsection, String sectionId, String sectionType) {
-        this.mFrom = from;
+    public SectionContentAdapter(String pageSource, ArrayList<SectionAdapterItem> adapterItems, boolean isSubsection, String sectionId, String sectionType) {
+        this.mPageSource = pageSource;
         this.adapterItems = adapterItems;
         this.mIsSubSection = isSubsection;
         this.mSectionId = sectionId;
@@ -140,7 +138,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             /*bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
             ArticleBean bean = item.getArticleBean();
             bannerViewHolder.itemView.setOnClickListener(v->{
-                IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                IntentUtil.openDetailActivity(holder.itemView.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
             });*/
 
         }
@@ -290,7 +288,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-                    IntentUtil.openDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                    IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
             });
 
@@ -299,7 +297,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-                    IntentUtil.openDetailActivity(view.getContext(), mFrom, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
+                    IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
             });
 
@@ -359,7 +357,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
-                    IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+                    IntentUtil.openDetailActivity(holder.itemView.getContext(), mPageSource,
                             bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
 
                 }

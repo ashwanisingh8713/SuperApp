@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.netoperation.db.THPDB;
-import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.DefaultTHApiManager;
@@ -31,7 +30,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -39,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class TopTabsFragment extends BaseFragmentTHP {
 
-    private String mFrom;
+    private String mPageSource;
     private String mSectionId;
     private String mSubSectionId;
     private boolean mIsSubsection;
@@ -61,7 +59,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
                                               boolean isSubsection, String subSectionId, String parentSectionName) {
         TopTabsFragment fragment = new TopTabsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("from", from);
+        bundle.putString("pageSource", from);
         bundle.putString("sectionId", sectionId);
         bundle.putString("parentSectionName", parentSectionName);
         bundle.putString("subSectionId", subSectionId);
@@ -81,7 +79,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mFrom = getArguments().getString("from");
+            mPageSource = getArguments().getString("pageSource");
             mSectionId = getArguments().getString("sectionId");
             mSubSectionId = getArguments().getString("subSectionId");
             mParentSectionName = getArguments().getString("parentSectionName");
@@ -97,7 +95,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.tabs);
 
-        if(mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
+        if(mPageSource.equals(NetConstants.PS_ADD_ON_SECTION)) {
             load_PS_ADD_ON_SECTION();
         }
         else {
@@ -120,7 +118,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
                         mSubSectionList = new ArrayList<>();
                         mSubSectionList.add(tableSection.getSection());
                         mSubSectionList.addAll(tableSection.getSubSections());
-                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mPageSource, null, mIsSubsection, mSubSectionList);
 
                         mViewPager.setAdapter(mTopTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
@@ -156,7 +154,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
                     if(mSubSectionId.equals("998")) {
                         mSubSectionList = new ArrayList<>();
                         mSubSectionList.add(sectionList.get(0).getSection());
-                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mPageSource, null, mIsSubsection, mSubSectionList);
                     }
                     else if (mIsSubsection) {
                         SectionBean subSectionBean = new SectionBean();
@@ -172,13 +170,13 @@ public class TopTabsFragment extends BaseFragmentTHP {
                         if (mSubSectionList == null) {
                             mSubSectionList = new ArrayList<>();
                         }
-                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mPageSource, null, mIsSubsection, mSubSectionList);
                         if (mSubSectionList.size() < 5) {
                             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
                         }
                     } else {
                         mTableSectionList = sectionList;
-                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, null);
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mPageSource, mTableSectionList, mIsSubsection, null);
                         if (mTableSectionList.size() < 5) {
                             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
                         }
@@ -195,9 +193,9 @@ public class TopTabsFragment extends BaseFragmentTHP {
         super.onResume();
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
         if(mIsSubsection) {
-            EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, false, mBottomTabIndex, mParentSectionName, ToolbarChangeRequired.SUB_SECTION));
+            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mBottomTabIndex, mParentSectionName, ToolbarChangeRequired.SUB_SECTION));
         } else {
-            EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mBottomTabIndex, null, ToolbarChangeRequired.SECTION));
+            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mBottomTabIndex, null, ToolbarChangeRequired.SECTION));
         }
         Log.i("TabFragment", "onResume() TabIndex = " + mBottomTabIndex + " EventBus Registered, isSubSection :: "+mIsSubsection);
         EventBus.getDefault().register(this);
@@ -230,7 +228,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         }
         else if(tableSection.getType().equalsIgnoreCase("static") && tableSection.getSecId().equalsIgnoreCase("998")) {
             // Opening News Digest Fragment
-            TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mBottomTabIndex, mFrom, mSectionId, true, tableSection.getSecId(), tableSection.getSecName());
+            TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mBottomTabIndex, mPageSource, mSectionId, true, tableSection.getSecId(), tableSection.getSecName());
             FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, topTabsFragment);
         }
     }
@@ -240,7 +238,7 @@ public class TopTabsFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Left Slider Sub-Section Pressed :: " + tableSection.getSecName() + "-" + tableSection.getSecId());
 
         // Opening Sub-Section Fragment
-        TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mBottomTabIndex, mFrom, mSectionId, true, tableSection.getSecId(), tableSection.getParentSecName());
+        TopTabsFragment topTabsFragment = TopTabsFragment.getInstance(mBottomTabIndex, mPageSource, mSectionId, true, tableSection.getSecId(), tableSection.getParentSecName());
         FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, topTabsFragment);
 
     }
@@ -250,10 +248,10 @@ public class TopTabsFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Back Button Pressed :: TabIndex = " + mBottomTabIndex);
 
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mFrom, true, mBottomTabIndex, null, ToolbarChangeRequired.SECTION));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mBottomTabIndex, null, ToolbarChangeRequired.SECTION));
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
-        BackPressCallback backPressCallback = new BackPressImpl(this, mFrom, mBottomTabIndex).onBackPressed();
+        BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mBottomTabIndex).onBackPressed();
         EventBus.getDefault().post(backPressCallback);
 
     }

@@ -70,12 +70,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); //For night mode theme for dialog
         }
-        //Assigning base url
-        if(BuildConfig.IS_PRODUCTION) {
-            ServiceFactory.BASE_URL = BuildConfig.PRODUCTION_BASE_URL;
-        } else {
-            ServiceFactory.BASE_URL = BuildConfig.STATGGING_BASE_URL;
-        }
 
         setContentView(layoutRes());
 

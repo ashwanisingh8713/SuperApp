@@ -12,21 +12,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mindorks.scheduler.Priority;
-import com.mindorks.scheduler.RxPS;
 import com.netoperation.db.TableBookmark;
 import com.netoperation.db.TableBreifing;
-import com.netoperation.db.DaoMP;
 import com.netoperation.db.TableSubscriptionArticle;
-import com.netoperation.db.TableMP;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.DaoUserProfile;
 import com.netoperation.db.TableUserProfile;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.KeyValueModel;
-import com.netoperation.model.MPConfigurationModel;
-import com.netoperation.model.MPCycleDurationModel;
 import com.netoperation.model.MorningBean;
 import com.netoperation.model.PaytmModel;
 import com.netoperation.model.PaytmTransactionStatus;
@@ -40,11 +34,9 @@ import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
-import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.RetentionDef;
-import com.netoperation.util.DefaultPref;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,13 +46,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -223,7 +212,7 @@ public class ApiManager {
                                                 loginId = contact;
                                             }
                                             PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                            PremiumPref.getInstance(context).saveLoginId(loginId);
+                                            PremiumPref.getInstance(context).saveLoginTypeId(loginId);
                                             PremiumPref.getInstance(context).saveLoginPasswd(password);
                                             PremiumPref.getInstance(context).setIsRefreshRequired(true);
                                             PremiumPref.getInstance(context).setIsUserAdsFree(true);
@@ -370,7 +359,7 @@ public class ApiManager {
 
                                     if (context != null) {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).saveLoginTypeId(loginId);
                                         PremiumPref.getInstance(context).saveLoginPasswd(loginPasswd);
                                     }
 
@@ -616,7 +605,7 @@ public class ApiManager {
 
                                     if (context != null) {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).saveLoginTypeId(loginId);
                                         PremiumPref.getInstance(context).saveLoginPasswd(loginPasswd);
                                     }
 
@@ -831,12 +820,10 @@ public class ApiManager {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                     }
                                 }
-
                             }
                             return userProfile;
                         }
                 );
-
     }
 
     public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String userid,
@@ -2066,7 +2053,7 @@ public class ApiManager {
 
                                     if (context != null) {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                        PremiumPref.getInstance(context).saveLoginId(userEmail);
+                                        PremiumPref.getInstance(context).saveLoginTypeId(userEmail);
                                         PremiumPref.getInstance(context).saveLoginPasswd(socialId);
                                         PremiumPref.getInstance(context).setUserLoggedName(userName);
                                         PremiumPref.getInstance(context).saveUserId(userId);
@@ -2130,7 +2117,7 @@ public class ApiManager {
 
                                     if (context != null) {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                        PremiumPref.getInstance(context).saveLoginId(loginId);
+                                        PremiumPref.getInstance(context).saveLoginTypeId(loginId);
                                         PremiumPref.getInstance(context).setIsRefreshRequired(true);
                                         PremiumPref.getInstance(context).setIsUserAdsFree(true);
                                         PremiumPref.getInstance(context).saveUserId(userId);

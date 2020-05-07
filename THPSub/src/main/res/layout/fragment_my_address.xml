@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:maxEms="11"
                 android:text="My Address"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="20sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.6"
                 tools:text="Click flow icon to edit/delete a saved address"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
         </LinearLayout>
@@ -81,7 +81,7 @@
         android:paddingEnd="20dp"
         android:paddingRight="20dp"
         android:textSize="15sp"
-        app:viewType="M"
+        app:textType="M"
         android:letterSpacing="0.04"
         tools:text="Full Address"
         />

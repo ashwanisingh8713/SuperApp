@@ -928,7 +928,7 @@ public class DefaultTHApiManager {
                     //Insert new record into Table in this case, when any Cycle name is found
                     mpTableDao.deleteAll();
                     //Delete startTime
-                    DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
+                    //DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
                     //Delete TableMPReadArticle MP
                     if (db.daoMPReadArticle() != null) {
                         db.daoMPReadArticle().DELETE();
@@ -1041,7 +1041,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{
@@ -1220,7 +1220,7 @@ public class DefaultTHApiManager {
                 .map(value -> {
                     THPDB thpdb = THPDB.getInstance(context);
                     //Delete startTime
-                    DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
+                    //DefaultPref.getInstance(context).setMPStartTimeInMillis(0);
                     //Delete TableMPReadArticle MP
                     if (thpdb.daoMPReadArticle() != null) {
                         thpdb.daoMPReadArticle().DELETE();

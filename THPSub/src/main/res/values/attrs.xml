@@ -5,7 +5,7 @@
         <attr name="font_path" format="string" />
         <attr name="textColor" format="color" />
         <attr name="hintColor" format="color" />
-        <attr name="viewType" format="enum">
+        <attr name="textType" format="enum">
             <enum name="XL" value="0" /> <!-- L DONE-->
             <enum name="L" value="1" /> <!-- M DONE-->
             <enum name="M" value="5" /> <!-- color_static -->

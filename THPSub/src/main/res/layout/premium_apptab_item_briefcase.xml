@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Neomi Rao to replace Kavanaugh on DC Circuit: Trump"
-        app:viewType="M"
+        app:textType="M"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
         app:font_path="@string/THP_FiraSans_SemiBold"

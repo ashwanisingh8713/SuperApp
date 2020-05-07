@@ -65,7 +65,6 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                                 "Clicked",
                                 "Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());
                 FlurryAgent.logEvent("Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());*/
-                Alerts.showToast(view.getContext(), "Explore");
 
             }
         });

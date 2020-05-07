@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/categories_nse_bse_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/currency_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:padding="5dp"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        app:textType="L"
+        android:textSize="14sp" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/tt_selling_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        android:padding="5dp"
+        app:textType="L"
+        android:textSize="14sp" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/tt_buying_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        android:padding="5dp"
+        app:textType="L"
+        android:textSize="14sp" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/bill_selling_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        android:padding="5dp"
+        app:textType="L"
+        android:textSize="14sp" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/bill_buying_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        android:padding="5dp"
+        app:textType="L"
+        android:textSize="14sp" />
+
+</LinearLayout>

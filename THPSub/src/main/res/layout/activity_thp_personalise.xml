@@ -28,7 +28,7 @@
                 android:layout_toRightOf="@+id/backBtn"
                 android:layout_centerInParent="true"
                 android:text="Personalise My Stories"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="18sp"
                 app:font_path="@string/THP_TundraOffc_Bold" />
 
@@ -59,7 +59,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:padding="10dp"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="20sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 

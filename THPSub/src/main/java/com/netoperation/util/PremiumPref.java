@@ -38,13 +38,13 @@ public class PremiumPref {
     /**
      * It saves either email or mobile no.
      */
-    public void saveLoginId(String loginId) {
-        mEditor.putString("loginId", loginId);
+    public void saveLoginTypeId(String loginId) {
+        mEditor.putString("loginTypeId", loginId);
         mEditor.commit();
     }
 
-    public String getLoginId() {
-        return mPreferences.getString("loginId", "");
+    public String getLoginTypeId() {
+        return mPreferences.getString("loginTypeId", "");
     }
 
     /**

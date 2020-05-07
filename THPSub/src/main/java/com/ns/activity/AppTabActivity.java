@@ -27,14 +27,12 @@ import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
-import com.ns.alerts.Alerts;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.AppTabFragment;
-import com.ns.contentfragment.TopTabsFragment;
 import com.ns.loginfragment.AccountCreatedFragment;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
@@ -93,12 +91,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         if(getIntent() != null && getIntent().getExtras()!= null) {
             mFrom = getIntent().getStringExtra("from");
-        }
-
-        if(BuildConfig.IS_PRODUCTION) {
-            ServiceFactory.BASE_URL = BuildConfig.PRODUCTION_BASE_URL;
-        } else {
-            ServiceFactory.BASE_URL = BuildConfig.STATGGING_BASE_URL;
         }
 
 
@@ -219,7 +211,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         // Fetch latest userinfo from server
                         mDisposable.add(ApiManager.getUserInfo(this, BuildConfig.SITEID,
                                 ResUtil.getDeviceId(this), mUserId,
-                                PremiumPref.getInstance(this).getLoginId(),
+                                PremiumPref.getInstance(this).getLoginTypeId(),
                                 PremiumPref.getInstance(this).getLoginPasswd())
                                 .subscribe(val->{
                                     Log.i("", "");

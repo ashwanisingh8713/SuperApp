@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TopTabsAdapter extends FragmentStatePagerAdapter {
 
-    private String mFrom;
+    private String mPageSource;
     private List<TableSection> mSectionList;
     private List<SectionBean> mSubSectionList;
     private boolean mIsSubsection;
@@ -24,9 +24,9 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
 
-    public TopTabsAdapter(FragmentManager fm, String from, List<TableSection> sectionList, boolean isSubsection, List<SectionBean> subSectionList) {
+    public TopTabsAdapter(FragmentManager fm, String pageSource, List<TableSection> sectionList, boolean isSubsection, List<SectionBean> subSectionList) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.mFrom = from;
+        this.mPageSource = pageSource;
         this.mSectionList = sectionList;
         this.mSubSectionList = subSectionList;
         this.mIsSubsection = isSubsection;
@@ -36,9 +36,9 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(mIsSubsection) {
-            return SectionFragment.getInstance(mFrom, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
+            return SectionFragment.getInstance(mPageSource, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
         }
-        return SectionFragment.getInstance(mFrom, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
+        return SectionFragment.getInstance(mPageSource, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
     }
 
     @Override
