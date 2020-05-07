@@ -1,13 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="appName">SuperApp</string>
 
-    <string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
-    <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>
-    <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>
     <string name="THP_TundraOffc">fonts/THP_TundraOffc.ttf</string>
     <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>
     <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
     <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
+
+    <!--<string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
+    <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>
+    <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>-->
+
+    <string name="THP_FiraSans_Bold">fonts/Lato-Bold.ttf</string>
+    <string name="THP_FiraSans_Regular">fonts/Lato-Regular.ttf</string>
+    <string name="THP_FiraSans_SemiBold">fonts/Lato-SemiBold.ttf</string>
 
     <string name="Rs">\u20B9</string>
     <string name="hint_registered_mobile_number"><font size="30">My hint string</font></string>
@@ -117,6 +122,7 @@
     <string name="no_internet_connection">No internet connection</string>
 
     <!--Start Google Analytics screen Name -->
+    <string name="ga_forex_screen">Forex Screen</string>
     <string name="ga_initial_setup_screen">Initial Setup Screen</string>
     <string name="ga_overlay_screen">Overlay Screen</string>
     <string name="ga_sidebar_category">Navigation Drawer</string>
@@ -208,6 +214,19 @@
     <string name="comscore_publisher_secret">7374b487c7c1a5f24aab4967f9818dec</string>
 
 
-
+    <string name="exchange_rates">Exchange Rates</string>
+    <string name="currency_inr">Currency (INR)</string>
+    <string name="tt_selling">TT\nSelling</string>
+    <string name="tt_buying">TT\nBuying</string>
+    <string name="bill_selling">BILL\nSelling</string>
+    <string name="bill_buying">BILL\nBuying</string>
+    <string name="bseFullText">Bombay Stock Exchange (BSE)</string>
+    <string name="nseFullText">National Stock Exchange (NSE)</string>
+    <string name="goldTitle">GOLD (INR/10g)</string>
+    <string name="forexTitle">USD/INR</string>
+    <string name="nseTitle">NIFTY</string>
+    <string name="bseTitle">SENSEX</string>
+    <string name="newsFeedText">Top News</string>
+    <string name="today_rate">Today’s Rate</string>
 
 </resources>

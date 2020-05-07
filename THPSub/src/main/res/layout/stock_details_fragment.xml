@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayoutWindowBG xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/last_update_date"
+         android:paddingLeft="10dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="5dp"
+        app:font_path="@string/THP_FiraSans_Bold"
+        app:textColor="@color/greyColor_1"
+        android:textSize="12sp" />
+
+    <com.ns.view.layout.NSCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/sensexText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                app:font_path="@string/THP_FiraSans_Bold"
+                app:textType="L"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/actual_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:font_path="@string/THP_FiraSans_SemiBold"
+                    app:textType="L"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/changeIcon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp" />
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/changesValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:font_path="@string/THP_FiraSans_SemiBold"
+                    android:paddingLeft="10dp"
+                    android:textSize="18sp"
+                    app:textType="L"/>
+
+                <com.ns.view.text.ArticleTitleTextView
+                    android:id="@+id/percentChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:font_path="@string/THP_FiraSans_SemiBold"
+                    android:paddingLeft="8dp"
+                    android:textSize="18sp"
+                    app:textType="L"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.ns.view.layout.NSCardView>
+
+
+    <com.ns.view.layout.NSCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.ns.view.CustomProgressBar
+                android:id="@+id/progress_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <ListView
+                android:id="@+id/stock_list"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:visibility="gone"></ListView>
+        </LinearLayout>
+    </com.ns.view.layout.NSCardView>
+
+
+</com.ns.view.layout.NSLinearLayoutWindowBG>

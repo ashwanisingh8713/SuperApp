@@ -31,7 +31,7 @@
             android:id="@+id/loadingMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:viewType="XL"
+            app:textType="XL"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="7dp"
             android:text="Thanks for your patience"

@@ -77,7 +77,7 @@
                             android:layout_height="wrap_content"
                             android:alpha="0.6"
                             android:text=""
-                            app:viewType="M"
+                            app:textType="M"
                             android:textSize="14sp"
                             app:font_path="@string/THP_FiraSans_Regular" />
                     </LinearLayout>
@@ -195,7 +195,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Personal Info"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -234,7 +234,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="My Address"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -272,7 +272,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Notification"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -311,7 +311,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Transaction History"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -350,7 +350,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Change Password"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -390,7 +390,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Manage Your Accounts"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -399,7 +399,7 @@
                                     android:layout_height="wrap_content"
                                     android:alpha="0.6"
                                     android:text="Subscribe to get these features free for"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="14sp"
                                     app:font_path="@string/THP_FiraSans_Regular" />
                             </LinearLayout>
@@ -437,7 +437,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="Feedback"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -475,7 +475,7 @@
                                     android:alpha="0.8"
                                     android:maxEms="11"
                                     android:text="@string/sign_out"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="16sp"
                                     app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -484,7 +484,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.6"
-                                    app:viewType="M"
+                                    app:textType="M"
                                     android:textSize="14sp"
                                     app:font_path="@string/THP_FiraSans_Regular" />
                             </LinearLayout>

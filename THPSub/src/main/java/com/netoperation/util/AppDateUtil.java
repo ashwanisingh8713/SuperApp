@@ -10,6 +10,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -252,6 +253,19 @@ public class AppDateUtil {
         } else {
             return "";
         }
+    }
+
+    public static String BL_getDateFormateChange(String dates){
+
+        String lastUpdateDate= null;
+        try {
+            Date d = new SimpleDateFormat("dd-MMM-yyyy HH:mm").parse(dates);
+            lastUpdateDate = new SimpleDateFormat("dd-MMM-yyyy").format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return lastUpdateDate;
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.util.NetConstants;
 import com.ns.contentfragment.AppTabListingFragment;
+import com.ns.contentfragment.IndicesTabFragment;
 import com.ns.contentfragment.TopTabsFragment;
 import com.ns.contentfragment.WebFragment;
 import com.ns.thpremium.R;
@@ -51,7 +52,8 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
             case NetConstants.PS_Url:
                 return WebFragment.getInstance(tabIndex, tabsBean);
             case NetConstants.PS_ADD_ON_SECTION:
-                return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_ADD_ON_SECTION, tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
+                //return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_ADD_ON_SECTION, tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
+                return IndicesTabFragment.getInstance(tabIndex, tabsBean.getGroup());
             case NetConstants.PS_SENSEX:
                 return new Fragment();
         }

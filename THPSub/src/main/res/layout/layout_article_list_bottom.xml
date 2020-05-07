@@ -35,7 +35,7 @@
         android:orientation="horizontal">
 
         <com.ns.view.text.ArticleTitleTextView
-            app:viewType="XS"
+            app:textType="XS"
             android:id="@+id/section_name"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"
@@ -53,7 +53,7 @@
             android:visibility="gone" />
 
         <com.ns.view.text.ArticleTitleTextView
-            app:viewType="XS"
+            app:textType="XS"
             android:id="@+id/textview_time"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"

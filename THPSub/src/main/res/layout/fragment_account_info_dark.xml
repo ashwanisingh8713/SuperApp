@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:maxEms="11"
                 android:text="Account Info"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="18sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.6"
                 tools:text="Edit your account details"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
         </LinearLayout>

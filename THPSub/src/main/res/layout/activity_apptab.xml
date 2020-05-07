@@ -39,7 +39,7 @@
             android:id="@+id/noConnectionTabText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:viewType="S"
+            app:textType="S"
             android:text="No connection"
             android:gravity="center_horizontal"
             android:visibility="gone"

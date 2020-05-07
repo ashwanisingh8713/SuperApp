@@ -32,7 +32,7 @@
                 android:textAlignment="center"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                app:viewType="M"/>
+                app:textType="M"/>
 
             <ImageView
                 android:id="@+id/shareIV"
@@ -79,7 +79,7 @@
             android:text="Caption"
             android:textSize="14sp"
             android:textStyle="italic"
-            app:viewType="M"/>
+            app:textType="M"/>
 
     </LinearLayout>
 

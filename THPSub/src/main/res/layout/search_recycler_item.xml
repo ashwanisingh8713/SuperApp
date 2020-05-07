@@ -18,7 +18,7 @@
         android:paddingRight="10dp"
         android:textColor="@color/search_title"
         android:textSize="14sp"
-        app:viewType="M"
+        app:textType="M"
          />
 
     <LinearLayout

@@ -25,7 +25,7 @@
             android:text="@string/info_home_explore"
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:font_path="@string/THP_FiraSans_Regular"
-            app:viewType="XL"/>
+            app:textType="XL"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_explore"
