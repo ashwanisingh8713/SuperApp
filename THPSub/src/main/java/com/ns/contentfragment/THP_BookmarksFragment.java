@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -20,7 +21,6 @@ import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.AppTabContentModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
-import com.ns.utils.NetUtils;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
@@ -71,7 +71,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
 
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), NetConstants.RECO_bookmarks, mUserId, mPullToRefreshLayout.getRecyclerView());
+        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), NetConstants.API_bookmarks, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setAppEmptyPageListener(this);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
@@ -130,11 +130,14 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
      */
     private void loadData(boolean isOnline) {
 
+
+
         Observable<List<ArticleBean>> observable = null;
 
         if (isOnline && mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
-                    NetConstants.RECO_bookmarks, ""+1000, BuildConfig.SITEID);
+                    NetConstants.API_bookmarks, ""+1000, BuildConfig.SITEID);
+
         }
         else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
@@ -151,7 +154,17 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         .map(value->{
                             List<AppTabContentModel> content = new ArrayList<>();
                             for(ArticleBean bean : value) {
-                                AppTabContentModel model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM);
+                                int viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
+                                if(bean.getGroupType() == null ) {
+                                    continue;
+                                }
+                                else if(bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
+                                }
+                                else if(bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
+                                }
+                                AppTabContentModel model = new AppTabContentModel(viewType);
                                 model.setBean(bean);
                                 content.add(model);
                             }
@@ -163,6 +176,11 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                                 mRecyclerAdapter.clearData();
                                 mRecyclerAdapter.addData(value);
                             }
+                            else {
+                                showEmptyLayout();
+                            }
+                            mPullToRefreshLayout.hideProgressBar();
+                            mPullToRefreshLayout.setRefreshing(false);
                         }, throwable -> {
                             if (throwable instanceof ConnectException
                                     || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException
@@ -177,10 +195,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
                         }, () -> {
 
-                            mPullToRefreshLayout.hideProgressBar();
-                            mPullToRefreshLayout.setRefreshing(false);
 
-                            showEmptyLayout();
 
                         }));
 

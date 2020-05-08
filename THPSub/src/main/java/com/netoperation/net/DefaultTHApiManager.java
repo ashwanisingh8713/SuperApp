@@ -13,7 +13,6 @@ import com.mindorks.scheduler.RxPS;
 import com.netoperation.config.download.FileUtils;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.DaoMP;
-import com.netoperation.db.DaoTemperoryArticle;
 import com.netoperation.db.THPDB;
 import com.netoperation.db.TableMP;
 import com.netoperation.default_db.DaoBanner;
@@ -761,49 +760,48 @@ public class DefaultTHApiManager {
     public static Observable<ArticleBean> isExistInTempArticleArticle(Context context, final String aid) {
         return Observable.just(aid)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<String, ArticleBean>() {
-                    @Override
-                    public ArticleBean apply(String aid) {
-                        ArticleBean requiredBean = new ArticleBean();
-                        requiredBean.setArticleId(aid);
-
-                        THPDB thp = THPDB.getInstance(context);
-
-                        // Check in TableTemperoryArticle
-                        DaoTemperoryArticle daoTableTemperoryArticle = thp.daoTemperoryArticle();
-                        List<TableTemperoryArticle> getAllArticles = daoTableTemperoryArticle.getAllTempBean();
-                        List<ArticleBean> allArticle = new ArrayList<>();
-
-                        for(TableTemperoryArticle tempArticle : getAllArticles) {
-                            allArticle.add(tempArticle.getBean());
-                        }
-
-                        int index = allArticle.indexOf(requiredBean);
-
-                        if (index != -1) {
-                            return allArticle.get(index);
-                        }
-                        return new ArticleBean();
+                .map(articleId->{
+                    ArticleBean requiredBean = new ArticleBean();
+                    requiredBean.setArticleId(aid);
+                    // Check in TableTemperoryArticle
+                    TableTemperoryArticle temperoryArticle = THPDB.getInstance(context).daoTemperoryArticle().getSingleTemperoryBean(aid);
+                    if(temperoryArticle != null) {
+                        return temperoryArticle.getBean();
                     }
+                    return new ArticleBean();
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url) {
+    public static Observable<List<ArticleBean>> getNotificationArticles(Context context) {
+        // Check in TableTemperoryArticle
+        return THPDB.getInstance(context).daoTemperoryArticle().getAllTempBeanObservable()
+                .subscribeOn(Schedulers.io())
+                .map(temperoryTablesArticles -> {
+                    List<ArticleBean> allArticle = new ArrayList<>();
+
+                    for (TableTemperoryArticle tempArticle : temperoryTablesArticles) {
+                        allArticle.add(tempArticle.getBean());
+                    }
+                    return allArticle;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static final Observable<ArticleBean> articleDetailFromServer(Context context, String aid, String url, String entryFrom) {
         url = url + aid;
         Observable<SearchedArticleModel> observable = ServiceFactory.getServiceAPIs().searchArticleByIDFromServer(url);
-        return observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<SearchedArticleModel, ArticleBean>() {
-                    @Override
-                    public ArticleBean apply(SearchedArticleModel model) {
-                        THPDB thp = THPDB.getInstance(context);
-                        if (model.getData().size() > 0) {
-                            TableTemperoryArticle temperoryArticle = new TableTemperoryArticle(aid, model.getData().get(0));
-                            thp.daoTemperoryArticle().insertTemperoryArticle(temperoryArticle);
-                            return model.getData().get(0);
-                        }
-                        return new ArticleBean();
+        return observable.subscribeOn(Schedulers.io())
+                .map(model->{
+                    THPDB thp = THPDB.getInstance(context);
+                    if (model.getData().size() > 0) {
+                        ArticleBean bean = model.getData().get(0);
+                        bean.setGroupType(entryFrom);
+                        TableTemperoryArticle temperoryArticle = new TableTemperoryArticle(aid, bean, entryFrom);
+                        thp.daoTemperoryArticle().insertTemperoryArticle(temperoryArticle);
+                        return model.getData().get(0);
                     }
+                    return new ArticleBean();
                 });
 
     }
@@ -1041,7 +1039,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{

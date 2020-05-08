@@ -636,12 +636,12 @@ public class DetailToolbar extends Toolbar {
 
     @Override
     public void setTitle(CharSequence title) {
-
+        setToolbarTitle(title);
     }
 
     @Override
     public void setTitle(int resId) {
-
+        setToolbarTitle(resId);
     }
 
 
@@ -653,7 +653,10 @@ public class DetailToolbar extends Toolbar {
     }
 
     public void setToolbarTitle(int resId) {
-        mTitleTextView.setText(resId);
+        if (mTitleTextView != null) {
+            mTitleTextView.setText(resId);
+            mTitleTextView.setVisibility(VISIBLE);
+        }
     }
 
     public TextView getTitleView() {

@@ -67,7 +67,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
         mWebView.loadUrl(mUrl);
 
 
-        new WebViewLinkClick().linkClick(mWebView, this, mProgressBar);
+        new WebViewLinkClick(false).linkClick(mWebView, this, mProgressBar);
 
         createAndShowBannerAds();
 

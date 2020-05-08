@@ -162,7 +162,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
                 .subscribe(tableRead -> {
                     Log.i("", "");
                     if (tableRead != null) {
-                        view.setAlpha(.4f);
+                        view.setAlpha(.7f);
                     } else {
                         view.setAlpha(1f);
                     }
@@ -212,14 +212,14 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
 
-    protected void local_bookmarkOperation(Context context, ArticleBean bean, ImageView imageView, int position, String from) {
+    protected void local_bookmarkOperation(Context context, ArticleBean bean, ImageView imageView, int position) {
         ApiManager.isExistInBookmark(context, bean.getArticleId())
                 .subscribe(articleBean->{
-                    bean.setGroupType(from);
+                    bean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
                     if(bean.getArticleId().equals(articleBean.getArticleId())) {
-                        local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, from);
+                        local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
                     } else {
-                        local_createBookmarkFromApp(context, bean, null, imageView, position, from);
+                        local_createBookmarkFromApp(context, bean, null, imageView, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
                     }
                 });
     }

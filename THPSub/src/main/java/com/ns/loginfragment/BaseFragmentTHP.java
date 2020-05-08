@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
 import com.netoperation.db.THPDB;
 import com.netoperation.net.ApiManager;
@@ -36,7 +33,6 @@ import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.text.CustomTextView;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -239,7 +235,7 @@ public abstract class BaseFragmentTHP extends Fragment {
                     });
                 }
             }
-            else if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+            else if (mFrom.equalsIgnoreCase(NetConstants.API_Mystories)) {
                 if(isNoContent) {
                     emptyIcon.setImageResource(R.drawable.ic_empty_watermark);
                     emptyTitleTxt.setVisibility(View.INVISIBLE);
@@ -273,7 +269,7 @@ public abstract class BaseFragmentTHP extends Fragment {
                     });
                 }
             }
-            else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested)) {
+            else if (mFrom.equalsIgnoreCase(NetConstants.API_suggested)) {
                 if(isNoContent) {
                     emptyIcon.setImageResource(R.drawable.ic_empty_suggestion);
                     emptyTitleTxt.setVisibility(View.INVISIBLE);

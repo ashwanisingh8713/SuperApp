@@ -6,31 +6,10 @@
     android:orientation="vertical"
     app:layoutType="Black_Dark">
 
-    <com.ns.view.layout.NSLinearLayout
-        android:id="@+id/backParentLayout"
+    <com.ns.view.DetailToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:orientation="horizontal"
-        app:layoutType="Black_Full"
-        >
-
-        <com.ns.view.btn.NSImageButton
-            app:btnType="arrow_no_line"
-            android:id="@+id/backBtn"
-            style="@style/backBtnStyle"
-            android:layout_gravity="center_vertical" />
-
-        <com.ns.view.text.ArticleTitleTextView
-            android:id="@+id/title_tv_merged"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            app:textType="M"
-            android:textSize="18sp"
-            app:font_path="@string/THP_FiraSans_Regular" />
-    </com.ns.view.layout.NSLinearLayout>
+        android:layout_height="@dimen/toolbar_height"/>
 
     <com.ns.view.CustomTabLayout
         android:id="@+id/tabLayout"

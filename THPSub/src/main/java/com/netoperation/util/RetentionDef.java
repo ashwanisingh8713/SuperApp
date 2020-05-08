@@ -8,11 +8,10 @@ import java.lang.annotation.Retention;
 import static com.netoperation.util.NetConstants.EVENT_CHANGE_ACCOUNT_STATUS;
 import static com.netoperation.util.NetConstants.EVENT_FORGOT_PASSWORD;
 import static com.netoperation.util.NetConstants.EVENT_SIGNUP;
-import static com.netoperation.util.NetConstants.RECO_bookmarks;
-import static com.netoperation.util.NetConstants.RECO_briefcase;
-import static com.netoperation.util.NetConstants.RECO_Mystories;
-import static com.netoperation.util.NetConstants.RECO_suggested;
-import static com.netoperation.util.NetConstants.RECO_trending;
+import static com.netoperation.util.NetConstants.API_bookmarks;
+import static com.netoperation.util.NetConstants.API_briefcase;
+import static com.netoperation.util.NetConstants.API_Mystories;
+import static com.netoperation.util.NetConstants.API_suggested;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public interface RetentionDef {
@@ -22,6 +21,6 @@ public interface RetentionDef {
     @interface userVerificationMode {}
 
     @Retention(SOURCE)
-    @StringDef({RECO_bookmarks, RECO_Mystories, RECO_suggested, RECO_trending, RECO_briefcase})
+    @StringDef({API_bookmarks, API_Mystories, API_suggested, API_briefcase})
     @interface Recomendation {}
 }

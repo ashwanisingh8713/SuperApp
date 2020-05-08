@@ -23,7 +23,7 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
-import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
@@ -414,11 +414,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 //                FlurryAgent.logEvent(getString(R.string.ga_bookmark_screen_button_clicked));
 //                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(MainActivity.this, getString(R.string.ga_action), getString(R.string.ga_bookmark_screen_button_clicked), "Home Fragment");
 
-
-//                    Intent intent = new Intent(AppTabActivity.this, THP_BookmarkActivity.class);
-                    Intent intent = new Intent(AppTabActivity.this, BookmarkMergedActivity.class);
-                    intent.putExtra("userId", mUserId);
-                    startActivity(intent);
+                IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_TAB);
                 changeSortPopUp.dismiss();
             }
         });
@@ -431,6 +427,9 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 NotificationFragment notificationFragment = new NotificationFragment();
                 pushFragmentToBackStack(notificationFragment);
                 SharedPreferenceHelper.putBoolean(getApplicationContext(), Constants.NEW_NOTIFICATION, false);*/
+
+                IntentUtil.openNotificationArticleActivity(AppTabActivity.this);
+
                 changeSortPopUp.dismiss();
             }
         });

@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -829,9 +830,8 @@ public class ApiManager {
     public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String userid,
                                                                             final @RetentionDef.Recomendation String recotype,
                                                                             String size, String siteid) {
-        Observable<RecomendationData> observable = ServiceFactory.getServiceAPIs().getRecommendation(userid, recotype,
-                size, siteid, ReqBody.REQUEST_SOURCE);
-        return observable.subscribeOn(Schedulers.newThread())
+        return ServiceFactory.getServiceAPIs().getRecommendation(userid, recotype, size, siteid, ReqBody.REQUEST_SOURCE)
+                .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             List<ArticleBean> beans = new ArrayList<>();
                             if (value == null) {
@@ -843,12 +843,11 @@ public class ApiManager {
                             }
                             THPDB thp = THPDB.getInstance(context);
                             if (beans != null && beans.size() > 0) {
-                                if (!recotype.equalsIgnoreCase(NetConstants.RECO_TEMP_NOT_EXIST)) {
-                                    thp.dashboardDao().deleteAll(recotype);
-                                }
+                                thp.dashboardDao().deleteAll(recotype);
                                 for (ArticleBean bean : beans) {
-                                    if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
+                                    if (recotype.equalsIgnoreCase(NetConstants.API_bookmarks)) {
                                         bean.setIsBookmark(1);
+                                        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
                                         TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                         thp.bookmarkTableDao().insertBookmark(tableBookmark);
                                     } else {
@@ -878,8 +877,7 @@ public class ApiManager {
     }
 
     public static Observable<List<ArticleBean>> getBookmarkGroupType(final Context context, final String groupType) {
-        Observable<RecomendationData> observable = Observable.just(new RecomendationData());
-        return observable.subscribeOn(Schedulers.newThread())
+        return Observable.just(new RecomendationData()).subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             List<ArticleBean> beans = new ArrayList<>();
                             if (context == null) {
@@ -914,7 +912,7 @@ public class ApiManager {
                                 return beans;
                             }
                             THPDB thp = THPDB.getInstance(context);
-                            if (recotype.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
+                            if (recotype.equalsIgnoreCase(NetConstants.API_bookmarks)) {
                                 List<TableBookmark> tableBookmark = thp.bookmarkTableDao().getAllBookmark();
                                 if (tableBookmark != null) {
                                     for (TableBookmark dash : tableBookmark) {
@@ -973,6 +971,9 @@ public class ApiManager {
                         bean.setThumbnailUrl(articleBean.getThumbnailUrl());
                         bean.setPubDate(articleBean.getPubDate());
                         bean.setPubDateTime(articleBean.getPubDateTime());
+                        bean.setPd(articleBean.getPd());
+                        bean.setOd(articleBean.getOd());
+                        bean.setGmt(articleBean.getGmt());
                         bean.setRecotype(articleBean.getRecotype());
                         bean.setRank(articleBean.getRank());
                         bean.setIsBookmark(articleBean.getIsBookmark());
@@ -1134,7 +1135,7 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
+                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
                             TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (tableBookmark != null) {
                                 ArticleBean articleBean = tableBookmark.getBean();
@@ -1228,7 +1229,7 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.RECO_bookmarks)) {
+                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
                             TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (tableBookmark != null) {
                                 ArticleBean articleBean = tableBookmark.getBean();

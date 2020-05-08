@@ -209,7 +209,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             staticItemHolder.mDummyView.setVisibility(View.GONE);
             // Enabling Weblink click on Lead Text
-            new WebViewLinkClick().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext(), null);
+            new WebViewLinkClick(true).linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext(), null);
         }
     }
 
@@ -278,7 +278,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
 
-                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
+                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
 
                 }
             });
@@ -377,7 +377,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");*/
 
-                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
+                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
                 }
             });
 

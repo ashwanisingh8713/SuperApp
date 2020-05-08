@@ -9,6 +9,9 @@ import com.netoperation.default_db.TableTemperoryArticle;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 
 @Dao
 public interface DaoTemperoryArticle {
@@ -18,6 +21,9 @@ public interface DaoTemperoryArticle {
 
     @Query("SELECT * FROM TableTemperoryArticle")
     List<TableTemperoryArticle> getAllTempBean();
+
+    @Query("SELECT * FROM TableTemperoryArticle")
+    Observable<List<TableTemperoryArticle>> getAllTempBeanObservable();
 
     @Query("SELECT * FROM TableTemperoryArticle WHERE aid = :aid")
     TableTemperoryArticle getSingleTemperoryBean(String aid);

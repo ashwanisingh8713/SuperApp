@@ -51,6 +51,7 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.view.THP_AutoResizeWebview;
+import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BookmarkPremiumViewHolder;
 import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
@@ -74,6 +75,7 @@ import com.taboola.android.utils.SdkDetailsHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -214,6 +216,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
             return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
         }
+        else if(viewType == VT_THD_DEFAULT_ROW) {
+            return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.cardview_article_list, viewGroup, false));
+        }
         return null;
     }
 
@@ -226,15 +232,17 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         if (viewHolder instanceof DashboardViewHolder) {
             premium_ui_Dash_Tren_Row(viewHolder, bean, position);
-        } else if (viewHolder instanceof BookmarkPremiumViewHolder) {
-            premium_ui_Bookmark_Row(viewHolder, bean, position);
-        } else if (viewHolder instanceof BriefcaseViewHolder) {
+        }
+        else if (viewHolder instanceof BriefcaseViewHolder) {
             premium_ui_Briefing_Row(viewHolder, bean, position);
-        } else if (viewHolder instanceof PREMIUM_DetailBannerViewHolder) {
+        }
+        else if (viewHolder instanceof PREMIUM_DetailBannerViewHolder) {
             premium_ui_detail_banner(viewHolder, bean);
-        } else if (viewHolder instanceof PREMIUM_DetailDescriptionWebViewHolder) {
+        }
+        else if (viewHolder instanceof PREMIUM_DetailDescriptionWebViewHolder) {
             premium_ui_detail_description(viewHolder, bean, position);
-        } else if (viewHolder instanceof BriefingHeaderViewHolder) {
+        }
+        else if (viewHolder instanceof BriefingHeaderViewHolder) {
             premium_ui_BriefingHeader(viewHolder, bean);
         }
         else if(viewHolder instanceof DG_DetailBannerViewHolder) {
@@ -266,6 +274,96 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         }
         else if(viewHolder instanceof DG_DetailAudioViewHolder) {
             dg_ui_detail_audio_type_banner(viewHolder,bean);
+        }
+        else if (viewHolder instanceof BookmarkPremiumViewHolder) {
+            premium_ui_Bookmark_Row(viewHolder, bean, position);
+        }
+        else if(viewHolder instanceof ArticlesViewHolder) {
+            defaultBookmark_ArticleData(viewHolder, position);
+        }
+    }
+
+
+    private void defaultBookmark_ArticleData(final RecyclerView.ViewHolder articlesViewHolder, final int position) {
+        ArticlesViewHolder holder = (ArticlesViewHolder) articlesViewHolder;
+        final ArticleBean bean = mContent.get(position).getBean();
+        if (bean != null) {
+
+            // Dims Read article given view
+            dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mArticlesLayout);
+
+            // Checks article's type
+            articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
+
+            // Checks whether article is bookmarked or not, If yes then it updates UI
+            isExistInBookmark(holder.itemView.getContext(), bean, holder.mBookmarkButton);
+
+            String imageUrl = bean.getIm_thumbnail_v2();
+
+            if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
+                imageUrl = bean.getIm_thumbnail();
+            }
+
+            if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
+                holder.mImageParentLayout.setVisibility(View.VISIBLE);
+                holder.mArticleImageView.setVisibility(View.VISIBLE);
+                imageUrl = ContentUtil.getThumbUrl(imageUrl);
+                GlideUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+
+            } else {
+                holder.mArticleImageView.setVisibility(View.GONE);
+                holder.mImageParentLayout.setVisibility(View.GONE);
+            }
+
+
+
+            holder.mArticleTextView.setText(bean.getTi());
+            String publishTime = bean.getGmt();
+            String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillisGMT(publishTime), Locale.ENGLISH);
+
+            holder.mArticleTimeTextView.setText(timeDiff);
+            holder.mArticleSectionName.setText(bean.getSname());
+
+            holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
+
+                    local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
+
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Article Clicked");
+                    IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                            bean.getArticleUrl(), position, bean.getArticleId());
+                }
+            });
+
+            holder.mMultimediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+                    //FlurryAgent.logEvent("Home: " + "Article Clicked");
+                    IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                            bean.getArticleUrl(), position, bean.getArticleId());
+                }
+            });
+
+            holder.mShareArticleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharingArticleUtil.shareArticle(v.getContext(), bean);
+                }
+            });
+
+            //Enabling sliding for view pager
+            //new UniversalTouchListener(mArticleViewHolder.mArticlesLayout, true);
         }
     }
 
@@ -307,11 +405,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Dash_Tren_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         DashboardViewHolder holder = (DashboardViewHolder) viewHolder;
-        if (mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
-            holder.trendingIcon_Img.setVisibility(View.VISIBLE);
-        } else {
-            holder.trendingIcon_Img.setVisibility(View.GONE);
-        }
+
+        holder.trendingIcon_Img.setVisibility(View.GONE);
 
         GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
@@ -430,7 +525,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     SharingArticleUtil.shareArticle(v.getContext(), bean);
                 }
         );
-
 
         holder.itemView.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
@@ -624,7 +718,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
-        new WebViewLinkClick().linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
+        new WebViewLinkClick(true).linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
 
         holder.mLeadTxt.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getArticletitle(), true),
                 "text/html", "UTF-8", null);
@@ -633,7 +727,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), null);
+        new WebViewLinkClick(true).linkClick(holder.webview, holder.itemView.getContext(), null);
 
         holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
                 "text/html", "UTF-8", null);
@@ -650,7 +744,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     private void premium_ui_BriefingHeader(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         BriefingHeaderViewHolder holder = (BriefingHeaderViewHolder) viewHolder;
         holder.userName_Txt.setText(bean.getTitle());
-        if (mFrom.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        if (mFrom.equalsIgnoreCase(NetConstants.API_Mystories)) {
             holder.yourEditionFor_Txt.setText(bean.getSectionName());
             holder.yourEditionFor_Txt.setVisibility(View.VISIBLE);
             holder.editionBtn_Txt.setVisibility(View.GONE);
@@ -660,7 +754,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             holder.editionBtn_Txt.setVisibility(View.VISIBLE);
             holder.yourEditionFor_Txt.setVisibility(View.VISIBLE);
             holder.yourEditionFor_Txt.setText("Today's Briefing");
-        } else if (mFrom.equalsIgnoreCase(NetConstants.RECO_suggested) || mFrom.equalsIgnoreCase(NetConstants.RECO_trending)) {
+        } else if (mFrom.equalsIgnoreCase(NetConstants.API_suggested)) {
             holder.yourEditionFor_Txt.setText(bean.getSectionName());
             holder.yourEditionFor_Txt.setVisibility(View.VISIBLE);
             holder.editionBtn_Txt.setVisibility(View.GONE);
@@ -952,7 +1046,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick().linkClick(holder.webview, holder.itemView.getContext(), null);
+        new WebViewLinkClick(true).linkClick(holder.webview, holder.itemView.getContext(), null);
 
 
 
@@ -1192,9 +1286,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 });
     }
 
-
-
-
     private void premium_updateBookmarkFavLike(ProgressBar bar, ImageView imageView, final Context context, int position, ArticleBean bean, String from) {
         if (bar != null) {
             bar.setVisibility(View.VISIBLE);
@@ -1268,7 +1359,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                                 imageView.setEnabled(true);
                                             }
                                             // If user is in bookmark then item should be removed.
-                                            if (mFrom.equals(NetConstants.RECO_bookmarks)) {
+                                            if (mFrom.equals(NetConstants.API_bookmarks)) {
                                                 deletedContentModel = mContent.remove(position);
                                                 deletedPosition = position;
                                                 notifyItemRemoved(position);
@@ -1302,7 +1393,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 //                                            notifyDataSetChanged();
                                         } else if (fav == NetConstants.LIKE_NO) {
 //                                    Alerts.showToastAtCenter(context, "Show fewer stories like this.");
-                                            if (mFrom.equals(NetConstants.RECO_bookmarks)) {
+                                            if (mFrom.equals(NetConstants.API_bookmarks)) {
                                                 notifyItemChanged(position);
 //                                                notifyDataSetChanged();
                                             } else {

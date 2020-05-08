@@ -21,10 +21,12 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -158,6 +160,9 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         }
         else if(mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             loadBookmarkData();
+        }
+        else if(mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
+            loadNotificationData();
         }
         else {
             loadDataFromPremium();
@@ -374,7 +379,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                                 viewPagerSetup(mHomeArticleList, mFrom);
                                 // Setting current position of ViewPager
                                 setCurrentPage(mClickedPosition, false);
-                                        hideProgressDialog();
+                                hideProgressDialog();
                                 Log.i(TAG, "Detail Pager SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: subscribe - DB");
                             },
                                     throwable -> {
@@ -388,6 +393,27 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 }));
 
     }
+
+
+    private void loadNotificationData() {
+        mDisposable.add(DefaultTHApiManager.getNotificationArticles(getActivity()).map(articleBeanList -> {
+            if (mHomeArticleList == null) {
+                mHomeArticleList = new ArrayList<>();
+            }
+            mHomeArticleList.addAll(articleBeanList);
+            viewPagerSetup(mHomeArticleList, mFrom);
+            // Setting current position of ViewPager
+            setCurrentPage(mClickedPosition, false);
+            hideProgressDialog();
+            return "";
+        })
+         .subscribe(isEmpty -> {
+                    Log.i("", "");
+            }, throwable -> {
+                    Log.i("", "");
+            }));
+    }
+
 
     /**
      * ViewPager Adapter Initialisation and Assiging

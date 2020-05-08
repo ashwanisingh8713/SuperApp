@@ -40,8 +40,11 @@ import io.reactivex.schedulers.Schedulers;
 public class WebViewLinkClick {
 
 
-    public WebViewLinkClick() {
+    private boolean mIsDetailPage;
 
+
+    public WebViewLinkClick(boolean isDetailPage) {
+        this.mIsDetailPage = isDetailPage;
     }
 
     public void linkClick(WebView webView, Context context, ProgressBar mProgressBar) {
@@ -80,6 +83,9 @@ public class WebViewLinkClick {
 
                 if(aid > 0) {
                     IntentUtil.openDetailAfterSearchInActivity(context, "" + aid, url);
+                }
+                else if(mIsDetailPage) {
+                    IntentUtil.openUrlInBrowser(context, url);
                 }
                 else {
                     view.loadUrl(url);

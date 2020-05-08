@@ -63,6 +63,6 @@ public class WebFragment extends BaseFragmentTHP {
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);
-        new WebViewLinkClick().linkClick(mWebView, getActivity(), mProgressBar);
+        new WebViewLinkClick(false).linkClick(mWebView, getActivity(), mProgressBar);
     }
 }

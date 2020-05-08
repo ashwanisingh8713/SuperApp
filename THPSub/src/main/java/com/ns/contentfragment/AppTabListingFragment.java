@@ -96,10 +96,10 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                 mPageType = NetConstants.BREIFING_ALL;
             }
             else if(mPageSource.equals(NetConstants.PS_My_Stories)) {
-                mPageType = NetConstants.RECO_Mystories;
+                mPageType = NetConstants.API_Mystories;
             }
             else if(mPageSource.equals(NetConstants.PS_Suggested)) {
-                mPageType = NetConstants.RECO_suggested;
+                mPageType = NetConstants.API_suggested;
             }
         }
 
@@ -375,22 +375,14 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         ArticleBean profileArticleBean = new ArticleBean();
         if (isBriefingPage()) {
             profileArticleBean.setSectionName("All Editions");
-        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        } else if (mPageType.equalsIgnoreCase(NetConstants.API_Mystories)) {
             profileArticleBean.setSectionName("Yours personalised stories");
-        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_suggested)) {
+        } else if (mPageType.equalsIgnoreCase(NetConstants.API_suggested)) {
             profileArticleBean.setSectionName("Your suggested stories");
-//            title = "Your suggested stories";
             profileArticleBean.setSectionName("Your suggested stories");
-        } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_trending)) {
-            profileArticleBean.setSectionName("Trending now");
-            title = "Trending now";
         }
-        if(BuildConfig.DEBUG) {
-//            profileArticleBean.setTitle(title + " :: " + getString(R.string.type_device));
-            profileArticleBean.setTitle(title);
-        } else {
-            profileArticleBean.setTitle(title);
-        }
+
+        profileArticleBean.setTitle(title);
         mProfileNameModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_HEADER, "userHeader");
         mProfileNameModel.setBean(profileArticleBean);
     }
@@ -651,7 +643,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         if(isBriefingPage()) {
             from = "Briefing";
             briefingEventCapture(pageStartTime, pageEndTime);
-        } else if(mPageType != null && mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        } else if(mPageType != null && mPageType.equalsIgnoreCase(NetConstants.API_Mystories)) {
             from = "My Stories";
         } else {
             from = mPageType;

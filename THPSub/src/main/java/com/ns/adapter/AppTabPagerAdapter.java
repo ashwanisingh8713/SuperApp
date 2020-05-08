@@ -40,7 +40,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     private Fragment getPageSourceTypeFragment(TabsBean tabsBean, int tabIndex) {
         switch (tabsBean.getPageSource()) {
             case NetConstants.GROUP_DEFAULT_SECTIONS:
-                return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_GROUP_DEFAULT_SECTIONS, NetConstants.RECO_HOME_TAB, false, "", null);
+                return TopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), NetConstants.RECO_HOME_TAB, false, "", null);
             case NetConstants.PS_Briefing:
             case NetConstants.PS_My_Stories:
             case NetConstants.PS_Suggested:
@@ -51,8 +51,7 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
             case NetConstants.PS_Url:
                 return WebFragment.getInstance(tabIndex, tabsBean);
             case NetConstants.PS_ADD_ON_SECTION:
-                //return TopTabsFragment.getInstance(tabIndex, NetConstants.PS_ADD_ON_SECTION, tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
-                return IndicesTabFragment.getInstance(tabIndex, tabsBean.getGroup());
+                return TopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
             case NetConstants.PS_SENSEX:
                 return IndicesTabFragment.getInstance(tabIndex, tabsBean.getGroup());
         }

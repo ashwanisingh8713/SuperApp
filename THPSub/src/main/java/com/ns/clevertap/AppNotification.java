@@ -15,6 +15,7 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
+import com.ns.activity.NotificationClickActivity;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 
@@ -87,7 +88,7 @@ public class AppNotification {
         //notification.contentView = collapsedView;
         //notification.bigContentView = expandedView;
 
-        Intent notificationIntent = new Intent(context, NotificationActivity.class);
+        Intent notificationIntent = new Intent(context, NotificationClickActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 

@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
 import com.netoperation.model.ArticleBean;
 
 @Entity(tableName ="TableTemperoryArticle")
-public class TableTemperoryArticle {
+public class
+TableTemperoryArticle {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -27,10 +28,21 @@ public class TableTemperoryArticle {
     @ColumnInfo(name ="bean")
     private ArticleBean bean;
 
+    private String entryFrom;
 
-    public TableTemperoryArticle(String aid, ArticleBean bean) {
+
+    public TableTemperoryArticle(String aid, ArticleBean bean, String entryFrom) {
         this.aid = aid;
         this.bean = bean;
+        this.entryFrom = entryFrom;
+    }
+
+    public String getEntryFrom() {
+        return entryFrom;
+    }
+
+    public void setEntryFrom(String entryFrom) {
+        this.entryFrom = entryFrom;
     }
 
     public String getAid() {

@@ -12,9 +12,8 @@ import com.ns.adapter.MergedBookmarkPagerAdapter;
 import com.ns.contentfragment.AppTabFragment;
 import com.ns.thpremium.R;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.view.text.CustomTextView;
 
-public class BookmarkMergedActivity extends BaseAcitivityTHP {
+public class BookmarkActivity extends BaseAcitivityTHP {
 
     String mUserId = "";
 
@@ -22,7 +21,7 @@ public class BookmarkMergedActivity extends BaseAcitivityTHP {
     private ViewPager bookmarkViewPager;
     private MergedBookmarkPagerAdapter pagerAdapter;
 
-    private int mBookmarkDisplay = NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_TAB;
+    private String mGroupTypeDisplay ;
 //    private int mBookmarkDisplay = NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE;
 
 
@@ -35,21 +34,22 @@ public class BookmarkMergedActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mGroupTypeDisplay = getIntent().getExtras().getString("groupType");
+
         if(getIntent() != null) {
             mUserId = getIntent().getStringExtra("userId");
         }
 
-        CustomTextView title_tv = findViewById(R.id.title_tv_merged);
-        title_tv.setText("Read Later");
+        getDetailToolbar().setTitle("Read Later");
 
         bookmarkViewPager = findViewById(R.id.bookmarkViewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        if(mBookmarkDisplay == NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE) {
+        if(mGroupTypeDisplay.equals(NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE)) {
             tabLayout.setVisibility(View.GONE);
         }
 
-        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), mUserId, mIsDayTheme, mBookmarkDisplay);
+        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), mUserId, mIsDayTheme, mGroupTypeDisplay);
         bookmarkViewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(bookmarkViewPager, true);
@@ -67,15 +67,15 @@ public class BookmarkMergedActivity extends BaseAcitivityTHP {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
-                pagerAdapter.SetOnSelectView(BookmarkMergedActivity.this, tabLayout, pos);
+                pagerAdapter.SetOnSelectView(BookmarkActivity.this, tabLayout, pos);
                 bookmarkViewPager.setCurrentItem(pos);
-                THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkMergedActivity.this, "Read Later : " + tab.getText(), AppTabFragment.class.getSimpleName());
+                THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkActivity.this, "Read Later : " + tab.getText(), AppTabFragment.class.getSimpleName());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
-                pagerAdapter.SetUnSelectView(BookmarkMergedActivity.this, tabLayout, pos);
+                pagerAdapter.SetUnSelectView(BookmarkActivity.this, tabLayout, pos);
             }
 
             @Override
@@ -83,13 +83,6 @@ public class BookmarkMergedActivity extends BaseAcitivityTHP {
 
             }
         });
-
-        // Back button click listener
-        findViewById(R.id.backBtn).setOnClickListener(v->{
-            finish();
-        });
-
-
 
     }
 

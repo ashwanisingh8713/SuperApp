@@ -1,4 +1,4 @@
-package com.ns.clevertap;
+package com.ns.activity;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationClickActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class NotificationActivity extends AppCompatActivity {
                     IntentUtil.openSubscriptionPageOfferWise(this,
                             THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE, planOffer);
                 } else {
-                    IntentUtil.openSubscriptionActivity(NotificationActivity.this,
+                    IntentUtil.openSubscriptionActivity(NotificationClickActivity.this,
                             THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE);
                 }
             }else{
@@ -94,7 +94,7 @@ public class NotificationActivity extends AppCompatActivity {
             //For notification clicked event
             CleverTapAPI.setAppForeground(true);
             try {
-                CleverTapAPI.getDefaultInstance(NotificationActivity.this).pushNotificationClickedEvent(intent.getExtras());
+                CleverTapAPI.getDefaultInstance(NotificationClickActivity.this).pushNotificationClickedEvent(intent.getExtras());
             } catch (Throwable t) {
                 // Ignore
             }
@@ -120,7 +120,7 @@ public class NotificationActivity extends AppCompatActivity {
                     IntentUtil.openSubscriptionPageOfferWise(this,
                             THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE, planOffer);
                 } else {
-                    IntentUtil.openSubscriptionActivity(NotificationActivity.this,
+                    IntentUtil.openSubscriptionActivity(NotificationClickActivity.this,
                             THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE);
                 }
             } else {

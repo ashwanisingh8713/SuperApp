@@ -15,9 +15,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -228,7 +226,7 @@ public class CleverTapUtil {
         final HashMap<String, Object> map = new HashMap<>();
 
         map.put("ArticleId", articleId);
-        if(from.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
+        if(from.equalsIgnoreCase(NetConstants.API_Mystories)) {
             from = "My Stories";
         }
         map.put(THPConstants.CT_KEY_AppSections, from);

@@ -176,7 +176,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     private void loadRecyclerData() {
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
-                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
+                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
             THPDB thpdb = THPDB.getInstance(getActivity());
             DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
             mDisposable.add(daoRead.isArticleRestricted(mArticleId)
@@ -356,7 +357,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
-                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)|| mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
+                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
             mArticleBean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
             mArticleBean.setIsBookmark(1);
             // To Create at App end

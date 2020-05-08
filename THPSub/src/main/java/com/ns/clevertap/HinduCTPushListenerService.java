@@ -6,14 +6,18 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.clevertap.android.sdk.CleverTapAPI;
-import com.clevertap.android.sdk.CleverTapInstanceConfig;
 import com.clevertap.android.sdk.FcmMessageListenerService;
 import com.clevertap.android.sdk.NotificationInfo;
 import com.google.firebase.messaging.RemoteMessage;
+import com.netoperation.db.THPDB;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
+import com.netoperation.util.NetConstants;
 import com.ns.utils.THPConstants;
 
 import java.util.Map;
+
+import io.reactivex.schedulers.Schedulers;
 
 public class HinduCTPushListenerService extends FcmMessageListenerService {
 
@@ -99,10 +103,19 @@ public class HinduCTPushListenerService extends FcmMessageListenerService {
             int article_id = 0;
             try {
                 article_id = Integer.parseInt(arguments.get("ns_article_id"));
+                final int artId = article_id;
+
+                THPDB.getInstance(getApplicationContext()).daoConfiguration().getConfigurationSingle()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe((tableConfiguration, throwable) -> {
+                            DefaultTHApiManager.articleDetailFromServer(getApplicationContext(), ""+artId, tableConfiguration.getSearchOption().getUrlId(), NetConstants.GROUP_NOTIFICATION);
+                        });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            final int artId = article_id;
+
+
+
 
             /*NotificationBean bean = new NotificationBean(artId, actionURL, title, description,
                     imageUrl, sectionName, pub_date, type, isHasBody, System.currentTimeMillis(),

@@ -69,7 +69,10 @@
         <activity android:name="com.ns.activity.CustomizeHomeScreenActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>
-        <activity android:name="com.ns.activity.BookmarkMergedActivity"
+        <activity android:name="com.ns.activity.BookmarkActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"/>
+        <activity android:name="com.ns.activity.NotificationArticleActivity"
             android:screenOrientation="portrait"
             android:configChanges="uiMode"/>
         <activity android:name="com.ns.activity.SearchActivity"
@@ -96,7 +99,7 @@
             android:configChanges="uiMode|keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name="com.ns.clevertap.NotificationActivity" />
+        <activity android:name="com.ns.activity.NotificationClickActivity" />
 
         <!--Activities provided by Facebook-->
         <activity android:name="com.facebook.FacebookActivity"

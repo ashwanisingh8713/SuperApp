@@ -37,9 +37,10 @@ import com.netoperation.util.DefaultPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BecomeMemberActivity;
-import com.ns.activity.BookmarkMergedActivity;
+import com.ns.activity.BookmarkActivity;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.activity.DemoActivity;
+import com.ns.activity.NotificationArticleActivity;
 import com.ns.activity.SearchActivity;
 import com.ns.activity.AppSettingActivity;
 import com.ns.activity.SignInAndUpActivity;
@@ -678,7 +679,7 @@ public class IntentUtil {
                                                        .subscribe((tableConfiguration, throwable) -> {
                                                        // Making Server request to get Article from server
                                                        // and Saving into DB, with SectionName = "tempSec"
-                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId());
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId(), "tempSec");
                                                        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
                                                                .subscribe(new Consumer<ArticleBean>() {
                                                                               @Override
@@ -880,7 +881,7 @@ public class IntentUtil {
     }
 
     public static void openBookmarkActivity(Context context, String from, String userId) {
-        Intent intent = new Intent(context, BookmarkMergedActivity.class);
+        Intent intent = new Intent(context, BookmarkActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("userId", userId);
         context.startActivity(intent);
@@ -959,5 +960,15 @@ public class IntentUtil {
     }
 
 
+    public static void openBookmarkActivity(Context context, String groupType) {
+        Intent intent = new Intent(context, BookmarkActivity.class);
+        intent.putExtra("groupType", groupType);
+        context.startActivity(intent);
+    }
+
+    public static void openNotificationArticleActivity(Context context) {
+        Intent intent = new Intent(context, NotificationArticleActivity.class);
+        context.startActivity(intent);
+    }
 
 }

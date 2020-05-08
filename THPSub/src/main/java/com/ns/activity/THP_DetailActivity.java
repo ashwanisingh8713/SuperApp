@@ -2,7 +2,6 @@ package com.ns.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,15 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.main.AppAds;
-import com.netoperation.db.DaoMP;
-import com.netoperation.db.THPDB;
-import com.netoperation.default_db.DaoMPReadArticle;
 import com.netoperation.default_db.TableMPReadArticle;
-import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
-import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.alerts.Alerts;
@@ -82,7 +76,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
             getDetailToolbar().showBreifingDetailIcons();
         }
-        else if (mFrom != null && NetConstants.RECO_bookmarks.equalsIgnoreCase(mFrom)) {
+        else if (mFrom != null && NetConstants.API_bookmarks.equalsIgnoreCase(mFrom)) {
             getDetailToolbar().showBookmarkPremiumDetailIcons(true);
         }
         // (mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK))
