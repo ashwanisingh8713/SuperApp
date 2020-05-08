@@ -28,6 +28,7 @@ import com.netoperation.model.KeyValueModel;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.helper.OtpReceivedInterface;
@@ -223,7 +224,7 @@ public class OTPVerificationFragment extends BaseFragmentTHP implements GoogleAp
 
         LinearLayout shadowLayout = view.findViewById(R.id.shadowLayout);
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_white_r12_s6_wh200_ltr));
         } else {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_dark_r12_s6_wh200_ltr));
@@ -272,7 +273,7 @@ public class OTPVerificationFragment extends BaseFragmentTHP implements GoogleAp
 
         // Verify button click listener
         view.findViewById(R.id.verify_Txt).setOnClickListener(v-> {
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         validateOTP(pinEntry.getText().toString(), emailOrContact);
                     } else {
                         noConnectionSnackBar(getView());
@@ -282,7 +283,7 @@ public class OTPVerificationFragment extends BaseFragmentTHP implements GoogleAp
 
         // Resend button click listener
         view.findViewById(R.id.resend_Txt).setOnClickListener(v-> {
-                 if(mIsOnline) {
+                 if(BaseAcitivityTHP.sIsOnline) {
                      reSendSignupOtpReq();
                      startSMSListener();
                  } else {

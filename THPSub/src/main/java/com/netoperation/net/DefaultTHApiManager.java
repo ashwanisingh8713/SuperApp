@@ -475,7 +475,7 @@ public class DefaultTHApiManager {
      * @param lut
      * @return
      */
-    public static Disposable getSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
+    public static Disposable getSectionContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
         final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
@@ -486,7 +486,7 @@ public class DefaultTHApiManager {
                         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
                         if (page == 1) {
                             daoSectionArticle.deleteSection(secId);
-                            Log.i(TAG, "getSectionContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
+                            Log.i(TAG, "getSectionContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
                         daoSectionArticle.insertSectionArticle(sectionArticles);
@@ -506,17 +506,17 @@ public class DefaultTHApiManager {
                     if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
-                    Log.i(TAG, "getSectionContent :: subscribe");
+                    Log.i(TAG, "getSectionContentFromServer :: subscribe");
                 },
                         throwable -> {
                     if (requestCallback != null) {
-                        requestCallback.onError(throwable, "getSectionContent");
+                        requestCallback.onError(throwable, "getSectionContentFromServer");
                     }
-                            Log.i(NetConstants.TAG_ERROR, "getSectionContent() :: " + throwable);
+                            Log.i(NetConstants.TAG_ERROR, "getSectionContentFromServer() :: " + throwable);
                 }, () -> {
-                    Log.i(TAG, "getSectionContent :: completed");
+                    Log.i(TAG, "getSectionContentFromServer :: completed");
                     if (requestCallback != null) {
-                        requestCallback.onComplete("getSectionContent");
+                        requestCallback.onComplete("getSectionContentFromServer");
                     }
                 });
     }
@@ -531,7 +531,7 @@ public class DefaultTHApiManager {
      * @param lut
      * @return
      */
-    public static Disposable getSubSectionContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
+    public static Disposable getSubSectionContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
         final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
@@ -539,13 +539,21 @@ public class DefaultTHApiManager {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
                     if (value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
                         THPDB thpdb = THPDB.getInstance(context);
-                        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
+                        /*DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
                         if (page == 1) {
                             daoSubSectionArticle.deleteSection(secId);
-                            Log.i(TAG, "getSubSectionContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
+                            Log.i(TAG, "getSubSectionContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
-                        daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
+                        daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);*/
+
+                        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
+                        if (page == 1) {
+                            daoSectionArticle.deleteSection(secId);
+                            Log.i(TAG, "getSubSectionContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
+                        }
+                        TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
+                        daoSectionArticle.insertSectionArticle(sectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
                             final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
@@ -562,16 +570,16 @@ public class DefaultTHApiManager {
                     if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
-                    Log.i(TAG, "getSubSectionContent :: subscribe");
+                    Log.i(TAG, "getSubSectionContentFromServer :: subscribe");
                 }, throwable -> {
                     if (requestCallback != null) {
-                        requestCallback.onError(throwable, "getSubSectionContent");
+                        requestCallback.onError(throwable, "getSubSectionContentFromServer");
                     }
-                    Log.i(NetConstants.TAG_ERROR, "getSubSectionContent() :: " + throwable);
+                    Log.i(NetConstants.TAG_ERROR, "getSubSectionContentFromServer() :: " + throwable);
                 }, () -> {
-                    Log.i(TAG, "getSubSectionContent :: completed");
+                    Log.i(TAG, "getSubSectionContentFromServer :: completed");
                     if (requestCallback != null) {
-                        requestCallback.onComplete("getSubSectionContent");
+                        requestCallback.onComplete("getSubSectionContentFromServer");
                     }
                 });
     }
@@ -584,7 +592,7 @@ public class DefaultTHApiManager {
      * @param page
      * @return
      */
-    public static Disposable getNewsDigestContent(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page) {
+    public static Disposable getNewsDigestContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page) {
         final String url = BuildConfig.NEWS_DIGEST_URL;
         return ServiceFactory.getServiceAPIs().newsDigest(url)
                 .subscribeOn(Schedulers.newThread())
@@ -594,7 +602,7 @@ public class DefaultTHApiManager {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
                         daoSubSectionArticle.deleteSection(secId);
-                        Log.i(TAG, "getNewsDigestContent :: DELETED ALL ARTICLES OF SecId :: " + secId);
+                        Log.i(TAG, "getNewsDigestContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
                         daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
 
@@ -613,16 +621,16 @@ public class DefaultTHApiManager {
                     if (requestCallback != null) {
                         requestCallback.onNext(value);
                     }
-                    Log.i(TAG, "getNewsDigestContent :: subscribe");
+                    Log.i(TAG, "getNewsDigestContentFromServer :: subscribe");
                 }, throwable -> {
                     if (requestCallback != null) {
-                        requestCallback.onError(throwable, "getNewsDigestContent");
+                        requestCallback.onError(throwable, "getNewsDigestContentFromServer");
                     }
-                    Log.i(NetConstants.TAG_ERROR, "getNewsDigestContent() :: " + throwable);
+                    Log.i(NetConstants.TAG_ERROR, "getNewsDigestContentFromServer() :: " + throwable);
                 }, () -> {
-                    Log.i(TAG, "getNewsDigestContent :: completed");
+                    Log.i(TAG, "getNewsDigestContentFromServer :: completed");
                     if (requestCallback != null) {
-                        requestCallback.onComplete("getNewsDigestContent");
+                        requestCallback.onComplete("getNewsDigestContentFromServer");
                     }
                 });
     }
@@ -1033,7 +1041,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{

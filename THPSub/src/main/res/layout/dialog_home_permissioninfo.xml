@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The Hindu"
-            app:viewType="M"
+            app:textType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Location"
-            app:viewType="M"
+            app:textType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 

@@ -32,6 +32,17 @@
             android:id="@+id/parentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/noConnectionTabText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textType="S"
+            android:text="No connection"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
             />
 
 

@@ -306,7 +306,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         } else {
             SUBSCRIPTION_WEB_URL = BuildConfig.STATGGING_SUBSCRIPTION_WEB_URL;
         }
-        if (!mIsDayTheme) {
+        if (!sIsDayTheme) {
             SUBSCRIPTION_WEB_URL += "true";
         }
 

@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.SignInAndUpActivity;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
@@ -212,7 +213,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 tc_Txt, R.color.blueColor_1, new TextSpanCallback() {
                     @Override
                     public void onTextSpanClick() {
-                        if(!mIsOnline) {
+                        if(!BaseAcitivityTHP.sIsOnline) {
                             Alerts.noConnectionSnackBar(getView(), (AppCompatActivity)getActivity());
                             return;
                         }
@@ -223,7 +224,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                     }
                 });
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             passwordVisible_Btn.setImageResource(R.drawable.ic_show_password);
         } else {
             passwordVisible_Btn.setImageResource(R.drawable.ic_show_password_dark);
@@ -235,7 +236,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 password_Et.setTransformationMethod(new PasswordTransformationMethod());
                 //Set Selection cursor to last character
                 password_Et.setSelection(password_Et.getText().length());
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_show_password);
                 } else {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_show_password_dark);
@@ -243,7 +244,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 mIsPasswdVisible = false;
             } else {
                 password_Et.setTransformationMethod(null);
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_hide_password);
                 } else {
                     passwordVisible_Btn.setImageResource(R.drawable.ic_hide_password_dark);
@@ -256,7 +257,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Sign In button click listener
         signIn_Txt.setOnClickListener(v -> {
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 Alerts.noConnectionSnackBar(getView(), (AppCompatActivity)getActivity());
                 return;
             }
@@ -432,7 +433,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
         // Forgot Password button click listener
         view.findViewById(R.id.forgotPassword_Txt).setOnClickListener(v -> {
 
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -483,7 +484,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Google Sign in click listener
         googleBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -497,7 +498,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Facebook Sign in click listener
         facebookBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
@@ -510,7 +511,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Twitter Sign in click listener
         tweeterBtn.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }

@@ -45,7 +45,7 @@ public class AccountCreatedFragment extends BaseFragmentTHP {
 
         LinearLayout shadowLayout = view.findViewById(R.id.shadowLayout);
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_white_r12_s6_wh200_ltr));
         } else {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_dark_r12_s6_wh200_ltr));

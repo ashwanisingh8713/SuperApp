@@ -21,6 +21,7 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -242,7 +243,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v-> {
 
-                    if (mIsOnline) {
+                    if (BaseAcitivityTHP.sIsOnline) {
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
                         if(mMainActivity.isOptionsChanged() && isHomeArticleOptionScreenShown) {
                             mMainActivity.getHomeDataFromServer();
@@ -254,7 +255,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                             getActivity().finish();
                         }
                     }
-                    else if (!mIsOnline) {
+                    else if (!BaseAcitivityTHP.sIsOnline) {
                         noConnectionSnackBar(getView());
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {

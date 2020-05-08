@@ -17,6 +17,7 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.AppTabContentAdapter;
 import com.ns.callbacks.BackPressCallback;
@@ -49,7 +50,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener
-        , OnEditionBtnClickListener, THP_AppEmptyPageListener, BaseFragmentTHP.BaseFragmentListener {
+        , OnEditionBtnClickListener, THP_AppEmptyPageListener, BaseFragmentTHP.EmptyViewClickListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private AppTabContentAdapter mRecyclerAdapter;
@@ -193,7 +194,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
      */
     private void registerPullToRefresh() {
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 mPullToRefreshLayout.setRefreshing(false);
                 return;
@@ -215,7 +216,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
             mPullToRefreshLayout.showSmoothProgressBar();
         }
         hideEmptyLayout();
-        loadData(mIsOnline);
+        loadData(BaseAcitivityTHP.sIsOnline);
     }
 
 
@@ -447,7 +448,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     });
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -474,7 +475,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -485,7 +486,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(!mIsOnline) {
+                        if(!sIsOnline) {
                             noConnectionSnackBar(getView());
                             return;
                         }
@@ -506,7 +507,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     });
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -518,7 +519,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(!mIsOnline) {
+                        if(!sIsOnline) {
                             noConnectionSnackBar(getView());
                             return;
                         }
@@ -571,7 +572,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                                 }
 
                                 emptyBtnTxt.setOnClickListener(v->{
-                                    if(!mIsOnline) {
+                                    if(!BaseAcitivityTHP.sIsOnline) {
                                         noConnectionSnackBar(getView());
                                         return;
                                     }

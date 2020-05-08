@@ -63,7 +63,7 @@ public class TxnStatusFragment extends BaseFragmentTHP {
         LinearLayout txnMainLayout = view.findViewById(R.id.txnMainLayout);
         ConstraintLayout transactionParentLayout = view.findViewById(R.id.transactionParentLayout);
         if(txnMainLayout != null) {
-            if (mIsDayTheme) {
+            if (sIsDayTheme) {
                 txnMainLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.apptab_transaction_bg));
             } else {
                 txnMainLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.apptab_transaction_bg_dark));

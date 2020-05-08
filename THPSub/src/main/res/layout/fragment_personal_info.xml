@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:maxEms="11"
                 android:text="Personal Info"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="@dimen/personal_info_textSize_18sp"
                 app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit your personal details"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
         </LinearLayout>
@@ -214,7 +214,7 @@
             android:gravity="center_vertical"
             android:maxEms="14"
             android:text="Use my current location"
-            app:viewType="M"
+            app:textType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_Regular"
             android:drawableLeft="@drawable/ic_location_wrapper" />
@@ -266,7 +266,7 @@
             android:layout_height="wrap_content"
             android:maxEms="11"
             android:text="Additional UID"
-            app:viewType="M"
+            app:textType="M"
             android:textSize="@dimen/personal_info_textSize_18sp"
             app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -318,7 +318,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:text="Why The Hindu group needs your personal information?"
-        app:viewType="M"
+        app:textType="M"
         android:drawableLeft="@drawable/ic_info_wrapper"
         android:focusable="false"
         android:drawablePadding="15dp"

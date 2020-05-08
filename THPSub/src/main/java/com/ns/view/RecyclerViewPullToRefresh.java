@@ -27,7 +27,7 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private CustomTextView mTryAgainBtn;
-    private ProgressBar mProgressBar;
+    private CustomProgressBar mProgressBar;
     private SmoothProgressBar smoothProgressBar;
 
     private LinearLayout networkIndicationLayout;

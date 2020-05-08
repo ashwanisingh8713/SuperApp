@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        app:viewType="M"
+        app:textType="M"
         android:lineSpacingExtra="5sp"
         app:font_path="@string/THP_FiraSans_Regular"
         android:alpha="0.6"
@@ -23,8 +23,8 @@
         />
 
     <com.ns.view.text.CustomEditView
-        app:viewType="M"
-        app:hintColor="@color/gray"
+        app:textType="M"
+        app:hintColor="@color/grey"
         android:id="@+id/emailOrMobile_Et"
         style="@style/editTextStyle"
         android:layout_width="match_parent"
@@ -49,8 +49,8 @@
         app:layout_constraintTop_toBottomOf="@+id/emailOrMobile_Et"/>
 
     <com.ns.view.text.CustomEditView
-        app:viewType="M"
-        app:hintColor="@color/gray"
+        app:textType="M"
+        app:hintColor="@color/grey"
         android:id="@+id/password_Et"
         style="@style/editTextStyle"
         android:layout_marginTop="12dp"
@@ -127,7 +127,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/signInAndUp_signin_top_margin"
         android:textSize="14sp"
-        app:viewType="M"
+        app:textType="M"
         android:letterSpacing="0.02"
         android:text="Forgot Password?"
         />
@@ -144,7 +144,7 @@
         android:gravity="center_horizontal"
         android:alpha="0.5"
         android:textSize="14sp"
-        app:viewType="M"
+        app:textType="M"
         android:letterSpacing="0.02"
         android:text="or Sign In with Social profiles"
         />
@@ -205,7 +205,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:font_path="@string/THP_FiraSans_Regular"
-        app:viewType="M"
+        app:textType="M"
         android:layout_marginBottom="@dimen/signIn_tc_bottom_margin"
         />
 

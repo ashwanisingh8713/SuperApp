@@ -51,8 +51,8 @@ public class CustomEditView extends AppCompatEditText {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextView);
 
             mFontPath = typedArray.getString(R.styleable.TextView_font_path);
-            if (typedArray.hasValue(R.styleable.TextView_viewType)) {
-                viewType = typedArray.getInt(R.styleable.TextView_viewType, 0);
+            if (typedArray.hasValue(R.styleable.TextView_textType)) {
+                viewType = typedArray.getInt(R.styleable.TextView_textType, 0);
             } else {
                 viewType = -1;
             }

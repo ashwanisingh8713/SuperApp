@@ -1,9 +1,12 @@
 package com.ns.loginfragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -41,7 +44,7 @@ public abstract class BaseFragmentTHP extends Fragment {
 
     public abstract int getLayoutRes();
 
-    protected boolean mIsOnline;
+    protected static boolean sIsDayTheme = true;
     protected boolean mIsVisible;
     protected int mSize = 30;
     protected String mUserId;
@@ -52,12 +55,12 @@ public abstract class BaseFragmentTHP extends Fragment {
 
     protected final CompositeDisposable mDisposable = new CompositeDisposable();
 
-    protected boolean mIsDayTheme = true;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIsDayTheme = DefaultPref.getInstance(getActivity()).isUserThemeDay();
+        sIsDayTheme = DefaultPref.getInstance(getActivity()).isUserThemeDay();
         meteredPaywallAllowedCount(getActivity());
     }
 
@@ -65,7 +68,6 @@ public abstract class BaseFragmentTHP extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutRes(), container, false);
-        netCheck(rootView);
         return rootView;
     }
 
@@ -78,26 +80,6 @@ public abstract class BaseFragmentTHP extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         mIsVisible = isVisibleToUser;
-    }
-
-    private void netCheck(View rootview) {
-        mDisposable.add(ReactiveNetwork
-                .observeNetworkConnectivity(getActivity())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(connectivity -> {
-                    if(connectivity.state() == NetworkInfo.State.CONNECTED) {
-                        mIsOnline = true;
-                    }
-                    else {
-                        mIsOnline = false;
-                        if(mIsVisible && rootview!=null) {
-//                            noConnectionSnackBar(getView());
-                        }
-                    }
-
-                    Log.i("", "");
-                }));
     }
 
 
@@ -164,15 +146,49 @@ public abstract class BaseFragmentTHP extends Fragment {
 
 
 
-    private BaseFragmentListener mBaseFragmentListener;
+    private EmptyViewClickListener mEmptyViewClickListener;
 
-    public void setBaseFragmentListener(BaseFragmentListener baseFragmentListener) {
-        mBaseFragmentListener = baseFragmentListener;
+    public void setEmptyViewClickListener(EmptyViewClickListener emptyViewClickListener) {
+        mEmptyViewClickListener = emptyViewClickListener;
     }
 
-    public interface BaseFragmentListener {
+    public interface EmptyViewClickListener {
         void onEmptyRefreshBtnClick();
         void onOtherStuffWork();
+    }
+
+    public void hideLoadingViewCrossFade(View visibleView, View hideView) {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        visibleView.setAlpha(0f);
+        visibleView.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        visibleView.animate()
+                .alpha(1f)
+                .setDuration(400)
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+        hideView.animate()
+                .alpha(0f)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        hideView.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    public void hideEmptyLayout(LinearLayout emptyLayout) {
+        if(emptyLayout != null) {
+            emptyLayout.setVisibility(View.GONE);
+        }
     }
 
 
@@ -182,8 +198,7 @@ public abstract class BaseFragmentTHP extends Fragment {
             return;
         }
         if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            emptyLayout.setVisibility(View.VISIBLE);
-            mPullToRefreshLayout.setVisibility(View.GONE);
+            hideLoadingViewCrossFade(emptyLayout, mPullToRefreshLayout);
 
             ImageView emptyIcon = emptyLayout.findViewById(R.id.emptyIcon);
             CustomTextView emptyTitleTxt = emptyLayout.findViewById(R.id.emptyTitleTxt);
@@ -200,13 +215,13 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!BaseAcitivityTHP.sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -218,8 +233,8 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
@@ -231,13 +246,13 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptySubTitleTxt.setVisibility(View.INVISIBLE);
                     emptyBtnTxt.setVisibility(View.INVISIBLE);
                     emptyBtnTxt.setEnabled(false);
-                    if(mBaseFragmentListener != null) {
-                        mBaseFragmentListener.onOtherStuffWork();
+                    if(mEmptyViewClickListener != null) {
+                        mEmptyViewClickListener.onOtherStuffWork();
                     }
 
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!BaseAcitivityTHP.sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -248,12 +263,12 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(!mIsOnline) {
+                        if(!BaseAcitivityTHP.sIsOnline) {
                             noConnectionSnackBar(getView());
                             return;
                         }
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
@@ -268,13 +283,13 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
                 else {
-                    if(!mIsOnline) {
+                    if(!BaseAcitivityTHP.sIsOnline) {
                         noConnectionSnackBar(getView());
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
@@ -286,12 +301,12 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(!mIsOnline) {
+                        if(!BaseAcitivityTHP.sIsOnline) {
                             noConnectionSnackBar(getView());
                             return;
                         }
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
@@ -306,26 +321,31 @@ public abstract class BaseFragmentTHP extends Fragment {
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setOnClickListener(v->{
-                        if(mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if(mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }
                 else {
-                    if (!mIsOnline) {
-                        noConnectionSnackBar(getView());
+                    if (!BaseAcitivityTHP.sIsOnline) {
+                        //noConnectionSnackBar(getView());
+                        emptyTitleTxt.setText("Oh no!");
+                        emptySubTitleTxt.setText("NO INTERNET - WHAT TO DO?");
+                        emptySubTitleTxt.setTypeface(Typeface.DEFAULT_BOLD);
+                    }
+                    else {
+                        emptyTitleTxt.setText("Oops...");
+                        emptySubTitleTxt.setText("Something went wrong");
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
                     emptyTitleTxt.setVisibility(View.VISIBLE);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
                     emptyBtnTxt.setVisibility(View.VISIBLE);
                     emptySubTitleTxt.setVisibility(View.VISIBLE);
                     emptyBtnTxt.setText("Refresh");
                     emptyBtnTxt.setEnabled(true);
                     emptyBtnTxt.setOnClickListener(v -> {
-                        if (mBaseFragmentListener != null) {
-                            mBaseFragmentListener.onEmptyRefreshBtnClick();
+                        if (mEmptyViewClickListener != null) {
+                            mEmptyViewClickListener.onEmptyRefreshBtnClick();
                         }
                     });
                 }

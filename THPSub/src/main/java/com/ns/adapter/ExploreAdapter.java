@@ -14,6 +14,7 @@ import com.netoperation.model.SectionBean;
 import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
+import com.ns.utils.FragmentUtil;
 import com.ns.utils.GlideUtil;
 
 import java.util.List;
@@ -50,6 +51,9 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FragmentUtil.redirectionOnSectionAndSubSection(view.getContext(), mSubSection.get(position).getSecId());
+
                 /*SlidingSectionFragment fragment = SlidingSectionFragment.newInstance(SlidingSectionFragment.FROM_EXPLORE, position, true, sectionId, mParentSecctionName);
                 ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();

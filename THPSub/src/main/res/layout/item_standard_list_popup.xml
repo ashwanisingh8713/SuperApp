@@ -14,7 +14,7 @@
         android:id="@+id/option_Txt"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:viewType="M"
+        app:textType="M"
         android:textSize="16sp"
         app:font_path="@string/THP_FiraSans_Regular"
         android:gravity="center"

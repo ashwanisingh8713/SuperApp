@@ -7,7 +7,7 @@
 
 
     <com.ns.view.text.ArticleTitleTextView
-        app:viewType="L"
+        app:textType="L"
         android:id="@+id/textview_article_list_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/article_item_title_height"

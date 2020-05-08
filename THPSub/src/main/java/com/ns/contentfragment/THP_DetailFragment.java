@@ -23,6 +23,7 @@ import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.AppTabContentAdapter;
@@ -255,7 +256,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
      */
     private void registerPullToRefresh() {
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 Alerts.showSnackbar(getActivity(), getResources().getString(R.string.please_check_ur_connectivity));
                 mPullToRefreshLayout.setRefreshing(false);
                 return;
@@ -414,7 +415,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
 
-        if(!mIsOnline) {
+        if(!BaseAcitivityTHP.sIsOnline) {
             noConnectionSnackBar(getView());
             return;
         }

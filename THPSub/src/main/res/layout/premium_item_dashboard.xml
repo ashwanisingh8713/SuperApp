@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Statehood for Jammu and Kashmir will be restored, says prime minister Modi.Statehood for Jammu and Kashmir will be restored, says prime minister Modi."
-            app:viewType="M"
+            app:textType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             android:ellipsize="end"
             app:font_path="@string/THP_FiraSans_SemiBold"

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayoutWindowBG xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.ns.view.layout.NSLinearLayoutWindowBG
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/mainTextView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            android:drawableEnd="@drawable/ic_drop_down"
+            android:drawableRight="@drawable/ic_drop_down"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="Top Gainers"
+            android:textColor="@color/forex_header_text_color"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/forex_row_background_second" />
+
+        <com.ns.view.layout.NSLinearLayout
+            android:id="@+id/optionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/topGainer"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="26dp"
+                android:paddingRight="12dp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                android:text="Top Gainers"
+                android:textColor="@color/forex_header_text_color"
+                android:textSize="18sp" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/topLoser"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="26dp"
+                android:paddingRight="12dp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                android:text="Top Losers"
+                android:textColor="@color/forex_header_text_color"
+                android:textSize="18sp" />
+        </com.ns.view.layout.NSLinearLayout>
+    </com.ns.view.layout.NSLinearLayoutWindowBG>
+
+
+    <com.ns.view.layout.NSLinearLayoutWindowBG
+        android:id="@+id/categories_nse_bse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/forex_background_color"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:textType="L"
+            android:text="Name"
+            android:textSize="14sp" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:textType="L"
+            android:text="Price"
+            android:textSize="14sp" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:textType="L"
+            android:text="Change (%)"
+            android:textSize="14sp" />
+    </com.ns.view.layout.NSLinearLayoutWindowBG>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/forex_row_background_second" />
+</com.ns.view.layout.NSLinearLayoutWindowBG>

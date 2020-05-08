@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/categories_nse_bse_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="14dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="14dp">
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/name_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:text="Name"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        app:textType="L" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/price_row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:paddingLeft="12dp"
+        android:text="Price"
+        app:font_path="@string/THP_FiraSans_SemiBold"
+        app:textType="L" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:orientation="horizontal">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/change_row_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Change"
+            app:font_path="@string/THP_FiraSans_SemiBold"
+            app:textType="L"
+            android:textSize="14sp" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/percent_change_row_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="% Change"
+            app:font_path="@string/THP_FiraSans_SemiBold"
+            app:textType="L"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</com.ns.view.layout.NSLinearLayout>

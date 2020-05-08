@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -54,7 +55,7 @@ public class AddAddressFragment extends BaseFragmentTHP {
 
     @Override
     public int getLayoutRes() {
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             return R.layout.fragment_add_address;
         } else {
             return R.layout.fragment_add_address_dark;
@@ -177,7 +178,7 @@ public class AddAddressFragment extends BaseFragmentTHP {
         });
 
         saveAddressBtn_Txt.setOnClickListener(v->{
-            if(mIsOnline) {
+            if(BaseAcitivityTHP.sIsOnline) {
                 updateAddress();
                 THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Save Address Button clicked", AddAddressFragment.class.getSimpleName());
                 //CleverTap

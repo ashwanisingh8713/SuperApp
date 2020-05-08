@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.AppTabContentAdapter;
 import com.ns.alerts.Alerts;
@@ -102,7 +103,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
      */
     private void registerPullToRefresh() {
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 Alerts.showSnackbar(getActivity(), getResources().getString(R.string.please_check_ur_connectivity));
                 mPullToRefreshLayout.setRefreshing(false);
                 return;
@@ -120,8 +121,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     }
 
     private void loadData() {
-        mIsOnline = NetUtils.isConnected(getActivity());
-        loadData(mIsOnline);
+        loadData(BaseAcitivityTHP.sIsOnline);
     }
 
     /**

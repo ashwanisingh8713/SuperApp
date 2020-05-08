@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.netoperation.net.ApiManager;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -45,7 +46,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
 
     @Override
     public int getLayoutRes() {
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             return R.layout.fragment_change_passwd;
         } else {
             return R.layout.fragment_change_passwd_dark;
@@ -98,14 +99,14 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
         });
 
         updatePasswordBtn_Txt.setOnClickListener(v->{
-            if(!mIsOnline) {
+            if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
             }
             updatePassword();
         });
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_show_password);
         } else {
             passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_show_password_dark);
@@ -118,7 +119,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 currentPasswordET.setTransformationMethod(new PasswordTransformationMethod());
                 //Set Selection cursor to last character
                 currentPasswordET.setSelection(currentPasswordET.getText().length());
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_show_password);
                 } else {
                     passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_show_password_dark);
@@ -126,7 +127,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 mIsPasswordVisibleInCurrent = false;
             } else {
                 currentPasswordET.setTransformationMethod(null);
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_hide_password);
                 } else {
                     passwordVisibleBtnCurrent.setImageResource(R.drawable.ic_hide_password_dark);
@@ -137,7 +138,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
             }
         });
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             passwordVisibleBtnNew.setImageResource(R.drawable.ic_show_password);
         } else {
             passwordVisibleBtnNew.setImageResource(R.drawable.ic_show_password_dark);
@@ -149,7 +150,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 newPasswordET.setTransformationMethod(new PasswordTransformationMethod());
                 //Set Selection cursor to last character
                 newPasswordET.setSelection(newPasswordET.getText().length());
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnNew.setImageResource(R.drawable.ic_show_password);
                 } else {
                     passwordVisibleBtnNew.setImageResource(R.drawable.ic_show_password_dark);
@@ -159,7 +160,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 newPasswordET.setTransformationMethod(null);
                 //Set Selection cursor to last character
                 newPasswordET.setSelection(newPasswordET.getText().length());
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnNew.setImageResource(R.drawable.ic_hide_password);
                 } else {
                     passwordVisibleBtnNew.setImageResource(R.drawable.ic_hide_password_dark);
@@ -168,7 +169,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
             }
         });
 
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_show_password);
         } else {
             passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_show_password_dark);
@@ -180,7 +181,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 confirmPasswordET.setTransformationMethod(new PasswordTransformationMethod());
                 confirmPasswordET.setSelection(confirmPasswordET.getText().length());
                 //Set Selection cursor to last character
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_show_password);
                 } else {
                     passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_show_password_dark);
@@ -190,7 +191,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
                 confirmPasswordET.setTransformationMethod(null);
                 confirmPasswordET.setSelection(confirmPasswordET.getText().length());
                 //Set Selection cursor to last character
-                if(mIsDayTheme) {
+                if(sIsDayTheme) {
                     passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_hide_password);
                 } else {
                     passwordVisibleBtnConfirm.setImageResource(R.drawable.ic_hide_password_dark);

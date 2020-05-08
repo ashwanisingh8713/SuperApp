@@ -13,6 +13,8 @@ import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.NetConstants;
 import com.ns.adapter.TopTabsAdapter;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
@@ -95,9 +97,49 @@ public class TopTabsFragment extends BaseFragmentTHP {
         mViewPager = view.findViewById(R.id.viewpager);
         mTabLayout = view.findViewById(R.id.tabs);
 
+        if(mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
+            load_PS_ADD_ON_SECTION();
+        }
+        else {
+            load_PS_GROUP_DEFAULT_SECTIONS();
+        }
+    }
 
+    private void load_PS_ADD_ON_SECTION() {
+        // Need to handle offline and section, sub-section
+        mDisposable.add(DefaultTHApiManager.isSectionOrSubsection(getActivity(), mSectionId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(value instanceof SectionBean) {
+                        Log.i("", "");
+
+                    }
+                    else if(value instanceof TableSection) {
+                        Log.i("", "");
+                        TableSection tableSection = (TableSection)value;
+                        mSubSectionList = new ArrayList<>();
+                        mSubSectionList.add(tableSection.getSection());
+                        mSubSectionList.addAll(tableSection.getSubSections());
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+
+                        mViewPager.setAdapter(mTopTabsAdapter);
+                        mTabLayout.setupWithViewPager(mViewPager);
+                        mViewPager.setCurrentItem(mSelectedPagerIndex);
+                    }
+                    else {
+                        Log.i("", "");
+                    }
+
+                    if(mSubSectionList.size() == 1) {
+                        mTabLayout.setVisibility(View.GONE);
+                    }
+
+                }));
+    }
+
+
+    private void load_PS_GROUP_DEFAULT_SECTIONS() {
         Single<List<TableSection>> tableSectionObservable = null;
-
         if(mSubSectionId.equals("998")) {// Opens News-Digest
             tableSectionObservable =  THPDB.getInstance(getActivity()).daoSection().getNewsDigestTableSection();
             mTabLayout.setVisibility(View.GONE);
@@ -108,44 +150,43 @@ public class TopTabsFragment extends BaseFragmentTHP {
             tableSectionObservable =  THPDB.getInstance(getActivity()).daoSection().getSectionsOfTopBar();
         }
         mDisposable.add(tableSectionObservable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(sectionList -> {
-                        if(mSubSectionId.equals("998")) {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sectionList -> {
+                    if(mSubSectionId.equals("998")) {
+                        mSubSectionList = new ArrayList<>();
+                        mSubSectionList.add(sectionList.get(0).getSection());
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                    }
+                    else if (mIsSubsection) {
+                        SectionBean subSectionBean = new SectionBean();
+                        subSectionBean.setSecId(mSubSectionId);
+                        for (TableSection tableSection : sectionList) {
+                            List<SectionBean> subSection = tableSection.getSubSections();
+                            mSelectedPagerIndex = subSection.indexOf(subSectionBean);
+                            if (mSelectedPagerIndex != -1) {
+                                mSubSectionList = subSection;
+                                break;
+                            }
+                        }
+                        if (mSubSectionList == null) {
                             mSubSectionList = new ArrayList<>();
-                            mSubSectionList.add(sectionList.get(0).getSection());
-                            mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
                         }
-                        else if (mIsSubsection) {
-                            SectionBean subSectionBean = new SectionBean();
-                            subSectionBean.setSecId(mSubSectionId);
-                            for (TableSection tableSection : sectionList) {
-                                List<SectionBean> subSection = tableSection.getSubSections();
-                                mSelectedPagerIndex = subSection.indexOf(subSectionBean);
-                                if (mSelectedPagerIndex != -1) {
-                                    mSubSectionList = subSection;
-                                    break;
-                                }
-                            }
-                            if (mSubSectionList == null) {
-                                mSubSectionList = new ArrayList<>();
-                            }
-                            mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
-                            if (mSubSectionList.size() < 5) {
-                                mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-                            }
-                        } else {
-                            mTableSectionList = sectionList;
-                            mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, null);
-                            if (mTableSectionList.size() < 5) {
-                                mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-                            }
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, null, mIsSubsection, mSubSectionList);
+                        if (mSubSectionList.size() < 5) {
+                            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
                         }
-                        mViewPager.setAdapter(mTopTabsAdapter);
-                        mTabLayout.setupWithViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mSelectedPagerIndex);
-                    }));
-
+                    } else {
+                        mTableSectionList = sectionList;
+                        mTopTabsAdapter = new TopTabsAdapter(getChildFragmentManager(), mFrom, mTableSectionList, mIsSubsection, null);
+                        if (mTableSectionList.size() < 5) {
+                            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+                        }
+                    }
+                    mViewPager.setAdapter(mTopTabsAdapter);
+                    mTabLayout.setupWithViewPager(mViewPager);
+                    mViewPager.setCurrentItem(mSelectedPagerIndex);
+                }));
     }
 
 

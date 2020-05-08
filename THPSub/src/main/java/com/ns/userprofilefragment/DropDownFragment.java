@@ -75,7 +75,7 @@ public class DropDownFragment extends BaseFragmentTHP {
         super.onViewCreated(view, savedInstanceState);
 
         FrameLayout shadowLayout = view.findViewById(R.id.otpLayout);
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_white_r12_s6_wh200_ltr));
         } else {
             shadowLayout.setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.shadow_dark_r12_s6_wh200_ltr));

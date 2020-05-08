@@ -19,6 +19,7 @@ import static android.content.Context.WIFI_SERVICE;
 
 
 public class NetUtils {
+
     /**
      * Opens wifi setting screen
      */

@@ -52,7 +52,7 @@
                 android:gravity="center_horizontal"
                 android:letterSpacing="0.03"
                 android:text="You have cancelled the transaction"
-                app:viewType="M"
+                app:textType="M"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 

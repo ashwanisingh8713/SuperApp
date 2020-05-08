@@ -21,7 +21,7 @@
         android:lineSpacingExtra="@dimen/text_line_spacing"
         android:maxLines="3"
         app:font_path="@string/THP_TundraOffc"
-        app:viewType="WigetText"
+        app:textType="WigetText"
         android:textSize="@dimen/widget_opinion_title_size" />
 
 </com.ns.view.layout.NSLinearLayout>
