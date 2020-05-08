@@ -73,8 +73,8 @@ android {
             manifestPlaceholders = [CLEVERTAP_ACCOUNT_ID:"",
                                     CLEVERTAP_ACCOUNT_TOKEN:""]
             //ResValue String type
-            resValue "string", "clevertap_test_account_id", "ZRK-48Z-865Z"
-            resValue "string", "clevertap_test_account_token", "1b4-321"
+            resValue "string", "clevertap_test_account_id", "TEST-ZRK-48Z-865Z"
+            resValue "string", "clevertap_test_account_token", "TEST-1b4-321"
             resValue "string", "clevertap_live_account_id", ""
             resValue "string", "clevertap_live_account_token", ""
         }
