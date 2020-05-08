@@ -24,6 +24,7 @@ public class THPConstants {
     public static final String FROM_PERSONALISE = "Personalise";
     public static final String FROM_DASHBOARD_SET_PREFERENCE = "DashboardSetPreference";
     public static final String PAYMENT = "Payment";
+    public static final String FROM_NOTIFICATION_CLICK = "notificationClick";
 
 
     public static final String date_dd_MM_yyyy = "dd-MM-yyyy";
@@ -270,5 +271,12 @@ public class THPConstants {
 
     public static final String IS_CITY = "IsCity";
 
+    //Push Notification type
+    public static final String ARTICLE = "article";
+    public static final String PLANS_PAGE = "planPage";
+    public static final String URL = "url";
+    public static final String NOTIFICATION_INCOMING_FILTER = "welcome_notification";
+    public static final String NEW_NOTIFICATION = "new_notification";
+    public static final String LOAD_NOTIFICATIONS = "ns_load_notifications";
 
 }

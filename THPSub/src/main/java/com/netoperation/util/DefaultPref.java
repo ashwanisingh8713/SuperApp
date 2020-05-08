@@ -255,4 +255,15 @@ public class DefaultPref {
     public boolean isConfigurationOnceLoaded() {
         return mPreferences.getBoolean("isConfigurationOnceLoaded", false);
     }
+
+//    Set and get any preferences start
+    public void putBoolean(String key, boolean value) {
+        mEditor.putBoolean(key, value);
+        mEditor.apply();
+    }
+
+    public boolean getBoolean(String key) {
+        return mPreferences.getBoolean(key, false);
+    }
+//    Set and get any preferences end
 }

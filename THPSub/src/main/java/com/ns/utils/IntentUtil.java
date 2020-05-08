@@ -70,6 +70,18 @@ import io.reactivex.schedulers.Schedulers;
 
 public class IntentUtil {
 
+    public static void callToLaunchTheApp(Context context) {
+        try {
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+            if (intent != null) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void openMainTabPage(Activity context) {
         Intent intent = new Intent(context, AppTabActivity.class);
         context.startActivity(intent, startHoldActivity(context));
@@ -937,6 +949,13 @@ public class IntentUtil {
 
     public static void clearAllPreviousActivity(AppCompatActivity activity) {
         ActivityCompat.finishAffinity(activity);
+    }
+
+    public static void openSubscriptionPageOfferWise(Context context, String from, String planOffer) {
+        Intent intent = new Intent(context, THPUserProfileActivity.class);
+        intent.putExtra("from", from);
+        intent.putExtra("planOffer", planOffer);
+        context.startActivity(intent);
     }
 
 

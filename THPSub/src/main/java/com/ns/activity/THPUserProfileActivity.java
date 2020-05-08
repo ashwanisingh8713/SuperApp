@@ -197,7 +197,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 if (data != null) {
                     getUserInfoApiCall();
                     TxnStatusFragment fragment = TxnStatusFragment.getInstance(data.getStringExtra("status"), data.getStringExtra("message"));
-                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+                    FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 }
             }
         }  else if (requestCode == 100) {

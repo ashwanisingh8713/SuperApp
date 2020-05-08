@@ -66,5 +66,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <!-- Developer Options   -->
+    <Button
+        android:id="@+id/buttonDeveloperOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Push Notification"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/banner_Ad_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </com.ns.view.layout.NSConstraintLayout>

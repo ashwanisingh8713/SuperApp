@@ -105,10 +105,6 @@
     <string name="purchase_now">Purchase Now</string>
     <string name="yet_to_active">Yet to Active</string>
 
-    <string name="CLEVERTAP_AC_ID">TEST-Z8W-R8K-465Z</string>
-    <string name="CLEVERTAP_TOKEN" tools:ignore="TypographyDashes">TEST-3b2-0b1</string>
-    <string name="CLEVERTAP_ACCOUNT_ID_LIVE">W8W-R8K-465Z</string>
-    <string name="CLEVERTAP_ACCOUNT_TOKEN_LIVE" tools:ignore="TypographyDashes">3b2-0b0</string>
     <string name="default_notification_channel_id" translatable="false">TheHindu</string>
 
     <string name="alpha_detail">1.0</string>
