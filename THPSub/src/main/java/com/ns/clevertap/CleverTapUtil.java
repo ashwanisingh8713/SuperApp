@@ -7,6 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.clevertap.android.sdk.CleverTapAPI;
+import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
@@ -15,6 +16,7 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,24 +87,11 @@ public class CleverTapUtil {
 
                     //Update custom profile properties
                    if (userProfile.getUserPlanList() != null && userProfile.getUserPlanList().size() > 0) {
-                       profileUpdate.put(THPConstants.CT_KEY_Plan_Type, userProfile.getUserPlanList().get(0).getPlanName());
-                     //  profileUpdate.put(THPConstants.CT_KEY_Subscription_End_Date, userProfile.getUserPlanList().get(0).geteDate());
-                     //  profileUpdate.put(THPConstants.CT_KEY_Subscription_Start_Date, userProfile.getUserPlanList().get(0).getsDate());
-
-                       try {
-                           final SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-
-                           String sd = userProfile.getUserPlanList().get(0).getsDate();
-                           final Date sDate = new Date(sdf.parse(sd).getTime());
-
-                           String ed = userProfile.getUserPlanList().get(0).geteDate();
-                           final Date eDate = new Date(sdf.parse(ed).getTime());
-
-                           profileUpdate.put(THPConstants.CT_KEY_Subscription_End_Date, eDate);
-                           profileUpdate.put(THPConstants.CT_KEY_Subscription_Start_Date, sDate);
-                       }catch (Exception e){
+                       ArrayList<String> myPlanNames = new ArrayList<>();
+                       for (TxnDataBean plan : userProfile.getUserPlanList()) {
+                           myPlanNames.add(plan.getPlanName());
                        }
-
+                       profileUpdate.put(THPConstants.CT_KEY_Plan_Type, myPlanNames);
                     } else {
                         profileUpdate.put(THPConstants.CT_KEY_Plan_Type, "Plan Expired");
                     }

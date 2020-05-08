@@ -96,6 +96,7 @@
             android:configChanges="uiMode|keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name="com.ns.clevertap.NotificationActivity" />
 
         <!--Activities provided by Facebook-->
         <activity android:name="com.facebook.FacebookActivity"
@@ -147,6 +148,100 @@
 <!--                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
+
+        <!-- Start CleverTap -->
+        <meta-data
+            android:name="CLEVERTAP_ACCOUNT_ID"
+            android:value="@string/clevertap_test_account_id" />
+        <meta-data
+            android:name="CLEVERTAP_TOKEN"
+            android:value="@string/clevertap_test_account_token" />
+
+        <!--
+        IMPORTANT: To force use Google AD ID to uniquely identify  users,
+        use the following meta tag. GDPR mandates that if you are using this tag,
+        there is prominent disclousure to your end customer in their application.
+        Read more about GDPR here - https://clevertap.com/blog/in-preparation-of-gdpr-compliance/
+        -->
+        <meta-data
+            android:name="CLEVERTAP_USE_GOOGLE_AD_ID"
+            android:value="1" />
+        <meta-data
+            android:name="CLEVERTAP_SSL_PINNING"
+            android:value="0" />
+        <!-- Add meta data for CleverTap Notification Icon -->
+        <meta-data
+            android:name="CLEVERTAP_NOTIFICATION_ICON"
+            android:value="icon_notification" />
+        <meta-data
+            android:name="CLEVERTAP_BACKGROUND_SYNC"
+            android:value="1" />
+
+        <!-- Add meta and set to 1 to raise Notification Viewed for Push Notifications -->
+        <meta-data
+            android:name="CLEVERTAP_RAISE_NOTIFICATION_VIEWED"
+            android:value="1" />
+
+        <!-- Add CleverTap Push Notification Services -->
+        <service
+            android:name="com.clevertap.android.sdk.FcmTokenListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.ns.clevertap.HinduCTPushListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.ns.clevertap.HinduCTPushNotificationReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service
+            android:name="com.clevertap.android.sdk.CTNotificationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.clevertap.PUSH_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.clevertap.android.sdk.CTBackgroundIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.clevertap.BG_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.clevertap.android.sdk.CTBackgroundJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="FCM_SENDER_ID"
+            android:value="id:853251516072" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+<!--        In-App Notification-->
+        <activity
+            android:name="com.clevertap.android.sdk.InAppNotificationActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden"/>
+
+        <meta-data
+            android:name="CLEVERTAP_INAPP_EXCLUDE"
+            android:value="" />
+
+        <!-- End CleverTap -->
 
 
     </application>

@@ -36,6 +36,7 @@ android {
             dimension "version"
             versionCode 1
             versionName "BLSP1.0"
+            applicationId "com.mobstac.thehindubusinessline"
 
             // BL Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
@@ -67,12 +68,22 @@ android {
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
+
+            //Configs for Manifest file
+            manifestPlaceholders = [CLEVERTAP_ACCOUNT_ID:"",
+                                    CLEVERTAP_ACCOUNT_TOKEN:""]
+            //ResValue String type
+            resValue "string", "clevertap_test_account_id", "ZRK-48Z-865Z"
+            resValue "string", "clevertap_test_account_token", "1b4-321"
+            resValue "string", "clevertap_live_account_id", ""
+            resValue "string", "clevertap_live_account_token", ""
         }
         TheHindu {
             dimension "version"
             versionCode 1
             versionName "THSP1.0"
 
+            applicationId "com.mobstac.thehindu"
 
             // TH Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
@@ -103,6 +114,15 @@ android {
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
+
+            //Configs for Manifest file
+            manifestPlaceholders = [CLEVERTAP_ACCOUNT_ID:"TEST-Z8W-R8K-465Z",
+                                    CLEVERTAP_ACCOUNT_TOKEN:"TEST-3b2-0b1"]
+            //ResValue String type
+            resValue "string", "clevertap_test_account_id", "TEST-Z8W-R8K-465Z"
+            resValue "string", "clevertap_test_account_token", "TEST-3b2-0b1"
+            resValue "string", "clevertap_live_account_id", "W8W-R8K-465Z"
+            resValue "string", "clevertap_live_account_token", "3b2-0b0"
         }
     }
 
@@ -113,9 +133,6 @@ android {
         versionName "SP1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-
-        applicationId "com.mobstac.thehindu"
-
         //Staging / Production Switch
         buildConfigField "boolean", "IS_PRODUCTION", "true"
 
@@ -133,6 +150,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api deps.appcompatv7
+    api deps.appcompatv4
     implementation deps.supportAnnotations
     api deps.supportDesign
     api deps.supportCardView
@@ -182,10 +200,12 @@ dependencies {
 
     // FIREBASE
     implementation deps.FIREBASE_CORE
+    implementation deps.FIREBASE_MESSAGING
 
     // CleverTap
-    api 'com.clevertap.android:clevertap-android-sdk:3.6.4'
-    api 'com.android.installreferrer:installreferrer:1.0'
+    api 'com.clevertap.android:clevertap-android-sdk:3.7.2'
+    api 'com.android.installreferrer:installreferrer:1.1.2'
+    api deps.PS_Base
 
 
     implementation deps.rxjava2

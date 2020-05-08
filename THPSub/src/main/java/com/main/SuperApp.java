@@ -1,6 +1,6 @@
 package com.main;
 
-import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.util.Log;
 
@@ -14,6 +14,8 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.clevertap.android.sdk.Application;
+import com.clevertap.android.sdk.CleverTapAPI;
 import com.comscore.Analytics;
 import com.comscore.PublisherConfiguration;
 import com.netoperation.db.THPDB;
@@ -55,6 +57,7 @@ public class SuperApp extends Application implements LifecycleObserver  {
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         startPeriodicWork();
+        initCleverTap();
 
     }
 
@@ -165,5 +168,15 @@ public class SuperApp extends Application implements LifecycleObserver  {
                 .addTag("periodicWorkRequest")
                 .build();*/
         WorkManager.getInstance().enqueue(periodicWorkRequest);
+    }
+
+    private void initCleverTap() {
+        CleverTapAPI cleverTapAPI = CleverTapAPI.getDefaultInstance(getApplicationContext());
+        //Set DebugLevel as below - From CleverTap Support
+        //CleverTapAPI.setDebugLevel(1277182231);
+        CleverTapAPI.createNotificationChannelGroup(getApplicationContext(),"TheHindu","TheHindu");
+        CleverTapAPI.createNotificationChannel(getApplicationContext(),"TheHindu",
+                "TheHindu","TheHindu",
+                NotificationManager.IMPORTANCE_MAX,"TheHindu",true);
     }
 }

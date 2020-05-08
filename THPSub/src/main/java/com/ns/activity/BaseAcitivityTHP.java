@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
+import com.clevertap.android.sdk.CleverTapAPI;
+import com.clevertap.android.sdk.InAppNotificationButtonListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.main.AppAds;
 import com.netoperation.model.AdData;
@@ -28,12 +31,16 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
+import com.ns.utils.IntentUtil;
+import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.DetailToolbar;
 
+import java.util.HashMap;
+
 import io.reactivex.disposables.CompositeDisposable;
 
-public abstract class BaseAcitivityTHP extends AppCompatActivity implements ToolbarClickListener {
+public abstract class BaseAcitivityTHP extends AppCompatActivity implements ToolbarClickListener, InAppNotificationButtonListener {
 
     protected final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -83,6 +90,32 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                 detailToolbar.setToolbarMenuListener(this);
             }
 
+        }
+// Initializing, CLeverTap In-App Notification Button Click Listener
+        CleverTapAPI clevertap = CleverTapAPI.getDefaultInstance(this);
+        clevertap.setInAppNotificationButtonListener(this);
+    }
+
+    @Override
+    public void onInAppButtonClick(HashMap<String, String> payload) {
+        Log.i("", "");
+        if (payload.containsKey("ns_type_PN")) {
+            String type = payload.get("ns_type_PN");
+            if (type != null) {
+                if(type.equalsIgnoreCase(THPConstants.PLANS_PAGE)){
+                    String planOffer = payload.get("ns_plan_offer");
+                    if (planOffer != null && !TextUtils.isEmpty(planOffer)) {
+                        IntentUtil.openSubscriptionPageOfferWise(this,
+                                THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE, planOffer);
+                    } else {
+                        IntentUtil.openSubscriptionActivity(this,
+                                THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE);
+                    }
+                } else if (type.equalsIgnoreCase(THPConstants.URL)) {
+                    String url = payload.get("ns_url");
+                    IntentUtil.openUrlInBrowser(this, url);
+                }
+            }
         }
     }
 

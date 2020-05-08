@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,9 @@ import com.netoperation.util.DefaultPref;
 import com.ns.adapter.AppTabPagerAdapter;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
+import com.ns.clevertap.AppNotification;
 import com.ns.loginfragment.BaseFragmentTHP;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
@@ -130,6 +133,19 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         subscribeLayout = view.findViewById(R.id.subscribeLayout);
         mTabLayout = view.findViewById(R.id.appTabsTabLayout);
         mViewPager = view.findViewById(R.id.appTabsViewPager);
+
+        //Developer Options Button, display only if it is Debug build
+        if (BuildConfig.DEBUG) {
+            Button buttonDeveloperOptions = view.findViewById(R.id.buttonDeveloperOptions);
+            buttonDeveloperOptions.setVisibility(View.VISIBLE);
+            buttonDeveloperOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppNotification.customTestNotification(view.getContext(), true, false, false);
+                }
+            });
+        }
+
 
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
