@@ -466,7 +466,7 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
                     }
 
                     // Now we are sending Personalise data to server
-                    ApiManager.setPersonalise(userProfile.getUserId(), BuildConfig.SITEID, ResUtil.getDeviceId(THPPersonaliseActivity.this),
+                    ApiManager.setPersonalise(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID, ResUtil.getDeviceId(THPPersonaliseActivity.this),
                             topicsL, citiesL, authorsL)
                             .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(keyValueModel->{
@@ -483,7 +483,7 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
                                     // TODO, currently nothing to do.
                                 }
                                 else if(userProfile.isHasSubscribedPlan() || userProfile.isHasFreePlan()) {
-                                    IntentUtil.openContentListingActivity(THPPersonaliseActivity.this, THPConstants.FROM_PERSONALISE);
+                                    IntentUtil.openContentListingActivity(THPPersonaliseActivity.this, NetConstants.PS_My_Stories);
                                 }
                                 else if(!userProfile.isHasSubscribedPlan() && !userProfile.isHasFreePlan()) {
                                     IntentUtil.openSubscriptionActivity(THPPersonaliseActivity.this, THPConstants.FROM_SUBSCRIPTION_EXPLORE);

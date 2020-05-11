@@ -286,7 +286,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
             return;
         }
         progressDialog = Alerts.showProgressDialog(getActivity());
-        ApiManager.logout(getActivity(), mUserProfile.getUserId(), BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()))
+        ApiManager.logout(getActivity(), mUserProfile.getAuthorization(), mUserProfile.getUserId(), BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(keyValueModel->{
                     if(keyValueModel.getState() != null && keyValueModel.getState().equalsIgnoreCase(NetConstants.SUCCESS)) {

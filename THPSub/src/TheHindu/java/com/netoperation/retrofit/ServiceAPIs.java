@@ -52,7 +52,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> signup(@Body JsonObject logoutBody);
 
     @POST("/taiauth/logout/hindu")
-    Observable<JsonElement> logout(@Body JsonObject loginBody);
+    Observable<JsonElement> logout(@Header("Authorization") String authorization, @Body JsonObject loginBody);
 
     @POST("/taiauth/userVerify/HINDU")
     Observable<JsonElement> userVerification(@Body JsonObject userVerificationBody);
@@ -61,7 +61,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> resetPassword(@Body JsonObject resetPasswordBody);
 
     @POST("/taiauth/userInfo/HINDU")
-    Observable<JsonElement> userInfo(@Body JsonObject userInfoBody);
+    Observable<JsonElement> userInfo(@Header("Authorization") String authorization, @Body JsonObject userInfoBody);
 
     @POST("/taiauth/updateUserInfo/HINDU")
     Observable<JsonElement> editProfile(@Body JsonObject editProfileBody);
@@ -111,7 +111,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> updateAddress(@Body JsonObject updateProfile);
 
     @POST("taiauth/userPreference/hindu")
-    Observable<JsonElement> setPersonalise(@Body JsonObject updateProfile);
+    Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
     @POST("taiauth/userPreference/hindu")
     Observable<SelectedPrefModel> getPersonalise(@Body JsonObject updateProfile);

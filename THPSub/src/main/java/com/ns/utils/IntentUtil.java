@@ -588,9 +588,9 @@ public class IntentUtil {
         context.startActivity(intent, startSlideActivity(context));
     }
 
-    public static void openContentListingActivity(Context context, String from) {
+    public static void openContentListingActivity(Context context, String pageSource) {
         Intent intent = new Intent(context, AppTabActivity.class);
-        intent.putExtra("from", from);
+        intent.putExtra("from", pageSource);
         context.startActivity(intent);
     }
 

@@ -191,7 +191,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
                                     CleverTapUtil.cleverTapEvent(getActivity(), THPConstants.CT_EVENT_PROFILE, map);
 
                                 } else {
-                                    fetchLatestUserInfo();
+                                    fetchLatestUserInfo(userProfile.getAuthorization());
                                     return;
                                     /*SubscriptionPlanModel txnTitleModel = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_TITLE);
                                     txnTitleModel.setTitle("Subscription Plans");
@@ -250,10 +250,10 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
 
 
     // Fetch latest userinfo from server
-    private void fetchLatestUserInfo() {
+    private void fetchLatestUserInfo(String authorization) {
         String loginId = PremiumPref.getInstance(getActivity()).getLoginTypeId();
         String loginPasswd = PremiumPref.getInstance(getActivity()).getLoginPasswd();
-        ApiManager.getUserInfoObject(getActivity(), BuildConfig.SITEID,
+        ApiManager.getUserInfoObject(getActivity(), authorization, BuildConfig.SITEID,
                 ResUtil.getDeviceId(getActivity()), mUserId, loginId, loginPasswd)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {

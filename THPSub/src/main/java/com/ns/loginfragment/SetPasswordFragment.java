@@ -408,7 +408,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                                     emailOrMobile = contact;
                                 }
                                 // Making server request to get User Info
-                                mDisposable.add(ApiManager.getUserInfoObject(getActivity(), BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()), userId, emailOrMobile, password)
+                                mDisposable.add(ApiManager.getUserInfoObject(getActivity(), keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()), userId, emailOrMobile, password)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(userProfile -> {
                                             if (getView() == null || getActivity() == null) {
