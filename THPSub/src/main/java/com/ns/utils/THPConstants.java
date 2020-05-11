@@ -278,5 +278,8 @@ public class THPConstants {
     public static final String NOTIFICATION_INCOMING_FILTER = "welcome_notification";
     public static final String NEW_NOTIFICATION = "new_notification";
     public static final String LOAD_NOTIFICATIONS = "ns_load_notifications";
+    public static final String PLAN_OFFER10 = "10%"; //P1
+    public static final String PLAN_OFFER20 = "20%"; //P2
+    public static final String PLAN_OFFER25 = "25%"; //P3
 
 }

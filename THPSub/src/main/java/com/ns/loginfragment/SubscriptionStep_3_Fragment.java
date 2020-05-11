@@ -94,7 +94,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
 
         view.findViewById(R.id.exploreSubscriptionPlans_Txt).setOnClickListener(view1 -> {
             if(BaseAcitivityTHP.sIsOnline) {
-                RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("");
+                RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("",null);
                 FragmentUtil.addFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 //CleverTap
                 HashMap<String, Object> map = new HashMap<>();

@@ -58,7 +58,7 @@ public class UserPlanAdapter extends BaseRecyclerViewAdapter {
         }
         holder.buttonPurchase.setOnClickListener(view -> {
                     if(NetUtils.isConnected(view.getContext())) {
-                        RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("");
+                        RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("",null);
                         FragmentUtil.addFragmentAnim((AppCompatActivity)view.getContext(), R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                     } else {
                         Alerts.noConnectionSnackBar(view, (AppCompatActivity) view.getContext());

@@ -233,16 +233,15 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+        <!--To enable the CleverTap Region for India (in1)-->
+        <meta-data
+            android:name="CLEVERTAP_REGION"
+            android:value="in1"/>
 
 <!--        In-App Notification-->
-        <activity
-            android:name="com.clevertap.android.sdk.InAppNotificationActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="keyboardHidden"/>
-
         <meta-data
             android:name="CLEVERTAP_INAPP_EXCLUDE"
-            android:value="" />
+            android:value="AppLocationActivity,IciciPGActivity,SignInAndUpActivity,SplashActivity,THP_YouTubeFullScreenActivity,VideoPlayerActivity" />
 
         <!-- End CleverTap -->
 
