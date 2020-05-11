@@ -168,7 +168,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 //Load user info details whenever returned from payment page
                 //getUserInfoApiCall();
                 showProgressDialog("\nVerifying transaction status ...");
-                ApiManager.getUserInfo(this, BuildConfig.SITEID,
+                ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                         ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                         PremiumPref.getInstance(this).getLoginTypeId(),
                         PremiumPref.getInstance(this).getLoginPasswd())
@@ -474,7 +474,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 .subscribe(paytmTransactionStatus -> {
                     //hideProgressDialog();
                     //getUserInfoApiCall();
-                    ApiManager.getUserInfo(this, BuildConfig.SITEID,
+                    ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                             ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                             PremiumPref.getInstance(this).getLoginTypeId(),
                             PremiumPref.getInstance(this).getLoginPasswd())
@@ -528,7 +528,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     }
 
     private void getUserInfoApiCall() {
-        ApiManager.getUserInfo(this, BuildConfig.SITEID,
+        ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                 ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                 PremiumPref.getInstance(this).getLoginTypeId(),
                 PremiumPref.getInstance(this).getLoginPasswd())

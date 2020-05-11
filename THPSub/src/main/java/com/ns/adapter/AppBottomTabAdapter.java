@@ -16,18 +16,18 @@ import com.ns.contentfragment.TopTabsFragment;
 import com.ns.contentfragment.WebFragment;
 import com.ns.thpremium.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
+public class AppBottomTabAdapter extends FragmentStatePagerAdapter {
 
 
-
-    //private String[] tabNames;
     private List<TabsBean> mTabsBean;
 
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-    public AppTabPagerAdapter(FragmentManager fm, List<TabsBean> tabsBean ) {
+    public AppBottomTabAdapter(FragmentManager fm, List<TabsBean> tabsBean ) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.mTabsBean = tabsBean;
     }
@@ -38,8 +38,9 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     private Fragment getPageSourceTypeFragment(TabsBean tabsBean, int tabIndex) {
+
         switch (tabsBean.getPageSource()) {
-            case NetConstants.GROUP_DEFAULT_SECTIONS:
+            case NetConstants.PS_GROUP_DEFAULT_SECTIONS:
                 return TopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), NetConstants.RECO_HOME_TAB, false, "", null);
             case NetConstants.PS_Briefing:
             case NetConstants.PS_My_Stories:
@@ -64,13 +65,12 @@ public class AppTabPagerAdapter extends FragmentStatePagerAdapter {
         return mTabsBean.size();
     }
 
-
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
         return mTabsBean.get(position).getTitle();
     }
+
 
     /**
      * On each Fragment instantiation we are saving the reference of that Fragment in a Map

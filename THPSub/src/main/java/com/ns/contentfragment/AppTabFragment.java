@@ -27,7 +27,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
-import com.ns.adapter.AppTabPagerAdapter;
+import com.ns.adapter.AppBottomTabAdapter;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
 import com.ns.clevertap.AppNotification;
@@ -39,25 +39,22 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.TabUtils;
 import com.ns.view.ViewPagerScroller;
-import com.ns.view.text.ArticleTitleTextView;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnClick, TabClickListener.OnTabClickListener {
 
     private ConstraintLayout subscribeLayout;
-    private String mFrom;
-    private int tabIndex = 0;
     private TabUtils mTabUtils;
 
-    public static AppTabFragment getInstance(String from, int tabIndex) {
+    public static AppTabFragment getInstance() {
         AppTabFragment fragment = new AppTabFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("tabIndex", tabIndex);
-        bundle.putString("from", from);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -65,7 +62,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private AppTabPagerAdapter mPagerAdapter;
+    private AppBottomTabAdapter mAppBottomTabAdapter;
 
 
 
@@ -101,33 +98,17 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tabIndex = getArguments().getInt("tabIndex");
-            mFrom = getArguments().getString("from");
         }
-
         mIsUserThemeDay = DefaultPref.getInstance(getActivity()).isUserThemeDay();
     }
 
-    public void updateTabIndex() {
-        if (mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_PERSONALISE)) {
-            tabIndex = 1;
-        } else if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
-            tabIndex = 0;
-        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_1)) {
-            tabIndex = 0;
-        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_2)) {
-            tabIndex = 1;
-        } else if (THPConstants.FLOW_TAB_CLICK != null && THPConstants.FLOW_TAB_CLICK.equals(THPConstants.TAB_3)) {
-            tabIndex = 2;
+    private Map<String, Integer> mPsTabIndexMap = new HashMap<>();
+
+    public void showPageSource(String pageSource) {
+        if(mPsTabIndexMap.containsKey(pageSource)) {
+            int pageSourceIndex = mPsTabIndexMap.get(pageSource);
+            mViewPager.setCurrentItem(pageSourceIndex);
         }
-
-        // To select default tab
-        mTabUtils.SetOnSelectView(getActivity(), mTabLayout, tabIndex);
-        mViewPager.setCurrentItem(tabIndex);
-    }
-
-    public void updateFromValue(String from) {
-        mFrom = from;
     }
 
     @Override
@@ -166,13 +147,14 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                         tabNames[i] = tab.getTitle();
                         tabUnSelectedIcon[i] = tab.getIconUrl().getLocalFilePath();
                         tabSelectedIcon[i] = tab.getIconUrl().getLocalFileSelectedPath();
+                        mPsTabIndexMap.put(tab.getPageSource(), i);
                     }
 
                     mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
 
-                    mPagerAdapter = new AppTabPagerAdapter(getChildFragmentManager(), tabsBeans);
+                    mAppBottomTabAdapter = new AppBottomTabAdapter(getChildFragmentManager(), tabsBeans);
 
-                    mViewPager.setAdapter(mPagerAdapter);
+                    mViewPager.setAdapter(mAppBottomTabAdapter);
 
                     mTabLayout.setupWithViewPager(mViewPager, true);
 
@@ -183,8 +165,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     }
 
                     // To select default tab
-                    mTabUtils.SetOnSelectView(getActivity(), mTabLayout, tabIndex);
-                    mViewPager.setCurrentItem(tabIndex);
+                    mTabUtils.SetOnSelectView(getActivity(), mTabLayout, 0);
 
                     // Tabs custom click handling
                     tabClickHandling(tabsBeans);

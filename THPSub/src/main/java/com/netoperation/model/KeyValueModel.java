@@ -22,6 +22,16 @@ public class KeyValueModel implements Parcelable {
     private String contact;
     private boolean isNewAccount;
 
+    private String token;
+
+    public String getToken() {
+        return "Bearer "+token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public boolean isNewAccount() {
         return isNewAccount;
     }
@@ -75,40 +85,8 @@ public class KeyValueModel implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.code);
-        dest.writeString(this.State);
-        dest.writeString(this.Code);
-    }
-
     public KeyValueModel() {
     }
-
-    protected KeyValueModel(Parcel in) {
-        this.name = in.readString();
-        this.code = in.readString();
-        this.State = in.readString();
-        this.Code = in.readString();
-    }
-
-    public static final Creator<KeyValueModel> CREATOR = new Creator<KeyValueModel>() {
-        @Override
-        public KeyValueModel createFromParcel(Parcel source) {
-            return new KeyValueModel(source);
-        }
-
-        @Override
-        public KeyValueModel[] newArray(int size) {
-            return new KeyValueModel[size];
-        }
-    };
 
 
     @Override
@@ -129,4 +107,44 @@ public class KeyValueModel implements Parcelable {
         super.hashCode();
         return 31*9;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.code);
+        dest.writeString(this.State);
+        dest.writeString(this.Code);
+        dest.writeString(this.userId);
+        dest.writeString(this.contact);
+        dest.writeByte(this.isNewAccount ? (byte) 1 : (byte) 0);
+        dest.writeString(this.token);
+    }
+
+    protected KeyValueModel(Parcel in) {
+        this.name = in.readString();
+        this.code = in.readString();
+        this.State = in.readString();
+        this.Code = in.readString();
+        this.userId = in.readString();
+        this.contact = in.readString();
+        this.isNewAccount = in.readByte() != 0;
+        this.token = in.readString();
+    }
+
+    public static final Creator<KeyValueModel> CREATOR = new Creator<KeyValueModel>() {
+        @Override
+        public KeyValueModel createFromParcel(Parcel source) {
+            return new KeyValueModel(source);
+        }
+
+        @Override
+        public KeyValueModel[] newArray(int size) {
+            return new KeyValueModel[size];
+        }
+    };
 }

@@ -94,9 +94,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         }
 
 
-        String taIn = THPConstants.FLOW_TAB_CLICK;
-        int tabIndex = getIntent().getIntExtra("tabIndex", 0);
-        mAppTabFragment = AppTabFragment.getInstance(mFrom,  tabIndex);
+        mAppTabFragment = AppTabFragment.getInstance();
 
         FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, mAppTabFragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
 
@@ -171,15 +169,17 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         super.onNewIntent(intent);
 
         if(intent != null) {
-            mFrom = intent.getStringExtra("from");
-            if(mAppTabFragment != null && mFrom != null) {
-                mAppTabFragment.updateFromValue(mFrom);
-                mAppTabFragment.updateTabIndex();
+            String from = intent.getStringExtra("from");
+
+            if(from != null && from.equals(NetConstants.PS_My_Stories)) {
+                if(mAppTabFragment != null) {
+                    mAppTabFragment.showPageSource(from);
+                }
             }
-            Log.i("", "");
+
 
             // THis below condition will be executed when user creates normal Sign-UP
-            if(mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
+            if(from != null && !TextUtils.isEmpty(from) && from.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
                 AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
                 FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
             }
@@ -209,7 +209,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 .subscribe(userProfile -> {
                     mUserId = userProfile.getUserId();
                         // Fetch latest userinfo from server
-                        mDisposable.add(ApiManager.getUserInfo(this, BuildConfig.SITEID,
+                        mDisposable.add(ApiManager.getUserInfo(this, userProfile.getAuthorization(), BuildConfig.SITEID,
                                 ResUtil.getDeviceId(this), mUserId,
                                 PremiumPref.getInstance(this).getLoginTypeId(),
                                 PremiumPref.getInstance(this).getLoginPasswd())

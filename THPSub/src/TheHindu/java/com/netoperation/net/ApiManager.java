@@ -206,6 +206,11 @@ public class ApiManager {
                                         String redirectUrl = ((JsonObject) value).get("redirectUrl").getAsString();
                                         String userId = ((JsonObject) value).get("userId").getAsString();
                                         String reason = ((JsonObject) value).get("reason").getAsString();
+                                        String token = "";
+
+                                        if (((JsonObject) value).has("token")) {
+                                            token = ((JsonObject) value).get("token").getAsString();
+                                        }
 
                                         if (context != null) {
                                             String loginId = "";
@@ -286,7 +291,7 @@ public class ApiManager {
                                         userProfile.setFid(fid);
                                         userProfile.setTid(tid);
                                         userProfile.setGid(gid);
-
+                                        userProfile.setAuthorization(token);
                                         userProfile.setHasFreePlan(true);
 
                                         TableUserProfile tableUserProfile = new TableUserProfile(userId, userProfile);
@@ -332,6 +337,9 @@ public class ApiManager {
                                     String userId = ((JsonObject) value).get("userId").getAsString();
                                     keyValueModel.setCode(userId);
                                 }
+                                if (((JsonObject) value).has("token")) {
+                                    keyValueModel.setToken(((JsonObject) value).get("token").getAsString());
+                                }
                                 keyValueModel.setState(status);
                                 keyValueModel.setName(reason);
                             }
@@ -351,9 +359,9 @@ public class ApiManager {
      * @param usrId
      * @return
      */
-    public static Observable<Boolean> getUserInfo(Context context, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
+    public static Observable<Boolean> getUserInfo(Context context, String authorization, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
 
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(ReqBody.userInfo(deviceId, siteId, usrId));
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, ReqBody.userInfo(deviceId, siteId, usrId));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(responseFromServer -> {
                             if (((JsonObject) responseFromServer).has("status")) {
@@ -512,7 +520,7 @@ public class ApiManager {
                                     // Deleting Previous Profile DB
                                     thpdb.userProfileDao().deleteAll();
 
-
+                                    userProfile.setAuthorization(authorization);
                                     userProfile.setEmailId(emailId);
                                     userProfile.setContact(contact_);
                                     userProfile.setRedirectUrl(redirectUrl);
@@ -596,9 +604,9 @@ public class ApiManager {
      * @param usrId
      * @return
      */
-    public static Observable<UserProfile> getUserInfoObject(Context context, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
+    public static Observable<UserProfile> getUserInfoObject(Context context, String authorization, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
 
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(ReqBody.userInfo(deviceId, siteId, usrId));
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, ReqBody.userInfo(deviceId, siteId, usrId));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(responseFromServer -> {
                             UserProfile userProfile = new UserProfile();
@@ -756,7 +764,7 @@ public class ApiManager {
                                     // Deleting Previous Profile DB
                                     thpdb.userProfileDao().deleteAll();
 
-
+                                    userProfile.setAuthorization(authorization);
                                     userProfile.setEmailId(emailId);
                                     userProfile.setContact(contact_);
                                     userProfile.setRedirectUrl(redirectUrl);
@@ -1804,8 +1812,8 @@ public class ApiManager {
      * @param deviceId
      * @return
      */
-    public static Observable<KeyValueModel> logout(Context context, String userId, String siteId, String deviceId) {
-        return ServiceFactory.getServiceAPIs().logout(ReqBody.logout(userId, siteId, deviceId))
+    public static Observable<KeyValueModel> logout(Context context, String authorization, String userId, String siteId, String deviceId) {
+        return ServiceFactory.getServiceAPIs().logout(authorization, ReqBody.logout(userId, siteId, deviceId))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     KeyValueModel keyValueModel = new KeyValueModel();
@@ -1896,7 +1904,7 @@ public class ApiManager {
                 });
     }
 
-    public static Observable<KeyValueModel> setPersonalise(@NonNull String userId, @NonNull String siteId, @NonNull String deviceId, @NonNull ArrayList<String> topics,
+    public static Observable<KeyValueModel> setPersonalise(@NonNull String authorization, @NonNull String userId, @NonNull String siteId, @NonNull String deviceId, @NonNull ArrayList<String> topics,
                                                            @NonNull ArrayList<String> cities, @NonNull ArrayList<String> authors) {
         JsonObject personaliseObj = new JsonObject();
 
@@ -1918,7 +1926,7 @@ public class ApiManager {
         }
         personaliseObj.add("author", ja);
 
-        return ServiceFactory.getServiceAPIs().setPersonalise(ReqBody.setUserPreference(userId, siteId, deviceId, personaliseObj))
+        return ServiceFactory.getServiceAPIs().setPersonalise(authorization, ReqBody.setUserPreference(userId, siteId, deviceId, personaliseObj))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -2072,6 +2080,11 @@ public class ApiManager {
                                         ApiManager.freePlan(userId, userEmail, siteId);
                                     }
 
+                                    if(((JsonObject) value).has("token")) {
+                                        String token = ((JsonObject) value).get("token").getAsString();
+                                        keyValueModel.setToken(token);
+                                    }
+
                                     return keyValueModel;
                                 } else if (status.equalsIgnoreCase("Fail")) {
                                     String reason = ((JsonObject) value).get("reason").getAsString();
@@ -2084,72 +2097,6 @@ public class ApiManager {
                 );
 
     }
-
-
-    public static Observable<KeyValueModel> socialLoginNewImp(Context context, String deviceId, String originUrl, String provider,
-                                                              String socialId, String userEmail, String userName, String siteId) {
-
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().socialLogin(ReqBody.socialLogin(deviceId,
-                originUrl, provider, socialId, userEmail, userName));
-        return observable.subscribeOn(Schedulers.newThread())
-                .map(value -> {
-                            KeyValueModel keyValueModel = new KeyValueModel();
-
-                            if (((JsonObject) value).has("status")) {
-                                String status = ((JsonObject) value).get("status").getAsString();
-                                if (status.equalsIgnoreCase("success")) {
-                                    String userId = ((JsonObject) value).get("userId").getAsString();
-                                    keyValueModel.setUserId(userId);
-                                    String isNew = "";
-                                    if (((JsonObject) value).has("isNew")) {
-                                        isNew = ((JsonObject) value).get("isNew").getAsString();
-                                    }
-
-                                    String email = ((JsonObject) value).get("emailId").getAsString();
-                                    String contact = ((JsonObject) value).get("contact").getAsString();
-
-
-                                    keyValueModel.setState(NetConstants.SUCCESS);
-
-                                    String loginId = "";
-                                    if (email != null && !TextUtils.isEmpty(email)) {
-                                        loginId = email;
-                                    } else if (contact != null && !TextUtils.isEmpty(contact)) {
-                                        loginId = contact;
-                                    }
-
-                                    if (context != null) {
-                                        PremiumPref.getInstance(context).setIsUserLoggedIn(true);
-                                        PremiumPref.getInstance(context).saveLoginTypeId(loginId);
-                                        PremiumPref.getInstance(context).setIsRefreshRequired(true);
-                                        PremiumPref.getInstance(context).setIsUserAdsFree(true);
-                                        PremiumPref.getInstance(context).saveUserId(userId);
-                                    }
-                                    keyValueModel.setContact(loginId);
-
-                                    // If account is new then we need to send free plan API
-                                    if (isNew.equals("1")) {
-                                        keyValueModel.setNewAccount(true);
-
-                                        /*String email_Contact = "";
-                                        if(email_Contact == null || TextUtils.isEmpty(email_Contact)) {
-                                            email_Contact = "";
-                                        }
-                                        ApiManager.freePlan(userId, email_Contact, siteId);*/
-                                    }
-
-                                    return keyValueModel;
-                                } else if (status.equalsIgnoreCase("Fail")) {
-                                    keyValueModel.setState(NetConstants.FAILURE);
-                                }
-
-                            }
-                            return keyValueModel;
-                        }
-                );
-
-    }
-
 
     public static Observable<PaytmModel> generateChecksumHash(String url, String userId, int planId, String contact, String countryCode) {
         return ServiceFactory.getServiceAPIs().getChecksumHash(url, ReqBody.checksumHashAPIBody(userId, planId, contact, countryCode))

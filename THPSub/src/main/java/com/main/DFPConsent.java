@@ -134,26 +134,8 @@ public class DFPConsent {
 
     public void GDPR_Testing(Context context) {
         if(BuildConfig.DEBUG) {
-
-            ConsentInformation.getInstance(context).setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-
-
-            // RedMi
-//            ConsentInformation.getInstance(context).addTestDevice("F10810FD9E05E408D3D77DCEC4CFD6E3");
-            // POCO
+            //ConsentInformation.getInstance(context).setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
              ConsentInformation.getInstance(context).addTestDevice("69A27258C3736E220C92E889FD41FB39");
-            // Moto
-//            ConsentInformation.getInstance(context).addTestDevice("0710ECF00058D88516EC9C67FDAB2D13");
-            // Honor
-            //ConsentInformation.getInstance(context).addTestDevice("C8A85B2402E3A7B45C66F9D746392FB3");
-            /*boolean ENABLE_EEA = SharedPreferenceHelper.isGDPR_EEA(context);
-            if (ENABLE_EEA) {
-                ConsentInformation.getInstance(context).setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-            } else {
-                ConsentInformation.getInstance(context).setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_NOT_EEA);
-            }*/
-
-
         }
     }
 

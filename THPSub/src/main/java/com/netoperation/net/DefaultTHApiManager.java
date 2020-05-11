@@ -994,9 +994,7 @@ public class DefaultTHApiManager {
 
 
     public static void getCommentCount(final String articleId, Context context) {
-
         String url = "https://api.vuukle.com/api/v1/Comments/getCommentCountListByHost?host=thehindu.com&articleIds="+articleId;
-
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().getCommentCount(url);
         observable.timeout(5, TimeUnit.SECONDS);
         observable.subscribeOn(Schedulers.newThread())
@@ -1030,7 +1028,6 @@ public class DefaultTHApiManager {
                 }, throwable -> {
 
                 });
-
     }
 
 
