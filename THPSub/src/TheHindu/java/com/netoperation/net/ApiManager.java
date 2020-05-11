@@ -37,6 +37,8 @@ import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.RetentionDef;
+import com.ns.model.PlanPage;
+import com.ns.utils.THPConstants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -2134,14 +2136,31 @@ public class ApiManager {
     }
 
 
-    public static Observable<String> loadSubsWebApi(String webUrl) {
+    public static Observable<String> loadSubsWebApi(String webUrl, String planOfferType) {
         return ServiceFactory.getServiceAPIs().getSubsWebviewUrl(webUrl)
                 .subscribeOn(Schedulers.newThread())
                 .map(jsonElement -> {
                     String url = null;
-                    if (jsonElement.getAsJsonObject().has("data")) {
-                        url = jsonElement.getAsJsonObject().getAsJsonObject("data").get("url").getAsString();
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    PlanPage planPage = gson.fromJson(jsonElement, PlanPage.class);
+                    if (planOfferType == null && planPage.getData() != null) {
+                        url = planPage.getData().getUrl();
+                    } else if (planOfferType != null && planPage.getData() != null && planPage.getData().getPlans() != null) {
+                        if (planOfferType.equalsIgnoreCase(THPConstants.PLAN_OFFER10)) {
+                            //Get 10% Off Url
+                            url = planPage.getData().getPlans().getP1();
+                        } else if (planOfferType.equalsIgnoreCase(THPConstants.PLAN_OFFER20)) {
+                            //Get 20% Off Url
+                            url = planPage.getData().getPlans().getP2();
+                        } else if (planOfferType.equalsIgnoreCase(THPConstants.PLAN_OFFER25)) {
+                            //Get 25% Off Url
+                            url = planPage.getData().getPlans().getP3();
+                        }
                     }
+                    /*if (jsonElement.getAsJsonObject().has("data")) {
+                        url = jsonElement.getAsJsonObject().getAsJsonObject("data").get("url").getAsString();
+                    }*/
                     return url;
                 });
     }

@@ -98,7 +98,7 @@ public class SubscriptionPlanAdapter extends BaseRecyclerViewAdapter {
                 holder.currentPackLayout.setVisibility(View.VISIBLE);
                 holder.buttonPurchaseNow.setOnClickListener(view -> {
                     //IntentUtil.openSubscriptionActivity(view.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
-                    RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("");
+                    RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("", null);
                     FragmentUtil.addFragmentAnim((AppCompatActivity)view.getContext(), R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 });
             } else {

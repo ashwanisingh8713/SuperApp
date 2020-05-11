@@ -24,6 +24,7 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
@@ -174,6 +175,11 @@ public class SuperApp extends Application implements LifecycleObserver  {
         CleverTapAPI cleverTapAPI = CleverTapAPI.getDefaultInstance(getApplicationContext());
         //Set DebugLevel as below - From CleverTap Support
         //CleverTapAPI.setDebugLevel(1277182231);
+        if (BuildConfig.DEBUG) {
+            CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.DEBUG);
+        } else {
+            CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.OFF);
+        }
         CleverTapAPI.createNotificationChannelGroup(getApplicationContext(),"TheHindu","TheHindu");
         CleverTapAPI.createNotificationChannel(getApplicationContext(),"TheHindu",
                 "TheHindu","TheHindu",

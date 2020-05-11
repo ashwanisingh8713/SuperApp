@@ -47,16 +47,18 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
 
     private WebView mWebView;
     private String JS_OBJECT_NAME = "Android";
+    private String mPlanOffer;
 
 
     public interface SubsPlanSelectListener {
         void onSubsPlanSelected(String planId, String countryName,int packValue,String packValidity,String packName);
     }
 
-    public static RecoPlansWebViewFragment getInstance(String from) {
+    public static RecoPlansWebViewFragment getInstance(String from, String planOffer) {
         RecoPlansWebViewFragment fragment = new RecoPlansWebViewFragment();
         Bundle bundle = new Bundle();
         bundle.putString("from", from);
+        bundle.putString("planOffer", planOffer);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -69,10 +71,9 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*if(getArguments() != null) {
-            mFrom = getArguments().getString("from");
-        }*/
+        if(getArguments() != null) {
+            mPlanOffer = getArguments().getString("planOffer");
+        }
     }
 
 
@@ -310,7 +311,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
             SUBSCRIPTION_WEB_URL += "true";
         }
 
-        ApiManager.loadSubsWebApi(SUBSCRIPTION_WEB_URL)
+        ApiManager.loadSubsWebApi(SUBSCRIPTION_WEB_URL, mPlanOffer)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(urlForSubsPage -> {
                     if (urlForSubsPage != null) {
