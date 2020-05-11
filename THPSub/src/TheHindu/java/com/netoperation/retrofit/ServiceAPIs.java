@@ -14,6 +14,7 @@ import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionContentFromServer;
+import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
@@ -198,6 +199,9 @@ public interface ServiceAPIs {
 
     @GET("") // configuration api
     Observable<JsonElement> configUpdateCheck(@Url String url);
+
+    @POST("") // Force Update.php
+    Observable<UpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);
 
 
 }

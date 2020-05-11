@@ -65,7 +65,7 @@ public class ApiManager {
     public static void userVerification(RequestCallback<KeyValueModel> callback,
                                         String email, String contact, String siteId, @RetentionDef.userVerificationMode String event) {
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userVerification(ReqBody.userVerification(email, contact, siteId, event));
-        observable.subscribeOn(Schedulers.newThread())
+        observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();

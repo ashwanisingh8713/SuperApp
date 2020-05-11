@@ -49,6 +49,7 @@ import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.SectionContentFromServer;
 import com.netoperation.model.THDefaultPersonalizeBean;
+import com.netoperation.model.UpdateModel;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
 import com.netoperation.retrofit.ServiceFactory;
@@ -1291,6 +1292,13 @@ public class DefaultTHApiManager {
                     return "";
                 }).subscribe();
 
+    }
+
+    public static Observable<UpdateModel> forceUpdate() {
+        return ServiceFactory.getServiceAPIs()
+                .forceUpdate(BuildConfig.FORCE_UPDATE_URL, ReqBody.forceUpdate())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

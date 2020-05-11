@@ -41,6 +41,7 @@ android {
             // BL Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
             buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
+            buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "boolean", "IS_BL", "true"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
@@ -88,6 +89,7 @@ android {
             // TH Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
             buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
+            buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "boolean", "IS_BL", "false"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""

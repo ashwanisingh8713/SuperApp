@@ -1,13 +1,17 @@
 package com.ns.activity;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -61,6 +65,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     private final int WHAT_TEMP_SECTION = 9;
     private final int WHAT_Server_Section = 10;
     private final int WHAT_ROUTE_FOR_SCREEN = 11;
+    private final int WHAT_FORCE_UPDATE = 12;
 
     private boolean isErrorOccured = false;
     private int totalSentRequestIcons;
@@ -83,8 +88,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         progressBar = findViewById(R.id.progressBar);
 
         registerReceiver();
-
-        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+        sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server");
 
         // Reduces Read article table
         DefaultTHApiManager.readArticleDelete(this);
@@ -105,6 +109,9 @@ public class SplashActivity extends BaseAcitivityTHP {
             Log.i("SplashPage", from);
 
             switch (msg.what) {
+                case WHAT_FORCE_UPDATE:
+                    forceUpdate();
+                    break;
                 case WHAT_CONFIG_UPDATE_CHECK:
                     showProgressBar("Checking App Configuration.");
                     isConfigurationUpdateAvailable();
@@ -177,11 +184,38 @@ public class SplashActivity extends BaseAcitivityTHP {
         loadingMsg.setText(msg);
     }
 
+    private void forceUpdate() {
+        mDisposable.add(DefaultTHApiManager.forceUpdate()
+                .subscribe(updateModel -> {
+
+                    String severVersionCode = updateModel.getVersion_code();
+                    int serverVersionNumber = 0;
+                    try {
+                        serverVersionNumber = Integer.parseInt(severVersionCode);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    int appVersionCode;
+
+                    appVersionCode = BuildConfig.VERSION_CODE;
+                    if ((appVersionCode < serverVersionNumber)) {
+                        final boolean isForceUpdate = updateModel.getForce_upgrade();
+                        showUpdateDialog(updateModel.getApp_store_url(), updateModel.getMessage(), isForceUpdate, updateModel.getRemind_me());
+                    }
+                    else {
+                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                    }
+
+                }, throwable -> {
+                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                }, ()->{
+
+                }));
+    }
+
     private void launchTabScreen() {
         IntentUtil.openMainTabPage(SplashActivity.this);
     }
-
-
 
     private void routeToAppropriateAction() {
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
@@ -477,4 +511,52 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
         }
     };
+
+
+    /**
+     * It shows Force Update Dialog
+     * @param app_store_url
+     * @param message
+     * @param isForceUpdate
+     * @param remindMeTimeInMillies
+     */
+    private void showUpdateDialog(final String app_store_url, String message, final boolean isForceUpdate, String remindMeTimeInMillies) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        try {
+                            if (app_store_url != null)
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(app_store_url)));
+                            finish();
+                        } catch (android.content.ActivityNotFoundException anfe) {
+
+                        }
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        if (isForceUpdate) {
+                            finish();
+                        } else {
+                            dialog.cancel();
+                            sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                        }
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+        builder.setCancelable(isForceUpdate);
+        builder.setTitle("A new update available");
+        builder.setMessage(message);
+
+        builder.setPositiveButton("Download", dialogClickListener);
+        if (isForceUpdate) {
+            builder.setNegativeButton("Cancel", dialogClickListener);
+        } else {
+            builder.setNegativeButton("Remind Me Later", dialogClickListener);
+        }
+        Dialog mDialog = builder.create();
+        mDialog.show();
+    }
 }

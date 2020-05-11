@@ -43,6 +43,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.util.HashMap;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseAcitivityTHP extends AppCompatActivity implements ToolbarClickListener, InAppNotificationButtonListener {
@@ -64,6 +65,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     private ArticleTitleTextView mNoConnectionTabText;
 
     public static boolean sIsOnline;
+    private Disposable internetDisposable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +83,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         setContentView(layoutRes());
 
         mNoConnectionTabText = findViewById(R.id.noConnectionTabText);
-        internetAvailibilityCheck();
         mToolbar = findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -126,33 +127,39 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
 
 
-    private void internetAvailibilityCheck() {
-        ReactiveNetwork
-                .observeNetworkConnectivity(this)
-                .subscribeOn(Schedulers.io())
-                .map(connectivity->{
-                    if(connectivity.state() == NetworkInfo.State.CONNECTED) {
-                        sIsOnline = true;
-                    }
-                    else {
-                        sIsOnline = false;
-                    }
-                    return sIsOnline;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(sIsOnline -> {
-                    if(sIsOnline && mNoConnectionTabText != null) {
-                        mNoConnectionTabText.setVisibility(View.GONE);
-                    }
-                    else if( mNoConnectionTabText != null) {
-                        mNoConnectionTabText.setVisibility(View.VISIBLE);
-                    }
 
-                    Log.i("", "");
-                });
+
+
+
+
+    private void internetAvailbilityCheck() {
+
+        internetDisposable = ReactiveNetwork.observeInternetConnectivity()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isConnected -> {
+                            sIsOnline = isConnected;
+                            if (sIsOnline && mNoConnectionTabText != null) {
+                                mNoConnectionTabText.setVisibility(View.GONE);
+                            } else if (mNoConnectionTabText != null) {
+                                mNoConnectionTabText.setVisibility(View.VISIBLE);
+                            }
+                        }
+                );
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        internetAvailbilityCheck();
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "BaseAcitivityTHP Screen", BaseAcitivityTHP.class.getSimpleName());
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        safelyDispose(internetDisposable);
+    }
 
     @Override
     protected void onStop() {
@@ -168,6 +175,13 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         super.onDestroy();
     }
 
+    private void safelyDispose(Disposable... disposables) {
+        for (Disposable subscription : disposables) {
+            if (subscription != null && !subscription.isDisposed()) {
+                subscription.dispose();
+            }
+        }
+    }
 
     public void setOnFragmentTools(FragmentTools fragmentTools) {
         mFragmentTools = fragmentTools;
@@ -293,11 +307,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "BaseAcitivityTHP Screen", BaseAcitivityTHP.class.getSimpleName());
-    }
+
 
     protected boolean isUserLoggedIn() {
         return PremiumPref.getInstance(this).isUserLoggedIn();
