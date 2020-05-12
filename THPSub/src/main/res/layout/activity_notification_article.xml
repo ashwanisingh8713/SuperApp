@@ -15,4 +15,17 @@
         android:id="@+id/recyclerViewPullToRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/no_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/ic_notify_graphics_wrapper"
+        android:gravity="center"
+        android:padding="30dp"
+        app:font_path="@string/THP_TundraOffc"
+        android:text="@string/info_no_notifications"
+        android:textSize="16sp"
+        android:visibility="gone"/>
 </com.ns.view.layout.NSLinearLayout>

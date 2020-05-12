@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sub_Menu_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutType="Black_Dark"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="15dp">
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/textView_ClearAll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/clear_all_menu"
+        app:textColor="#808080"
+        app:font_path="@string/THP_FiraSans_Regular"/>
+
+</com.ns.view.layout.NSLinearLayout>

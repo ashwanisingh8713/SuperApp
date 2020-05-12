@@ -151,7 +151,7 @@
 
     <!-- Start Pop Up Window Options-->
     <string name="setting_menu">Settings</string>
-    <string name="clear_all_menu"></string>
+    <string name="clear_all_menu">Clear All</string>
     <string name="share_app_menu">Share this app</string>
     <string name="custom_home_screen">Personalise Home Screen</string>
 

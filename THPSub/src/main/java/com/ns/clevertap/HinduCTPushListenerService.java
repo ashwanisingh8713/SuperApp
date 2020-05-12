@@ -114,9 +114,6 @@ public class HinduCTPushListenerService extends FcmMessageListenerService {
                 e.printStackTrace();
             }
 
-
-
-
             /*NotificationBean bean = new NotificationBean(artId, actionURL, title, description,
                     imageUrl, sectionName, pub_date, type, isHasBody, System.currentTimeMillis(),
                     parentId, sectionId, false, articleType);
