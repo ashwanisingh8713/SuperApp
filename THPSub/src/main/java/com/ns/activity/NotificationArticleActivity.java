@@ -51,6 +51,7 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
         mRecyclerAdapter = new SectionContentAdapter(NetConstants.GROUP_NOTIFICATION, new ArrayList<>(), false, "mSectionId", NetConstants.GROUP_NOTIFICATION);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
         mDisposable.add(DefaultTHApiManager.getNotificationArticles(this).map(articleBeanList->{
+            mRecyclerAdapter.deleteAllItems();
             for (ArticleBean bean : articleBeanList) {
                 final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
                 SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
@@ -62,7 +63,6 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
                 .subscribe(isEmpty->{
                     Log.i("", "");
                     if (isEmpty) {
-                        mRecyclerAdapter.deleteAllItems();
                         //Show ToolBar icons
                         getDetailToolbar().showNotificationAndBookmarkeIcons(false);
                         mPullToRefreshLayout.setVisibility(View.GONE);
