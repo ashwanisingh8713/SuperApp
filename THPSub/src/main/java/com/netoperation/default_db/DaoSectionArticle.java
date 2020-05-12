@@ -35,7 +35,7 @@ public interface DaoSectionArticle {
     TableSectionArticle getPageArticles(String secId, int page);
 
     @Query("DELETE FROM TableSectionArticle WHERE secId = :secId")
-    int deleteSection(String secId);
+    int deleteSectionAllArticle(String secId);
 
     @Query("DELETE FROM TableSectionArticle")
     void deleteAll();

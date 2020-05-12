@@ -3,6 +3,7 @@ package com.ns.adapter;
 import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private boolean mIsSubSection;
     private String mSectionId;
     private String mSectionType;
+    private SparseIntArray positionList = new SparseIntArray();
 
     public SectionContentAdapter(String pageSource, ArrayList<SectionAdapterItem> adapterItems, boolean isSubsection, String sectionId, String sectionType) {
         this.mPageSource = pageSource;
@@ -179,6 +181,13 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if (holder instanceof TaboolaNativeAdViewHolder) {
             ((TaboolaNativeAdViewHolder) holder).mAdContainer.removeAllViews();
             ((TaboolaNativeAdViewHolder) holder).thumbNailContainer.removeAllViews();
+        }
+        else if(holder instanceof WidgetsViewHolder) {
+            WidgetsViewHolder widgetsViewHolder = (WidgetsViewHolder) holder;
+            final int position = widgetsViewHolder.getAdapterPosition();
+            int firstVisiblePosition = widgetsViewHolder.layoutManager.findFirstVisibleItemPosition();
+            positionList.put(position, firstVisiblePosition);
+
         }
     }
 
@@ -519,6 +528,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
         public RecyclerView mWidgetsRecyclerView;
         public TextView mWidgetTitleTextView, mWidgetFooterTextView;
+        public LinearLayoutManager layoutManager;
 
         public WidgetsViewHolder(View itemView) {
             super(itemView);
@@ -526,7 +536,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             mWidgetsRecyclerView = itemView.findViewById(R.id.recyclerview_widgets);
             mWidgetTitleTextView = itemView.findViewById(R.id.textview_widget_title);
             mWidgetFooterTextView = itemView.findViewById(R.id.textview_widget_viewAll);
-
+            layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            mWidgetsRecyclerView.setLayoutManager(layoutManager);
         }
     }
 
@@ -597,10 +608,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
 
     ////////////////////////////////////
-    private void fillWidgetData(WidgetsViewHolder mWidgetsViewHolder, final int position) {
+    private void fillWidgetData(WidgetsViewHolder mWidgetsViewHolder, final int verticleItemPosition) {
 
-        final SectionAdapterItem dataBean = adapterItems.get(position);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mWidgetsViewHolder.mWidgetsRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        final SectionAdapterItem dataBean = adapterItems.get(verticleItemPosition);
+
 
         /*mWidgetsViewHolder.mWidgetsRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -627,22 +638,37 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 return false;
             }
         });*/
+        WidgetAdapter widgetAdapter = dataBean.getWidgetAdapter();
 
-        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(dataBean.getWidgetAdapter());
-        mWidgetsViewHolder.mWidgetsRecyclerView.setLayoutManager(mLayoutManager);
-//        mWidgetsViewHolder.mWidgetsRecyclerView.setHasFixedSize(true);
-        mWidgetsViewHolder.mWidgetTitleTextView.setText(dataBean.getWidgetAdapter().getSectionName());
+        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(widgetAdapter);
+        mWidgetsViewHolder.mWidgetTitleTextView.setText(widgetAdapter.getSectionName());
         //for top-picks we are desableing the visiblity the view all textview
         if (dataBean.getWidgetAdapter().getSectionId()== 88) {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.GONE);
         } else {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
-            mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + dataBean.getWidgetAdapter().getSectionName());
+            mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + widgetAdapter.getSectionName());
         }
 
         mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(v->{
-            FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+dataBean.getWidgetAdapter().getSectionId());
+            FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+widgetAdapter.getSectionId());
         });
+
+        widgetAdapter.setWidgetItemClickListener(new WidgetAdapter.WidgetItemClickListener() {
+            @Override
+            public void onWidgetItemClickListener(int innerItemPosition, String secId) {
+                int firstVisiblePosition = mWidgetsViewHolder.layoutManager.findFirstVisibleItemPosition();
+                positionList.put(verticleItemPosition, firstVisiblePosition);
+            }
+        });
+
+        // Retrieve and set the saved position
+        int lastSeenFirstPosition = positionList.get(verticleItemPosition, 0);
+        if (lastSeenFirstPosition >= 0) {
+            mWidgetsViewHolder.layoutManager.scrollToPositionWithOffset(lastSeenFirstPosition, 0);
+        }
+
+
 
         /*mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -510,7 +510,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         else {
             sectionBannerAds(false);
         }
-
     }
 
     private void sectionBannerAds(boolean isHomePage) {

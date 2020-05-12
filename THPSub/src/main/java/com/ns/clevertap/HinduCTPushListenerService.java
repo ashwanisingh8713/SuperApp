@@ -81,40 +81,7 @@ public class HinduCTPushListenerService extends FcmMessageListenerService {
 
     private void parseAndDisplayArticleNotification(Map<String, String> data) {
         DefaultPref.getInstance(getApplicationContext()).putBoolean(THPConstants.NEW_NOTIFICATION, true);
-        try {
-            final Map<String, String> arguments = data;
-            final String actionURL = arguments.get("ns_action");
-            final String type = arguments.get("ns_type_PN");
-            final String title = arguments.get("gcm_title");
-            final String description = arguments.get("gcm_alert");
-            final String imageUrl = arguments.get("ns_image");
-            final String sectionName = arguments.get("ns_sec_name");
-            final String pub_date = arguments.get("ns_push_date");
-            final boolean isHasBody = Boolean.parseBoolean(arguments.get("ns_has_body"));
-            final String parentId = arguments.get("ns_parent_id");
-            final String sectionId = arguments.get("ns_section_id");
-
-            final String articleType;
-            if (arguments.containsKey("ns_article_type")) {
-                articleType = arguments.get("ns_article_type");
-            } else {
-                articleType = "article";
-            }
-
-
-            /*NotificationBean bean = new NotificationBean(artId, actionURL, title, description,
-                    imageUrl, sectionName, pub_date, type, isHasBody, System.currentTimeMillis(),
-                    parentId, sectionId, false, articleType);
-            SharedPreferenceHelper.addInJSONArray(this, bean);
-            Intent mNotificationReceiver = new Intent(THPConstants.NOTIFICATION_INCOMING_FILTER);
-            mNotificationReceiver.putExtra(THPConstants.NEW_NOTIFICATION, true);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(mNotificationReceiver);*/
-
-            AppNotification.customNotificationWithImageUrl(this, arguments);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AppNotification.customNotificationWithImageUrl(this, data);
     }
 
     private void parseAndDisplaySubsPlanNotification(Map<String, String> data) {

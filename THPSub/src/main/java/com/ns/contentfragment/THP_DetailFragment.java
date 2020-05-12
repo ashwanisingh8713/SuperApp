@@ -381,7 +381,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)  || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+                || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
             mArticleBean.setIsBookmark(0);
             // To Remove at App end
             mDisposable.add(ApiManager.createUnBookmark(getActivity(), mArticleBean.getArticleId()).subscribe(boole -> {

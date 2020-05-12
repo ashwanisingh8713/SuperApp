@@ -3,7 +3,9 @@ package com.netoperation.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +19,6 @@ public class DefaultPref {
     private SharedPreferences.Editor mEditor;
 
     private static DefaultPref mUser;
-
 
     private DefaultPref(Context context) {
         try {
@@ -266,4 +267,5 @@ public class DefaultPref {
         return mPreferences.getBoolean(key, false);
     }
 //    Set and get any preferences end
+
 }

@@ -22,7 +22,7 @@
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             />
 
-        <com.ns.view.NonSwipeableViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="0px"

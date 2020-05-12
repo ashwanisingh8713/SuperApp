@@ -440,10 +440,17 @@ public class DefaultTHApiManager {
                         SectionContentFromServer sectionContent = (SectionContentFromServer) value;
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoWidget daoWidget = thpdb.daoWidget();
+                        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
                         if(sectionContent.getData().getArticle().size() > 0) {
                             TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
                             tableWidget.setBeans(sectionContent.getData().getArticle());
                             daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
+
+                            // Delete Articles from respective TableSectionArticle
+                            daoSectionArticle.deleteSectionAllArticle(sectionContent.getData().getSid());
+                            // Insert Articles in respective TableSectionArticle
+                            TableSectionArticle tableSectionArticle = new TableSectionArticle(sectionContent.getData().getSid(), sectionContent.getData().getSname(), 1, sectionContent.getData().getArticle());
+                            daoSectionArticle.insertSectionArticle(tableSectionArticle);
 
                             Log.i("HomeData", "widgetContent :: Inserted");
                         }
@@ -485,7 +492,7 @@ public class DefaultTHApiManager {
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
                         if (page == 1) {
-                            daoSectionArticle.deleteSection(secId);
+                            daoSectionArticle.deleteSectionAllArticle(secId);
                             Log.i(TAG, "getSectionContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());
@@ -549,7 +556,7 @@ public class DefaultTHApiManager {
 
                         DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
                         if (page == 1) {
-                            daoSectionArticle.deleteSection(secId);
+                            daoSectionArticle.deleteSectionAllArticle(secId);
                             Log.i(TAG, "getSubSectionContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
                         }
                         TableSectionArticle sectionArticles = new TableSectionArticle(value.getData().getSid(), value.getData().getSname(), page, value.getData().getArticle());

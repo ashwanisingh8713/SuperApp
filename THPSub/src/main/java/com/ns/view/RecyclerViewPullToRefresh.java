@@ -114,8 +114,10 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
 
     public void hideProgressBar() {
         mProgressBar.setVisibility(GONE);
-        smoothProgressBar.setVisibility(GONE);
         mTryAgainBtn.setVisibility(GONE);
+        smoothProgressBar.postDelayed(()->{
+            smoothProgressBar.setVisibility(GONE);
+        }, 1000);
     }
 
 

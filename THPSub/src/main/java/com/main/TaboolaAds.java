@@ -1,6 +1,7 @@
 package com.main;
 
 import android.util.Log;
+import android.util.SparseIntArray;
 
 import com.netoperation.model.AdData;
 import com.netoperation.util.PremiumPref;
@@ -20,6 +21,7 @@ public class TaboolaAds {
     private TBPlacement mTbPlacement;
     private List<AdData> taboolaAdsBeans;
     private int loadedCount;
+    private SparseIntArray mAddedPositionList = new SparseIntArray();
 
     public interface OnTaboolaAdLoadListener {
         void onTaboolaAdLoadSuccess(AdData adData);
@@ -34,10 +36,18 @@ public class TaboolaAds {
     }
 
     public void initAndLoadRecommendationsBatch() {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+            return;
+        }
         if(taboolaAdsBeans == null || taboolaAdsBeans.size()<=loadedCount) {
             return;
         }
         AdData adData = taboolaAdsBeans.get(loadedCount);
+        if(isAlreadyExecuted(adData.getIndex())) {
+            loadedCount++;
+            loadNextRecommendationsBatch();
+            return;
+        }
         Log.i("TATA", "Init Sent :: "+adData.getIndex());
         String placementName = "Below Home Stream";
         String sourceType = "home";
@@ -53,6 +63,7 @@ public class TaboolaAds {
                     mTbPlacement.prefetchThumbnails();
                     if (mOnTaboolaAdLoadListener != null) {
                         loadedCount++;
+                        addSuccessPosition(adData.getIndex());
                         TBRecommendationItem item = mTbPlacement.getItems().get(0);
                         adData.createAdDataUiqueId(adData.getIndex(), item.getPublisherId());
                         adData.setTaboolaNativeAdItem(item);
@@ -71,13 +82,19 @@ public class TaboolaAds {
     }
 
     public void loadNextRecommendationsBatch() {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+            return;
+        }
         if (mTbPlacement != null) {
             if(taboolaAdsBeans == null || taboolaAdsBeans.size()<=loadedCount) {
                 return;
             }
             AdData adData = taboolaAdsBeans.get(loadedCount);
-            Log.i("TATA", "Sent :: "+adData.getIndex());
-            Log.i("TATA", "SecId :: "+adData.getSecId());
+            if(isAlreadyExecuted(adData.getIndex())) {
+                loadedCount++;
+                loadNextRecommendationsBatch();
+                return;
+            }
             TaboolaApi.getInstance().getNextBatchForPlacement(mTbPlacement, new TBRecommendationRequestCallback() {
                 @Override
                 public void onRecommendationsFetched(TBRecommendationsResponse response) {
@@ -85,6 +102,7 @@ public class TaboolaAds {
                     if (mTbPlacement != null && mTbPlacement.getItems() != null && !mTbPlacement.getItems().isEmpty()) {
                         if (mOnTaboolaAdLoadListener != null) {
                             loadedCount++;
+                            addSuccessPosition(adData.getIndex());
                             TBRecommendationItem item = mTbPlacement.getItems().get(0);
                             adData.createAdDataUiqueId(adData.getIndex(), item.getPublisherId());
                             adData.setTaboolaNativeAdItem(item);
@@ -102,6 +120,14 @@ public class TaboolaAds {
                 }
             });
         }
+    }
+
+    public void addSuccessPosition(int adIndex) {
+        mAddedPositionList.put(adIndex, 1);
+    }
+
+    public boolean isAlreadyExecuted(int adIndex) {
+        return 1==mAddedPositionList.get(adIndex, 0);
     }
 
 

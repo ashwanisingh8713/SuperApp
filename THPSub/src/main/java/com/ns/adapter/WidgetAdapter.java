@@ -45,13 +45,6 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     private int sectionId;
     private String sectionName;
 
-    public String getSectionName() {
-        return sectionName;
-    }
-
-    public int getSectionId() {
-        return sectionId;
-    }
 
     public WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
         mWidgetList = mWidgetListParam;
@@ -151,6 +144,10 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, appExclusiveViewHolder.mRootLayout);
+
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
 
@@ -186,6 +183,10 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mWidgetViewHolder.mWidgetLayout);
+
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
         }
@@ -217,6 +218,9 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mCartoonViewHolder.mRootLayout);
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
         }
@@ -246,6 +250,9 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mOpinionViewHolder.mRootLayout);
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
         }
@@ -286,6 +293,9 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mParentView);
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
 
@@ -297,9 +307,20 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mPlayButton);
+                    if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }
                 }
             });
         }
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public int getSectionId() {
+        return sectionId;
     }
 
     public List<ArticleBean> getArticleList() {
@@ -378,5 +399,15 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             mWidgetDescripitionTextView = itemView.findViewById(R.id.textview_opinion_content);
             mRootLayout = itemView.findViewById(R.id.layout_root_opinion);
         }
+    }
+
+    private WidgetItemClickListener mWidgetItemClickListener;
+
+    public void setWidgetItemClickListener(WidgetItemClickListener widgetItemClickListener) {
+        mWidgetItemClickListener = widgetItemClickListener;
+    }
+
+    public interface WidgetItemClickListener {
+        void onWidgetItemClickListener(int innerItemPosition, String secId);
     }
 }

@@ -14,6 +14,7 @@ import com.google.android.gms.ads.AdSize;
 import com.main.DFPAds;
 import com.main.TaboolaAds;
 import com.netoperation.db.THPDB;
+import com.netoperation.db.TableBookmark;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSection;
@@ -30,6 +31,7 @@ import com.netoperation.model.SectionBean;
 import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -41,11 +43,14 @@ import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -170,8 +175,14 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     @Override
     public void onResume() {
         super.onResume();
-        if(mRecyclerAdapter != null) {
-            mRecyclerAdapter.notifyDataSetChanged();
+        if(mRecyclerAdapter != null ) {
+
+            int findFirstVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstVisibleItemPosition();
+            int findLastVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastVisibleItemPosition();
+            //int findFirstCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstCompletelyVisibleItemPosition();
+            //int findLastCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastCompletelyVisibleItemPosition();
+
+            mRecyclerAdapter.notifyItemRangeChanged(findFirstVisibleItemPosition, findLastVisibleItemPosition-findFirstVisibleItemPosition);
         }
 
         AdData adData = new AdData(-1, "");
@@ -186,11 +197,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     }
 
+
+
     @Override
     public void onEmptyRefreshBtnClick() {
         mPullToRefreshLayout.showProgressBar();
-        //mPullToRefreshLayout.setVisibility(View.VISIBLE);
-        //hideEmptyLayout(emptyLayout);
         hideLoadingViewCrossFade(mPullToRefreshLayout, emptyLayout);
         new Handler().postDelayed(()->{
             sectionOrSubSectionDataFromDB();
@@ -626,7 +637,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 taboolaAdsBeans.add(adsBean);
             }
         }
-
         //taboolaAdsBeans1.add(taboolaAdsBeans.get(0));
         dfpAds.listingAds();
 
@@ -641,13 +651,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onDFPAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
-        int index = mRecyclerAdapter.indexOf(item);
-        if(index == -1) {
-            if(adData.getAdView() != null) {
-                int updateIndex = mRecyclerAdapter.insertItem(item, adData.getIndex());
-                mRecyclerAdapter.notifyItemChanged(updateIndex);
-            }
-        }
+        insertAdsItemView(runnableAdItem(item));
     }
 
     @Override
@@ -655,25 +659,39 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     }
 
-
     @Override
     public void onTaboolaAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
-        int index = mRecyclerAdapter.indexOf(item);
-
-        if(index == -1) {
-            Log.i("TATA", "Received :: "+adData.getIndex());
-            Log.i("TATA", "SecId :: "+adData.getSecId());
-            taboolaAds.loadNextRecommendationsBatch();
-                int updateIndex = mRecyclerAdapter.insertItem(item, adData.getIndex());
-                mRecyclerAdapter.notifyItemChanged(updateIndex);
-        }
+        insertAdsItemView(runnableAdItem(item));
     }
 
     @Override
     public void onTaboolaAdLoadFailure(AdData adData) {
 
+    }
+
+    private Handler mHandler;
+
+    private void insertAdsItemView(Runnable runnable) {
+        if(mHandler == null) {
+            mHandler = new Handler();
+        }
+        mHandler.postDelayed(runnable, 300);
+    }
+
+    private Runnable runnableAdItem (SectionAdapterItem item) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                int index = mRecyclerAdapter.indexOf(item);
+                if (index == -1) {
+                    int updateIndex = mRecyclerAdapter.insertItem(item, item.getAdData().getIndex());
+                    mRecyclerAdapter.notifyItemChanged(updateIndex);
+                    taboolaAds.loadNextRecommendationsBatch();
+                }
+            }
+        };
     }
 
 }
