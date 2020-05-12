@@ -2,7 +2,6 @@ package com.ns.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -20,16 +19,17 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.InAppNotificationButtonListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.main.AppAds;
+import com.main.DFPAds;
+import com.main.SuperApp;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
-import com.netoperation.retrofit.ServiceFactory;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
-import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
@@ -100,6 +100,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 // Initializing, CLeverTap In-App Notification Button Click Listener
         CleverTapAPI clevertap = CleverTapAPI.getDefaultInstance(this);
         clevertap.setInAppNotificationButtonListener(this);
+
+        loadConfiguration();
     }
 
     @Override
@@ -125,15 +127,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         }
     }
 
-
-
-
-
-
-
-
     private void internetAvailbilityCheck() {
-
         internetDisposable = ReactiveNetwork.observeInternetConnectivity()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -307,19 +301,20 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     }
 
 
-
-
     protected boolean isUserLoggedIn() {
         return PremiumPref.getInstance(this).isUserLoggedIn();
     }
 
 
-    protected void createAndShowBannerAds() {
-        AppAds appAds = new AppAds();
-        appAds.createBannerAdRequest(false);
-        appAds.setOnAppAdLoadListener(new AppAds.OnAppAdLoadListener() {
+    protected void activityBannerAds() {
+        TableConfiguration tableConfiguration = getTableConfiguration();
+        if(tableConfiguration == null) return;
+
+        DFPAds DFPAds = new DFPAds();
+        DFPAds.createBannerAdRequest(false, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
+        DFPAds.setOnAppAdLoadListener(new com.main.DFPAds.OnDFPAdLoadListener() {
             @Override
-            public void onAppAdLoadSuccess(AdData adData) {
+            public void onDFPAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);
                 if(banner_Ad_layout != null) {
                     banner_Ad_layout.setVisibility(View.VISIBLE);
@@ -328,7 +323,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             }
 
             @Override
-            public void onAppAdLoadFailure(AdData adData) {
+            public void onDFPAdLoadFailure(AdData adData) {
                 Log.i("", "");
 
             }
@@ -351,5 +346,25 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         } else {
             return false;
         }
+    }
+
+    private static TableConfiguration sTableConfiguration;
+
+    private static void loadConfiguration() {
+        if(sTableConfiguration == null) {
+            DefaultTHApiManager.appConfiguration(SuperApp.getAppContext())
+                    .subscribe(tableConfiguration -> {
+                        sTableConfiguration = tableConfiguration;
+                    }, throwable -> {
+
+                    });
+        }
+    }
+
+    public static TableConfiguration getTableConfiguration() {
+        if(sTableConfiguration == null) {
+            loadConfiguration();
+        }
+        return sTableConfiguration;
     }
 }

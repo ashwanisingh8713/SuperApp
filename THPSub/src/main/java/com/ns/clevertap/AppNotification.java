@@ -178,8 +178,8 @@ public class AppNotification {
         } else {
             return;
         }
-        arguments.put("nt", context.getString(R.string.appName));
-        arguments.put("gcm_title", context.getString(R.string.appName));
+        arguments.put("nt", context.getString(R.string.APP_NAME));
+        arguments.put("gcm_title", context.getString(R.string.APP_NAME));
         arguments.put("nm", arguments.get("ns_type_PN").toUpperCase()+" : 15 migrant workers run over by goods train in Maharashtra");
         arguments.put("gcm_alert", arguments.get("ns_type_PN").toUpperCase()+" : 15 migrant workers run over by goods train in Maharashtra");
         arguments.put("ns_image", "https://www.thehindu.com/news/national/other-states/ir60zu/article31531497.ece/ALTERNATES/FREE_960/aurangabadtrain-police");

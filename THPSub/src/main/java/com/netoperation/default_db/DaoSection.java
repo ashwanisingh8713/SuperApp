@@ -4,6 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.netoperation.model.StaticPageUrlBean;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -38,6 +40,9 @@ public interface DaoSection {
 
     @Query("SELECT * FROM TableSection WHERE show_on_explore = :show_on_explore")
     List<TableSection> getSectionsOfExplore(boolean show_on_explore);
+
+    @Query("SELECT staticPageUrlBean FROM TableSection WHERE secId = :secId")
+    Single<StaticPageUrlBean> getStaticPage(String secId);
 
     @Query("SELECT * FROM TableSection WHERE secId = :secId")
     TableSection getSubSections(String secId);

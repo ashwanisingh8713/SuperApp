@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface DaoSectionArticle {
@@ -25,7 +26,7 @@ public interface DaoSectionArticle {
     Observable<TableSectionArticle> getPageArticlesObservable(String secId, int page);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId AND page = :page")
-    Maybe<List<TableSectionArticle>> getPageArticlesMaybe(String secId, int page);
+    Single<List<TableSectionArticle>> getPageArticlesMaybe(String secId, int page);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId")
     Maybe<List<TableSectionArticle>> getArticlesMaybe(String secId);

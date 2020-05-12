@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.ads.AdSize;
-import com.main.AppAds;
+import com.main.DFPAds;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoMPReadArticle;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
@@ -55,7 +56,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, AppAds.OnAppAdLoadListener {
+public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, DFPAds.OnDFPAdLoadListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private AppTabContentAdapter mRecyclerAdapter;
@@ -760,7 +761,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         postCommentBtnModel.setBean(bean);
         mRecyclerAdapter.addData(postCommentBtnModel);
 
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, "taboolaModel");
         taboolaModel.setBean(bean);
         mRecyclerAdapter.addData(taboolaModel);
 
@@ -777,7 +778,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         description_restricted.setBean(bean);
         mRecyclerAdapter.addData(description_restricted);
 
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA, "taboolaModel");
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, "taboolaModel");
         taboolaModel.setBean(bean);
         mRecyclerAdapter.addData(taboolaModel);
     }
@@ -787,10 +788,16 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(!NetUtils.isConnected(getActivity())) {
             return;
         }
+
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration == null) {
+            return;
+        }
+
         ArrayList<AdData> mAdsData = new ArrayList<>();
         ArrayList<String> adsId = new ArrayList<>();
-        adsId.add(AppAds.firstInline);
-        adsId.add(AppAds.secondInline);
+        adsId.add(tableConfiguration.getAds().getDetailPageTopAdId());
+        adsId.add(tableConfiguration.getAds().getDetailPageBottomAdId());
 
         for(int i=0; i<adsId.size(); i++) {
             int index = 0;
@@ -801,17 +808,18 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 index = 4;
             }
 
-            AdData adData = new AdData(index, AdSize.MEDIUM_RECTANGLE, adsId.get(i), false);
+            AdData adData = new AdData(index, adsId.get(i));
+            adData.setAdSize(AdSize.MEDIUM_RECTANGLE);
             mAdsData.add(adData);
         }
 
-        AppAds appAds = new AppAds(mAdsData, this);
-        appAds.loadAds();
+        DFPAds DFPAds = new DFPAds(mAdsData, this);
+        DFPAds.listingAds();
     }
 
 
     @Override
-    public void onAppAdLoadSuccess(AdData adData) {
+    public void onDFPAdLoadSuccess(AdData adData) {
         AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         int index = mRecyclerAdapter.indexOf(item);
@@ -824,7 +832,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     @Override
-    public void onAppAdLoadFailure(AdData adData) {
+    public void onDFPAdLoadFailure(AdData adData) {
 
     }
 

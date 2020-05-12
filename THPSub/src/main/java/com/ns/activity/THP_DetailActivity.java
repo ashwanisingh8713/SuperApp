@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.main.AppAds;
+import com.main.DFPAds;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
@@ -109,10 +109,10 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 .delay(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(val->{
-                    new AppAds().loadFullScreenAds();
+                    new DFPAds().loadFullScreenAds();
                 });
 
-        createAndShowBannerAds();
+        activityBannerAds();
 
         EventBus.getDefault().register(this);
 
@@ -148,7 +148,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        new AppAds().showFullScreenAds();
+        new DFPAds().showFullScreenAds();
         super.onDestroy();
     }
 

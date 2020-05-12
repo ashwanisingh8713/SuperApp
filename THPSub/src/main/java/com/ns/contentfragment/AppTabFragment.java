@@ -17,8 +17,9 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.main.AppAds;
+import com.main.DFPAds;
 import com.netoperation.config.model.TabsBean;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.net.ApiManager;
@@ -39,6 +40,10 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.TabUtils;
 import com.ns.view.ViewPagerScroller;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -220,10 +225,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             PremiumPref.getInstance(getActivity()).setIsSubscribeClose(true);
             view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
         });
-
-
-
-        createAndShowBannerAds();
 
     }
 
@@ -465,6 +466,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         super.onResume();
         // Shows user name
         loadUserProfile();
+
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -479,27 +489,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
 
-    private void createAndShowBannerAds() {
-        AppAds appAds = new AppAds();
-        appAds.createBannerAdRequest(true);
-        appAds.setOnAppAdLoadListener(new AppAds.OnAppAdLoadListener() {
-            @Override
-            public void onAppAdLoadSuccess(AdData adData) {
-                LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
-                if(banner_Ad_layout != null) {
-                    banner_Ad_layout.setVisibility(View.VISIBLE);
-                    banner_Ad_layout.addView(adData.getAdView());
-                }
-            }
-
-            @Override
-            public void onAppAdLoadFailure(AdData adData) {
-                Log.i("", "");
-
-            }
-        });
-    }
-
 
     private void updateUserStatus() {
         ApiManager.getUserProfile(getActivity())
@@ -511,6 +500,46 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     //PremiumPref.getInstance(getActivity())
 
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(AdData adData) {
+        if(adData != null && adData.getSecId().equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
+            sectionBannerAds(true);
+        }
+        else {
+            sectionBannerAds(false);
+        }
+
+    }
+
+    private void sectionBannerAds(boolean isHomePage) {
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration == null) return;
+        DFPAds DFPAds = new DFPAds();
+        DFPAds.createBannerAdRequest(isHomePage, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
+        DFPAds.setOnAppAdLoadListener(new com.main.DFPAds.OnDFPAdLoadListener() {
+            @Override
+            public void onDFPAdLoadSuccess(AdData adData) {
+                LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
+                if(banner_Ad_layout != null) {
+                    banner_Ad_layout.setVisibility(View.VISIBLE);
+                    int childCount = banner_Ad_layout.getChildCount();
+                    if(banner_Ad_layout.getChildCount() > 0) {
+                        for(int i=0; i<childCount; i++) {
+                            banner_Ad_layout.removeViewAt(i);
+                        }
+                    }
+                    banner_Ad_layout.addView(adData.getAdView());
+                }
+            }
+
+            @Override
+            public void onDFPAdLoadFailure(AdData adData) {
+                Log.i("", "");
+
+            }
+        });
     }
 
 }

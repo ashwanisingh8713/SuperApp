@@ -15,7 +15,7 @@
 
     <application
         android:name="com.main.SuperApp"
-        android:label="@string/appName"
+        android:label="@string/APP_NAME"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -105,7 +105,7 @@
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/appName" />
+            android:label="@string/APP_NAME" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"

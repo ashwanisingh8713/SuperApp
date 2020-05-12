@@ -1,12 +1,6 @@
 package com.ns.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -69,7 +63,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
         new WebViewLinkClick(false).linkClick(mWebView, this, mProgressBar);
 
-        createAndShowBannerAds();
+        activityBannerAds();
 
     }
 

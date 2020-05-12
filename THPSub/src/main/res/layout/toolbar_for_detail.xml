@@ -45,7 +45,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
-        android:text="@string/appName"
+        android:text="@string/APP_NAME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/action_logo"
         app:layout_constraintTop_toTopOf="parent" />

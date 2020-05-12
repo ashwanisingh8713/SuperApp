@@ -11,13 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdSize;
-import com.main.AppAds;
+import com.main.DFPAds;
+import com.main.TaboolaAds;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableWidget;
@@ -38,6 +40,8 @@ import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,12 +49,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, BaseFragmentTHP.EmptyViewClickListener, AppAds.OnAppAdLoadListener {
+public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener,
+        BaseFragmentTHP.EmptyViewClickListener, DFPAds.OnDFPAdLoadListener, TaboolaAds.OnTaboolaAdLoadListener {
 
     private static String TAG = NetConstants.TAG_UNIQUE;
 
@@ -167,6 +173,17 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         if(mRecyclerAdapter != null) {
             mRecyclerAdapter.notifyDataSetChanged();
         }
+
+        AdData adData = new AdData(-1, "");
+        adData.setSecId(mSectionId);
+        // It sends event to AppTabFragment.java in handleEvent(AdData adData)
+        EventBus.getDefault().post(adData);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 
     @Override
@@ -202,54 +219,67 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }));
     }
 
+    private void getStaticPage() {
+            THPDB.getInstance(getActivity())
+                    .daoSection().getStaticPage(mSectionId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(staticPageUrlBean -> {
+                        mStaticPageBean = staticPageUrlBean;
+                        addWebPagePageBean();
+                    }, throwable -> {
+                        Log.i("", "");
+                    });
+    }
+
 
     private void sectionOrSubSectionDataFromDB() {
         THPDB thpdb = THPDB.getInstance(getActivity());
-        mDisposable.add(thpdb.daoSectionArticle()
-                .getPageArticlesMaybe(mSectionId, mPage)
+        mDisposable.add(thpdb.daoSectionArticle().getPageArticlesMaybe(mSectionId, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
-                        Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB :: Page - " + mPage);
-                        if(mSectionId.equals("998")) {// Opens News-Digest
-                            showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
-                        }
-                        else {
-                            sectionOrSubSectionFromServer(mPage);
-                        }
-                    } else {
-                        for (TableSectionArticle sectionArticle : value) {
-                            List<ArticleBean> articleBeanList = sectionArticle.getBeans();
-                            for (ArticleBean bean : articleBeanList) {
-                                final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
-                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
-                                item.setArticleBean(bean);
-                                mRecyclerAdapter.addSingleItem(item);
+                            if (value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
+                                Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: NO Article in DB :: Page - " + mPage);
+                                if (mSectionId.equals("998")) {// Opens News-Digest
+                                    showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
+                                } else {
+                                    sectionOrSubSectionFromServer(mPage);
+                                }
+                            } else {
+                                for (TableSectionArticle sectionArticle : value) {
+                                    List<ArticleBean> articleBeanList = sectionArticle.getBeans();
+                                    for (ArticleBean bean : articleBeanList) {
+                                        final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                                        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                                        item.setArticleBean(bean);
+                                        mRecyclerAdapter.addSingleItem(item);
+                                    }
+                                }
+                                Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from DB :: Page - " + mPage);
+                                if (mPage == 1) {
+                                    getSubsections();
+                                    getStaticPage();
+                                }
+                                incrementPageCount();
+
+                                Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mPage - 1));
+                                setLoading(false);
+                                mPullToRefreshLayout.setRefreshing(false);
+                                loadAdvertisment();
                             }
-                        }
-                        Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from DB :: Page - " + mPage);
-                        if(mPage == 1) {
-                            getSubsections();
-                        }
-                        incrementPageCount();
-                    }
-
-                }, throwable -> {
-                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mPage + " :: throwable - " + throwable);
-                    Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionDataFromDB() :: " + throwable);
-                    setLoading(false);
-                }, () -> {
-                    Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mPage - 1));
-                    setLoading(false);
-                }));
-
+                        },
+                        throwable -> {
+                            Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mPage + " :: throwable - " + throwable);
+                            Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionDataFromDB() :: " + throwable);
+                            setLoading(false);
+                            mPullToRefreshLayout.setRefreshing(false);
+                        }));
     }
 
     private void sectionOrSubSectionFromServer(int page) {
         mPullToRefreshLayout.showSmoothProgressBar();
         setLoading(true);
-
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
             @Override
             public void onNext(ArrayList<SectionAdapterItem> articleBeans) {
@@ -281,6 +311,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
                 setLoading(false);
+                mPullToRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -288,8 +319,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
                 setLoading(false);
                 mPullToRefreshLayout.hideProgressBar();
+                mPullToRefreshLayout.setRefreshing(false);
                 showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
-
+                loadAdvertisment();
             }
         };
         if(mSectionId.equals("998")) {// Opens News-Digest
@@ -423,8 +455,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                             }
                         }
                     }
-
-
                 }, throwable -> {
                     Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
                 }));
@@ -522,13 +552,14 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                     // Widget Observable
                     showHomeWidgets();
                     addWebPagePageBean();
-                    loadAdvertisiment();
+                    loadAdvertisment();
                 }));
     }
 
 
     private void addWebPagePageBean() {
-        if (mStaticPageBean != null && mStaticPageBean.getPosition() > -1 && BaseAcitivityTHP.sIsOnline) {
+        if (mStaticPageBean != null && mStaticPageBean.isIsEnabled()
+                && mStaticPageBean.getPosition() > -1 && BaseAcitivityTHP.sIsOnline) {
             final String itemRowId = "staticWebpage_" + mStaticPageBean.getPosition();
             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
             int index = mRecyclerAdapter.indexOf(item);
@@ -563,41 +594,51 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPage = 1;
     }
 
+    private TaboolaAds taboolaAds;
+    private DFPAds dfpAds;
 
-    private void loadAdvertisiment() {
+    private void loadAdvertisment() {
         if(!BaseAcitivityTHP.sIsOnline) {
             return;
         }
-        ArrayList<AdData> mAdsData = new ArrayList<>();
-        ArrayList<String> adsId = new ArrayList<>();
-        adsId.add(AppAds.firstInline);
-        adsId.add(AppAds.secondInline);
-        adsId.add(AppAds.thirdInline);
 
-        for(int i=0; i<adsId.size(); i++) {
-            int index = 0;
-            if(i == 0) {
-                index = 4;
-            }
-            else if(i == 1) {
-                index = 11;
-            }
-            else if(i == 2) {
-                index = 16;
-            }
-            AdData adData = new AdData(index, AdSize.MEDIUM_RECTANGLE, adsId.get(i), true);
-            mAdsData.add(adData);
+        Log.i("TATA", "loadAdvertisment :: ");
+
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration == null) {
+            return;
+        }
+        List<AdData> listingAdsBeans = tableConfiguration.getAds().getListingPageAds();
+        List<AdData> taboolaAdsBeans = new ArrayList<>();
+        List<AdData> taboolaAdsBeans1 = new ArrayList<>();
+
+        if(dfpAds == null) {
+            dfpAds = new DFPAds(this);
         }
 
+        for(AdData adsBean : listingAdsBeans) {
+            adsBean.setSecId(mSectionId);
+            if(adsBean.getType().equalsIgnoreCase("DFP")) {
+                adsBean.setAdSize(AdSize.MEDIUM_RECTANGLE);
+                dfpAds.createMEDIUM_RECTANGLE(adsBean);
+            }
+            else {
+                taboolaAdsBeans.add(adsBean);
+            }
+        }
 
+        taboolaAdsBeans1.add(taboolaAdsBeans.get(0));
+        dfpAds.listingAds();
 
-        AppAds appAds = new AppAds(mAdsData, this);
-        appAds.loadAds();
+        if(taboolaAds == null && taboolaAdsBeans.size() > 0) {
+                taboolaAds = new TaboolaAds(this, taboolaAdsBeans1);
+                taboolaAds.initAndLoadRecommendationsBatch();
+        }
     }
 
 
     @Override
-    public void onAppAdLoadSuccess(AdData adData) {
+    public void onDFPAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         int index = mRecyclerAdapter.indexOf(item);
@@ -607,13 +648,32 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 mRecyclerAdapter.notifyItemChanged(updateIndex);
             }
         }
-
     }
 
     @Override
-    public void onAppAdLoadFailure(AdData adData) {
+    public void onDFPAdLoadFailure(AdData adData) {
 
     }
 
+
+    @Override
+    public void onTaboolaAdLoadSuccess(AdData adData) {
+        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId());
+        item.setAdData(adData);
+        int index = mRecyclerAdapter.indexOf(item);
+
+        if(index == -1) {
+            Log.i("TATA", "Received :: "+adData.getIndex());
+            Log.i("TATA", "SecId :: "+adData.getSecId());
+            taboolaAds.loadNextRecommendationsBatch();
+                int updateIndex = mRecyclerAdapter.insertItem(item, adData.getIndex());
+                mRecyclerAdapter.notifyItemChanged(updateIndex);
+        }
+    }
+
+    @Override
+    public void onTaboolaAdLoadFailure(AdData adData) {
+
+    }
 
 }

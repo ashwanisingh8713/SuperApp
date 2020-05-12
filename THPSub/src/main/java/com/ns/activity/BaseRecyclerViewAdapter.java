@@ -42,7 +42,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_THD_WIDGET_Cartoons = 18;
     public static final int VT_THD_WIDGET_DEFAULT = 19;
     public static final int VT_THD_300X250_ADS = 20;
-    public static final int VT_THD_TABOOLA_ADS = 21;
+    public static final int VT_TABOOLA_LISTING_ADS = 218;
     public static final int VT_THD_DEFAULT_ROW = 22;
 
     public static final int VT_BLD_BANNER = 23;
@@ -54,7 +54,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
     public static final int VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER = 28;
     public static final int VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW = 29;
-    public static final int VT_TABOOLA = 30;
+    public static final int VT_TABOOLA_WIDGET = 30;
     public static final int VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW = 31;
     public static final int VT_THD_SEARCH_ROW = 32;
     public static final int VT_THD_PHOTO_VIEW = 33;

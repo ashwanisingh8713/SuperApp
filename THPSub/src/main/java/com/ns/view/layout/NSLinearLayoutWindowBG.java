@@ -30,8 +30,6 @@ public class NSLinearLayoutWindowBG extends LinearLayout {
 
     void init(Context context, AttributeSet attrs) {
 
-
-
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if(isUserThemeDay) {

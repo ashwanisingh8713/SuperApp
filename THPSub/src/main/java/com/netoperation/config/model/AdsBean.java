@@ -1,5 +1,7 @@
 package com.netoperation.config.model;
 
+import com.netoperation.model.AdData;
+
 import java.util.List;
 
 public class AdsBean {
@@ -17,7 +19,7 @@ public class AdsBean {
     private String fullScreenAdId;
     private String detailPageTopAdId;
     private String detailPageBottomAdId;
-    private List<ListingAdsBean> listingPageAds;
+    private List<AdData> listingPageAds;
 
     public String getBottomAdHomeId() {
         return bottomAdHomeId;
@@ -59,11 +61,11 @@ public class AdsBean {
         this.detailPageBottomAdId = detailPageBottomAdId;
     }
 
-    public List<ListingAdsBean> getListingPageAds() {
+    public List<AdData> getListingPageAds() {
         return listingPageAds;
     }
 
-    public void setListingPageAds(List<ListingAdsBean> listingPageAds) {
+    public void setListingPageAds(List<AdData> listingPageAds) {
         this.listingPageAds = listingPageAds;
     }
 

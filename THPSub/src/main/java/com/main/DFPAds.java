@@ -19,9 +19,9 @@ import com.netoperation.util.PremiumPref;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AppAds {
+public class DFPAds {
 
-    private final String TAG = AppAds.class.getName();
+    private final String TAG = DFPAds.class.getName();
 
     public static String firstInline = "/22390678/Hindu_Android_HP_Middle";
     public static String secondInline = "/22390678/Hindu_Android_HP_Footer";
@@ -33,21 +33,21 @@ public class AppAds {
 
     private static PublisherInterstitialAd mPublisherInterstitialAd;
 
-    public interface OnAppAdLoadListener {
-        void onAppAdLoadSuccess(AdData adData);
-        void onAppAdLoadFailure(AdData adData);
+    public interface OnDFPAdLoadListener {
+        void onDFPAdLoadSuccess(AdData adData);
+        void onDFPAdLoadFailure(AdData adData);
     }
 
-    private OnAppAdLoadListener mOnAppAdLoadListener;
+    private OnDFPAdLoadListener mOnDFPAdLoadListener;
 
     private static Bundle nonPersonalizedAdsReqBundle;
 
-    private interface InAdLoadListener extends OnAppAdLoadListener {
+    private interface InAdLoadListener extends OnDFPAdLoadListener {
         void onAdClose();
     }
 
-    public void setOnAppAdLoadListener(OnAppAdLoadListener onAppAdLoadListener) {
-        this.mOnAppAdLoadListener = onAppAdLoadListener;
+    public void setOnAppAdLoadListener(OnDFPAdLoadListener onDFPAdLoadListener) {
+        this.mOnDFPAdLoadListener = onDFPAdLoadListener;
     }
 
     /**
@@ -59,13 +59,19 @@ public class AppAds {
         requestConfiguration.build();
     }
 
-    public AppAds() {
+    public DFPAds() {
         addTestDevice();
     }
 
-    public AppAds(ArrayList<AdData> adsData, OnAppAdLoadListener onAppAdLoadListener) {
+    public DFPAds(ArrayList<AdData> adsData, OnDFPAdLoadListener onDFPAdLoadListener) {
         this.mAdsData = adsData;
-        mOnAppAdLoadListener = onAppAdLoadListener;
+        mOnDFPAdLoadListener = onDFPAdLoadListener;
+        // To Add test devices to show Ads
+        addTestDevice();
+    }
+
+    public DFPAds(OnDFPAdLoadListener onDFPAdLoadListener) {
+        mOnDFPAdLoadListener = onDFPAdLoadListener;
         // To Add test devices to show Ads
         addTestDevice();
     }
@@ -73,7 +79,7 @@ public class AppAds {
     /**
      * Loads Listing and Detail Ads
      */
-    public void loadAds() {
+    public void listingAds() {
         if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
@@ -86,19 +92,19 @@ public class AppAds {
 
             publisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
                 @Override
-                public void onAppAdLoadSuccess(AdData adData) {
+                public void onDFPAdLoadSuccess(AdData adData) {
                     mLoadedCount++;
                     adData.setAdView(publisherAdView);
-                    if(mOnAppAdLoadListener != null) {
-                        mOnAppAdLoadListener.onAppAdLoadSuccess(adData);
+                    if(mOnDFPAdLoadListener != null) {
+                        mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
                     }
-                    loadAds();
+                    listingAds();
                 }
 
                 @Override
-                public void onAppAdLoadFailure(AdData adData) {
-                    if(mOnAppAdLoadListener != null) {
-                        mOnAppAdLoadListener.onAppAdLoadSuccess(adData);
+                public void onDFPAdLoadFailure(AdData adData) {
+                    if(mOnDFPAdLoadListener != null) {
+                        mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
                     }
                 }
 
@@ -115,19 +121,57 @@ public class AppAds {
         }
     }
 
-    public void createBannerAdRequest(boolean isHomePage) {
+    public void createMEDIUM_RECTANGLE(AdData adData) {
+        adData.createAdDataUiqueId(adData.getIndex(), adData.getAdId());
+        final PublisherAdView publisherAdView = new PublisherAdView(SuperApp.getAppContext());
+        publisherAdView.setAdUnitId(adData.getAdId());
+        publisherAdView.setAdSizes(adData.getAdSize());
+
+        publisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
+            @Override
+            public void onDFPAdLoadSuccess(AdData adData) {
+                mLoadedCount++;
+                adData.setAdView(publisherAdView);
+                if(mOnDFPAdLoadListener != null) {
+                    mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
+                }
+                listingAds();
+            }
+
+            @Override
+            public void onDFPAdLoadFailure(AdData adData) {
+                if(mOnDFPAdLoadListener != null) {
+                    mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
+                }
+            }
+
+            @Override
+            public void onAdClose() {
+
+            }
+
+        }));
+
+        // Start loading the ad.
+        publisherAdView.loadAd(appAdRequest());
+    }
+
+    public void createBannerAdRequest(boolean isHomePage, String homePageAdId, String otherPageAdId) {
         if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
         String unitId = "";
         if(isHomePage) {
-            unitId = "/22390678/Hindu_Android_HP_Sticky";
+            //unitId = "/22390678/Hindu_Android_HP_Sticky";
+            unitId = homePageAdId;
         }
         else {
-            unitId = "/22390678/Hindu_Android_AT_Sticky";
+            //unitId = "/22390678/Hindu_Android_AT_Sticky";
+            unitId = otherPageAdId;
         }
 
-        AdData adData = new AdData(-1, AdSize.BANNER, unitId, false);
+        AdData adData = new AdData(-1, unitId);
+        adData.setAdSize(AdSize.BANNER);
 
         PublisherAdView mBannerPublisherAdView = new PublisherAdView(SuperApp.getAppContext());
         mBannerPublisherAdView.setAdSizes(adData.getAdSize());
@@ -140,17 +184,17 @@ public class AppAds {
             }
 
             @Override
-            public void onAppAdLoadSuccess(AdData adData) {
-                if(mOnAppAdLoadListener != null) {
+            public void onDFPAdLoadSuccess(AdData adData) {
+                if(mOnDFPAdLoadListener != null) {
                     adData.setAdView(mBannerPublisherAdView);
-                    mOnAppAdLoadListener.onAppAdLoadSuccess(adData);
+                    mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
             }
 
             @Override
-            public void onAppAdLoadFailure(AdData adData) {
-                if(mOnAppAdLoadListener != null) {
-                    mOnAppAdLoadListener.onAppAdLoadFailure(adData);
+            public void onDFPAdLoadFailure(AdData adData) {
+                if(mOnDFPAdLoadListener != null) {
+                    mOnDFPAdLoadListener.onDFPAdLoadFailure(adData);
                 }
             }
         }));
@@ -194,7 +238,8 @@ public class AppAds {
         mPublisherInterstitialAd = new PublisherInterstitialAd(SuperApp.getAppContext());
         mPublisherInterstitialAd.setAdUnitId(dfp_interstitial_ad);
 
-        AdData adData = new AdData(-1, AdSize.INVALID, dfp_interstitial_ad, false);
+        AdData adData = new AdData(-1, dfp_interstitial_ad);
+        adData.setAdSize(AdSize.INVALID);
 
         mPublisherInterstitialAd.loadAd(appAdRequest());
 
@@ -206,12 +251,12 @@ public class AppAds {
             }
 
             @Override
-            public void onAppAdLoadSuccess(AdData adData) {
+            public void onDFPAdLoadSuccess(AdData adData) {
                 DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(true);
             }
 
             @Override
-            public void onAppAdLoadFailure(AdData adData) {
+            public void onDFPAdLoadFailure(AdData adData) {
 
             }
         }));
@@ -260,7 +305,7 @@ public class AppAds {
                 super.onAdLoaded();
                 Log.i(TAG, "onAdLoaded() :: " + adData.toString());
                 if(inAdLoadListener != null) {
-                    inAdLoadListener.onAppAdLoadSuccess(adData);
+                    inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
             }
 
@@ -269,7 +314,7 @@ public class AppAds {
                 super.onAdFailedToLoad(i);
                 Log.i(TAG, "onAdFailedToLoad() :: " + adData.toString());
                 if(inAdLoadListener != null) {
-                    inAdLoadListener.onAppAdLoadSuccess(adData);
+                    inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
             }
 
@@ -302,7 +347,7 @@ public class AppAds {
                 super.onAdClosed();
                 Log.i(TAG, "onAdClosed() :: " + adData.toString());
                 if(inAdLoadListener != null) {
-                    inAdLoadListener.onAppAdLoadSuccess(adData);
+                    inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
             }
         };

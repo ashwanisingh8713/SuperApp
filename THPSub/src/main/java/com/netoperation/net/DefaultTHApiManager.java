@@ -1037,7 +1037,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{
@@ -1122,6 +1122,12 @@ public class DefaultTHApiManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 ;
 
+    }
+
+    public static Single<TableConfiguration> appConfiguration(Context context) {
+        return THPDB.getInstance(context).daoConfiguration()
+                .getConfigurationSingle()
+                .subscribeOn(Schedulers.io());
     }
 
     public static Flowable<HashMap> meteredPaywallReadArticleCount(Context context) {

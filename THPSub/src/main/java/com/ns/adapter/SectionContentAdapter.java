@@ -1,6 +1,8 @@
 package com.ns.adapter;
 
+import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +22,16 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.util.AppDateUtil;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
+import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.view.IconImgView;
@@ -35,6 +40,11 @@ import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.SearchRecyclerHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
+import com.ns.viewholder.TaboolaNativeAdViewHolder;
+import com.taboola.android.api.TBImageView;
+import com.taboola.android.api.TBRecommendationItem;
+import com.taboola.android.api.TBTextView;
+import com.taboola.android.api.TaboolaApi;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -126,6 +136,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.inline_ads_container, viewGroup, false));
         }
+        else if(viewType == VT_TABOOLA_LISTING_ADS) {
+            return new TaboolaNativeAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.cardview_taboola_native_ad_item, viewGroup, false));
+        }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
@@ -135,12 +149,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         SectionAdapterItem item = adapterItems.get(position);
         if(holder instanceof BannerViewHolder) {
             fillBannerData((BannerViewHolder) holder, position);
-            /*bannerViewHolder.mArticleSectionName.setText("pos : "+position+"--"+item.getItemRowId());
-            ArticleBean bean = item.getArticleBean();
-            bannerViewHolder.itemView.setOnClickListener(v->{
-                IntentUtil.openDetailActivity(holder.itemView.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
-            });*/
-
         }
         else if(holder instanceof WidgetsViewHolder) {
             fillWidgetData((WidgetsViewHolder)holder, position);
@@ -157,8 +165,20 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         else if(holder instanceof InlineAdViewHolder) {
             fillInlineAdView(holder, item);
         }
+        else if(holder instanceof TaboolaNativeAdViewHolder) {
+            fillTaboolaAds(holder, item);
+        }
         else if(holder instanceof ExploreViewHolder) {
             fillExploreData(holder, item);
+        }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        if (holder instanceof TaboolaNativeAdViewHolder) {
+            ((TaboolaNativeAdViewHolder) holder).mAdContainer.removeAllViews();
+            ((TaboolaNativeAdViewHolder) holder).thumbNailContainer.removeAllViews();
         }
     }
 
@@ -169,6 +189,73 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         exploreHolder.mExploreRecyclerView.setHasFixedSize(true);
         exploreHolder.mExploreRecyclerView.setAdapter(item.getExploreAdapter());
 
+    }
+
+    private void fillTaboolaAds(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+        TBRecommendationItem tbRecommendationItem = item.getAdData().getTaboolaNativeAdItem();
+        TaboolaNativeAdViewHolder taboolaNativeAdViewHolder = (TaboolaNativeAdViewHolder) holder;
+        taboolaNativeAdViewHolder.mAttributionView.setOnClickListener(view -> TaboolaApi.getInstance().handleAttributionClick(holder.itemView.getContext()));
+        TBImageView thumbnailView = tbRecommendationItem.getThumbnailView(taboolaNativeAdViewHolder.itemView.getContext());
+        thumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        ViewGroup parent = (ViewGroup) thumbnailView.getParent();
+        if (parent != null) {
+            parent.removeView(thumbnailView);
+        }
+
+        TBTextView tbTextView = tbRecommendationItem.getTitleView(taboolaNativeAdViewHolder.itemView.getContext());
+
+        ViewGroup parent2 = (ViewGroup) tbTextView.getParent();
+        if (parent2 != null) {
+            parent2.removeView(tbTextView);
+        }
+
+        boolean isUserThemeDay = DefaultPref.getInstance(holder.itemView.getContext()).isUserThemeDay();
+        if(isUserThemeDay) {
+            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.article_list_text));
+        } else {
+            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.dark_article_list_text));
+        }
+        tbTextView.setMaxLines(2);
+        tbTextView.setEllipsize(TextUtils.TruncateAt.END);
+        tbTextView.setTypeface(Typeface.createFromAsset(holder.itemView.getContext().getAssets(), holder.itemView.getContext().getResources().getString(R.string.THP_TundraOffc)));
+        tbTextView.setTextSize(17);
+
+        taboolaNativeAdViewHolder.thumbNailContainer.addView(thumbnailView);
+        taboolaNativeAdViewHolder.mAdContainer.addView(tbTextView);
+
+        if (tbRecommendationItem.getBrandingView(taboolaNativeAdViewHolder.itemView.getContext()) != null) {
+            TBTextView tbBrandTextView = tbRecommendationItem.getBrandingView(taboolaNativeAdViewHolder.itemView.getContext());
+            tbBrandTextView.setTypeface(Typeface.createFromAsset(holder.itemView.getContext().getAssets(),
+                    holder.itemView.getContext().getResources().getString(R.string.THP_FiraSans_Regular)));
+            ViewGroup parent3 = (ViewGroup) tbBrandTextView.getParent();
+            if (parent3 != null) {
+                parent3.removeView(tbBrandTextView);
+            }
+            taboolaNativeAdViewHolder.mAdContainer.addView(tbBrandTextView);
+        }
+
+        TaboolaApi.getInstance().setOnClickListener((placementName, itemId, url, isOrganic) -> {
+            Log.i("", "");
+
+            if (isOrganic) {
+                int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
+                IntentUtil.openDetailAfterSearchInActivity(holder.itemView.getContext(), ""+articleId, url);
+
+                /*FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked));
+                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
+                        holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked),
+                        holder.itemView.getContext().getString(R.string.ga_home));*/
+                return false;
+            } else {
+                /*FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_nonorganic_clicked));
+                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
+                        holder.itemView.getContext().getString(R.string.ga_article_taboola_home_nonorganic_clicked),
+                        holder.itemView.getContext().getString(R.string.ga_home));*/
+            }
+
+            return true;
+        });
     }
 
     private void fillInlineAdView(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
@@ -484,7 +571,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             adapterItems.add(item);
             notifyItemChanged(adapterItems.size());
             updateIndex = adapterItems.size()-1;
-        } else if(index < adapterItems.size()){
+        } else if(index < adapterItems.size()) {
             adapterItems.add(index, item);
             updateIndex = index;
         }

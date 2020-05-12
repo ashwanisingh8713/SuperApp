@@ -356,8 +356,6 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         private ImageView mPlayButton;
         private View mParentView;
 
-
-
         public MultiMediaViewHolder(View itemView) {
             super(itemView);
             mParentView = itemView;

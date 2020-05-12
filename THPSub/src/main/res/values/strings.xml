@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="appName">SuperApp</string>
 
     <string name="THP_TundraOffc">fonts/THP_TundraOffc.ttf</string>
     <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>

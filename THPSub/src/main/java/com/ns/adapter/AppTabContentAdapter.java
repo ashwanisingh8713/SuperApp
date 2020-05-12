@@ -194,7 +194,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         else if (viewType == VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW) {
             return new DG_Restricted_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_restricted_description, viewGroup, false));
         }
-        else if (viewType == VT_TABOOLA) {
+        else if (viewType == VT_TABOOLA_WIDGET) {
             if (mInfiniteTaboolaView == null) {
                 mInfiniteTaboolaView = createTaboolaWidget(viewGroup.getContext(), false);
             }
@@ -1190,7 +1190,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
                 if (isOrganic) {
                     int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-
                     IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), ""+articleId, url);
 
                     /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));

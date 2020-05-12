@@ -70,14 +70,12 @@ android {
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
 
-            //Configs for Manifest file
-            manifestPlaceholders = [CLEVERTAP_ACCOUNT_ID:"",
-                                    CLEVERTAP_ACCOUNT_TOKEN:""]
             //ResValue String type
             resValue "string", "clevertap_test_account_id", "TEST-ZRK-48Z-865Z"
             resValue "string", "clevertap_test_account_token", "TEST-1b4-321"
             resValue "string", "clevertap_live_account_id", ""
             resValue "string", "clevertap_live_account_token", ""
+            resValue "string", "APP_NAME", "SU_BL"
         }
         TheHindu {
             dimension "version"
@@ -117,14 +115,12 @@ android {
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
 
-            //Configs for Manifest file
-            manifestPlaceholders = [CLEVERTAP_ACCOUNT_ID:"TEST-Z8W-R8K-465Z",
-                                    CLEVERTAP_ACCOUNT_TOKEN:"TEST-3b2-0b1"]
             //ResValue String type
             resValue "string", "clevertap_test_account_id", "TEST-Z8W-R8K-465Z"
             resValue "string", "clevertap_test_account_token", "TEST-3b2-0b1"
             resValue "string", "clevertap_live_account_id", "W8W-R8K-465Z"
             resValue "string", "clevertap_live_account_token", "3b2-0b0"
+            resValue "string", "APP_NAME", "SU_TH"
         }
     }
 
