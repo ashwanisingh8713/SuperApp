@@ -776,15 +776,26 @@ public class DefaultTHApiManager {
 
     public static Observable<List<ArticleBean>> getNotificationArticles(Context context) {
         // Check in TableTemperoryArticle
-        return THPDB.getInstance(context).daoTemperoryArticle().getAllTempBeanObservable()
+        return THPDB.getInstance(context).daoTemperoryArticle().getAllNotification(NetConstants.GROUP_NOTIFICATION)
                 .subscribeOn(Schedulers.io())
                 .map(temperoryTablesArticles -> {
                     List<ArticleBean> allArticle = new ArrayList<>();
-
                     for (TableTemperoryArticle tempArticle : temperoryTablesArticles) {
                         allArticle.add(tempArticle.getBean());
                     }
                     return allArticle;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public static Single<Boolean> deleteAllNotification(Context context) {
+        return Single.just(NetConstants.GROUP_NOTIFICATION)
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    THPDB thpdb = THPDB.getInstance(context);
+                    int count = thpdb.daoTemperoryArticle().deleteAllNotification(val);
+                    return count>0;
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -804,7 +815,6 @@ public class DefaultTHApiManager {
                     }
                     return new ArticleBean();
                 });
-
     }
 
     public static final Observable<List<ArticleBean>> articleFromServer(String aid, String url) {

@@ -11,10 +11,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
+import com.netoperation.db.THPDB;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.NetConstants;
 import com.ns.activity.NotificationClickActivity;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
@@ -24,6 +28,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by NS on 5/7/2020.
@@ -134,9 +140,6 @@ public class AppNotification {
         notificationIntent.putExtra("ns_offer_id", ns_offer_id);
         notificationIntent.putExtra("ns_url", ns_url);
 
-
-
-
         PendingIntent contentIntent = PendingIntent.getActivity(context, uniqueID, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         notification.contentIntent = contentIntent;
@@ -147,6 +150,28 @@ public class AppNotification {
         notification.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
 
         mNotificationManager.notify(uniqueID, notification);
+
+        int article_id = 0;
+        try {
+            article_id = Integer.parseInt(ns_article_id);
+            final int artId = article_id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final int artId = article_id;
+
+        THPDB.getInstance(context).daoConfiguration().getConfigurationSingle()
+                .subscribeOn(Schedulers.io())
+                .subscribe((tableConfiguration, throwable) -> {
+                    DefaultTHApiManager.articleDetailFromServer(context,
+                            ""+artId, tableConfiguration.getSearchOption().getUrlId(), NetConstants.GROUP_NOTIFICATION)
+                            .subscribe(val->{
+                                Log.i("", "");
+                            }, throwable1 -> {
+                                Log.i("", "");
+                            });
+                });
 
     }
 

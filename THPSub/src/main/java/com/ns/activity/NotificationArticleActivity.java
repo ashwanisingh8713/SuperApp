@@ -57,11 +57,12 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
                 item.setArticleBean(bean);
                 mRecyclerAdapter.addSingleItem(item);
             }
-            return mRecyclerAdapter.getItemCount() == 0;
+            return articleBeanList.size() == 0;
         })
                 .subscribe(isEmpty->{
                     Log.i("", "");
                     if (isEmpty) {
+                        mRecyclerAdapter.deleteAllItems();
                         //Show ToolBar icons
                         getDetailToolbar().showNotificationAndBookmarkeIcons(false);
                         mPullToRefreshLayout.setVisibility(View.GONE);
@@ -103,7 +104,12 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
             public void onClick(View view) {
                 changeSortPopUp.dismiss();
                 //Clear Notifications
-                //mDisposable.add(DefaultTHApiManager.deleteNotificationArticles(NotificationArticleActivity.this).subscribe());
+                mDisposable.add(DefaultTHApiManager.deleteAllNotification(NotificationArticleActivity.this)
+                        .subscribe(isAllDeleted->{
+                            Log.i("", "");
+                        }, throwable -> {
+                            Log.i("", "");
+                        }));
             }
         });
     }

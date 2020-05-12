@@ -100,19 +100,7 @@ public class HinduCTPushListenerService extends FcmMessageListenerService {
             } else {
                 articleType = "article";
             }
-            int article_id = 0;
-            try {
-                article_id = Integer.parseInt(arguments.get("ns_article_id"));
-                final int artId = article_id;
 
-                THPDB.getInstance(getApplicationContext()).daoConfiguration().getConfigurationSingle()
-                        .subscribeOn(Schedulers.io())
-                        .subscribe((tableConfiguration, throwable) -> {
-                            DefaultTHApiManager.articleDetailFromServer(getApplicationContext(), ""+artId, tableConfiguration.getSearchOption().getUrlId(), NetConstants.GROUP_NOTIFICATION);
-                        });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
             /*NotificationBean bean = new NotificationBean(artId, actionURL, title, description,
                     imageUrl, sectionName, pub_date, type, isHasBody, System.currentTimeMillis(),

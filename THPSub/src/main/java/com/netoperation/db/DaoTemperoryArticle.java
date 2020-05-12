@@ -22,11 +22,15 @@ public interface DaoTemperoryArticle {
     @Query("SELECT * FROM TableTemperoryArticle")
     List<TableTemperoryArticle> getAllTempBean();
 
-    @Query("SELECT * FROM TableTemperoryArticle")
-    Observable<List<TableTemperoryArticle>> getAllTempBeanObservable();
+    @Query("SELECT * FROM TableTemperoryArticle WHERE entryFrom = :entryFrom")
+    Observable<List<TableTemperoryArticle>> getAllNotification(String entryFrom);
+
 
     @Query("SELECT * FROM TableTemperoryArticle WHERE aid = :aid")
     TableTemperoryArticle getSingleTemperoryBean(String aid);
+
+    @Query("DELETE FROM TableTemperoryArticle WHERE entryFrom = :entryFrom")
+    int deleteAllNotification(String entryFrom);
 
     @Query("DELETE FROM TableTemperoryArticle")
     void deleteAll();
