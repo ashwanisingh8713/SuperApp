@@ -271,9 +271,9 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     @Override
     public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
-        Alerts.showToast(this, "TO");
+        //Alerts.showToast(this, "TO");
         if(mFragmentTools != null) {
-            mFragmentTools.onLikeClickListener(toolbarCallModel);
+            mFragmentTools.onOverflowClickListener(toolbarCallModel);
         }
     }
 

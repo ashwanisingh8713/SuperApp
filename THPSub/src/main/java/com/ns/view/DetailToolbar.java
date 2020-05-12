@@ -129,9 +129,9 @@ public class DetailToolbar extends Toolbar {
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
         commentParent.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
 
         mTitleTextView.setVisibility(VISIBLE);
-        premiumLogoBtn.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
 
         if (isShowOverFlow)

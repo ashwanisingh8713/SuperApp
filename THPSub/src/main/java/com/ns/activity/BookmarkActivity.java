@@ -2,6 +2,7 @@ package com.ns.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.adapter.MergedBookmarkPagerAdapter;
 import com.ns.contentfragment.AppTabFragment;
@@ -79,12 +82,6 @@ public class BookmarkActivity extends BaseAcitivityTHP {
                 pagerAdapter.SetOnSelectView(BookmarkActivity.this, tabLayout, pos);
                 bookmarkViewPager.setCurrentItem(pos);
                 THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkActivity.this, "Read Later : " + tab.getText(), AppTabFragment.class.getSimpleName());
-                //Show Clear All menu
-                if (pos == 1) {
-                    getDetailToolbar().showNotificationAndBookmarkeIcons(true);
-                } else {
-                    getDetailToolbar().showNotificationAndBookmarkeIcons(false);
-                }
             }
 
             @Override
@@ -106,36 +103,5 @@ public class BookmarkActivity extends BaseAcitivityTHP {
     protected void onResume() {
         super.onResume();
         //AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkMergedActivity.this, "BookmarkMergedActivity Screen", BookmarkMergedActivity.class.getSimpleName());
-
-    }
-
-    @Override
-    public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.layout_submenu_overflow, null, true);
-
-        final PopupWindow changeSortPopUp = new PopupWindow(this);
-        //Inflating the Popup using xml file
-        changeSortPopUp.setContentView(layout);
-        changeSortPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeSortPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeSortPopUp.setFocusable(true);
-        changeSortPopUp.setBackgroundDrawable(getResources().getDrawable(R.drawable.shadow_143418));
-
-        int width = getDetailToolbar().getWidth();
-        int height = getDetailToolbar().getHeight();
-        // Show Pop-up Window
-        changeSortPopUp.showAsDropDown(getDetailToolbar(), width, -(height/3));
-
-        //Click listener
-        CustomTextView clearAll = layout.findViewById(R.id.textView_ClearAll);
-        clearAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeSortPopUp.dismiss();
-                //Clear Bookmarks
-                //mDisposable.add(DefaultTHApiManager.deleteNotificationArticles(NotificationArticleActivity.this).subscribe());
-            }
-        });
     }
 }

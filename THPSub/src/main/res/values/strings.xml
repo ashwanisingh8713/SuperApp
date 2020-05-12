@@ -223,5 +223,6 @@
     <string name="bseTitle">SENSEX</string>
     <string name="newsFeedText">Top News</string>
     <string name="today_rate">Today’s Rate</string>
+    <string name="remove_all">Remove All</string>
 
 </resources>

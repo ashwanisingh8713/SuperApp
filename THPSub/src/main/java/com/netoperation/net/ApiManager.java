@@ -912,6 +912,16 @@ public class ApiManager {
                 );
 
     }
+    public static Single<Boolean> deleteAllBookmarks(Context context) {
+        return Single.just(NetConstants.BOOKMARK_IN_ONE)
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    THPDB thpdb = THPDB.getInstance(context);
+                    thpdb.bookmarkTableDao().deleteAll();
+                    return true;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
     public static Observable<List<ArticleBean>> premium_allArticleFromDB(final Context context, final @RetentionDef.Recomendation String recotype) {
         Observable<RecomendationData> observable = Observable.just(new RecomendationData());

@@ -1,6 +1,9 @@
 package com.ns.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,18 +102,32 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
 
         //Click listener
         CustomTextView clearAll = layout.findViewById(R.id.textView_ClearAll);
-        clearAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeSortPopUp.dismiss();
-                //Clear Notifications
-                mDisposable.add(DefaultTHApiManager.deleteAllNotification(NotificationArticleActivity.this)
-                        .subscribe(isAllDeleted->{
-                            Log.i("", "");
-                        }, throwable -> {
-                            Log.i("", "");
-                        }));
-            }
+        clearAll.setOnClickListener(view -> {
+            changeSortPopUp.dismiss();
+            createWarningDialog();
         });
+    }
+
+    private void createWarningDialog() {
+        AlertDialog.Builder builder = null;
+        if(mIsDayTheme) {
+            builder = new AlertDialog.Builder(this);
+        } else {
+            builder = new AlertDialog.Builder(this, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+        }
+        builder.setMessage("Do you want to clear all articles from Notifications ? ");
+        builder.setPositiveButton("Yes", (dialog, id) -> {
+            dialog.dismiss();
+            //Clear Notifications
+            mDisposable.add(DefaultTHApiManager.deleteAllNotification(NotificationArticleActivity.this)
+                    .subscribe(isAllDeleted->{
+                        Log.i("", "");
+                    }, throwable -> {
+                        Log.i("", "");
+                    }));
+        });
+        builder.setNegativeButton("No", (dialog, id) -> dialog.cancel());
+        Dialog mWarningDialog = builder.create();
+        mWarningDialog.show();
     }
 }
