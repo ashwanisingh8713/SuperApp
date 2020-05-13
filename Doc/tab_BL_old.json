@@ -1,20 +1,4 @@
 {
-  "lastServerUpdateTime": "UTC-TIME",
-  "vokkleId": "1234",
-  "refreshIntervalInMins": "value",
-  "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
-  "staticItem": [
-    {
-      "title": "Name",
-      "urlDark": "value",
-      "urlLight": "value"
-    },
-    {
-      "title": "Name",
-      "urlDark": "value",
-      "urlLight": "value"
-    }
-  ],
   "tabs": [
     {
       "title": "Home",
@@ -26,29 +10,6 @@
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"
-    },
-    {
-      "title": "Briefing",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Briefing"
-    },
-    {
-      "title": "Url Tab",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "Url",
-      "value": "https://www.google.com/"
     },
     {
       "title": "Portfolio Section ",
@@ -376,40 +337,358 @@
       }
     },
     {
-      "title": "My Stories",
+      "title": "BLink ",
       "iconUrl": {
         "urlDark": "value",
         "urlLight": "value",
         "urlSelectedDark": "value",
         "urlSelectedLight": "value"
       },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "My Stories"
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "ADD_ON_SECTION",
+      "section": {
+        "parentId": 0,
+        "secId": 37,
+        "secName": "BLink",
+        "link": "https://www.thehindubusinessline.com/blink/",
+        "secColorRgb": "255,255,255",
+        "type": "GN",
+        "priority": 13,
+        "overridePriority": 0,
+        "explorePriority": 1,
+        "overrideExplore": 0,
+        "image_v2": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+        "image": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+        "show_on_burger": false,
+        "show_on_explore": false,
+        "custom": false,
+        "webLink": "",
+        "customScreen": 0,
+        "customScreenPri": 0,
+        "subSections": [
+          {
+            "parentId": 37,
+            "secId": 74,
+            "secName": "Know",
+            "link": "https://www.thehindubusinessline.com/blink/know/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 1,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/know/a376d0/article31533416.ece/ALTERNATES/FREE_660/BLinkIMG-20200416-WA0022P2",
+            "image": "https://www.thehindubusinessline.com/blink/know/a376d0/article31533416.ece/ALTERNATES/FREE_660/BLinkIMG-20200416-WA0022P2",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 75,
+            "secName": "Meet",
+            "link": "https://www.thehindubusinessline.com/blink/meet/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 2,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/meet/xp3qk/article31479347.ece/ALTERNATES/FREE_660/METROTRAIN",
+            "image": "https://www.thehindubusinessline.com/blink/meet/xp3qk/article31479347.ece/ALTERNATES/FREE_660/METROTRAIN",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 76,
+            "secName": "Work",
+            "link": "https://www.thehindubusinessline.com/blink/work/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 3,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/work/5spupu/article31051085.ece/ALTERNATES/FREE_660/BLinkLEAD",
+            "image": "https://www.thehindubusinessline.com/blink/work/5spupu/article31051085.ece/ALTERNATES/FREE_660/BLinkLEAD",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 77,
+            "secName": "Talk",
+            "link": "https://www.thehindubusinessline.com/blink/talk/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 4,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/talk/spc6en/article31534219.ece/ALTERNATES/FREE_660/BLinkiStock-690008188",
+            "image": "https://www.thehindubusinessline.com/blink/talk/spc6en/article31534219.ece/ALTERNATES/FREE_660/BLinkiStock-690008188",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 78,
+            "secName": "Cover",
+            "link": "https://www.thehindubusinessline.com/blink/cover/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 5,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 79,
+            "secName": "Watch",
+            "link": "https://www.thehindubusinessline.com/blink/watch/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 6,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/watch/lzp13o/article31480284.ece/ALTERNATES/FREE_660/BLINKBALCONY2",
+            "image": "https://www.thehindubusinessline.com/blink/watch/lzp13o/article31480284.ece/ALTERNATES/FREE_660/BLINKBALCONY2",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 80,
+            "secName": "Read",
+            "link": "https://www.thehindubusinessline.com/blink/read/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 7,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/read/544v9w/article31534638.ece/ALTERNATES/FREE_660/BLinkIan-Jack",
+            "image": "https://www.thehindubusinessline.com/blink/read/544v9w/article31534638.ece/ALTERNATES/FREE_660/BLinkIan-Jack",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 81,
+            "secName": "Takeaway",
+            "link": "https://www.thehindubusinessline.com/blink/takeaway/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 8,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/takeaway/27n7wc/article31533916.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/takeaway/27n7wc/article31533916.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 82,
+            "secName": "Play",
+            "link": "https://www.thehindubusinessline.com/blink/play/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 9,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/play/sdlpqw/article31110259.ece/ALTERNATES/FREE_660/BLINKLEAD",
+            "image": "https://www.thehindubusinessline.com/blink/play/sdlpqw/article31110259.ece/ALTERNATES/FREE_660/BLINKLEAD",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 83,
+            "secName": "Explore",
+            "link": "https://www.thehindubusinessline.com/blink/explore/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 10,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/explore/5ymtjx/article31533006.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/explore/5ymtjx/article31533006.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 84,
+            "secName": "Hang",
+            "link": "https://www.thehindubusinessline.com/blink/hang/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 11,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/hang/jnsd6/article31534744.ece/ALTERNATES/FREE_660/BLINKMAHARANAPRATAP",
+            "image": "https://www.thehindubusinessline.com/blink/hang/jnsd6/article31534744.ece/ALTERNATES/FREE_660/BLINKMAHARANAPRATAP",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 85,
+            "secName": "Shoot",
+            "link": "https://www.thehindubusinessline.com/blink/shoot/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 12,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/shoot/7wdi0f/article31533858.ece/ALTERNATES/FREE_660/BLinkDSC01883",
+            "image": "https://www.thehindubusinessline.com/blink/shoot/7wdi0f/article31533858.ece/ALTERNATES/FREE_660/BLinkDSC01883",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          }
+        ],
+        "staticPageUrl": {
+          "url": "",
+          "isEnabled": false,
+          "position": "0",
+          "sectionId": 0
+        }
+      }
     },
     {
-      "title": "Suggested",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Suggested"
-    },
-    {
-      "title": "Profile",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Profile"
-    },
-    {
-      "title": "Tab Title",
+      "title": "Indices",
       "iconUrl": {
         "urlDark": "value",
         "urlLight": "value",
@@ -419,232 +698,5 @@
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "SENSEX"
     }
-
-  ],
-  "appTheme": {
-    "textColors": {
-      "dark": {
-        "XL": "#000000",
-        "L": "#000000",
-        "M": "#000000",
-        "S": "#818181",
-        "XS": "#818181",
-        "detailpageText": "#000000",
-        "WigetText": "#ffffff",
-        "breadcrumSelect": "ffffff",
-        "breadcrumUnSelect": "818181"
-      },
-      "light": {
-        "XL": "#ffffff",
-        "L": "#ffffff",
-        "M": "#ffffff",
-        "S": "#818181",
-        "XS": "#818181",
-        "detailpageText": "#ffffff",
-        "WigetText": "#ffffff",
-        "breadcrumSelect": "ffffff",
-        "breadcrumUnSelect": "818181"
-      }
-    },
-    "tilesBg": {
-      "dark": "#191919",
-      "light": "#ffffff"
-    },
-    "screenBg": {
-      "dark": "#191919",
-      "light": "#ffffff"
-    },
-    "topBarBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
-    },
-    "bottomBarBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
-    },
-    "widgetBg": {
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      }
-    },
-    "breadcrumBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
-    }
-  },
-  "widgetIndex": [
-    {
-      "secId": "142",
-      "index": "5"
-    },
-    {
-      "secId": "88",
-      "index": "8"
-    },
-    {
-      "secId": "5",
-      "index": "10"
-    },
-    {
-      "secId": "138",
-      "index": "12"
-    },
-    {
-      "secId": "69",
-      "index": "15"
-    }
-  ],
-  "Ads": {
-    "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
-    "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
-    "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
-    "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
-    "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
-    "listingPageAds": [
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "4"
-      },
-      {
-        "type": "taboola",
-        "index": "6"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Footer",
-        "index": "8"
-      },
-      {
-        "type": "taboola",
-        "index": "10"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Bottom",
-        "index": "12"
-      },
-      {
-        "type": "taboola",
-        "index": "13"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "16"
-      },
-      {
-        "type": "taboola",
-        "index": "18"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "20"
-      }
-    ]
-  },
-  "taboola": {
-    "id": "thehindu-hinduappandroid",
-    "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
-    "publisher": "thehindu-hinduappandroid",
-    "pageType": "article",
-    "mode": "thumbnails-a",
-    "placementLight": "Below Article Thumbnails",
-    "placementDark": "Below Article Thumbnails Dark",
-    "taboolaNativeAd": {
-      "placement_home": "Below Home Stream",
-      "placement_home_source_type": "home",
-      "placement_section": "Below Section Stream",
-      "placement_section_source_type": "section",
-      "placement_detail": "Below Article Stream"
-    }
-  },
-  "subSectionsIndex": "3",
-  "searchOption": {
-    "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
-    "urlText": "https://www.thehindu.com/app/search.json?term=",
-    "types": [
-      "article",
-      "sensex"
-    ]
-  },
-  "totalIcons" : "88",
-  "otherIconsDownloadUrls": {
-    "dark" : {
-      "Logo" : "url",
-      "Listing" : {
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-      },
-      "topbar" : {
-        "left_slider_three_line" : "url",
-        "logo" : "url",
-        "search" : "url",
-        "overflow_verticle_dot" : "url",
-        "back" : "url",
-        "ttsPlay" : "url",
-        "ttsPause" : "url",
-        "comment" : "url",
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "textSize" : "url",
-        "share" : "url",
-        "crown" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-
-      },
-      "placeHolder" : {
-        "banner" : "url",
-        "thumb" : "url",
-        "widget" : "url",
-        "ads": "url"
-      }
-    },
-    "light" : {
-      "Logo" : "url",
-      "Listing" : {
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-      },
-      "topbar" : {
-        "left_slider_three_line" : "url",
-        "logo" : "url",
-        "search" : "url",
-        "overflow_verticle_dot" : "url",
-        "back" : "url",
-        "ttsPlay" : "url",
-        "ttsPause" : "url",
-        "comment" : "url",
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "textSize" : "url",
-        "share" : "url",
-        "crown" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-
-      },
-      "placeHolder" : {
-        "banner" : "url",
-        "thumb" : "url",
-        "widget" : "url",
-        "ads": "url"
-      }
-    }
-  }
+  ]
 }

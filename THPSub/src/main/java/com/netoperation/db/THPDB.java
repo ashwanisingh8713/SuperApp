@@ -18,7 +18,6 @@ import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSection;
-import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoTempWork;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
@@ -29,7 +28,6 @@ import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSection;
-import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableTempWork;
 import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
@@ -37,7 +35,7 @@ import com.netoperation.default_db.TableWidget;
 @Database(entities = {TableSubscriptionArticle.class, TableBookmark.class,
         TableBreifing.class, TableUserProfile.class,
         TableHomeArticle.class, TableSectionArticle.class,
-        TableSection.class, TableSubSectionArticle.class, TableConfiguration.class,
+        TableSection.class, TableConfiguration.class,
         TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class,
         TableTemperoryArticle.class, TableMP.class, TableMPReadArticle.class},
         version = 6, exportSchema = false)
@@ -57,7 +55,6 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoBanner daoBanner();
     public abstract DaoSectionArticle daoSectionArticle();
     public abstract DaoSection daoSection();
-    public abstract DaoSubSectionArticle daoSubSectionArticle();
     public abstract DaoConfiguration daoConfiguration();
     public abstract DaoWidget daoWidget();
     public abstract DaoPersonaliseDefault daoPersonaliseDefault();

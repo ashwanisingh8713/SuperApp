@@ -23,7 +23,6 @@ import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
-import com.netoperation.default_db.DaoSubSectionArticle;
 import com.netoperation.default_db.DaoTempWork;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
@@ -34,7 +33,6 @@ import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
-import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.default_db.TableTempWork;
 import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
@@ -607,11 +605,11 @@ public class DefaultTHApiManager {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
                     if (value.getData().getArticle() != null && value.getData().getArticle().size() > 0) {
                         THPDB thpdb = THPDB.getInstance(context);
-                        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
-                        daoSubSectionArticle.deleteSection(secId);
+                        DaoSectionArticle daoSubSectionArticle = thpdb.daoSectionArticle();
+                        daoSubSectionArticle.deleteSectionAllArticle(secId);
                         Log.i(TAG, "getNewsDigestContentFromServer :: DELETED ALL ARTICLES OF SecId :: " + secId);
-                        TableSubSectionArticle subSectionArticles = new TableSubSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
-                        daoSubSectionArticle.insertSubSectionArticle(subSectionArticles);
+                        TableSectionArticle subSectionArticles = new TableSectionArticle(secId, value.getData().getSname(), page, value.getData().getArticle());
+                        daoSubSectionArticle.insertSectionArticle(subSectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
                             final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
@@ -740,22 +738,7 @@ public class DefaultTHApiManager {
                         }
                         int index = allArticle.indexOf(requiredBean);
 
-                        if(index == -1) {
-                            // Check in Sub - Sections
-                            DaoSubSectionArticle daoSubSectionArticle = thp.daoSubSectionArticle();
-                            List<TableSubSectionArticle> getSubAllArticles = daoSubSectionArticle.getAllArticles();
-                            List<ArticleBean> allSubArticle = new ArrayList<>();
-
-                            for(TableSubSectionArticle subSectionArticle : getSubAllArticles) {
-                                allSubArticle.addAll(subSectionArticle.getBeans());
-                            }
-                            index = allSubArticle.indexOf(requiredBean);
-                            if(index != -1) {
-                                return   allArticle.get(index);
-                            }
-                        }
-
-                        else if (index != -1) {
+                        if (index != -1) {
                             return   allArticle.get(index);
                         }
                         return new ArticleBean();
@@ -1054,7 +1037,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/2";
+        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
         return ServiceFactory.getServiceAPIs().config(url)
         .subscribeOn(Schedulers.newThread())
                 .map(config->{
@@ -1317,6 +1300,7 @@ public class DefaultTHApiManager {
     public static Observable<UpdateModel> forceUpdate() {
         return ServiceFactory.getServiceAPIs()
                 .forceUpdate(BuildConfig.FORCE_UPDATE_URL, ReqBody.forceUpdate())
+                .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

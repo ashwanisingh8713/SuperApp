@@ -1,9 +1,7 @@
 package com.ns.adapter;
 
-import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.util.AppDateUtil;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
-import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
-import com.ns.utils.FragmentUtil;
 import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
@@ -44,6 +42,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     private List<ArticleBean> mWidgetList;
     private int sectionId;
     private String sectionName;
+    private WidgetIndex widgetIndex;
 
 
     public WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
@@ -132,19 +131,18 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillAppExclusiveData(AppExclusiveViewHolder appExclusiveViewHolder, final int position) {
+    private void fillAppExclusiveData(AppExclusiveViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
-            appExclusiveViewHolder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
-            appExclusiveViewHolder.mRootLayout.setOnClickListener(new View.OnClickListener() {
+            holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            holder.mRootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
 //                    FlurryAgent.logEvent("Widget: " + " Article Clicked");
 
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, appExclusiveViewHolder.mRootLayout);
-
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mRootLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -152,11 +150,11 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             });
 
             // Dims Read article given view
-            dimReadArticle(appExclusiveViewHolder.mRootLayout.getContext(), bean.getArticleId(), appExclusiveViewHolder.mRootLayout);
+            dimReadArticle(holder.mRootLayout.getContext(), bean.getArticleId(), holder.mRootLayout);
         }
     }
 
-    private void fillWidgetData(final WidgetViewHolder mWidgetViewHolder, final int position) {
+    private void fillWidgetData(final WidgetViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
 
@@ -165,24 +163,22 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                GlideUtil.loadImage(mWidgetViewHolder.itemView.getContext(), mWidgetViewHolder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
+                GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
             } else {
-                mWidgetViewHolder.mWidgetImageView.setImageResource(R.drawable.ph_toppicks_th);
+                holder.mWidgetImageView.setImageResource(R.drawable.ph_toppicks_th);
             }
-            mWidgetViewHolder.mWidgetTextView.setText(bean.getTi());
+            holder.mWidgetTextView.setText(bean.getTi());
 
             // Dims Read article given view
-            dimReadArticle(mWidgetViewHolder.mWidgetLayout.getContext(), bean.getArticleId(), mWidgetViewHolder.mWidgetLayout);
-
-
-            mWidgetViewHolder.mWidgetLayout.setOnClickListener(new View.OnClickListener() {
+            dimReadArticle(holder.mWidgetLayout.getContext(), bean.getArticleId(), holder.mWidgetLayout);
+            holder.mWidgetLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mWidgetViewHolder.mWidgetLayout);
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mWidgetLayout);
 
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
@@ -192,7 +188,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillCartoonData(CartoonViewHolder mCartoonViewHolder, final int position) {
+    private void fillCartoonData(CartoonViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
             if (bean.getHi().equals("1")) {
@@ -201,23 +197,23 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     imageUrl = bean.getMe().get(0).getIm();
                 }
                 if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(mCartoonViewHolder.itemView.getContext(), mCartoonViewHolder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl), R.drawable.ph_topnews_th);
+                    GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl), R.drawable.ph_topnews_th);
                 } else {
-                    mCartoonViewHolder.mWidgetImageView.setImageResource(R.drawable.ph_topnews_th);
+                    holder.mWidgetImageView.setImageResource(R.drawable.ph_topnews_th);
                 }
             }
 
             // Dims Read article given view
-            dimReadArticle(mCartoonViewHolder.mRootLayout.getContext(), bean.getArticleId(), mCartoonViewHolder.mRootLayout);
+            dimReadArticle(holder.mRootLayout.getContext(), bean.getArticleId(), holder.mRootLayout);
 
-            mCartoonViewHolder.mRootLayout.setOnClickListener(new View.OnClickListener() {
+            holder.mRootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mCartoonViewHolder.mRootLayout);
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mRootLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -258,55 +254,49 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillMultiMediaData(MultiMediaViewHolder mMultiMediaViewHolder, final int position) {
+    private void fillMultiMediaData(MultiMediaViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
-
         if (bean != null) {
-            mMultiMediaViewHolder.mWidgetTitleTextView.setText(bean.getTi());
+            boolean isDayTheme = DefaultPref.getInstance(holder.itemView.getContext()).isUserThemeDay();
+            holder.mWidgetTitleTextView.setText(bean.getTi());
             String publishTime = bean.getGmt();
             String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.strToMlsForSearchedArticle(publishTime), Locale.ENGLISH);
-            mMultiMediaViewHolder.mWidgetTime.setText(timeDiff);
+            holder.mWidgetTime.setText(timeDiff);
 
             String imageUrl = bean.getIm_thumbnail_v2();
             if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
                 imageUrl = bean.getIm_thumbnail();
             }
-
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                GlideUtil.loadImage(mMultiMediaViewHolder.itemView.getContext(), mMultiMediaViewHolder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl), R.drawable.ph_exploresections_th);
+                GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl), R.drawable.ph_exploresections_th);
             } else {
-                mMultiMediaViewHolder.mWidgetImageView.setImageResource(R.drawable.ph_exploresections_th);
+                holder.mWidgetImageView.setImageResource(R.drawable.ph_exploresections_th);
             }
-
-
             // Dims Read article given view
-            dimReadArticle(mMultiMediaViewHolder.mParentView.getContext(), bean.getArticleId(), mMultiMediaViewHolder.mParentView);
-
-            articleTypeImage(bean.getArticleType(), bean, mMultiMediaViewHolder.mPlayButton);
-
-
-            mMultiMediaViewHolder.mParentView.setOnClickListener(new View.OnClickListener() {
+            dimReadArticle(holder.mParentView.getContext(), bean.getArticleId(), holder.mParentView);
+            articleTypeImage(bean.getArticleType(), bean, holder.mPlayButton);
+            holder.mParentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mParentView);
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mParentView);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
                 }
             });
 
-            mMultiMediaViewHolder.mPlayButton.setOnClickListener(new View.OnClickListener() {
+            holder.mPlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mMultiMediaViewHolder.mPlayButton);
+                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mPlayButton);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -325,6 +315,14 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
     public List<ArticleBean> getArticleList() {
         return mWidgetList;
+    }
+
+    public WidgetIndex getWidgetIndex() {
+        return widgetIndex;
+    }
+
+    public void setWidgetIndex(WidgetIndex widgetIndex) {
+        this.widgetIndex = widgetIndex;
     }
 
     public void updateArticleList(List<ArticleBean> articleBeans) {

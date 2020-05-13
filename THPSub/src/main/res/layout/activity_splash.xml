@@ -34,7 +34,6 @@
             app:textType="XL"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="7dp"
-            android:text="Thanks for your patience"
             android:paddingTop="5dp"
             android:paddingBottom="7dp"
             android:paddingLeft="10dp"

@@ -1,0 +1,335 @@
+{
+  "lastServerUpdateTime": "UTC-TIME",
+  "vokkleId": "1234",
+  "refreshIntervalInMins": "value",
+  "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
+  "staticItem": [
+    {
+      "title": "Name",
+      "urlDark": "value",
+      "urlLight": "value"
+    },
+    {
+      "title": "Name",
+      "urlDark": "value",
+      "urlLight": "value"
+    }
+  ],
+  "tabs": [
+    {
+      "title": "Home",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "GROUP_DEFAULT_SECTIONS"
+    },
+    {
+      "title": "Briefing",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Briefing"
+    },
+    {
+      "title": "My Stories",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "My Stories"
+    },
+    {
+      "title": "Suggested",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Suggested"
+    },
+    {
+      "title": "Profile",
+      "iconUrl": {
+        "urlDark": "value",
+        "urlLight": "value",
+        "urlSelectedDark": "value",
+        "urlSelectedLight": "value"
+      },
+      "group": "GROUP_PREMIUM_SECTIONS",
+      "pageSource": "Profile"
+    }
+  ],
+  "appTheme": {
+    "textColors": {
+      "dark": {
+        "XL": "#000000",
+        "L": "#000000",
+        "M": "#000000",
+        "S": "#818181",
+        "XS": "#818181",
+        "detailpageText": "#000000",
+        "WigetText": "#ffffff",
+        "breadcrumSelect": "ffffff",
+        "breadcrumUnSelect": "818181"
+      },
+      "light": {
+        "XL": "#ffffff",
+        "L": "#ffffff",
+        "M": "#ffffff",
+        "S": "#818181",
+        "XS": "#818181",
+        "detailpageText": "#ffffff",
+        "WigetText": "#ffffff",
+        "breadcrumSelect": "ffffff",
+        "breadcrumUnSelect": "818181"
+      }
+    },
+    "tilesBg": {
+      "dark": "#191919",
+      "light": "#ffffff"
+    },
+    "screenBg": {
+      "dark": "#191919",
+      "light": "#ffffff"
+    },
+    "topBarBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    },
+    "bottomBarBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    },
+    "breadcrumBg": {
+      "dark": "#313131",
+      "light": "#ffffff"
+    }
+  },
+  "widgetIndex": [
+    {
+      "secId": "142",
+      "index": "5",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "text": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      }
+    },
+    {
+      "secId": "88",
+      "index": "8",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "text": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      }
+    },
+    {
+      "secId": "5",
+      "index": "10",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "text": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      }
+    },
+    {
+      "secId": "138",
+      "index": "12",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "text": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      }
+    },
+    {
+      "secId": "69",
+      "index": "15",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "text": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      }
+    }
+  ],
+  "Ads": {
+    "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
+    "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
+    "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
+    "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
+    "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
+    "listingPageAds": [
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "4"
+      },
+      {
+        "type": "taboola",
+        "index": "6"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Footer",
+        "index": "8"
+      },
+      {
+        "type": "taboola",
+        "index": "10"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Bottom",
+        "index": "12"
+      },
+      {
+        "type": "taboola",
+        "index": "13"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "16"
+      },
+      {
+        "type": "taboola",
+        "index": "18"
+      },
+      {
+        "type": "DFP",
+        "adId": "/22390678/Hindu_Android_HP_Middle",
+        "index": "20"
+      }
+    ]
+  },
+  "taboola": {
+    "id": "thehindu-hinduappandroid",
+    "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
+    "publisher": "thehindu-hinduappandroid",
+    "pageType": "article",
+    "mode": "thumbnails-a",
+    "placementLight": "Below Article Thumbnails",
+    "placementDark": "Below Article Thumbnails Dark",
+    "taboolaNativeAd": {
+      "placement_home": "Below Home Stream",
+      "placement_home_source_type": "home",
+      "placement_section": "Below Section Stream",
+      "placement_section_source_type": "section",
+      "placement_detail": "Below Article Stream"
+    }
+  },
+  "subSectionsIndex": "3",
+  "searchOption": {
+    "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+    "urlText": "https://www.thehindu.com/app/search.json?term=",
+    "types": [
+      "article",
+      "sensex"
+    ]
+  },
+  "totalIcons" : "88",
+  "otherIconsDownloadUrls": {
+    "dark" : {
+      "Logo" : "url",
+      "Listing" : {
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+      },
+      "topbar" : {
+        "left_slider_three_line" : "url",
+        "logo" : "url",
+        "search" : "url",
+        "overflow_verticle_dot" : "url",
+        "back" : "url",
+        "ttsPlay" : "url",
+        "ttsPause" : "url",
+        "comment" : "url",
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "textSize" : "url",
+        "share" : "url",
+        "crown" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+
+      },
+      "placeHolder" : {
+        "banner" : "url",
+        "thumb" : "url",
+        "widget" : "url",
+        "ads": "url"
+      }
+    },
+    "light" : {
+      "Logo" : "url",
+      "Listing" : {
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+      },
+      "topbar" : {
+        "left_slider_three_line" : "url",
+        "logo" : "url",
+        "search" : "url",
+        "overflow_verticle_dot" : "url",
+        "back" : "url",
+        "ttsPlay" : "url",
+        "ttsPause" : "url",
+        "comment" : "url",
+        "bookmark" : "url",
+        "unbookmark" : "url",
+        "textSize" : "url",
+        "share" : "url",
+        "crown" : "url",
+        "like" : "url",
+        "dislike" : "url",
+        "favorite" : "url",
+        "unfavorite" : "url"
+
+      },
+      "placeHolder" : {
+        "banner" : "url",
+        "thumb" : "url",
+        "widget" : "url",
+        "ads": "url"
+      }
+    }
+  }
+}

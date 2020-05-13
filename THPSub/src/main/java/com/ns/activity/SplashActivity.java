@@ -110,6 +110,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             switch (msg.what) {
                 case WHAT_FORCE_UPDATE:
+                    showProgressBar("Please Wait...");
                     forceUpdate();
                     break;
                 case WHAT_CONFIG_UPDATE_CHECK:
@@ -187,7 +188,6 @@ public class SplashActivity extends BaseAcitivityTHP {
     private void forceUpdate() {
         mDisposable.add(DefaultTHApiManager.forceUpdate()
                 .subscribe(updateModel -> {
-
                     String severVersionCode = updateModel.getVersion_code();
                     int serverVersionNumber = 0;
                     try {

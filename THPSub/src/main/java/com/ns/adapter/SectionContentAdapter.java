@@ -34,6 +34,7 @@ import com.ns.utils.GlideUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
+import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.view.IconImgView;
 import com.ns.viewholder.ArticlesViewHolder;
@@ -165,7 +166,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             fillStaticWebview(holder, item);
         }
         else if(holder instanceof InlineAdViewHolder) {
-            fillInlineAdView(holder, item);
+            fillInlineAdView(holder, item, position);
         }
         else if(holder instanceof TaboolaNativeAdViewHolder) {
             fillTaboolaAds(holder, item);
@@ -267,9 +268,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         });
     }
 
-    private void fillInlineAdView(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+    private void fillInlineAdView(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
         AdData adData = item.getAdData();
         InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
+        if(THPConstants.IS_SHOW_INDEX) {
+            inlineAdViewHolder.indexTxt.setText(indexText(position,""));
+        }
         inlineAdViewHolder.frameLayout.removeAllViews();
         inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
         final PublisherAdView adView = adData.getAdView();
@@ -313,6 +317,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         SearchRecyclerHolder searchHolder = (SearchRecyclerHolder)holder;
         final ArticleBean bean = adapterItems.get(position).getArticleBean();
         searchHolder.title.setText(bean.getTi());
+        if(THPConstants.IS_SHOW_INDEX) {
+            searchHolder.title.setText(indexText(position, bean.getTi()));
+        }
         searchHolder.sname.setText(bean.getSname());
         String publishDate = bean.getPd();
         String formatedDate = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillis(publishDate), Locale.ENGLISH);
@@ -362,6 +369,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
 
             holder.mArticleTextView.setText(bean.getTi());
+
+            if(THPConstants.IS_SHOW_INDEX) {
+                holder.mArticleTextView.setText(indexText(position, bean.getTi()));
+            }
+
             String publishTime = bean.getGmt();
             String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillisGMT(publishTime), Locale.ENGLISH);
 
@@ -441,6 +453,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
 
             holder.mBannerTextView.setText(bean.getTi());
+
+        if(THPConstants.IS_SHOW_INDEX) {
+            holder.mBannerTextView.setText(indexText(position, bean.getTi()));
+        }
 
             String publishTime = bean.getGmt();
             String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.changeStringToMillisGMT(publishTime), Locale.ENGLISH);
@@ -650,6 +666,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + widgetAdapter.getSectionName());
         }
 
+        if(THPConstants.IS_SHOW_INDEX) {
+            mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
+            mWidgetsViewHolder.mWidgetFooterTextView.setText(indexText(verticleItemPosition, "View All " + widgetAdapter.getSectionName()));
+        }
+
         mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(v->{
             FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+widgetAdapter.getSectionId());
         });
@@ -698,6 +719,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
         });*/
 
+    }
+
+
+    private String indexText(int index, String actualText) {
+        return index+ " :: "+actualText;
     }
 
 }

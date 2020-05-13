@@ -13,20 +13,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoBanner;
-import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSectionArticle;
-import com.netoperation.default_db.DaoSubSectionArticle;
-import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSectionArticle;
-import com.netoperation.default_db.TableSubSectionArticle;
 import com.netoperation.model.ArticleBean;
-import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
-import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -44,7 +38,6 @@ import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -146,7 +139,8 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
             if(mIsSubsection) {
-                subSectionDataFromDB();
+                //subSectionDataFromDB();
+                sectionDataFromDB();
             } else {
                 if(mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
                     homeAndBannerArticleFromDB();
@@ -276,43 +270,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB");
                 }));
-
     }
-
-    /**
-     * Sub-Section all articles from DB
-     */
-    private void subSectionDataFromDB() {
-        final THPDB thpdb = THPDB.getInstance(getActivity());
-        DaoSubSectionArticle daoSubSectionArticle = thpdb.daoSubSectionArticle();
-        Maybe<List<TableSubSectionArticle>> sectionArticlesMaybe = daoSubSectionArticle.getArticlesMaybe(mSectionId).subscribeOn(Schedulers.io());
-        mDisposable.add(sectionArticlesMaybe
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value-> {
-                    if(value == null || value.size() == 0 || value.get(0).getBeans() == null || value.get(0).getBeans().size() == 0) {
-                        Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: NO Article in DB");
-                    }
-                    else {
-                        ArrayList<String> articleIds = new ArrayList<>();
-                        for (TableSubSectionArticle sectionArticle : value) {
-                            if(mHomeArticleList == null) {
-                                mHomeArticleList = new ArrayList<>();
-                            }
-                            mHomeArticleList.addAll(sectionArticle.getBeans());
-
-                        }
-
-                        viewPagerSetup(mHomeArticleList, mFrom);
-                    }
-
-                }, throwable->{
-                    Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: throwable from DB :: throwable - "+throwable);
-                }, ()->{
-                    Log.i(TAG, "Detail Pager SECTION :: "+sectionOrSubsectionName+"-"+mSectionId+" :: complete DB ");
-                }));
-
-    }
-
 
     /**
      * Bookmark all articles from DB

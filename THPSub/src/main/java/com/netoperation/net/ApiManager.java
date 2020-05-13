@@ -996,7 +996,7 @@ public class ApiManager {
                         bean.setGmt(articleBean.getGmt());
                         bean.setRecotype(articleBean.getRecotype());
                         bean.setRank(articleBean.getRank());
-                        bean.setIsBookmark(articleBean.getIsBookmark());
+                        bean.setIsBookmark(1);
                         bean.setIsFavourite(articleBean.getIsFavourite());
                         bean.setDescription(articleBean.getDescription());
                         bean.setShortDescription(articleBean.getShortDescription());

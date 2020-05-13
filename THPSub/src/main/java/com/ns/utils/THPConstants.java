@@ -282,4 +282,7 @@ public class THPConstants {
     public static final String PLAN_OFFER20 = "20%"; //P2
     public static final String PLAN_OFFER25 = "25%"; //P3
 
+
+    public static final boolean IS_SHOW_INDEX = true;
+
 }

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.AdSize;
 import com.main.DFPAds;
 import com.main.TaboolaAds;
+import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.db.THPDB;
-import com.netoperation.db.TableBookmark;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoSection;
@@ -31,7 +31,6 @@ import com.netoperation.model.SectionBean;
 import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
-import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -43,18 +42,13 @@ import com.ns.thpremium.R;
 import com.ns.view.RecyclerViewPullToRefresh;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -181,8 +175,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             int findLastVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastVisibleItemPosition();
             //int findFirstCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstCompletelyVisibleItemPosition();
             //int findLastCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastCompletelyVisibleItemPosition();
-
-            mRecyclerAdapter.notifyItemRangeChanged(findFirstVisibleItemPosition, findLastVisibleItemPosition-findFirstVisibleItemPosition);
+            int itemCount = findLastVisibleItemPosition-findFirstVisibleItemPosition;
+            if(itemCount < 3) {
+                itemCount = 3;
+            }
+            mRecyclerAdapter.notifyItemRangeChanged(findFirstVisibleItemPosition, itemCount);
         }
 
         AdData adData = new AdData(-1, "");
@@ -194,10 +191,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     @Override
     public void onPause() {
         super.onPause();
-
     }
-
-
 
     @Override
     public void onEmptyRefreshBtnClick() {
@@ -206,7 +200,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         new Handler().postDelayed(()->{
             sectionOrSubSectionDataFromDB();
         }, 600);
-
     }
 
     @Override
@@ -426,44 +419,51 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 homeAndBannerArticleFromDB();
             }
         });
-
         getHomeWidgetFromServer();
     }
 
 
+    /**
+     * It shows home page widgets
+     */
     private void showHomeWidgets() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
         mDisposable.add(widgetObservable
-                .delay(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    if (value instanceof ArrayList) {
-                        ArrayList tableDatas = ((ArrayList) value);
-                        // Widgets
-                        for (int i = 0; i < tableDatas.size(); i++) {
-                            if (tableDatas.get(i) instanceof TableWidget) {
-                                TableWidget widget = (TableWidget) tableDatas.get(i);
+                    final Map<String,WidgetIndex> xxxMap = new HashMap<>();
+                    final TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                    if(tableConfiguration != null) {
+                        List<WidgetIndex> widgetIndex = tableConfiguration.getWidgetIndex();
+                        for (WidgetIndex xxx : widgetIndex) {
+                            xxxMap.put(xxx.getSecId(), xxx);
+                        }
+                    }
 
-                                if(widget.getBeans() == null || widget.getBeans().size() == 0) {
-                                    continue;
-                                }
-
-                                final String itemRowId = "widget_" + widget.getSecId();
-                                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
-                                int index = mRecyclerAdapter.indexOf(item);
-                                if (index == -1) {
-                                    WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
-                                    item.setWidgetAdapter(widgetAdapter);
-                                    mRecyclerAdapter.addSingleItem(item);
-                                    Log.i(TAG, "Home Page Widget Added :: " + widget.getSecName() + " :: " + widget.getSecId());
-                                } else {
-                                    item = mRecyclerAdapter.getItem(index);
-                                    item.getWidgetAdapter().updateArticleList(widget.getBeans());
-                                    mRecyclerAdapter.notifyItemChanged(index);
-                                    Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
-                                }
+                    for (TableWidget widget : value) {
+                        if (widget.getBeans() == null || widget.getBeans().size() == 0) {
+                            continue;
+                        }
+                        final String itemRowId = "widget_" + widget.getSecId();
+                        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
+                        int index = mRecyclerAdapter.indexOf(item);
+                        if (index == -1) {
+                            WidgetIndex xx = xxxMap.get(widget.getSecId());
+                            WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
+                            widgetAdapter.setWidgetIndex(xx);
+                            item.setWidgetAdapter(widgetAdapter);
+                            if(xx == null) {
+                                mRecyclerAdapter.addSingleItem(item);
+                            } else {
+                                mRecyclerAdapter.insertItem(item, xx.getIndex());
                             }
+                            Log.i(TAG, "Home Page Widget Added :: " + widget.getSecName() + " :: " + widget.getSecId());
+                        } else {
+                            item = mRecyclerAdapter.getItem(index);
+                            item.getWidgetAdapter().updateArticleList(widget.getBeans());
+                            mRecyclerAdapter.notifyItemChanged(index);
+                            Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
                         }
                     }
                 }, throwable -> {
