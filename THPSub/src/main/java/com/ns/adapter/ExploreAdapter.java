@@ -11,11 +11,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.SectionBean;
-import com.ns.alerts.Alerts;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         String imageUrl = mSubSection.get(position).getImage();
         if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
             imageUrl = ContentUtil.getWidgetUrl(imageUrl);
-            GlideUtil.loadImage(holder.itemView.getContext(), holder.mExploreImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_exploresections_th);
+            PicassoUtil.loadImage(holder.itemView.getContext(), holder.mExploreImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_exploresections_th);
         } else {
             holder.mExploreImageView.setImageResource(R.drawable.ph_exploresections_th);
         }

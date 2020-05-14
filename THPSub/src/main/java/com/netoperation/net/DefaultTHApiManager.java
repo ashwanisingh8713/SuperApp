@@ -57,7 +57,6 @@ import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1039,7 +1038,7 @@ public class DefaultTHApiManager {
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
         String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
         return ServiceFactory.getServiceAPIs().config(url)
-        .subscribeOn(Schedulers.newThread())
+        .subscribeOn(Schedulers.io())
                 .map(config->{
                     if(config.isSTATUS()) {
                         THPDB thpdb = THPDB.getInstance(context);
@@ -1101,20 +1100,21 @@ public class DefaultTHApiManager {
                         limit = tabsBeans.size();
                     }
 
-                    File destinationFolder;
+                    String destinationFolderPath;
                     if (isDayTheme) {
-                        destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT);
+                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT).getPath();
                     } else {
-                        destinationFolder = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK);
+                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK).getPath();
                     }
 
                     List<TabsBean> tabsBeanList = tabsBeans.stream().limit(limit).collect(Collectors.toList());
                     for(TabsBean tab : tabsBeanList) {
                         if (isDayTheme) {
-                            String fileName = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlLight());
-                            String selectedPath = FileUtils.getFileNameFromUrl(tab.getIconUrl().getUrlSelectedLight());
-                            tab.getIconUrl().setLocalFilePath(destinationFolder+"/"+fileName);
-                            tab.getIconUrl().setLocalFileSelectedPath(destinationFolder+"/"+selectedPath);
+                            tab.getIconUrl().setLocalFilePath(FileUtils.getFilePathFromUrl(destinationFolderPath, tab.getIconUrl().getUrlLight()));
+                            tab.getIconUrl().setLocalFileSelectedPath(FileUtils.getFilePathFromUrl(destinationFolderPath, tab.getIconUrl().getUrlSelectedLight()));
+                        } else {
+                            tab.getIconUrl().setLocalFilePath(FileUtils.getFilePathFromUrl(destinationFolderPath, tab.getIconUrl().getUrlDark()));
+                            tab.getIconUrl().setLocalFileSelectedPath(FileUtils.getFilePathFromUrl(destinationFolderPath, tab.getIconUrl().getUrlSelectedDark()));
                         }
                     }
                     return tabsBeanList;

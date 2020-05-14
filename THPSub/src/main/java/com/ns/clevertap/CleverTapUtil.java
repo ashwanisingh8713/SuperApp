@@ -123,7 +123,7 @@ public class CleverTapUtil {
         //CleverTapAPI.getDefaultInstance(context).pushEvent(THPConstants.CT_EVENT_ARTICLE_READ, prodViewedAction);
     }
 
-    public static void cleverTapDetailPageEvent(Context context, boolean isBriefing, String IS_Article_PREMIUM, String from, int articleId, String articleTitle,
+    public static void cleverTapDetailPageEvent(Context context, boolean isBriefing, String IS_Article_PREMIUM, String from, String articleId, String articleTitle,
                                                 String articleLink, String sectionName, String articleType, String Article_USER_TIME_SPENT) {
         HashMap<String, Object> prodViewedAction = new HashMap<String, Object>();
         prodViewedAction.put(THPConstants.CT_KEY_platform,"app");
@@ -359,7 +359,7 @@ public class CleverTapUtil {
 
     /*
      * isArticle is 1 if page type is an Article Detail Page otherwise 0*/
-    public static void cleverTapEventPageVisit(Context context, String pageType, int articleId, String section, String authors, int isArticle) {
+    public static void cleverTapEventPageVisit(Context context, String pageType, String articleId, String section, String authors, int isArticle) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(THPConstants.CT_KEY_PAGE_TYPE, pageType);
         map.put(THPConstants.CT_KEY_IS_ARTICLE, isArticle);

@@ -18,6 +18,7 @@ public class ListingIconUrl {
     private String dislike;
     private String favorite;
     private String unfavorite;
+    private String share;
 
     public String getBookmark() {
         return bookmark;
@@ -65,5 +66,13 @@ public class ListingIconUrl {
 
     public void setUnfavorite(String unfavorite) {
         this.unfavorite = unfavorite;
+    }
+
+    public String getShare() {
+        return share;
+    }
+
+    public void setShare(String share) {
+        this.share = share;
     }
 }

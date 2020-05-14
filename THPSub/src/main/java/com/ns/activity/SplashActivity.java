@@ -129,12 +129,16 @@ public class SplashActivity extends BaseAcitivityTHP {
                     break;
                 case WHAT_MP:
                     showProgressBar("Configuring Articles.");
-                    if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
+                    if(!DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
+                        sendHandlerMsg(WHAT_ERROR, "Configuration file table has ERROR! So .....");
+                    }
+                    else if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
                         callMpApi();
                     }
                     else {
                         sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is not expired");
                     }
+                    refreshConfigurationInstance();
                     break;
                 case WHAT_ROUTE_FOR_SCREEN:
                     routeToAppropriateAction();
@@ -296,14 +300,13 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onNext(TableConfiguration configuration) {
                 if(configuration != null) {
-                    DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
+
                 }
             }
 
             @Override
             public void onError(Throwable t, String str) {
                 sendHandlerMsg(WHAT_ERROR, "App Configuration data fetch is failed from server");
-
             }
 
             @Override
@@ -492,11 +495,12 @@ public class SplashActivity extends BaseAcitivityTHP {
                 if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
+                        DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
                         sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
                     }
                 }
 
-                Log.i("Downloading", "Fail :: "+ totalReceivedFailRequestIcons);
+                Log.i("Downloading", "Fail :: "+ totalReceivedFailRequestIcons +" :: URL = "+download.getUrl());
 
             }
             else if(intent.getAction().equals(IconDownloadService.MESSAGE_SUCCESS)){
@@ -504,10 +508,11 @@ public class SplashActivity extends BaseAcitivityTHP {
                 if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
+                        DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
                         sendHandlerMsg(WHAT_MP, totalReceivedSuccessRequestIcons+" Icons are downloaded successfully, making request for metered paywall");
                     }
                 }
-                Log.i("Downloading", "Success :: "+ totalReceivedFailRequestIcons);
+                Log.i("Downloading", "Success :: "+ totalReceivedSuccessRequestIcons +" :: URL = "+download.getUrl());
             }
         }
     };

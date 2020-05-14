@@ -3,10 +3,10 @@
     {
       "title": "Home",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -14,10 +14,10 @@
     {
       "title": "Portfolio Section ",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -339,10 +339,10 @@
     {
       "title": "BLink ",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -690,10 +690,10 @@
     {
       "title": "Indices",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.pn",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "SENSEX"

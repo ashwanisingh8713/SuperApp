@@ -13,7 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.R;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         ImageView mImageView = view.findViewById(R.id.detail_image);
         String imageUrl = mImageUrlList.get(position).getBigImageUrl();
         if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-            GlideUtil.loadImage(mContext, mImageView, imageUrl);
+            PicassoUtil.loadImage(mContext, mImageView, imageUrl);
         } else {
 //            imageView.setImageResource(R.mipmap.ph_topnews_th);
         }

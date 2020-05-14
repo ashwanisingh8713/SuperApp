@@ -1,7 +1,9 @@
 package com.ns.contentfragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -139,8 +141,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
-        //mViewPager.setOffscreenPageLimit(4);
-
+        mViewPager.setOffscreenPageLimit(4);
+        // App Tab Configuration
         mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
                 .subscribe(tabsBeans -> {
                     String[] tabNames = new String[tabsBeans.size()];
@@ -155,7 +157,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                         mPsTabIndexMap.put(tab.getPageSource(), i);
                     }
 
-                    mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay);
+                    mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay, tabsBeans);
 
                     mAppBottomTabAdapter = new AppBottomTabAdapter(getChildFragmentManager(), tabsBeans);
 
@@ -398,6 +400,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             // Gesture Tab On-Click
             final TabClickListener tabClickListener = new TabClickListener(i, tabsBeans.get(i), this);
             GestureDetectorCompat gestureDetectorCompat = new GestureDetectorCompat(getContext(), tabClickListener);
+            tabStrip.getChildAt(i).setHapticFeedbackEnabled(false);
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {

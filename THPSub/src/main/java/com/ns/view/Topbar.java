@@ -1,6 +1,7 @@
 package com.ns.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -16,11 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.netoperation.config.model.ColorOptionBean;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -36,29 +40,29 @@ import com.ns.view.btn.NSImageButton;
  * Created by ashwanisingh on 21/09/18.
  */
 
-public class DetailToolbar extends Toolbar {
+public class Topbar extends Toolbar {
 
     private ToolbarClickListener mToolbarClickListener;
     private TextView mTitleTextView;
     private NSImageButton mBackImageView;
     private LogoImgView mLogoImageView;
-    private IconImgView mSearchImageView;
-    private IconImgView mCreateBookMarkImageView;
-    private IconImgView mRemoveBookMarkedImageView;
-    private IconImgView mTextSizeImageView;
-    private IconImgView mTTSPlayImageView;
-    private IconImgView mTTSPauseImageView;
-    private IconImgView premiumLogoBtn;
-    private IconImgView mCommentBtn;
+    private TopbarIconView mSearchImageView;
+    private TopbarIconView mCreateBookMarkImageView;
+    private TopbarIconView mRemoveBookMarkedImageView;
+    private TopbarIconView mTextSizeImageView;
+    private TopbarIconView mTTSPlayImageView;
+    private TopbarIconView mTTSPauseImageView;
+    private TopbarIconView premiumLogoBtn;
+    private TopbarIconView mCommentBtn;
 
     private ProgressBar mProgressTTS;
     private ProgressBar mProgressFavourite;
     private ProgressBar mProgressBookmark;
     private ProgressBar mProgressLike;
 
-    private IconImgView favStarTHPIC;
-    private IconImgView shareTHPIC;
-    private IconImgView toggleLikeDisLikeTHPIC;
+    private TopbarIconView favStarTHPIC;
+    private TopbarIconView shareTHPIC;
+    private TopbarIconView toggleLikeDisLikeTHPIC;
 
     private FrameLayout overflowParent;
     private FrameLayout likeParent;
@@ -66,6 +70,8 @@ public class DetailToolbar extends Toolbar {
     private FrameLayout favouriteParent;
     private FrameLayout ttsParent;
     private RelativeLayout commentParent;
+
+    private boolean isUserThemeDay;
 
 
     public void showSectionIcons(OnClickListener onClickListener) {
@@ -364,17 +370,17 @@ public class DetailToolbar extends Toolbar {
 
     private ToolbarCallModel mToolbarCallModel;
 
-    public DetailToolbar(Context context) {
+    public Topbar(Context context) {
         super(context);
         init(context, null);
     }
 
-    public DetailToolbar(Context context, @Nullable AttributeSet attrs) {
+    public Topbar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public DetailToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Topbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -382,6 +388,25 @@ public class DetailToolbar extends Toolbar {
 
     private void init(Context context, AttributeSet attrs) {
         mView = LayoutInflater.from(context).inflate(R.layout.toolbar_for_detail, this, true);
+        isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+
+        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+            ColorOptionBean topbarTheme = tableConfiguration.getAppTheme().getTopBarBg();
+            if(isUserThemeDay) {
+                mView.setBackgroundColor(Color.parseColor(topbarTheme.getLight()));
+            } else {
+                mView.setBackgroundColor(Color.parseColor(topbarTheme.getDark()));
+            }
+        } else {
+            if(isUserThemeDay) {
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.topbar_light));
+            }
+            else {
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
+            }
+        }
+
         mTitleTextView = findViewById(R.id.action_titleText);
         mBackImageView = findViewById(R.id.action_back);
         mLogoImageView = findViewById(R.id.action_logo);

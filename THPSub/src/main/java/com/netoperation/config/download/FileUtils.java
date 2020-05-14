@@ -66,6 +66,14 @@ public class FileUtils {
         }
     }
 
+    public static String getFilePathFromUrl(String destinationFolderPath, String url) {
+        try {
+            return destinationFolderPath+"/"+url.substring(url.lastIndexOf("/") + 1, url.length());
+        } catch (Exception e) {
+            return url;
+        }
+    }
+
 
     public static File getImageFileInput(File directory, String imgUrl) throws IOException {
         final String fileName = getFileNameFromUrl(imgUrl);

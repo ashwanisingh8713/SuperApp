@@ -1,6 +1,7 @@
 package com.netoperation.default_db;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.model.ArticleBean;
@@ -28,11 +29,13 @@ public class TableBanner {
     private String type;
     private String lastUpdatedTime;
 
-//    private long dataInsertTimeOfTable;
-
     private StaticPageUrlBean staticPageBean;
 
     private List<ArticleBean> beans = new ArrayList<>();
+
+    @Ignore
+    public TableBanner() {
+    }
 
     public TableBanner(String secId, String secName, String type, String lastUpdatedTime, StaticPageUrlBean staticPageBean) {
         this.secId = secId;
@@ -40,16 +43,7 @@ public class TableBanner {
         this.type = type;
         this.lastUpdatedTime = lastUpdatedTime;
         this.staticPageBean = staticPageBean;
-//        this.dataInsertTimeOfTable = System.currentTimeMillis();
     }
-
-//    public long getDataInsertTimeOfTable() {
-//        return dataInsertTimeOfTable;
-//    }
-
-//    public void setDataInsertTimeOfTable(long dataInsertTimeOfTable) {
-//        this.dataInsertTimeOfTable = dataInsertTimeOfTable;
-//    }
 
     public String getType() {
         return type;

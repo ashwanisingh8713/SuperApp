@@ -19,7 +19,7 @@ import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
 
@@ -163,7 +163,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
+                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
             } else {
                 holder.mWidgetImageView.setImageResource(R.drawable.ph_toppicks_th);
             }
@@ -197,7 +197,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     imageUrl = bean.getMe().get(0).getIm();
                 }
                 if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl), R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl), R.drawable.ph_topnews_th);
                 } else {
                     holder.mWidgetImageView.setImageResource(R.drawable.ph_topnews_th);
                 }
@@ -268,7 +268,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                GlideUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl), R.drawable.ph_exploresections_th);
+                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl), R.drawable.ph_exploresections_th);
             } else {
                 holder.mWidgetImageView.setImageResource(R.drawable.ph_exploresections_th);
             }

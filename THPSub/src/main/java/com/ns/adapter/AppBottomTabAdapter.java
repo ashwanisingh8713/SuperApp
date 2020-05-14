@@ -10,15 +10,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.util.NetConstants;
-import com.ns.contentfragment.AppTabListingFragment;
-import com.ns.contentfragment.IndicesTabFragment;
-import com.ns.contentfragment.TopTabsFragment;
-import com.ns.contentfragment.WebFragment;
-import com.ns.thpremium.R;
+import com.ns.contentfragment.TabPremiumListingFragment;
+import com.ns.contentfragment.TabIndicesFragment;
+import com.ns.contentfragment.TabTopTabsFragment;
+import com.ns.contentfragment.TabWebFragment;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AppBottomTabAdapter extends FragmentStatePagerAdapter {
 
@@ -41,20 +38,20 @@ public class AppBottomTabAdapter extends FragmentStatePagerAdapter {
 
         switch (tabsBean.getPageSource()) {
             case NetConstants.PS_GROUP_DEFAULT_SECTIONS:
-                return TopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), NetConstants.RECO_HOME_TAB, false, "", null);
+                return TabTopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), NetConstants.RECO_HOME_TAB, false, "", null);
             case NetConstants.PS_Briefing:
             case NetConstants.PS_My_Stories:
             case NetConstants.PS_Suggested:
-                return AppTabListingFragment.getInstance(tabIndex, tabsBean.getPageSource());
+                return TabPremiumListingFragment.getInstance(tabIndex, tabsBean.getPageSource());
 
             case NetConstants.PS_Profile:
                 return new Fragment(); // pageSource="Profile" opens in different Activity, and it's tab click is handled
             case NetConstants.PS_Url:
-                return WebFragment.getInstance(tabIndex, tabsBean);
+                return TabWebFragment.getInstance(tabIndex, tabsBean.getPageSource(), tabsBean.getValue(), tabsBean.getTitle());
             case NetConstants.PS_ADD_ON_SECTION:
-                return TopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
+                return TabTopTabsFragment.getInstance(tabIndex, tabsBean.getPageSource(), tabsBean.getSection().getSecId(), true, tabsBean.getSection().getSecId(), tabsBean.getSection().getSecName());
             case NetConstants.PS_SENSEX:
-                return IndicesTabFragment.getInstance(tabIndex, tabsBean.getGroup());
+                return TabIndicesFragment.getInstance(tabIndex, tabsBean.getPageSource(), tabsBean.getTitle());
         }
 
         return new Fragment();

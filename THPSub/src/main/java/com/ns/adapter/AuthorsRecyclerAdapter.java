@@ -15,7 +15,7 @@ import com.netoperation.model.PersonaliseModel;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.callbacks.THPPersonaliseItemClickListener;
 import com.ns.thpremium.R;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
 
 
@@ -44,7 +44,7 @@ public class AuthorsRecyclerAdapter extends BaseRecyclerViewAdapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         AuthorHolder holder = (AuthorHolder) viewHolder;
         PersonaliseModel model = details.getValues().get(i);
-        GlideUtil.loadImage(holder.image_author.getContext(), holder.image_author, model.getImage());
+        PicassoUtil.loadImage(holder.image_author.getContext(), holder.image_author, model.getImage());
         holder.tv_author_name.setText(ResUtil.capitalizeFirstLetter(model.getTitle().toLowerCase()));
 
         if(model.isSelected()) {

@@ -30,19 +30,23 @@ import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewLinkClick;
-import com.ns.view.IconImgView;
+import com.ns.view.TopbarIconView;
+import com.ns.view.text.ArticleTitleTextView;
 import com.ns.viewholder.ArticlesViewHolder;
+import com.ns.viewholder.BannerViewHolder;
+import com.ns.viewholder.ExploreViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.SearchRecyclerHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 import com.ns.viewholder.TaboolaNativeAdViewHolder;
+import com.ns.viewholder.WidgetsViewHolder;
 import com.taboola.android.api.TBImageView;
 import com.taboola.android.api.TBRecommendationItem;
 import com.taboola.android.api.TBTextView;
@@ -60,6 +64,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private String mSectionId;
     private String mSectionType;
     private SparseIntArray positionList = new SparseIntArray();
+
 
     public SectionContentAdapter(String pageSource, ArrayList<SectionAdapterItem> adapterItems, boolean isSubsection, String sectionId, String sectionType) {
         this.mPageSource = pageSource;
@@ -169,10 +174,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             fillInlineAdView(holder, item, position);
         }
         else if(holder instanceof TaboolaNativeAdViewHolder) {
-            fillTaboolaAds(holder, item);
+            fillTaboolaAds(holder, item, position);
         }
         else if(holder instanceof ExploreViewHolder) {
-            fillExploreData(holder, item);
+            fillExploreData(holder, item, position);
         }
     }
 
@@ -192,16 +197,19 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillExploreData(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+    private void fillExploreData(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
         ExploreViewHolder exploreHolder = (ExploreViewHolder) holder;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(exploreHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         exploreHolder.mExploreRecyclerView.setLayoutManager(mLayoutManager);
         exploreHolder.mExploreRecyclerView.setHasFixedSize(true);
         exploreHolder.mExploreRecyclerView.setAdapter(item.getExploreAdapter());
+        if(THPConstants.IS_SHOW_INDEX) {
+            exploreHolder.exploreTitle.setText(indexText(position, holder.itemView.getContext().getString(R.string.info_home_explore)));
+        }
 
     }
 
-    private void fillTaboolaAds(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+    private void fillTaboolaAds(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
         TBRecommendationItem tbRecommendationItem = item.getAdData().getTaboolaNativeAdItem();
         TaboolaNativeAdViewHolder taboolaNativeAdViewHolder = (TaboolaNativeAdViewHolder) holder;
         taboolaNativeAdViewHolder.mAttributionView.setOnClickListener(view -> TaboolaApi.getInstance().handleAttributionClick(holder.itemView.getContext()));
@@ -243,6 +251,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 parent3.removeView(tbBrandTextView);
             }
             taboolaNativeAdViewHolder.mAdContainer.addView(tbBrandTextView);
+        }
+
+        if(THPConstants.IS_SHOW_INDEX) {
+            String title = tbTextView.getText().toString();
+            tbTextView.setText(indexText(position, title));
         }
 
         TaboolaApi.getInstance().setOnClickListener((placementName, itemId, url, isOrganic) -> {
@@ -339,10 +352,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         ArticlesViewHolder holder = (ArticlesViewHolder) articlesViewHolder;
         final ArticleBean bean = adapterItems.get(position).getArticleBean();
         if (bean != null) {
-
             // Dims Read article given view
             dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mArticlesLayout);
-
             // Checks article's type
             articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);
 
@@ -359,14 +370,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 holder.mImageParentLayout.setVisibility(View.VISIBLE);
                 holder.mArticleImageView.setVisibility(View.VISIBLE);
                 imageUrl = ContentUtil.getThumbUrl(imageUrl);
-                GlideUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
 
             } else {
                 holder.mArticleImageView.setVisibility(View.GONE);
                 holder.mImageParentLayout.setVisibility(View.GONE);
             }
-
-
 
             holder.mArticleTextView.setText(bean.getTi());
 
@@ -445,7 +454,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
                 imageUrl = ContentUtil.getBannerUrl(imageUrl);
-                GlideUtil.loadImage(holder.itemView.getContext(), holder.mBannerImageView, imageUrl, R.drawable.ph_topnews_th);
+                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mBannerImageView, imageUrl, R.drawable.ph_topnews_th);
             } else {
                 holder.mBannerImageView.setImageResource(R.drawable.ph_topnews_th);
             }
@@ -505,71 +514,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-
-    /**
-     * Banner View Holder
-     */
-    public class BannerViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView mBannerImageView;
-        public TextView mBannerTextView;
-        public LinearLayout mBannerLayout;
-        public TextView mArticleUpdateTime;
-        public TextView mArticleSectionName;
-        public IconImgView mBookmarkButton;
-        public IconImgView mShareArticleButton;
-        public ImageButton mMultimediaButton;
-
-        public BannerViewHolder(View itemView) {
-            super(itemView);
-            mBookmarkButton = itemView.findViewById(R.id.button_bookmark);
-            mBannerLayout = itemView.findViewById(R.id.layout_banner);
-            mBannerImageView = itemView.findViewById(R.id.imageview_banner);
-            mBannerTextView = itemView.findViewById(R.id.textview_banner);
-            mArticleSectionName = itemView.findViewById(R.id.section_name);
-            mArticleUpdateTime = itemView.findViewById(R.id.textview_time);
-            mShareArticleButton = itemView.findViewById(R.id.button_article_share);
-            mMultimediaButton = itemView.findViewById(R.id.multimedia_button);
-            mArticleSectionName.setVisibility(View.VISIBLE);
-        }
-    }
-
-
-
-
-    /**
-     * Default Widget View Holder
-     */
-    private static class WidgetsViewHolder extends RecyclerView.ViewHolder {
-
-        public RecyclerView mWidgetsRecyclerView;
-        public TextView mWidgetTitleTextView, mWidgetFooterTextView;
-        public LinearLayoutManager layoutManager;
-
-        public WidgetsViewHolder(View itemView) {
-            super(itemView);
-
-            mWidgetsRecyclerView = itemView.findViewById(R.id.recyclerview_widgets);
-            mWidgetTitleTextView = itemView.findViewById(R.id.textview_widget_title);
-            mWidgetFooterTextView = itemView.findViewById(R.id.textview_widget_viewAll);
-            layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-            mWidgetsRecyclerView.setLayoutManager(layoutManager);
-        }
-    }
-
-    /**
-     * Horizontal RecyclerView for Sub-sections
-     */
-    private static class ExploreViewHolder extends RecyclerView.ViewHolder {
-
-        public RecyclerView mExploreRecyclerView;
-
-        public ExploreViewHolder(View itemView) {
-            super(itemView);
-
-            mExploreRecyclerView = itemView.findViewById(R.id.recyclerview_explore);
-        }
-    }
 
     public void deleteItem(SectionAdapterItem item) {
         adapterItems.remove(item);
@@ -658,17 +602,16 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
         mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(widgetAdapter);
         mWidgetsViewHolder.mWidgetTitleTextView.setText(widgetAdapter.getSectionName());
+
+        if(THPConstants.IS_SHOW_INDEX) {
+            mWidgetsViewHolder.mWidgetTitleTextView.setText(indexText(verticleItemPosition, "View All " + widgetAdapter.getSectionName()));
+        }
         //for top-picks we are desableing the visiblity the view all textview
         if (dataBean.getWidgetAdapter().getSectionId()== 88) {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.GONE);
         } else {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
             mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + widgetAdapter.getSectionName());
-        }
-
-        if(THPConstants.IS_SHOW_INDEX) {
-            mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
-            mWidgetsViewHolder.mWidgetFooterTextView.setText(indexText(verticleItemPosition, "View All " + widgetAdapter.getSectionName()));
         }
 
         mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(v->{
@@ -688,36 +631,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if (lastSeenFirstPosition >= 0) {
             mWidgetsViewHolder.layoutManager.scrollToPositionWithOffset(lastSeenFirstPosition, 0);
         }
-
-
-
-        /*mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int parentId = dataBean.getWidgetParentSecId();
-                int position;
-                boolean isSubsection;
-                String parentName;
-                if (parentId == 0) {
-                    position = DatabaseJanitor.getSectionPosition(dataBean.getWidgetSectionId());
-                    parentName = dataBean.getWidgetName();
-                    isSubsection = false;
-                } else {
-                    position = DatabaseJanitor.getSubsectionPostion(parentId, dataBean.getWidgetSectionId());
-                    parentName = DatabaseJanitor.getParentSectionName(parentId);
-                    isSubsection = true;
-                }
-                if (position >= 0) {
-                    SlidingSectionFragment fragment = SlidingSectionFragment.newInstance(SlidingSectionFragment.FROM_VIEW_ALL, position, isSubsection, parentId, parentName);
-                    pushFragmentToBackStack(fragment);
-
-                } else if (position == -1) {
-                    SlidingArticleFragment fragment = SlidingArticleFragment.newInstance(0, String.valueOf(dataBean.getWidgetSectionId()),
-                            false);
-                    pushFragmentToBackStack(fragment);
-                }
-            }
-        });*/
 
     }
 

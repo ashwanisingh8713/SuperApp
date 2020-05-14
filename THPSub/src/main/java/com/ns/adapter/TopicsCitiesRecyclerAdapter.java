@@ -13,7 +13,7 @@ import com.netoperation.model.PersonaliseModel;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.callbacks.THPPersonaliseItemClickListener;
 import com.ns.thpremium.R;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
 import com.ns.view.text.CustomTextView;
 
@@ -41,7 +41,7 @@ public class TopicsCitiesRecyclerAdapter extends BaseRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         TopicsCitiesHolder holder = (TopicsCitiesHolder) viewHolder;
-        GlideUtil.loadImage(holder.image.getContext(), holder.image, (imageUrl+details.getValues().get(i).getImage()));
+        PicassoUtil.loadImage(holder.image.getContext(), holder.image, (imageUrl+details.getValues().get(i).getImage()));
         holder.tv_topics_cities.setText(ResUtil.capitalizeFirstLetter(details.getValues().get(i).getTitle().toLowerCase()));
         PersonaliseModel model = details.getValues().get(i);
         if(model.isSelected()) {

@@ -78,6 +78,16 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="CustomTabLayout">
+        <attr name="tabType" format="enum">
+            <enum name="defaultTab" value="0" />
+            <enum name="sectionTop" value="1" />
+            <enum name="bottomTab" value="2" />
+            <enum name="bookmarkTop" value="3" />
+            <enum name="loginTop" value="4" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="TagFlowLayout">
         <attr name="auto_select_effect" format="boolean"></attr>
         <attr name="max_select" format="integer"></attr>

@@ -8,18 +8,22 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ns.adapter.IndicesTabViewPagerAdapter;
+import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.IndicesSection;
 import com.ns.thpremium.R;
 import com.ns.view.CustomTabLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndicesTabFragment extends BaseFragmentTHP {
+public class TabIndicesFragment extends BaseFragmentTHP {
 
-    private String mFrom;
-    private int tabIndex = 0;
+    private String mPageSource;
+    private String mParentSectionName;
+    private int mTabIndex = 0;
     private int selectedTabPosition = 0;
 
     public ViewPager mViewPager;
@@ -27,11 +31,12 @@ public class IndicesTabFragment extends BaseFragmentTHP {
 
     private IndicesTabViewPagerAdapter mIndicesTabViewPagerAdapter;
 
-    public static IndicesTabFragment getInstance(int tabIndex, String from) {
-        IndicesTabFragment fragment = new IndicesTabFragment();
+    public static TabIndicesFragment getInstance(int tabIndex, String pageSource, String parentSectionName) {
+        TabIndicesFragment fragment = new TabIndicesFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("tabIndex", tabIndex);
-        bundle.putString("from", from);
+        bundle.putString("pageSource", pageSource);
+        bundle.putString("parentSectionName", parentSectionName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -45,8 +50,9 @@ public class IndicesTabFragment extends BaseFragmentTHP {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tabIndex = getArguments().getInt("tabIndex");
-            mFrom = getArguments().getString("from");
+            mTabIndex = getArguments().getInt("tabIndex");
+            mPageSource = getArguments().getString("pageSource");
+            mParentSectionName = getArguments().getString("parentSectionName");
         }
     }
 
@@ -67,5 +73,12 @@ public class IndicesTabFragment extends BaseFragmentTHP {
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(selectedTabPosition, true);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // It sends Event in AppTabActivity.java=> handleEvent(ToolbarChangeRequired toolbarChangeRequired)
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
     }
 }

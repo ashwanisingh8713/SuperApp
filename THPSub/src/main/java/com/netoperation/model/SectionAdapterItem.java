@@ -14,11 +14,20 @@ public class SectionAdapterItem {
     private ExploreAdapter exploreAdapter;
     private StaticPageUrlBean staticPageUrlBean;
     private AdData adData;
+    private int proposedIndex;
 
 
     public SectionAdapterItem(int viewType, String itemRowId) {
         this.viewType = viewType;
         this.itemRowId = itemRowId;
+    }
+
+    public int getProposedIndex() {
+        return proposedIndex;
+    }
+
+    public void setProposedIndex(int proposedIndex) {
+        this.proposedIndex = proposedIndex;
     }
 
     public AdData getAdData() {

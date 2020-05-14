@@ -178,7 +178,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             THPDB thpdb = THPDB.getInstance(getActivity());
             DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
             mDisposable.add(daoRead.isArticleRestricted(mArticleId)
@@ -360,7 +361,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             mArticleBean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
             mArticleBean.setIsBookmark(1);
             // To Create at App end
@@ -384,7 +386,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
                 || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
+                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             mArticleBean.setIsBookmark(0);
             // To Remove at App end
             mDisposable.add(ApiManager.createUnBookmark(getActivity(), mArticleBean.getArticleId()).subscribe(boole -> {
@@ -688,10 +691,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
             // CleverTap Event Capture
             CleverTapUtil.cleverTapDetailPageEvent(getActivity(), isBriefingDetail(), THPConstants.CT_FROM_TH_PREMIUM, mFrom,
-                    Integer.parseInt(mArticleBean.getArticleId()), mArticleBean.getArticletitle(), mArticleBean.getArticleLink(),
+                    mArticleBean.getArticleId(), mArticleBean.getArticletitle(), mArticleBean.getArticleLink(),
                     mArticleBean.getSectionName(), mArticleBean.getArticleType(), totalTime);
 
-            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_ARTICLE, Integer.parseInt(mArticleBean.getArticleId()),
+            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_ARTICLE, mArticleBean.getArticleId(),
                     mArticleBean.getSectionName(), mArticleBean.getAuthor() == null ? "No Author" : TextUtils.join(", ", mArticleBean.getAuthor()), 1);
         }
     }

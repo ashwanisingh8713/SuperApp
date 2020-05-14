@@ -6,24 +6,28 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.netoperation.config.model.OtherIconUrls;
+import com.netoperation.config.model.OtherIconsDownloadUrls;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.thpremium.R;
 
-public class IconImgView extends AppCompatImageView {
+public class TopbarIconView extends AppCompatImageView {
 
     private int mIconType = -1;
 
-    public IconImgView(Context context) {
+    public TopbarIconView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public IconImgView(Context context, AttributeSet attrs) {
+    public TopbarIconView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public IconImgView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TopbarIconView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -39,6 +43,28 @@ public class IconImgView extends AppCompatImageView {
                 mIconType = -1;
             }
         }
+
+
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration != null) {
+            OtherIconsDownloadUrls otherIconsDownloadUrls = tableConfiguration.getOtherIconsDownloadUrls();
+            if (isUserThemeDay) {
+                OtherIconUrls otherIconUrls = otherIconsDownloadUrls.getLight();
+                otherIconUrls.getListing();
+            }
+            else {
+
+            }
+        }
+
+
+
+
+        ///////////////////////////////////////////////////////////////////
 
         // 0 = app:iconType="ttsPlay"
         if(mIconType == 0) {

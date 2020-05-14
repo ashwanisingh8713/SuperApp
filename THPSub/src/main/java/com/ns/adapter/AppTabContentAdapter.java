@@ -42,7 +42,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.AppAudioManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
@@ -308,7 +308,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 holder.mImageParentLayout.setVisibility(View.VISIBLE);
                 holder.mArticleImageView.setVisibility(View.VISIBLE);
                 imageUrl = ContentUtil.getThumbUrl(imageUrl);
-                GlideUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
 
             } else {
                 holder.mArticleImageView.setVisibility(View.GONE);
@@ -408,7 +408,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.trendingIcon_Img.setVisibility(View.GONE);
 
-        GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
+        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(bean.getArticletitle());
         // Section Name
@@ -484,7 +484,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Bookmark_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BookmarkPremiumViewHolder holder = (BookmarkPremiumViewHolder) viewHolder;
-        GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
+        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(bean.getArticletitle());
         // Section Name
@@ -555,7 +555,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Briefing_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BriefcaseViewHolder holder = (BriefcaseViewHolder) viewHolder;
-        GlideUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
+        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(ResUtil.htmlText(bean.getArticletitle()));
 
@@ -642,7 +642,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             holder.shadowOverlay.setVisibility(View.GONE);
         } else {
             holder.imageView.setVisibility(View.VISIBLE);
-            GlideUtil.loadImage(holder.itemView.getContext(), holder.imageView, ContentUtil.getBannerUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
+            PicassoUtil.loadImage(holder.itemView.getContext(), holder.imageView, ContentUtil.getBannerUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
 
             String caption = null;
             if (bean.getIMAGES() != null && bean.getIMAGES().size() > 0) {
@@ -815,7 +815,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
                 } else {
                     dg_banner_vh.mHeaderImageView.setVisibility(View.GONE);
                 }
@@ -867,7 +867,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
@@ -925,7 +925,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
@@ -992,7 +992,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    GlideUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {

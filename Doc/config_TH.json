@@ -5,14 +5,24 @@
   "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
   "staticItem": [
     {
-      "title": "Name",
-      "urlDark": "value",
-      "urlLight": "value"
+      "title": "Terms & Condition",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
     },
     {
-      "title": "Name",
-      "urlDark": "value",
-      "urlLight": "value"
+      "title": "Privacy Policy",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
+    },
+    {
+      "title": "Help",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
+    },
+    {
+      "title": "AboutUs",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
     }
   ],
   "tabs": [
@@ -70,29 +80,6 @@
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "Profile"
-    },
-    {
-      "title": "Tab Title",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "SENSEX"
-    },
-    {
-      "title": "Url Tab",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
-      },
-      "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "Url",
-      "value": "https://www.google.com/"
     }
   ],
   "appTheme": {
@@ -104,9 +91,7 @@
         "S": "#818181",
         "XS": "#818181",
         "detailpageText": "#000000",
-        "WigetText": "#ffffff",
-        "breadcrumSelect": "ffffff",
-        "breadcrumUnSelect": "818181"
+        "WigetText": "#ffffff"
       },
       "light": {
         "XL": "#ffffff",
@@ -115,9 +100,7 @@
         "S": "#818181",
         "XS": "#818181",
         "detailpageText": "#ffffff",
-        "WigetText": "#ffffff",
-        "breadcrumSelect": "ffffff",
-        "breadcrumUnSelect": "818181"
+        "WigetText": "#ffffff"
       }
     },
     "tilesBg": {
@@ -136,9 +119,19 @@
       "dark": "#313131",
       "light": "#ffffff"
     },
-    "breadcrumBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
+    "breadcrumb": {
+      "text": {
+        "dark": "#313131",
+        "light": "#1394D1"
+      },
+      "bg": {
+        "dark": "#313131",
+        "light": "#1394D1"
+      },
+      "indicator": {
+        "dark": "#ffffff",
+        "light": "#818181"
+      }
     }
   },
   "widgetIndex": [
@@ -150,8 +143,8 @@
         "light": "#ffffff"
       },
       "text": {
-        "dark": "#191919",
-        "light": "#ffffff"
+        "dark": "#ffffff",
+        "light": "#191919"
       }
     },
     {
@@ -162,8 +155,8 @@
         "light": "#ffffff"
       },
       "text": {
-        "dark": "#191919",
-        "light": "#ffffff"
+        "dark": "#ffffff",
+        "light": "#191919"
       }
     },
     {
@@ -174,8 +167,8 @@
         "light": "#ffffff"
       },
       "text": {
-        "dark": "#191919",
-        "light": "#ffffff"
+        "dark": "#ffffff",
+        "light": "#191919"
       }
     },
     {
@@ -186,8 +179,8 @@
         "light": "#ffffff"
       },
       "text": {
-        "dark": "#191919",
-        "light": "#ffffff"
+        "dark": "#ffffff",
+        "light": "#191919"
       }
     },
     {
@@ -198,8 +191,8 @@
         "light": "#ffffff"
       },
       "text": {
-        "dark": "#191919",
-        "light": "#ffffff"
+        "dark": "#ffffff",
+        "light": "#191919"
       }
     }
   ],

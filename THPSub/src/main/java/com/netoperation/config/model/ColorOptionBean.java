@@ -7,8 +7,10 @@ public class ColorOptionBean {
      * light : #ffffff
      */
 
-    private String dark;
-    private String light;
+    private String dark = "";
+    private String light = "";
+    private String darkSelected;
+    private String lightSelected = "";
 
     public String getDark() {
         return dark;
@@ -24,5 +26,21 @@ public class ColorOptionBean {
 
     public void setLight(String light) {
         this.light = light;
+    }
+
+    public String getDarkSelected() {
+        return darkSelected;
+    }
+
+    public void setDarkSelected(String darkSelected) {
+        this.darkSelected = darkSelected;
+    }
+
+    public String getLightSelected() {
+        return lightSelected;
+    }
+
+    public void setLightSelected(String lightSelected) {
+        this.lightSelected = lightSelected;
     }
 }

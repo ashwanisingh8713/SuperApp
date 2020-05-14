@@ -18,6 +18,7 @@
         app:layoutType="Black_Dark">
 
         <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/exploreTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/banner_title_margin"

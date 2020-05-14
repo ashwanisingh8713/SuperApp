@@ -137,7 +137,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(mFrom.equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             if(mIsSubsection) {
                 //subSectionDataFromDB();
                 sectionDataFromDB();

@@ -6,7 +6,7 @@
     android:gravity="bottom"
     >
 
-    <com.ns.view.IconImgView
+    <com.ns.view.ListingIconView
         android:id="@+id/button_article_share"
         app:iconType="share"
         android:layout_width="@dimen/article_item_icon_width"
@@ -16,7 +16,7 @@
         android:padding="3dp" />
 
 
-    <com.ns.view.IconImgView
+    <com.ns.view.ListingIconView
         android:id="@+id/button_bookmark"
         app:iconType="unbookmark"
         android:layout_width="@dimen/article_item_icon_width"

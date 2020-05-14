@@ -352,14 +352,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             lockDrawer();
         }
 
-        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION)) {
+        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION_TOPBAR)) {
             showSectionToolbar();
         }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION)) {
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION_TOPBAR)) {
             showSubSectionToolbar(toolbarChangeRequired.getTitle());
         }
-
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.Other_Tabs)) {
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.OTHER_TOPBAR)) {
+            showSubSectionToolbar(toolbarChangeRequired.getTitle());
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_TOPBAR)) {
             showPremiumToolbar();
         }
     }

@@ -50,7 +50,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener
+public class TabPremiumListingFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener
         , OnEditionBtnClickListener, THP_AppEmptyPageListener, BaseFragmentTHP.EmptyViewClickListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
@@ -71,10 +71,10 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
 
     private int mTabIndex;
 
-    public static AppTabListingFragment getInstance(int tabIndex, String from) {
-        AppTabListingFragment fragment = new AppTabListingFragment();
+    public static TabPremiumListingFragment getInstance(int tabIndex, String pageSource) {
+        TabPremiumListingFragment fragment = new TabPremiumListingFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("pageSource", from);
+        bundle.putString("pageSource", pageSource);
         bundle.putInt("tabIndex", tabIndex);
         fragment.setArguments(bundle);
         return fragment;
@@ -141,7 +141,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
         super.onResume();
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.Other_Tabs));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM_TOPBAR));
 
         Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
         EventBus.getDefault().register(this);
@@ -330,7 +330,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     mPageStartTime = System.currentTimeMillis();
                 }
                 mBreifingType = NetConstants.BREIFING_ALL;
-                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : All Editions clicked", AppTabListingFragment.class.getSimpleName());
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : All Editions clicked", TabPremiumListingFragment.class.getSimpleName());
             } else if(value.equalsIgnoreCase("Morning Editions")) {
                 if (!mBreifingType.equalsIgnoreCase(NetConstants.BREIFING_MORNING)) {
                     //Capture Event
@@ -339,7 +339,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     mPageStartTime = System.currentTimeMillis();
                 }
                 mBreifingType = NetConstants.BREIFING_MORNING;
-                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Morning Editions clicked", AppTabListingFragment.class.getSimpleName());
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Morning Editions clicked", TabPremiumListingFragment.class.getSimpleName());
             } else if(value.equalsIgnoreCase("Noon Editions")) {
                 if (!mBreifingType.equalsIgnoreCase(NetConstants.BREIFING_NOON)) {
                     //Capture Event
@@ -348,7 +348,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     mPageStartTime = System.currentTimeMillis();
                 }
                 mBreifingType = NetConstants.BREIFING_NOON;
-                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Noon Editions clicked", AppTabListingFragment.class.getSimpleName());
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Noon Editions clicked", TabPremiumListingFragment.class.getSimpleName());
             } else if(value.equalsIgnoreCase("Evening Editions")) {
                 if (!mBreifingType.equalsIgnoreCase(NetConstants.BREIFING_EVENING)) {
                     //Capture Event
@@ -357,7 +357,7 @@ public class AppTabListingFragment extends BaseFragmentTHP implements RecyclerVi
                     mPageStartTime = System.currentTimeMillis();
                 }
                 mBreifingType = NetConstants.BREIFING_EVENING;
-                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Evening Editions clicked", AppTabListingFragment.class.getSimpleName());
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getContext(), "Action", "Briefing : Evening Editions clicked", TabPremiumListingFragment.class.getSimpleName());
             }
 
             loadData(false);

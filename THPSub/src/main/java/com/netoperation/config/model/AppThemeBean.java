@@ -15,9 +15,9 @@ public class AppThemeBean {
     private ColorOptionBean tilesBg;
     private ColorOptionBean screenBg;
     private ColorOptionBean topBarBg;
-    private ColorOptionBean bottomBarBg;
+    private Breadcrumb bottomBar;
     private WidgetBgBean widgetBg;
-    private ColorOptionBean breadcrumBg;
+    private Breadcrumb breadcrumb;
 
     public TextColorsBean getTextColors() {
         return textColors;
@@ -51,12 +51,12 @@ public class AppThemeBean {
         this.topBarBg = topBarBg;
     }
 
-    public ColorOptionBean getBottomBarBg() {
-        return bottomBarBg;
+    public Breadcrumb getBottomBar() {
+        return bottomBar;
     }
 
-    public void setBottomBarBg(ColorOptionBean bottomBarBg) {
-        this.bottomBarBg = bottomBarBg;
+    public void setBottomBar(Breadcrumb bottomBarBg) {
+        this.bottomBar = bottomBarBg;
     }
 
     public WidgetBgBean getWidgetBg() {
@@ -67,12 +67,12 @@ public class AppThemeBean {
         this.widgetBg = widgetBg;
     }
 
-    public ColorOptionBean getBreadcrumBg() {
-        return breadcrumBg;
+    public Breadcrumb getBreadcrumb() {
+        return breadcrumb;
     }
 
-    public void setBreadcrumBg(ColorOptionBean breadcrumBg) {
-        this.breadcrumBg = breadcrumBg;
+    public void setBreadcrumb(Breadcrumb breadcrumb) {
+        this.breadcrumb = breadcrumb;
     }
 
     public static class TextColorsBean {

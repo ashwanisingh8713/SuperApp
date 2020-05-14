@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
-import com.ns.view.IconImgView;
+import com.ns.view.TopbarIconView;
 
 /**
  * Normal Row Item View Holder
@@ -22,8 +22,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     public TextView mArticleTimeTextView;
     public TextView mArticleSectionName;
     public LinearLayout mArticlesLayout;
-    public IconImgView mBookmarkButton;
-    public IconImgView mShareArticleButton;
+    public ImageView mBookmarkButton;
+    public ImageView mShareArticleButton;
     public ImageButton mMultimediaButton;
     public FrameLayout mImageParentLayout;
 

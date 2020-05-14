@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.model.ImageGallaryUrl;
 import com.ns.thpremium.R;
-import com.ns.utils.GlideUtil;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 
@@ -66,7 +66,7 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
 
         final String imageUrl = item.getImageUrl();
         if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-            GlideUtil.loadImage(mContext, viewHolder.imgView, imageUrl);
+            PicassoUtil.loadImage(mContext, viewHolder.imgView, imageUrl);
         } else {
 //            viewHolder.imgView.setImageResource(R.mipmap.ph_topnews_th);
         }

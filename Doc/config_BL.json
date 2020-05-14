@@ -1,0 +1,1004 @@
+{
+    "lastServerUpdateTime": "UTC-TIME",
+    "vokkleId": "1234",
+    "refreshIntervalInMins": "value",
+    "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
+    "staticItem": [
+      {
+        "title": "Terms & Condition",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
+      },
+      {
+        "title": "Privacy Policy",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
+      },
+      {
+        "title": "Help",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
+      },
+      {
+        "title": "AboutUs",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
+      }
+    ],
+  "tabs": [
+    {
+      "title": "Home",
+      "iconUrl": {
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "GROUP_DEFAULT_SECTIONS"
+    },
+    {
+      "title": "Portfolio Section ",
+      "iconUrl": {
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "ADD_ON_SECTION",
+      "section": {
+        "parentId": 0,
+        "secId": 5,
+        "secName": "Portfolio",
+        "link": "https://www.thehindubusinessline.com/portfolio/",
+        "secColorRgb": "255,255,255",
+        "type": "GN",
+        "priority": 14,
+        "overridePriority": 0,
+        "explorePriority": 1,
+        "overrideExplore": 0,
+        "image_v2": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+        "image": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+        "show_on_burger": false,
+        "show_on_explore": false,
+        "custom": false,
+        "webLink": "",
+        "customScreen": 0,
+        "customScreenPri": 0,
+        "subSections": [
+          {
+            "parentId": 5,
+            "secId": 86,
+            "secName": "Big Story",
+            "link": "https://www.thehindubusinessline.com/portfolio/big-story/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 1,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/big-story/xzoeww/article31488024.ece/ALTERNATES/FREE_660/PO04Bouncingfinpiggy",
+            "image": "https://www.thehindubusinessline.com/portfolio/big-story/xzoeww/article31488024.ece/ALTERNATES/FREE_660/PO04Bouncingfinpiggy",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 41,
+            "secName": "Personal Finance",
+            "link": "https://www.thehindubusinessline.com/portfolio/personal-finance/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 2,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+            "image": "https://www.thehindubusinessline.com/portfolio/personal-finance/6kz8go/article31498860.ece/ALTERNATES/FREE_660/BL05MEDICLAIM",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 57,
+            "secName": "India Economy",
+            "link": "https://www.thehindubusinessline.com/portfolio/india-economy/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 3,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/economy/agri-business/leqzst/article31166181.ece/ALTERNATES/FREE_660/BL26COMMUSTARDHARVESTING",
+            "image": "https://www.thehindubusinessline.com/economy/agri-business/leqzst/article31166181.ece/ALTERNATES/FREE_660/BL26COMMUSTARDHARVESTING",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 43,
+            "secName": "Commodity Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/commodity-analysis/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 5,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/news/62mqha/article31415740.ece/ALTERNATES/FREE_660/BL24STATESPOKHRIYAL",
+            "image": "https://www.thehindubusinessline.com/news/62mqha/article31415740.ece/ALTERNATES/FREE_660/BL24STATESPOKHRIYAL",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 38,
+            "secName": "Stock Fundamentals",
+            "link": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 7,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/i9tfhk/article31494259.ece/ALTERNATES/FREE_660/0305IndusIndcolcol",
+            "image": "https://www.thehindubusinessline.com/portfolio/stock-fundamental-analysis-india/i9tfhk/article31494259.ece/ALTERNATES/FREE_660/0305IndusIndcolcol",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 39,
+            "secName": "Mutual Funds",
+            "link": "https://www.thehindubusinessline.com/portfolio/mutual-funds/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 8,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/mutual-funds/jaf2v9/article31494170.ece/ALTERNATES/FREE_660/PO04Goldweightscale",
+            "image": "https://www.thehindubusinessline.com/portfolio/mutual-funds/jaf2v9/article31494170.ece/ALTERNATES/FREE_660/PO04Goldweightscale",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 87,
+            "secName": "Day Trading Guide",
+            "link": "https://www.thehindubusinessline.com/portfolio/day-trading-guide/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 9,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "",
+            "image": "",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 40,
+            "secName": "Technical Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/technical-analysis/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 10,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/markets/stock-markets/rh844z/article31046825.ece/ALTERNATES/FREE_660/NIFTY",
+            "image": "https://www.thehindubusinessline.com/markets/stock-markets/rh844z/article31046825.ece/ALTERNATES/FREE_660/NIFTY",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 58,
+            "secName": "People",
+            "link": "https://www.thehindubusinessline.com/portfolio/people/",
+            "secColorRgb": "255,255,255",
+            "type": "GN",
+            "priority": 11,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/portfolio/people/rabqfn/article25020623.ece/ALTERNATES/FREE_660/PO24manish",
+            "image": "https://www.thehindubusinessline.com/portfolio/people/rabqfn/article25020623.ece/ALTERNATES/FREE_660/PO24manish",
+            "show_on_burger": true,
+            "show_on_explore": false,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 89,
+            "secName": "News Analysis",
+            "link": "https://www.thehindubusinessline.com/portfolio/news-analysis/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 12,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/money-and-banking/wf5x6e/article28589841.ece/ALTERNATES/FREE_660/ICICI-Lombard-General-Insurance",
+            "image": "https://www.thehindubusinessline.com/money-and-banking/wf5x6e/article28589841.ece/ALTERNATES/FREE_660/ICICI-Lombard-General-Insurance",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 5,
+            "secId": 90,
+            "secName": "Research Reports",
+            "link": "https://www.thehindubusinessline.com/portfolio/research-reports/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 13,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "",
+            "image": "",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          }
+        ],
+        "staticPageUrl": {
+          "url": "",
+          "isEnabled": false,
+          "position": "0",
+          "sectionId": 0
+        }
+      }
+    },
+    {
+      "title": "BLink ",
+      "iconUrl": {
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "ADD_ON_SECTION",
+      "section": {
+        "parentId": 0,
+        "secId": 37,
+        "secName": "BLink",
+        "link": "https://www.thehindubusinessline.com/blink/",
+        "secColorRgb": "255,255,255",
+        "type": "GN",
+        "priority": 13,
+        "overridePriority": 0,
+        "explorePriority": 1,
+        "overrideExplore": 0,
+        "image_v2": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+        "image": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+        "show_on_burger": false,
+        "show_on_explore": false,
+        "custom": false,
+        "webLink": "",
+        "customScreen": 0,
+        "customScreenPri": 0,
+        "subSections": [
+          {
+            "parentId": 37,
+            "secId": 74,
+            "secName": "Know",
+            "link": "https://www.thehindubusinessline.com/blink/know/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 1,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/know/a376d0/article31533416.ece/ALTERNATES/FREE_660/BLinkIMG-20200416-WA0022P2",
+            "image": "https://www.thehindubusinessline.com/blink/know/a376d0/article31533416.ece/ALTERNATES/FREE_660/BLinkIMG-20200416-WA0022P2",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 75,
+            "secName": "Meet",
+            "link": "https://www.thehindubusinessline.com/blink/meet/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 2,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/meet/xp3qk/article31479347.ece/ALTERNATES/FREE_660/METROTRAIN",
+            "image": "https://www.thehindubusinessline.com/blink/meet/xp3qk/article31479347.ece/ALTERNATES/FREE_660/METROTRAIN",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 76,
+            "secName": "Work",
+            "link": "https://www.thehindubusinessline.com/blink/work/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 3,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/work/5spupu/article31051085.ece/ALTERNATES/FREE_660/BLinkLEAD",
+            "image": "https://www.thehindubusinessline.com/blink/work/5spupu/article31051085.ece/ALTERNATES/FREE_660/BLinkLEAD",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 77,
+            "secName": "Talk",
+            "link": "https://www.thehindubusinessline.com/blink/talk/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 4,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/talk/spc6en/article31534219.ece/ALTERNATES/FREE_660/BLinkiStock-690008188",
+            "image": "https://www.thehindubusinessline.com/blink/talk/spc6en/article31534219.ece/ALTERNATES/FREE_660/BLinkiStock-690008188",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 78,
+            "secName": "Cover",
+            "link": "https://www.thehindubusinessline.com/blink/cover/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 5,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/cover/nnau58/article31533654.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 79,
+            "secName": "Watch",
+            "link": "https://www.thehindubusinessline.com/blink/watch/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 6,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/watch/lzp13o/article31480284.ece/ALTERNATES/FREE_660/BLINKBALCONY2",
+            "image": "https://www.thehindubusinessline.com/blink/watch/lzp13o/article31480284.ece/ALTERNATES/FREE_660/BLINKBALCONY2",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 80,
+            "secName": "Read",
+            "link": "https://www.thehindubusinessline.com/blink/read/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 7,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/read/544v9w/article31534638.ece/ALTERNATES/FREE_660/BLinkIan-Jack",
+            "image": "https://www.thehindubusinessline.com/blink/read/544v9w/article31534638.ece/ALTERNATES/FREE_660/BLinkIan-Jack",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 81,
+            "secName": "Takeaway",
+            "link": "https://www.thehindubusinessline.com/blink/takeaway/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 8,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/takeaway/27n7wc/article31533916.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/takeaway/27n7wc/article31533916.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 82,
+            "secName": "Play",
+            "link": "https://www.thehindubusinessline.com/blink/play/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 9,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/play/sdlpqw/article31110259.ece/ALTERNATES/FREE_660/BLINKLEAD",
+            "image": "https://www.thehindubusinessline.com/blink/play/sdlpqw/article31110259.ece/ALTERNATES/FREE_660/BLINKLEAD",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 83,
+            "secName": "Explore",
+            "link": "https://www.thehindubusinessline.com/blink/explore/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 10,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/explore/5ymtjx/article31533006.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "image": "https://www.thehindubusinessline.com/blink/explore/5ymtjx/article31533006.ece/ALTERNATES/FREE_660/LEAD-IMAGE",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 84,
+            "secName": "Hang",
+            "link": "https://www.thehindubusinessline.com/blink/hang/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 11,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/hang/jnsd6/article31534744.ece/ALTERNATES/FREE_660/BLINKMAHARANAPRATAP",
+            "image": "https://www.thehindubusinessline.com/blink/hang/jnsd6/article31534744.ece/ALTERNATES/FREE_660/BLINKMAHARANAPRATAP",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          },
+          {
+            "parentId": 37,
+            "secId": 85,
+            "secName": "Shoot",
+            "link": "https://www.thehindubusinessline.com/blink/shoot/",
+            "secColorRgb": "#737373",
+            "type": "GN",
+            "priority": 12,
+            "overridePriority": 0,
+            "explorePriority": 0,
+            "overrideExplore": 0,
+            "image_v2": "https://www.thehindubusinessline.com/blink/shoot/7wdi0f/article31533858.ece/ALTERNATES/FREE_660/BLinkDSC01883",
+            "image": "https://www.thehindubusinessline.com/blink/shoot/7wdi0f/article31533858.ece/ALTERNATES/FREE_660/BLinkDSC01883",
+            "show_on_burger": true,
+            "show_on_explore": true,
+            "custom": false,
+            "webLink": "",
+            "customScreen": 0,
+            "customScreenPri": 0,
+            "staticPageUrl": {
+              "url": "",
+              "isEnabled": false,
+              "position": "0",
+              "sectionId": 0
+            }
+          }
+        ],
+        "staticPageUrl": {
+          "url": "",
+          "isEnabled": false,
+          "position": "0",
+          "sectionId": 0
+        }
+      }
+    },
+    {
+      "title": "Indices",
+      "iconUrl": {
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.pn",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png"
+      },
+      "group": "GROUP_DEFAULT_SECTIONS",
+      "pageSource": "SENSEX"
+    }
+  ],
+    "appTheme": {
+      "textColors": {
+        "dark": {
+          "XL": "#000000",
+          "L": "#000000",
+          "M": "#000000",
+          "S": "#818181",
+          "XS": "#818181",
+          "detailpageText": "#000000"
+        },
+        "light": {
+          "XL": "#ffffff",
+          "L": "#ffffff",
+          "M": "#ffffff",
+          "S": "#818181",
+          "XS": "#818181",
+          "detailpageText": "#ffffff"
+        }
+      },
+      "tilesBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "screenBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "topBarBg": {
+        "dark": "#313131",
+        "light": "#1394D1"
+      },
+      "bottomBar": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ededed",
+          "light": "#818181",
+          "lightSelected": "#ff0000"
+        },
+        "bg": {
+          "dark": "#313131",
+          "light": "#1394D1"
+        },
+        "indicator": {
+          "dark": "#ffffff",
+          "light": "#818181"
+        }
+      },
+      "breadcrumb": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ededed",
+          "light": "#818181",
+          "lightSelected": "#424242"
+        },
+        "bg": {
+          "dark": "#313131",
+          "light": "#1394D1"
+        },
+        "indicator": {
+          "dark": "#ffffff",
+          "light": "#818181"
+        }
+      }
+    },
+    "widgetIndex": [
+      {
+        "secId": "142",
+        "index": "5",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "88",
+        "index": "8",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "5",
+        "index": "10",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "138",
+        "index": "12",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "69",
+        "index": "15",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      }
+    ],
+    "Ads": {
+      "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
+      "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
+      "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
+      "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
+      "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
+      "listingPageAds": [
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "4"
+        },
+        {
+          "type": "taboola",
+          "index": "6"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Footer",
+          "index": "8"
+        },
+        {
+          "type": "taboola",
+          "index": "10"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Bottom",
+          "index": "12"
+        },
+        {
+          "type": "taboola",
+          "index": "13"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "16"
+        },
+        {
+          "type": "taboola",
+          "index": "18"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "20"
+        }
+      ]
+    },
+    "taboola": {
+      "id": "thehindu-hinduappandroid",
+      "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
+      "publisher": "thehindu-hinduappandroid",
+      "pageType": "article",
+      "mode": "thumbnails-a",
+      "placementLight": "Below Article Thumbnails",
+      "placementDark": "Below Article Thumbnails Dark",
+      "taboolaNativeAd": {
+        "placement_home": "Below Home Stream",
+        "placement_home_source_type": "home",
+        "placement_section": "Below Section Stream",
+        "placement_section_source_type": "section",
+        "placement_detail": "Below Article Stream"
+      }
+    },
+    "subSectionsIndex": "3",
+    "searchOption": {
+      "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+      "urlText": "https://www.thehindu.com/app/search.json?term=",
+      "types": [
+        "article",
+        "sensex"
+      ]
+    },
+    "totalIcons": "88",
+    "otherIconsDownloadUrls": {
+      "dark": {
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
+        },
+        "placeHolder": {
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ads.png"
+        }
+      },
+      "light": {
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png"
+        },
+        "placeHolder": {
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ads.png"
+        }
+      }
+    }
+  }

@@ -344,8 +344,18 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_HORIZONTAL_LIST, rowItemId);
             ExploreAdapter exploreAdapter = new ExploreAdapter(mSubSections, mSectionId);
             item.setExploreAdapter(exploreAdapter);
-            mRecyclerAdapter.insertItem(item, 2);
+            int subSectionIndex = 2;
+            TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+            if(tableConfiguration != null) {
+                String subSectionsIndex = tableConfiguration.getSubSectionsIndex();
+                try {
+                    subSectionIndex = Integer.parseInt(subSectionsIndex);
+                } catch (Exception e) {
 
+                }
+            }
+            item.setProposedIndex(subSectionIndex);
+            insertAdsItemView(runnableItem(item));
         }
     }
 
@@ -651,6 +661,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onDFPAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
+        item.setProposedIndex(adData.getIndex());
         insertAdsItemView(runnableAdItem(item));
     }
 
@@ -663,6 +674,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onTaboolaAdLoadSuccess(AdData adData) {
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
+        item.setProposedIndex(adData.getIndex());
         insertAdsItemView(runnableAdItem(item));
     }
 
@@ -684,11 +696,32 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         return new Runnable() {
             @Override
             public void run() {
+                if(mRecyclerAdapter == null) {
+                    return;
+                }
                 int index = mRecyclerAdapter.indexOf(item);
                 if (index == -1) {
-                    int updateIndex = mRecyclerAdapter.insertItem(item, item.getAdData().getIndex());
+                    int updateIndex = mRecyclerAdapter.insertItem(item, item.getProposedIndex());
                     mRecyclerAdapter.notifyItemChanged(updateIndex);
-                    taboolaAds.loadNextRecommendationsBatch();
+                    if(taboolaAds != null) {
+                        taboolaAds.loadNextRecommendationsBatch();
+                    }
+                }
+            }
+        };
+    }
+
+    private Runnable runnableItem (SectionAdapterItem item) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                if(mRecyclerAdapter == null) {
+                    return;
+                }
+                int index = mRecyclerAdapter.indexOf(item);
+                if (index == -1) {
+                    int updateIndex = mRecyclerAdapter.insertItem(item, item.getProposedIndex());
+                    mRecyclerAdapter.notifyItemChanged(updateIndex);
                 }
             }
         };

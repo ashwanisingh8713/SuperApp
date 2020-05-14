@@ -16,19 +16,23 @@ import com.ns.view.THP_AutoResizeWebview;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class WebFragment extends BaseFragmentTHP {
+public class TabWebFragment extends BaseFragmentTHP {
 
     private THP_AutoResizeWebview mWebView;
     private ProgressBar mProgressBar;
 
     private String mUrl;
     private int mTabIndex;
+    private String mParentSectionName;
+    private String mPageSource;
 
-    public static WebFragment getInstance(int tabIndex, TabsBean tabsBean) {
+    public static TabWebFragment getInstance(int tabIndex, String pageSource, String url, String parentSectionName) {
         Bundle bundle = new Bundle();
-        bundle.putString("url", tabsBean.getValue());
+        bundle.putString("url", url);
+        bundle.putString("pageSource", pageSource);
         bundle.putInt("tabIndex", tabIndex);
-        WebFragment fragment = new WebFragment();
+        bundle.putString("parentSectionName", parentSectionName);
+        TabWebFragment fragment = new TabWebFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -44,6 +48,8 @@ public class WebFragment extends BaseFragmentTHP {
         if(getArguments() != null) {
             mUrl = getArguments().getString("url");
             mTabIndex = getArguments().getInt("tabIndex");
+            mParentSectionName = getArguments().getString("parentSectionName");
+            mPageSource = getArguments().getString("pageSource");
         }
     }
 
@@ -59,7 +65,7 @@ public class WebFragment extends BaseFragmentTHP {
         super.onResume();
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired("WebFragment", false, mTabIndex, null, ToolbarChangeRequired.Other_Tabs));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);

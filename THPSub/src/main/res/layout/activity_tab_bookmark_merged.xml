@@ -6,7 +6,7 @@
     android:orientation="vertical"
     app:layoutType="Black_Dark">
 
-    <com.ns.view.DetailToolbar
+    <com.ns.view.Topbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
@@ -23,9 +23,10 @@
     <com.ns.view.CustomTabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/custom_tab_height"
+        android:layout_height="@dimen/topbarHeight"
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
+        app:tabType="bookmarkTop"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
 
 

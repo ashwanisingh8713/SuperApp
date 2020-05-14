@@ -87,7 +87,7 @@
             />
 
 
-        <com.ns.view.IconImgView
+        <com.ns.view.TopbarIconView
             app:iconType="bookmarked"
             android:id="@+id/bookmark_Img"
             android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
             android:layout_marginRight="10dp"
             />
 
-        <com.ns.view.IconImgView
+        <com.ns.view.TopbarIconView
             app:iconType="share"
             android:id="@+id/share_Img"
             android:layout_width="wrap_content"

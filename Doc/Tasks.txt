@@ -1,0 +1,20 @@
+Global Search
+Bookmark Search
+Left Slider Divider
+Indices Topbar back click
+Add_On_Section topbar for overflow menu option
+Reduce text size of "No Connection"
+Indices "No connection" or "Failure" msg
+BL Subscription
+Icons from server
+How to change icon color
+Top and bottom bar color
+
+
+
+
+/////////////////
+Top and bottom bar color
+Icons from server
+Reduce text size of "No Connection"
+Updated config.json

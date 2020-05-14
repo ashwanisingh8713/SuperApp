@@ -14,7 +14,7 @@
         android:orientation="vertical"
         app:layoutType="Black_Dark">
 
-        <com.ns.view.DetailToolbar
+        <com.ns.view.Topbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
@@ -43,6 +43,7 @@
             android:text="No connection"
             android:gravity="center_horizontal"
             android:visibility="gone"
+            android:textSize="@dimen/textSize_10sp"
             />
 
 

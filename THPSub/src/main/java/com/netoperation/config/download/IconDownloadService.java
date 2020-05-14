@@ -29,10 +29,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -43,6 +47,7 @@ public class IconDownloadService extends Service {
     private NotificationManager notificationManager;
     private int totalFileSize;
 
+    protected final CompositeDisposable mDisposable = new CompositeDisposable();
 
     private IconRetroInterface retrofitInterface;
 
@@ -98,7 +103,7 @@ public class IconDownloadService extends Service {
         }
         else if(state.equals(STATE_START)) {
             mStatus = STATUS_RUNNING;
-            THPDB.getInstance(this).daoConfiguration().getConfigurationSingle()
+            mDisposable.add(THPDB.getInstance(this).daoConfiguration().getConfigurationSingle()
                     .subscribeOn(Schedulers.io())
                     .map(tableConfiguration -> {
 
@@ -182,6 +187,7 @@ public class IconDownloadService extends Service {
                             downloadRequest(listing.getLike(), folderListingF);
                             downloadRequest(listing.getUnbookmark(), folderListingF);
                             downloadRequest(listing.getBookmark(), folderListingF);
+                            downloadRequest(listing.getShare(), folderListingF);
 
                             downloadRequest(topbar.getBookmark(), folderTopbarF);
                             downloadRequest(topbar.getUnbookmark(), folderTopbarF);
@@ -214,7 +220,9 @@ public class IconDownloadService extends Service {
                     },
                     throwable -> {
                         Log.i("", "");
-                    });
+                        Download download = new Download();
+                        sendFailedNotification(download);
+                    }));
         }
 
         stopSelf();
@@ -225,16 +233,14 @@ public class IconDownloadService extends Service {
 
     private void downloadRequest(String url, File destinationFolder) {
         sendRequestCountNotification();
-        /*if(!URLUtil.isValidUrl(url)) {
+        if(!URLUtil.isValidUrl(url)) {
             Download download = new Download();
             download.setUrl("Not valid url :: "+url);
             download.setLocalFilePath(destinationFolder.getPath());
             sendFailedNotification(download);
             return;
-        }*/
+        }
         Call<ResponseBody> request = retrofitInterface.downloadFile(url);
-
-
             request.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -261,46 +267,89 @@ public class IconDownloadService extends Service {
 
     }
 
-    private void downloadFile(ResponseBody body, File destinationFolder, String url) throws IOException {
-        String fileName = FileUtils.getFileNameFromUrl(url);
-        int count;
-        byte data[] = new byte[1024 * 4];
-        long fileSize = body.contentLength();
-        InputStream bis = new BufferedInputStream(body.byteStream(), 1024 * 8);
-        File outputFile = new File(destinationFolder, fileName);
-        OutputStream output = new FileOutputStream(outputFile);
-        long total = 0;
-        long startTime = System.currentTimeMillis();
-        int timeCount = 1;
-        Download download = new Download();
-        while ((count = bis.read(data)) != -1) {
+    private static class DownloadContentPackage {
+        ResponseBody body; File destinationFolder; String url;
 
-            total += count;
-            totalFileSize = (int) (fileSize / (Math.pow(1024, 2)));
-            double current = Math.round(total / (Math.pow(1024, 2)));
-
-            int progress = (int) ((total * 100) / fileSize);
-
-            long currentTime = System.currentTimeMillis() - startTime;
-
-
-            download.setTotalFileSize(totalFileSize);
-            download.setUrl(url);
-
-            if (currentTime > 1000 * timeCount) {
-
-                download.setCurrentFileSize((int) current);
-                download.setStatus(progress);
-                sendProgressNotification(download);
-                timeCount++;
-            }
-
-            output.write(data, 0, count);
+        public DownloadContentPackage(ResponseBody body, File destinationFolder, String url) {
+            this.body = body;
+            this.destinationFolder = destinationFolder;
+            this.url = url;
         }
-        onDownloadComplete(download);
-        output.flush();
-        output.close();
-        bis.close();
+
+        public ResponseBody getBody() {
+            return body;
+        }
+
+        public File getDestinationFolder() {
+            return destinationFolder;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+//        mDisposable.clear();
+//        mDisposable.dispose();
+        super.onDestroy();
+    }
+
+    private void downloadFile(ResponseBody bodyParam, File destinationFolderParam, String urlParam) {
+        mDisposable.add(Observable.just(new DownloadContentPackage(bodyParam, destinationFolderParam, urlParam))
+                .subscribeOn(Schedulers.io())
+                .map(downloadContentPackage -> {
+                    ResponseBody body = downloadContentPackage.body;
+                    File destinationFolder = downloadContentPackage.destinationFolder;
+                    String url = downloadContentPackage.url;
+                    String fileName = FileUtils.getFileNameFromUrl(url);
+                    int count;
+                    byte data[] = new byte[1024 * 4];
+                    long fileSize = body.contentLength();
+                    InputStream bis = new BufferedInputStream(body.byteStream(), 1024 * 8);
+                    File outputFile = new File(destinationFolder, fileName);
+                    OutputStream output = new FileOutputStream(outputFile);
+                    long total = 0;
+                    long startTime = System.currentTimeMillis();
+                    int timeCount = 1;
+                    Download download = new Download();
+                    while ((count = bis.read(data)) != -1) {
+                        total += count;
+                        totalFileSize = (int) (fileSize / (Math.pow(1024, 2)));
+                        double current = Math.round(total / (Math.pow(1024, 2)));
+
+                        int progress = (int) ((total * 100) / fileSize);
+
+                        long currentTime = System.currentTimeMillis() - startTime;
+                        download.setTotalFileSize(totalFileSize);
+                        download.setUrl(url);
+                        if (currentTime > 1000 * timeCount) {
+                            download.setCurrentFileSize((int) current);
+                            download.setStatus(progress);
+                            sendProgressNotification(download);
+                            timeCount++;
+                        }
+                        output.write(data, 0, count);
+                    }
+                    output.flush();
+                    output.close();
+                    bis.close();
+                    return download;
+                })
+                .subscribe(download -> {
+                    onDownloadComplete(download);
+                }, throwable -> {
+                    Download download = new Download();
+                    if (throwable instanceof HttpException) {
+                        HttpException httpException = (HttpException) throwable;
+                        download.setUrl(httpException.response().raw().request().url().toString());
+                    }
+                    else {
+                        download.setUrl(urlParam);
+                    }
+                    sendFailedNotification(download);
+                }));
 
     }
 

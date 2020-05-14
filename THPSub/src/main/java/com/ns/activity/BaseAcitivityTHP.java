@@ -26,7 +26,6 @@ import com.netoperation.model.AdData;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
-import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -36,7 +35,7 @@ import com.ns.utils.CommonUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.view.DetailToolbar;
+import com.ns.view.Topbar;
 import com.ns.view.text.ArticleTitleTextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -53,12 +52,11 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public abstract int layoutRes();
 
     protected FragmentTools mFragmentTools;
-    private DetailToolbar mToolbar;
+    private Topbar mToolbar;
 
-    public DetailToolbar getDetailToolbar() {
+    public Topbar getDetailToolbar() {
         return  mToolbar;
     }
-
 
     protected boolean mIsDayTheme = true;
     protected boolean hasSubscriptionPlan;
@@ -91,9 +89,9 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
             // Registering Back button click listener
-            if(mToolbar instanceof DetailToolbar) {
-                DetailToolbar detailToolbar = (DetailToolbar) mToolbar;
-                detailToolbar.setToolbarMenuListener(this);
+            if(mToolbar instanceof Topbar) {
+                Topbar topbar = (Topbar) mToolbar;
+                topbar.setToolbarMenuListener(this);
             }
 
         }
@@ -101,7 +99,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         CleverTapAPI clevertap = CleverTapAPI.getDefaultInstance(this);
         clevertap.setInAppNotificationButtonListener(this);
 
-        loadConfiguration();
+        loadConfigurationInstance();
     }
 
     @Override
@@ -350,20 +348,25 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     private static TableConfiguration sTableConfiguration;
 
-    private static void loadConfiguration() {
+    private static void loadConfigurationInstance() {
         if(sTableConfiguration == null) {
+            refreshConfigurationInstance();
+        }
+    }
+
+    public static void refreshConfigurationInstance() {
             DefaultTHApiManager.appConfiguration(SuperApp.getAppContext())
                     .subscribe(tableConfiguration -> {
                         sTableConfiguration = tableConfiguration;
                     }, throwable -> {
 
                     });
-        }
+
     }
 
     public static TableConfiguration getTableConfiguration() {
         if(sTableConfiguration == null) {
-            loadConfiguration();
+            loadConfigurationInstance();
         }
         return sTableConfiguration;
     }

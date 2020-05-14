@@ -8,24 +8,25 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class ToolbarChangeRequired {
 
-    private String from;
+    private String mPageSource;
     private boolean isEnableLeftSlider;
     private int tabIndex;
     private String typeOfToolbar;
     private String title;
 
-    public static final String SECTION = "section";
-    public static final String SUB_SECTION = "subSection";
-    public static final String Other_Tabs = "otherTabs";
+    public static final String SECTION_TOPBAR = "sectionTopbar";
+    public static final String SUB_SECTION_TOPBAR = "subSectionTopbar";
+    public static final String PREMIUM_TOPBAR = "premiumTopbar";
+    public static final String OTHER_TOPBAR = "otherTopbar";
 
     @Retention(SOURCE)
     @StringDef({
-            SECTION, SUB_SECTION, Other_Tabs
+            SECTION_TOPBAR, SUB_SECTION_TOPBAR, PREMIUM_TOPBAR, OTHER_TOPBAR
     })
     public @interface ChangeType {}
 
-    public ToolbarChangeRequired(String from, boolean isEnableLeftSlider, int tabIndex, String title, @ChangeType String typeOfToolbar) {
-        this.from = from;
+    public ToolbarChangeRequired(String pageSource, boolean isEnableLeftSlider, int tabIndex, String title, @ChangeType String typeOfToolbar) {
+        this.mPageSource = pageSource;
         this.isEnableLeftSlider = isEnableLeftSlider;
         this.tabIndex = tabIndex;
         this.typeOfToolbar = typeOfToolbar;
@@ -40,8 +41,8 @@ public class ToolbarChangeRequired {
         return title;
     }
 
-    public String getFrom() {
-        return from;
+    public String getPageSource() {
+        return mPageSource;
     }
 
     public boolean isEnableLeftSlider() {

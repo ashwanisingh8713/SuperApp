@@ -8,7 +8,6 @@ import java.util.List;
 @Dao
 public interface DaoPersonaliseDefault {
 
-
     @Insert
     void insertDefaultPersonalise(TablePersonaliseDefault tableBookmark);
 
