@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.PopupMenu;
@@ -452,6 +453,10 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         this.menuIcon.setImageResource(this.menuIconRes);
     }
 
+    public View getMenuIconView() {
+        return menuIcon;
+    }
+
     /**
      * Set search icon drawable
      *
@@ -773,7 +778,11 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         } else if (id == R.id.mt_clear) {
             searchEdit.setText("");
         } else if (id == R.id.mt_menu) {
-            popupMenu.show();
+            if (popupWindow != null) {
+                popupWindow.showAsDropDown(menuIcon);
+            } else {
+                popupMenu.show();
+            }
         } else if (id == R.id.mt_nav) {
             int button = searchOpened ? BUTTON_BACK : BUTTON_NAVIGATION;
             if (searchOpened) {
@@ -783,6 +792,11 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
                 onSearchActionListener.onButtonClicked(button);
             }
         }
+    }
+
+    private PopupWindow popupWindow;
+    public void setPopUpWindow(PopupWindow popUpWindow) {
+        this.popupWindow = popUpWindow;
     }
 
     @Override
