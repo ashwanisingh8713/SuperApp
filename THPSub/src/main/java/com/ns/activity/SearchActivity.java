@@ -8,13 +8,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +26,9 @@ import com.main.SuperApp;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.netoperation.asynctasks.GetCompanyNameTask;
 import com.netoperation.asynctasks.SearchAdapter;
+import com.netoperation.config.model.Breadcrumb;
 import com.netoperation.db.THPDB;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.DefaultTHApiManager;
@@ -41,6 +46,7 @@ import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.RecyclerViewPullToRefresh;
+import com.ns.view.TopbarIconView;
 import com.ns.view.layout.NSLinearLayout;
 
 import java.util.ArrayList;
@@ -54,9 +60,12 @@ import io.realm.Case;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 
-public class SearchActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
+public class SearchActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
-    private MaterialSearchBar searchBar;
+    private TopbarIconView mBackImageView;
+    private TopbarIconView action_crossBtn;
+    private TopbarIconView action_overflow;
+    private EditText searchEditText;
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private LinearLayout emptyLayout;
 
@@ -72,45 +81,49 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        searchBar = findViewById(R.id.searchBar);
+        mBackImageView = findViewById(R.id.action_back);
+        action_crossBtn = findViewById(R.id.action_crossBtn);
+        action_overflow = findViewById(R.id.action_overflow);
+        searchEditText = findViewById(R.id.searchEditText);
         mPullToRefreshLayout = findViewById(R.id.recyclerView);
         emptyLayout = findViewById(R.id.emptyLayout);
         mPullToRefreshLayout.hideProgressBar();
 
-        searchBar.openSearch();
-        searchBar.setOnSearchActionListener(this);
-
-        searchBar.setHint("Search for " + mSearchType);
-
         boolean isDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
-        if(isDayTheme) {
-            searchBar.setTextColor(getResources().getColor(R.color.Black));
-            searchBar.setTextHintColor(getResources().getColor(R.color.search_hint));
-            searchBar.setSearchBarColor(Color.WHITE);
-            searchBar.setArrowIcon(R.drawable.arrow_back);
-            searchBar.setClearIcon(R.drawable.ic_close_search);
-            searchBar.setMenuIcon(R.drawable.ic_more);
+
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+            Breadcrumb breadcrumb = tableConfiguration.getAppTheme().getBreadcrumb();
+            String hintColr;
+            String textColr;
+            if(isDayTheme) {
+                hintColr = breadcrumb.getText().getLight();
+                textColr = breadcrumb.getText().getLightSelected();
+            } else {
+                hintColr = breadcrumb.getText().getDark();
+                textColr = breadcrumb.getText().getDarkSelected();
+            }
+            searchEditText.setTextColor(Color.parseColor(textColr));
+            searchEditText.setHintTextColor(Color.parseColor(hintColr));
+
         }
         else {
-            searchBar.setTextColor(getResources().getColor(R.color.white));
-            searchBar.setTextHintColor(getResources().getColor(R.color.search_hint));
-            searchBar.setSearchBarColor(Color.BLACK);
-            searchBar.setArrowIcon(R.drawable.ic_arrow_back_dark);
-            searchBar.setClearIcon(R.drawable.ic_close_search);
-            searchBar.setMenuIcon(R.drawable.ic_more_w);
+            if (isDayTheme) {
+                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.Black));
+                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.search_hint));
+            } else {
+                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.white));
+                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.search_hint));
+            }
         }
 
-        // Setting Search Pop up option from Menu XML
-         searchBar.inflateMenu(R.menu.search_option_menu);
-        //registering popup with OnMenuItemClickListener
-        searchBar.getMenu().setOnMenuItemClickListener(item -> {
-            Toast.makeText(SearchActivity.this,"You have selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-            item.setChecked(true);
-            mSearchType = item.getTitle().toString();
-            searchBar.setHint("Search for "+mSearchType);
-            return true;
+        searchEditText.setOnEditorActionListener(this);
+
+        mBackImageView.setOnClickListener(v->{
+            CommonUtil.hideKeyboard(mPullToRefreshLayout);
+            finish();
         });
-        searchBar.addTextChangeListener(new TextWatcher() {
+        searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -134,21 +147,17 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         mRecyclerAdapter = new SectionContentAdapter(NetConstants.GROUP_DEFAULT_SECTIONS, new ArrayList<>(), false, null, null);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
-        //registerEmptyView();
-
-
         //Fetch Search Options from DB
         THPDB.getInstance(this).daoConfiguration().getConfigurationSingle()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((tableConfiguration, throwable) -> {
+                .subscribe((tableConfiguration1, throwable) -> {
                     Log.i("", "");
-                    mListSearchTypes = tableConfiguration.getSearchOption().getTypes();
+                    mListSearchTypes = tableConfiguration1.getSearchOption().getTypes();
                     if (mListSearchTypes.size() > 0) {
                         mSearchType = mListSearchTypes.get(0);
                     }
-                    mSearchUrlByText = tableConfiguration.getSearchOption().getUrlText();
-                    updateSearchTypeUI();
+                    mSearchUrlByText = tableConfiguration1.getSearchOption().getUrlText();
                 });
 
         //Fetch Stocks API for BL
@@ -160,12 +169,17 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
             }
         }
 
+
+        action_overflow.setOnClickListener(v->{
+            updateSearchTypeUI();
+        });
+
     }
 
     private void updateSearchTypeUI() {
-        if (popupWindow != null) {
+        /*if (popupWindow != null) {
             return;
-        }
+        } */
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.layout_radio_group, null, true);
         RadioGroup rg = new RadioGroup(this);
@@ -192,7 +206,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         rg.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton radioButton = group.findViewById(checkedId);
             mSearchType = radioButton.getText().toString();
-            searchBar.setHint("Search for "+mSearchType);
+            searchEditText.setHint("Search for "+mSearchType);
             if (popupWindow != null)
             popupWindow.dismiss();
         });
@@ -211,7 +225,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         popupWindow.setOverlapAnchor(true);
         //Set PopUpWindow
-        searchBar.setPopUpWindow(popupWindow);
+        popupWindow.showAsDropDown(action_overflow);
     }
 
     private void registerEmptyView() {
@@ -272,7 +286,7 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
                         () -> {
                             if (progress != null) {
                                 progress.dismiss();
-                                CommonUtil.hideKeyboard(searchBar);
+                                CommonUtil.hideKeyboard(mPullToRefreshLayout);
                             }
                         });
     }
@@ -295,11 +309,12 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
     }
 
     @Override
-    public void onSearchStateChanged(boolean enabled) {
-        Log.i("", "");
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        onSearchConfirmed(searchEditText.getText());
+        return true;
     }
 
-    @Override
+
     public void onSearchConfirmed(CharSequence text) {
         if(NetUtils.isConnected(this)) {
             if (mSearchType.equalsIgnoreCase("Article")) {
@@ -313,14 +328,5 @@ public class SearchActivity extends AppCompatActivity implements MaterialSearchB
         }
     }
 
-    @Override
-    public void onButtonClicked(int buttonCode) {
-        Log.i("", "");
-        if(buttonCode == MaterialSearchBar.BUTTON_BACK ) {
-            CommonUtil.hideKeyboard(searchBar);
-            finishAfterTransition();
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 }
