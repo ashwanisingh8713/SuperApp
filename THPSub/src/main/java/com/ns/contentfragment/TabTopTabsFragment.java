@@ -128,7 +128,7 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
                         Log.i("", "");
                     }
 
-                    if(mSubSectionList.size() == 1) {
+                    if(mSubSectionList == null || mSubSectionList.size() == 1) {
                         mTabLayout.setVisibility(View.GONE);
                     }
 

@@ -49,8 +49,8 @@ public class ResUtil {
 
     public static String resolution(Context context) {
         float density = context.getResources().getDisplayMetrics().density;
-        return "xhdpi";
-        /*if(density < 1.1) {
+        //return "xhdpi";
+        if(density < 1.1) {
             return "mdpi";
         }
         else if(density < 1.6) {
@@ -66,7 +66,7 @@ public class ResUtil {
             return "xxxhdpi";
         } else {
             return "xhdpi";
-        }*/
+        }
     }
 
     private static float getPixelScaleFactor(Context context) {
