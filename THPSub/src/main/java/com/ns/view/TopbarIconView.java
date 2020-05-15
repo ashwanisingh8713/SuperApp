@@ -133,6 +133,9 @@ public class TopbarIconView extends AppCompatImageView {
             iconUrl = topbarIconUrl.getCross();
         }
 
+        //17 = app:iconType="refresh"
+        //TODO Set Icon for Refresh
+
         if(iconUrl == null) {
             iconUrl = "";
         }

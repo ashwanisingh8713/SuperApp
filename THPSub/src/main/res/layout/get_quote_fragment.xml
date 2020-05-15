@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.ns.view.ProgressView
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ns.view.layout.NSLinearLayout
+            android:id="@+id/value_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/forex_row_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/actual_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/forex_header_text_color"
+                    android:textSize="16sp" />
+
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/changesValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:textSize="16sp" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/percentChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/changeIcon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="5dp" />
+            </com.ns.view.layout.NSLinearLayout>
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background_second"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Last Traded Price"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/last_traded_price_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Open Price"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/open_price_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background_second"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Intra Day High"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/intra_day_high_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Intra Day Low"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/intra_day_low_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background_second"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prev Day Close"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/prev_day_close_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="52 Week High"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/week_high_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+
+            <com.ns.view.layout.NSLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/forex_row_background_second"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="52 Week Low"
+                    android:textColor="@color/forex_text_color" />
+
+                <com.ns.view.LatoSemiBoldTextView
+                    android:id="@+id/week_low_val"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="&lt;val>"
+                    android:textColor="@color/forex_text_color" />
+            </com.ns.view.layout.NSLinearLayout>
+
+        </com.ns.view.layout.NSLinearLayout>
+    </ScrollView>
+</com.ns.view.layout.NSLinearLayout>
