@@ -194,11 +194,11 @@ public interface ServiceAPIs {
     @GET("") // newsLetter.php
     Observable<SectionContentFromServer> newsDigest(@Url String url);
 
-    @GET("") // configuration api
-    Observable<ConfigurationData> config(@Url String url);
+    @POST("") // configuration api
+    Observable<ConfigurationData> config(@Url String url, @Body JsonObject jsonObject);
 
-    @GET("") // configuration api
-    Observable<JsonElement> configUpdateCheck(@Url String url);
+    @POST("") // configuration api
+    Observable<JsonElement> configUpdateCheck(@Url String url, @Body JsonObject jsonObject);
 
     @POST("") // Force Update.php
     Observable<UpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);

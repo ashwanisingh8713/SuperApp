@@ -13,14 +13,10 @@ public class ReqBody {
 
     public static final String REQUEST_SOURCE = "app";
 
-    public static JsonObject recommendation(String tagId, String aid, String siteId,
-                                            String sectionName, String transactionId) {
+    public static JsonObject configuration(String packageName, String resolution) {
         JsonObject object = new JsonObject();
-        object.addProperty("tagId", tagId);
-        object.addProperty("aid", aid);
-        object.addProperty("siteId", siteId);
-        object.addProperty("section", sectionName);
-        object.addProperty("transactionId", transactionId);
+        object.addProperty("packageName", packageName);
+        object.addProperty("resolution", resolution);
         return object;
     }
 

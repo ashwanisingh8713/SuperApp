@@ -3,6 +3,7 @@ package com.ns.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.Gravity;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -50,10 +51,6 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
 
-
-
-        ///////////////////////////////////////////////////////////////////
-
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
             if(isUserThemeDay) {
@@ -65,17 +62,7 @@ public class ListingIconView extends AppCompatImageView {
         else {
             loadIconsFromApp(isUserThemeDay);
         }
-
-
-
-
-        ///////////////////////////////////////////////////////////////////
-
-
-
-
     }
-
 
     private void loadIconsFromServer(ListingIconUrl listingIconUrl, String destinationFolderPath) {
 
@@ -83,7 +70,6 @@ public class ListingIconView extends AppCompatImageView {
 
         // 1 = app:iconType="share"
         if(mIconType == 1) {
-            setImageResource(R.drawable.ic_share_article);
             iconUrl = listingIconUrl.getShare();
         }
         // 2 = app:iconType="favourite"
@@ -109,6 +95,10 @@ public class ListingIconView extends AppCompatImageView {
         // 11 = app:iconType="unfavourite"
         else if(mIconType == 11) {
             iconUrl = listingIconUrl.getUnfavorite();
+        }
+
+        if(iconUrl == null) {
+            iconUrl = "";
         }
 
         PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));

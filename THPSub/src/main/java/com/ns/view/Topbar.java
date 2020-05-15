@@ -44,7 +44,7 @@ public class Topbar extends Toolbar {
 
     private ToolbarClickListener mToolbarClickListener;
     private TextView mTitleTextView;
-    private NSImageButton mBackImageView;
+    private TopbarIconView mBackImageView;
     private LogoImgView mLogoImageView;
     private TopbarIconView mSearchImageView;
     private TopbarIconView mCreateBookMarkImageView;
@@ -91,10 +91,8 @@ public class Topbar extends Toolbar {
         overflowParent.setVisibility(VISIBLE);
         mSearchImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
-        // In declare-styleable name="NSImageButton" enum Section = 6
-        int sectionBtnType = 6;
-        mBackImageView.setIcon(sectionBtnType);
         mBackImageView.setOnClickListener(onClickListener);
+        mBackImageView.setIcon(15);
     }
 
     public void showSubSectionIcons(String title, OnClickListener onClickListener) {
@@ -117,9 +115,6 @@ public class Topbar extends Toolbar {
 
         mTitleTextView.setText(title);
 
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -144,10 +139,6 @@ public class Topbar extends Toolbar {
         overflowParent.setVisibility(VISIBLE);
         else
         overflowParent.setVisibility(GONE);
-
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
     }
 
     public void showBackTitleIcons(String title, OnClickListener onClickListener) {
@@ -168,9 +159,6 @@ public class Topbar extends Toolbar {
         mTitleTextView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
         mBackImageView.setOnClickListener(onClickListener);
 
         mTitleTextView.setText(title);
@@ -200,9 +188,6 @@ public class Topbar extends Toolbar {
         if(!isHomeArticleOptionScreenShown) {
             mBackImageView.setVisibility(GONE);
         } else {
-            // In declare-styleable name="NSImageButton" enum arrow_back = 2
-            int arrow_back = 2;
-            mBackImageView.setIcon(arrow_back);
             mBackImageView.setOnClickListener(onClickListener);
         }
 
@@ -227,11 +212,6 @@ public class Topbar extends Toolbar {
         ttsParent.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
-
-
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
     }
 
     public void showGalleryIcons(OnClickListener onClickListener) {
@@ -253,9 +233,6 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
 
         mTitleTextView.setText("");
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -276,9 +253,6 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
         mLogoImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
-        // In declare-styleable name="NSImageButton" enum Section = 6
-        int arrow_no_line = 0;
-        mBackImageView.setIcon(arrow_no_line);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -305,11 +279,6 @@ public class Topbar extends Toolbar {
         shareTHPIC.setVisibility(VISIBLE);
         mTextSizeImageView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
-
-
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
     }
 
     public void showNonPremiumDetailIcons(boolean hasSubscriptionPlan) {
@@ -336,10 +305,6 @@ public class Topbar extends Toolbar {
         mTextSizeImageView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
 
-
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
     }
 
     public void showNonPremiumRestrictedDetailIcons() {
@@ -360,9 +325,6 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
-        // In declare-styleable name="NSImageButton" enum arrow_back = 2
-        int arrow_back = 2;
-        mBackImageView.setIcon(arrow_back);
     }
 
     private View mView;
@@ -394,9 +356,9 @@ public class Topbar extends Toolbar {
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
             ColorOptionBean topbarTheme = tableConfiguration.getAppTheme().getTopBarBg();
             if(isUserThemeDay) {
-                mView.setBackgroundColor(Color.parseColor(topbarTheme.getLight()));
+                setBackgroundColor(Color.parseColor(topbarTheme.getLight()));
             } else {
-                mView.setBackgroundColor(Color.parseColor(topbarTheme.getDark()));
+                setBackgroundColor(Color.parseColor(topbarTheme.getDark()));
             }
         } else {
             if(isUserThemeDay) {

@@ -56,6 +56,7 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
+import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1036,8 +1037,8 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/get/1";
-        return ServiceFactory.getServiceAPIs().config(url)
+        String url = "http://3.0.22.177/hindu/subscription/superapp/getConfig";
+        return ServiceFactory.getServiceAPIs().config(url, ReqBody.configuration("thehindu", ResUtil.resolution(context)))
         .subscribeOn(Schedulers.io())
                 .map(config->{
                     if(config.isSTATUS()) {
@@ -1066,8 +1067,8 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
-        String url = "http://3.0.22.177/hindu/subscription/coreAPI/checkUpdates";
-        return ServiceFactory.getServiceAPIs().configUpdateCheck(url)
+        String url = "http://3.0.22.177/hindu/subscription/superapp/checkConfig";
+        return ServiceFactory.getServiceAPIs().configUpdateCheck(url, ReqBody.configuration("thehindu", ResUtil.resolution(context)))
                 .subscribeOn(Schedulers.io())
                 .map(jsonElement -> {
                     if (((JsonObject) jsonElement).has("lastUpdatedTime")) {

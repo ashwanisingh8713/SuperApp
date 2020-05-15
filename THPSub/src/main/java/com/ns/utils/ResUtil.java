@@ -47,6 +47,28 @@ public class ResUtil {
         return dp * context.getResources().getDisplayMetrics().density;
     }
 
+    public static String resolution(Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return "xhdpi";
+        /*if(density < 1.1) {
+            return "mdpi";
+        }
+        else if(density < 1.6) {
+            return "hdpi";
+        }
+        else if(density < 2.1) {
+            return "xhdpi";
+        }
+        else if(density < 3.1) {
+            return "xxhdpi";
+        }
+        else if(density < 4.1) {
+            return "xxxhdpi";
+        } else {
+            return "xhdpi";
+        }*/
+    }
+
     private static float getPixelScaleFactor(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);

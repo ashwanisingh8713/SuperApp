@@ -284,6 +284,6 @@ public class THPConstants {
 
 
     public static final boolean IS_SHOW_INDEX = true;
-    public static final boolean IS_USE_SEVER_THEME = false;
+    public static final boolean IS_USE_SEVER_THEME = true;
 
 }

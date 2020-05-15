@@ -10,7 +10,10 @@ Icons from server
 How to change icon color
 Top and bottom bar color
 
-
+### Todays' Task
+Topbar Icon
+Indices Top and Back
+BL Subscription
 
 
 /////////////////

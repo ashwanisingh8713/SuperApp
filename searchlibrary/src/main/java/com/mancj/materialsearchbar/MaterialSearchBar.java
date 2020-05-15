@@ -468,7 +468,7 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
      * @param arrowIconResId icon resource id
      */
     public void setArrowIcon(int arrowIconResId) {
-        this.arrowIconRes = arrowIconResId;
+        //this.arrowIconRes = arrowIconResId;
         this.arrowIcon.setImageResource(arrowIconRes);
     }
 

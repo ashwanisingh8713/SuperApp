@@ -151,11 +151,6 @@ public class TTSSettingActivity extends BaseAcitivityTHP {
     private final String GS_TIME_TRACKING_CATEGORY = "TTSSettingScreen";
 
 
-
-    public static float dpToPixels(int dp, Context context) {
-        return dp * (context.getResources().getDisplayMetrics().density);
-    }
-
     /**
      * Sets Speed Seekbar's dots color
      * @param val

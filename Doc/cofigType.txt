@@ -30,3 +30,29 @@ staticItem
         "urlDark": "value",
         "urlLingh": "value"
     }
+
+widgetType
+    - FullScreenImg (Cartoon)
+    - Section_Title (Opinion)
+    - Image_Title_Time (Multimedia)
+    - Image_Title (Top Picks)
+    - Only_Title(Quotes)
+    - Image_Section_Card (BL)
+
+viewAllGravity | titleGravity
+    - Right_Bottom
+    - Right_Top
+    - Left_Bottom
+    - Left_Top
+    - Bottom_Center
+    - Top_Center
+
+titleType
+    - icon_title
+    - title
+
+
+
+
+
+

@@ -102,7 +102,7 @@ public class NSImageButton extends AppCompatImageButton {
             if(isDayTheme) {
                 setImageResource(R.drawable.ic_navigation);
             } else {
-                setImageResource(R.drawable.ic_navigation_white);
+                setImageResource(R.drawable.ic_navigation_dark);
             }
         }
     }

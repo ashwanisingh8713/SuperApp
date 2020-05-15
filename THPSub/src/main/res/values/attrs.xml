@@ -64,6 +64,9 @@
             <enum name="unfavourite" value="11" />
             <enum name="ttsStop" value="12" />
             <enum name="comment" value="13" />
+            <enum name="back" value="14" />
+            <enum name="slider" value="15" />
+            <enum name="cross" value="16" />
         </attr>
     </declare-styleable>
 

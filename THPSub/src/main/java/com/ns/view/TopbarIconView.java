@@ -6,16 +6,16 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.netoperation.config.model.OtherIconUrls;
-import com.netoperation.config.model.OtherIconsDownloadUrls;
+import com.netoperation.config.download.FileUtils;
+import com.netoperation.config.model.TopbarIconUrl;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.thpremium.R;
+import com.ns.utils.PicassoUtil;
+import com.ns.utils.THPConstants;
 
 public class TopbarIconView extends AppCompatImageView {
-
-    private int mIconType = -1;
 
     public TopbarIconView(Context context) {
         super(context);
@@ -33,41 +33,117 @@ public class TopbarIconView extends AppCompatImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
+
+        int iconType = 0;
 
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSIcon);
-            if (typedArray.hasValue(R.styleable.NSIcon_iconType)) {
-                mIconType = typedArray.getInt(R.styleable.NSIcon_iconType, 0);
-            } else {
-                mIconType = -1;
-            }
+            iconType = typedArray.getInt(R.styleable.NSIcon_iconType, 0);
+
         }
 
+        updateIcon(iconType);
 
+    }
 
-        ///////////////////////////////////////////////////////////////////
-
-
+    private void updateIcon(int iconType) {
+        final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration != null) {
-            OtherIconsDownloadUrls otherIconsDownloadUrls = tableConfiguration.getOtherIconsDownloadUrls();
-            if (isUserThemeDay) {
-                OtherIconUrls otherIconUrls = otherIconsDownloadUrls.getLight();
-                otherIconUrls.getListing();
-            }
-            else {
-
+        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+            if(isUserThemeDay) {
+                loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getLight().getTopbar(), FileUtils.destinationFolder(getContext(), FileUtils.TOPBAR_ICONs_LIGHT).getPath());
+            } else {
+                loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getDark().getTopbar(), FileUtils.destinationFolder(getContext(), FileUtils.TOPBAR_ICONs_DARK).getPath());
             }
         }
+        else {
+            loadIconsFromApp(iconType, isUserThemeDay);
+        }
+    }
 
+    private void loadIconsFromServer(int mIconType, TopbarIconUrl topbarIconUrl, String destinationFolderPath) {
 
-
-
-        ///////////////////////////////////////////////////////////////////
-
+        String iconUrl = "";
         // 0 = app:iconType="ttsPlay"
-        if(mIconType == 0) {
+        if (mIconType == 0) {
+            iconUrl = topbarIconUrl.getTtsPlay();
+        }
+        // 1 = app:iconType="share"
+        else if (mIconType == 1) {
+            iconUrl = topbarIconUrl.getShare();
+        }
+        // 2 = app:iconType="favourite"
+        else if (mIconType == 2) {
+            iconUrl = topbarIconUrl.getFavorite();
+        }
+        // 3 = app:iconType="bookmarked"
+        else if (mIconType == 3) {
+            iconUrl = topbarIconUrl.getBookmark();
+        }
+        // 4 = app:iconType="unbookmark"
+        else if (mIconType == 4) {
+            iconUrl = topbarIconUrl.getUnbookmark();
+        }
+        // 5 = app:iconType="fontSize"
+        else if (mIconType == 5) {
+            iconUrl = topbarIconUrl.getTextSize();
+        }
+        // 6 = app:iconType="like"
+        else if (mIconType == 6) {
+            iconUrl = topbarIconUrl.getLike();
+        }
+        // 7 = app:iconType="crown"
+        else if (mIconType == 7) {
+            iconUrl = topbarIconUrl.getCrown();
+        }
+        // 8 = app:iconType="overflow"
+        else if (mIconType == 8) {
+            iconUrl = topbarIconUrl.getOverflow_verticle_dot();
+        }
+        // 9 = app:iconType="search"
+        else if (mIconType == 9) {
+            iconUrl = topbarIconUrl.getSearch();
+        }
+        // 10 = app:iconType="dislike"
+        else if (mIconType == 10) {
+            iconUrl = topbarIconUrl.getDislike();
+        }
+        // 11 = app:iconType="unfavourite"
+        else if (mIconType == 11) {
+            iconUrl = topbarIconUrl.getUnfavorite();
+        }
+        // 12 = app:iconType="ttsStop"
+        else if (mIconType == 12) {
+            iconUrl = topbarIconUrl.getTtsPause();
+        }
+        // 13 = app:iconType="comment"
+        else if (mIconType == 13) {
+            iconUrl = topbarIconUrl.getComment();
+        }
+        // 14 = app:iconType="back"
+        else if (mIconType == 14) {
+            iconUrl = topbarIconUrl.getBack();
+        }
+        // 15 = app:iconType="slider"
+        else if (mIconType == 15) {
+            iconUrl = topbarIconUrl.getLeft_slider_three_line();
+        }
+        // 16 = app:iconType="cross"
+        else if (mIconType == 16) {
+            iconUrl = topbarIconUrl.getCross();
+        }
+
+        if(iconUrl == null) {
+            iconUrl = "";
+        }
+
+        PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));
+
+    }
+
+    private void loadIconsFromApp (int mIconType, boolean isUserThemeDay) {
+        // 0 = app:iconType="ttsPlay"
+        if (mIconType == 0) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_audio);
             } else {
@@ -75,7 +151,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 1 = app:iconType="share"
-        else if(mIconType == 1) {
+        else if (mIconType == 1) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_share_article);
             } else {
@@ -83,7 +159,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 2 = app:iconType="favourite"
-        else if(mIconType == 2) {
+        else if (mIconType == 2) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_like_selected);
             } else {
@@ -91,7 +167,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 3 = app:iconType="bookmarked"
-        else if(mIconType == 3) {
+        else if (mIconType == 3) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_bookmark_selected);
             } else {
@@ -99,7 +175,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 4 = app:iconType="unbookmark"
-        else if(mIconType == 4) {
+        else if (mIconType == 4) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_bookmark_unselected);
             } else {
@@ -107,7 +183,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 5 = app:iconType="fontSize"
-        else if(mIconType == 5) {
+        else if (mIconType == 5) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_textsize);
             } else {
@@ -115,7 +191,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 6 = app:iconType="like"
-        else if(mIconType == 6) {
+        else if (mIconType == 6) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_switch_off_copy);
             } else {
@@ -123,7 +199,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 7 = app:iconType="crown"
-        else if(mIconType == 7) {
+        else if (mIconType == 7) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_premium_logo);
             } else {
@@ -131,7 +207,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 8 = app:iconType="overflow"
-        else if(mIconType == 8) {
+        else if (mIconType == 8) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_more);
             } else {
@@ -139,7 +215,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 9 = app:iconType="search"
-        else if(mIconType == 9) {
+        else if (mIconType == 9) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_search);
             } else {
@@ -147,7 +223,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 10 = app:iconType="dislike"
-        else if(mIconType == 10) {
+        else if (mIconType == 10) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_switch_on_copy);
             } else {
@@ -155,7 +231,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 11 = app:iconType="unfavourite"
-        else if(mIconType == 11) {
+        else if (mIconType == 11) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_like_unselected);
             } else {
@@ -163,7 +239,7 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 12 = app:iconType="ttsStop"
-        if(mIconType == 12) {
+        else if (mIconType == 12) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.tts_stop);
             } else {
@@ -171,14 +247,41 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 13 = app:iconType="comment"
-        if(mIconType == 13) {
+        else if (mIconType == 13) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_comment);
             } else {
                 setImageResource(R.drawable.ic_comment_w);
             }
         }
+        // 14 = app:iconType="back"
+        else if (mIconType == 14) {
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.ic_arrow_back_light);
+            } else {
+                setImageResource(R.drawable.ic_arrow_back_dark);
+            }
+        }
+        // 15 = app:iconType="slider"
+        else if (mIconType == 15) {
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.ic_navigation);
+            } else {
+                setImageResource(R.drawable.ic_navigation_dark);
+            }
+        }
+        // 16 = app:iconType="cross"
+        else if (mIconType == 15) {
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.ic_close_search);
+            } else {
+                setImageResource(R.drawable.ic_close_search);
+            }
+        }
+    }
 
+    public void setIcon(int iconType) {
+        updateIcon(iconType);
     }
 
 

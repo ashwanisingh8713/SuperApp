@@ -1,7 +1,5 @@
 package com.netoperation.config.model;
 
-import android.webkit.URLUtil;
-
 public class TopbarIconUrl {
     /**
      * left_slider_three_line : url
@@ -21,6 +19,7 @@ public class TopbarIconUrl {
      * dislike : url
      * favorite : url
      * unfavorite : url
+     * slider : url
      */
 
     private String left_slider_three_line;
@@ -40,6 +39,15 @@ public class TopbarIconUrl {
     private String dislike;
     private String favorite;
     private String unfavorite;
+    private String cross;
+
+    public String getCross() {
+        return cross;
+    }
+
+    public void setCross(String cross) {
+        this.cross = cross;
+    }
 
     public String getLeft_slider_three_line() {
         return left_slider_three_line;

@@ -1,350 +1,844 @@
 {
-  "lastServerUpdateTime": "UTC-TIME",
-  "vokkleId": "1234",
-  "refreshIntervalInMins": "value",
-  "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
-  "staticItem": [
-    {
-      "title": "Terms & Condition",
-      "urlDark": "https://www.google.com/?client=safari",
-      "urlLight": "https://www.google.com/?client=safari"
-    },
-    {
-      "title": "Privacy Policy",
-      "urlDark": "https://www.google.com/?client=safari",
-      "urlLight": "https://www.google.com/?client=safari"
-    },
-    {
-      "title": "Help",
-      "urlDark": "https://www.google.com/?client=safari",
-      "urlLight": "https://www.google.com/?client=safari"
-    },
-    {
-      "title": "AboutUs",
-      "urlDark": "https://www.google.com/?client=safari",
-      "urlLight": "https://www.google.com/?client=safari"
-    }
-  ],
-  "tabs": [
-    {
-      "title": "Home",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+  "packageName": "thehindu",
+  "resolution": "xhdpi",
+  "configJson": {
+    "lastServerUpdateTime": "UTC-TIME",
+    "vokkleId": "1234",
+    "refreshIntervalInMins": "value",
+    "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
+    "staticItem": [
+      {
+        "title": "Terms & Condition",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
       },
-      "group": "GROUP_DEFAULT_SECTIONS",
-      "pageSource": "GROUP_DEFAULT_SECTIONS"
-    },
-    {
-      "title": "Briefing",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+      {
+        "title": "Privacy Policy",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
       },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Briefing"
-    },
-    {
-      "title": "My Stories",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+      {
+        "title": "Help",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
       },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "My Stories"
-    },
-    {
-      "title": "Suggested",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+      {
+        "title": "AboutUs",
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
+      }
+    ],
+    "tabs": [
+      {
+        "title": "Home",
+        "iconUrl": {
+          "urlDark": "value",
+          "urlLight": "value",
+          "urlSelectedDark": "value",
+          "urlSelectedLight": "value"
+        },
+        "group": "GROUP_DEFAULT_SECTIONS",
+        "pageSource": "GROUP_DEFAULT_SECTIONS"
       },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Suggested"
-    },
-    {
-      "title": "Profile",
-      "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+      {
+        "title": "States",
+        "iconUrl": {
+          "urlDark": "value",
+          "urlLight": "value",
+          "urlSelectedDark": "value",
+          "urlSelectedLight": "value"
+        },
+        "group": "GROUP_DEFAULT_SECTIONS",
+        "pageSource": "ADD_ON_SECTION",
+        "section": {
+          "parentId": 0,
+          "secId": 89,
+          "secName": "States",
+          "link": "https://www.thehindu.com/news/states/",
+          "secColorRgb": "255,255,255",
+          "type": "GN",
+          "priority": 7,
+          "overridePriority": 0,
+          "explorePriority": 5,
+          "overrideExplore": 0,
+          "image": "http://d2esthce0rzs6j.cloudfront.net/media/11052020/31554168/11MNSHRAMIKSPECIAL_thumbnail",
+          "image_v2": "https://www.thehindu.com/news/national/karnataka/eon39d/article31554167.ece/ALTERNATES/FREE_660/11MNSHRAMIKSPECIAL",
+          "show_on_burger": true,
+          "show_on_explore": true,
+          "custom": false,
+          "webLink": "https://www.thehindu.com/news/states/",
+          "customScreen": 0,
+          "customScreenPri": 0,
+          "subSections": [
+            {
+              "parentId": 89,
+              "secId": 90,
+              "secName": "Andhra Pradesh",
+              "link": "https://www.thehindu.com/news/national/andhra-pradesh/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 1,
+              "overridePriority": 0,
+              "explorePriority": 1,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/11052020/31561237/12VJLIQUORSEIZED_thumbnail",
+              "image_v2": "https://www.thehindu.com/news/national/andhra-pradesh/uis3xm/article31561236.ece/ALTERNATES/FREE_660/12VJLIQUORSEIZED",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/andhra-pradesh/",
+              "customScreen": 2,
+              "customScreenPri": 1,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 89,
+              "secId": 91,
+              "secName": "Karnataka",
+              "link": "https://www.thehindu.com/news/national/karnataka/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 2,
+              "overridePriority": 0,
+              "explorePriority": 2,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31560900/bbjpg_thumbnail",
+              "image_v2": "https://www.thehindu.com/incoming/cr5l7c/article31562052.ece/ALTERNATES/FREE_660/bbjpg",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/karnataka/",
+              "customScreen": 2,
+              "customScreenPri": 2,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 89,
+              "secId": 92,
+              "secName": "Kerala",
+              "link": "https://www.thehindu.com/news/national/kerala/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 3,
+              "overridePriority": 0,
+              "explorePriority": 3,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/11052020/31561097/12tvMigrantworkersTirur_thumbnail",
+              "image_v2": "https://www.thehindu.com/news/national/kerala/yz860c/article31561096.ece/ALTERNATES/FREE_660/12tvMigrantworkersTirur",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/kerala/",
+              "customScreen": 2,
+              "customScreenPri": 3,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 89,
+              "secId": 93,
+              "secName": "Tamil Nadu",
+              "link": "https://www.thehindu.com/news/national/tamil-nadu/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 4,
+              "overridePriority": 0,
+              "explorePriority": 4,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12_compress052020/31565131/12_compress",
+              "image_v2": "https://www.thehindu.com/news/national/tamil-nadu/bg8478/article31565130.ece/ALTERNATES/FREE_660/12",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/tamil-nadu/",
+              "customScreen": 2,
+              "customScreenPri": 4,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 89,
+              "secId": 94,
+              "secName": "Telangana",
+              "link": "https://www.thehindu.com/news/national/telangana/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 5,
+              "overridePriority": 0,
+              "explorePriority": 5,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/11052020/31561372/KKP0621_thumbnail",
+              "image_v2": "https://www.thehindu.com/news/national/telangana/8bvlpi/article31561371.ece/ALTERNATES/FREE_660/KKP0621",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/telangana/",
+              "customScreen": 2,
+              "customScreenPri": 5,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 89,
+              "secId": 95,
+              "secName": "Other States",
+              "link": "https://www.thehindu.com/news/national/other-states/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 6,
+              "overridePriority": 0,
+              "explorePriority": 6,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31563641/THAVDASSAMPET_thumbnail",
+              "image_v2": "https://www.thehindu.com/news/national/other-states/jq8zid/article31563640.ece/ALTERNATES/FREE_660/THAVDASSAMPET",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/news/national/other-states/",
+              "customScreen": 2,
+              "customScreenPri": 6,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            }
+          ],
+          "staticPageUrl": {
+            "url": "",
+            "isEnabled": false,
+            "position": "0",
+            "sectionId": 0
+          }
+        }
       },
-      "group": "GROUP_PREMIUM_SECTIONS",
-      "pageSource": "Profile"
-    }
-  ],
-  "appTheme": {
-    "textColors": {
+      {
+        "title": "Editorials & Opinion",
+        "iconUrl": {
+          "urlDark": "value",
+          "urlLight": "value",
+          "urlSelectedDark": "value",
+          "urlSelectedLight": "value"
+        },
+        "group": "GROUP_DEFAULT_SECTIONS",
+        "pageSource": "ADD_ON_SECTION",
+        "section": {
+          "parentId": 0,
+          "secId": 5,
+          "secName": "Editorials & Opinion",
+          "link": "",
+          "secColorRgb": "255,255,255",
+          "type": "GN",
+          "priority": 13,
+          "overridePriority": 0,
+          "explorePriority": 8,
+          "overrideExplore": 0,
+          "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31560930/12THiStock_1075261116a_thumbnail",
+          "image_v2": "https://www.thehindu.com/opinion/lead/dko28j/article31560929.ece/ALTERNATES/FREE_660/12THiStock-1075261116a",
+          "show_on_burger": true,
+          "show_on_explore": true,
+          "custom": false,
+          "webLink": "",
+          "customScreen": 0,
+          "customScreenPri": 0,
+          "subSections": [
+            {
+              "parentId": 5,
+              "secId": 15,
+              "secName": "Editorial",
+              "link": "https://www.thehindu.com/opinion/editorial/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 1,
+              "overridePriority": 0,
+              "explorePriority": 1,
+              "overrideExplore": 0,
+              "image": "",
+              "image_v2": "",
+              "show_on_burger": true,
+              "show_on_explore": false,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/editorial/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 16,
+              "secName": "Lead",
+              "link": "https://www.thehindu.com/opinion/lead/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 2,
+              "overridePriority": 0,
+              "explorePriority": 2,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31560930/12THiStock_1075261116a_thumbnail",
+              "image_v2": "https://www.thehindu.com/opinion/lead/dko28j/article31560929.ece/ALTERNATES/FREE_660/12THiStock-1075261116a",
+              "show_on_burger": true,
+              "show_on_explore": false,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/lead/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 14,
+              "secName": "Columns",
+              "link": "https://www.thehindu.com/opinion/columns/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 3,
+              "overridePriority": 0,
+              "explorePriority": 3,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/11052020/31551667/5thPanneerselvan_thumbnail",
+              "image_v2": "https://www.thehindu.com/opinion/Readers-Editor/s6mtou/article31551666.ece/ALTERNATES/FREE_660/5thPanneerselvan",
+              "show_on_burger": true,
+              "show_on_explore": false,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/columns/",
+              "customScreen": 1,
+              "customScreenPri": 16,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 17,
+              "secName": "Comment",
+              "link": "https://www.thehindu.com/opinion/op-ed/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 4,
+              "overridePriority": 0,
+              "explorePriority": 4,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31560942/12THMIGRANT_thumbnail",
+              "image_v2": "https://www.thehindu.com/opinion/op-ed/5kqdin/article31560941.ece/ALTERNATES/FREE_660/12THMIGRANT",
+              "show_on_burger": true,
+              "show_on_explore": false,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/op-ed/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 101,
+              "secName": "Interview",
+              "link": "https://www.thehindu.com/opinion/interview/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 5,
+              "overridePriority": 0,
+              "explorePriority": 5,
+              "overrideExplore": 0,
+              "image": "https://www.thehindu.com/news/national/3kv8bt/article31397486.ece/ALTERNATES/FREE_660/vipul-mathur-2",
+              "image_v2": "https://www.thehindu.com/news/national/3kv8bt/article31397486.ece/ALTERNATES/FREE_660/vipul-mathur-2",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/interview/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 69,
+              "secName": "Cartoons",
+              "link": "https://www.thehindu.com/opinion/cartoon/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 6,
+              "overridePriority": 0,
+              "explorePriority": 6,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/12052020/31560033/12thVande_Bharat_1_thumbnail",
+              "image_v2": "https://www.thehindu.com/opinion/cartoon/jsa1zf/article31560032.ece/ALTERNATES/FREE_660/12thVande-Bharat-1",
+              "show_on_burger": true,
+              "show_on_explore": false,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/cartoon/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 102,
+              "secName": "Open Page",
+              "link": "https://www.thehindu.com/opinion/open-page/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 7,
+              "overridePriority": 0,
+              "explorePriority": 7,
+              "overrideExplore": 0,
+              "image": "https://www.thehindu.com/opinion/open-page/jydl26/article31542445.ece/ALTERNATES/FREE_660/OpenPage",
+              "image_v2": "https://www.thehindu.com/opinion/open-page/jydl26/article31542445.ece/ALTERNATES/FREE_660/OpenPage",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/open-page/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 103,
+              "secName": "Reader's Editor",
+              "link": "https://www.thehindu.com/opinion/Readers-Editor/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 8,
+              "overridePriority": 0,
+              "explorePriority": 8,
+              "overrideExplore": 0,
+              "image": "http://d2esthce0rzs6j.cloudfront.net/media/27042020/31438769/Panneerselvan_AS_col_thumbnail",
+              "image_v2": "https://www.thehindu.com/opinion/Readers-Editor/oc3mvl/article31438768.ece/ALTERNATES/FREE_660/Panneerselvan-AS-col",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/Readers-Editor/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            },
+            {
+              "parentId": 5,
+              "secId": 104,
+              "secName": "Letters",
+              "link": "https://www.thehindu.com/opinion/letters/",
+              "secColorRgb": "255,255,255",
+              "type": "GN",
+              "priority": 9,
+              "overridePriority": 0,
+              "explorePriority": 9,
+              "overrideExplore": 0,
+              "image": "",
+              "image_v2": "",
+              "show_on_burger": true,
+              "show_on_explore": true,
+              "custom": false,
+              "webLink": "https://www.thehindu.com/opinion/letters/",
+              "customScreen": 0,
+              "customScreenPri": 0,
+              "lat": "",
+              "long": "",
+              "staticPageUrl": {
+                "url": "",
+                "isEnabled": false,
+                "position": "0",
+                "sectionId": 0
+              }
+            }
+          ],
+          "staticPageUrl": {
+            "url": "",
+            "isEnabled": false,
+            "position": "0",
+            "sectionId": 0
+          }
+        }
+      },
+      {
+        "title": "My Stories",
+        "iconUrl": {
+          "urlDark": "value",
+          "urlLight": "value",
+          "urlSelectedDark": "value",
+          "urlSelectedLight": "value"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "My Stories"
+      },
+      {
+        "title": "Profile",
+        "iconUrl": {
+          "urlDark": "value",
+          "urlLight": "value",
+          "urlSelectedDark": "value",
+          "urlSelectedLight": "value"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "Profile"
+      }
+    ],
+    "appTheme": {
+      "textColors": {
+        "dark": {
+          "XL": "#000000",
+          "L": "#000000",
+          "M": "#000000",
+          "S": "#818181",
+          "XS": "#818181",
+          "detailpageText": "#000000"
+        },
+        "light": {
+          "XL": "#ffffff",
+          "L": "#ffffff",
+          "M": "#ffffff",
+          "S": "#818181",
+          "XS": "#818181",
+          "detailpageText": "#ffffff"
+        }
+      },
+      "tilesBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "screenBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "topBarBg": {
+        "dark": "#313131",
+        "light": "#1394D1"
+      },
+      "bottomBar": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ededed",
+          "light": "#818181",
+          "lightSelected": "#ff0000"
+        },
+        "bg": {
+          "dark": "#313131",
+          "light": "#1394D1"
+        },
+        "indicator": {
+          "dark": "#ffffff",
+          "light": "#818181"
+        }
+      },
+      "breadcrumb": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ededed",
+          "light": "#818181",
+          "lightSelected": "#424242"
+        },
+        "bg": {
+          "dark": "#313131",
+          "light": "#1394D1"
+        },
+        "indicator": {
+          "dark": "#ffffff",
+          "light": "#818181"
+        }
+      }
+    },
+    "widgetIndex": [
+      {
+        "secId": "142",
+        "index": "5",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "88",
+        "index": "8",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "5",
+        "index": "10",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "138",
+        "index": "12",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      },
+      {
+        "secId": "69",
+        "index": "15",
+        "background": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "text": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        }
+      }
+    ],
+    "Ads": {
+      "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
+      "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
+      "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
+      "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
+      "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
+      "listingPageAds": [
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "4"
+        },
+        {
+          "type": "taboola",
+          "index": "6"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Footer",
+          "index": "8"
+        },
+        {
+          "type": "taboola",
+          "index": "10"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Bottom",
+          "index": "12"
+        },
+        {
+          "type": "taboola",
+          "index": "13"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "16"
+        },
+        {
+          "type": "taboola",
+          "index": "18"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "20"
+        }
+      ]
+    },
+    "taboola": {
+      "id": "thehindu-hinduappandroid",
+      "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
+      "publisher": "thehindu-hinduappandroid",
+      "pageType": "article",
+      "mode": "thumbnails-a",
+      "placementLight": "Below Article Thumbnails",
+      "placementDark": "Below Article Thumbnails Dark",
+      "taboolaNativeAd": {
+        "placement_home": "Below Home Stream",
+        "placement_home_source_type": "home",
+        "placement_section": "Below Section Stream",
+        "placement_section_source_type": "section",
+        "placement_detail": "Below Article Stream"
+      }
+    },
+    "subSectionsIndex": "3",
+    "searchOption": {
+      "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+      "urlText": "https://www.thehindu.com/app/search.json?term=",
+      "types": [
+        "article",
+        "sensex"
+      ]
+    },
+    "totalIcons": "88",
+    "otherIconsDownloadUrls": {
       "dark": {
-        "XL": "#000000",
-        "L": "#000000",
-        "M": "#000000",
-        "S": "#818181",
-        "XS": "#818181",
-        "detailpageText": "#000000",
-        "WigetText": "#ffffff"
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+        },
+        "placeHolder": {
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ads.png"
+        }
       },
       "light": {
-        "XL": "#ffffff",
-        "L": "#ffffff",
-        "M": "#ffffff",
-        "S": "#818181",
-        "XS": "#818181",
-        "detailpageText": "#ffffff",
-        "WigetText": "#ffffff"
-      }
-    },
-    "tilesBg": {
-      "dark": "#191919",
-      "light": "#ffffff"
-    },
-    "screenBg": {
-      "dark": "#191919",
-      "light": "#ffffff"
-    },
-    "topBarBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
-    },
-    "bottomBarBg": {
-      "dark": "#313131",
-      "light": "#ffffff"
-    },
-    "breadcrumb": {
-      "text": {
-        "dark": "#313131",
-        "light": "#1394D1"
-      },
-      "bg": {
-        "dark": "#313131",
-        "light": "#1394D1"
-      },
-      "indicator": {
-        "dark": "#ffffff",
-        "light": "#818181"
-      }
-    }
-  },
-  "widgetIndex": [
-    {
-      "secId": "142",
-      "index": "5",
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      },
-      "text": {
-        "dark": "#ffffff",
-        "light": "#191919"
-      }
-    },
-    {
-      "secId": "88",
-      "index": "8",
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      },
-      "text": {
-        "dark": "#ffffff",
-        "light": "#191919"
-      }
-    },
-    {
-      "secId": "5",
-      "index": "10",
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      },
-      "text": {
-        "dark": "#ffffff",
-        "light": "#191919"
-      }
-    },
-    {
-      "secId": "138",
-      "index": "12",
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      },
-      "text": {
-        "dark": "#ffffff",
-        "light": "#191919"
-      }
-    },
-    {
-      "secId": "69",
-      "index": "15",
-      "background": {
-        "dark": "#191919",
-        "light": "#ffffff"
-      },
-      "text": {
-        "dark": "#ffffff",
-        "light": "#191919"
-      }
-    }
-  ],
-  "Ads": {
-    "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
-    "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
-    "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
-    "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
-    "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
-    "listingPageAds": [
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "4"
-      },
-      {
-        "type": "taboola",
-        "index": "6"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Footer",
-        "index": "8"
-      },
-      {
-        "type": "taboola",
-        "index": "10"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Bottom",
-        "index": "12"
-      },
-      {
-        "type": "taboola",
-        "index": "13"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "16"
-      },
-      {
-        "type": "taboola",
-        "index": "18"
-      },
-      {
-        "type": "DFP",
-        "adId": "/22390678/Hindu_Android_HP_Middle",
-        "index": "20"
-      }
-    ]
-  },
-  "taboola": {
-    "id": "thehindu-hinduappandroid",
-    "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
-    "publisher": "thehindu-hinduappandroid",
-    "pageType": "article",
-    "mode": "thumbnails-a",
-    "placementLight": "Below Article Thumbnails",
-    "placementDark": "Below Article Thumbnails Dark",
-    "taboolaNativeAd": {
-      "placement_home": "Below Home Stream",
-      "placement_home_source_type": "home",
-      "placement_section": "Below Section Stream",
-      "placement_section_source_type": "section",
-      "placement_detail": "Below Article Stream"
-    }
-  },
-  "subSectionsIndex": "3",
-  "searchOption": {
-    "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
-    "urlText": "https://www.thehindu.com/app/search.json?term=",
-    "types": [
-      "article",
-      "sensex"
-    ]
-  },
-  "totalIcons" : "88",
-  "otherIconsDownloadUrls": {
-    "dark" : {
-      "Logo" : "url",
-      "Listing" : {
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-      },
-      "topbar" : {
-        "left_slider_three_line" : "url",
-        "logo" : "url",
-        "search" : "url",
-        "overflow_verticle_dot" : "url",
-        "back" : "url",
-        "ttsPlay" : "url",
-        "ttsPause" : "url",
-        "comment" : "url",
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "textSize" : "url",
-        "share" : "url",
-        "crown" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-
-      },
-      "placeHolder" : {
-        "banner" : "url",
-        "thumb" : "url",
-        "widget" : "url",
-        "ads": "url"
-      }
-    },
-    "light" : {
-      "Logo" : "url",
-      "Listing" : {
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-      },
-      "topbar" : {
-        "left_slider_three_line" : "url",
-        "logo" : "url",
-        "search" : "url",
-        "overflow_verticle_dot" : "url",
-        "back" : "url",
-        "ttsPlay" : "url",
-        "ttsPause" : "url",
-        "comment" : "url",
-        "bookmark" : "url",
-        "unbookmark" : "url",
-        "textSize" : "url",
-        "share" : "url",
-        "crown" : "url",
-        "like" : "url",
-        "dislike" : "url",
-        "favorite" : "url",
-        "unfavorite" : "url"
-
-      },
-      "placeHolder" : {
-        "banner" : "url",
-        "thumb" : "url",
-        "widget" : "url",
-        "ads": "url"
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+        },
+        "placeHolder": {
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ads.png"
+        }
       }
     }
   }

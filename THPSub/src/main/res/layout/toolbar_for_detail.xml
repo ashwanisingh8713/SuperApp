@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     >
     <!-- Start Back Icon-->
-    <com.ns.view.btn.NSImageButton
+    <com.ns.view.TopbarIconView
+        app:iconType="back"
         android:id="@+id/action_back"
-        style="@style/backBtnStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
-        app:btnType="arrow_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"/>
     <!-- End Back Icon-->
 
     <!-- Start Logo Icon-->
@@ -65,13 +65,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.ns.view.TopbarIconView
+            app:iconType="overflow"
             android:id="@+id/action_overfloddw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:contentDescription="Notification Icon"
-            app:iconType="overflow"
             app:srcCompat="@drawable/ic_more_w" />
 
         <TextView

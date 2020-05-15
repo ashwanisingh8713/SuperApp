@@ -925,8 +925,7 @@ public class IntentUtil {
 
     public static void openSearchActivity(AppCompatActivity context) {
         Intent intent = new Intent(context, SearchActivity.class);
-        context.startActivity(intent,
-                ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+        context.startActivity(intent, startSlideActivity(context));
     }
 
     public static void openHomeArticleOptionActivity(AppCompatActivity context) {
@@ -944,7 +943,6 @@ public class IntentUtil {
     public static void openSettingActivity(AppCompatActivity context) {
         Intent intent = new Intent(context, AppSettingActivity.class);
         context.startActivity(intent, startSlideActivity(context));
-
     }
 
 

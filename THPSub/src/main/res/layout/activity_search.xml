@@ -102,7 +102,7 @@
 
     </com.ns.view.layout.NSConstraintLayout>
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
+    <!--<com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/searchBar"
         style="@style/MaterialSearchBarDark"
         android:layout_width="match_parent"
@@ -112,7 +112,18 @@
         app:mt_borderlessRippleEnabled="true"
         app:mt_backIconClickEnabled="true"
         app:mt_menuDividerEnabled="true"
-        />
+        />-->
+
+    <com.ns.view.TopbarSearch
+        android:id="@+id/searchToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetRight="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"/>
 
 
 </com.ns.view.layout.NSFrameLayout>
