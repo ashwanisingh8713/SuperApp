@@ -2,6 +2,8 @@
 apply plugin: 'com.android.application'
 //apply the Google Services Gradle plugin
 apply plugin: 'com.google.gms.google-services'
+//apply plug in for Realm DB
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
@@ -37,6 +39,7 @@ android {
             versionCode 1
             versionName "BLSP1.0"
             applicationId "com.mobstac.thehindubusinessline"
+            //applicationIdSuffix ".test"
 
             // BL Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
@@ -62,7 +65,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
+            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindubusinessline.com/app/search.json?term=\""
 
 
             buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
@@ -275,6 +278,9 @@ dependencies {
 
     // Local Broadcast Manager
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+    //Realm Dependency
+    implementation 'io.realm:android-adapters:1.3.0'
 
 
 }

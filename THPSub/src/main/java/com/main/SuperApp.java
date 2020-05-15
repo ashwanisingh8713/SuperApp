@@ -1,7 +1,9 @@
 package com.main;
 
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
@@ -34,11 +36,16 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SuperApp extends Application implements LifecycleObserver  {
 
     private static Context sAppContext;
     public static boolean isInBackground;
+    public static final int DATABASE_SCHEMA_VERSION = 1;
+    public static RealmConfiguration mRealmConfiguration;
+    public static Realm mRealm;
 
 
 
@@ -59,7 +66,8 @@ public class SuperApp extends Application implements LifecycleObserver  {
 
         startPeriodicWork();
         initCleverTap();
-
+        //Initialise Realm DB
+        initRealm(this);
     }
 
     public static Context getAppContext() {
@@ -185,4 +193,42 @@ public class SuperApp extends Application implements LifecycleObserver  {
                 "TheHindu","TheHindu",
                 NotificationManager.IMPORTANCE_MAX,"TheHindu",true);
     }
+
+    private void initRealm(Context context) {
+        ActivityManager activityManager =
+                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo processInfo : activityManager.getRunningAppProcesses()) {
+            if (android.os.Process.myPid() == processInfo.pid) {
+                if (TextUtils.equals(processInfo.processName, BuildConfig.APPLICATION_ID)) {
+                    Realm.init(context);
+                    Realm.setDefaultConfiguration(getMyRealmConfiguration());
+                }
+                break;
+            }
+        }
+    }
+//    Realm Configurations Start
+/**
+ * Get Realm Instance
+ * @return Realm*/
+    public static Realm getRealmInstance() {
+        if (mRealm == null) {
+            mRealm = Realm.getInstance(getMyRealmConfiguration());
+            return mRealm;
+        }
+        return mRealm;
+    }
+    /**
+     * Get Realm Configuration
+     * @return RealmConfiguration*/
+    private static RealmConfiguration getMyRealmConfiguration() {
+        if (mRealmConfiguration == null) {
+            mRealmConfiguration = new RealmConfiguration.Builder()
+                    .name("TheHinduBusinessline.realm")
+                    .schemaVersion(DATABASE_SCHEMA_VERSION)
+                    .build();
+        }
+        return mRealmConfiguration;
+    }
+//    Realm Configurations End
 }
