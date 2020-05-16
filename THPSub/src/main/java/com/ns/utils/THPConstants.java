@@ -262,10 +262,7 @@ public class THPConstants {
     public static final String MP_Cycle_Firebase = "Cycle_Name";
     public static final String ArticleCount_Firebase = "Article_Count";
     public static final String Allowed_Counts_Firebase = "Allowed_Counts";
-
     // DEFAULT
-
-
 
     public static final int APP_EXCLUSIVE_SECTION_ID = 142;
 
@@ -284,6 +281,6 @@ public class THPConstants {
 
 
     public static final boolean IS_SHOW_INDEX = true;
-    public static final boolean IS_USE_SEVER_THEME = false;
+    public static final boolean IS_USE_SEVER_THEME = true;
 
 }

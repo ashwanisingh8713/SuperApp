@@ -268,4 +268,23 @@ public class DefaultPref {
     }
 //    Set and get any preferences end
 
+
+    public void setDefaultContentBaseUrl(String defaultContentBaseUrl) {
+        mEditor.putString("defaultContentBaseUrl", defaultContentBaseUrl);
+        mEditor.commit();
+    }
+
+    public String getDefaultContentBaseUrl() {
+        return mPreferences.getString("defaultContentBaseUrl", "");
+    }
+
+    public void setNewsDigestUrl(String newsDigestUrl) {
+        mEditor.putString("newsDigestUrl", newsDigestUrl);
+        mEditor.commit();
+    }
+
+    public String getNewsDigestUrl() {
+        return mPreferences.getString("newsDigestUrl", "");
+    }
+
 }

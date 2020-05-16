@@ -94,12 +94,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@drawable/page_background">
+        >
 
         <com.ns.view.layout.NSLinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/page_background"
             android:orientation="vertical">
 
             <View
@@ -114,7 +113,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/page_background"
                 android:gravity="center"
                 android:visibility="gone" />
         </com.ns.view.layout.NSLinearLayout>

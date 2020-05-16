@@ -3,7 +3,7 @@
   "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
-    "vokkleId": "1234",
+    "vokkleId": "d1a4a16d-cfaf-4ad2-8f9b-ddf5a1b257d2",
     "refreshIntervalInMins": "value",
     "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
     "staticItem": [
@@ -920,15 +920,6 @@
         "placement_detail": "Below Article Stream"
       }
     },
-    "subSectionsIndex": "3",
-    "searchOption": {
-      "urlId": "https://www.thehindubusinessline.com/app/search.json?term=",
-      "urlText": "https://www.thehindubusinessline.com/app/search.json?term=",
-      "types": [
-        "article",
-        "sensex"
-      ]
-    },
     "totalIcons": "88",
     "otherIconsDownloadUrls": {
       "dark": {
@@ -1007,6 +998,20 @@
           "ads": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ads.png"
         }
       }
+    },
+    "subSectionsIndex": "3",
+    "contentUrl": {
+      "baseUrlPremium": "https://tai.thehindu.com",
+      "baseUrlDefault": "https://app.thehindubusinessline.com/hinduBL/service/api_v2/",
+      "newsDigest": "http://thehindubusinessline.com/newsletter/"
+    },
+    "searchOption": {
+      "urlId": "https://www.thehindubusinessline.com/app/search.json?term=",
+      "urlText": "https://www.thehindubusinessline.com/app/search.json?term=",
+      "types": [
+        "article",
+        "sensex"
+      ]
     }
   }
 }

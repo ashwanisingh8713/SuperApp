@@ -250,10 +250,15 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     }
 
     private void searchArticleByText(String query) {
+        if(mSearchUrlByText == null) {
+            BaseAcitivityTHP.refreshConfigurationInstance();
+            Alerts.showToast(this, "Kindly try again...");
+            return;
+        }
         final ProgressDialog progress = Alerts.showProgressDialog(SearchActivity.this);
         // Making Server request to get Article from server
         // and Saving into DB, with SectionName = "tempSec"
-        Observable<List<ArticleBean>> observable = DefaultTHApiManager.articleFromServer(query, BuildConfig.PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL);
+        Observable<List<ArticleBean>> observable = DefaultTHApiManager.articleFromServer(query, mSearchUrlByText);
         observable.timeout(15, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(articleBeans -> {

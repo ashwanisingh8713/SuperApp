@@ -18,6 +18,7 @@ import com.netoperation.config.model.PlaceHolder;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.config.model.TopbarIconUrl;
 import com.netoperation.db.THPDB;
+import com.netoperation.util.DefaultPref;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 
@@ -43,8 +44,8 @@ import retrofit2.Retrofit;
 
 public class IconDownloadService extends Service {
 
-    private NotificationCompat.Builder notificationBuilder;
-    private NotificationManager notificationManager;
+    //private NotificationCompat.Builder notificationBuilder;
+    //private NotificationManager notificationManager;
     private int totalFileSize;
 
     protected final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -71,17 +72,17 @@ public class IconDownloadService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        /*notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_download)
                 .setContentTitle("Download")
                 .setContentText("Downloading File")
                 .setAutoCancel(true);
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(0, notificationBuilder.build());*/
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.DEFAULT_BASE_URL)
+                .baseUrl(DefaultPref.getInstance(this).getDefaultContentBaseUrl())
                 .build();
 
         retrofitInterface = retrofit.create(IconRetroInterface.class);
@@ -358,9 +359,9 @@ public class IconDownloadService extends Service {
         Intent intent = new Intent(IconDownloadService.MESSAGE_PROGRESS);
         intent.putExtra("download",download);
         LocalBroadcastManager.getInstance(IconDownloadService.this).sendBroadcast(intent);
-        notificationBuilder.setProgress(100,download.getStatus(),false);
+        /*notificationBuilder.setProgress(100,download.getStatus(),false);
         notificationBuilder.setContentText(String.format("Downloaded (%d/%d) MB",download.getCurrentFileSize(),download.getTotalFileSize()));
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(0, notificationBuilder.build());*/
 
 
     }
@@ -400,16 +401,16 @@ public class IconDownloadService extends Service {
 
         sendSuccessNotification(download);
 
-        notificationManager.cancel(0);
+        /*notificationManager.cancel(0);
         notificationBuilder.setProgress(0,0,false);
         notificationBuilder.setContentText("File Downloaded");
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(0, notificationBuilder.build());*/
 
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        notificationManager.cancel(0);
+        //notificationManager.cancel(0);
     }
 
 }

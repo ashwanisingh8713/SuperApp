@@ -3,7 +3,7 @@
   "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
-    "vokkleId": "1234",
+    "vokkleId": "432081eb-6e8e-4abc-a88f-ca5357aa7244",
     "refreshIntervalInMins": "value",
     "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
     "staticItem": [
@@ -753,15 +753,6 @@
         "placement_detail": "Below Article Stream"
       }
     },
-    "subSectionsIndex": "3",
-    "searchOption": {
-      "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
-      "urlText": "https://www.thehindu.com/app/search.json?term=",
-      "types": [
-        "article",
-        "sensex"
-      ]
-    },
     "totalIcons": "88",
     "otherIconsDownloadUrls": {
       "dark": {
@@ -840,6 +831,20 @@
           "ads": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ads.png"
         }
       }
+    },
+    "subSectionsIndex": "3",
+    "contentUrl": {
+      "baseUrlPremium": "https://tai.thehindu.com",
+      "baseUrlDefault": "https://app.thehindu.com/hindu/service/api_v1.004/",
+      "newsDigest": "https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php"
+    },
+    "searchOption": {
+      "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+      "urlText": "https://www.thehindu.com/app/search.json?term=",
+      "types": [
+        "article",
+        "sensex"
+      ]
     }
   }
 }

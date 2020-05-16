@@ -178,4 +178,13 @@ public class PremiumPref {
     public String getStatus() {
         return mPreferences.getString("statusTest", "");
     }
+
+    public void setPremiumContentBaseUrl(String premiumContentBaseUrl) {
+        mEditor.putString("premiumContentBaseUrl", premiumContentBaseUrl);
+        mEditor.commit();
+    }
+
+    public String getPremiumContentBaseUrl() {
+        return mPreferences.getString("premiumContentBaseUrl", "");
+    }
 }

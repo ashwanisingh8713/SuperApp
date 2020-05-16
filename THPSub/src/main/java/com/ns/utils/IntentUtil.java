@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.netoperation.db.THPDB;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -795,7 +796,12 @@ public class IntentUtil {
 
 
     public static void openCommentActivity(Context context, ArticleBean articlesBean) {
-        String Vukkle_API_KEY = BuildConfig.VUUKLE_API_KEY;
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration == null) {
+            Alerts.showToast(context, "Kindly try again.");
+            return;
+        }
+        String Vukkle_API_KEY = tableConfiguration.getVokkleId();
 
         String articleId = articlesBean.getArticleId();
         String articleLink = articlesBean.getArticleUrl();

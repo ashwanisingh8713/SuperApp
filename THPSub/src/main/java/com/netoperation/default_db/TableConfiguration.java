@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.netoperation.config.model.ContentUrl;
 import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.config.model.AdsBean;
@@ -44,11 +45,21 @@ public class TableConfiguration {
     @ColumnInfo
     private SearchOptionBean searchOption;
     @ColumnInfo
+    private ContentUrl contentUrl;
+    @ColumnInfo
     private OtherIconsDownloadUrls otherIconsDownloadUrls;
     @ColumnInfo
     private List<UrlBean> staticItem;
     @ColumnInfo
     private List<TabsBean> tabs;
+
+    public ContentUrl getContentUrl() {
+        return contentUrl;
+    }
+
+    public void setContentUrl(ContentUrl contentUrl) {
+        this.contentUrl = contentUrl;
+    }
 
     public int getTotalIcons() {
         return totalIcons;
