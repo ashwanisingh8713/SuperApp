@@ -132,6 +132,10 @@ public class TopbarIconView extends AppCompatImageView {
         else if (mIconType == 16) {
             iconUrl = topbarIconUrl.getCross();
         }
+        // 17 = app:iconType="refresh"
+        else if (mIconType == 17) {
+            iconUrl = topbarIconUrl.getRefresh();
+        }
 
         //17 = app:iconType="refresh"
         //TODO Set Icon for Refresh
@@ -274,11 +278,19 @@ public class TopbarIconView extends AppCompatImageView {
             }
         }
         // 16 = app:iconType="cross"
-        else if (mIconType == 15) {
+        else if (mIconType == 16) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_close_search);
             } else {
                 setImageResource(R.drawable.ic_close_search);
+            }
+        }
+        // 17 = app:iconType="refresh"
+        else if (mIconType == 17) {
+            if (isUserThemeDay) {
+                setImageResource(R.drawable.ic_refresh_black_24dp);
+            } else {
+                setImageResource(R.drawable.ic_refresh_black_24dp);
             }
         }
     }

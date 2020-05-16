@@ -25,6 +25,7 @@ import com.main.SuperApp;
 import com.netoperation.asynctasks.GetCompanyNameTask;
 import com.netoperation.asynctasks.SearchAdapter;
 import com.netoperation.config.model.Breadcrumb;
+import com.netoperation.config.model.SearchType;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.ArticleBean;
@@ -67,8 +68,8 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     private LinearLayout emptyLayout;
 
     private SectionContentAdapter mRecyclerAdapter;
-    private String mSearchType = "Article";
-    private List<String> mListSearchTypes = new ArrayList<>();
+    private SearchType mSelectedSearchType;
+    private List<SearchType> mListSearchTypes = new ArrayList<>();
     private String mSearchUrlByText;
     private PopupWindow popupWindow;
 
@@ -141,7 +142,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if (!s.toString().isEmpty()) {
                     action_crossBtn.setVisibility(View.VISIBLE);
-                    if (!mSearchType.equalsIgnoreCase("Article")) {
+                    if (!mSelectedSearchType.getSearchType().equalsIgnoreCase("article")) {
                         searchStocksByText(s.toString());
                     }
                 } else {
@@ -164,9 +165,9 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((tableConfiguration1, throwable) -> {
                     Log.i("", "");
-                    mListSearchTypes = tableConfiguration1.getSearchOption().getTypes();
+                    mListSearchTypes = tableConfiguration1.getSearchOption().getSearchItem();
                     if (mListSearchTypes.size() > 0) {
-                        mSearchType = mListSearchTypes.get(0);
+                        mSelectedSearchType = mListSearchTypes.get(0);
                         searchEditText.setHint("Search for " + ResUtil.capitalizeFirstLetter(mSearchType));
                     }
                     mSearchUrlByText = tableConfiguration1.getSearchOption().getUrlText();
@@ -183,12 +184,12 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
 
         action_overflow.setOnClickListener(v->{
-            updateSearchTypeUI();
+            popupSearchOptions();
         });
 
     }
 
-    private void updateSearchTypeUI() {
+    private void popupSearchOptions() {
         if (popupWindow != null) {
             popupWindow.showAsDropDown(action_overflow);
             return;
@@ -197,12 +198,18 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         View layout = layoutInflater.inflate(R.layout.layout_radio_group, null, true);
         RadioGroup rg = new RadioGroup(this);
         NSLinearLayout nl = layout.findViewById(R.id.radioGroupLayout);
-        for (String type : mListSearchTypes) {
+        int count = 0;
+        for (SearchType type : mListSearchTypes) {
             RadioButton rb = new RadioButton(this);
-            rb.setText(ResUtil.capitalizeFirstLetter(type));
+            rb.setText(ResUtil.capitalizeFirstLetter(type.getTitle()));
             rb.setTag(type);
             rb.setPadding(10,20,10,10);
             rg.addView(rb);
+
+            if(count == 0) {
+                rb.setChecked(true);
+            }
+            count++;
         }
         rg.setOrientation(RadioGroup.VERTICAL);
         rg.setGravity(Gravity.START);
@@ -218,16 +225,18 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
         rg.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton radioButton = group.findViewById(checkedId);
-            mSearchType = radioButton.getText().toString();
-            searchEditText.setHint("Search for "+mSearchType);
+            mSelectedSearchType = (SearchType)radioButton.getTag();
+            radioButton.setChecked(true);
+            //mSelectedSearchType = radioButton.getText().toString();
+            searchEditText.setHint("Search for "+ mSelectedSearchType.getTitle());
             if (popupWindow != null)
             popupWindow.dismiss();
         });
 
-        RadioButton rb1 = rg.findViewWithTag(mSearchType);
+        /*RadioButton rb1 = rg.findViewWithTag(mSearchType);
         if (rb1 != null) {
             rb1.setChecked(true);
-        }
+        }*/
         popupWindow = new PopupWindow(this);
         //Inflating the Popup using xml file
         popupWindow.setContentView(layout);
@@ -317,9 +326,9 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
     public void onSearchConfirmed(CharSequence text) {
         if(NetUtils.isConnected(this)) {
-            if (mSearchType.equalsIgnoreCase("Article")) {
+            if (mSelectedSearchType.getSearchType().equalsIgnoreCase("article")) {
                 searchArticleByText(text.toString());
-            } else {
+            } else if (mSelectedSearchType.getSearchType().equalsIgnoreCase("stock")) {
                 searchStocksByText(text.toString());
             }
         }

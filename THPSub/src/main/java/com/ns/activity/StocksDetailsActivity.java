@@ -40,7 +40,7 @@ public class StocksDetailsActivity extends BaseAcitivityTHP {
         TopbarIconView searchMenuItem = findViewById(R.id.action_search);
         ArticleTitleTextView titleToolbar = findViewById(R.id.action_titleText);
         refreshMenuItem = findViewById(R.id.action_refresh);
-        refreshMenuItem.setImageResource(R.drawable.ic_refresh_black_24dp);
+        //refreshMenuItem.setImageResource(R.drawable.ic_refresh_black_24dp);
         titleToolbar.setText("Stock Details");
         mBackImageView.setOnClickListener(view -> {
             finish();

@@ -1,26 +1,17 @@
 package com.ns.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.adapter.MergedBookmarkPagerAdapter;
 import com.ns.contentfragment.AppTabFragment;
-import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.view.text.CustomTextView;
 
 public class BookmarkActivity extends BaseAcitivityTHP {
 

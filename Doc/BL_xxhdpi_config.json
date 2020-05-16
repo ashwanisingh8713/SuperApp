@@ -951,7 +951,8 @@
           "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/dislike.png",
           "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/favorite.png",
           "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/unfavorite.png",
-          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
         },
         "placeHolder": {
           "banner": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/banner.png",
@@ -989,7 +990,8 @@
           "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/dislike.png",
           "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/favorite.png",
           "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/unfavorite.png",
-          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
         },
         "placeHolder": {
           "banner": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/banner.png",
@@ -1008,9 +1010,15 @@
     "searchOption": {
       "urlId": "https://www.thehindubusinessline.com/app/search.json?term=",
       "urlText": "https://www.thehindubusinessline.com/app/search.json?term=",
-      "types": [
-        "article",
-        "sensex"
+      "searchItem": [
+        {
+          "title": "Article",
+          "searchType": "article"
+        },
+        {
+          "title": "Stocks",
+          "searchType": "stock"
+        }
       ]
     }
   }

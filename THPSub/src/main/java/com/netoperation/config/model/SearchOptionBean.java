@@ -3,14 +3,10 @@ package com.netoperation.config.model;
 import java.util.List;
 
 public class SearchOptionBean {
-    /**
-     * url : value
-     * types : ["article","sensex"]
-     */
 
     private String urlId;
     private String urlText;
-    private List<String> types;
+    private List<SearchType> searchItem;
 
     public String getUrlText() {
         return urlText;
@@ -28,11 +24,11 @@ public class SearchOptionBean {
         this.urlId = urlId;
     }
 
-    public List<String> getTypes() {
-        return types;
+    public List<SearchType> getSearchItem() {
+        return searchItem;
     }
 
-    public void setTypes(List<String> types) {
-        this.types = types;
+    public void setSearchItem(List<SearchType> searchItem) {
+        this.searchItem = searchItem;
     }
 }
