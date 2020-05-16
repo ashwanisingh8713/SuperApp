@@ -415,7 +415,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             public void onClick(View view) {
 //                FlurryAgent.logEvent(getString(R.string.ga_bookmark_screen_button_clicked));
 //                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(MainActivity.this, getString(R.string.ga_action), getString(R.string.ga_bookmark_screen_button_clicked), "Home Fragment");
-                IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_TAB);
+                IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE);
                 changeSortPopUp.dismiss();
             }
         });

@@ -208,6 +208,7 @@ public class IconDownloadService extends Service {
                             downloadRequest(topbar.getSearch(), folderTopbarF);
                             downloadRequest(topbar.getTextSize(), folderTopbarF);
                             downloadRequest(topbar.getCross(), folderTopbarF);
+                            downloadRequest(topbar.getRefresh(), folderTopbarF);
 
                             downloadRequest(placeHolder.getWidget(), folderPlaceHolderF);
                             downloadRequest(placeHolder.getThumb(), folderPlaceHolderF);

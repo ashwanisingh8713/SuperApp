@@ -40,6 +40,15 @@ public class TopbarIconUrl {
     private String favorite;
     private String unfavorite;
     private String cross;
+    private String refresh;
+
+    public String getRefresh() {
+        return refresh;
+    }
+
+    public void setRefresh(String refresh) {
+        this.refresh = refresh;
+    }
 
     public String getCross() {
         return cross;

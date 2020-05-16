@@ -784,7 +784,8 @@
           "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
           "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
           "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
-          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
         },
         "placeHolder": {
           "banner": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/banner.png",
@@ -802,7 +803,8 @@
           "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
           "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
           "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png"
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
         },
         "topbar": {
           "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/left_slider_three_line.png",
@@ -822,7 +824,8 @@
           "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
           "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
           "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
-          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png"
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
         },
         "placeHolder": {
           "banner": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/banner.png",
@@ -841,9 +844,11 @@
     "searchOption": {
       "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
       "urlText": "https://www.thehindu.com/app/search.json?term=",
-      "types": [
-        "article",
-        "sensex"
+      "searchItem": [
+        {
+          "title": "Article",
+          "searchType": "article"
+        }
       ]
     }
   }
