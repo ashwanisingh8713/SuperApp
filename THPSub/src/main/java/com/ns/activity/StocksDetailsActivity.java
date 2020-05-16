@@ -15,6 +15,7 @@ import com.ns.thpremium.R;
 import com.ns.view.LatoSemiBoldTextView;
 import com.ns.view.TopbarIconView;
 import com.ns.view.TopbarStocks;
+import com.ns.view.text.ArticleTitleTextView;
 import com.ns.view.text.CustomTextView;
 
 public class StocksDetailsActivity extends BaseAcitivityTHP {
@@ -37,8 +38,10 @@ public class StocksDetailsActivity extends BaseAcitivityTHP {
 
         TopbarIconView mBackImageView = findViewById(R.id.action_back);
         TopbarIconView searchMenuItem = findViewById(R.id.action_search);
+        ArticleTitleTextView titleToolbar = findViewById(R.id.action_titleText);
         refreshMenuItem = findViewById(R.id.action_refresh);
         refreshMenuItem.setImageResource(R.drawable.ic_refresh_black_24dp);
+        titleToolbar.setText("Stock Details");
         mBackImageView.setOnClickListener(view -> {
             finish();
         });

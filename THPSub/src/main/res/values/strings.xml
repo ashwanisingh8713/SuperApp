@@ -53,8 +53,8 @@
     <string name="facebook_app_id">429571521229925</string>
     <string name="fb_login_protocol_scheme">fb429571521229925</string>-->
 
-    <string name="facebook_app_id">467175884091779</string>
-    <string name="fb_login_protocol_scheme">fb467175884091779</string>
+    <!--<string name="facebook_app_id">467175884091779</string>
+    <string name="fb_login_protocol_scheme">fb467175884091779</string>-->
 
     <!-- For twitter Login-->
     <!--<string name="com.twitter.sdk.android.CONSUMER_KEY" tools:ignore="ExtraTranslation">R4aG29tZVOgu3t8bIA2t7T9by</string>
