@@ -1,0 +1,24 @@
+{
+  "staticItem": [
+    {
+      "title": "Terms & Condition",
+      "urlDark": "https://www.thehindu.com/app-termsofuse/",
+      "urlLight": "https://www.thehindu.com/app-termsofuse/"
+    },
+    {
+      "title": "Privacy Policy",
+      "urlDark": "https://alphath.thehindu.co.in/app-privacypolicy-dark/?test",
+      "urlLight": "https://www.thehindu.com/privacypolicy/"
+    },
+    {
+      "title": "Help",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
+    },
+    {
+      "title": "AboutUs",
+      "urlDark": "https://www.google.com/?client=safari",
+      "urlLight": "https://www.google.com/?client=safari"
+    }
+  ]
+}

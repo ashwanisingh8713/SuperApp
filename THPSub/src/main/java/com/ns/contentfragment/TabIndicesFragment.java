@@ -1,6 +1,7 @@
 package com.ns.contentfragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ns.adapter.IndicesTabViewPagerAdapter;
+import com.ns.callbacks.BackPressCallback;
+import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.IndicesSection;
@@ -15,6 +18,8 @@ import com.ns.thpremium.R;
 import com.ns.view.CustomTabLayout;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +83,29 @@ public class TabIndicesFragment extends BaseFragmentTHP {
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
+        EventBus.getDefault().register(this);
         // It sends Event in AppTabActivity.java=> handleEvent(ToolbarChangeRequired toolbarChangeRequired)
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("handleEvent", "unregister() ::  "+mPageSource+" :: "+mTabIndex);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressImpl backPress) {
+        Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
+
+        // ToolbarChangeRequired Event Post, It shows Toolbar for Section
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+
+        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
+        BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();
+        EventBus.getDefault().post(backPressCallback);
+    }
+
 }

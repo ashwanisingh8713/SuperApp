@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.netoperation.model.PersonaliseDetails;
 import com.netoperation.model.PersonaliseModel;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
@@ -65,6 +66,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     private CustomTextView emptyTitleTxt;
     private CustomTextView emptySubTitleTxt;
     private CustomTextView emptyBtnTxt;
+    private UserProfile mUserProfile;
 
     private long mPageStartTime = 0l;
     private long mPageEndTime = 0l;
@@ -134,8 +136,6 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -143,13 +143,14 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM_TOPBAR));
 
-        Log.i("TabFragment", "onResume() TabIndex = " + mTabIndex + " EventBus Registered");
+        Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);
 
         // Shows user name
         mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
+                    mUserProfile = userProfile;
                     String title = "";
 
                     if (userProfile != null && TextUtils.isEmpty(userProfile.getFullNameForProfile())) {
@@ -254,7 +255,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         }
         else {
             if (isOnline) {
-                observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
+                observable = ApiManager.getRecommendationFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId,
                         mPageType, ""+mSize, BuildConfig.SITEID);
             } else {
                 observable = ApiManager.premium_allArticleFromDB(getActivity(), mPageType);
@@ -659,7 +660,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     public void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
-        Log.i("TabFragment", "onPause() TabIndex = "+mTabIndex+" EventBus UnRegistered");
+        Log.i("handleEvent", "unregister() ::  "+mPageSource+" :: "+mTabIndex);
     }
 
     @Override
@@ -670,7 +671,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(BackPressImpl backPress) {
-        Log.i("handleEvent", "Back Button Pressed :: TabIndex = "+mTabIndex);
+        Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mPageType, mTabIndex).onBackPressed();

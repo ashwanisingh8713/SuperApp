@@ -1,6 +1,7 @@
 package com.ns.contentfragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.netoperation.config.model.TabsBean;
+import com.ns.callbacks.BackPressCallback;
+import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
@@ -15,6 +18,8 @@ import com.ns.utils.WebViewLinkClick;
 import com.ns.view.THP_AutoResizeWebview;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class TabWebFragment extends BaseFragmentTHP {
 
@@ -63,12 +68,32 @@ public class TabWebFragment extends BaseFragmentTHP {
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
+        EventBus.getDefault().register(this);
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);
         new WebViewLinkClick(false).linkClick(mWebView, getActivity(), mProgressBar);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("handleEvent", "unregister() ::  "+mPageSource+" :: "+mTabIndex);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressImpl backPress) {
+        Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
+
+        // ToolbarChangeRequired Event Post, It shows Toolbar for Section
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+
+        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
+        BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();
+        EventBus.getDefault().post(backPressCallback);
     }
 }

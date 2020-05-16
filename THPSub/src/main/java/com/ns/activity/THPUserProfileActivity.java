@@ -294,7 +294,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
         if (mSelectedBean.getAmount() == 0.0) {
             currency = null;
         }
-        ApiManager.createSubscription(mUserProfile.getUserId(), txnId, "" + mSelectedBean.getAmount(), "WAP", BuildConfig.SITEID,
+        ApiManager.createSubscription(mUserProfile.getAuthorization(), mUserProfile.getUserId(), txnId, "" + mSelectedBean.getAmount(), "WAP", BuildConfig.SITEID,
                 mSelectedBean.getPlanId(), "Subscription", billingChannel, mSelectedBean.getValidity(),
                 prefContact, currency, createTaxJsonObject().toString(), "" + mSelectedBean.getNetamount())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -18,8 +18,6 @@ import com.ns.utils.THPConstants;
 
 public class LogoImgView extends AppCompatImageView {
 
-    private int logoType = -1;
-
     public LogoImgView(Context context) {
         super(context);
         init(context, null);
@@ -40,43 +38,45 @@ public class LogoImgView extends AppCompatImageView {
 
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSImageLogo);
-            if (typedArray.hasValue(R.styleable.NSImageLogo_logoType)) {
-                logoType = typedArray.getInt(R.styleable.NSImageLogo_logoType, 0);
-            } else {
-                logoType = -1;
-            }
+            int logoType = typedArray.getInt(R.styleable.NSImageLogo_logoType, 0);
+            updateIcon(logoType);
         }
 
+
+
+
+
+    }
+
+    private void updateIcon(int logoType) {
+        final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
             String destinationFolderPath;
             if(isUserThemeDay) {
                 // 0 = app:logoType="Splash"
                 if(logoType == 0) {
-                    destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.LOGOs_LIGHT).getPath();
+                    destinationFolderPath = FileUtils.destinationFolder(getContext(), FileUtils.LOGOs_LIGHT).getPath();
                 } else {
-                    destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT).getPath();
+                    destinationFolderPath = FileUtils.destinationFolder(getContext(), FileUtils.TOPBAR_ICONs_LIGHT).getPath();
                 }
-                loadIconsFromServer(tableConfiguration.getOtherIconsDownloadUrls().getLight(), destinationFolderPath);
+                loadIconsFromServer(logoType, tableConfiguration.getOtherIconsDownloadUrls().getLight(), destinationFolderPath);
             } else {
                 // 0 = app:logoType="Splash"
                 if(logoType == 0) {
-                    destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.LOGOs_DARK).getPath();
+                    destinationFolderPath = FileUtils.destinationFolder(getContext(), FileUtils.LOGOs_DARK).getPath();
                 } else {
-                    destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK).getPath();
+                    destinationFolderPath = FileUtils.destinationFolder(getContext(), FileUtils.TOPBAR_ICONs_DARK).getPath();
                 }
-                loadIconsFromServer(tableConfiguration.getOtherIconsDownloadUrls().getDark(), destinationFolderPath);
+                loadIconsFromServer(logoType, tableConfiguration.getOtherIconsDownloadUrls().getDark(), destinationFolderPath);
             }
         }
         else {
-            loadIconsFromApp(isUserThemeDay);
+            loadIconsFromApp(logoType, isUserThemeDay);
         }
-
-
-
     }
 
-    private void loadIconsFromServer(OtherIconUrls otherIconUrls, String destinationFolderPath) {
+    private void loadIconsFromServer(int logoType, OtherIconUrls otherIconUrls, String destinationFolderPath) {
         String iconUrl = "";
 
         // 0 = app:logoType="Splash"
@@ -99,7 +99,7 @@ public class LogoImgView extends AppCompatImageView {
         PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));
     }
 
-    private void loadIconsFromApp(boolean isUserThemeDay) {
+    private void loadIconsFromApp(int logoType, boolean isUserThemeDay) {
         // 0 = app:logoType="Splash"
         if(logoType == 0) {
             if (isUserThemeDay) {
@@ -124,6 +124,10 @@ public class LogoImgView extends AppCompatImageView {
                 setImageResource(R.drawable.logo_actionbar_dark);
             }
         }
+    }
+
+    public void setIcon(int logoType) {
+        updateIcon(logoType);
     }
 
 

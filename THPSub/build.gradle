@@ -43,7 +43,7 @@ android {
 
             // BL Base URL
             buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
-            buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
+            buildConfigField "String", "NEWS_DIGEST_URL", "\"http://thehindubusinessline.com/newsletter/\""
             buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "boolean", "IS_BL", "true"
 
@@ -64,9 +64,6 @@ android {
 
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
-
-            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindubusinessline.com/app/search.json?term=\""
-
 
             buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
@@ -110,8 +107,6 @@ android {
 
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
-
-            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
 
             buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""

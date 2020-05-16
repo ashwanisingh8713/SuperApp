@@ -297,7 +297,7 @@ public class ChangePasswordFragment extends BaseFragmentTHP {
             updatePasswordBtn_Txt.setText("");
             mDisposable.add(ApiManager.getUserProfile(getActivity())
                     .subscribe(userProfile ->
-                                    ApiManager.updatePassword(userProfile.getUserId(), currentPassword, confirmPassword)
+                                    ApiManager.updatePassword(userProfile.getAuthorization(), userProfile.getUserId(), currentPassword, confirmPassword)
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(keyValueModel -> {
                                                 if(keyValueModel.getState() != null && keyValueModel.getState().equalsIgnoreCase("failed")) {

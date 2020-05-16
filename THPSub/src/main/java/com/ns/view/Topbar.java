@@ -92,11 +92,11 @@ public class Topbar extends Toolbar {
         mSearchImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
         mBackImageView.setOnClickListener(onClickListener);
+        // 15 = app:iconType="slider"
         mBackImageView.setIcon(15);
     }
 
     public void showSubSectionIcons(String title, OnClickListener onClickListener) {
-        overflowParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
         favouriteParent.setVisibility(GONE);
@@ -108,13 +108,16 @@ public class Topbar extends Toolbar {
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
         commentParent.setVisibility(GONE);
+        mBackImageView.setVisibility(GONE);
 
+        overflowParent.setVisibility(VISIBLE);
         mTitleTextView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
 
         mTitleTextView.setText(title);
-
+        // 14 = app:iconType="back"
+        mBackImageView.setIcon(14);
         mBackImageView.setOnClickListener(onClickListener);
     }
 

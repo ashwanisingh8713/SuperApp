@@ -92,7 +92,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     private int mDescriptionTextSize;
 
 
-
     private Snackbar snackbar;
 
     public Snackbar getSnackbar() {
@@ -140,10 +139,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     public int insertItem(AppTabContentModel item, int index) {
         int updateIndex = 0;
-        if(index >= mContent.size()) {
+        if (index >= mContent.size()) {
             mContent.add(item);
-            updateIndex = mContent.size()-1;
-        } else if(index < mContent.size()){
+            updateIndex = mContent.size() - 1;
+        } else if (index < mContent.size()) {
             mContent.add(index, item);
             updateIndex = index;
         }
@@ -158,71 +157,53 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         if (viewType == VT_HEADER) {
             return new BriefingHeaderViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_briefing_header, viewGroup, false));
-        }
-        else if (viewType == VT_DASHBOARD) {
+        } else if (viewType == VT_DASHBOARD) {
             return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_item_dashboard, viewGroup, false));
-        }
-        else if (viewType == VT_TRENDING) {
+        } else if (viewType == VT_TRENDING) {
             return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_item_dashboard, viewGroup, false));
-        }
-        else if (viewType == VT_BOOKMARK_PREMIUM) {
+        } else if (viewType == VT_BOOKMARK_PREMIUM) {
             return new BookmarkPremiumViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_item_bookmark, viewGroup, false));
-        }
-        else if (viewType == VT_BRIEFCASE) {
+        } else if (viewType == VT_BRIEFCASE) {
             return new BriefcaseViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_apptab_item_briefcase, viewGroup, false));
-        }
-        else if (viewType == VT_LOADMORE) {
+        } else if (viewType == VT_LOADMORE) {
             return new BookmarkViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_loadmore, viewGroup, false));
-        }
-        else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
+        } else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
             return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_banner, viewGroup, false));
-        }
-        else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
+        } else if (viewType == VT_PREMIUM_DETAIL_DESCRIPTION_WEBVIEW) {
             return new PREMIUM_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_description, viewGroup, false));
-        }
-        else if (viewType == VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER) {
+        } else if (viewType == VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER) {
             return new DG_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
-        }
-        else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
+        } else if (viewType == VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW) {
             return new DG_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_description, viewGroup, false));
-        }
-        else if (viewType == VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW) {
+        } else if (viewType == VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW) {
             return new DG_Restricted_DetailDescriptionWebViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_restricted_description, viewGroup, false));
-        }
-        else if (viewType == VT_TABOOLA_WIDGET) {
+        } else if (viewType == VT_TABOOLA_WIDGET) {
             if (mInfiniteTaboolaView == null) {
                 mInfiniteTaboolaView = createTaboolaWidget(viewGroup.getContext(), false);
             }
             return new ViewHolderTaboola(mInfiniteTaboolaView);
-        }
-        else if(viewType == VT_THD_300X250_ADS) {
+        } else if (viewType == VT_THD_300X250_ADS) {
             return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.inline_ads_container, viewGroup, false));
-        }
-        else if(viewType == VT_THD_PHOTO_VIEW) {
+        } else if (viewType == VT_THD_PHOTO_VIEW) {
             return new DG_DetailPhotoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
-        }
-        else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
+        } else if (viewType == VT_DETAIL_VIDEO_PLAYER) {
             return new DG_DetailVideoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
-        }
-        else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
+        } else if (viewType == VT_DETAIL_AUDIO_PLAYER) {
             return new DG_DetailAudioViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_banner, viewGroup, false));
-        }
-        else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
+        } else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
             return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
-        }
-        else if(viewType == VT_THD_DEFAULT_ROW) {
+        } else if (viewType == VT_THD_DEFAULT_ROW) {
             return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.cardview_article_list, viewGroup, false));
         }
         return null;
     }
-
 
 
     @Override
@@ -232,53 +213,38 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         if (viewHolder instanceof DashboardViewHolder) {
             premium_ui_Dash_Tren_Row(viewHolder, bean, position);
-        }
-        else if (viewHolder instanceof BriefcaseViewHolder) {
+        } else if (viewHolder instanceof BriefcaseViewHolder) {
             premium_ui_Briefing_Row(viewHolder, bean, position);
-        }
-        else if (viewHolder instanceof PREMIUM_DetailBannerViewHolder) {
+        } else if (viewHolder instanceof PREMIUM_DetailBannerViewHolder) {
             premium_ui_detail_banner(viewHolder, bean);
-        }
-        else if (viewHolder instanceof PREMIUM_DetailDescriptionWebViewHolder) {
+        } else if (viewHolder instanceof PREMIUM_DetailDescriptionWebViewHolder) {
             premium_ui_detail_description(viewHolder, bean, position);
-        }
-        else if (viewHolder instanceof BriefingHeaderViewHolder) {
+        } else if (viewHolder instanceof BriefingHeaderViewHolder) {
             premium_ui_BriefingHeader(viewHolder, bean);
-        }
-        else if(viewHolder instanceof DG_DetailBannerViewHolder) {
+        } else if (viewHolder instanceof DG_DetailBannerViewHolder) {
             dg_ui_detail_banner(viewHolder, bean);
-        }
-        else if(viewHolder instanceof DG_DetailDescriptionWebViewHolder) {
+        } else if (viewHolder instanceof DG_DetailDescriptionWebViewHolder) {
             dg_ui_detail_description(viewHolder, mContent.get(position));
-        }
-        else if(viewHolder instanceof ViewHolderTaboola) {
+        } else if (viewHolder instanceof ViewHolderTaboola) {
             if (mInfiniteTaboolaView != null && mInfiniteTaboolaView.getTag() == null) {
                 mInfiniteTaboolaView.setTag(bean.getArticleLink());
                 buildBelowArticleWidget(mInfiniteTaboolaView, bean.getArticleLink());
             }
-        }
-        else if(viewHolder instanceof DG_Restricted_DetailDescriptionWebViewHolder) {
+        } else if (viewHolder instanceof DG_Restricted_DetailDescriptionWebViewHolder) {
             dg_ui_restricted_detail_description(viewHolder, bean);
-        }
-        else if(viewHolder instanceof InlineAdViewHolder) {
+        } else if (viewHolder instanceof InlineAdViewHolder) {
             fillInlineAdView(viewHolder, mContent.get(position));
-        }
-        else if (viewHolder instanceof DG_DetailPhotoViewHolder) {
+        } else if (viewHolder instanceof DG_DetailPhotoViewHolder) {
             dg_ui_detail_photoview_banner(viewHolder, bean);
-        }
-        else if (viewHolder instanceof DG_DetailVideoViewHolder) {
+        } else if (viewHolder instanceof DG_DetailVideoViewHolder) {
             dg_ui_detail_video_type_banner(viewHolder, bean);
-        }
-        else if(viewHolder instanceof DG_PostCommentBtnViewHolder) {
+        } else if (viewHolder instanceof DG_PostCommentBtnViewHolder) {
             dg_ui_post_comment_btn(viewHolder, mContent.get(position));
-        }
-        else if(viewHolder instanceof DG_DetailAudioViewHolder) {
-            dg_ui_detail_audio_type_banner(viewHolder,bean);
-        }
-        else if (viewHolder instanceof BookmarkPremiumViewHolder) {
+        } else if (viewHolder instanceof DG_DetailAudioViewHolder) {
+            dg_ui_detail_audio_type_banner(viewHolder, bean);
+        } else if (viewHolder instanceof BookmarkPremiumViewHolder) {
             premium_ui_Bookmark_Row(viewHolder, bean, position);
-        }
-        else if(viewHolder instanceof ArticlesViewHolder) {
+        } else if (viewHolder instanceof ArticlesViewHolder) {
             defaultBookmark_ArticleData(viewHolder, position);
         }
     }
@@ -314,7 +280,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 holder.mArticleImageView.setVisibility(View.GONE);
                 holder.mImageParentLayout.setVisibility(View.GONE);
             }
-
 
 
             holder.mArticleTextView.setText(bean.getTi());
@@ -368,8 +333,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void dg_ui_post_comment_btn(final RecyclerView.ViewHolder holder, AppTabContentModel item) {
-        DG_PostCommentBtnViewHolder viewHolder = (DG_PostCommentBtnViewHolder)holder;
-        viewHolder.post_comment_detail.setOnClickListener(v->{
+        DG_PostCommentBtnViewHolder viewHolder = (DG_PostCommentBtnViewHolder) holder;
+        viewHolder.post_comment_detail.setOnClickListener(v -> {
             IntentUtil.openCommentActivity(v.getContext(), item.getBean());
         });
     }
@@ -381,7 +346,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
         final PublisherAdView adView = adData.getAdView();
 
-        if(adData.isReloadOnScroll()) {
+        if (adData.isReloadOnScroll()) {
             // Create an ad request.
             PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
             // Start loading the ad.
@@ -399,6 +364,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Shows content on UI of Listing
+     *
      * @param viewHolder
      * @param bean
      * @param position
@@ -478,6 +444,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Shows content on UI of Listing
+     *
      * @param viewHolder
      * @param bean
      * @param position
@@ -512,8 +479,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
                         local_removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position, mFrom);
-                    }
-                    else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                    } else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
                         premium_updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
@@ -530,8 +496,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
                         IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
                                 bean.getArticleUrl(), position, bean.getArticleId());
-                    }
-                    else if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
+                    } else if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
                         IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     } else {
@@ -549,6 +514,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Briefing Listing Row UI
+     *
      * @param viewHolder
      * @param bean
      * @param position
@@ -582,6 +548,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Premium Detail Page Banner UI
+     *
      * @param viewHolder
      * @param bean
      */
@@ -708,8 +675,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 .setDuration(animDuration);
 
     }
+
     /**
      * Premium Detail Page Description UI
+     *
      * @param viewHolder
      * @param bean
      */
@@ -738,6 +707,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Premium Briefing Header UI
+     *
      * @param viewHolder
      * @param bean
      */
@@ -780,6 +750,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Group Default Detail Page Banner
+     *
      * @param viewHolder
      * @param bean
      */
@@ -833,8 +804,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Photo view type banner
+     *
      * @param viewHolder view holder for Photo type views
-     * @param bean  for Article
+     * @param bean       for Article
      */
     private void dg_ui_detail_photoview_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_DetailPhotoViewHolder db_photo_banner_holder = (DG_DetailPhotoViewHolder) viewHolder;
@@ -889,10 +861,12 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             });
         }
     }
+
     /**
      * Video view type banner
+     *
      * @param viewHolder view holder for Photo type views
-     * @param bean  for Article
+     * @param bean       for Article
      */
     private void dg_ui_detail_video_type_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_DetailVideoViewHolder db_video_banner_holder = (DG_DetailVideoViewHolder) viewHolder;
@@ -958,8 +932,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Audio view type banner
+     *
      * @param viewHolder view holder for Photo type views
-     * @param bean  for Article
+     * @param bean       for Article
      */
     private void dg_ui_detail_audio_type_banner(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_DetailAudioViewHolder dg_detailAudioViewHolder = (DG_DetailAudioViewHolder) viewHolder;
@@ -1019,6 +994,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     /**
      * Default Group Detail Page Description UI
+     *
      * @param viewHolder
      * @param item
      */
@@ -1029,7 +1005,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
         String fullDescription = bean.getDescription();
 
-        if(bean.getAdd_pos() > 1) {
+        if (bean.getAdd_pos() > 1) {
             if (item.getUniqueIdForView().equals("description_1Model")) {
                 holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription.substring(0, bean.getAdd_pos() - 1)),
                         "text/html", "UTF-8", null);
@@ -1037,8 +1013,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), "", fullDescription.substring(bean.getAdd_pos() - 1)),
                         "text/html", "UTF-8", null);
             }
-        }
-        else {
+        } else {
             holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription),
                     "text/html", "UTF-8", null);
         }
@@ -1049,11 +1024,11 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         new WebViewLinkClick(true).linkClick(holder.webview, holder.itemView.getContext(), null);
 
 
-
     }
 
     /**
      * Default Group Restricted Detail Page Description UI
+     *
      * @param viewHolder
      * @param bean
      */
@@ -1089,7 +1064,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
             holder.webview.setLayoutParams(part1WebviewParam);
 
-            if(holder.shadowView_Mp != null) {
+            if (holder.shadowView_Mp != null) {
                 holder.shadowView_Mp.setLayoutParams(part1WebviewParam);
                 boolean mIsDayTheme = DefaultPref.getInstance(holder.shadowView_Mp.getContext()).isUserThemeDay();
                 if (mIsDayTheme) {
@@ -1123,8 +1098,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signIn_Txt.getContext(), "signIn");
                         //CleverTap and Firebase Events
-                        THPFirebaseAnalytics.firebaseMP_SignIn(holder.signIn_Txt.getContext(),BaseFragmentTHP.getCycleName());
-                        CleverTapUtil.cleverTapMP_SignIn(holder.signIn_Txt.getContext(),BaseFragmentTHP.getCycleName());
+                        THPFirebaseAnalytics.firebaseMP_SignIn(holder.signIn_Txt.getContext(), BaseFragmentTHP.getCycleName());
+                        CleverTapUtil.cleverTapMP_SignIn(holder.signIn_Txt.getContext(), BaseFragmentTHP.getCycleName());
 
                     });
             ResUtil.doClickSpanForString(holder.signUp_Txt.getContext(), BaseFragmentTHP.getMpSignUpButtonName(), "Sign Up",
@@ -1132,15 +1107,15 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signUp_Txt.getContext(), "signUp");
                         //CleverTap and Firebase Events
-                        THPFirebaseAnalytics.firebaseMP_SignUp(holder.signUp_Txt.getContext(),BaseFragmentTHP.getCycleName());
-                        CleverTapUtil.cleverTapMP_SignUp(holder.signUp_Txt.getContext(),BaseFragmentTHP.getCycleName());
+                        THPFirebaseAnalytics.firebaseMP_SignUp(holder.signUp_Txt.getContext(), BaseFragmentTHP.getCycleName());
+                        CleverTapUtil.cleverTapMP_SignUp(holder.signUp_Txt.getContext(), BaseFragmentTHP.getCycleName());
                     });
             holder.getFullAccess_Txt.setText(BaseFragmentTHP.getMpGetFullAccessButtonName());
             // Get Full Access Click Listener
             holder.getFullAccess_Txt.setOnClickListener(v -> {
-                if(!NetUtils.isConnected(holder.getFullAccess_Txt.getContext())) {
+                if (!NetUtils.isConnected(holder.getFullAccess_Txt.getContext())) {
                     Alerts.noConnectionSnackBar(holder.getFullAccess_Txt, (AppCompatActivity) holder.getFullAccess_Txt.getContext());
-                }else {
+                } else {
                     IntentUtil.openSubscriptionActivity(holder.getFullAccess_Txt.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     THPConstants.IS_FROM_MP_BLOCKER = true;
                     //MP Firebase & CleverTap events
@@ -1160,7 +1135,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void buildBelowArticleWidget(TaboolaWidget taboolaWidget, String articleLink) {
-        if(PremiumPref.getInstance(taboolaWidget.getContext()).isUserAdsFree()) {
+        if (PremiumPref.getInstance(taboolaWidget.getContext()).isUserAdsFree()) {
             return;
         }
         Resources res = taboolaWidget.getResources();
@@ -1190,7 +1165,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
                 if (isOrganic) {
                     int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-                    IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), ""+articleId, url);
+                    IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), "" + articleId, url);
 
                     /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
                     GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",
@@ -1217,7 +1192,6 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-
     public void addData(List<AppTabContentModel> content) {
         mContent.addAll(content);
         notifyDataSetChanged();
@@ -1230,7 +1204,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     public void addData(AppTabContentModel content) {
         mContent.add(content);
-        notifyItemChanged(mContent.size()-1);
+        notifyItemChanged(mContent.size() - 1);
     }
 
     public void replaceData(ArticleBean articleBean, int position) {
@@ -1241,7 +1215,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
     public void clearData() {
-        if(mInfiniteTaboolaView != null) {
+        if (mInfiniteTaboolaView != null) {
             mInfiniteTaboolaView.clearCache(true);
             mInfiniteTaboolaView = null;
         }
@@ -1249,10 +1223,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-
-
     /**
      * Checks, Whether article is Favorite or not
+     *
      * @param context
      * @param articleBean
      * @param favStartImg
@@ -1327,136 +1300,139 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         final int fav = favourite;
         final String articleId = bean.getArticleId();
 
-        // To Create and Remove at server end
-        ApiManager.createBookmarkFavLike(mUserId, BuildConfig.SITEID, articleId, bookmark, favourite)
+        ApiManager.getUserProfile(imageView.getContext())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(val -> {
-                            if (val) {
-                                bean.setIsFavourite(fav);
-                                bean.setIsBookmark(book);
-                                if (from.equals("bookmark")) {
-                                    if (book == NetConstants.BOOKMARK_YES) {
-                                        bean.setGroupType(NetConstants.GROUP_PREMIUM_SECTIONS);
-                                        // To Create at App end
-                                        ApiManager.createBookmark(context, bean).subscribe(boole -> {
-                                            if (bar != null) {
-                                                bar.setVisibility(View.GONE);
-                                                imageView.setVisibility(View.VISIBLE);
-                                                imageView.setEnabled(true);
-                                            }
-                                            notifyItemChanged(position);
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_YES");
-                                        });
+                .subscribe(userProfile -> {
+                    // To Create and Remove at server end
+                    ApiManager.createBookmarkFavLike(userProfile.getAuthorization(), mUserId, BuildConfig.SITEID, articleId, book, fav)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(val -> {
+                                        if (val) {
+                                            bean.setIsFavourite(fav);
+                                            bean.setIsBookmark(book);
+                                            if (from.equals("bookmark")) {
+                                                if (book == NetConstants.BOOKMARK_YES) {
+                                                    bean.setGroupType(NetConstants.GROUP_PREMIUM_SECTIONS);
+                                                    // To Create at App end
+                                                    ApiManager.createBookmark(context, bean).subscribe(boole -> {
+                                                        if (bar != null) {
+                                                            bar.setVisibility(View.GONE);
+                                                            imageView.setVisibility(View.VISIBLE);
+                                                            imageView.setEnabled(true);
+                                                        }
+                                                        notifyItemChanged(position);
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_YES");
+                                                    });
 
-                                        Alerts.showToastAtCenter(context, "Added to Read Later");
-                                    } else if (book == NetConstants.BOOKMARK_NO) {
-                                        // To Remove at App end
-                                        ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
-                                            if (bar != null) {
-                                                bar.setVisibility(View.GONE);
-                                                imageView.setVisibility(View.VISIBLE);
-                                                imageView.setEnabled(true);
-                                            }
-                                            // If user is in bookmark then item should be removed.
-                                            if (mFrom.equals(NetConstants.API_bookmarks)) {
-                                                deletedContentModel = mContent.remove(position);
-                                                deletedPosition = position;
-                                                notifyItemRemoved(position);
-                                                notifyItemRangeChanged(position, mContent.size());
+                                                    Alerts.showToastAtCenter(context, "Added to Read Later");
+                                                } else if (book == NetConstants.BOOKMARK_NO) {
+                                                    // To Remove at App end
+                                                    ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
+                                                        if (bar != null) {
+                                                            bar.setVisibility(View.GONE);
+                                                            imageView.setVisibility(View.VISIBLE);
+                                                            imageView.setEnabled(true);
+                                                        }
+                                                        // If user is in bookmark then item should be removed.
+                                                        if (mFrom.equals(NetConstants.API_bookmarks)) {
+                                                            deletedContentModel = mContent.remove(position);
+                                                            deletedPosition = position;
+                                                            notifyItemRemoved(position);
+                                                            notifyItemRangeChanged(position, mContent.size());
+                                                            // Empty Check Call back
+                                                            checkPageEmptyCallback();
+                                                        } else {
+                                                            notifyItemChanged(position);
+                                                        }
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
+                                                    });
 
-                                                // Empty Check Call back
-                                                checkPageEmptyCallback();
-
-                                            } else {
-//                                                    notifyDataSetChanged();
-                                                notifyItemChanged(position);
-                                            }
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
-                                        });
-
-                                    }
-                                } else if (from.equals("dislike") || from.equals("favourite")) {
-                                    if (book == NetConstants.BOOKMARK_YES) {
-                                        // To Update at App end
-                                        ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
-                                                Log.i("updateBookmark", "true")
-                                        );
-                                    }
-                                    // To Update at App end
-                                    ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
-
-                                        if (fav == NetConstants.LIKE_YES) {
-                                            Alerts.showToastAtCenter(context, "You will see more stories like this.");
-                                            notifyItemChanged(position);
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.LIKE_YES");
-//                                            notifyDataSetChanged();
-                                        } else if (fav == NetConstants.LIKE_NO) {
-//                                    Alerts.showToastAtCenter(context, "Show fewer stories like this.");
-                                            if (mFrom.equals(NetConstants.API_bookmarks)) {
-                                                notifyItemChanged(position);
-//                                                notifyDataSetChanged();
-                                            } else {
-                                                // This is for UNDO functionality
-                                                if (bar != null) {
-                                                    // SnackBar Initializing
-                                                    snackbar = Snackbar.make(mRecyclerView, R.string.item_removed_message, 3000)
-                                                            .setAction(R.string.undo, new View.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(View v) {
-                                                                    //This is for UNDO functionality
-                                                                    if (deletedContentModel != null && deletedContentModel.getBean() != null) {
-                                                                        premium_updateBookmarkFavLike(null, null, context,
-                                                                                deletedPosition, deletedContentModel.getBean(), "dislike");
-                                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "UNDO");
-                                                                    }
-                                                                }
-                                                            });
-                                                    // SnackBar Displaying and managing bottom margin
-                                                    displaySnackBarWithBottomMargin(getSnackbar());
                                                 }
-                                                deletedContentModel = mContent.remove(position);
-                                                deletedPosition = position;
-                                                //notifyDataSetChanged();
-                                                notifyItemRemoved(position);
-                                                notifyItemRangeChanged(position, mContent.size());
-                                                // Empty Check Call back
-                                                checkPageEmptyCallback();
+                                            } else if (from.equals("dislike") || from.equals("favourite")) {
+                                                if (book == NetConstants.BOOKMARK_YES) {
+                                                    // To Update at App end
+                                                    ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
+                                                            Log.i("updateBookmark", "true")
+                                                    );
+                                                }
+                                                // To Update at App end
+                                                ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
+
+                                                    if (fav == NetConstants.LIKE_YES) {
+                                                        Alerts.showToastAtCenter(context, "You will see more stories like this.");
+                                                        notifyItemChanged(position);
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.LIKE_YES");
+//                                            notifyDataSetChanged();
+                                                    } else if (fav == NetConstants.LIKE_NO) {
+//                                    Alerts.showToastAtCenter(context, "Show fewer stories like this.");
+                                                        if (mFrom.equals(NetConstants.API_bookmarks)) {
+                                                            notifyItemChanged(position);
+//                                                notifyDataSetChanged();
+                                                        } else {
+                                                            // This is for UNDO functionality
+                                                            if (bar != null) {
+                                                                // SnackBar Initializing
+                                                                snackbar = Snackbar.make(mRecyclerView, R.string.item_removed_message, 3000)
+                                                                        .setAction(R.string.undo, new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                //This is for UNDO functionality
+                                                                                if (deletedContentModel != null && deletedContentModel.getBean() != null) {
+                                                                                    premium_updateBookmarkFavLike(null, null, context,
+                                                                                            deletedPosition, deletedContentModel.getBean(), "dislike");
+                                                                                    CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "UNDO");
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                // SnackBar Displaying and managing bottom margin
+                                                                displaySnackBarWithBottomMargin(getSnackbar());
+                                                            }
+                                                            deletedContentModel = mContent.remove(position);
+                                                            deletedPosition = position;
+                                                            //notifyDataSetChanged();
+                                                            notifyItemRemoved(position);
+                                                            notifyItemRangeChanged(position, mContent.size());
+                                                            // Empty Check Call back
+                                                            checkPageEmptyCallback();
+                                                        }
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.LIKE_NO");
+
+                                                    } else {
+                                                        //This is for UNDO functionality, from SnackBar
+                                                        if (deletedContentModel != null) {
+                                                            boolean contains = mContent.contains(deletedContentModel);
+                                                            if (!contains) {
+                                                                deletedContentModel.setBean(bean);
+                                                                AppTabContentModel model = new AppTabContentModel(deletedContentModel.getViewType());
+                                                                model.setBean(bean);
+                                                                mContent.add(deletedPosition, model);
+                                                                deletedContentModel = null;
+                                                                notifyItemInserted(deletedPosition);
+                                                                notifyItemRangeChanged(deletedPosition, mContent.size());
+                                                            }
+                                                        } else {
+                                                            notifyItemChanged(position);
+                                                        }
+                                                    }
+
+                                                });
                                             }
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.LIKE_NO");
 
                                         } else {
-                                            //This is for UNDO functionality, from SnackBar
-                                            if (deletedContentModel != null) {
-                                                boolean contains = mContent.contains(deletedContentModel);
-                                                if (!contains) {
-                                                    deletedContentModel.setBean(bean);
-                                                    AppTabContentModel model = new AppTabContentModel(deletedContentModel.getViewType());
-                                                    model.setBean(bean);
-                                                    mContent.add(deletedPosition, model);
-                                                    deletedContentModel = null;
-                                                    notifyItemInserted(deletedPosition);
-                                                    notifyItemRangeChanged(deletedPosition, mContent.size());
-                                                }
-                                            } else {
-                                                notifyItemChanged(position);
-                                            }
+                                            notifyItemChanged(position);
                                         }
-
-                                    });
-                                }
-
-                            } else {
-                                notifyItemChanged(position);
-                            }
-                        },
-                        val -> {
-                            if (imageView != null && imageView.getContext() != null) {
-                                notifyItemChanged(position);
-                                Alerts.showSnackbar((Activity) imageView.getContext(), imageView.getContext().getResources().getString(R.string.something_went_wrong));
+                                    },
+                                    val -> {
+                                        if (imageView != null && imageView.getContext() != null) {
+                                            notifyItemChanged(position);
+                                            Alerts.showSnackbar((Activity) imageView.getContext(), imageView.getContext().getResources().getString(R.string.something_went_wrong));
 //                            Alerts.showAlertDialogOKBtn(imageView.getContext(), imageView.getContext().getResources().getString(R.string.failed_to_connect), imageView.getContext().getResources().getString(R.string.please_check_ur_connectivity));
-                            }
-                        }
-                );
+                                        }
+                                    }
+                            );
+                });
+
+
     }
 
     public int getDescriptionItemPosition() {

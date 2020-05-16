@@ -3,10 +3,10 @@
     {
       "title": "Home",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -14,10 +14,10 @@
     {
       "title": "States",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -221,10 +221,10 @@
     {
       "title": "Editorials & Opinion",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -512,10 +512,10 @@
     {
       "title": "My Stories",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "My Stories"
@@ -523,10 +523,10 @@
     {
       "title": "Profile",
       "iconUrl": {
-        "urlDark": "value",
-        "urlLight": "value",
-        "urlSelectedDark": "value",
-        "urlSelectedLight": "value"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
       },
       "group": "GROUP_PREMIUM_SECTIONS",
       "pageSource": "Profile"

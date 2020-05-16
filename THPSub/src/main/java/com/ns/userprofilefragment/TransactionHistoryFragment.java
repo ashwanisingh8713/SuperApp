@@ -76,7 +76,7 @@ public class TransactionHistoryFragment extends BaseFragmentTHP {
         mRecyclerViewPullToRefresh.showProgressBar();
         mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .subscribe(userProfile ->
-                    ApiManager.getTxnHistory(userProfile.getUserId(), BuildConfig.SITEID)
+                    ApiManager.getTxnHistory(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(txnDataBeans -> {
                                 mRecyclerViewPullToRefresh.hideProgressBar();

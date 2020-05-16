@@ -607,7 +607,7 @@ public class ApiManager {
     public static Observable<UserProfile> getUserInfoObject(Context context, String authorization, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
 
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, ReqBody.userInfo(deviceId, siteId, usrId));
-        return observable.subscribeOn(Schedulers.newThread())
+        return observable.subscribeOn(Schedulers.io())
                 .map(responseFromServer -> {
                             UserProfile userProfile = new UserProfile();
                             if (((JsonObject) responseFromServer).has("status")) {
@@ -837,10 +837,10 @@ public class ApiManager {
                 );
     }
 
-    public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String userid,
+    public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String authorization, String userid,
                                                                             final @RetentionDef.Recomendation String recotype,
                                                                             String size, String siteid) {
-        return ServiceFactory.getServiceAPIs().getRecommendation(userid, recotype, size, siteid, ReqBody.REQUEST_SOURCE)
+        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, userid, recotype, size, siteid, ReqBody.REQUEST_SOURCE)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             List<ArticleBean> beans = new ArrayList<>();
@@ -1068,11 +1068,11 @@ public class ApiManager {
     }
 
 
-    public static Observable<Boolean> createBookmarkFavLike(@NonNull String userId, @NonNull String siteId,
+    public static Observable<Boolean> createBookmarkFavLike(String authorization, @NonNull String userId, @NonNull String siteId,
                                                             @NonNull String contentId, @NonNull int bookmarkVal,
                                                             @NonNull int favoriteVal) {
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs()
-                .createBookmarkFavLike(ReqBody.createBookmarkFavLike(userId, siteId, contentId, bookmarkVal, favoriteVal));
+                .createBookmarkFavLike(authorization, ReqBody.createBookmarkFavLike(userId, siteId, contentId, bookmarkVal, favoriteVal));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     if (((JsonObject) value).has("status")) {
@@ -1601,7 +1601,7 @@ public class ApiManager {
 
     public static Observable<UserProfile> getUserProfile(Context context) {
         return Observable.just("userProfile")
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map(value -> {
                             DaoUserProfile dao = THPDB.getInstance(context).userProfileDao();
                             if (dao.getUserProfileTable() == null) {
@@ -1631,7 +1631,7 @@ public class ApiManager {
     public static Observable<KeyValueModel> updateProfile(Context context, UserProfile userProfile, String siteId,
                                                           String FullName, String DOB,
                                                           String Gender, String Profile_Country, String Profile_State) {
-        return ServiceFactory.getServiceAPIs().updateProfile(ReqBody.updateProfile(userProfile.getEmailId(), userProfile.getContact(),
+        return ServiceFactory.getServiceAPIs().updateProfile(userProfile.getAuthorization(), ReqBody.updateProfile(userProfile.getEmailId(), userProfile.getContact(),
                 siteId, userProfile.getUserId(), FullName, DOB, Gender, Profile_Country, Profile_State))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -1661,7 +1661,7 @@ public class ApiManager {
                                                           String address_house_no, String address_street, String address_landmark,
                                                           String address_pincode, String address_state, String address_city,
                                                           String address_default_option, String address_fulllname) {
-        return ServiceFactory.getServiceAPIs().updateAddress(ReqBody.updateAddress(userProfile.getEmailId(),
+        return ServiceFactory.getServiceAPIs().updateAddress(userProfile.getAuthorization(), ReqBody.updateAddress(userProfile.getEmailId(),
                 userProfile.getContact(), siteId, userProfile.getUserId(), address_house_no, address_street, address_landmark,
                 address_pincode, address_state, address_city, address_default_option, address_fulllname))
                 .subscribeOn(Schedulers.newThread())
@@ -1697,8 +1697,8 @@ public class ApiManager {
      * @param userId
      * @return
      */
-    public static Observable<List<TxnDataBean>> getTxnHistory(String userId, String siteId) {
-        return ServiceFactory.getServiceAPIs().getTxnHistory(userId, "0", siteId, "app")
+    public static Observable<List<TxnDataBean>> getTxnHistory(String authorization, String userId, String siteId) {
+        return ServiceFactory.getServiceAPIs().getTxnHistory(authorization, userId, "0", siteId, "app")
                 .subscribeOn(Schedulers.newThread())
                 .map(jsonElement -> {
                             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -1721,8 +1721,8 @@ public class ApiManager {
      * @param newPasswd
      * @return
      */
-    public static Observable<KeyValueModel> updatePassword(String userId, String oldPasswd, String newPasswd) {
-        return ServiceFactory.getServiceAPIs().updatePassword(ReqBody.updatePassword(userId, oldPasswd, newPasswd))
+    public static Observable<KeyValueModel> updatePassword(String authorization, String userId, String oldPasswd, String newPasswd) {
+        return ServiceFactory.getServiceAPIs().updatePassword(authorization, ReqBody.updatePassword(userId, oldPasswd, newPasswd))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -1855,8 +1855,8 @@ public class ApiManager {
      * @param siteId
      * @return
      */
-    public static Observable<List<TxnDataBean>> getUserPlanInfo(String userId, String siteId) {
-        return ServiceFactory.getServiceAPIs().getUserPlanInfo(userId, siteId, ReqBody.REQUEST_SOURCE)
+    public static Observable<List<TxnDataBean>> getUserPlanInfo(String authorization, String userId, String siteId) {
+        return ServiceFactory.getServiceAPIs().getUserPlanInfo(authorization, userId, siteId, ReqBody.REQUEST_SOURCE)
                 .subscribeOn(Schedulers.newThread())
                 .map(value ->
                         {
@@ -2023,20 +2023,11 @@ public class ApiManager {
     }
 
 
-    public static Observable<KeyValueModel> createSubscription(String userid,
-                                                               String trxnid,
-                                                               String amt,
-                                                               String channel,
-                                                               String siteid,
-                                                               String planid,
-                                                               String plantype,
-                                                               String billingchannel,
-                                                               String validity,
-                                                               String contact,
-                                                               String currency,
-                                                               String tax,
-                                                               String netAmount) {
-        return ServiceFactory.getServiceAPIs().createSubscription(ReqBody.createSubscription(userid, trxnid,
+    public static Observable<KeyValueModel> createSubscription(String authorization, String userid, String trxnid,
+                                                               String amt, String channel, String siteid, String planid,
+                                                               String plantype, String billingchannel, String validity,
+                                                               String contact, String currency, String tax, String netAmount) {
+        return ServiceFactory.getServiceAPIs().createSubscription(authorization, ReqBody.createSubscription(userid, trxnid,
                 amt, channel, siteid, planid, plantype, billingchannel, validity, contact, currency, tax, netAmount))
                 .subscribeOn(Schedulers.newThread())
                 .map(jsonElement -> {
@@ -2085,14 +2076,14 @@ public class ApiManager {
                                     }
                                     keyValueModel.setUserId(userId);
 
-                                    // If account is new then we need to send free plan API
-                                    if (isNew.equals("1")) {
-                                        ApiManager.freePlan(userId, userEmail, siteId);
-                                    }
-
                                     if(((JsonObject) value).has("token")) {
                                         String token = ((JsonObject) value).get("token").getAsString();
                                         keyValueModel.setToken(token);
+                                    }
+
+                                    // If account is new then we need to send free plan API
+                                    if (isNew.equals("1")) {
+                                        ApiManager.freePlan(keyValueModel.getToken(), userId, userEmail, siteId);
                                     }
 
                                     return keyValueModel;
@@ -2226,7 +2217,7 @@ public class ApiManager {
         PremiumPref.getInstance(context).setIsRefreshRequired(true);
     }
 
-    public static void freePlan(String userId, String contact, String siteid) {
+    public static void freePlan(String authorization, String userId, String contact, String siteid) {
 
         String trxnid = "A";
         Calendar calendar = Calendar.getInstance();
@@ -2241,7 +2232,7 @@ public class ApiManager {
         trxnid += thisYear + thisMonth + thisDay + "KCaFREE" + hour + minute + second;
         JsonObject jsonObject = ReqBody.freePlan(userId, contact, trxnid, siteid);
 
-        ServiceFactory.getServiceAPIs().freePlan(jsonObject)
+        ServiceFactory.getServiceAPIs().freePlan(authorization, jsonObject)
                 .subscribeOn(Schedulers.newThread())
                 .repeatWhen(value -> {
                     /**
@@ -2266,7 +2257,7 @@ public class ApiManager {
     }
 
 
-    public static Observable<Boolean> freePlanF(String userId, String contact, String siteid) {
+    public static Observable<Boolean> freePlanF(String authorization, String userId, String contact, String siteid) {
 
         String trxnid = "A";
         Calendar calendar = Calendar.getInstance();
@@ -2281,7 +2272,7 @@ public class ApiManager {
         trxnid += thisYear + thisMonth + thisDay + "KCaFREE" + hour + minute + second;
         JsonObject jsonObject = ReqBody.freePlan(userId, contact, trxnid, siteid);
 
-        return ServiceFactory.getServiceAPIs().freePlan(jsonObject)
+        return ServiceFactory.getServiceAPIs().freePlan(authorization, jsonObject)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     if (((JsonObject) value).has("status")) {

@@ -18,34 +18,30 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:contentInsetLeft="0dp"
             android:contentInsetStart="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            android:contentInsetRight="0dp"
+            android:contentInsetLeft="0dp"
             android:contentInsetEnd="0dp"
-            app:contentInsetRight="0dp"
+            android:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"
-            />
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp" />
 
         <FrameLayout
             android:id="@+id/parentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/noConnectionTabText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:textType="S"
-            android:text="No connection"
             android:gravity="center_horizontal"
-            android:visibility="gone"
+            android:text="No connection"
             android:textSize="@dimen/textSize_10sp"
-            />
-
+            android:visibility="gone"
+            app:textType="S" />
 
 
     </com.ns.view.layout.NSLinearLayout>
@@ -55,16 +51,36 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        >
-        <ExpandableListView
-            android:id="@+id/expandableListView"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:background="@android:color/white"
-            android:dividerHeight="0dp"
-            android:groupIndicator="@null" />
+            android:layout_marginTop="@dimen/topbarHeight"
+            android:orientation="vertical">
+
+            <com.ns.view.LogoImgView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                app:logoType="Splash" />
+
+            <View style="@style/dividerStyle" />
+
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:childDivider="@android:color/transparent"
+                android:childIndicator="@null"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null"
+                android:scrollbars="none" />
+        </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

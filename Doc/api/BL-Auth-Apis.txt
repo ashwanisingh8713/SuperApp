@@ -1,0 +1,44 @@
+2.3 Logout
+'http://tai.thehindu.co.in/v1/auth/logout/HINDU
+
+2.6 UserInfo
+http://tai.thehindu.co.in/v1/auth/userInfo/HINDU
+
+2.7 Edit Profile
+http://tai.thehindu.co.in/v1/auth/updateUserInfo/HINDU
+
+2.9 Update Password
+http://tai.thehindu.co.in/v1/auth/updatePassword/HINDU
+
+2.11 Set Preference
+http://tai.thehindu.co.in/v1/auth/userPreference/HINDU
+
+4.8 Create Free Subscription
+http://tai.thehindu.co.in/v1/subscription/createfreesub/HINDU
+
+4.2 Create Subscription
+http://tai.thehindu.co.in/v1/subscription/createsub/HINDU
+
+4.3  Handle CallBack of Subscription Request :  paytm/icici
+http://tai.thehindu.co.in/v1/subscription/subcallback/HINDU  // Not Used
+
+4.4 Get user Plan detail
+http://tai.thehindu.co.in/v1/subscription/getuserplaninfo/HINDU
+
+4.6 Transaction Detail
+http://tai.thehindu.co.in/v1/charging/transaction/detail/HINDU
+
+4.7 Invoice Download
+http://tai.thehindu.co.in/v1/charging/invoice // Not Used
+
+5.1 UserDashBoard Reco
+http://tai.thehindu.co.in/v1/mydashboard/userreco/HINDU
+
+5.2 Preference List Reco
+http://tai.thehindu.co.in/v1/mydashboard/preflistreco/HINDU // Not Used
+
+5.3 Add/Update user Bookmark/Favourite/Dislike
+http://tai.thehindu.co.in/v1/mydashboard/userchoice/HINDU
+
+5.4 Fetch user Bookmark/Favourite/Dislike
+http://tai.thehindu.co.in/v1/mydashboard/userchoicelist/HINDU // Not Used

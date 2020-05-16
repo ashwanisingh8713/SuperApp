@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
@@ -52,6 +54,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private AppTabContentAdapter mRecyclerAdapter;
     private String mUserId;
     private String mGoupType;
+    private UserProfile mUserProfile;
 
     public static THP_BookmarksFragment getInstance(String userId, String groupType) {
         THP_BookmarksFragment fragment = new THP_BookmarksFragment();
@@ -104,6 +107,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
         loadData();
 
+        mDisposable.add(ApiManager.getUserProfile(getActivity())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userProfile -> {
+                    mUserProfile = userProfile;
+                    loadData();
+                }));
+
     }
 
     @Override
@@ -152,15 +162,10 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
      * @param isOnline
      */
     private void loadData(boolean isOnline) {
-
-
-
         Observable<List<ArticleBean>> observable = null;
-
         if (isOnline && mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
-            observable = ApiManager.getRecommendationFromServer(getActivity(), mUserId,
+            observable = ApiManager.getRecommendationFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId,
                     NetConstants.API_bookmarks, ""+1000, BuildConfig.SITEID);
-
         }
         else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);

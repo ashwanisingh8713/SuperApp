@@ -12,9 +12,6 @@ import com.ns.model.IndicesSection;
 
 import java.util.List;
 
-/**
- * Created by 9920 on 11/9/2017.
- */
 
 public class IndicesTabViewPagerAdapter extends FragmentStatePagerAdapter {
 
