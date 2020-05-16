@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.model.TxnDataBean;
+import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.ns.activity.THPUserProfileActivity;
 import com.ns.adapter.SubscriptionPackAdapter;
@@ -34,10 +35,9 @@ public class SubscriptionPackFragment extends BaseFragmentTHP  implements OnSubs
     private SubscriptionPackAdapter mAdapter;
 
     private String mFrom;
+    private UserProfile mUserProfile;
 
     private THPUserProfileActivity mTHPUserProfileActivity;
-
-
     private OnSubscribeBtnClick mOnSubscribeBtnClick;
     private OnPlanInfoLoad mPlanInfoLoad;
 
@@ -113,6 +113,7 @@ public class SubscriptionPackFragment extends BaseFragmentTHP  implements OnSubs
         mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
+                    mUserProfile = userProfile;
                     mUserId = userProfile.getUserId();
                     /*if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_PROFILE_VIEWALL)) {
                         loadUserPlanData();
@@ -132,7 +133,7 @@ public class SubscriptionPackFragment extends BaseFragmentTHP  implements OnSubs
      * Load User Plan Info
      */
     private void loadUserPlanData() {
-        mDisposable.add(ApiManager.getUserPlanInfo(mUserId, BuildConfig.SITEID)
+        mDisposable.add(ApiManager.getUserPlanInfo(mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(planInfoList->{
                     if(planInfoList.size() != 0) {

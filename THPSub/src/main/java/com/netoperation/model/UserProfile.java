@@ -57,7 +57,14 @@ public class UserProfile {
     }
 
     public void setAuthorization(String authorization) {
-        this.authorization = authorization;
+        if(authorization != null && authorization.contains("Bearer")) {
+            this.authorization = authorization;
+        } else if(authorization == null) {
+            this.authorization = "";
+        } else {
+            this.authorization = "Bearer "+authorization;
+        }
+
     }
 
     private ArrayList<TxnDataBean> userPlanList;

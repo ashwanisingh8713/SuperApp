@@ -5,6 +5,7 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.netoperation.config.model.ContentUrl;
 import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.config.model.PlaceHolder;
 import com.netoperation.config.model.WidgetIndex;
@@ -211,6 +212,19 @@ public class Converters {
     @TypeConverter
     public static OtherIconsDownloadUrls stringToOtherIconsDownloadUrlsBean(String value) {
         Type listType = new TypeToken<OtherIconsDownloadUrls>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String ContentUrlToString(ContentUrl contentUrl) {
+        Gson gson = new Gson();
+        String json = gson.toJson(contentUrl);
+        return json;
+    }
+
+    @TypeConverter
+    public static ContentUrl stringToContentUrl(String value) {
+        Type listType = new TypeToken<ContentUrl>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 

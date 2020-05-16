@@ -42,8 +42,8 @@ android {
             //applicationIdSuffix ".test"
 
             // BL Base URL
-            buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
-            buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
+            //buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v2/\""
+            //buildConfigField "String", "NEWS_DIGEST_URL", "\"http://thehindubusinessline.com/newsletter/\""
             buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "boolean", "IS_BL", "true"
 
@@ -65,10 +65,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindubusinessline.com/app/search.json?term=\""
-
-
-            buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            //buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
             buildConfigField "String", "TWITTER_API_KEY", "\"j2rIA5nAJCNVvAvQzOK9YOebE\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"77I77S0CeAQgcZOLFJGrSKQ2Srta3F1Jvk1nIbjdjiSJh3jod\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
@@ -90,8 +87,8 @@ android {
             applicationId "com.mobstac.thehindu"
 
             // TH Base URL
-            buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
-            buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
+            //buildConfigField "String", "DEFAULT_BASE_URL", "\"https://app.thehindu.com/hindu/service/api_v1.004/\""
+            //buildConfigField "String", "NEWS_DIGEST_URL", "\"https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php\""
             buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "boolean", "IS_BL", "false"
 
@@ -113,9 +110,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_SEARCH_BY_ARTICLE_TEXT_URL", "\"https://www.thehindu.com/app/search.json?term=\""
-
-            buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            //buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""

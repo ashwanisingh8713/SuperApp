@@ -11,6 +11,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoConfiguration;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 public class PeriodicWork extends Worker {
@@ -43,23 +45,36 @@ public class PeriodicWork extends Worker {
     }
 
     private void getSectionData() {
-        DefaultTHApiManager.writeSectionReponseInTempTable(mContext, System.currentTimeMillis(), new RequestCallback() {
-            @Override
-            public void onNext(Object o) {
+        Observable.just("Configuration")
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    DaoConfiguration daoConfiguration = THPDB.getInstance(mContext).daoConfiguration();
+                    String contentDefaultUrl = daoConfiguration.getConfiguration().getContentUrl().getBaseUrlDefault();
 
-            }
+                    return contentDefaultUrl;
+                })
+                .subscribe(contentDefaultUrl->{
+                    DefaultTHApiManager.writeSectionReponseInTempTable(mContext, contentDefaultUrl, System.currentTimeMillis(), new RequestCallback() {
+                        @Override
+                        public void onNext(Object o) {
 
-            @Override
-            public void onError(Throwable t, String str) {
+                        }
 
-            }
+                        @Override
+                        public void onError(Throwable t, String str) {
 
-            @Override
-            public void onComplete(String str) {
-                Log.i("BackgroundWork", "Received Section Data from server");
-                getHomeDatafromServer();
-            }
-        }, "PeriodicWork");
+                        }
+
+                        @Override
+                        public void onComplete(String str) {
+                            Log.i("BackgroundWork", "Received Section Data from server");
+                            getHomeDatafromServer();
+                        }
+                    }, "PeriodicWork");
+                }, throwable -> {
+
+                });
+
     }
 
     // Get Home Article from server

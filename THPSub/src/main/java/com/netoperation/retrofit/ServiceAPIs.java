@@ -64,13 +64,13 @@ public interface ServiceAPIs {
     Observable<JsonElement> userInfo(@Header("Authorization") String authorization, @Body JsonObject userInfoBody);
 
     @POST("/taiauth/updateUserInfo/HINDU")
-    Observable<JsonElement> editProfile(@Body JsonObject editProfileBody);
+    Observable<JsonElement> editProfile(@Header("Authorization") String authorization,@Body JsonObject editProfileBody);
 
     @POST("/taiauth/validateOtp/HINDU")
     Observable<JsonElement> validateOtp(@Body JsonObject validateOtpBody);
 
     @POST("/taiauth/updatePassword/HINDU")
-    Observable<JsonElement> updatePassword(@Body JsonObject updatePasswordBody);
+    Observable<JsonElement> updatePassword(@Header("Authorization") String authorization, @Body JsonObject updatePasswordBody);
 
     @POST("/taiauth/updateAccountStatus/HINDU")
     Observable<JsonElement> suspendAccount(@Body JsonObject suspendAccountBody);
@@ -79,14 +79,14 @@ public interface ServiceAPIs {
     Observable<JsonElement> deleteAccount(@Body JsonObject deleteAccountBody);
 
     @GET("/mydashboard/userreco/hindu")
-    Observable<RecomendationData> getRecommendation(@Query("userid") String userid, @Query("recotype") String recotype,
+    Observable<RecomendationData> getRecommendation(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("recotype") String recotype,
                                                     @Query("size") String size, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
     @POST("/mydashboard/userchoice/HINDU")
-    Observable<JsonElement> createBookmarkFavLike(@Body JsonObject bookmarkFavLikeBody);
+    Observable<JsonElement> createBookmarkFavLike(@Header("Authorization") String authorization, @Body JsonObject bookmarkFavLikeBody);
 
     @GET("/mydashboard/userchoicelist/HINDU")
-    Observable<List<UserChoice>> getBookmarkFavLike(@Query("userid") String userid, @Query("siteid") String siteid);
+    Observable<List<UserChoice>> getBookmarkFavLike(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid);
 
     @GET("")
     Observable<SearchedArticleModel> searchArticleByIDFromServer(@Url String url);
@@ -105,10 +105,10 @@ public interface ServiceAPIs {
     Observable<ArrayList<KeyValueModel>> getState(@Query("type") String type, @Query("country") String country);
 
     @POST("taiauth/updateUserInfo/HINDU")
-    Observable<JsonElement> updateProfile(@Body JsonObject updateProfile);
+    Observable<JsonElement> updateProfile(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
     @POST("taiauth/updateUserInfo/HINDU")
-    Observable<JsonElement> updateAddress(@Body JsonObject updateProfile);
+    Observable<JsonElement> updateAddress(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
     @POST("taiauth/userPreference/hindu")
     Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
@@ -117,16 +117,16 @@ public interface ServiceAPIs {
     Observable<SelectedPrefModel> getPersonalise(@Body JsonObject updateProfile);
 
     @GET("charging/transaction/detail/HINDU")
-    Observable<JsonElement> getTxnHistory(@Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);
+    Observable<JsonElement> getTxnHistory(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);
 
     @GET("subscription/getuserplaninfo/HINDU")
-    Observable<UserPlanList> getUserPlanInfo(@Query("userid") String userid, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
+    Observable<UserPlanList> getUserPlanInfo(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
     @GET("subscription/getplaninfo/HINDU")
     Observable<PlanRecoModel> getRecommendedPlan(@Query("siteid") String siteid, @Query("tagid") String tagid,
                                                  @Query("isInd") String isInd, @Query("isPlt") String isPlt);
     @POST("subscription/createsub/HINDU")
-    Observable<JsonElement> createSubscription(@Body JsonObject subscriptionBody);
+    Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Body JsonObject subscriptionBody);
 
 
 
@@ -163,7 +163,7 @@ public interface ServiceAPIs {
 
 
     @POST("/subscription/createfreesub/HINDU")
-    Observable<JsonElement> freePlan(@Body JsonObject recommendationBody);
+    Observable<JsonElement> freePlan(@Header("Authorization") String authorization, @Body JsonObject recommendationBody);
 
 
     // ######################################################################################################## //

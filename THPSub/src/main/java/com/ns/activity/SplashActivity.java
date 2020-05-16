@@ -32,6 +32,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -300,7 +301,9 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onNext(TableConfiguration configuration) {
                 if(configuration != null) {
-
+                    DefaultPref.getInstance(SplashActivity.this).setDefaultContentBaseUrl(configuration.getContentUrl().getBaseUrlDefault());
+                    DefaultPref.getInstance(SplashActivity.this).setNewsDigestUrl(configuration.getContentUrl().getNewsDigest());
+                    PremiumPref.getInstance(SplashActivity.this).setPremiumContentBaseUrl(configuration.getContentUrl().getBaseUrlPremium());
                 }
             }
 

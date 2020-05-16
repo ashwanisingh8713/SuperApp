@@ -65,7 +65,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             mFrom = getArguments().getString("from");
         }
     }
@@ -84,17 +84,17 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
 
 
         // Back button click listener
-        view.findViewById(R.id.backBtn).setOnClickListener(v-> {
+        view.findViewById(R.id.backBtn).setOnClickListener(v -> {
                     if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0)
                         FragmentUtil.clearSingleBackStack((AppCompatActivity) getActivity());
                     else
                         getActivity().onBackPressed();
-                    }
+                }
         );
 
         view.findViewById(R.id.exploreSubscriptionPlans_Txt).setOnClickListener(view1 -> {
-            if(BaseAcitivityTHP.sIsOnline) {
-                RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("",null);
+            if (BaseAcitivityTHP.sIsOnline) {
+                RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance("", null);
                 FragmentUtil.addFragmentAnim((AppCompatActivity) getActivity(), R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
                 //CleverTap
                 HashMap<String, Object> map = new HashMap<>();
@@ -135,12 +135,12 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
     public void onResume() {
         super.onResume();
 
-        if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_ACCOUNT_CREATED)) {
+        if (mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_ACCOUNT_CREATED)) {
             Observable.just("justDealy")
                     .subscribeOn(Schedulers.newThread())
                     .delay(5, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(vaule->{
+                    .subscribe(vaule -> {
                         loadData();
                     });
         } else {
@@ -173,8 +173,8 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
                                     ArrayList<TxnDataBean> activePlan = new ArrayList<>();
 
                                     // As per requirement only one active plan should be shown.
-                                    for(TxnDataBean bean : planBeans) {
-                                        if(bean.getIsActive() == 1) {
+                                    for (TxnDataBean bean : planBeans) {
+                                        if (bean.getIsActive() == 1) {
                                             activePlan.add(bean);
                                             break;
                                         }
@@ -199,50 +199,49 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
                                     subscriptionPlanModels.add(txnTitleModel);*/
                                 }
 
-                            ApiManager.getUserPlanInfo(userProfile.getUserId(), BuildConfig.SITEID)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(txnDataBeans -> {
-                                        hideProgressDialog();
-                                        if (txnDataBeans != null) {
-                                            Collections.sort(txnDataBeans, (txnDataBean, t1) -> t1.getIsActive() - txnDataBean.getIsActive());
-                                        }
-
-                                        // Here we are adding Purchased Plan Title and Subtitle
-                                        if(txnDataBeans != null && txnDataBeans.size() > 0) {
-                                            SubscriptionPlanModel txnTitleModel = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_TITLE);
-                                            txnTitleModel.setTitle("Purchased Plans");
-                                            txnTitleModel.setSubTitle("Your list of purchased plan");
-                                            subscriptionPlanModels.add(txnTitleModel);
-                                        }
-                                        else {
-                                            SubscriptionPlanModel txnTitleModel = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_TITLE);
-                                            txnTitleModel.setTitle("Purchased Plans");
-                                            txnTitleModel.setSubTitle("You have not purchased any plans yet");
-                                            subscriptionPlanModels.add(txnTitleModel);
-                                        }
-
-                                        for(TxnDataBean bean : txnDataBeans) {
-                                            // Here we are adding Purchased Plan Item view data
-                                            SubscriptionPlanModel model1 = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_ITEM);
-                                            model1.setTxnDataBean(bean);
-                                            subscriptionPlanModels.add(model1);
-                                        }
-
-                                        // This is MutliView Recycler Adapter
-                                        SubscriptionPlanAdapter adapter = new SubscriptionPlanAdapter(subscriptionPlanModels);
-                                        recyclerView.setAdapter(adapter);
-                                    }, throwable -> {
-                                        if(getActivity() != null && getView() != null) {
+                                mDisposable.add(ApiManager.getUserPlanInfo(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(txnDataBeans -> {
                                             hideProgressDialog();
-                                            Alerts.showSnackbar(getActivity(), getResources().getString(R.string.something_went_wrong));
-                                        }
-                                    }, () -> {
-                                        if(getActivity() != null && getView() != null) {
-                                            hideProgressDialog();
-                                        }
-                                    });
+                                            if (txnDataBeans != null) {
+                                                Collections.sort(txnDataBeans, (txnDataBean, t1) -> t1.getIsActive() - txnDataBean.getIsActive());
+                                            }
+
+                                            // Here we are adding Purchased Plan Title and Subtitle
+                                            if (txnDataBeans != null && txnDataBeans.size() > 0) {
+                                                SubscriptionPlanModel txnTitleModel = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_TITLE);
+                                                txnTitleModel.setTitle("Purchased Plans");
+                                                txnTitleModel.setSubTitle("Your list of purchased plan");
+                                                subscriptionPlanModels.add(txnTitleModel);
+                                            } else {
+                                                SubscriptionPlanModel txnTitleModel = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_TITLE);
+                                                txnTitleModel.setTitle("Purchased Plans");
+                                                txnTitleModel.setSubTitle("You have not purchased any plans yet");
+                                                subscriptionPlanModels.add(txnTitleModel);
+                                            }
+
+                                            for (TxnDataBean bean : txnDataBeans) {
+                                                // Here we are adding Purchased Plan Item view data
+                                                SubscriptionPlanModel model1 = new SubscriptionPlanModel(SubscriptionPlanAdapter.VT_PURCHASED_ITEM);
+                                                model1.setTxnDataBean(bean);
+                                                subscriptionPlanModels.add(model1);
+                                            }
+
+                                            // This is MutliView Recycler Adapter
+                                            SubscriptionPlanAdapter adapter = new SubscriptionPlanAdapter(subscriptionPlanModels);
+                                            recyclerView.setAdapter(adapter);
+                                        }, throwable -> {
+                                            if (getActivity() != null && getView() != null) {
+                                                hideProgressDialog();
+                                                Alerts.showSnackbar(getActivity(), getResources().getString(R.string.something_went_wrong));
+                                            }
+                                        }, () -> {
+                                            if (getActivity() != null && getView() != null) {
+                                                hideProgressDialog();
+                                            }
+                                        }));
+                            }
                         }
-    }
                         , throwable -> {
 
                         }));
@@ -253,7 +252,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
     private void fetchLatestUserInfo(String authorization) {
         String loginId = PremiumPref.getInstance(getActivity()).getLoginTypeId();
         String loginPasswd = PremiumPref.getInstance(getActivity()).getLoginPasswd();
-        ApiManager.getUserInfoObject(getActivity(), authorization, BuildConfig.SITEID,
+        mDisposable.add(ApiManager.getUserInfoObject(getActivity(), authorization, BuildConfig.SITEID,
                 ResUtil.getDeviceId(getActivity()), mUserId, loginId, loginPasswd)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
@@ -284,7 +283,7 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
                             CleverTapUtil.cleverTapEvent(getActivity(), THPConstants.CT_EVENT_PROFILE, map);
                         }
 
-                        ApiManager.getUserPlanInfo(userProfile.getUserId(), BuildConfig.SITEID)
+                        mDisposable.add(ApiManager.getUserPlanInfo(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(txnDataBeans -> {
                                     hideEmptyLayout();
@@ -317,26 +316,26 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
                                     SubscriptionPlanAdapter adapter = new SubscriptionPlanAdapter(subscriptionPlanModels);
                                     recyclerView.setAdapter(adapter);
                                 }, throwable -> {
-                                    if(getActivity() != null && getView() != null) {
+                                    if (getActivity() != null && getView() != null) {
                                         hideProgressDialog();
                                         showEmptyLayout();
                                     }
                                 }, () -> {
-                                    if(getActivity() != null && getView() != null) {
+                                    if (getActivity() != null && getView() != null) {
                                         hideProgressDialog();
                                     }
-                                });
+                                }));
                     }
                 }, thr -> {
-                    if(getActivity() != null && getView() != null) {
+                    if (getActivity() != null && getView() != null) {
                         showEmptyLayout();
                         hideProgressDialog();
                     }
-                }, ()->{
-                    if(getActivity() != null && getView() != null) {
+                }, () -> {
+                    if (getActivity() != null && getView() != null) {
                         hideProgressDialog();
                     }
-                } );
+                }));
     }
 
     private void hideEmptyLayout() {
@@ -371,7 +370,6 @@ public class SubscriptionStep_3_Fragment extends BaseFragmentTHP {
             loadData();
         });
     }
-
 
 
 }

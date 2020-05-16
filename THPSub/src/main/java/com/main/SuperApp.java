@@ -25,6 +25,7 @@ import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -98,7 +99,8 @@ public class SuperApp extends Application implements LifecycleObserver  {
         isInBackground =true;
 
         // When app is in background then it will fetch section data from server
-        DefaultTHApiManager.writeSectionReponseInTempTable(this, System.currentTimeMillis(), new RequestCallback() {
+        DefaultTHApiManager.writeSectionReponseInTempTable(this, DefaultPref.getInstance(this).getDefaultContentBaseUrl(),
+                System.currentTimeMillis(), new RequestCallback() {
             @Override
             public void onNext(Object o) {
 

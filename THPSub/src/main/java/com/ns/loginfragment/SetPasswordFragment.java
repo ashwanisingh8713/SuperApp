@@ -353,7 +353,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                         progressBar.setVisibility(View.VISIBLE);
                         submit_Txt.setEnabled(false);
                         // Create free plan
-                        freePlan(keyValueModel.getUserId(), keyValueModel.getContact());
+                        freePlan(keyValueModel.getToken(), keyValueModel.getUserId(), keyValueModel.getContact());
                         /*Intent intent = new Intent();
                         intent.putExtra("isKillToBecomeMemberActivity", true);
                         if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {
@@ -509,8 +509,8 @@ public class SetPasswordFragment extends BaseFragmentTHP {
 
     }
 
-    private void freePlan(String userId, String contact) {
-        ApiManager.freePlanF(userId, contact, BuildConfig.SITEID)
+    private void freePlan(String authorization, String userId, String contact) {
+        ApiManager.freePlanF(authorization, userId, contact, BuildConfig.SITEID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
 

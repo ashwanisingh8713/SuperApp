@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.main.SuperApp;
 import com.mindorks.scheduler.Priority;
 import com.mindorks.scheduler.RxPS;
 import com.netoperation.config.download.FileUtils;
@@ -89,12 +90,11 @@ public class DefaultTHApiManager {
 
     /**
      * Inserts SectionAndWedget object response into respective table.
-     * @param context
      * @param sectionAndWidget
      * @return
      */
-    private static SectionAndWidget insertSectionResponseInDB(Context context, SectionAndWidget sectionAndWidget, boolean isFromTempTable) {
-        THPDB db = THPDB.getInstance(context);
+    private static SectionAndWidget insertSectionResponseInDB(SectionAndWidget sectionAndWidget, boolean isFromTempTable) {
+        THPDB db = THPDB.getInstance(SuperApp.getAppContext());
         DaoSection daoSection = db.daoSection();
         DaoBanner daoBanner = db.daoBanner();
         DaoWidget daoWidget = db.daoWidget();
@@ -183,12 +183,12 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable sectionDirectFromServer(Context context, RequestCallback callback, final long executionTime) {
-        String url = BuildConfig.DEFAULT_BASE_URL + "sectionList_v4.php";
+        String url = DefaultPref.getInstance(context).getDefaultContentBaseUrl() + "sectionList_v4.php";
         Observable<SectionAndWidget> observable = ServiceFactory.getServiceAPIs().sectionList(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
                 .map(sectionAndWidget -> {
-                            return insertSectionResponseInDB(context, sectionAndWidget, false);
+                            return insertSectionResponseInDB(sectionAndWidget, false);
                         }
                 )
                 .subscribe(value -> {
@@ -220,7 +220,7 @@ public class DefaultTHApiManager {
                     TableTempWork tempSection = daoTempWork.getTableTempWork(NetConstants.TEMP_SECTION_ID);
                     Gson gson = new Gson();
                     SectionAndWidget sectionAndWidget = gson.fromJson(tempSection.getJsonString(), SectionAndWidget.class);
-                    return insertSectionResponseInDB(context, sectionAndWidget, true);
+                    return insertSectionResponseInDB(sectionAndWidget, true);
                 })
                 .subscribe(value -> {
                     if (callback != null) {
@@ -246,8 +246,8 @@ public class DefaultTHApiManager {
      * @param context
      * @return
      */
-    public static Disposable writeSectionReponseInTempTable(Context context, final long executionTime, RequestCallback callback, String from) {
-        String url = BuildConfig.DEFAULT_BASE_URL + "sectionList_v4.php";
+    public static Disposable writeSectionReponseInTempTable(Context context, String defaultContentBaseUrl, final long executionTime, RequestCallback callback, String from) {
+        String url = defaultContentBaseUrl + "sectionList_v4.php";
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().sectionListForJson(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
                 .timeout(15, TimeUnit.SECONDS)
@@ -325,7 +325,9 @@ public class DefaultTHApiManager {
             return bannerObservable
                     .switchMap(tableBanner -> {
                         return sectionObservable.map(personaliseIdsTable -> {
-                            final String url = BuildConfig.DEFAULT_BASE_URL + "newsFeed.php";
+                            DaoConfiguration daoConfiguration = THPDB.getInstance(SuperApp.getAppContext()).daoConfiguration();
+                            String contentDefaultUrl = daoConfiguration.getConfiguration().getContentUrl().getBaseUrlDefault();
+                            final String url = contentDefaultUrl + "newsFeed.php";
                             String bannerId = tableBanner.getSecId();
 
                             final JsonArray personliseSectionIds = new JsonArray();
@@ -423,50 +425,66 @@ public class DefaultTHApiManager {
      * @param sections
      * @return
      */
-    public static Disposable widgetContent(Context context, Map<String, String> sections) {
-        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
-        final Observable[] observables = new Observable[sections.size()];
-        int count = 0;
-        for (Map.Entry<String, String> entry : sections.entrySet()) {
-            observables[count] = ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(entry.getKey(), 1, entry.getValue(), 0))
-                    .subscribeOn(Schedulers.newThread());
-            count++;
-        }
-        if (observables.length > 0) {
-            return Observable.mergeArray(observables)
-                    .map(value -> {
-                        SectionContentFromServer sectionContent = (SectionContentFromServer) value;
-                        THPDB thpdb = THPDB.getInstance(context);
-                        DaoWidget daoWidget = thpdb.daoWidget();
-                        DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
-                        if(sectionContent.getData().getArticle().size() > 0) {
-                            TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
-                            tableWidget.setBeans(sectionContent.getData().getArticle());
-                            daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
+    public static void widgetContent(Context context, Map<String, String> sections) {
 
-                            // Delete Articles from respective TableSectionArticle
-                            daoSectionArticle.deleteSectionAllArticle(sectionContent.getData().getSid());
-                            // Insert Articles in respective TableSectionArticle
-                            TableSectionArticle tableSectionArticle = new TableSectionArticle(sectionContent.getData().getSid(), sectionContent.getData().getSname(), 1, sectionContent.getData().getArticle());
-                            daoSectionArticle.insertSectionArticle(tableSectionArticle);
+        Observable.just("Configuration")
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    DaoConfiguration daoConfiguration = THPDB.getInstance(context).daoConfiguration();
+                    String contentDefaultUrl = daoConfiguration.getConfiguration().getContentUrl().getBaseUrlDefault();
+                    return contentDefaultUrl;
+                })
+                .subscribe(contentDefaultUrl->{
 
-                            Log.i("HomeData", "widgetContent :: Inserted");
-                        }
-                        else {
-                            Log.i("HomeData", "widgetContent :: Not Valid");
-                        }
+                    final String url = contentDefaultUrl + "section-content.php";
+                    final Observable[] observables = new Observable[sections.size()];
+                    int count = 0;
+                    for (Map.Entry<String, String> entry : sections.entrySet()) {
+                        observables[count] = ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(entry.getKey(), 1, entry.getValue(), 0))
+                                .subscribeOn(Schedulers.newThread());
+                        count++;
+                    }
+                    if (observables.length > 0) {
+                        Observable.mergeArray(observables)
+                                .map(value -> {
+                                    SectionContentFromServer sectionContent = (SectionContentFromServer) value;
+                                    THPDB thpdb = THPDB.getInstance(context);
+                                    DaoWidget daoWidget = thpdb.daoWidget();
+                                    DaoSectionArticle daoSectionArticle = thpdb.daoSectionArticle();
+                                    if(sectionContent.getData().getArticle().size() > 0) {
+                                        TableWidget tableWidget = daoWidget.getWidget(sectionContent.getData().getSid());
+                                        tableWidget.setBeans(sectionContent.getData().getArticle());
+                                        daoWidget.deleteAndInsertWidget(sectionContent.getData().getSid(), tableWidget);
 
-                        return sectionContent.getData().getSid() + "-" + sectionContent.getData().getSname();
-                    })
-                    .subscribe(value -> {
-                        Log.i(TAG, "widgetContent :: subscribe-" + value);
-                    }, throwable -> {
-                        Log.i(NetConstants.TAG_ERROR, "writeContent() :: " + throwable);
-                    }, () -> {
-                        Log.i(TAG, "widgetContent :: completed");
-                    });
-        }
-        return Observable.just("").subscribe();
+                                        // Delete Articles from respective TableSectionArticle
+                                        daoSectionArticle.deleteSectionAllArticle(sectionContent.getData().getSid());
+                                        // Insert Articles in respective TableSectionArticle
+                                        TableSectionArticle tableSectionArticle = new TableSectionArticle(sectionContent.getData().getSid(), sectionContent.getData().getSname(), 1, sectionContent.getData().getArticle());
+                                        daoSectionArticle.insertSectionArticle(tableSectionArticle);
+
+                                        Log.i("HomeData", "widgetContent :: Inserted");
+                                    }
+                                    else {
+                                        Log.i("HomeData", "widgetContent :: Not Valid");
+                                    }
+
+                                    return sectionContent.getData().getSid() + "-" + sectionContent.getData().getSname();
+                                })
+                                .subscribe(value -> {
+                                    Log.i(TAG, "widgetContent :: subscribe-" + value);
+                                }, throwable -> {
+                                    Log.i(NetConstants.TAG_ERROR, "writeContent() :: " + throwable);
+                                }, () -> {
+                                    Log.i(TAG, "widgetContent :: completed");
+                                });
+                    }
+
+
+
+                }, throwable -> {
+
+                });
+
     }
 
 
@@ -481,7 +499,8 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable getSectionContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
-        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
+        String defaultContentBaseUrl = DefaultPref.getInstance(context).getDefaultContentBaseUrl();
+        final String url = defaultContentBaseUrl + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -537,7 +556,8 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable getSubSectionContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page, String type, long lut) {
-        final String url = BuildConfig.DEFAULT_BASE_URL + "section-content.php";
+        String defaultContentBaseUrl = DefaultPref.getInstance(context).getDefaultContentBaseUrl();
+        final String url = defaultContentBaseUrl + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -598,8 +618,8 @@ public class DefaultTHApiManager {
      * @return
      */
     public static Disposable getNewsDigestContentFromServer(Context context, RequestCallback<ArrayList<SectionAdapterItem>> requestCallback, String secId, int page) {
-        final String url = BuildConfig.NEWS_DIGEST_URL;
-        return ServiceFactory.getServiceAPIs().newsDigest(url)
+        String newsDigestUrl = DefaultPref.getInstance(context).getNewsDigestUrl();
+        return ServiceFactory.getServiceAPIs().newsDigest(newsDigestUrl)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();

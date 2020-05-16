@@ -377,7 +377,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             CleverTapUtil.cleverTapBookmarkFavLike(getActivity(), mArticleId, mFrom, "NetConstants.BOOKMARK_YES");
         }
         else {
-            updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+            premium_updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
         }
     }
 
@@ -399,18 +399,18 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             CleverTapUtil.cleverTapBookmarkFavLike(getActivity(), mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
         }
         else {
-            updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+            premium_updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
         }
     }
 
     @Override
     public void onFavClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mArticleBean, "favourite");
+        premium_updateBookmarkFavLike(getActivity(), mArticleBean, "favourite");
     }
 
     @Override
     public void onLikeClickListener(ToolbarCallModel toolbarCallModel) {
-        updateBookmarkFavLike(getActivity(), mArticleBean, "dislike");
+        premium_updateBookmarkFavLike(getActivity(), mArticleBean, "dislike");
     }
 
     @Override
@@ -421,7 +421,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     ///////////////////////////////////////////////////////////////////////////////////
     ////////////////// Start For Premium Bookmark, Fav, Like & Dislike ////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
-    private void updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
+    private void premium_updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
 
         bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
 
@@ -468,72 +468,78 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         final int book = bookmark;
         final int fav = favourite;
 
-        // To Create and Remove at server end
-        mDisposable.add(ApiManager.createBookmarkFavLike(mUserId, BuildConfig.SITEID, bean.getArticleId(), bookmark, favourite)
+        mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(val-> {
-                            if (val) {
-                                bean.setIsFavourite(fav);
-                                bean.setIsBookmark(book);
-                                if(from.equals("bookmark")) {
-                                    if(book == NetConstants.BOOKMARK_YES) {
-                                        // To Create at App end
+                .subscribe(userProfile -> {
+                    // To Create and Remove at server end
+                    mDisposable.add(ApiManager.createBookmarkFavLike(userProfile.getAuthorization(), mUserId, BuildConfig.SITEID, bean.getArticleId(), book, fav)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(val-> {
+                                        if (val) {
+                                            bean.setIsFavourite(fav);
+                                            bean.setIsBookmark(book);
+                                            if(from.equals("bookmark")) {
+                                                if(book == NetConstants.BOOKMARK_YES) {
+                                                    // To Create at App end
 
-                                        mDisposable.add(ApiManager.createBookmark(context, bean).subscribe(boole -> {
-                                            mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
-                                        }));
-                                        Alerts.showToastAtCenter(context, "Added to Read Later");
-                                        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Added Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
-                                        CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_YES");
-                                    }
-                                    else if(book == NetConstants.BOOKMARK_NO) {
-                                        // To Remove at App end
-                                        mDisposable.add(ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
-                                            mActivity.getDetailToolbar().setIsBookmarked(!(Boolean)boole);
-                                            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Removed Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
-                                        }));
-                                    }
-                                }
-                                else if(from.equals("dislike") || from.equals("favourite")) {
-                                    if(book == NetConstants.BOOKMARK_YES) {
-                                        // To Update at App end
-                                        mDisposable.add(ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
-                                                Log.i("updateBookmark", "true")
-                                        ));
-                                    }
-                                    // To Update at App end
-                                    mDisposable.add(ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
-                                        // notifyItemChanged(position);
-                                        Log.i("updateLIKE", "true");
-                                        mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
+                                                    mDisposable.add(ApiManager.createBookmark(context, bean).subscribe(boole -> {
+                                                        mActivity.getDetailToolbar().setIsBookmarked((Boolean)boole);
+                                                    }));
+                                                    Alerts.showToastAtCenter(context, "Added to Read Later");
+                                                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Added Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                                    CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_YES");
+                                                }
+                                                else if(book == NetConstants.BOOKMARK_NO) {
+                                                    // To Remove at App end
+                                                    mDisposable.add(ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {
+                                                        mActivity.getDetailToolbar().setIsBookmarked(!(Boolean)boole);
+                                                        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Removed Read Later : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
+                                                    }));
+                                                }
+                                            }
+                                            else if(from.equals("dislike") || from.equals("favourite")) {
+                                                if(book == NetConstants.BOOKMARK_YES) {
+                                                    // To Update at App end
+                                                    mDisposable.add(ApiManager.updateBookmark(context, bean.getArticleId(), fav).subscribe(boole ->
+                                                            Log.i("updateBookmark", "true")
+                                                    ));
+                                                }
+                                                // To Update at App end
+                                                mDisposable.add(ApiManager.updateLike(context, bean.getArticleId(), fav).subscribe(boole -> {
+                                                    // notifyItemChanged(position);
+                                                    Log.i("updateLIKE", "true");
+                                                    mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
 
-                                        if(fav == NetConstants.LIKE_YES) {
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.LIKE_YES");
-                                            Alerts.showToastAtCenter(context, "You will see more stories like this.");
-                                            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Favourite Added: " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                                    if(fav == NetConstants.LIKE_YES) {
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.LIKE_YES");
+                                                        Alerts.showToastAtCenter(context, "You will see more stories like this.");
+                                                        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Favourite Added: " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                                    }
+                                                    else if(fav == NetConstants.LIKE_NO) {
+                                                        CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.LIKE_NO");
+                                                        Alerts.showToastAtCenter(context, "Show fewer stories like this.");
+                                                        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Dislike Article : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                                    }
+                                                }));
+                                            }
+
                                         }
-                                        else if(fav == NetConstants.LIKE_NO) {
-                                            CleverTapUtil.cleverTapBookmarkFavLike(context, mArticleId, mFrom, "NetConstants.LIKE_NO");
-                                            Alerts.showToastAtCenter(context, "Show fewer stories like this.");
-                                            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(context, "Action", "Details : Dislike Article : " + bean.getArticleId(), THP_DetailFragment.class.getSimpleName());
+                                        else {
+                                            // notifyItemChanged(position);
                                         }
-                                    }));
-                                }
+                                    },
+                                    val-> {
+                                        if(getActivity() != null && getView() != null) {
+                                            mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
+                                            isExistInBookmark(bean.getArticleId());
+                                            Alerts.showSnackbar(getActivity(), getActivity().getResources().getString(R.string.something_went_wrong));
+                                        }
+                                    }
+                            ));
+                        }));
 
-                            }
-                            else {
-                                // notifyItemChanged(position);
-                            }
-                        },
-                        val-> {
-                            if(getActivity() != null && getView() != null) {
-                                mActivity.getDetailToolbar().isFavOrLike(context, bean, bean.getArticleId());
-                                isExistInBookmark(bean.getArticleId());
-                                Alerts.showSnackbar(getActivity(), getActivity().getResources().getString(R.string.something_went_wrong));
-                            }
-                        }
-                ));
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////
