@@ -18,12 +18,10 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.main.SuperApp;
-import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.netoperation.asynctasks.GetCompanyNameTask;
 import com.netoperation.asynctasks.SearchAdapter;
 import com.netoperation.config.model.Breadcrumb;
@@ -36,7 +34,6 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.alerts.Alerts;
-import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.CompanyData;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -89,6 +86,16 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         emptyLayout = findViewById(R.id.emptyLayout);
         mPullToRefreshLayout.hideProgressBar();
 
+        if (!THPConstants.IS_USE_SEVER_THEME) {
+            action_crossBtn.setImageResource(R.drawable.close);
+            action_crossBtn.setVisibility(View.GONE);
+        }
+        action_crossBtn.setOnClickListener(view -> {
+            searchEditText.setText("");
+            searchEditText.clearFocus();
+            action_crossBtn.setVisibility(View.GONE);
+        });
+
         boolean isDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
@@ -132,9 +139,12 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if (!s.toString().isEmpty()) {
+                    action_crossBtn.setVisibility(View.VISIBLE);
                     if (!mSearchType.equalsIgnoreCase("Article")) {
                         searchStocksByText(s.toString());
                     }
+                } else {
+                    action_crossBtn.setVisibility(View.GONE);
                 }
             }
 
@@ -177,9 +187,10 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     }
 
     private void updateSearchTypeUI() {
-        /*if (popupWindow != null) {
+        if (popupWindow != null) {
+            popupWindow.showAsDropDown(action_overflow);
             return;
-        } */
+        }
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.layout_radio_group, null, true);
         RadioGroup rg = new RadioGroup(this);
@@ -228,32 +239,14 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         popupWindow.showAsDropDown(action_overflow);
     }
 
-    private void registerEmptyView() {
-        BaseFragmentTHP fragmentTHP = new BaseFragmentTHP() {
-            @Override
-            public int getLayoutRes() {
-                return 0;
-            }
-        };
-
-        fragmentTHP.showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, "");
-
-        fragmentTHP.setEmptyViewClickListener(new BaseFragmentTHP.EmptyViewClickListener() {
-            @Override
-            public void onEmptyRefreshBtnClick() {
-
-            }
-
-            @Override
-            public void onOtherStuffWork() {
-
-            }
-        });
+    private void showEmptyView() {
+        emptyLayout.setVisibility(View.VISIBLE);
+        mPullToRefreshLayout.setVisibility(View.GONE);
     }
 
     private void showContentView() {
-        mPullToRefreshLayout.setVisibility(View.VISIBLE);
         emptyLayout.setVisibility(View.GONE);
+        mPullToRefreshLayout.setVisibility(View.VISIBLE);
     }
 
     private void searchArticleByText(String query) {
@@ -275,7 +268,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                                 }
                                 mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
                             } else {
-                                registerEmptyView();
+                                showEmptyView();
                             }
                         }, throwable -> {
                             if (progress != null) {
@@ -304,7 +297,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             SearchAdapter mSearchCompanyAdapter = new SearchAdapter(this, companyList);
             mPullToRefreshLayout.setDataAdapter(mSearchCompanyAdapter);
         } else {
-            registerEmptyView();
+            showEmptyView();
         }
     }
 

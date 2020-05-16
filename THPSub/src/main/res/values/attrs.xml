@@ -67,6 +67,7 @@
             <enum name="back" value="14" />
             <enum name="slider" value="15" />
             <enum name="cross" value="16" />
+            <enum name="refresh" value="17" />
         </attr>
     </declare-styleable>
 

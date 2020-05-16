@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Start Back Icon-->
+    <com.ns.view.TopbarIconView
+        android:id="@+id/action_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:padding="10dp"
+        app:iconType="back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- End Back Icon-->
+
+    <!-- Start Search Icon-->
+    <com.ns.view.TopbarIconView
+        android:id="@+id/action_refresh"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        app:iconType="refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/action_search"
+        app:layout_constraintRight_toLeftOf="@id/action_search"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <!-- End Search Icon-->
+
+    <!-- Start Overflow Icon-->
+    <com.ns.view.TopbarIconView
+        android:id="@+id/action_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:clickable="true"
+        app:iconType="search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_w" />
+    <!-- End Overflow Icon-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

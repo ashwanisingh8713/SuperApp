@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ns.activity.StocksDetailsActivity">
+
+    <com.ns.view.layout.NSLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.ns.view.TopbarStocks
+            android:id="@+id/stocksDetailsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/forex_background_color"
+            card_view:cardElevation="2dp"
+            card_view:cardUseCompatPadding="true">
+
+            <com.ns.view.LatoSemiBoldTextView
+                android:id="@+id/companyName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:background="@color/forex_background_color"
+                android:gravity="center"
+                android:padding="4dp"
+                android:textColor="@color/forex_header_text_color"
+                android:textSize="18sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/forex_background_color"
+            card_view:cardElevation="2dp"
+            card_view:cardUseCompatPadding="true">
+
+            <androidx.fragment.app.FragmentTabHost
+                android:id="@android:id/tabhost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="50dp">
+
+                <com.ns.view.layout.NSLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:orientation="horizontal" />
+
+                    <com.ns.view.layout.NSFrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="0" />
+
+                    <FrameLayout
+                        android:id="@+id/realtabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </com.ns.view.layout.NSLinearLayout>
+            </androidx.fragment.app.FragmentTabHost>
+        </androidx.cardview.widget.CardView>
+    </com.ns.view.layout.NSLinearLayout>
+
+    <com.ns.view.layout.NSFrameLayout
+        android:id="@+id/layout_add_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/page_background">
+
+        <com.ns.view.layout.NSLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/page_background"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/homeBottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/bottom_ads_top_strip_color"
+                android:visibility="gone" />
+
+            <com.ns.view.layout.NSRelativeLayout
+                android:id="@+id/homeBottomAdHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/page_background"
+                android:gravity="center"
+                android:visibility="gone" />
+        </com.ns.view.layout.NSLinearLayout>
+
+
+    </com.ns.view.layout.NSFrameLayout>
+
+
+</com.ns.view.layout.NSFrameLayout>

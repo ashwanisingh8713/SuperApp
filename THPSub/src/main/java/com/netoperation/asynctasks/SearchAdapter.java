@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.activity.StocksDetailsActivity;
 import com.ns.contentfragment.StockDetailsFragment;
 import com.ns.model.CompanyData;
 import com.ns.thpremium.R;
@@ -47,8 +48,8 @@ public class SearchAdapter extends BaseRecyclerViewAdapter {
         holder.mParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*CompanyData object = mSearchList.get(position);
-                Intent i = new Intent(mContext, StockDetailsFragment.class);
+                CompanyData object = mSearchList.get(position);
+                Intent i = new Intent(mContext, StocksDetailsActivity.class);
                 String nse = String.valueOf(object.getNse());
                 String companyId = String.valueOf(object.getId());
                 String companyName = object.getName();
@@ -58,7 +59,7 @@ public class SearchAdapter extends BaseRecyclerViewAdapter {
                 i.putExtra("nseSymbol", nse);
                 i.putExtra("companyId",companyId);
                 i.putExtra("companyName", companyName);
-                mContext.startActivity(i);*/
+                mContext.startActivity(i);
             }
         });
     }

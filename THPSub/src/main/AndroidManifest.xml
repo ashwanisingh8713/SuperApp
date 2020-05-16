@@ -77,6 +77,7 @@
             android:configChanges="uiMode"/>
         <activity android:name="com.ns.activity.SearchActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:configChanges="uiMode"/>
         <activity android:name="com.ns.activity.AppSettingActivity"
             android:screenOrientation="portrait"
@@ -117,6 +118,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ns.activity.StocksDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name="com.netoperation.config.download.IconDownloadService"
             android:exported="false"
