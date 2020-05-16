@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -15,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -42,6 +46,8 @@ import com.ns.view.CustomProgressBar;
 import com.ns.view.LogoImgView;
 import com.ns.view.text.ArticleTitleTextView;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +85,21 @@ public class SplashActivity extends BaseAcitivityTHP {
         return R.layout.activity_splash;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Get KeyHash for Release build or Debug build.
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    BuildConfig.APPLICATION_ID,
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (Exception ignored) {}
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

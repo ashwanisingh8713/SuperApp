@@ -66,18 +66,24 @@ android {
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
             //buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"j2rIA5nAJCNVvAvQzOK9YOebE\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"77I77S0CeAQgcZOLFJGrSKQ2Srta3F1Jvk1nIbjdjiSJh3jod\""
+
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
 
             //ResValue String type
+            //CleverTap
             resValue "string", "clevertap_test_account_id", "TEST-ZRK-48Z-865Z"
             resValue "string", "clevertap_test_account_token", "TEST-1b4-321"
             resValue "string", "clevertap_live_account_id", ""
             resValue "string", "clevertap_live_account_token", ""
             resValue "string", "APP_NAME", "SU_BL"
+            //Facebook Sign In
             resValue "string", "facebook_app_id", "360214941478115"
             resValue "string", "fb_login_protocol_scheme", "fb360214941478115"
+            //Google Sign in
+            resValue "string", "custom_web_client_id", "124091613188-0fb97lkpnj7l92loa3h4oad0kneln3m7.apps.googleusercontent.com"
         }
         TheHindu {
             dimension "version"
@@ -111,18 +117,24 @@ android {
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
             //buildConfigField "String", "VUUKLE_API_KEY", "\"432081eb-6e8e-4abc-a88f-ca5357aa7244\""
+            //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"1YIayOnN05m8dPdYHV87n5luuZOl7aVJbYjo6h8guDFXISZNOH\""
+
             buildConfigField "String", "SUBSCRIPTION_BASE64", "\" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSrxIqpbLRUnTRk7BeP3LRZuOB7GCYXRRs4GzdBi34wsj28EgOBAElljqA1CEAoZ1m8G4THnn+5yuSmEI7N0/mgt5eczYWnTpVuJl3EzdYWZvNsZdYm27cLVTpXfOjC+NSxrtjF02fvuTJz2c5X09Pj7YGk66ZvJvgYUm50KUhlKE0THlcr3nAe7xl8zgxNdcFMVbfgoq5x0RCHDX8GBgTgG+kK1xKsAMJsZnq+UmVTkCTnLkbwsxHhtVSOCPprz5fz9QxpM2T9eznJc+paxub5ccaOj4lmEwv8jA+puUG6NmJ5SB3ncl5PsdPbqmuyO1Xl7rnUe0cHTm/fw32eYiwIDAQAB\""
 
             //ResValue String type
+            //CleverTap
             resValue "string", "clevertap_test_account_id", "TEST-Z8W-R8K-465Z"
             resValue "string", "clevertap_test_account_token", "TEST-3b2-0b1"
             resValue "string", "clevertap_live_account_id", "W8W-R8K-465Z"
             resValue "string", "clevertap_live_account_token", "3b2-0b0"
             resValue "string", "APP_NAME", "SU_TH"
+            //Facebook sign in
             resValue "string", "facebook_app_id", "467175884091779"
             resValue "string", "fb_login_protocol_scheme", "fb467175884091779"
+            //Google Sign in
+            resValue "string", "custom_web_client_id", "617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com"
         }
     }
 

@@ -117,6 +117,7 @@ public class SocialLoginUtil {
     //Start Google Sign In methods
 
     private void initGoogleSignInProcess() {
+        String id = mActivity.getString(R.string.custom_web_client_id);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(mActivity.getString(R.string.default_web_client_id))
                 .requestEmail()
