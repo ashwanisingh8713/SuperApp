@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         mPullToRefreshLayout = findViewById(R.id.recyclerView);
         emptyLayout = findViewById(R.id.emptyLayout);
         mPullToRefreshLayout.hideProgressBar();
-        searchEditText.setHint("Search for "+mSearchType);
+        searchEditText.setHint("Search");
 
         if (!THPConstants.IS_USE_SEVER_THEME) {
             action_crossBtn.setImageResource(R.drawable.close);
@@ -168,7 +168,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                     mListSearchTypes = tableConfiguration1.getSearchOption().getSearchItem();
                     if (mListSearchTypes.size() > 0) {
                         mSelectedSearchType = mListSearchTypes.get(0);
-                        searchEditText.setHint("Search for " + ResUtil.capitalizeFirstLetter(mSearchType));
+                        searchEditText.setHint("Search for " + mListSearchTypes.get(0).getTitle());
                     }
                     mSearchUrlByText = tableConfiguration1.getSearchOption().getUrlText();
                 });
