@@ -912,6 +912,30 @@ public class ApiManager {
                 );
 
     }
+    public static Observable<List<ArticleBean>> getBookmarkGroupTypeWithQuery(final Context context, final String searQuery) {
+        return Observable.just(new RecomendationData()).subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                            List<ArticleBean> beans = new ArrayList<>();
+                            if (context == null) {
+                                return beans;
+                            }
+                            THPDB thp = THPDB.getInstance(context);
+                            List<TableBookmark> tableBookmark = null;
+                            tableBookmark = thp.bookmarkTableDao().getAllBookmark();
+                            if (tableBookmark != null) {
+                                for (TableBookmark bookmark : tableBookmark) {
+                                    ArticleBean bean = bookmark.getBean();
+                                    if (bean.getTi().contains(searQuery) || bean.getDe().contains(searQuery)
+                                    || bean.getTitle().contains(searQuery) || bean.getDescription().contains(searQuery)) {
+                                        beans.add(bean);
+                                    }
+                                }
+                            }
+                            return beans;
+                        }
+                );
+
+    }
     public static Single<Boolean> deleteAllBookmarks(Context context) {
         return Single.just(NetConstants.BOOKMARK_IN_ONE)
                 .subscribeOn(Schedulers.io())

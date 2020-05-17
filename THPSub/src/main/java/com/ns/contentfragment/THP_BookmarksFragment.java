@@ -4,16 +4,21 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.UserProfile;
@@ -34,8 +39,12 @@ import com.ns.model.AppTabContentModel;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.CommonUtil;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.ns.view.NSEditText;
 import com.ns.view.RecyclerViewPullToRefresh;
+import com.ns.view.layout.NSLinearLayout;
 import com.ns.view.text.CustomTextView;
 
 import java.net.ConnectException;
@@ -47,7 +56,7 @@ import java.util.concurrent.TimeoutException;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, THP_AppEmptyPageListener, FragmentTools {
+public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, THP_AppEmptyPageListener, FragmentTools, TextWatcher {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private LinearLayout emptyLayout;
@@ -55,12 +64,15 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private String mUserId;
     private String mGoupType;
     private UserProfile mUserProfile;
+    private NSLinearLayout mSearchParentLayout;
+    private NSEditText mSearchBox;
+    private AppCompatImageView mClearText;
 
     public static THP_BookmarksFragment getInstance(String userId, String groupType) {
         THP_BookmarksFragment fragment = new THP_BookmarksFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("userId",userId);
-        bundle.putString("groupType",groupType);
+        bundle.putString("userId", userId);
+        bundle.putString("groupType", groupType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -81,7 +93,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             mUserId = getArguments().getString("userId");
             mGoupType = getArguments().getString("groupType");
         }
@@ -93,7 +105,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
-
+        mSearchParentLayout = view.findViewById(R.id.searchLayout);
+        mSearchBox = view.findViewById(R.id.searchEditText);
+        mClearText = view.findViewById(R.id.close_button);
+//Update Search Box View
+        if (mGoupType != null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)){
+            mSearchParentLayout.setVisibility(View.VISIBLE);
+        }
         mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), NetConstants.API_bookmarks, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setAppEmptyPageListener(this);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
@@ -113,7 +131,28 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                     mUserProfile = userProfile;
                     loadData();
                 }));
-
+//      Add Text Watcher
+        mSearchBox.addTextChangedListener(this);
+//        Add ImeOptions Handler
+        mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    CommonUtil.hideKeyboard(mSearchBox);
+                    return true;
+                }
+                return false;
+            }
+        });
+//        ClearText onClickListener
+        mClearText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSearchBox.setText("");
+                mSearchBox.clearFocus();
+                CommonUtil.hideKeyboard(mSearchBox);
+            }
+        });
     }
 
     @Override
@@ -123,7 +162,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mActivity != null) {
             mActivity.setOnFragmentTools(this);
         }
-        if(mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+        if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
             loadData(false);
         }
 
@@ -135,8 +174,8 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
      * Adding Pull To Refresh Listener
      */
     private void registerPullToRefresh() {
-        mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
-            if(!BaseAcitivityTHP.sIsOnline) {
+        mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(() -> {
+            if (!BaseAcitivityTHP.sIsOnline) {
                 Alerts.showSnackbar(getActivity(), getResources().getString(R.string.please_check_ur_connectivity));
                 mPullToRefreshLayout.setRefreshing(false);
                 return;
@@ -159,37 +198,37 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
     /**
      * Load bookmarks from respective Group
+     *
      * @param isOnline
      */
     private void loadData(boolean isOnline) {
         Observable<List<ArticleBean>> observable = null;
-        if (isOnline && mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if (isOnline && mGoupType != null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId,
-                    NetConstants.API_bookmarks, ""+1000, BuildConfig.SITEID);
-        }
-        else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                    NetConstants.API_bookmarks, "" + 1000, BuildConfig.SITEID);
+        } else if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
-        }
-        else if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+        } else if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_DEFAULT_BOOKMARK);
-        }
-        else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
-            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+        } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
+            if (ResUtil.isEmpty(mSearchBox.getText().toString())) {
+                observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+            } else {
+                observable = ApiManager.getBookmarkGroupTypeWithQuery(getActivity(), mSearchBox.getText().toString());
+            }
         }
 
         mDisposable.add(
                 observable
-                        .map(value->{
+                        .map(value -> {
                             List<AppTabContentModel> content = new ArrayList<>();
-                            for(ArticleBean bean : value) {
+                            for (ArticleBean bean : value) {
                                 int viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
-                                if(bean.getGroupType() == null ) {
+                                if (bean.getGroupType() == null) {
                                     continue;
-                                }
-                                else if(bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+                                } else if (bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
                                     viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
-                                }
-                                else if(bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                                } else if (bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
                                     viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
                                 }
                                 AppTabContentModel model = new AppTabContentModel(viewType);
@@ -200,11 +239,15 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         })
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(value -> {
-                            if(value.size()>0) {
+                            if (value.size() > 0) {
                                 mRecyclerAdapter.clearData();
                                 mRecyclerAdapter.addData(value);
-                            }
-                            else {
+                                mPullToRefreshLayout.setVisibility(View.VISIBLE);
+                                emptyLayout.setVisibility(View.GONE);
+                            } else {
+                                if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+                                    mRecyclerAdapter.clearData();
+                                }
                                 showEmptyLayout();
                             }
                             mPullToRefreshLayout.hideProgressBar();
@@ -224,14 +267,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         }, () -> {
 
 
-
                         }));
 
     }
 
     private void showEmptyLayout() {
-        if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            if(mGoupType!=null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK) || mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
+        if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
+            if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK) || mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
                 TextView emptyTxtMsg = emptyLayout.findViewById(R.id.emptyTitleTxt);
                 emptyTxtMsg.setText("You have not added any bookmarks");
             }
@@ -245,7 +287,9 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
     @Override
     public void checkPageEmpty() {
-        showEmptyLayout();
+        //showEmptyLayout();
+        //Reload contents
+        loadData();
     }
 
 
@@ -323,14 +367,14 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         int width = mActivity.getDetailToolbar().getWidth();
         int height = mActivity.getDetailToolbar().getHeight();
         // Show Pop-up Window
-        changeSortPopUp.showAsDropDown(mActivity.getDetailToolbar(), width, -(height/3));
+        changeSortPopUp.showAsDropDown(mActivity.getDetailToolbar(), width, -(height / 3));
 
         //Click listener
         CustomTextView clearAll = layout.findViewById(R.id.textView_ClearAll);
         clearAll.setText(R.string.remove_all);
         clearAll.setOnClickListener(view -> {
             changeSortPopUp.dismiss();
-            if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
+            if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
                 return;
             }
             createWarningDialog();
@@ -340,7 +384,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private void createWarningDialog() {
         AlertDialog.Builder builder = null;
         boolean mIsDayTheme = DefaultPref.getInstance(getActivity()).isUserThemeDay();
-        if(mIsDayTheme) {
+        if (mIsDayTheme) {
             builder = new AlertDialog.Builder(getActivity());
         } else {
             builder = new AlertDialog.Builder(getActivity(), android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK);
@@ -350,7 +394,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
             dialog.dismiss();
             //Clear Bookmarks
             mDisposable.add(ApiManager.deleteAllBookmarks(getActivity())
-                    .subscribe(isAllDeleted->{
+                    .subscribe(isAllDeleted -> {
                         Log.i("", "");
                         mRecyclerAdapter.clearData();
                         showEmptyLayout();
@@ -361,5 +405,26 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         builder.setNegativeButton("No", (dialog, id) -> dialog.cancel());
         Dialog mWarningDialog = builder.create();
         mWarningDialog.show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (ResUtil.isEmpty(charSequence)) {
+            mClearText.setVisibility(View.GONE);
+        } else {
+            mClearText.setVisibility(View.VISIBLE);
+        }
+        //Load data for query string
+        loadData();
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }
