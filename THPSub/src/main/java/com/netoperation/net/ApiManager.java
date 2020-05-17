@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -925,8 +926,10 @@ public class ApiManager {
                             if (tableBookmark != null) {
                                 for (TableBookmark bookmark : tableBookmark) {
                                     ArticleBean bean = bookmark.getBean();
-                                    if (bean.getTi().contains(searQuery) || bean.getDe().contains(searQuery)
-                                    || bean.getTitle().contains(searQuery) || bean.getDescription().contains(searQuery)) {
+                                    if (Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getTi()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getTitle()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getDe()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getDescription()).find()) {
                                         beans.add(bean);
                                     }
                                 }
