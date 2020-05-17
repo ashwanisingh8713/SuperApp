@@ -9,7 +9,7 @@
     <dimen name="margine_18_dp">18dp</dimen>
     <dimen name="backBtnWidthHeight">45dp</dimen>
 
-    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="topBar_height">56dp</dimen>
     <dimen name="searchview_margintop">48dp</dimen>
 
     <dimen name="signInAndUp_editText_height">45dp</dimen>
@@ -146,7 +146,7 @@
     <dimen name="subscribeLayoutHeight">50dp</dimen>
     <dimen name="snackbarBottomMargin">52dp</dimen>
     <dimen name="bottomBarHeight">50dp</dimen>
-    <dimen name="topbarHeight">45dp</dimen>
+    <dimen name="topTabHeight">45dp</dimen>
     <dimen name="signin_field_text_size">16sp</dimen>
     <dimen name="padding_current_plan">20dp</dimen>
     <dimen name="margin_to_social_signin_text">16dp</dimen>

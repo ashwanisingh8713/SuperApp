@@ -5,43 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/parentTopLayout"
+    <com.ns.view.Topbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:orientation="horizontal"
-        >
-
-        <com.ns.view.btn.NSImageButton
-            app:btnType="arrow_no_line"
-            style="@style/backBtnStyle"
-            android:id="@+id/backBtn"
-            android:layout_centerVertical="true"/>
-
-        <com.ns.view.text.CustomTextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_toRightOf="@+id/backBtn"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center"
-            android:textSize="@dimen/personal_info_textSize_16sp"
-            android:textColor="@color/boldBlackColor"
-            app:font_path="@string/THP_FiraSans_Bold"
-            />
-
-
-        <include android:layout_width="match_parent"
-            android:layout_height="@dimen/listing_divider_height"
-            layout="@layout/listing_divider"
-            android:layout_alignParentBottom="true"
-            />
-    </RelativeLayout>
-
-
+        android:layout_height="@dimen/topBar_height"
+        />
 
     <com.ns.view.layout.NSConstraintLayout
         android:layout_width="match_parent"

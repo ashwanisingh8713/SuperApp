@@ -260,7 +260,12 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         // News Digest
         else if(tableSection.getType().equalsIgnoreCase("static")
                 && tableSection.getSecId().equalsIgnoreCase("998")) {
-            FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
+            if(BuildConfig.IS_BL) {
+                IntentUtil.openWebActivity(this, "News Digest", DefaultPref.getInstance(this).getNewsDigestUrl());
+            }
+            else {
+                FragmentUtil.redirectionOnSectionAndSubSection(this, tableSection.getSecId());
+            }
         }
         else if(tableSection.getType().equalsIgnoreCase("static")) {
             IntentUtil.openUrlInBrowser(this, tableSection.getSection().getWebLink());

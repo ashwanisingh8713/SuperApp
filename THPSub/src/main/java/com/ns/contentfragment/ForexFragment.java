@@ -61,9 +61,9 @@ public class ForexFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layoutView = inflater.inflate(R.layout.fragment_forex, container, false);
-        listView = ((ListView) layoutView.findViewById(R.id.forex_list));
-        mProgressView =  layoutView.findViewById(R.id.progress_container);
-        mLastUpdateDate = (TextView) layoutView.findViewById(R.id.last_update_date);
+        listView = layoutView.findViewById(R.id.forex_list);
+        mProgressView = layoutView.findViewById(R.id.progress_container);
+        mLastUpdateDate = layoutView.findViewById(R.id.last_update_date);
         getForexItem();
 
 

@@ -16,7 +16,7 @@
         <com.ns.view.TopbarStocks
             android:id="@+id/stocksDetailsToolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
+            android:layout_height="@dimen/topBar_height"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             android:contentInsetRight="0dp"

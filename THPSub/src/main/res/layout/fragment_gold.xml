@@ -15,12 +15,11 @@
         android:textColor="@color/sensexFullTextColor"
         android:textSize="12sp" />
 
-    <androidx.cardview.widget.CardView
+    <com.ns.view.layout.NSCardView
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:background="@color/forex_background_color"
         card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true">
 
@@ -29,14 +28,14 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             app:font_path="@string/THP_FiraSans_Bold"
-            android:background="@color/forex_background_color"
+            app:textType="L"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/today_rate"
             android:textColor="@color/forex_header_text_color"
             android:textSize="18sp" />
 
-    </androidx.cardview.widget.CardView>
+    </com.ns.view.layout.NSCardView>
 
 
     <com.ns.view.CustomProgressBar
@@ -46,7 +45,7 @@
         android:visibility="gone"
         android:layout_gravity="center"/>
 
-    <androidx.cardview.widget.CardView
+    <com.ns.view.layout.NSCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="6dp"
@@ -63,7 +62,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_background_color"
                 android:orientation="horizontal"
                 android:padding="21dp">
 
@@ -73,7 +71,7 @@
                     app:font_path="@string/THP_FiraSans_Bold"
                     android:layout_weight="1"
                     android:text="Commodity"
-                    android:textColor="@color/forex_header_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
 
                 <com.ns.view.text.ArticleTitleTextView
@@ -83,7 +81,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="Value"
-                    android:textColor="@color/forex_header_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -95,7 +93,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_background_color"
                 android:orientation="horizontal"
                 android:padding="21dp">
 
@@ -105,7 +102,7 @@
                     app:font_path="@string/THP_FiraSans_SemiBold"
                     android:layout_weight="1"
                     android:text="Gold(10g)"
-                    android:textColor="@color/forex_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
 
                 <com.ns.view.text.ArticleTitleTextView
@@ -115,7 +112,7 @@
                     app:font_path="@string/THP_FiraSans_SemiBold"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/forex_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -123,7 +120,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background_second"
                 android:orientation="horizontal"
                 android:padding="21dp">
 
@@ -133,7 +129,7 @@
                     app:font_path="@string/THP_FiraSans_SemiBold"
                     android:layout_weight="1"
                     android:text="Silver(1Kg)"
-                    android:textColor="@color/forex_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
 
                 <com.ns.view.text.ArticleTitleTextView
@@ -143,11 +139,11 @@
                     app:font_path="@string/THP_FiraSans_SemiBold"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/forex_text_color"
+                    app:textType="L"
                     android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.ns.view.layout.NSCardView>
 </LinearLayout>
 

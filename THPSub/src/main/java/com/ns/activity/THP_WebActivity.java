@@ -1,6 +1,7 @@
 package com.ns.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,8 +21,6 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
     private THP_AutoResizeWebview mWebView;
     private ProgressBar mProgressBar;
-    private TextView mTitleView;
-
     private String mUrl;
     private String mFrom;
 
@@ -31,8 +30,6 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
         mWebView = findViewById(R.id.webview);
         mProgressBar = findViewById(R.id.progressBar);
-        mTitleView = findViewById(R.id.titleText);
-
         if(getIntent().getExtras() != null) {
             mUrl = getIntent().getStringExtra("url");
             mFrom = getIntent().getStringExtra("from");
@@ -46,15 +43,13 @@ public class THP_WebActivity extends BaseAcitivityTHP {
             mTitleView.setText(mFrom);
         }*/
 
+        getDetailToolbar().getBackView().setVisibility(View.VISIBLE);
+        getDetailToolbar().getPremiumLogoBtn().setVisibility(View.VISIBLE);
+
         if(mFrom != null) {
-            mTitleView.setText(mFrom);
+            getDetailToolbar().setTitle(mFrom);
         }
 
-
-        // Back Button Click Listener
-        findViewById(R.id.backBtn).setOnClickListener(v->
-                finish()
-        );
 
 
         mWebView.getSettings().setJavaScriptEnabled(true);

@@ -7,7 +7,7 @@
     <com.ns.view.CustomTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/topbarHeight"
+        android:layout_height="@dimen/topTabHeight"
         android:elevation="5dp"
         app:tabGravity="fill"
         app:tabIndicatorHeight="2dp"

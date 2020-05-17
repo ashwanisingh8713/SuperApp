@@ -104,12 +104,12 @@ public class Topbar extends Toolbar {
         favStarTHPIC.setVisibility(GONE);
         shareTHPIC.setVisibility(GONE);
         toggleLikeDisLikeTHPIC.setVisibility(GONE);
-        mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
         mTextSizeImageView.setVisibility(GONE);
         commentParent.setVisibility(GONE);
         mBackImageView.setVisibility(GONE);
 
+        mSearchImageView.setVisibility(VISIBLE);
         overflowParent.setVisibility(VISIBLE);
         mTitleTextView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
@@ -330,9 +330,6 @@ public class Topbar extends Toolbar {
         shareTHPIC.setVisibility(VISIBLE);
     }
 
-    private View mView;
-    private String mTitle;
-
     private ToolbarCallModel mToolbarCallModel;
 
     public Topbar(Context context) {
@@ -352,7 +349,9 @@ public class Topbar extends Toolbar {
 
 
     private void init(Context context, AttributeSet attrs) {
-        mView = LayoutInflater.from(context).inflate(R.layout.toolbar_for_detail, this, true);
+        LayoutInflater.from(context).inflate(R.layout.toolbar_for_detail, this, true);
+        setContentInsetsAbsolute(0, 0);
+
         isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
 
@@ -515,7 +514,6 @@ public class Topbar extends Toolbar {
         }
 
 
-        setToolbarTitle(mTitle);
     }
 
 
@@ -684,6 +682,9 @@ public class Topbar extends Toolbar {
         return mBackImageView;
     }
 
+    public TopbarIconView getPremiumLogoBtn() {
+        return premiumLogoBtn;
+    }
 
     public void hideBackBtn() {
         mBackImageView.setVisibility(GONE);

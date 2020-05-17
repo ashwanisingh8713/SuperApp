@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.netoperation.util.DefaultPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.StocksDetailsActivity;
@@ -26,10 +27,12 @@ import java.util.List;
 public class SearchAdapter extends BaseRecyclerViewAdapter {
     private Context mContext;
     private List<CompanyData> mSearchList;
+    boolean isDayTheme;
 
     public SearchAdapter(Context mContext, List<CompanyData> _searchList) {
         this.mContext = mContext;
         mSearchList = _searchList;
+        isDayTheme = DefaultPref.getInstance(mContext).isUserThemeDay();
     }
 
     @Override
@@ -45,6 +48,7 @@ public class SearchAdapter extends BaseRecyclerViewAdapter {
         SearchRecyclerHolder holder = (SearchRecyclerHolder) holderMain;
         final CompanyData bean = mSearchList.get(position);
         holder.title.setText(bean.getName());
+        holder.dividerSearchStock.setBackgroundColor(holder.title.getCurrentTextColor());
         holder.mParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,11 +81,13 @@ public class SearchAdapter extends BaseRecyclerViewAdapter {
     public class SearchRecyclerHolder extends RecyclerView.ViewHolder {
         public View mParentLayout;
         public TextView title;
+        public View dividerSearchStock;
 
         public SearchRecyclerHolder(View itemView) {
             super(itemView);
             mParentLayout = itemView;
             title = itemView.findViewById(R.id.title);
+            dividerSearchStock = itemView.findViewById(R.id.dividerSearchStock);
         }
     }
 }

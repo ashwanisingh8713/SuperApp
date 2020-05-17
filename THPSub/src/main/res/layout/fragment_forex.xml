@@ -13,15 +13,14 @@
         android:paddingLeft="10dp"
         android:paddingBottom="4dp"
         android:paddingTop="5dp"
-        android:textColor="@color/greyColor_1"
+        app:textType="L"
         android:textSize="12sp" />
 
-    <androidx.cardview.widget.CardView
+    <com.ns.view.layout.NSCardView
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:background="@color/forex_background_color"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
@@ -30,16 +29,15 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             app:font_path="@string/THP_FiraSans_Bold"
-            android:background="@color/forex_background_color"
+            app:textType="L"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/exchange_rates"
-            android:textColor="@color/forex_header_text_color"
             android:textSize="18sp" />
 
-    </androidx.cardview.widget.CardView>
+    </com.ns.view.layout.NSCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.ns.view.layout.NSCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="6dp"
@@ -56,7 +54,6 @@
                 android:id="@+id/categories_nse_bse_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_background_color"
                 android:orientation="horizontal"
                 android:padding="4dp">
 
@@ -65,6 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:font_path="@string/THP_FiraSans_Bold"
+                    app:textType="L"
                     android:layout_weight="1.5"
                     android:padding="5dp"
                     android:paddingRight="2dp"
@@ -75,6 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:font_path="@string/THP_FiraSans_Bold"
+                    app:textType="L"
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:paddingRight="2dp"
@@ -85,6 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:font_path="@string/THP_FiraSans_Bold"
+                    app:textType="L"
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:paddingRight="2dp"
@@ -95,6 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:font_path="@string/THP_FiraSans_Bold"
+                    app:textType="L"
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:paddingRight="2dp"
@@ -105,6 +106,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:font_path="@string/THP_FiraSans_Bold"
+                    app:textType="L"
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:paddingRight="2dp"
@@ -132,7 +134,7 @@
                 android:visibility="gone"></ListView>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.ns.view.layout.NSCardView>
 
 
 </LinearLayout>

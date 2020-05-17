@@ -7,10 +7,7 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,8 +33,6 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewLinkClick;
-import com.ns.view.TopbarIconView;
-import com.ns.view.text.ArticleTitleTextView;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BannerViewHolder;
 import com.ns.viewholder.ExploreViewHolder;
@@ -122,7 +117,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
         else if(viewType == VT_THD_DEFAULT_ROW) {
             return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cardview_article_list, viewGroup, false));
+                    .inflate(R.layout.th_cardview_article_list, viewGroup, false));
         }
         else if(viewType == VT_THD_SEARCH_ROW) {
             return new SearchRecyclerHolder(LayoutInflater.from(viewGroup.getContext())

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayoutWindowBG xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,7 +13,7 @@
         android:paddingBottom="4dp"
         android:paddingTop="5dp"
         app:font_path="@string/THP_FiraSans_Bold"
-        app:textColor="@color/greyColor_1"
+        app:textType="L"
         android:textSize="12sp" />
 
     <com.ns.view.layout.NSCardView
@@ -117,4 +117,4 @@
     </com.ns.view.layout.NSCardView>
 
 
-</com.ns.view.layout.NSLinearLayoutWindowBG>
+</com.ns.view.layout.NSLinearLayout>

@@ -200,7 +200,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
         } else if (viewType == VT_THD_DEFAULT_ROW) {
             return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cardview_article_list, viewGroup, false));
+                    .inflate(R.layout.th_cardview_article_list, viewGroup, false));
         }
         return null;
     }

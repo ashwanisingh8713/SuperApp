@@ -113,7 +113,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                 textColr = breadcrumb.getText().getDarkSelected();
             }
             searchEditText.setTextColor(Color.parseColor(textColr));
-            searchEditText.setHintTextColor(Color.parseColor(hintColr));
+            searchEditText.setHintTextColor(Color.parseColor(textColr));
 
         }
         else {

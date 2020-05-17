@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:visibility="gone"/>
     <!-- End Back Icon-->
 
     <!-- Start Logo Icon-->
@@ -27,10 +28,10 @@
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         android:scaleType="centerInside"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/action_back"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
          />
     <!-- End Logo Icon-->
 
@@ -48,7 +49,8 @@
         android:text="@string/APP_NAME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/action_logo"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
     <!-- Start Title TextView-->
 
     <!-- Start Overflow Icon-->
@@ -62,7 +64,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="overflow"
@@ -103,7 +106,8 @@
         app:layout_constraintEnd_toStartOf="@id/overflowParent"
         app:layout_constraintRight_toLeftOf="@id/overflowParent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_premium_logo" />
+        app:srcCompat="@drawable/ic_premium_logo"
+        android:visibility="gone"/>
     <!-- End Crown Icon-->
 
     <!-- Start Search Icon-->
@@ -113,13 +117,13 @@
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         android:layout_marginRight="@dimen/toolbar_ic_gap"
-        android:visibility="visible"
         app:iconType="search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/action_premiumLogoBtn"
         app:layout_constraintRight_toLeftOf="@id/action_premiumLogoBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search_w" />
+        app:srcCompat="@drawable/ic_search_w"
+        android:visibility="gone"/>
     <!-- End Search Icon-->
 
     <!-- Start Like -->
@@ -132,7 +136,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toLeftOf="@id/action_search"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="like"
@@ -158,11 +163,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toLeftOf="@+id/likeParent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="bookmarked"
@@ -203,11 +208,11 @@
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         android:scaleType="center"
         android:src="@drawable/ic_textsize_w"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toLeftOf="@+id/bookmarkParent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
     <!-- End Font Icon -->
 
     <!-- Start Favourite Icon -->
@@ -220,7 +225,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toLeftOf="@+id/action_fontSizeIC"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="favourite"
@@ -252,7 +258,8 @@
         android:src="@drawable/ic_share_article"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/favouriteParent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
     <!-- End Share Icon -->
 
     <!-- Start Comment Icon -->
@@ -266,7 +273,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap">
+        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="comment"
@@ -303,7 +311,8 @@
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/commentParent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.ns.view.TopbarIconView
             app:iconType="ttsStop"

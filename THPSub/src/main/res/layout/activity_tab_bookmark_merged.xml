@@ -9,7 +9,7 @@
     <com.ns.view.Topbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
+        android:layout_height="@dimen/topBar_height"
         android:background="@color/white"
         android:contentInsetEnd="0dp"
         android:contentInsetLeft="0dp"
@@ -23,7 +23,7 @@
     <com.ns.view.CustomTabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/topbarHeight"
+        android:layout_height="@dimen/topTabHeight"
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabType="bookmarkTop"
