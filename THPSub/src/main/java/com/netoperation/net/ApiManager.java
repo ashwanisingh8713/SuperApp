@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -905,6 +906,32 @@ public class ApiManager {
                                 for (TableBookmark bookmark : tableBookmark) {
                                     ArticleBean bean = bookmark.getBean();
                                     beans.add(bean);
+                                }
+                            }
+                            return beans;
+                        }
+                );
+
+    }
+    public static Observable<List<ArticleBean>> getBookmarkGroupTypeWithQuery(final Context context, final String searQuery) {
+        return Observable.just(new RecomendationData()).subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                            List<ArticleBean> beans = new ArrayList<>();
+                            if (context == null) {
+                                return beans;
+                            }
+                            THPDB thp = THPDB.getInstance(context);
+                            List<TableBookmark> tableBookmark = null;
+                            tableBookmark = thp.bookmarkTableDao().getAllBookmark();
+                            if (tableBookmark != null) {
+                                for (TableBookmark bookmark : tableBookmark) {
+                                    ArticleBean bean = bookmark.getBean();
+                                    if (Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getTi()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getTitle()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getDe()).find()
+                                        || Pattern.compile(Pattern.quote(searQuery), Pattern.CASE_INSENSITIVE).matcher(bean.getDescription()).find()) {
+                                        beans.add(bean);
+                                    }
                                 }
                             }
                             return beans;
