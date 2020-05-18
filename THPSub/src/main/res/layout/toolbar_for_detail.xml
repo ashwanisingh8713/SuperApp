@@ -22,8 +22,8 @@
     <com.ns.view.LogoImgView
         android:id="@+id/action_logo"
         app:logoType="Section"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         android:layout_marginRight="@dimen/toolbar_ic_gap"

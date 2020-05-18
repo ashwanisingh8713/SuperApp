@@ -105,9 +105,6 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
             }
         }
 
-
-
-        mUserId = PremiumPref.getInstance(getActivity()).getUserId();
     }
 
     @Override
@@ -139,6 +136,12 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     @Override
     public void onResume() {
         super.onResume();
+
+        mUserId = PremiumPref.getInstance(getActivity()).getUserId();
+
+        if(mRecyclerAdapter != null) {
+            mRecyclerAdapter.setUserId(mUserId);
+        }
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM_TOPBAR));
@@ -430,119 +433,6 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
 
     }
-
-
-    /*private void showEmptyLayout(boolean isNoContent) {
-        if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            emptyLayout.setVisibility(View.VISIBLE);
-            mPullToRefreshLayout.setVisibility(View.GONE);
-
-            emptyIcon = getView().findViewById(R.id.emptyIcon);
-            emptyTitleTxt = getView().findViewById(R.id.emptyTitleTxt);
-            emptySubTitleTxt = getView().findViewById(R.id.emptySubTitleTxt);
-            emptyBtnTxt = getView().findViewById(R.id.emptyBtnTxt);
-
-            if (isBriefingPage()) {
-                if(isNoContent) {
-                    emptyIcon.setImageResource(R.drawable.ic_empty_breifing);
-                    emptyTitleTxt.setVisibility(View.INVISIBLE);
-                    emptySubTitleTxt.setVisibility(View.VISIBLE);
-                    emptySubTitleTxt.setText("No content in Breifing. Please look \n back after sometime");
-                    emptyBtnTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setEnabled(true);
-                    emptyBtnTxt.setText("Refresh");
-                    emptyBtnTxt.setOnClickListener(v->{
-                        loadData();
-                    });
-                }
-                else {
-                    if(!sIsOnline) {
-                        noConnectionSnackBar(getView());
-                    }
-                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
-                    emptyTitleTxt.setVisibility(View.VISIBLE);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
-                    emptyBtnTxt.setVisibility(View.VISIBLE);
-                    emptySubTitleTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setText("Refresh");
-                    emptyBtnTxt.setEnabled(true);
-                    emptyBtnTxt.setOnClickListener(v->{
-                        loadData();
-                    });
-                }
-            } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_Mystories)) {
-                if(isNoContent) {
-                    emptyIcon.setImageResource(R.drawable.ic_empty_watermark);
-                    emptyTitleTxt.setVisibility(View.INVISIBLE);
-                    emptySubTitleTxt.setVisibility(View.INVISIBLE);
-                    emptyBtnTxt.setVisibility(View.INVISIBLE);
-                    emptyBtnTxt.setEnabled(false);
-                    // To set Empty Btn txt, if user has set preferences or not
-                    getUserSavedPersonalise(mUserId);
-
-                }
-                else {
-                    if(!sIsOnline) {
-                        noConnectionSnackBar(getView());
-                    }
-                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
-                    emptySubTitleTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setText("Refresh");
-                    emptyBtnTxt.setEnabled(true);
-                    emptyBtnTxt.setOnClickListener(v->{
-                        if(!sIsOnline) {
-                            noConnectionSnackBar(getView());
-                            return;
-                        }
-                        loadData();
-                    });
-                }
-            } else if (mPageType.equalsIgnoreCase(NetConstants.RECO_suggested)) {
-                if(isNoContent) {
-                    emptyIcon.setImageResource(R.drawable.ic_empty_suggestion);
-                    emptyTitleTxt.setVisibility(View.INVISIBLE);
-                    emptySubTitleTxt.setVisibility(View.VISIBLE);
-                    emptySubTitleTxt.setText("No content in Suggestion. Please look \n back after sometime");
-                    emptyBtnTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setEnabled(true);
-                    emptyBtnTxt.setText("Refresh");
-                    emptyBtnTxt.setOnClickListener(v->{
-                        loadData();
-                    });
-                }
-                else {
-                    if(!sIsOnline) {
-                        noConnectionSnackBar(getView());
-                    }
-                    emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
-                    emptyTitleTxt.setVisibility(View.VISIBLE);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
-                    emptySubTitleTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setVisibility(View.VISIBLE);
-                    emptyBtnTxt.setText("Refresh");
-                    emptyBtnTxt.setEnabled(true);
-                    emptyBtnTxt.setOnClickListener(v->{
-                        if(!sIsOnline) {
-                            noConnectionSnackBar(getView());
-                            return;
-                        }
-                        loadData();
-                    });
-                }
-            }
-        } else {
-            mPullToRefreshLayout.setVisibility(View.VISIBLE);
-            emptyLayout.setVisibility(View.GONE);
-        }
-    }*/
-
-
-
 
     private void getUserSavedPersonalise(String userId) {
         mDisposable.add(

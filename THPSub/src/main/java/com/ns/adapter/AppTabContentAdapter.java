@@ -451,7 +451,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Bookmark_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BookmarkPremiumViewHolder holder = (BookmarkPremiumViewHolder) viewHolder;
-        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
+        //PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(bean.getArticletitle());
         // Section Name
@@ -1476,6 +1476,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
     public List<AppTabContentModel> getAllContent() {
         return mContent;
+    }
+
+    public void setUserId(String userId) {
+        mUserId = userId;
     }
 
 }

@@ -171,7 +171,12 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         if(intent != null) {
             String from = intent.getStringExtra("from");
 
-            if(from != null && from.equals(NetConstants.PS_My_Stories)) {
+            if(from!=null && from.equalsIgnoreCase("Logout")) {
+                if(mAppTabFragment != null) {
+                    mAppTabFragment.changeTab(0);
+                }
+            }
+            else if(from != null) {
                 if(mAppTabFragment != null) {
                     mAppTabFragment.showPageSource(from);
                 }

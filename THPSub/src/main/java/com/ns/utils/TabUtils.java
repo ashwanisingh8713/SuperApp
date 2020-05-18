@@ -63,6 +63,7 @@ public class TabUtils {
         ImageView tabIcon = v.findViewById(R.id.tab_Icon);
 
         if(THPConstants.IS_USE_SEVER_THEME) {
+            tv.setTextColor(Color.parseColor(textColor));
             PicassoUtil.loadImageFromCache(context, tabIcon, tabsBeans.get(position).getIconUrl().getLocalFilePath());
         }
         else {

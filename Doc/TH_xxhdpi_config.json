@@ -590,34 +590,34 @@
       },
       "topBarBg": {
         "dark": "#313131",
-        "light": "#1394D1"
+        "light": "#818181"
       },
       "bottomBar": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#ededed",
-          "light": "#818181",
-          "lightSelected": "#ff0000"
+          "light": "#ffffff",
+          "lightSelected": "#000000"
         },
         "bg": {
           "dark": "#313131",
           "light": "#1394D1"
         },
         "indicator": {
-          "dark": "#ffffff",
-          "light": "#818181"
+          "dark": "#00000000",
+          "light": "#00000000"
         }
       },
       "breadcrumb": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#ededed",
-          "light": "#818181",
-          "lightSelected": "#424242"
+          "light": "#000000",
+          "lightSelected": "#ffffff"
         },
         "bg": {
           "dark": "#313131",
-          "light": "#1394D1"
+          "light": "#ffffff"
         },
         "indicator": {
           "dark": "#ffffff",
@@ -628,7 +628,7 @@
     "widgetIndex": [
       {
         "secId": "142",
-        "index": "5",
+        "index": "6",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"

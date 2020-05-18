@@ -1082,7 +1082,6 @@ public class ApiManager {
                         } else if (status.equalsIgnoreCase("Fail")) {
                             return false;
                         }
-
                     }
                     return false;
                 });

@@ -607,7 +607,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                     if(isNewAccount) {
                         IntentUtil.openContentListingActivity(getActivity(), THPConstants.FROM_USER_SignUp);
                     } else {
-                        IntentUtil.openContentListingActivity(getActivity(), "");
+                        IntentUtil.openContentListingActivity(getActivity(), THPConstants.FLOW_TAB_CLICK);
                     }
                 }
             } else if (userProfile != null && !(userProfile.isHasFreePlan() && userProfile.isHasSubscribedPlan())) {

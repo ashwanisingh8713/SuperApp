@@ -1,9 +1,7 @@
 package com.ns.contentfragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -116,6 +114,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             int pageSourceIndex = mPsTabIndexMap.get(pageSource);
             mViewPager.setCurrentItem(pageSourceIndex);
         }
+    }
+
+    public void changeTab(int tabIndex) {
+        mViewPager.setCurrentItem(tabIndex);
     }
 
     @Override
@@ -235,6 +237,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         boolean isUserLoggedIn = PremiumPref.getInstance(getActivity()).isUserLoggedIn();
         boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
         boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
+
+        THPConstants.FLOW_TAB_CLICK = tabsBean.getPageSource();
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
@@ -508,14 +512,25 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(AdData adData) {
         if(adData != null && adData.getSecId().equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
-            sectionBannerAds(true);
+            sectionBottomBannerAds(true);
         }
         else {
-            sectionBannerAds(false);
+            sectionBottomBannerAds(false);
         }
     }
 
-    private void sectionBannerAds(boolean isHomePage) {
+    private void sectionBottomBannerAds(boolean isHomePage) {
+        boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
+        if(isUserAdsFree) {
+            getView().findViewById(R.id.banner_Ad_layout).setVisibility(View.GONE);
+
+            boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
+            if(isHasSubscription) {
+                getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+            }
+
+            return;
+        }
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration == null) return;
         DFPAds DFPAds = new DFPAds();

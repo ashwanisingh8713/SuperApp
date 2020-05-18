@@ -360,9 +360,7 @@ public class UserProfileFragment extends BaseFragmentTHP {
                 .subscribe(v->{
                     Alerts.showToast(getActivity(), "Logged out successfully.");
                     // Opens TheHindu Default Sections Screen
-                    /*Intent intent = new Intent();
-                    intent.putExtra("isKillToAppTabActivity", true);
-                    getActivity().setResult(Activity.RESULT_OK, intent);*/
+                    IntentUtil.openContentListingActivity(getActivity(), "Logout");
                     getActivity().finish();
                     progressDialog.dismiss();
 
