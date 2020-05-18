@@ -864,8 +864,10 @@ public class ApiManager {
                                     } else {
                                         TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(bean.getArticleId());
                                         if (tableBookmark != null && bean.getIsBookmark() == 1) {
+                                            bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
                                             thp.bookmarkTableDao().updateBookmark(bean.getArticleId(), bean);
                                         } else if (bean.getIsBookmark() == 1) {
+                                            bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
                                             TableBookmark bookmarkkTable = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                             thp.bookmarkTableDao().insertBookmark(bookmarkkTable);
                                         } else if (bean.getIsBookmark() == 0) {

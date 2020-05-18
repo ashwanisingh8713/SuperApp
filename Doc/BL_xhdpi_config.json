@@ -1,5 +1,6 @@
 {
-  "packageName": "thehindu",
+  "packageName": "com.mobstac.thehindubusinessline",
+  "environment" : "development",
   "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
@@ -1003,7 +1004,6 @@
     },
     "subSectionsIndex": "3",
     "contentUrl": {
-      "baseUrlPremium": "https://tai.thehindu.com",
       "baseUrlDefault": "https://app.thehindubusinessline.com/hinduBL/service/api_v2/",
       "newsDigest": "http://thehindubusinessline.com/newsletter/"
     },

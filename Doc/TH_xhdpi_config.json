@@ -1,5 +1,6 @@
 {
-  "packageName": "thehindu",
+  "packageName": "com.mobstac.thehindu",
+  "environment" : "development",
   "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
@@ -837,7 +838,6 @@
     },
     "subSectionsIndex": "3",
     "contentUrl": {
-      "baseUrlPremium": "https://tai.thehindu.com",
       "baseUrlDefault": "https://app.thehindu.com/hindu/service/api_v1.004/",
       "newsDigest": "https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php"
     },

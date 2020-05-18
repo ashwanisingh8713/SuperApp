@@ -22,7 +22,6 @@ public class ServiceFactory {
 
     private static ServiceAPIs sServiceAPIs;
 
-
     public static ServiceAPIs getServiceAPIs() {
         if(sServiceAPIs == null) {
             sServiceAPIs = createServiceAPIs();

@@ -1057,8 +1057,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        String url = "http://3.0.22.177/hindu/subscription/superapp/getConfig";
-        return ServiceFactory.getServiceAPIs().config(url, ReqBody.configuration("thehindu", ResUtil.resolution(context)))
+        return ServiceFactory.getServiceAPIs().config(BuildConfig.APP_CONFIG_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
         .subscribeOn(Schedulers.io())
                 .map(config->{
                     if(config.isSTATUS()) {
@@ -1087,8 +1086,7 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
-        String url = "http://3.0.22.177/hindu/subscription/superapp/checkConfig";
-        return ServiceFactory.getServiceAPIs().configUpdateCheck(url, ReqBody.configuration("thehindu", ResUtil.resolution(context)))
+        return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.APP_CONFIG_UPDATE_CHECK_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
                 .subscribeOn(Schedulers.io())
                 .map(jsonElement -> {
                     if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
