@@ -15,15 +15,10 @@ import com.ns.utils.THPFirebaseAnalytics;
 
 public class BookmarkActivity extends BaseAcitivityTHP {
 
-    String mUserId = "";
-
     private TabLayout tabLayout;
     private ViewPager bookmarkViewPager;
     private MergedBookmarkPagerAdapter pagerAdapter;
-
     private String mGroupTypeDisplay ;
-//    private int mBookmarkDisplay = NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE;
-
 
     @Override
     public int layoutRes() {
@@ -36,23 +31,19 @@ public class BookmarkActivity extends BaseAcitivityTHP {
 
         mGroupTypeDisplay = getIntent().getExtras().getString("groupType");
 
-        if(getIntent() != null) {
-            mUserId = getIntent().getStringExtra("userId");
-        }
-
         getDetailToolbar().setTitle("Read Later");
         getDetailToolbar().showNotificationAndBookmarkeIcons(false);
 
         bookmarkViewPager = findViewById(R.id.bookmarkViewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        if(mGroupTypeDisplay.equals(NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE)) {
+        if(mGroupTypeDisplay.equals(NetConstants.BOOKMARK_IN_ONE)) {
             tabLayout.setVisibility(View.GONE);
             //Show overflow menu
             getDetailToolbar().showNotificationAndBookmarkeIcons(true);
         }
 
-        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), mUserId, mIsDayTheme, mGroupTypeDisplay);
+        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), mIsDayTheme, mGroupTypeDisplay);
         bookmarkViewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(bookmarkViewPager, true);

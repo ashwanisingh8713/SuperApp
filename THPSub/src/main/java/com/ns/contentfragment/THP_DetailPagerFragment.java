@@ -21,11 +21,13 @@ import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.DetailPagerAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
+import com.ns.utils.ContentUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.ViewPagerScroller;
 
@@ -52,8 +54,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
     private String mFrom;
     private int mClickedPosition;
-    private String mArticleUrl;
-    private ArticleBean mArticleBean;
     private String mArticleId;
 
     private ViewPager mViewPager;
@@ -62,20 +62,6 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private THP_DetailActivity mActivity;
 
     private List<ArticleBean> mHomeArticleList;
-
-
-    public static final THP_DetailPagerFragment getInstance(String articleId,
-                                                            int clickedPosition, String from, String userId) {
-        THP_DetailPagerFragment fragment = new THP_DetailPagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("clickedPosition", clickedPosition);
-        bundle.putString("articleId", articleId);
-        bundle.putString("from", from);
-        bundle.putString("userId", userId);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
 
     /**
      * This is for Non-Premium
@@ -118,18 +104,14 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
-            mArticleBean = getArguments().getParcelable("ArticleBean");
-            mClickedPosition = getArguments().getInt("clickedPosition");
-            mArticleId = getArguments().getString("articleId");
-            mArticleUrl = getArguments().getString("articleUrl");
             mFrom = getArguments().getString("from");
-            mUserId = getArguments().getString("userId");
-
-            // This is for Non-Premium
+            mArticleId = getArguments().getString("articleId");
             mSectionId = getArguments().getString("sectionId");
-            mSectionType = getArguments().getString("sectionType");
             sectionOrSubsectionName = getArguments().getString("sectionOrSubsectionName");
+            mSectionType = getArguments().getString("sectionType");
             mIsSubsection = getArguments().getBoolean("isSubsection");
+
+            mUserId = PremiumPref.getInstance(getActivity()).getUserId();
         }
     }
 
@@ -152,7 +134,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         else if(mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)) {
             loadDataFromTemp();
         }
-        else if(mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+        else if(ContentUtil.isFromBookmarkPage(mFrom)) {
             loadBookmarkData();
         }
         else if(mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
@@ -165,13 +147,11 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Details Screen", THP_DetailPagerFragment.class.getSimpleName());
     }
-
 
 
     /**

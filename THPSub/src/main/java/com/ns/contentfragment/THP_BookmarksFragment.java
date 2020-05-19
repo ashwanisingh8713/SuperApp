@@ -26,6 +26,7 @@ import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.BookmarkActivity;
@@ -68,10 +69,9 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private NSEditText mSearchBox;
     private AppCompatImageView mClearText;
 
-    public static THP_BookmarksFragment getInstance(String userId, String groupType) {
+    public static THP_BookmarksFragment getInstance(String groupType) {
         THP_BookmarksFragment fragment = new THP_BookmarksFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("userId", userId);
         bundle.putString("groupType", groupType);
         fragment.setArguments(bundle);
         return fragment;
@@ -94,9 +94,10 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUserId = getArguments().getString("userId");
             mGoupType = getArguments().getString("groupType");
         }
+
+        mUserId = PremiumPref.getInstance(getContext()).getUserId();
     }
 
     @Override
@@ -112,7 +113,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mGoupType != null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)){
             mSearchParentLayout.setVisibility(View.VISIBLE);
         }
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), NetConstants.API_bookmarks, mUserId, mPullToRefreshLayout.getRecyclerView());
+        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mGoupType, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setAppEmptyPageListener(this);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
@@ -217,7 +218,6 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                 observable = ApiManager.getBookmarkGroupTypeWithQuery(getActivity(), mSearchBox.getText().toString());
             }
         }
-
         mDisposable.add(
                 observable
                         .map(value -> {

@@ -9,18 +9,21 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.main.DFPAds;
+import com.main.SuperApp;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.THP_DetailFragment;
 import com.ns.contentfragment.THP_DetailPagerFragment;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
+import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
@@ -62,6 +65,8 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        hasSubscriptionPlan = PremiumPref.getInstance(this).isHasSubscription();
+
         if (getIntent().getExtras() != null) {
             mFrom = getIntent().getStringExtra("from");
             url = getIntent().getStringExtra("url");
@@ -76,17 +81,15 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
             getDetailToolbar().showBreifingDetailIcons();
         }
-        else if (mFrom != null && NetConstants.API_bookmarks.equalsIgnoreCase(mFrom)) {
-            getDetailToolbar().showBookmarkPremiumDetailIcons(true);
+        else if (mFrom != null && (((NetConstants.PS_My_Stories.equalsIgnoreCase(mFrom))
+                || (NetConstants.PS_Suggested.equalsIgnoreCase(mFrom))))) {
+            getDetailToolbar().showPremiumDetailIcons();
         }
-        // (mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS) || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK))
+        else if (ContentUtil.isFromPremiumBookmark(mFrom)) {
+            getDetailToolbar().showBookmarkPremiumDetailIcons(hasSubscriptionPlan);
+        }
         else {
-            ApiManager.getUserProfile(this)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(userProfile -> {
-                        hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-                        getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
-                    });
+            getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
         }
 
 
@@ -111,8 +114,6 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 .subscribe(val->{
                     new DFPAds().loadFullScreenAds();
                 });
-
-        activityBannerAds();
 
         EventBus.getDefault().register(this);
 
@@ -143,6 +144,8 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     protected void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "THP_DetailActivity Screen", THP_DetailActivity.class.getSimpleName());
+        bottomBannerAds();
+
     }
 
     @Override
@@ -153,6 +156,9 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     }
 
 
+    /**
+     * It receives event from THP_DetailFragment.java => loadRecyclerData() => subscribe(tableMPReadArticle)
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(TableMPReadArticle mpReadArticle) {
         if(!shouldShowMeteredPaywall() || !mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {

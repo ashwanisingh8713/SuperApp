@@ -512,23 +512,21 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(AdData adData) {
         if(adData != null && adData.getSecId().equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
-            sectionBottomBannerAds(true);
+            bottomBannerAds(true);
         }
         else {
-            sectionBottomBannerAds(false);
+            bottomBannerAds(false);
         }
     }
 
-    private void sectionBottomBannerAds(boolean isHomePage) {
-        boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
-        if(isUserAdsFree) {
+    private void bottomBannerAds(boolean isHomePage) {
+        if(PremiumPref.getInstance(getActivity()).isUserAdsFree()) {
             getView().findViewById(R.id.banner_Ad_layout).setVisibility(View.GONE);
 
             boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
             if(isHasSubscription) {
                 getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
             }
-
             return;
         }
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();

@@ -218,6 +218,25 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
     }
 
+    public void showPremiumDetailIcons() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        likeParent.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
+        favouriteParent.setVisibility(VISIBLE);
+        favStarTHPIC.setVisibility(VISIBLE);
+        toggleLikeDisLikeTHPIC.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+    }
+
     public void showGalleryIcons(OnClickListener onClickListener) {
         overflowParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
@@ -258,6 +277,8 @@ public class Topbar extends Toolbar {
         mLogoImageView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
         mBackImageView.setOnClickListener(onClickListener);
+        // 14 = app:iconType="back"
+        mBackImageView.updateIcon(14);
     }
 
     public void showBookmarkPremiumDetailIcons(boolean hasSubscriptionPlan) {

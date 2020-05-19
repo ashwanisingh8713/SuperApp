@@ -122,6 +122,9 @@ public class DFPAds {
     }
 
     public void createMEDIUM_RECTANGLE(AdData adData) {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+            return;
+        }
         adData.createAdDataUiqueId(adData.getIndex(), adData.getAdId());
         final PublisherAdView publisherAdView = new PublisherAdView(SuperApp.getAppContext());
         publisherAdView.setAdUnitId(adData.getAdId());

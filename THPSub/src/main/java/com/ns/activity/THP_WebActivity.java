@@ -3,7 +3,6 @@ package com.ns.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -58,7 +57,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
         new WebViewLinkClick(false).linkClick(mWebView, this, mProgressBar);
 
-        activityBannerAds();
+        bottomBannerAds();
 
     }
 

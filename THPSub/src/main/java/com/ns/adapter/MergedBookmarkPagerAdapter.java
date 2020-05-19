@@ -19,38 +19,35 @@ import com.ns.thpremium.R;
 
 public class MergedBookmarkPagerAdapter extends FragmentStatePagerAdapter {
 
-    private String mUserId;
-
     private String[] mTabTitle = {"Subscription", "Non Subscription"};
     private boolean mIsDayTheme;
 
     private String mGroupType;
 
-    public MergedBookmarkPagerAdapter(FragmentManager fm, String userId, boolean isDayTheme, String groupType) {
+    public MergedBookmarkPagerAdapter(FragmentManager fm,  boolean isDayTheme, String groupType) {
         super(fm);
-        mUserId = userId;
         mIsDayTheme = isDayTheme;
         mGroupType = groupType;
     }
 
     @Override
     public Fragment getItem(int i) {
-        if(mGroupType.equals(NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_TAB)) {
+        if(mGroupType.equals(NetConstants.BOOKMARK_IN_TAB)) {
             if (i == 0) {
-                return THP_BookmarksFragment.getInstance(mUserId, NetConstants.GROUP_PREMIUM_BOOKMARK);
+                return THP_BookmarksFragment.getInstance(NetConstants.GROUP_PREMIUM_BOOKMARK);
             }
             else {
-                return THP_BookmarksFragment.getInstance(mUserId, NetConstants.GROUP_DEFAULT_BOOKMARK);
+                return THP_BookmarksFragment.getInstance(NetConstants.GROUP_DEFAULT_BOOKMARK);
             }
         }
         else { // (mBookmarkViewType == NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE)
-            return THP_BookmarksFragment.getInstance(mUserId, NetConstants.BOOKMARK_IN_ONE);
+            return THP_BookmarksFragment.getInstance(NetConstants.BOOKMARK_IN_ONE);
         }
     }
 
     @Override
     public int getCount() {
-        if(mGroupType.equals(NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_TAB)) {
+        if(mGroupType.equals(NetConstants.BOOKMARK_IN_TAB)) {
             return 2;
         }
         return 1;

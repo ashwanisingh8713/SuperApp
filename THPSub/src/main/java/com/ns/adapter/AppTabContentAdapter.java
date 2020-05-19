@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.material.snackbar.Snackbar;
+import com.netoperation.config.model.ContentUrl;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -65,6 +67,7 @@ import com.ns.viewholder.DashboardViewHolder;
 import com.ns.viewholder.DG_DetailBannerViewHolder;
 import com.ns.viewholder.DG_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
+import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.DG_PostCommentBtnViewHolder;
@@ -171,7 +174,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             return new BriefcaseViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_apptab_item_briefcase, viewGroup, false));
         } else if (viewType == VT_LOADMORE) {
-            return new BookmarkViewHolder(LayoutInflater.from(viewGroup.getContext())
+            return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_loadmore, viewGroup, false));
         } else if (viewType == VT_PREMIUM_DETAIL_IMAGE_BANNER) {
             return new PREMIUM_DetailBannerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.premium_detail_banner, viewGroup, false));
@@ -306,8 +309,14 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-                    IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
-                            bean.getArticleUrl(), position, bean.getArticleId());
+                    if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                                bean.getArticleUrl(), position, bean.getArticleId());
+                    }
+                    else {
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+                                bean.getArticleUrl(), position, bean.getArticleId());
+                    }
                 }
             });
 
@@ -316,8 +325,14 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-                    IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
-                            bean.getArticleUrl(), position, bean.getArticleId());
+                    if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                                bean.getArticleUrl(), position, bean.getArticleId());
+                    }
+                    else {
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+                                bean.getArticleUrl(), position, bean.getArticleId());
+                    }
                 }
             });
 
@@ -469,12 +484,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.time_Txt.setText(formatedPubDt);
 
         holder.bookmarkProgressBar.setVisibility(View.GONE);
-
-        if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-            holder.share_Img.setVisibility(View.VISIBLE);
-        } else {
-            holder.share_Img.setVisibility(View.GONE);
-        }
+        holder.share_Img.setVisibility(View.GONE);
 
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
@@ -495,16 +505,15 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         );
 
         holder.itemView.setOnClickListener(v -> {
-                    if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
-                                bean.getArticleUrl(), position, bean.getArticleId());
-                    } else if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
-                                bean.getArticleUrl(), position, bean.getArticleId());
+                    if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
+                        if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
+                            IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_PREMIUM_BOOKMARK, bean.getArticleUrl(), position, bean.getArticleId());
+                        } else {
+                            IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleUrl(), position, bean.getArticleId());
+                        }
                     } else {
                         IntentUtil.openSubscriptionActivity(holder.itemView.getContext(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                     }
-
                     THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", ResUtil.capitalizeFirstLetter(mFrom) + " clicked : " + bean.getArticleId() + " : " + bean.getTitle(), ResUtil.capitalizeFirstLetter(mFrom) + " List Screen");
 
                     if (getSnackbar() != null && getSnackbar().isShown()) {
@@ -1249,20 +1258,20 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         if (like == NetConstants.LIKE_NEUTRAL) {
                             // 11 = app:iconType="unfavourite"
                             favStartImg.updateIcon(11);
-                            // 6 = app:iconType="like"
-                            toggleLikeDisLikeImg.updateIcon(6);
+                            // 10 = app:iconType="dislike"
+                            toggleLikeDisLikeImg.updateIcon(10);
                         }
                         else if (like == NetConstants.LIKE_YES) {
                             // 2 = app:iconType="favourite"
                             favStartImg.updateIcon(2);
-                            // 6 = app:iconType="like"
-                            toggleLikeDisLikeImg.updateIcon(6);
+                            // 10 = app:iconType="dislike"
+                            toggleLikeDisLikeImg.updateIcon(10);
                         }
                         else if (like == NetConstants.LIKE_NO) {
                             // 11 = app:iconType="unfavourite"
                             favStartImg.updateIcon(11);
-                            // 10 = app:iconType="dislike"
-                            toggleLikeDisLikeImg.updateIcon(10);
+                            // 6 = app:iconType="like"
+                            toggleLikeDisLikeImg.updateIcon(6);
                         }
                     }
                     else {
@@ -1359,7 +1368,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                                             imageView.setEnabled(true);
                                                         }
                                                         // If user is in bookmark then item should be removed.
-                                                        if (mFrom.equals(NetConstants.API_bookmarks)) {
+                                                        if (ContentUtil.isFromBookmarkPage(mFrom)) {
                                                             deletedContentModel = mContent.remove(position);
                                                             deletedPosition = position;
                                                             notifyItemRemoved(position);
@@ -1390,7 +1399,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 //                                            notifyDataSetChanged();
                                                     } else if (fav == NetConstants.LIKE_NO) {
 //                                    Alerts.showToastAtCenter(context, "Show fewer stories like this.");
-                                                        if (mFrom.equals(NetConstants.API_bookmarks)) {
+                                                        if (ContentUtil.isFromBookmarkPage(mFrom)) {
                                                             notifyItemChanged(position);
 //                                                notifyDataSetChanged();
                                                         } else {
@@ -1506,5 +1515,8 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
     public void setUserId(String userId) {
         mUserId = userId;
     }
+
+
+
 
 }

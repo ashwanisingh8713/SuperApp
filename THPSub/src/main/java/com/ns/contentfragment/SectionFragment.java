@@ -648,7 +648,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             }
         }
         //taboolaAdsBeans1.add(taboolaAdsBeans.get(0));
-        dfpAds.listingAds();
 
         if(taboolaAds == null && taboolaAdsBeans.size() > 0) {
                 taboolaAds = new TaboolaAds(this, taboolaAdsBeans);

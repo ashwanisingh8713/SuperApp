@@ -1,11 +1,40 @@
 package com.ns.utils;
 
 import com.netoperation.model.MeBean;
+import com.netoperation.util.NetConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentUtil {
+
+    public static boolean isFromBookmarkPage(String from) {
+        if(from != null && (from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_ONE)
+                || from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_TAB)
+                || from.equalsIgnoreCase(NetConstants.GROUP_PREMIUM_BOOKMARK)
+                || from.equalsIgnoreCase(NetConstants.GROUP_DEFAULT_BOOKMARK))) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isFromPremiumBookmark(String from) {
+        if(from != null && (from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_ONE)
+                || from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_TAB)
+                || from.equalsIgnoreCase(NetConstants.GROUP_PREMIUM_BOOKMARK))) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isFromNonPremiumBookmark(String from) {
+        if(from != null && (from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_ONE)
+                || from.equalsIgnoreCase(NetConstants.BOOKMARK_IN_TAB)
+                || from.equalsIgnoreCase(NetConstants.GROUP_DEFAULT_BOOKMARK))) {
+            return true;
+        }
+        return false;
+    }
 
     public static StringBuilder getAuthor(List<String> authors) {
         StringBuilder author = new StringBuilder();

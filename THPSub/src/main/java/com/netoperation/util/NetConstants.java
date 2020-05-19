@@ -38,9 +38,10 @@ public class NetConstants {
     public static final String GROUP_PREMIUM_BOOKMARK = "GROUP_PREMIUM_BOOKMARK";
     public static final String GROUP_NOTIFICATION = "GROUP_NOTIFICATION";
     public static final String BOOKMARK_IN_ONE = "BOOKMARK_IN_ONE";
+    public static final String BOOKMARK_IN_TAB = "BOOKMARK_IN_TAB";
 
-    public static final String BOOKMARK_DEFAULT_PREMIUM_IN_ONE = "1";
-    public static final String BOOKMARK_DEFAULT_PREMIUM_IN_TAB = "2";
+    //public static final String BOOKMARK_DEFAULT_PREMIUM_IN_ONE = "1";
+    //public static final String BOOKMARK_DEFAULT_PREMIUM_IN_TAB = "2";
 
 
     public static final int BOOKMARK_YES = 1;

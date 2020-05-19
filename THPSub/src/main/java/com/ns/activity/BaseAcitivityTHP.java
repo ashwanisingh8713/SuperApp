@@ -304,7 +304,15 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     }
 
 
-    protected void activityBannerAds() {
+    protected void bottomBannerAds() {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+            LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);
+            if(banner_Ad_layout != null) {
+                banner_Ad_layout.setVisibility(View.GONE);
+            }
+            return;
+        }
+
         TableConfiguration tableConfiguration = getTableConfiguration();
         if(tableConfiguration == null) return;
 

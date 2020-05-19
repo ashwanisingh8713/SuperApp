@@ -111,7 +111,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if(getArguments() != null) {
             mArticleBean = getArguments().getParcelable("ArticleBean");
             mArticleId = getArguments().getString("articleId");
@@ -197,6 +196,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(tableMPReadArticle->{
+                        // It sends event in THP_DetailActivity.java => handleEvent(TableMPReadArticle mpReadArticle)
                         EventBus.getDefault().post(tableMPReadArticle);
 
                         if(!mActivity.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {

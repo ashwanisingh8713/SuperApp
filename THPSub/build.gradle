@@ -41,6 +41,8 @@ android {
             applicationId "com.mobstac.thehindubusinessline"
 
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
@@ -91,6 +93,8 @@ android {
             applicationId "com.mobstac.thehindu"
 
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
