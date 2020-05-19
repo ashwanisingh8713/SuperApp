@@ -27,7 +27,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/forex_row_background_second" />
+            android:background="@color/color_F5F5F5" />
 
         <com.ns.view.layout.NSLinearLayout
             android:id="@+id/optionLayout"
@@ -67,7 +67,6 @@
         android:id="@+id/categories_nse_bse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/forex_background_color"
         android:orientation="horizontal"
         android:paddingBottom="15dp"
         android:paddingTop="15dp">
@@ -108,5 +107,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/forex_row_background_second" />
+        android:background="@color/color_F5F5F5" />
 </com.ns.view.layout.NSLinearLayoutWindowBG>

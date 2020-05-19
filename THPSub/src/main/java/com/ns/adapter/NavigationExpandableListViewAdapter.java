@@ -104,7 +104,7 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
                     mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.epaper_day));
                     mGroupViewHolder.mNewTagImageView.setImageResource(R.drawable.ic_epaper_day_24x24);
                 } else {
-                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.epaper_night));
+                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.color_ededed_dark));
                     mGroupViewHolder.mNewTagImageView.setImageResource(R.drawable.ic_epaper_night_24x24);
                 }
             } else {
@@ -112,9 +112,9 @@ public class NavigationExpandableListViewAdapter extends BaseExpandableListAdapt
                 mGroupViewHolder.mNewTagImageView.setVisibility(View.GONE);
                 boolean isUserThemeDay = DefaultPref.getInstance(mGroupViewHolder.textView.getContext()).isUserThemeDay();
                 if (isUserThemeDay) {
-                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(),R.color.color_static_text));
+                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.color_191919_light));
                 } else {
-                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.dark_color_static_text));
+                    mGroupViewHolder.textView.setTextColor(ResUtil.getColor(mGroupViewHolder.textView.getContext().getResources(), R.color.color_ededed_dark));
                 }
             }
 

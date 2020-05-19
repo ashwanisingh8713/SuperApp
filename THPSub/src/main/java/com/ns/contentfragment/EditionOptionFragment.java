@@ -78,21 +78,21 @@ public class EditionOptionFragment extends BaseFragmentTHP {
 
 
                     if(morningEnable == null) {
-                        morningEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.timeColor));
+                        morningEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
                         morningEditions_Txt.setEnabled(false);
                     } else {
                         morningTime = "";
                     }
 
                     if(noonEnable == null) {
-                        noonEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.timeColor));
+                        noonEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
                         noonEditions_Txt.setEnabled(false);
                     } else {
                         noonTime = "";
                     }
 
                     if(eveningEnable == null) {
-                        eveningEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.timeColor));
+                        eveningEditions_Txt.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
                         eveningEditions_Txt.setEnabled(false);
                     } else {
                         eveningTime = "";

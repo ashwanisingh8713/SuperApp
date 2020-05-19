@@ -46,7 +46,7 @@
             android:lineSpacingExtra="@dimen/text_line_spacing"
             android:maxLines="2"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/article_list_text"
+            android:textColor="@color/color_111111_light"
             android:textSize="15sp" />
 
         <com.mobstac.thehindubusinessline.view.LatoSemiBoldTextView

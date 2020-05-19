@@ -12,7 +12,7 @@
     <!-- Space contains text -->
     <item android:state_checked="true" android:state_focused="true">
         <shape android:shape="rectangle">
-            <stroke android:width="2dp" android:color="@color/pinFocusColor" />
+            <stroke android:width="2dp" android:color="@color/color_1b528e" />
             <corners android:radius="8dp" />
             <solid android:color="@color/defaultWindowColor" />
         </shape>
@@ -20,7 +20,7 @@
     <!--Space is the next space for character input -->
     <item android:state_focused="true" android:state_selected="true">
         <shape android:shape="rectangle">
-            <stroke android:width="2dp" android:color="@color/pinFocusColor" />
+            <stroke android:width="2dp" android:color="@color/color_1b528e" />
             <corners android:radius="8dp" />
             <solid android:color="@android:color/white" />
         </shape>
@@ -28,7 +28,7 @@
     <!--Space contains text and not focused -->
     <item android:state_focused="false" android:state_checked="true">
         <shape android:shape="oval">
-            <stroke android:width="2dp" android:color="@color/pinFocusColor" />
+            <stroke android:width="2dp" android:color="@color/color_1b528e" />
             <corners android:radius="8dp" />
             <solid android:color="@color/pinDefaultColor" />
         </shape>

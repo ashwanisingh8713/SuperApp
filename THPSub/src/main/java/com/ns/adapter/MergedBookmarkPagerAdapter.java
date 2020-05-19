@@ -85,9 +85,9 @@ public class MergedBookmarkPagerAdapter extends FragmentStatePagerAdapter {
         View selected = tab.getCustomView();
         TextView iv_text = selected.findViewById(R.id.textView);
         if(mIsDayTheme) {
-            iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.boldBlackColor));
+            iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.color_191919_light));
         } else {
-            iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.dark_color_static_text));
+            iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.color_ededed_dark));
         }
     }
 
@@ -95,6 +95,6 @@ public class MergedBookmarkPagerAdapter extends FragmentStatePagerAdapter {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         View selected = tab.getCustomView();
         TextView iv_text = selected.findViewById(R.id.textView);
-        iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.greyColor_1));
+        iv_text.setTextColor(context.getResources().getColor(com.ns.thpremium.R.color.color_818181_light));
     }
 }

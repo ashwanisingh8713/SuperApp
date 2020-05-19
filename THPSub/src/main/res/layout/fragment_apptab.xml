@@ -10,7 +10,7 @@
         android:id="@+id/appTabsHorizontalDivider"
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
-        android:background="@color/boldBlackColor"
+        android:background="@color/color_191919_light"
         app:layout_constraintBottom_toTopOf="@+id/appTabsTabLayoutParent" />
 
     <LinearLayout

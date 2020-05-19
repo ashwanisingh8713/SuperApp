@@ -99,7 +99,7 @@ public class BecomeMemberActivity extends BaseAcitivityTHP {
 
         // Sign In Click Listener
         ResUtil.doClickSpanForString(this, "Already have an account? ", "Sign In",
-                signIn_Txt, R.color.blueColor_1, new TextSpanCallback() {
+                signIn_Txt, R.color.color_1b528e, new TextSpanCallback() {
                     @Override
                     public void onTextSpanClick() {
                         if(!isInAleadySignUPIN) {

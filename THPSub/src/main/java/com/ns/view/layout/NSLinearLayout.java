@@ -49,60 +49,60 @@ public class NSLinearLayout extends LinearLayout {
         // 1 = Multimedia
         else if(viewType == 1) {
             if(isUserThemeDay) {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_light)); // ffffff
+                setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_light)); // ffffff
             }
             else {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_dark)); // //313131
+                setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_dark)); // //313131
             }
         }
         // 2 = Cartoon
         else if(viewType == 2) {
-            setBackground(getResources().getDrawable(R.drawable.cartoon_border)); // d4d4d4
+            setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.cartoon_border)); // d4d4d4
         }
         // 3 = APPEXCLUSIVE
         else if(viewType == 3) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.widget_app_exclusive_background)); //CF4939
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.red)); //CF4939
         }
         // 4 = Normal Widget
         else if(viewType == 4) {
             if(isUserThemeDay) {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_light)); // ffffff
+                setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_light)); // ffffff
             }
             else {
-                setBackground(getResources().getDrawable(R.drawable.drawable_explore_dark)); //313131
+                setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_dark)); //313131
             }
         }
         // 5 = Black_Light
         else if(viewType == 5){
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light)); // ffffff
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); // ffffff
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131)); //313131
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_313131)); //313131
             }
         }
         // 6 = Black_Dark
         else if(viewType == 6){
             if(isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background)); //ffffff
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); //ffffff
             }
             else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark)); // 191919
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_191919_light)); // 191919
             }
         }
         // 7 = Black_Full
         else if(viewType == 7) {
             if(isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_white)); // ffffff
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); // ffffff
             }
             else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_dark));  // 000000
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_000000));  // 000000
             }
         }
         else {
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light)); // ffffff
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); // ffffff
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131)); //313131
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_313131)); //313131
             }
         }
 

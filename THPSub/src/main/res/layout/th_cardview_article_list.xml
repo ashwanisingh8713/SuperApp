@@ -46,6 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_gravity="bottom"
-        android:background="@color/article_list_bottom" />
+        android:background="@color/color_52969696" />
 
 </com.ns.view.layout.NSLinearLayout>

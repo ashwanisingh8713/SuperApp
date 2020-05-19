@@ -16,7 +16,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:textColor="@color/search_title"
+        android:textColor="@color/color_111111_light"
         android:textSize="14sp"
         app:textType="M"
          />
@@ -34,7 +34,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="@color/text_warm_grey"
+            android:textColor="@color/color_818181_light"
             android:textSize="12sp" />
 
         <com.ns.view.text.CustomTextView
@@ -46,12 +46,12 @@
             android:drawableStart="@drawable/ic_dot"
             android:fontFamily="sans-serif"
             android:paddingRight="10dp"
-            app:textColor="@color/text_warm_grey"
+            app:textColor="@color/color_818181_light"
             android:textSize="12sp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/article_list_bottom" />
+        android:background="@color/color_52969696" />
 </LinearLayout>

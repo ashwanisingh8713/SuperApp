@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.ns.loginfragment.SignInFragment;
 import com.ns.loginfragment.SignUpFragment;
 import com.ns.thpremium.R;
+import com.ns.utils.ResUtil;
 
 public class SignInAndUpPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -86,9 +87,9 @@ public class SignInAndUpPagerAdapter extends FragmentStatePagerAdapter {
         View selected = tab.getCustomView();
         TextView iv_text = selected.findViewById(R.id.textView);
         if(mIsDayTheme) {
-            iv_text.setTextColor(context.getResources().getColor(R.color.boldBlackColor));
+            iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_191919_light));
         } else {
-            iv_text.setTextColor(context.getResources().getColor(R.color.dark_color_static_text));
+            iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_ededed_dark));
         }
     }
 
@@ -96,6 +97,6 @@ public class SignInAndUpPagerAdapter extends FragmentStatePagerAdapter {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         View selected = tab.getCustomView();
         TextView iv_text = selected.findViewById(R.id.textView);
-        iv_text.setTextColor(context.getResources().getColor(R.color.greyColor_1));
+        iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_818181_light));
     }
 }

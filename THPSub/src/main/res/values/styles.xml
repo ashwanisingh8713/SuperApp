@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/color_1b528e</item>
+        <item name="colorPrimaryDark">@color/color_1b528e</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/defaultWindowColor</item>
     </style>
@@ -88,7 +88,7 @@
         <item name="android:maxLines">2</item>
         <item name="android:alpha">0.6</item>
         <item name="android:visibility">gone</item>
-        <item name="android:textColor">@color/redColor_1</item>
+        <item name="android:textColor">@color/red</item>
         <item name="font">@string/THP_FiraSans_Regular</item>
     </style>
 
@@ -132,15 +132,15 @@
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@color/boldBlackColor_50alp</item>
-        <item name="colorControlNormal">@color/listing_dividerColor</item>
+        <item name="colorControlNormal">@color/color_52969696</item>
         <item name="colorControlActivated">@color/boldBlackColor_50alp</item>
         <item name="font_path">@string/THP_FiraSans_Regular</item>
     </style>
 
     <style name="TextLabelDark" parent="TextAppearance.AppCompat">
-        <item name="android:textColorHint">@color/dark_color_static_text</item>
-        <item name="colorControlNormal">@color/listing_dividerColor</item>
-        <item name="colorControlActivated">@color/dark_color_static_text</item>
+        <item name="android:textColorHint">@color/color_ededed_dark</item>
+        <item name="colorControlNormal">@color/color_52969696</item>
+        <item name="colorControlActivated">@color/color_ededed_dark</item>
         <item name="font_path">@string/THP_FiraSans_Regular</item>
     </style>
 
@@ -162,7 +162,7 @@
         <item name="android:textSize">@dimen/personal_info_textSize_16sp</item>
         <item name="font_path">@string/THP_FiraSans_Regular</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/boldBlackColor</item>
+        <item name="android:textColor">@color/color_191919_light</item>
         <item name="android:alpha">0.9</item>
         <item name="android:lineSpacingExtra">0.8sp</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -175,7 +175,7 @@
         <item name="android:textSize">@dimen/personal_info_textSize_16sp</item>
         <item name="font_path">@string/THP_FiraSans_Regular</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/boldBlackColor</item>
+        <item name="android:textColor">@color/color_191919_light</item>
         <item name="android:alpha">0.9</item>
         <item name="android:lineSpacingExtra">0.8sp</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -218,34 +218,34 @@
         <item name="spb_interpolator">spb_interpolator_acceleratedecelerate</item>
         <item name="spb_mirror_mode">true</item>
         <item name="spb_reversed">true</item>
-        <item name="spb_colors">@array/gplus_colors</item>
+        <item name="spb_colors">@array/smooth_progress_colors</item>
         <item name="spb_progressiveStart_activated">true</item>
         <item name="spb_generate_background_with_colors">false</item>
     </style>
 
     <style name="progressDialogLight" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Used for the buttons and Progressbar -->
-        <item name="colorAccent">@color/blueColor_1</item>
+        <item name="colorAccent">@color/color_1b528e</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/progressDialogLight</item>
+        <item name="android:background">@color/color_191919_light</item>
     </style>
 
 
     <style name="progressDialogDark" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Used for the buttons and Progressbar -->
-        <item name="colorAccent">@color/blueColor_1</item>
+        <item name="colorAccent">@color/color_1b528e</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/progressDialogDark</item>
+        <item name="android:background">@color/color_ededed_dark</item>
     </style>
 
     <style name="dividerStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/divider_height</item>
-        <item name="android:background">@color/divider_color_hori</item>
+        <item name="android:background">@color/color_52969696</item>
     </style>
 
     <style name="Widget.DiscreteIndicatorTextAppearance" parent="android:TextAppearance.Small">

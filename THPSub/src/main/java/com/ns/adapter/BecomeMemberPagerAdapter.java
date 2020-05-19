@@ -78,7 +78,7 @@ public class BecomeMemberPagerAdapter extends PagerAdapter {
             TextView benefitsIncludes_Txt = layout.findViewById(R.id.benefitsIncludes_Txt);
             becomeMember_Txt.setText("Subscription Benefits");
             benefitsIncludes_Txt.setText("Subscribe to get these features free for");
-            benefitsIncludes_Txt.setTextColor(ResUtil.getColor(context.getResources(), R.color.boldBlackColor));
+            benefitsIncludes_Txt.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_191919_light));
             benefitsIncludes_Txt.setAlpha(0.6f);
         } else if (position > 0) {
             ImageView text1 = layout.findViewById(R.id.text1);

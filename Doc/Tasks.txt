@@ -21,3 +21,7 @@ Top and bottom bar color
 Icons from server
 Reduce text size of "No Connection"
 Updated config.json
+
+
+
+// Need to define all pages for text color

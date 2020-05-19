@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 tools:text="English (India)"
                 app:font_path="@string/THP_FiraSans_Regular"
-                app:textColor="@color/text_warm_grey"
+                app:textColor="@color/color_818181_light"
                 android:textSize="14sp" />
 
 
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         tools:text="100%"
                         app:font_path="@string/THP_FiraSans_Regular"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -156,7 +156,7 @@
                         android:layout_weight="1"
                         android:text="0.5x"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         app:font_path="@string/THP_FiraSans_Regular"/>
 
                     <com.ns.view.text.CustomTextView
@@ -166,7 +166,7 @@
                         android:layout_weight="1"
                         android:text="0.75x"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         app:font_path="@string/THP_FiraSans_Regular"/>
 
                     <com.ns.view.text.CustomTextView
@@ -176,7 +176,7 @@
                         android:layout_weight="1"
                         android:text="1x"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         app:font_path="@string/THP_FiraSans_Regular"/>
 
                     <com.ns.view.text.CustomTextView
@@ -186,7 +186,7 @@
                         android:layout_weight="1"
                         android:text="1.5x"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         app:font_path="@string/THP_FiraSans_Regular"/>
 
                     <com.ns.view.text.CustomTextView
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:text="2x"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         app:font_path="@string/THP_FiraSans_Regular"/>
 
                 </LinearLayout>
@@ -220,7 +220,7 @@
                             android:paddingLeft="5dp"
                             android:paddingStart="5dp"
                             android:text="."
-                            app:textColor="@color/customise_tag_background"
+                            app:textColor="@color/color_006599"
                             android:textSize="@dimen/speed_seekbar_dot_size"
                             app:font_path="@string/THP_TundraOffc"/>
 
@@ -232,7 +232,7 @@
                             android:paddingLeft="15dp"
                             android:paddingStart="15dp"
                             android:text="."
-                            app:textColor="@color/customise_tag_background"
+                            app:textColor="@color/color_006599"
                             android:textSize="@dimen/speed_seekbar_dot_size"
                             app:font_path="@string/THP_TundraOffc"/>
 
@@ -244,7 +244,7 @@
                             android:paddingLeft="5dp"
                             android:paddingStart="5dp"
                             android:text="."
-                            app:textColor="@color/customise_tag_background"
+                            app:textColor="@color/color_006599"
                             android:textSize="@dimen/speed_seekbar_dot_size"
                             app:font_path="@string/THP_TundraOffc"/>
 
@@ -256,7 +256,7 @@
                             android:paddingLeft="5dp"
                             android:paddingStart="5dp"
                             android:text="."
-                            app:textColor="@color/customise_tag_background"
+                            app:textColor="@color/color_006599"
                             android:textSize="@dimen/speed_seekbar_dot_size"
                             app:font_path="@string/THP_TundraOffc"/>
 
@@ -265,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/speed_seekbar_dot_height"
                             android:text="."
-                            app:textColor="@color/customise_tag_background"
+                            app:textColor="@color/color_006599"
                             android:textSize="@dimen/speed_seekbar_dot_size"
                             app:font_path="@string/THP_TundraOffc"/>
 
@@ -337,7 +337,7 @@
                         android:layout_height="wrap_content"
                         android:text="1x"
                         app:font_path="@string/THP_TundraOffc"
-                        app:textColor="@color/text_warm_grey"
+                        app:textColor="@color/color_818181_light"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -382,7 +382,7 @@
                                 android:paddingLeft="5dp"
                                 android:paddingStart="5dp"
                                 android:text="."
-                                app:textColor="@color/customise_tag_background"
+                                app:textColor="@color/color_006599"
                                 app:font_path="@string/THP_TundraOffc"
                                 android:textSize="@dimen/speed_seekbar_dot_size" />
 
@@ -390,7 +390,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="."
-                                app:textColor="@color/customise_tag_background"
+                                app:textColor="@color/color_006599"
                                 app:font_path="@string/THP_TundraOffc"
                                 android:textSize="@dimen/speed_seekbar_dot_size" />
 

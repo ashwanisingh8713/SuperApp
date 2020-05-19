@@ -17,7 +17,6 @@
             <option value="$PROJECT_DIR$/photoview" />
             <option value="$PROJECT_DIR$/pinentryedittext" />
             <option value="$PROJECT_DIR$/reactivenetwork" />
-            <option value="$PROJECT_DIR$/searchlibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

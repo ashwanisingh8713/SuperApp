@@ -34,10 +34,10 @@ public class NSCardView extends CardView {
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if(isUserThemeDay) {
-            setCardBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background)); //ffffff
+            setCardBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); //ffffff
         }
         else {
-            setCardBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark)); // 191919
+            setCardBackgroundColor(ResUtil.getColor(getResources(), R.color.color_191919_light)); // 191919
         }
 
     }

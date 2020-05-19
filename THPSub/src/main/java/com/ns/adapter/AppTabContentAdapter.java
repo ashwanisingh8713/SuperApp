@@ -1093,7 +1093,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
             }
             ResUtil.doClickSpanForString(holder.signIn_Txt.getContext(), BaseFragmentTHP.getMpSignInButtonName(), "Sign In",
                     holder.signIn_Txt,
-                    R.color.blueColor_1,
+                    R.color.color_1b528e,
                     () -> {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signIn_Txt.getContext(), "signIn");
@@ -1103,7 +1103,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
 
                     });
             ResUtil.doClickSpanForString(holder.signUp_Txt.getContext(), BaseFragmentTHP.getMpSignUpButtonName(), "Sign Up",
-                    holder.signUp_Txt, R.color.blueColor_1, () -> {
+                    holder.signUp_Txt, R.color.color_1b528e, () -> {
                         THPConstants.IS_FROM_MP_BLOCKER = true;
                         IntentUtil.openSignInOrUpActivity(holder.signUp_Txt.getContext(), "signUp");
                         //CleverTap and Firebase Events

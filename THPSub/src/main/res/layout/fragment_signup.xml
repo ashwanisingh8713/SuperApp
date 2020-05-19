@@ -161,7 +161,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:font_path="@string/THP_FiraSans_Bold"
-        android:textColor="@color/blueColor_1"/>
+        android:textColor="@color/color_1b528e"/>
 
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/tc_Txt"

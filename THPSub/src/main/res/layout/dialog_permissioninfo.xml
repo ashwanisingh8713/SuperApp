@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TheHindu Subscription Permission"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="TheHindu Subscription requires the following permission(s)"
-            android:textColor="@color/timeColor"
+            android:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Phone"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To get network type"
-            android:textColor="@color/timeColor"
+            android:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Wifi and Network"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To get public IP address"
-            android:textColor="@color/timeColor"
+            android:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -73,7 +73,7 @@
             android:layout_marginTop="15dp"
             android:text="OK"
             android:layout_gravity="right"
-            android:textColor="@color/blueColor_1"
+            android:textColor="@color/color_1b528e"
             android:textSize="14sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
     </LinearLayout>

@@ -35,6 +35,7 @@ import androidx.core.view.ViewCompat;
 import com.ns.thpremium.R;
 import com.ns.tts.discreteSeekbar.internal.compat.SeekBarCompat;
 import com.ns.tts.discreteSeekbar.internal.drawable.MarkerDrawable;
+import com.ns.utils.ResUtil;
 import com.ns.view.text.ArticleTitleTextView;
 
 
@@ -107,7 +108,7 @@ public class Marker extends ViewGroup implements MarkerDrawable.MarkerAnimationL
         }
         a.recycle();
 
-        mNumber.setTextColor(getResources().getColor(R.color.text_warm_grey));
+        mNumber.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
         mNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
     }
 

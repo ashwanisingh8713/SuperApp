@@ -111,7 +111,7 @@
                 android:id="@+id/resend_Txt"
                 android:text="Resend OTP"
                 style="@style/gray_background"
-                android:textColor="@color/blueColor_1"
+                android:textColor="@color/color_1b528e"
                 app:font_path="@string/THP_FiraSans_Regular"
                 />
 

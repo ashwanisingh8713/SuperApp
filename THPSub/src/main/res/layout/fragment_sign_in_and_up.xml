@@ -36,7 +36,7 @@
             android:layout_height="40dp"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
-            app:tabIndicatorColor="@color/blueColor_1"
+            app:tabIndicatorColor="@color/color_1b528e"
             />
 
         <androidx.viewpager.widget.ViewPager

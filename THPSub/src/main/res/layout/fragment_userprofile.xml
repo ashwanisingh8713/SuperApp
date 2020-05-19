@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:maxEms="11"
                             android:text="Hi User"
-                            app:textColor="@color/blueColor_1"
+                            app:textColor="@color/color_1b528e"
                             android:textSize="18sp"
                             app:font_path="@string/THP_FiraSans_Bold" />
 

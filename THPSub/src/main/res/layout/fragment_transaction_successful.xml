@@ -63,7 +63,7 @@
                 android:gravity="center_horizontal"
                 android:imeOptions="actionDone"
                 android:text="You can able to"
-                android:textColor="@color/boldBlackColor"
+                android:textColor="@color/color_191919_light"
                 android:textSize="14sp" />
 
             <com.ns.view.text.CustomTextView
@@ -74,7 +74,7 @@
                 android:background="@drawable/grey_background"
                 android:gravity="center"
                 android:text="View Subscription Details"
-                app:textColor="@color/color_static_text"
+                app:textColor="@color/color_191919_light"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -86,7 +86,7 @@
                 android:background="@drawable/grey_background"
                 android:gravity="center"
                 android:text="@string/set_preference"
-                app:textColor="@color/color_static_text"
+                app:textColor="@color/color_191919_light"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 

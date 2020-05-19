@@ -124,7 +124,7 @@
             app:layout_constraintTop_toBottomOf="@+id/statusTitle_Txt"
             android:textSize="16sp"
             android:layout_marginTop="6dp"
-            app:textColor="@color/greenColor_1"
+            app:textColor="@color/green"
             android:text="Success"
             app:font_path="@string/THP_FiraSans_Regular"
             />
@@ -137,7 +137,7 @@
             app:layout_constraintTop_toBottomOf="@+id/paymentModeTitle_Txt"
             android:textSize="16sp"
             android:layout_marginTop="6dp"
-            app:textColor="@color/redColor_1"
+            app:textColor="@color/red"
             android:text="ICICI"
             app:font_path="@string/THP_FiraSans_Regular"
             />

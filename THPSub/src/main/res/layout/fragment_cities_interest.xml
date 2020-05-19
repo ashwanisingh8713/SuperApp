@@ -19,11 +19,11 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:background="@color/color_home_widget_background"
+            android:background="@color/color_ffffff"
             android:gravity="start|center_vertical"
             android:text="@string/intital_setup_localize"
             android:textAllCaps="true"
-            app:textColor="@color/color_custom_header_text"
+            app:textColor="@color/color_424242"
             android:textSize="32sp"
             android:textStyle="bold"
             app:font_path="@string/THP_FiraSans_Bold"/>

@@ -62,7 +62,7 @@
                 android:background="@drawable/grey_background"
                 android:gravity="center"
                 android:text="Check Subscription Details"
-                app:textColor="@color/color_static_text"
+                app:textColor="@color/color_191919_light"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -75,7 +75,7 @@
                 android:background="@drawable/grey_background"
                 android:gravity="center"
                 android:text="Dismiss"
-                app:textColor="@color/color_static_text"
+                app:textColor="@color/color_191919_light"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_Regular" />
 

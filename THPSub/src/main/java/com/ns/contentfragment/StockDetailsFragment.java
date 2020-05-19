@@ -11,8 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -451,15 +449,15 @@ public class StockDetailsFragment extends Fragment implements View.OnClickListen
                 if (changeIndicator < 0) {
                     mChangeValue.setText("" + change);
                     mPercentageChange.setText("(" + stockChange + "%" + ")");
-                    mChangeValue.setTextColor(getResources().getColor(R.color.RedDown));
-                    mPercentageChange.setTextColor(getResources().getColor(R.color.RedDown));
+                    mChangeValue.setTextColor(getResources().getColor(R.color.red));
+                    mPercentageChange.setTextColor(getResources().getColor(R.color.red));
                     mProfitOrLossIcon.setImageResource(R.drawable.ic_loss_arrow);
 
                 } else if (changeIndicator > 0) {
                     mChangeValue.setText("" + change);
                     mPercentageChange.setText("(" + stockChange + "%" + ")");
-                    mChangeValue.setTextColor(getResources().getColor(R.color.GreenUp));
-                    mPercentageChange.setTextColor(getResources().getColor(R.color.GreenUp));
+                    mChangeValue.setTextColor(getResources().getColor(R.color.green));
+                    mPercentageChange.setTextColor(getResources().getColor(R.color.green));
                     mProfitOrLossIcon.setImageResource(R.drawable.ic_profit_arrow);
                 } else {
                     mChangeValue.setText("N.A.");
@@ -533,15 +531,15 @@ public class StockDetailsFragment extends Fragment implements View.OnClickListen
                 if (changeIndicator < 0) {
                     mChangeValue.setText("" + change);
                     mPercentageChange.setText("(" + stockChange + "%" + ")");
-                    mChangeValue.setTextColor(getResources().getColor(R.color.RedDown));
-                    mPercentageChange.setTextColor(getResources().getColor(R.color.RedDown));
+                    mChangeValue.setTextColor(getResources().getColor(R.color.red));
+                    mPercentageChange.setTextColor(getResources().getColor(R.color.red));
                     mProfitOrLossIcon.setImageResource(R.drawable.ic_loss_arrow);
 
                 } else if (changeIndicator > 0) {
                     mChangeValue.setText("" + change);
                     mPercentageChange.setText("(" + stockChange + "%" + ")");
-                    mChangeValue.setTextColor(getResources().getColor(R.color.GreenUp));
-                    mPercentageChange.setTextColor(getResources().getColor(R.color.GreenUp));
+                    mChangeValue.setTextColor(getResources().getColor(R.color.green));
+                    mPercentageChange.setTextColor(getResources().getColor(R.color.green));
                     mProfitOrLossIcon.setImageResource(R.drawable.ic_profit_arrow);
                 } else {
                     mChangeValue.setText("N.A.");

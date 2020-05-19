@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/color_customize_item_normal_background" />
+    <solid android:color="@color/color_F5F5F5" />
     <corners android:radius="30dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/customise_tag_background" />
+        android:color="@color/color_006599" />
 
 </shape>

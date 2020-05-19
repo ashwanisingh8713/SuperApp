@@ -34,33 +34,33 @@ public class ArticleTitleTextView extends CustomTextView {
         // 0 = "XL", XLarge
         if(getViewType() == 0) {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.color_banner_text)); // 424242
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_424242)); // 424242
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.dark_color_banner_text)); // ededed
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark)); // ededed
             }
         }
         // 1 = "L", Large
         else if(getViewType() == 1) {
                 if (isUserThemeDay) {
-                    setTextColor(ResUtil.getColor(getResources(), R.color.article_list_text)); // 111111
+                    setTextColor(ResUtil.getColor(getResources(), R.color.color_111111_light)); // 111111
                 } else {
-                    setTextColor(ResUtil.getColor(getResources(), R.color.dark_article_list_text)); // ededed
+                    setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark)); // ededed
                 }
         }
         // 2 = "S", Small
         else if(getViewType() == 2) {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.article_list_text)); // 111111
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_111111_light)); // 111111
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.dark_article_list_text)); // ededed
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark)); // ededed
             }
         }
         // 3 = "XS", X_Small
         else if(getViewType() == 3) {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.article_bottom_text_color)); // 818181
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light)); // 818181
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.article_bottom_text_color)); // 818181
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light)); // 818181
             }
         }
         // 4 = "WigetText" colored text View
@@ -70,16 +70,16 @@ public class ArticleTitleTextView extends CustomTextView {
         // 5 = "M", M
         else if(getViewType() == 5) {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.color_static_text));  // 191919
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_191919_light));  // 191919
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.dark_color_static_text)); // ededed
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark)); // ededed
             }
         }
         else {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.color_static_text)); // 191919
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_191919_light)); // 191919
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.dark_color_static_text));  // ededed
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark));  // ededed
             }
         }
 

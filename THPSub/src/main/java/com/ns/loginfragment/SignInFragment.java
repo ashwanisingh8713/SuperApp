@@ -210,7 +210,7 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         // Terms and Conditions click listener
         ResUtil.doClickSpanForString(getActivity(), "By signing in, you agree to our  ", "Terms and Conditions",
-                tc_Txt, R.color.blueColor_1, new TextSpanCallback() {
+                tc_Txt, R.color.color_1b528e, new TextSpanCallback() {
                     @Override
                     public void onTextSpanClick() {
                         if(!BaseAcitivityTHP.sIsOnline) {

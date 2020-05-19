@@ -111,7 +111,7 @@
                     android:maxLength="20"
                     android:maxLines="1"
                     app:hintTextAppearance="@style/HintLabel"
-                    android:textColor="@color/dark_color_static_text"/>
+                    android:textColor="@color/color_ededed_dark"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
@@ -152,7 +152,7 @@
                     android:maxLines="1"
                     android:paddingBottom="15dp"
                     app:hintTextAppearance="@style/HintLabel"
-                    android:textColor="@color/dark_color_static_text"/>
+                    android:textColor="@color/color_ededed_dark"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
@@ -192,7 +192,7 @@
                     android:maxLength="20"
                     android:maxLines="1"
                     app:hintTextAppearance="@style/HintLabel"
-                    android:textColor="@color/dark_color_static_text"/>
+                    android:textColor="@color/color_ededed_dark"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.ns.view.text.CustomTextView

@@ -47,7 +47,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/drawable_outline_blue"
                 android:textAllCaps="true"
-                android:textColor="@color/color_customize_item_select_background"
+                android:textColor="@color/color_006599"
                 android:textSize="13sp"
                 android:visibility="gone" />
 

@@ -57,5 +57,5 @@
         android:layout_height="1dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:background="@color/navigation_devider" />
+        android:background="@color/color_ededed_dark" />
 </com.ns.view.layout.NSLinearLayout>

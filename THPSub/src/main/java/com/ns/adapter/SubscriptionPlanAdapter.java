@@ -76,13 +76,13 @@ public class SubscriptionPlanAdapter extends BaseRecyclerViewAdapter {
             holder.endDate_Txt.setText("End Date  "+(bean.geteDate() != null ? bean.geteDate() : ""));
 
             if(bean.getIsActive() == 1) {
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.greenColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.green));
                 holder.status_Txt.setText("Active");
             } else if(bean.getIsActive() == 0 && CommonUtil.isStartDateFutureDate(bean.getsDate())) {
                 holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.yellow_yet_to_active));
                 holder.status_Txt.setText("Yet to Active");
             } else if(bean.getIsActive() == 0 && !CommonUtil.isStartDateFutureDate(bean.getsDate())) {
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.redColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.red));
                 holder.status_Txt.setText("Expired");
             } else {
                 holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.grey));

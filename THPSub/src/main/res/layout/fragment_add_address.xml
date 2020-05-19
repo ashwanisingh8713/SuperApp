@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:maxEms="11"
                         android:text="Add Address"
-                        android:textColor="@color/boldBlackColor"
+                        android:textColor="@color/color_191919_light"
                         android:textSize="18sp"
                         app:font_path="@string/THP_FiraSans_Bold" />
 
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:alpha="0.8"
                         android:text="Edit your address details"
-                        android:textColor="@color/boldBlackColor"
+                        android:textColor="@color/color_191919_light"
                         android:textSize="14sp"
                         app:font_path="@string/THP_FiraSans_Regular" />
                 </LinearLayout>

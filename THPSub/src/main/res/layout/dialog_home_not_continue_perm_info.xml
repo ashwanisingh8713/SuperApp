@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="The app requires the following permission(s) to perform this action"
-            app:textColor="@color/timeColor"
+            app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To give better news content and user experiene we need location access."
-            app:textColor="@color/timeColor"
+            app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To grant permissions, go to App info > Permissions"
-            app:textColor="@color/timeColor"
+            app:textColor="@color/color_818181_light"
             android:layout_marginTop="15dp"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
@@ -72,7 +72,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="15dp"
                 android:text="Cancel"
-                app:textColor="@color/blueColor_1"
+                app:textColor="@color/color_1b528e"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_SemiBold"
                 android:layout_marginRight="45dp"
@@ -85,7 +85,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:text="App Info"
-            app:textColor="@color/blueColor_1"
+            app:textColor="@color/color_1b528e"
             android:textSize="14sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
         </LinearLayout>

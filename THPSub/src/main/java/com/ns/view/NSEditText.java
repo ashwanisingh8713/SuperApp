@@ -57,11 +57,11 @@ public class NSEditText extends AppCompatEditText {
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         if (isUserThemeDay) {
-            setTextColor(ResUtil.getColor(getResources(), R.color.color_banner_text));
-            setHintTextColor(ResUtil.getColor(getResources(), R.color.color_banner_text));
+            setTextColor(ResUtil.getColor(getResources(), R.color.color_424242));
+            setHintTextColor(ResUtil.getColor(getResources(), R.color.color_424242));
         } else {
-            setTextColor(ResUtil.getColor(getResources(), R.color.dark_color_banner_text));
-            setHintTextColor(ResUtil.getColor(getResources(), R.color.dark_color_banner_text));
+            setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark));
+            setHintTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark));
         }
     }
 

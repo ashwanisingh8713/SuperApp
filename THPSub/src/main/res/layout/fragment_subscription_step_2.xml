@@ -23,7 +23,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="The Hindu Subscription"
-        android:textColor="@color/boldBlackColor"
+        android:textColor="@color/color_191919_light"
         android:textSize="27sp"
         app:font_path="@string/THP_TundraOffc_Bold" />
 
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:alpha="0.8"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:text="Choose Plan"
             app:font_path="@string/THP_FiraSans_Bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:alpha="0.6"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:text="Subscribe to get these features free for"
             app:font_path="@string/THP_FiraSans_Regular"
             android:paddingTop="5dp"
@@ -191,7 +191,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:font_path="@string/THP_FiraSans_Regular"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             android:layout_marginBottom="30dp"
             />
 

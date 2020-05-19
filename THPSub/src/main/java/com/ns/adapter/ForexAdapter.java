@@ -58,15 +58,15 @@ public class ForexAdapter extends BaseAdapter {
 
         if (position % 2 == 0) {
             if(isUserThemeDay) {
-                convertView.setBackgroundResource(R.color.forex_row_background);
+                convertView.setBackgroundResource(R.color.color_ffffff);
             } else {
-                convertView.setBackgroundResource(R.color.forex_row_background_dark);
+                convertView.setBackgroundResource(R.color.color_191919_light);
             }
         } else {
             if(isUserThemeDay) {
-                convertView.setBackgroundResource(R.color.forex_row_background_second);
+                convertView.setBackgroundResource(R.color.color_F5F5F5);
             } else {
-                convertView.setBackgroundResource(R.color.forex_row_background_second_dark);
+                convertView.setBackgroundResource(R.color.color_262626);
             }
         }
         return convertView;

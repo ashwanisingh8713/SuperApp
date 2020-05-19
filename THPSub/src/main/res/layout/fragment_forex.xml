@@ -117,7 +117,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/forex_row_background_second" />
+                android:background="@color/color_F5F5F5" />
 
             <com.ns.view.CustomProgressBar
                 android:id="@+id/progress_container"

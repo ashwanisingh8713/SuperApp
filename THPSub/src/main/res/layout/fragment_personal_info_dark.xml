@@ -107,7 +107,7 @@
                 android:text=""
                 app:hintTextAppearance="@style/HintLabel"
                 android:imeOptions="normal"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,7 @@
                 android:paddingBottom="15dp"
                 android:maxLines="1"
                 app:hintTextAppearance="@style/HintLabel"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,7 +159,7 @@
                 android:hint="Gender"
                 android:inputType="textPersonName"
                 android:drawableRight="@drawable/ic_edition_dropdown_white"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,7 +181,7 @@
                 android:hint="Country"
                 android:inputType="textPersonName"
                 android:drawableRight="@drawable/ic_edition_dropdown_white"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,7 +204,7 @@
                 android:maxLines="1"
                 android:drawableRight="@drawable/ic_edition_dropdown_white"
                 app:hintTextAppearance="@style/HintLabel"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -295,7 +295,7 @@
                 style="@style/personalInfoET_Style"
                 android:maxLines="1"
                 android:inputType="textPersonName"
-                android:textColor="@color/dark_color_static_text"
+                android:textColor="@color/color_ededed_dark"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -307,7 +307,7 @@
             android:gravity="center"
             android:layout_marginTop="@dimen/personal_info_gap_for_verifyotp"
             android:text="Verify via OTP"
-            app:textColor="@color/blueColor_1"
+            app:textColor="@color/color_1b528e"
             android:background="@drawable/blue_outline_backgraoud"
             android:textSize="@dimen/personal_info_textSize_18sp"
             app:font_path="@string/THP_FiraSans_Bold" />
@@ -337,7 +337,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/part4Layout"
-        android:background="@color/background_dark"/>
+        android:background="@color/color_191919_light"/>
 
     <!--End Part 4 Layout-->
 

@@ -46,25 +46,25 @@ public class NSFrameLayout extends FrameLayout {
         // 5 = Black_Light
         if(viewType == 5){
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_313131));
             }
         }
         // 6 = Black_Dark
         else if(viewType == 6){
             if(isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_home_banner_background));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
             }
             else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_191919_light));
             }
         }
         else {
             if (isUserThemeDay) {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_light));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
             } else {
-                setBackgroundColor(ResUtil.getColor(getResources(), R.color.background_dark_313131));
+                setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_313131));
             }
         }
     }

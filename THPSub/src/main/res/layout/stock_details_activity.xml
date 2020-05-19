@@ -24,12 +24,11 @@
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"/>
 
-        <androidx.cardview.widget.CardView
+        <com.ns.view.layout.NSCardView
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:background="@color/forex_background_color"
             card_view:cardElevation="2dp"
             card_view:cardUseCompatPadding="true">
 
@@ -38,20 +37,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:background="@color/forex_background_color"
+                android:background="@color/color_ffffff"
                 android:gravity="center"
                 android:padding="4dp"
-                android:textColor="@color/forex_header_text_color"
+                android:textColor="@color/color_000000"
                 android:textSize="18sp" />
 
-        </androidx.cardview.widget.CardView>
+        </com.ns.view.layout.NSCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.ns.view.layout.NSCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:background="@color/forex_background_color"
             card_view:cardElevation="2dp"
             card_view:cardUseCompatPadding="true">
 
@@ -86,7 +84,7 @@
                         android:layout_weight="1" />
                 </com.ns.view.layout.NSLinearLayout>
             </androidx.fragment.app.FragmentTabHost>
-        </androidx.cardview.widget.CardView>
+        </com.ns.view.layout.NSCardView>
     </com.ns.view.layout.NSLinearLayout>
 
     <com.ns.view.layout.NSFrameLayout
@@ -105,7 +103,7 @@
                 android:id="@+id/homeBottomLine"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/bottom_ads_top_strip_color"
+                android:background="@color/color_000000"
                 android:visibility="gone" />
 
             <com.ns.view.layout.NSRelativeLayout

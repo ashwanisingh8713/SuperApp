@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:textSize="14sp"
-        app:textColor="@color/greyColor_1"
+        app:textColor="@color/color_818181_light"
         android:lineSpacingExtra="12sp"
         android:text="Your edition for 30th jan"
         app:font_path="@string/THP_FiraSans_Regular"

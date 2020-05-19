@@ -101,7 +101,7 @@
                 android:inputType="number"
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:textColor="@color/boldBlackColor"
+                android:textColor="@color/color_191919_light"
                 app:hintTextAppearance="@style/HintLabel"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -122,7 +122,7 @@
                 android:inputType="number"
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:textColor="@color/boldBlackColor"
+                android:textColor="@color/color_191919_light"
                 app:hintTextAppearance="@style/HintLabel"
                 />
         </com.google.android.material.textfield.TextInputLayout>

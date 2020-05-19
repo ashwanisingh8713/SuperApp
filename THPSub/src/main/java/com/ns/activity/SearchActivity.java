@@ -118,11 +118,11 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         }
         else {
             if (isDayTheme) {
-                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.Black));
-                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.search_hint));
+                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.color_000000));
+                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
             } else {
                 searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.white));
-                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.search_hint));
+                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
             }
         }
 

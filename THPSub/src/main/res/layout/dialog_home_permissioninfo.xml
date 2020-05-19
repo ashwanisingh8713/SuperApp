@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="The Hindu requires the following information"
-            app:textColor="@color/timeColor"
+            app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please permit us to access your location, which will then be used to send personalised stories, updates and notifications."
-            app:textColor="@color/timeColor"
+            app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="CANCEL"
-                android:textColor="@color/blueColor_1"
+                android:textColor="@color/color_1b528e"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_SemiBold" />
 
@@ -76,7 +76,7 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="OK"
-                app:textColor="@color/blueColor_1"
+                app:textColor="@color/color_1b528e"
                 android:textSize="14sp"
                 app:font_path="@string/THP_FiraSans_SemiBold" />
 

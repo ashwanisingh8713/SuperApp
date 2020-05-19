@@ -1,2 +1,2 @@
-include ':THPSub', ':photoview', ':reactivenetwork', ':pinentryedittext', ':exo_ui', ':exo_core', ':searchlibrary'
+include ':THPSub', ':photoview', ':reactivenetwork', ':pinentryedittext', ':exo_ui', ':exo_core'
 rootProject.name='Super App'

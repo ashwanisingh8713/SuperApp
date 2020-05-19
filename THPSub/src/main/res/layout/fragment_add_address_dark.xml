@@ -109,7 +109,7 @@
                         style="@style/addAddressET_Style"
                         android:inputType="textPostalAddress"
                         android:maxLines="1"
-                        android:textColor="@color/dark_color_static_text"
+                        android:textColor="@color/color_ededed_dark"
                         app:hintTextAppearance="@style/HintLabel" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,7 @@
                         android:inputType="textPostalAddress"
                         android:maxLines="1"
                         android:paddingBottom="15dp"
-                        android:textColor="@color/dark_color_static_text"
+                        android:textColor="@color/color_ededed_dark"
                         app:hintTextAppearance="@style/HintLabel" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +157,7 @@
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="6"
-                        android:textColor="@color/dark_color_static_text"/>
+                        android:textColor="@color/color_ededed_dark"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -178,7 +178,7 @@
                         style="@style/addAddressET_Style"
                         android:hint="State"
                         android:inputType="textPostalAddress"
-                        android:textColor="@color/dark_color_static_text"/>
+                        android:textColor="@color/color_ededed_dark"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -201,7 +201,7 @@
                         android:inputType="textPostalAddress"
                         android:maxLines="1"
                         app:hintTextAppearance="@style/HintLabel"
-                        android:textColor="@color/dark_color_static_text"/>
+                        android:textColor="@color/color_ededed_dark"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -222,7 +222,7 @@
                         android:inputType="textPostalAddress"
                         android:maxLines="1"
                         app:hintTextAppearance="@style/HintLabel"
-                        android:textColor="@color/dark_color_static_text"/>
+                        android:textColor="@color/color_ededed_dark"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.ns.view.text.ArticleTitleTextView

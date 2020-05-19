@@ -26,7 +26,6 @@ import com.ns.thpremium.R;
 import com.ns.tts.LanguageItem;
 import com.ns.tts.TTSPreference;
 import com.ns.tts.TTSUtil;
-import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
@@ -91,14 +90,14 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
         isDayMode = DefaultPref.getInstance(AppSettingActivity.this).isUserThemeDay();
 
         if(isDayMode) {
-            mPushNotification.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.article_list_text));
-            mDayModeASwitch.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.article_list_text));
-            mTurnOffImages.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.article_list_text));
+            mPushNotification.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_111111_light));
+            mDayModeASwitch.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_111111_light));
+            mTurnOffImages.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_111111_light));
         }
         else {
-            mPushNotification.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.dark_article_list_text));
-            mDayModeASwitch.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.dark_article_list_text));
-            mTurnOffImages.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.dark_article_list_text));
+            mPushNotification.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_ededed_dark));
+            mDayModeASwitch.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_ededed_dark));
+            mTurnOffImages.setTextColor(ResUtil.getColor(getResources(), com.ns.thpremium.R.color.color_ededed_dark));
         }
 
 
@@ -117,19 +116,19 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                 switch (progress) {
                     case 0:
                         mSizeTextView.setText(getString(R.string.info_article_small));
-                        mSmallArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                        mSmallArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                         break;
                     case 1:
                         mSizeTextView.setText(getString(R.string.info_article_medium));
-                        mMediumArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                        mMediumArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                         break;
                     case 2:
                         mSizeTextView.setText(getString(R.string.info_article_large));
-                        mLargeArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                        mLargeArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                         break;
                     case 3:
                         mSizeTextView.setText(getString(R.string.info_article_xlarge));
-                        mXLargeTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                        mXLargeTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                         break;
 
                 }
@@ -242,19 +241,19 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
         switch (progress - 1) {
             case 0:
                 mSizeTextView.setText(getString(R.string.info_article_small));
-                mSmallArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                mSmallArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                 break;
             case 1:
                 mSizeTextView.setText(getString(R.string.info_article_medium));
-                mMediumArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                mMediumArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                 break;
             case 2:
                 mSizeTextView.setText(getString(R.string.info_article_large));
-                mLargeArticleTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                mLargeArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                 break;
             case 3:
                 mSizeTextView.setText(getString(R.string.info_article_xlarge));
-                mXLargeTextView.setTextColor(getResources().getColor(R.color.color_primary));
+                mXLargeTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_006599));
                 break;
 
         }
@@ -270,10 +269,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     }
 
     private void resetTextColors() {
-        mSmallArticleTextView.setTextColor(getResources().getColor(R.color.text_warm_grey));
-        mMediumArticleTextView.setTextColor(getResources().getColor(R.color.text_warm_grey));
-        mLargeArticleTextView.setTextColor(getResources().getColor(R.color.text_warm_grey));
-        mXLargeTextView.setTextColor(getResources().getColor(R.color.text_warm_grey));
+        mSmallArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
+        mMediumArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
+        mLargeArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
+        mXLargeTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
 
     }
 

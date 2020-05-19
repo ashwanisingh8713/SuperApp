@@ -12,7 +12,7 @@
         android:paddingLeft="10dp"
         android:paddingBottom="4dp"
         android:paddingTop="5dp"
-        android:textColor="@color/sensexFullTextColor"
+        android:textColor="@color/color_818181_light"
         android:textSize="12sp" />
 
     <com.ns.view.layout.NSCardView
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/today_rate"
-            android:textColor="@color/forex_header_text_color"
+            android:textColor="@color/color_000000"
             android:textSize="18sp" />
 
     </com.ns.view.layout.NSCardView>
@@ -88,7 +88,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/forex_row_background_second" />
+                android:background="@color/color_F5F5F5" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -103,14 +103,14 @@ public class CustomTabLayout extends TabLayout {
 
     private void setDefaultColors(boolean isUserThemeDay) {
         if (isUserThemeDay) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_titlestrip_background));
-            setTabTextColors(ResUtil.getColor(getResources(), R.color.text_warm_grey), ResUtil.getColor(getResources(), R.color.color_banner_text));
-            setSelectedTabIndicatorColor(ResUtil.getColor(getResources(), R.color.text_peacock_blue));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
+            setTabTextColors(ResUtil.getColor(getResources(), R.color.color_818181_light), ResUtil.getColor(getResources(), R.color.color_424242));
+            setSelectedTabIndicatorColor(ResUtil.getColor(getResources(), R.color.color_000000));
 
         } else {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.dark_color_titlestrip_background));
-            setTabTextColors(ResUtil.getColor(getResources(), R.color.dark_text_warm_grey), ResUtil.getColor(getResources(), R.color.dark_color_banner_text));
-            setSelectedTabIndicatorColor(ResUtil.getColor(getResources(), R.color.dark_text_peacock_blue));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_191919_light));
+            setTabTextColors(ResUtil.getColor(getResources(), R.color.color_818181_light), ResUtil.getColor(getResources(), R.color.color_ededed_dark));
+            setSelectedTabIndicatorColor(ResUtil.getColor(getResources(), R.color.color_006599));
         }
     }
 

@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -160,15 +159,15 @@ public class GetQuoteFragment extends Fragment {
             if (changeIndicator < 0) {
                 mChangeTextView.setText("" + change);
                 mChangePercentView.setText("(" + stockChange + "%" + ")");
-                mChangeTextView.setTextColor(getResources().getColor(R.color.RedDown));
-                mChangePercentView.setTextColor(getResources().getColor(R.color.RedDown));
+                mChangeTextView.setTextColor(getResources().getColor(R.color.red));
+                mChangePercentView.setTextColor(getResources().getColor(R.color.red));
                 changeIcon.setImageResource(R.drawable.loss_arrow);
 
             } else if (changeIndicator > 0) {
                 mChangeTextView.setText("" + change);
                 mChangePercentView.setText("(" + stockChange + "%" + ")");
-                mChangeTextView.setTextColor(getResources().getColor(R.color.GreenUp));
-                mChangePercentView.setTextColor(getResources().getColor(R.color.GreenUp));
+                mChangeTextView.setTextColor(getResources().getColor(R.color.green));
+                mChangePercentView.setTextColor(getResources().getColor(R.color.green));
                 changeIcon.setImageResource(R.drawable.profit_arrow);
             } else {
                 mChangeTextView.setText("N.A.");
@@ -196,15 +195,15 @@ public class GetQuoteFragment extends Fragment {
             if (changeIndicator < 0) {
                 mChangeTextView.setText("" + change);
                 mChangePercentView.setText("(" + stockChange + "%" + ")");
-                mChangeTextView.setTextColor(getResources().getColor(R.color.RedDown));
-                mChangePercentView.setTextColor(getResources().getColor(R.color.RedDown));
+                mChangeTextView.setTextColor(getResources().getColor(R.color.red));
+                mChangePercentView.setTextColor(getResources().getColor(R.color.red));
                 changeIcon.setImageResource(R.drawable.loss_arrow);
 
             } else if (changeIndicator > 0) {
                 mChangeTextView.setText("" + change);
                 mChangePercentView.setText("(" + stockChange + "%" + ")");
-                mChangeTextView.setTextColor(getResources().getColor(R.color.GreenUp));
-                mChangePercentView.setTextColor(getResources().getColor(R.color.GreenUp));
+                mChangeTextView.setTextColor(getResources().getColor(R.color.green));
+                mChangePercentView.setTextColor(getResources().getColor(R.color.green));
                 changeIcon.setImageResource(R.drawable.profit_arrow);
             } else {
                 mChangeTextView.setText("N.A.");

@@ -12,7 +12,7 @@
         android:id="@+id/homeBottomLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/bottom_ads_top_strip_color"
+        android:background="@color/color_000000"
         android:visibility="visible" />
 
 </com.ns.view.layout.NSLinearLayout>

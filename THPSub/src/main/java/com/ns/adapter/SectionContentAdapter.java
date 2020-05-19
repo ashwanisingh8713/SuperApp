@@ -225,9 +225,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
         boolean isUserThemeDay = DefaultPref.getInstance(holder.itemView.getContext()).isUserThemeDay();
         if(isUserThemeDay) {
-            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.article_list_text));
+            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.color_111111_light));
         } else {
-            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.dark_article_list_text));
+            tbTextView.setTextColor(ResUtil.getColor(holder.itemView.getContext().getResources(), R.color.color_ededed_dark));
         }
         tbTextView.setMaxLines(2);
         tbTextView.setEllipsize(TextUtils.TruncateAt.END);

@@ -72,7 +72,7 @@
             app:pinCharacterSpacing="20dp"
             app:pinTextBottomPadding="15dp"
             tools:ignore="SpUsage"
-            android:textColor="@color/color_static_text"/>
+            android:textColor="@color/color_191919_light"/>
 
 
         <FrameLayout
@@ -117,7 +117,7 @@
               android:id="@+id/resend_Txt"
               android:text="Resend OTP"
               style="@style/gray_background"
-              android:textColor="@color/blueColor_1"
+              android:textColor="@color/color_1b528e"
               app:font_path="@string/THP_FiraSans_Regular"
               />
 

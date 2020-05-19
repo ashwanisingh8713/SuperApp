@@ -20,7 +20,7 @@
         android:textSize="@dimen/textSize_10sp"
         android:gravity="center"
         android:text="More"
-        android:textColor="@color/greyColor_1"
+        android:textColor="@color/color_818181_light"
         android:singleLine="true"
         android:maxLines="1"
         app:font_path="@string/THP_FiraSans_SemiBold"

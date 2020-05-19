@@ -89,9 +89,9 @@ public class TabUtils {
         } else {
             tabIcon.setImageResource(tabSelectedIcons[position]);
             if (mIsDayTheme) {
-                iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.boldBlackColor));
+                iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_191919_light));
             } else {
-                iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.blueColor_1));
+                iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_1b528e));
             }
         }
     }
@@ -108,7 +108,7 @@ public class TabUtils {
             selected.setBackgroundColor(Color.parseColor(background));
             PicassoUtil.loadImageFromCache(context, tabIcon, tabsBeans.get(position).getIconUrl().getLocalFilePath());
         } else {
-            iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.greyColor_1));
+            iv_text.setTextColor(ResUtil.getColor(context.getResources(), R.color.color_818181_light));
             tabIcon.setImageResource(tabUnSelectedIcons[position]);
         }
     }

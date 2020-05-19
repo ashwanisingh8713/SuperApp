@@ -49,11 +49,11 @@ public class THToolbar extends Toolbar {
         }
 
         if (isUserThemeDay) {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_white));
-            setTitleTextColor(ResUtil.getColor(getResources(), R.color.toolbar_dark));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
+            setTitleTextColor(ResUtil.getColor(getResources(), R.color.color_000000));
         } else {
-            setBackgroundColor(ResUtil.getColor(getResources(), R.color.toolbar_dark));
-            setTitleTextColor(ResUtil.getColor(getResources(), R.color.toolbar_white));
+            setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_000000));
+            setTitleTextColor(ResUtil.getColor(getResources(), R.color.color_ffffff));
         }
 
         setToolbarBackButtonDefault();

@@ -24,7 +24,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/forex_row_background"
+                android:background="@color/color_ffffff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp">
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/forex_header_text_color"
+                    android:textColor="@color/color_000000"
                     android:textSize="16sp" />
 
 
@@ -64,7 +64,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background_second"
+                android:background="@color/color_F5F5F5"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -89,7 +89,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background"
+                android:background="@color/color_ffffff"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -114,7 +114,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background_second"
+                android:background="@color/color_F5F5F5"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -139,7 +139,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background"
+                android:background="@color/color_ffffff"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -164,7 +164,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background_second"
+                android:background="@color/color_F5F5F5"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -189,7 +189,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background"
+                android:background="@color/color_ffffff"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
@@ -214,7 +214,7 @@
             <com.ns.view.layout.NSLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/forex_row_background_second"
+                android:background="@color/color_F5F5F5"
                 android:orientation="horizontal"
                 android:padding="15dp">
 

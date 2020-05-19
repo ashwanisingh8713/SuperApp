@@ -15,7 +15,7 @@
         android:text="@string/info_article_s"
         app:font_path="@string/THP_TundraOffc"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        app:textColor="@color/text_warm_grey" />
+        app:textColor="@color/color_818181_light" />
 
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/textview_article_medium"
@@ -26,7 +26,7 @@
         android:text="@string/info_article_m"
         app:font_path="@string/THP_TundraOffc"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        app:textColor="@color/text_warm_grey" />
+        app:textColor="@color/color_818181_light" />
 
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/textview_article_large"
@@ -37,7 +37,7 @@
         android:text="@string/info_article_l"
         app:font_path="@string/THP_TundraOffc"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        app:textColor="@color/text_warm_grey" />
+        app:textColor="@color/color_818181_light" />
 
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/textview_article_xlarge"
@@ -48,5 +48,5 @@
         android:text="@string/info_article_xl"
         app:font_path="@string/THP_TundraOffc"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        app:textColor="@color/text_warm_grey" />
+        app:textColor="@color/color_818181_light" />
 </LinearLayout>

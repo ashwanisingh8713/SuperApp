@@ -68,7 +68,7 @@
         app:layout_constraintTop_toTopOf="@+id/orderId_Txt"
         app:layout_constraintBottom_toBottomOf="@+id/divider1"
         android:textSize="16sp"
-        app:textColor="@color/greenColor_1"
+        app:textColor="@color/green"
         android:text="Success"
         app:font_path="@string/THP_FiraSans_Bold"
         />

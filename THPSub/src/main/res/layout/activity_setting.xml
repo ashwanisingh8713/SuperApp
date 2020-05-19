@@ -42,7 +42,7 @@
             android:text="Medium Text"
             app:font_path="@string/THP_TundraOffc"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:textColor="@color/text_warm_grey"
+            app:textColor="@color/color_818181_light"
             android:layout_alignLeft="@id/textView2"
             android:layout_alignStart="@id/textView2"
             android:layout_below="@id/textView2"/>
@@ -147,7 +147,7 @@
             android:layout_below="@+id/tts1"
             android:text="English (india)"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:textColor="@color/text_warm_grey"
+            app:textColor="@color/color_818181_light"
             app:font_path="@string/THP_TundraOffc"/>
 
         <ImageView
@@ -172,7 +172,7 @@
         android:paddingLeft="15dp"
         android:text="GDPR Setting"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/color_static_text"
+        android:textColor="@color/color_191919_light"
         android:visibility="gone" />
 
     <View

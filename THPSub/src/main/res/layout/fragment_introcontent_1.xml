@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/becomeMember_Txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textSize_20sp"
-        app:textType="M"
         android:text="Become a Member"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:textAllCaps="false"
         android:textAllCaps="false"
+        android:textSize="@dimen/textSize_20sp"
         app:font_path="@string/THP_TundraOffc_Bold"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textAllCaps="false"
+        app:textType="M" />
 
     <com.ns.view.text.CustomTextView
         android:id="@+id/benefitsIncludes_Txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/personal_info_textSize_14sp"
-        app:textColor="@color/yellowColor_1"
-        android:text="Benefits includes"
-        app:layout_constraintTop_toBottomOf="@+id/becomeMember_Txt"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="3dp"
-        app:textAllCaps="false"
+        android:text="Benefits includes"
         android:textAllCaps="false"
+        android:textSize="@dimen/personal_info_textSize_14sp"
         app:font_path="@string/THP_FiraSans_Regular"
-        />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/becomeMember_Txt"
+        app:textAllCaps="false"
+        app:textColor="@color/yellowColor_1" />
 
 
     <!--Row 1-->
@@ -40,87 +37,82 @@
     <ImageView
         android:id="@+id/img1"
         style="@style/introIconStyle"
-        app:srcCompat="@drawable/bi_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/benefitsIncludes_Txt"
-        />
+        app:srcCompat="@drawable/bi_1" />
+
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/txt1"
+        style="@style/introTextStyle"
         android:text="Briefing"
         app:layout_constraintLeft_toRightOf="@+id/img1"
-        style="@style/introTextStyle"
         app:layout_constraintTop_toBottomOf="@+id/benefitsIncludes_Txt"
-        app:textType="M"
-        />
+        app:textType="M" />
 
 
     <!--Row 2-->
     <ImageView
         android:id="@+id/img2"
         style="@style/introIconStyle"
-        app:srcCompat="@drawable/bi_2"
-        app:layout_constraintTop_toBottomOf="@+id/txt1"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txt1"
+        app:srcCompat="@drawable/bi_2" />
+
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/txt2"
-        android:text="My stories"
-        app:layout_constraintTop_toBottomOf="@+id/txt1"
-        app:layout_constraintLeft_toRightOf="@+id/img2"
         style="@style/introTextStyle"
-        app:textType="M"
-        />
+        android:text="My stories"
+        app:layout_constraintLeft_toRightOf="@+id/img2"
+        app:layout_constraintTop_toBottomOf="@+id/txt1"
+        app:textType="M" />
 
     <!--Row 3-->
     <ImageView
         android:id="@+id/img3"
         style="@style/introIconStyle"
-        app:srcCompat="@drawable/bi_4"
-        app:layout_constraintTop_toBottomOf="@+id/txt2"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txt2"
+        app:srcCompat="@drawable/bi_4" />
+
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/txt3"
-        android:text="Personalised recommendation"
-        app:layout_constraintTop_toBottomOf="@+id/txt2"
-        app:layout_constraintLeft_toRightOf="@+id/img3"
         style="@style/introTextStyle"
-        app:textType="M"
-        />
+        android:text="Personalised recommendation"
+        app:layout_constraintLeft_toRightOf="@+id/img3"
+        app:layout_constraintTop_toBottomOf="@+id/txt2"
+        app:textType="M" />
 
     <!--Row 4-->
     <ImageView
         android:id="@+id/img4"
         style="@style/introIconStyle"
-        app:srcCompat="@drawable/bi_3"
-        app:layout_constraintTop_toBottomOf="@+id/txt3"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txt3"
+        app:srcCompat="@drawable/bi_3" />
+
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/txt4"
-        android:text="Ad free experience"
-        app:layout_constraintTop_toBottomOf="@+id/txt3"
-        app:layout_constraintLeft_toRightOf="@+id/img4"
         style="@style/introTextStyle"
-        app:textType="M"
-        />
+        android:text="Ad free experience"
+        app:layout_constraintLeft_toRightOf="@+id/img4"
+        app:layout_constraintTop_toBottomOf="@+id/txt3"
+        app:textType="M" />
 
     <!--Row 5-->
     <ImageView
         android:id="@+id/img5"
         style="@style/introIconStyle"
-        app:srcCompat="@drawable/bi_5"
-        app:layout_constraintTop_toBottomOf="@+id/txt4"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txt4"
+        app:srcCompat="@drawable/bi_5" />
+
     <com.ns.view.text.ArticleTitleTextView
         android:id="@+id/txt5"
-        android:text="Faster page loads"
-        app:layout_constraintTop_toBottomOf="@+id/txt4"
-        app:layout_constraintLeft_toRightOf="@+id/img5"
         style="@style/introTextStyle"
-        app:textType="M"
-        />
+        android:text="Faster page loads"
+        app:layout_constraintLeft_toRightOf="@+id/img5"
+        app:layout_constraintTop_toBottomOf="@+id/txt4"
+        app:textType="M" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

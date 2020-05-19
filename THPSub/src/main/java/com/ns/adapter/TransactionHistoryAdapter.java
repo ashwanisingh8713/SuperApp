@@ -53,9 +53,9 @@ public class TransactionHistoryAdapter extends BaseRecyclerViewAdapter {
             }
             String Trxnstatus = bean.getTrxnstatus();
             if(Trxnstatus.equalsIgnoreCase("Failed")) {
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.redColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.red));
             } else {
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.greenColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.green));
             }
             holder.status_Txt.setText(ResUtil.capitalizeFirstLetter(Trxnstatus));
             holder.paymentMode_Txt.setText(ResUtil.capitalizeFirstLetter(bean.getBillingmode()));
@@ -74,13 +74,13 @@ public class TransactionHistoryAdapter extends BaseRecyclerViewAdapter {
             holder.endDate_Txt.setText("End Date  "+(bean.geteDate() != null ? bean.geteDate() : ""));
 
             if(bean.getIsActive() == 1) {
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.greenColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.green));
                 holder.status_Txt.setText("Active");
             } else if(CommonUtil.isStartDateFutureDate(bean.getsDate())) {
                 holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.black));
                 holder.status_Txt.setText("Yet to active");
             } else{
-                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.redColor_1));
+                holder.status_Txt.setTextColor(ResUtil.getColor(holder.itemView.getResources(), R.color.red));
                 holder.status_Txt.setText("Expired");
             }
 

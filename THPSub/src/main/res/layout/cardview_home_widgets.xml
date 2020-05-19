@@ -10,7 +10,7 @@
     <com.ns.view.layout.NSLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_home_widget_background"
+        android:background="@color/color_ffffff"
         android:orientation="vertical"
         android:paddingBottom="@dimen/widget_paddingBottom"
         android:paddingLeft="@dimen/widget_paddingTop"
@@ -44,7 +44,7 @@
             android:text="VIEW ALL"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/widget_viewall"
+            android:textColor="@color/color_006599"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular"/>
 

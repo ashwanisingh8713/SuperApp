@@ -249,9 +249,6 @@ dependencies {
     implementation project(path: ':exo_ui')
     implementation project(path: ':exo_core')
 
-    // Material Search View
-    implementation project(path: ':searchlibrary')
-
     // Work Manager
     implementation "android.arch.work:work-runtime:1.0.0"
 

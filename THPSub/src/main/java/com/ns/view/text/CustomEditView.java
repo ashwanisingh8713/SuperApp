@@ -85,9 +85,9 @@ public class CustomEditView extends AppCompatEditText {
         // 5 = "color_static", color_static
         if(getViewType() == 5) {
             if (isUserThemeDay) {
-                setTextColor(ResUtil.getColor(getResources(), R.color.color_static_text));
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_191919_light));
             } else {
-                setTextColor(ResUtil.getColor(getResources(), R.color.dark_color_static_text));
+                setTextColor(ResUtil.getColor(getResources(), R.color.color_ededed_dark));
             }
         }
     }

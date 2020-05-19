@@ -301,7 +301,7 @@
             android:gravity="center"
             android:layout_marginTop="@dimen/personal_info_gap_for_verifyotp"
             android:text="Verify via OTP"
-            app:textColor="@color/blueColor_1"
+            app:textColor="@color/color_1b528e"
             android:background="@drawable/blue_outline_backgraoud"
             android:textSize="@dimen/personal_info_textSize_18sp"
             app:font_path="@string/THP_FiraSans_Bold" />

@@ -47,7 +47,7 @@
             android:maxLines="1"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:textColor="@color/article_bottom_text_color"
+            app:textColor="@color/color_818181_light"
             app:font_path="@string/THP_FiraSans_Regular"
             android:textSize="10sp"
             android:visibility="gone" />
@@ -62,7 +62,7 @@
             android:maxLines="1"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:textColor="@color/article_bottom_text_color"
+            app:textColor="@color/color_818181_light"
             android:textSize="10sp"
             app:font_path="@string/THP_FiraSans_Regular"/>
     </LinearLayout>

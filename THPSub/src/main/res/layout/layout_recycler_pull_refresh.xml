@@ -37,7 +37,7 @@
             android:gravity="center"
             android:alpha="0.5"
             android:visibility="gone"
-            android:textColor="@color/boldBlackColor"
+            android:textColor="@color/color_191919_light"
             />
 
         <com.ns.view.CustomProgressBar
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/boldBlackColor"
+        android:background="@color/color_191919_light"
         android:visibility="gone">
 
         <com.ns.view.text.CustomTextView
@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:text="No internet connection!"
             android:gravity="center_vertical"
-            android:textColor="@color/greyColor_1"
+            android:textColor="@color/color_818181_light"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
             app:font_path="@string/THP_FiraSans_Bold"
