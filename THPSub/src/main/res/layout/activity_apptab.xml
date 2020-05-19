@@ -59,7 +59,7 @@
             android:layout_marginTop="@dimen/topTabHeight"
             android:orientation="vertical">
 
-            <com.ns.view.LogoImgView
+            <com.ns.view.img.LogoImgView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

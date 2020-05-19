@@ -33,7 +33,8 @@ import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
-import com.ns.view.btn.NSImageButton;
+import com.ns.view.img.LogoImgView;
+import com.ns.view.img.TopbarIconView;
 
 
 /**
@@ -93,7 +94,7 @@ public class Topbar extends Toolbar {
         premiumLogoBtn.setVisibility(VISIBLE);
         mBackImageView.setOnClickListener(onClickListener);
         // 15 = app:iconType="slider"
-        mBackImageView.setIcon(15);
+        mBackImageView.updateIcon(15);
     }
 
     public void showSubSectionIcons(String title, OnClickListener onClickListener) {
@@ -117,7 +118,7 @@ public class Topbar extends Toolbar {
 
         mTitleTextView.setText(title);
         // 14 = app:iconType="back"
-        mBackImageView.setIcon(14);
+        mBackImageView.updateIcon(14);
         mBackImageView.setOnClickListener(onClickListener);
     }
 
@@ -375,7 +376,7 @@ public class Topbar extends Toolbar {
         mBackImageView = findViewById(R.id.action_back);
         mLogoImageView = findViewById(R.id.action_logo);
         mSearchImageView = findViewById(R.id.action_search);
-        mCreateBookMarkImageView = findViewById(R.id.bookmarkIC);
+        mCreateBookMarkImageView = findViewById(R.id.unbookmarkIC);
         mRemoveBookMarkedImageView = findViewById(R.id.bookmarkedIC);
         mTextSizeImageView = findViewById(R.id.action_fontSizeIC);
         mTTSPlayImageView = findViewById(R.id.action_ttsPlay);
@@ -538,13 +539,17 @@ public class Topbar extends Toolbar {
     }
 
     private void showHideBookmarkImg(boolean isBookmarked) {
+        // 4 = app:iconType="unbookmark"
+        // 3 = app:iconType="bookmarked"
         mProgressBookmark.setVisibility(GONE);
         if (isBookmarked) {
             mCreateBookMarkImageView.setVisibility(GONE);
             mRemoveBookMarkedImageView.setVisibility(VISIBLE);
+            //mRemoveBookMarkedImageView.updateIcon(4);
         } else {
             mRemoveBookMarkedImageView.setVisibility(GONE);
             mCreateBookMarkImageView.setVisibility(VISIBLE);
+            //mCreateBookMarkImageView.updateIcon(3);
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
+import com.ns.view.img.ListingIconView;
 
 public class BannerViewHolder extends RecyclerView.ViewHolder {
 
@@ -17,7 +18,7 @@ public class BannerViewHolder extends RecyclerView.ViewHolder {
     public LinearLayout mBannerLayout;
     public TextView mArticleUpdateTime;
     public TextView mArticleSectionName;
-    public ImageView mBookmarkButton;
+    public ListingIconView mBookmarkButton;
     public ImageView mShareArticleButton;
     public ImageButton mMultimediaButton;
 

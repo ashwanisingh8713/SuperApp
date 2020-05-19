@@ -43,11 +43,10 @@ import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.view.CustomProgressBar;
-import com.ns.view.LogoImgView;
+import com.ns.view.img.LogoImgView;
 import com.ns.view.text.ArticleTitleTextView;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 

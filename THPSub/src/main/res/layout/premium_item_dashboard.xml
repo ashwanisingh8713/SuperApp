@@ -96,7 +96,8 @@
             app:layout_constraintTop_toTopOf="@+id/trendingIcon_Img"
             />
 
-        <ImageView
+        <com.ns.view.img.ListingIconView
+            app:iconType="like"
             android:id="@+id/toggleBtn_Img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,7 +120,8 @@
             />
 
 
-        <ImageView
+        <com.ns.view.img.ListingIconView
+            app:iconType="unbookmark"
             android:id="@+id/bookmark_Img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,7 +145,8 @@
             android:visibility="gone"
             />
 
-        <ImageView
+        <com.ns.view.img.ListingIconView
+            app:iconType="unfavourite"
             android:id="@+id/like_Img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

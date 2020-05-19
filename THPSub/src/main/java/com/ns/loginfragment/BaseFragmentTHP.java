@@ -153,7 +153,7 @@ public abstract class BaseFragmentTHP extends Fragment {
         void onOtherStuffWork();
     }
 
-    public void hideLoadingViewCrossFade(View visibleView, View hideView) {
+    public void showHideLoadingViewCrossFade(View visibleView, View hideView) {
 
         // Set the content view to 0% opacity but visible, so that it is visible
         // (but fully transparent) during the animation.
@@ -194,7 +194,7 @@ public abstract class BaseFragmentTHP extends Fragment {
             return;
         }
         if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            hideLoadingViewCrossFade(emptyLayout, mPullToRefreshLayout);
+            showHideLoadingViewCrossFade(emptyLayout, mPullToRefreshLayout);
 
             ImageView emptyIcon = emptyLayout.findViewById(R.id.emptyIcon);
             CustomTextView emptyTitleTxt = emptyLayout.findViewById(R.id.emptyTitleTxt);
@@ -347,8 +347,7 @@ public abstract class BaseFragmentTHP extends Fragment {
                 }
             }
         } else {
-            mPullToRefreshLayout.setVisibility(View.VISIBLE);
-            emptyLayout.setVisibility(View.GONE);
+            showHideLoadingViewCrossFade(mPullToRefreshLayout, emptyLayout);
         }
     }
 

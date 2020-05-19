@@ -44,7 +44,7 @@ import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.RecyclerViewPullToRefresh;
-import com.ns.view.TopbarIconView;
+import com.ns.view.img.TopbarIconView;
 import com.ns.view.layout.NSLinearLayout;
 
 import java.util.ArrayList;

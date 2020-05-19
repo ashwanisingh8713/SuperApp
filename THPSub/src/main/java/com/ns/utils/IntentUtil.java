@@ -84,11 +84,7 @@ public class IntentUtil {
         }
     }
 
-    public static void openMainTabPage(Activity context) {
-        Intent intent = new Intent(context, AppTabActivity.class);
-        context.startActivity(intent, startHoldActivity(context));
-        context.finish();
-    }
+
 
 
     /**
@@ -593,6 +589,12 @@ public class IntentUtil {
         Intent intent = new Intent(context, AppTabActivity.class);
         intent.putExtra("from", pageSource);
         context.startActivity(intent);
+    }
+
+    public static void openMainTabPage(Activity context) {
+        Intent intent = new Intent(context, AppTabActivity.class);
+        context.startActivity(intent, startHoldActivity(context));
+        context.finish();
     }
 
     public static void openMemberActivity(Context context, String from) {

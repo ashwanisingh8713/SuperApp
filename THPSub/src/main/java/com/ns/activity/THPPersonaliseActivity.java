@@ -440,15 +440,12 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
                     for(PersonaliseItem item : topics) {
                         topicsL.add(item.getValue());
                     }
-
                     for(PersonaliseItem item : cities) {
                         citiesL.add(item.getValue());
                     }
-
                     for(PersonaliseItem item : authors) {
                         authorsL.add(item.getValue());
                     }
-
 
                     //CleverTap
                     if (viewPager.getCurrentItem() == 0) { //Topic
@@ -479,10 +476,7 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
                                 viewPager.setCurrentItem(2);
                             } else if (viewPager.getCurrentItem() == 2) {
                                 Alerts.showToast(THPPersonaliseActivity.this, "Author preference set successfully");
-                                if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_DASHBOARD_SET_PREFERENCE)) {
-                                    // TODO, currently nothing to do.
-                                }
-                                else if(userProfile.isHasSubscribedPlan() || userProfile.isHasFreePlan()) {
+                                if(userProfile.isHasSubscribedPlan() || userProfile.isHasFreePlan()) {
                                     IntentUtil.openContentListingActivity(THPPersonaliseActivity.this, NetConstants.PS_My_Stories);
                                 }
                                 else if(!userProfile.isHasSubscribedPlan() && !userProfile.isHasFreePlan()) {

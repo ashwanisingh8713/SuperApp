@@ -50,6 +50,7 @@ import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.WebViewLinkClick;
+import com.ns.view.img.ListingIconView;
 import com.ns.view.THP_AutoResizeWebview;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BookmarkPremiumViewHolder;
@@ -394,8 +395,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.bookmarkProgressBar.setVisibility(View.GONE);
         holder.toggleBtnProgressBar.setVisibility(View.GONE);
 
+        // Checks whether article is Favorite or not
         premium_isFavOrLike(holder.like_Img.getContext(), bean, holder.like_Img, holder.toggleBtn_Img);
-        // Checks whether article is bookmarked or not, If yes then it updates UI
+        // Checks whether article is bookmarked or not
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
         holder.bookmark_Img.setOnClickListener(v -> {
@@ -1231,7 +1233,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
      * @param favStartImg
      * @param toggleLikeDisLikeImg
      */
-    private void premium_isFavOrLike(Context context, ArticleBean articleBean, final ImageView favStartImg, final ImageView toggleLikeDisLikeImg) {
+    private void premium_isFavOrLike(Context context, ArticleBean articleBean, final ListingIconView favStartImg, final ListingIconView toggleLikeDisLikeImg) {
         ApiManager.isExistFavNdLike(context, articleBean.getArticleId())
                 .subscribe(likeVal -> {
                     int like = (int) likeVal;
@@ -1239,18 +1241,41 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                         articleBean.setIsFavourite(like);
                     }
                     favStartImg.setVisibility(View.VISIBLE);
-                    toggleLikeDisLikeImg.setVisibility(View.VISIBLE);
                     favStartImg.setEnabled(true);
+                    toggleLikeDisLikeImg.setVisibility(View.VISIBLE);
                     toggleLikeDisLikeImg.setEnabled(true);
-                    if (like == NetConstants.LIKE_NEUTRAL) {
-                        favStartImg.setImageResource(R.drawable.ic_like_unselected);
-                        toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
-                    } else if (like == NetConstants.LIKE_YES) {
-                        favStartImg.setImageResource(R.drawable.ic_like_selected);
-                        toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
-                    } else if (like == NetConstants.LIKE_NO) {
-                        favStartImg.setImageResource(R.drawable.ic_like_unselected);
-                        toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_on_copy);
+
+                    if(THPConstants.IS_USE_SEVER_THEME) {
+                        if (like == NetConstants.LIKE_NEUTRAL) {
+                            // 11 = app:iconType="unfavourite"
+                            favStartImg.updateIcon(11);
+                            // 6 = app:iconType="like"
+                            toggleLikeDisLikeImg.updateIcon(6);
+                        }
+                        else if (like == NetConstants.LIKE_YES) {
+                            // 2 = app:iconType="favourite"
+                            favStartImg.updateIcon(2);
+                            // 6 = app:iconType="like"
+                            toggleLikeDisLikeImg.updateIcon(6);
+                        }
+                        else if (like == NetConstants.LIKE_NO) {
+                            // 11 = app:iconType="unfavourite"
+                            favStartImg.updateIcon(11);
+                            // 10 = app:iconType="dislike"
+                            toggleLikeDisLikeImg.updateIcon(10);
+                        }
+                    }
+                    else {
+                        if (like == NetConstants.LIKE_NEUTRAL) {
+                            favStartImg.setImageResource(R.drawable.ic_like_unselected);
+                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
+                        } else if (like == NetConstants.LIKE_YES) {
+                            favStartImg.setImageResource(R.drawable.ic_like_selected);
+                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
+                        } else if (like == NetConstants.LIKE_NO) {
+                            favStartImg.setImageResource(R.drawable.ic_like_unselected);
+                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_on_copy);
+                        }
                     }
 
                 }, val -> {

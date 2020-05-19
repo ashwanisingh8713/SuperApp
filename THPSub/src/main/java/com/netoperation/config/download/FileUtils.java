@@ -75,7 +75,7 @@ public class FileUtils {
     }
 
 
-    public static File getImageFileInput(File directory, String imgUrl) throws IOException {
+    public static File getImageFile(File directory, String imgUrl) throws IOException {
         final String fileName = getFileNameFromUrl(imgUrl);
         File imageFile = new File(directory, fileName);
         return imageFile;

@@ -1,4 +1,4 @@
-package com.ns.view;
+package com.ns.view.img;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,9 +20,9 @@ import com.ns.utils.THPConstants;
 
 import java.io.File;
 
-public class ListingIconView extends AppCompatImageView {
+public class ListingIconView extends BaseImgView {
 
-    private int mIconType = -1;
+    //private int mIconType = -1;
 
     public ListingIconView(Context context) {
         super(context);
@@ -40,60 +40,62 @@ public class ListingIconView extends AppCompatImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
-
+        int iconType = -1;
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSIcon);
-            if (typedArray.hasValue(R.styleable.NSIcon_iconType)) {
-                mIconType = typedArray.getInt(R.styleable.NSIcon_iconType, 0);
-            } else {
-                mIconType = -1;
-            }
+            iconType = typedArray.getInt(R.styleable.NSIcon_iconType, 0);
+            typedArray.recycle();
         }
 
+        updateIcon(iconType);
+    }
+
+    @Override
+    public void updateIcon(int iconType) {
+        final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
             if(isUserThemeDay) {
-                loadIconsFromServer(tableConfiguration.getOtherIconsDownloadUrls().getLight().getListing(), FileUtils.destinationFolder(context, FileUtils.LISTING_ICONs_LIGHT).getPath());
+                loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getLight().getListing(), FileUtils.destinationFolder(getContext(), FileUtils.LISTING_ICONs_LIGHT).getPath());
             } else {
-                loadIconsFromServer(tableConfiguration.getOtherIconsDownloadUrls().getDark().getListing(), FileUtils.destinationFolder(context, FileUtils.LISTING_ICONs_DARK).getPath());
+                loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getDark().getListing(), FileUtils.destinationFolder(getContext(), FileUtils.LISTING_ICONs_DARK).getPath());
             }
         }
         else {
-            loadIconsFromApp(isUserThemeDay);
+            loadIconsFromApp(iconType, isUserThemeDay);
         }
     }
 
-    private void loadIconsFromServer(ListingIconUrl listingIconUrl, String destinationFolderPath) {
+    private void loadIconsFromServer(int iconType, ListingIconUrl listingIconUrl, String destinationFolderPath) {
 
         String iconUrl = "";
 
         // 1 = app:iconType="share"
-        if(mIconType == 1) {
+        if(iconType == 1) {
             iconUrl = listingIconUrl.getShare();
         }
         // 2 = app:iconType="favourite"
-        else if(mIconType == 2) {
+        else if(iconType == 2) {
             iconUrl = listingIconUrl.getFavorite();
         }
         // 3 = app:iconType="bookmarked"
-        else if(mIconType == 3) {
+        else if(iconType == 3) {
             iconUrl = listingIconUrl.getBookmark();
         }
         // 4 = app:iconType="unbookmark"
-        else if(mIconType == 4) {
+        else if(iconType == 4) {
             iconUrl = listingIconUrl.getUnbookmark();
         }
         // 6 = app:iconType="like"
-        else if(mIconType == 6) {
+        else if(iconType == 6) {
             iconUrl = listingIconUrl.getLike();
         }
         // 10 = app:iconType="dislike"
-        else if(mIconType == 10) {
+        else if(iconType == 10) {
             iconUrl = listingIconUrl.getDislike();
         }
         // 11 = app:iconType="unfavourite"
-        else if(mIconType == 11) {
+        else if(iconType == 11) {
             iconUrl = listingIconUrl.getUnfavorite();
         }
 
@@ -104,9 +106,9 @@ public class ListingIconView extends AppCompatImageView {
         PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));
     }
 
-    private void loadIconsFromApp(boolean isUserThemeDay) {
+    private void loadIconsFromApp(int iconType, boolean isUserThemeDay) {
         // 1 = app:iconType="share"
-        if(mIconType == 1) {
+        if(iconType == 1) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_share_article);
             } else {
@@ -114,7 +116,7 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
         // 2 = app:iconType="favourite"
-        else if(mIconType == 2) {
+        else if(iconType == 2) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_like_selected);
             } else {
@@ -122,7 +124,7 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
         // 3 = app:iconType="bookmarked"
-        else if(mIconType == 3) {
+        else if(iconType == 3) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_bookmark_selected);
             } else {
@@ -130,7 +132,7 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
         // 4 = app:iconType="unbookmark"
-        else if(mIconType == 4) {
+        else if(iconType == 4) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_bookmark_unselected);
             } else {
@@ -138,7 +140,7 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
         // 6 = app:iconType="like"
-        else if(mIconType == 6) {
+        else if(iconType == 6) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_switch_off_copy);
             } else {
@@ -147,7 +149,7 @@ public class ListingIconView extends AppCompatImageView {
         }
 
         // 10 = app:iconType="dislike"
-        else if(mIconType == 10) {
+        else if(iconType == 10) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_switch_on_copy);
             } else {
@@ -155,7 +157,7 @@ public class ListingIconView extends AppCompatImageView {
             }
         }
         // 11 = app:iconType="unfavourite"
-        else if(mIconType == 11) {
+        else if(iconType == 11) {
             if (isUserThemeDay) {
                 setImageResource(R.drawable.ic_like_unselected);
             } else {

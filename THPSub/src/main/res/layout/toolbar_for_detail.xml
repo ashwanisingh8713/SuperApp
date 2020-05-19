@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     >
     <!-- Start Back Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         app:iconType="back"
         android:id="@+id/action_back"
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
     <!-- End Back Icon-->
 
     <!-- Start Logo Icon-->
-    <com.ns.view.LogoImgView
+    <com.ns.view.img.LogoImgView
         android:id="@+id/action_logo"
         app:logoType="Section"
         android:layout_width="150dp"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="overflow"
             android:id="@+id/action_overfloddw"
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
     <!-- End Overflow Icon-->
 
     <!-- Start Crown Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         android:id="@+id/action_premiumLogoBtn"
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
@@ -111,7 +111,7 @@
     <!-- End Crown Icon-->
 
     <!-- Start Search Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         android:id="@+id/action_search"
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
@@ -139,7 +139,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="like"
             android:id="@+id/action_likeTHPIC"
             android:layout_width="@dimen/toolbar_ic_width"
@@ -169,7 +169,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="bookmarked"
             android:id="@+id/bookmarkedIC"
             android:layout_width="@dimen/toolbar_ic_width"
@@ -177,16 +177,16 @@
             android:layout_gravity="center"
             android:scaleType="center"
             android:visibility="invisible"
-            app:srcCompat="@drawable/ic_bookmark_selected" />
+            />
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="unbookmark"
-            android:id="@+id/bookmarkIC"
+            android:id="@+id/unbookmarkIC"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
             android:layout_gravity="center"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_bookmark_unselected" />
+            />
 
         <ProgressBar
             android:id="@+id/bookmarkrogressBar"
@@ -199,7 +199,7 @@
     <!-- End Bookmark and Unbookmark-->
 
     <!-- Start Font Icon -->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         app:iconType="fontSize"
         android:id="@+id/action_fontSizeIC"
         android:layout_width="@dimen/toolbar_ic_width"
@@ -228,7 +228,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="favourite"
             android:id="@+id/action_favTHP"
             android:layout_width="@dimen/toolbar_ic_width"
@@ -247,7 +247,7 @@
     <!-- End Favourite Icon -->
 
     <!-- Start Share Icon -->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         app:iconType="share"
         android:id="@+id/action_shareTHP"
         android:layout_width="@dimen/toolbar_ic_width"
@@ -276,7 +276,7 @@
         android:layout_marginRight="@dimen/toolbar_ic_gap"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="comment"
             android:id="@+id/action_commentTHP"
             android:layout_width="@dimen/toolbar_ic_width"
@@ -314,7 +314,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="ttsStop"
             android:id="@+id/action_ttsStop"
             android:layout_width="@dimen/toolbar_ic_width"
@@ -323,7 +323,7 @@
             android:src="@drawable/tts_stop"
             android:visibility="gone" />
 
-        <com.ns.view.TopbarIconView
+        <com.ns.view.img.TopbarIconView
             app:iconType="ttsPlay"
             android:id="@+id/action_ttsPlay"
             android:layout_width="@dimen/toolbar_ic_width"

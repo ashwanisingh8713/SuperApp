@@ -3,7 +3,6 @@ package com.ns.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentTabHost;
@@ -13,10 +12,9 @@ import com.ns.contentfragment.GetQuoteFragment;
 import com.ns.contentfragment.StockDetailsFragment;
 import com.ns.thpremium.R;
 import com.ns.view.LatoSemiBoldTextView;
-import com.ns.view.TopbarIconView;
+import com.ns.view.img.TopbarIconView;
 import com.ns.view.TopbarStocks;
 import com.ns.view.text.ArticleTitleTextView;
-import com.ns.view.text.CustomTextView;
 
 public class StocksDetailsActivity extends BaseAcitivityTHP {
     private TopbarStocks mToolbar;

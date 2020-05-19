@@ -1,4 +1,4 @@
-package com.ns.view;
+package com.ns.view.img;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.THPConstants;
 
-public class TopbarIconView extends AppCompatImageView {
+public class TopbarIconView extends BaseImgView {
 
     public TopbarIconView(Context context) {
         super(context);
@@ -39,14 +39,15 @@ public class TopbarIconView extends AppCompatImageView {
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSIcon);
             iconType = typedArray.getInt(R.styleable.NSIcon_iconType, 0);
-
+            typedArray.recycle();
         }
 
         updateIcon(iconType);
 
     }
 
-    private void updateIcon(int iconType) {
+    @Override
+    public void updateIcon(int iconType) {
         final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
@@ -293,10 +294,6 @@ public class TopbarIconView extends AppCompatImageView {
                 setImageResource(R.drawable.ic_refresh_black_24dp);
             }
         }
-    }
-
-    public void setIcon(int iconType) {
-        updateIcon(iconType);
     }
 
 

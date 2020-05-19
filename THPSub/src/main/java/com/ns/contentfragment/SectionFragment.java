@@ -196,7 +196,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     @Override
     public void onEmptyRefreshBtnClick() {
         mPullToRefreshLayout.showProgressBar();
-        hideLoadingViewCrossFade(mPullToRefreshLayout, emptyLayout);
+        showHideLoadingViewCrossFade(mPullToRefreshLayout, emptyLayout);
         new Handler().postDelayed(()->{
             sectionOrSubSectionDataFromDB();
         }, 600);

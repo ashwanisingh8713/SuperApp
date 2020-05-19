@@ -3,10 +3,10 @@
     {
       "title": "Home",
       "iconUrl": {
-        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
-        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
-        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
-        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"

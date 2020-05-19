@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.joooonho.SelectableRoundedImageView;
 import com.ns.thpremium.R;
+import com.ns.view.img.BaseImgView;
 import com.ns.view.text.CustomTextView;
 
 public class BookmarkPremiumViewHolder extends RecyclerView.ViewHolder {
@@ -17,7 +18,7 @@ public class BookmarkPremiumViewHolder extends RecyclerView.ViewHolder {
     public CustomTextView title;
     public CustomTextView authorName_Txt;
     public CustomTextView time_Txt;
-    public ImageView bookmark_Img;
+    public BaseImgView bookmark_Img;
     public ImageView share_Img;
     public SelectableRoundedImageView image;
     public View horizontalDivider;

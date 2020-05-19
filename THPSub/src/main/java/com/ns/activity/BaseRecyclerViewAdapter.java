@@ -17,6 +17,8 @@ import com.ns.callbacks.THP_AppEmptyPageListener;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
+import com.ns.view.img.BaseImgView;
+import com.ns.view.img.ListingIconView;
 
 public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
@@ -130,7 +132,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
      * @param articleBean
      * @param imageView1
      */
-    protected void isExistInBookmark(Context context, ArticleBean articleBean, final ImageView imageView1) {
+    protected void isExistInBookmark(Context context, ArticleBean articleBean, final BaseImgView imageView1) {
         ApiManager.isExistInBookmark(context, articleBean.getArticleId())
                 .subscribe(bean -> {
                     ArticleBean bean1 = bean;
@@ -139,12 +141,23 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
                     }
                     imageView1.setVisibility(View.VISIBLE);
                     imageView1.setEnabled(true);
-                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
-                        imageView1.setImageResource(R.drawable.ic_bookmark_selected);
-                    } else {
-                        imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
-
+                    if(THPConstants.IS_USE_SEVER_THEME) {
+                        if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
+                            // 3 = app:iconType="bookmarked"
+                            imageView1.updateIcon(3);
+                        } else {
+                            // 4 = app:iconType="unbookmark"
+                            imageView1.updateIcon(4);
+                        }
                     }
+                    else {
+                        if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
+                            imageView1.setImageResource(R.drawable.ic_bookmark_selected);
+                        } else {
+                            imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
+                        }
+                    }
+
 
                 }, val -> {
                     Log.i("", "");

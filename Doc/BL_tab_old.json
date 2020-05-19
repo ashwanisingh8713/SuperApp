@@ -3,10 +3,10 @@
     {
       "title": "Home",
       "iconUrl": {
-        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
-        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
-        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
-        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -339,10 +339,10 @@
     {
       "title": "BLink ",
       "iconUrl": {
-        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
-        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
-        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
-        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "ADD_ON_SECTION",
@@ -690,10 +690,10 @@
     {
       "title": "Indices",
       "iconUrl": {
-        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
-        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
-        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.pn",
-        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png"
+        "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
+        "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
+        "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png",
+        "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png"
       },
       "group": "GROUP_DEFAULT_SECTIONS",
       "pageSource": "SENSEX"

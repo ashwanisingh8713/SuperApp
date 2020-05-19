@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.joooonho.SelectableRoundedImageView;
 import com.ns.thpremium.R;
+import com.ns.view.img.ListingIconView;
 import com.ns.view.text.CustomTextView;
 
 public class DashboardViewHolder extends RecyclerView.ViewHolder {
@@ -17,9 +18,9 @@ public class DashboardViewHolder extends RecyclerView.ViewHolder {
     public CustomTextView title;
     public CustomTextView authorName_Txt;
     public CustomTextView time_Txt;
-    public ImageView toggleBtn_Img;
-    public ImageView bookmark_Img;
-    public ImageView like_Img;
+    public ListingIconView toggleBtn_Img;
+    public ListingIconView bookmark_Img;
+    public ListingIconView like_Img;
     public ImageView trendingIcon_Img;
     public SelectableRoundedImageView image;
     public View horizontalDivider;

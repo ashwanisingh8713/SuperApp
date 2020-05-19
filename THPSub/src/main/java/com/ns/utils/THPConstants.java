@@ -22,7 +22,6 @@ public class THPConstants {
     public static final String FROM_USER_PROFILE = "userProfile";
     public static final String FROM_BookmarkListing = "BookmarkListing";
     public static final String FROM_PERSONALISE = "Personalise";
-    public static final String FROM_DASHBOARD_SET_PREFERENCE = "DashboardSetPreference";
     public static final String PAYMENT = "Payment";
     public static final String FROM_NOTIFICATION_CLICK = "notificationClick";
 

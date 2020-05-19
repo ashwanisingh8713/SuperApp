@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <!-- Start Back Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         android:id="@+id/action_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         ><requestFocus/></EditText>
 
     <!-- Start Search Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         android:id="@+id/action_crossBtn"
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
@@ -52,7 +52,7 @@
     <!-- End Search Icon-->
 
     <!-- Start Overflow Icon-->
-    <com.ns.view.TopbarIconView
+    <com.ns.view.img.TopbarIconView
         android:id="@+id/action_overflow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

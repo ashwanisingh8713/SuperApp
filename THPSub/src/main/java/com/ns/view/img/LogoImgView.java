@@ -1,4 +1,4 @@
-package com.ns.view;
+package com.ns.view.img;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,7 +16,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.THPConstants;
 
-public class LogoImgView extends AppCompatImageView {
+public class LogoImgView extends BaseImgView {
 
     public LogoImgView(Context context) {
         super(context);
@@ -34,21 +34,16 @@ public class LogoImgView extends AppCompatImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
-
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSImageLogo);
             int logoType = typedArray.getInt(R.styleable.NSImageLogo_logoType, 0);
+            typedArray.recycle();
             updateIcon(logoType);
         }
-
-
-
-
-
     }
 
-    private void updateIcon(int logoType) {
+    @Override
+    public void updateIcon(int logoType) {
         final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
@@ -124,10 +119,6 @@ public class LogoImgView extends AppCompatImageView {
                 setImageResource(R.drawable.logo_actionbar_dark);
             }
         }
-    }
-
-    public void setIcon(int logoType) {
-        updateIcon(logoType);
     }
 
 

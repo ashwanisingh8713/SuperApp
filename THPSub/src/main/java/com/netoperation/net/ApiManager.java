@@ -2234,14 +2234,15 @@ public class ApiManager {
                     clearDB(db, context);
                     return "";
                 });
-
     }
 
     private static void clearDB(THPDB db, Context context) {
-        db.bookmarkTableDao().deleteAll();
         db.breifingDao().deleteAll();
         db.userProfileDao().deleteAll();
         db.dashboardDao().deleteAll();
+        //db.bookmarkTableDao().deleteAll();
+        // Only premium bookmark should be deleted
+        db.bookmarkTableDao().delete(NetConstants.GROUP_PREMIUM_BOOKMARK);
         PremiumPref.getInstance(context).setIsRefreshRequired(true);
     }
 

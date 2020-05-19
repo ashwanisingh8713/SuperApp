@@ -474,7 +474,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
                                         noConnectionSnackBar(getView());
                                         return;
                                     }
-                                    IntentUtil.openPersonaliseActivity(getActivity(), THPConstants.FROM_DASHBOARD_SET_PREFERENCE);
+                                    IntentUtil.openPersonaliseActivity(getActivity(), NetConstants.PS_My_Stories);
                                 });
 
                                 emptyBtnTxt.setEnabled(true);
