@@ -199,48 +199,24 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(tableMPReadArticle->{
-
-
-                        /*if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
-
-                        }
-
-                        else {
-
-                        }*/
-
                         // It sends event in THP_DetailActivity.java => handleEvent(TableMPReadArticle mpReadArticle)
                         EventBus.getDefault().post(tableMPReadArticle);
 
+                        final String groupType = mArticleBean.getGroupType();
 
+                        ToolbarChangeRequired toolbarChangeRequired = ContentUtil.getTopbarFromGroupType(groupType);
 
-                        ////////////////////////////////////////////////////////
-
-                        /*ToolbarChangeRequired toolbarChangeRequired = new ToolbarChangeRequired();
-
-                        String groupType = mArticleBean.getGroupType();
-
-                        if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
-                            if(PremiumPref.getInstance(getActivity()).isHasSubscription()) {
-                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
-                            } else {
-                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
+                        if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
+                            if (!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted()) {
+                                // TODO, Noting for now
+                            }
+                            else {
+                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN);
                             }
                         }
-                        else {
-                            if(PremiumPref.getInstance(getActivity()).isHasSubscription()) {
-                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
-                            } else {
-                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
-                            }
-                        }*/
 
-
-
-
-                        ////////////////////////////////////////////////////////
-
-
+                        // It sends event in THP_DetailActivity.java => ToolbarChangeRequired toolbarChangeRequired
+                        EventBus.getDefault().post(toolbarChangeRequired);
 
                         if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1 || PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
@@ -249,7 +225,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 }
                                 mRecyclerAdapter.clearData();
                                 // Creates and Shows Detail Page
-                                dgPage(mArticleBean);
+                                if(groupType != null && groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+                                    premiumPage(mArticleBean);
+                                } else {
+                                    dgPage(mArticleBean);
+                                }
                                 if (PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
                                     ApiManager.nowNotRefreshRequired(getActivity());
                                 }

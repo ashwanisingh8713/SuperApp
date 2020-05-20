@@ -228,19 +228,6 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     public void handleEvent(TableMPReadArticle tableMPReadArticle) {
         if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
-            if (!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted()) {
-                //Show Menu Icons
-                if(PremiumPref.getInstance(this).isHasSubscription()) {
-                    getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
-                }
-                else {
-                    getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
-                }
-
-            } else {
-                //Hide Some Menu Icons
-                getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
-            }
             return;
         }
         mReadingArticleId = tableMPReadArticle.getArticleId();

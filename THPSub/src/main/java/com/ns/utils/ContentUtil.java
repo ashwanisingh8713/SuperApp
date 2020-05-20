@@ -5,11 +5,43 @@ import com.netoperation.model.MeBean;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
+import com.ns.callbacks.ToolbarChangeRequired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentUtil {
+
+
+    public static ToolbarChangeRequired getTopbarFromGroupType(String groupType) {
+        final ToolbarChangeRequired toolbarChangeRequired = new ToolbarChangeRequired();
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isHasSubscription()) {
+
+            if(groupType == null) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
+            }
+            else if(groupType == NetConstants.G_BOOKMARK_DEFAULT) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
+            }
+            else if(groupType == NetConstants.G_BOOKMARK_PREMIUM) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
+            }
+
+        }
+        else {
+            if(groupType == null) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN);
+            }
+            else if(groupType == NetConstants.G_BOOKMARK_DEFAULT) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN);
+            }
+            else if(groupType == NetConstants.G_BOOKMARK_PREMIUM) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
+            }
+        }
+
+        return toolbarChangeRequired;
+    }
 
     /*
      * Check shall MP should show

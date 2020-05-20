@@ -1343,7 +1343,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                             bean.setIsBookmark(book);
                                             if (from.equals("bookmark")) {
                                                 if (book == NetConstants.BOOKMARK_YES) {
-                                                    bean.setGroupType(NetConstants.G_PREMIUM_SECTIONS);
+                                                    bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
                                                     // To Create at App end
                                                     ApiManager.createBookmark(context, bean).subscribe(boole -> {
                                                         if (bar != null) {

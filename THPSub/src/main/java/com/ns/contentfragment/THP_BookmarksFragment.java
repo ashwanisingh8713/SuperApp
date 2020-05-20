@@ -220,12 +220,14 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                         .map(value -> {
                             List<AppTabContentModel> content = new ArrayList<>();
                             for (ArticleBean bean : value) {
-                                int viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
+                                int viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
                                 if (bean.getGroupType() == null) {
                                     continue;
-                                } else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
                                     viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
-                                } else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                                     viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
                                 }
                                 AppTabContentModel model = new AppTabContentModel(viewType);
