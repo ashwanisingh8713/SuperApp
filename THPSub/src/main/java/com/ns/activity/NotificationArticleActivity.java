@@ -3,7 +3,6 @@ package com.ns.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,7 +50,7 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
         mPullToRefreshLayout.enablePullToRefresh(false);
         mNoNotificationView = findViewById(R.id.no_notification);
 
-        mRecyclerAdapter = new SectionContentAdapter(NetConstants.GROUP_NOTIFICATION, new ArrayList<>(), false, "mSectionId", NetConstants.GROUP_NOTIFICATION);
+        mRecyclerAdapter = new SectionContentAdapter(NetConstants.G_NOTIFICATION, new ArrayList<>(), false, "mSectionId", NetConstants.G_NOTIFICATION);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
         mDisposable.add(DefaultTHApiManager.getNotificationArticles(this).map(articleBeanList->{
             mRecyclerAdapter.deleteAllItems();

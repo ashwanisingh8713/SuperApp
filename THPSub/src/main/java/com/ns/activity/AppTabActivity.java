@@ -230,21 +230,14 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onResume() {
         super.onResume();
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
-        Log.i("TabFragment", "onResume() In Activity EventBus Registered");
+        Log.i("TabFragment", "onResume() In AppTabActivity EventBus Registered");
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("TabFragment", "onPause() In Activity EventBus UnRegistered");
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("TabFragment", "onStop() In Activity EventBus UnRegistered");
+        Log.i("TabFragment", "onPause() In AppTabActivity EventBus UnRegistered");
         EventBus.getDefault().unregister(this);
     }
 
@@ -315,30 +308,50 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     }
 
     /**
-     * Show Section Screen Toolbar icons and sets navigation btn click
+     * Show Premium Section Screen Toolbar icons and sets navigation btn click
      */
     private void showPremiumToolbar() {
-        getDetailToolbar().showPremiumDetailIcons(navigationBtnClick->{
-            mAppTabFragment.setCurrentTab(0);
-        });
+        if(PremiumPref.getInstance(this).isHasSubscription()) {
+            getDetailToolbar().PREMIUM_LISTING_TOPBAR(navigationBtnClick -> {
+                mAppTabFragment.setCurrentTab(0);
+            });
+        }
+        else {
+            getDetailToolbar().PREMIUM_LISTING_TOPBAR_CROWN(navigationBtnClick -> {
+                mAppTabFragment.setCurrentTab(0);
+            });
+        }
     }
 
     /**
      * Show Section Screen Toolbar icons and sets navigation btn click
      */
     private void showSectionToolbar() {
-        getDetailToolbar().showSectionIcons(navigationBtnClick->{
-            mDrawerLayout.openDrawer(GravityCompat.START);
-        });
+        if(PremiumPref.getInstance(this).isHasSubscription()) {
+            getDetailToolbar().SECTION_LISTING_TOPBAR(navigationBtnClick -> {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            });
+        } else {
+            getDetailToolbar().SECTION_LISTING_TOPBAR_CROWN(navigationBtnClick -> {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            });
+        }
     }
 
     /**
      * Show Sub-Section Screen Toolbar icons and sets Back btn click and send event for pop-out fragment
      */
     private void showSubSectionToolbar(String title) {
-        getDetailToolbar().showSubSectionIcons(title, backBtnClick->{
-            EventBus.getDefault().post(new BackPressImpl());
-        });
+        if(PremiumPref.getInstance(this).isHasSubscription()) {
+            getDetailToolbar().SUB_SECTION_LISTING_TOPBAR(title, backBtnClick -> {
+                EventBus.getDefault().post(new BackPressImpl());
+            });
+        }
+        else {
+            getDetailToolbar().SUB_SECTION_LISTING_TOPBAR_CROWN(title, backBtnClick -> {
+                EventBus.getDefault().post(new BackPressImpl());
+            });
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -362,16 +375,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             lockDrawer();
         }
 
-        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION_TOPBAR)) {
+        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SECTION_LISTING_TOPBAR)) {
             showSectionToolbar();
         }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION_TOPBAR)) {
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.SUB_SECTION_LISTING_TOPBAR)) {
             showSubSectionToolbar(toolbarChangeRequired.getTitle());
         }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.OTHER_TOPBAR)) {
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.OTHER_LISTING_TOPBAR)) {
             showSubSectionToolbar(toolbarChangeRequired.getTitle());
         }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_TOPBAR)) {
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_LISTING_TOPBAR)) {
             showPremiumToolbar();
         }
     }

@@ -1,5 +1,11 @@
 package com.netoperation.util;
 
+import androidx.annotation.StringDef;
+
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
 public class NetConstants {
 
     public static final boolean IS_HOLD = true;
@@ -32,17 +38,21 @@ public class NetConstants {
     public static final String RECO_TEMP_NOT_EXIST = "TEMP_NOT_EXIST";
     public static final String RECO_HOME_TAB = "HOME_TAB";
 
-    public static final String GROUP_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
-    public static final String GROUP_PREMIUM_SECTIONS = "GROUP_PREMIUM_SECTIONS";
-    public static final String GROUP_DEFAULT_BOOKMARK = "GROUP_DEFAULT_BOOKMARK";
-    public static final String GROUP_PREMIUM_BOOKMARK = "GROUP_PREMIUM_BOOKMARK";
-    public static final String GROUP_NOTIFICATION = "GROUP_NOTIFICATION";
+    public static final String G_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
+    public static final String G_PREMIUM_SECTIONS = "GROUP_PREMIUM_SECTIONS";
+    public static final String G_BOOKMARK_DEFAULT = "BOOKMARK_GROUP_DEFAULT";
+    public static final String G_BOOKMARK_PREMIUM = "BOOKMARK_GROUP_PREMIUM";
+    public static final String G_NOTIFICATION = "GROUP_NOTIFICATION";
+
     public static final String BOOKMARK_IN_ONE = "BOOKMARK_IN_ONE";
     public static final String BOOKMARK_IN_TAB = "BOOKMARK_IN_TAB";
 
-    //public static final String BOOKMARK_DEFAULT_PREMIUM_IN_ONE = "1";
-    //public static final String BOOKMARK_DEFAULT_PREMIUM_IN_TAB = "2";
-
+    @Retention(SOURCE)
+    @StringDef({
+            G_BOOKMARK_DEFAULT,
+            G_BOOKMARK_PREMIUM
+    })
+    public @interface BookmarkType {}
 
     public static final int BOOKMARK_YES = 1;
     public static final int BOOKMARK_NO = 0;

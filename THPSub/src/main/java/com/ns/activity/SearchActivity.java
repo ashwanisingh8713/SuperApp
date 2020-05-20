@@ -156,7 +156,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             }
         });
 
-        mRecyclerAdapter = new SectionContentAdapter(NetConstants.GROUP_DEFAULT_SECTIONS, new ArrayList<>(), false, null, null);
+        mRecyclerAdapter = new SectionContentAdapter(NetConstants.G_DEFAULT_SECTIONS, new ArrayList<>(), false, null, null);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
         //Fetch Search Options from DB

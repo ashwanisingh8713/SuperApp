@@ -34,10 +34,10 @@ public class MergedBookmarkPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         if(mGroupType.equals(NetConstants.BOOKMARK_IN_TAB)) {
             if (i == 0) {
-                return THP_BookmarksFragment.getInstance(NetConstants.GROUP_PREMIUM_BOOKMARK);
+                return THP_BookmarksFragment.getInstance(NetConstants.G_BOOKMARK_PREMIUM);
             }
             else {
-                return THP_BookmarksFragment.getInstance(NetConstants.GROUP_DEFAULT_BOOKMARK);
+                return THP_BookmarksFragment.getInstance(NetConstants.G_BOOKMARK_DEFAULT);
             }
         }
         else { // (mBookmarkViewType == NetConstants.BOOKMARK_DEFAULT_PREMIUM_IN_ONE)

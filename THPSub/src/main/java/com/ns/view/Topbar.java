@@ -74,8 +74,7 @@ public class Topbar extends Toolbar {
 
     private boolean isUserThemeDay;
 
-
-    public void showSectionIcons(OnClickListener onClickListener) {
+    public void SECTION_LISTING_TOPBAR_CROWN(OnClickListener onClickListener) {
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
         favouriteParent.setVisibility(GONE);
@@ -97,7 +96,29 @@ public class Topbar extends Toolbar {
         mBackImageView.updateIcon(15);
     }
 
-    public void showSubSectionIcons(String title, OnClickListener onClickListener) {
+    public void SECTION_LISTING_TOPBAR(OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        mBackImageView.setVisibility(VISIBLE);
+        mLogoImageView.setVisibility(VISIBLE);
+        overflowParent.setVisibility(VISIBLE);
+        mSearchImageView.setVisibility(VISIBLE);
+        mBackImageView.setOnClickListener(onClickListener);
+        // 15 = app:iconType="slider"
+        mBackImageView.updateIcon(15);
+    }
+
+    public void SUB_SECTION_LISTING_TOPBAR_CROWN(String title, OnClickListener onClickListener) {
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
         favouriteParent.setVisibility(GONE);
@@ -114,6 +135,31 @@ public class Topbar extends Toolbar {
         overflowParent.setVisibility(VISIBLE);
         mTitleTextView.setVisibility(VISIBLE);
         premiumLogoBtn.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+        mTitleTextView.setText(title);
+        // 14 = app:iconType="back"
+        mBackImageView.updateIcon(14);
+        mBackImageView.setOnClickListener(onClickListener);
+    }
+
+    public void SUB_SECTION_LISTING_TOPBAR(String title, OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        mBackImageView.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        mSearchImageView.setVisibility(VISIBLE);
+        overflowParent.setVisibility(VISIBLE);
+        mTitleTextView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
 
         mTitleTextView.setText(title);
@@ -199,7 +245,26 @@ public class Topbar extends Toolbar {
 
     }
 
-    public void showBreifingDetailIcons() {
+    public void BREIFING_DETAIL_TOPBAR_CROWN() {
+        overflowParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+
+        premiumLogoBtn.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+    }
+
+    public void BREIFING_DETAIL_TOPBAR() {
         overflowParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
@@ -218,24 +283,7 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
     }
 
-    public void showPremiumDetailIcons() {
-        overflowParent.setVisibility(GONE);
-        mSearchImageView.setVisibility(GONE);
-        mLogoImageView.setVisibility(GONE);
-        mTextSizeImageView.setVisibility(GONE);
-        commentParent.setVisibility(GONE);
-        mTitleTextView.setVisibility(GONE);
-        premiumLogoBtn.setVisibility(GONE);
 
-        likeParent.setVisibility(VISIBLE);
-        bookmarkParent.setVisibility(VISIBLE);
-        favouriteParent.setVisibility(VISIBLE);
-        favStarTHPIC.setVisibility(VISIBLE);
-        toggleLikeDisLikeTHPIC.setVisibility(VISIBLE);
-        ttsParent.setVisibility(VISIBLE);
-        shareTHPIC.setVisibility(VISIBLE);
-        mBackImageView.setVisibility(VISIBLE);
-    }
 
     public void showGalleryIcons(OnClickListener onClickListener) {
         overflowParent.setVisibility(GONE);
@@ -259,7 +307,7 @@ public class Topbar extends Toolbar {
         mBackImageView.setOnClickListener(onClickListener);
     }
 
-    public void showPremiumDetailIcons(OnClickListener onClickListener) {
+    public void PREMIUM_LISTING_TOPBAR_CROWN(OnClickListener onClickListener) {
         likeParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
         favouriteParent.setVisibility(GONE);
@@ -281,7 +329,67 @@ public class Topbar extends Toolbar {
         mBackImageView.updateIcon(14);
     }
 
-    public void showBookmarkPremiumDetailIcons(boolean hasSubscriptionPlan) {
+    public void PREMIUM_LISTING_TOPBAR(OnClickListener onClickListener) {
+        likeParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        ttsParent.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        shareTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        mBackImageView.setVisibility(VISIBLE);
+        mLogoImageView.setVisibility(VISIBLE);
+        mBackImageView.setOnClickListener(onClickListener);
+        // 14 = app:iconType="back"
+        mBackImageView.updateIcon(14);
+    }
+
+    public void PREMIUM_DETAIL_TOPBAR() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
+
+        likeParent.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
+        favouriteParent.setVisibility(VISIBLE);
+        favStarTHPIC.setVisibility(VISIBLE);
+        toggleLikeDisLikeTHPIC.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+    }
+
+    public void PREMIUM_DETAIL_TOPBAR_CROWN() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+
+        premiumLogoBtn.setVisibility(VISIBLE);
+        likeParent.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
+        favouriteParent.setVisibility(VISIBLE);
+        favStarTHPIC.setVisibility(VISIBLE);
+        toggleLikeDisLikeTHPIC.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+    }
+
+    public void PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN() {
         overflowParent.setVisibility(GONE);
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
@@ -294,11 +402,26 @@ public class Topbar extends Toolbar {
         commentParent.setVisibility(GONE);
         bookmarkParent.setVisibility(GONE);
 
-        if(hasSubscriptionPlan) {
-            premiumLogoBtn.setVisibility(GONE);
-        } else {
-            premiumLogoBtn.setVisibility(VISIBLE);
-        }
+        premiumLogoBtn.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        mTextSizeImageView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+    }
+
+    public void PREMIUM_BOOKMARK_DETAIL_TOPBAR() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        commentParent.setVisibility(GONE);
+        bookmarkParent.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
 
         ttsParent.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
@@ -306,7 +429,7 @@ public class Topbar extends Toolbar {
         mBackImageView.setVisibility(VISIBLE);
     }
 
-    public void showNonPremiumDetailIcons(boolean hasSubscriptionPlan) {
+    public void DEFAULT_DETAIL_TOPBAR_CROWN() {
         overflowParent.setVisibility(GONE);
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);
@@ -317,11 +440,27 @@ public class Topbar extends Toolbar {
         favouriteParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
 
-        if(hasSubscriptionPlan) {
-            premiumLogoBtn.setVisibility(GONE);
-        } else {
-            premiumLogoBtn.setVisibility(VISIBLE);
-        }
+        premiumLogoBtn.setVisibility(VISIBLE);
+        commentParent.setVisibility(VISIBLE);
+        ttsParent.setVisibility(VISIBLE);
+        shareTHPIC.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
+        mTextSizeImageView.setVisibility(VISIBLE);
+        mBackImageView.setVisibility(VISIBLE);
+
+    }
+
+    public void DEFAULT_DETAIL_TOPBAR() {
+        overflowParent.setVisibility(GONE);
+        mSearchImageView.setVisibility(GONE);
+        mLogoImageView.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
+        mTitleTextView.setVisibility(GONE);
+        favStarTHPIC.setVisibility(GONE);
+        toggleLikeDisLikeTHPIC.setVisibility(GONE);
+        favouriteParent.setVisibility(GONE);
+        likeParent.setVisibility(GONE);
+        premiumLogoBtn.setVisibility(GONE);
 
         commentParent.setVisibility(VISIBLE);
         ttsParent.setVisibility(VISIBLE);
@@ -332,7 +471,7 @@ public class Topbar extends Toolbar {
 
     }
 
-    public void showNonPremiumRestrictedDetailIcons() {
+    public void DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN() {
         overflowParent.setVisibility(GONE);
         mSearchImageView.setVisibility(GONE);
         mLogoImageView.setVisibility(GONE);

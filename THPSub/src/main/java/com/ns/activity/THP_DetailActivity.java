@@ -2,6 +2,7 @@ package com.ns.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,15 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.main.DFPAds;
-import com.main.SuperApp;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.ArticleBean;
-import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
+import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.THP_DetailFragment;
 import com.ns.contentfragment.THP_DetailPagerFragment;
@@ -65,7 +65,13 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        hasSubscriptionPlan = PremiumPref.getInstance(this).isHasSubscription();
+        Log.i("TabFragment", "onCreate() In THP_DetailActivity EventBus Registered");
+//        EventBus.getDefault().register(this);
+
+        subsCloseImg_Mp = findViewById(R.id.subsCloseImg_Mp);
+        msgCountTxt_Mp = findViewById(R.id.msgCountTxt_Mp);
+        subscribeBtn_Txt_Mp = findViewById(R.id.subscribeBtn_Txt_Mp);
+        subscribeLayout_Mp = findViewById(R.id.subscribeLayout_Mp);
 
         if (getIntent().getExtras() != null) {
             mFrom = getIntent().getStringExtra("from");
@@ -75,21 +81,42 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             mArticleBean = getIntent().getParcelableExtra("ArticleBean");
         }
 
+
+        // Breifing Detail Page Toolbar
         if (mFrom != null && ((NetConstants.BREIFING_ALL.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_EVENING.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_NOON.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
-            getDetailToolbar().showBreifingDetailIcons();
+            if(PremiumPref.getInstance(this).isHasSubscription()) {
+                getDetailToolbar().BREIFING_DETAIL_TOPBAR();
+            } else {
+                getDetailToolbar().BREIFING_DETAIL_TOPBAR_CROWN();
+            }
         }
+        // Premium Detail Page Toolbar
         else if (mFrom != null && (((NetConstants.PS_My_Stories.equalsIgnoreCase(mFrom))
                 || (NetConstants.PS_Suggested.equalsIgnoreCase(mFrom))))) {
-            getDetailToolbar().showPremiumDetailIcons();
+            if(PremiumPref.getInstance(this).isHasSubscription()) {
+                getDetailToolbar().PREMIUM_DETAIL_TOPBAR();
+            } else {
+                getDetailToolbar().PREMIUM_DETAIL_TOPBAR_CROWN();
+            }
         }
+        // Bookmark Detail Page Toolbar
         else if (ContentUtil.isFromPremiumBookmark(mFrom)) {
-            getDetailToolbar().showBookmarkPremiumDetailIcons(hasSubscriptionPlan);
+            if(PremiumPref.getInstance(this).isHasSubscription()) {
+                getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR();
+            } else {
+                getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN();
+            }
         }
         else {
-            getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
+            if(PremiumPref.getInstance(this).isHasSubscription()) {
+                getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
+            }
+            else {
+                getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
+            }
         }
 
 
@@ -106,21 +133,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
         }
 
-        // To Create Full Screen Ad
-        Observable.just("")
-                .subscribeOn(Schedulers.newThread())
-                .delay(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(val->{
-                    new DFPAds().loadFullScreenAds();
-                });
 
-        EventBus.getDefault().register(this);
-
-        subsCloseImg_Mp = findViewById(R.id.subsCloseImg_Mp);
-        msgCountTxt_Mp = findViewById(R.id.msgCountTxt_Mp);
-        subscribeBtn_Txt_Mp = findViewById(R.id.subscribeBtn_Txt_Mp);
-        subscribeLayout_Mp = findViewById(R.id.subscribeLayout_Mp);
         subscribeBtn_Txt_Mp.setOnClickListener(view -> {
             if(NetUtils.isConnected(THP_DetailActivity.this)) {
                 //Redirect on subscription plan page
@@ -138,14 +151,35 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             DefaultTHApiManager.insertCloseBannerClick(THP_DetailActivity.this, mReadingArticleId, true);
             subscribeLayout_Mp.setVisibility(View.GONE);
         });
+
+
+        // To Create Full Screen Ad
+        Observable.just("")
+                .subscribeOn(Schedulers.newThread())
+                .delay(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(val->{
+                    new DFPAds().loadFullScreenAds();
+                });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.i("TabFragment", "onResume() In THP_DetailActivity EventBus Registered");
+        EventBus.getDefault().register(this);
+
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "THP_DetailActivity Screen", THP_DetailActivity.class.getSimpleName());
         bottomBannerAds();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("TabFragment", "onPause() In THP_DetailActivity EventBus UnRegistered");
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -155,28 +189,65 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         super.onDestroy();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
+
+        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR_CROWN)) {
+            getDetailToolbar().BREIFING_DETAIL_TOPBAR_CROWN();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR)) {
+            getDetailToolbar().BREIFING_DETAIL_TOPBAR();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN)) {
+            getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR)) {
+            getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN)) {
+            getDetailToolbar().PREMIUM_DETAIL_TOPBAR_CROWN();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR)) {
+            getDetailToolbar().PREMIUM_DETAIL_TOPBAR();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN)) {
+            getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN)) {
+            getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
+        }
+        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR)) {
+            getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
+        }
+    }
 
     /**
      * It receives event from THP_DetailFragment.java => loadRecyclerData() => subscribe(tableMPReadArticle)
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleEvent(TableMPReadArticle mpReadArticle) {
-        if(!shouldShowMeteredPaywall() || !mpReadArticle.isArticleRestricted() || (!mpReadArticle.isUserCanReRead() && mpReadArticle.isArticleRestricted())) {
+    public void handleEvent(TableMPReadArticle tableMPReadArticle) {
+        if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
-            if (!shouldShowMeteredPaywall() || !mpReadArticle.isArticleRestricted()) {
+            if (!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted()) {
                 //Show Menu Icons
-                getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
+                if(PremiumPref.getInstance(this).isHasSubscription()) {
+                    getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
+                }
+                else {
+                    getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
+                }
+
             } else {
                 //Hide Some Menu Icons
-                getDetailToolbar().showNonPremiumRestrictedDetailIcons();
+                getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
             }
             return;
         }
-        mReadingArticleId = mpReadArticle.getArticleId();
-        int totalReadSize = mpReadArticle.getTotalReadCount();
-        boolean isNeedToShowMpBanner = (DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired() && mpReadArticle.isUserCanReRead())
+        mReadingArticleId = tableMPReadArticle.getArticleId();
+        int totalReadSize = tableMPReadArticle.getTotalReadCount();
+        boolean isNeedToShowMpBanner = (DefaultPref.getInstance(THP_DetailActivity.this).isMPDurationExpired() && tableMPReadArticle.isUserCanReRead())
                 || totalReadSize <= BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)
-                || (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) && mpReadArticle.isUserCanReRead());
+                || (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) && tableMPReadArticle.isUserCanReRead());
         String bannerMsg = BaseFragmentTHP.getMpBannerMsg();
         //For Display in UI, total read size should not exceed allowed counts.
         if (totalReadSize > BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)) {
@@ -193,7 +264,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         }
 
         //Check Is Banner close button click TRUE/FALSE
-        boolean isBannerCloseClick = mpReadArticle.isBannerCloseClick();
+        boolean isBannerCloseClick = tableMPReadArticle.isBannerCloseClick();
         if(isNeedToShowMpBanner && !isBannerCloseClick) {
             msgCountTxt_Mp.setText(bannerMsg);
             subscribeLayout_Mp.setVisibility(View.VISIBLE);
@@ -203,10 +274,15 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         }
         if (isNeedToShowMpBanner) {
             //Show Menu Icons
-            getDetailToolbar().showNonPremiumDetailIcons(hasSubscriptionPlan);
+            if(PremiumPref.getInstance(this).isHasSubscription()) {
+                getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
+            }
+            else {
+                getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
+            }
         } else {
             //Hide Some Menu Icons
-            getDetailToolbar().showNonPremiumRestrictedDetailIcons();
+            getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
         }
     }
 

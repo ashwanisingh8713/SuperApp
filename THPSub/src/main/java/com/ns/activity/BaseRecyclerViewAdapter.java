@@ -18,7 +18,6 @@ import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 import com.ns.view.img.BaseImgView;
-import com.ns.view.img.ListingIconView;
 
 public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
@@ -228,11 +227,11 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     protected void local_bookmarkOperation(Context context, ArticleBean bean, ImageView imageView, int position) {
         ApiManager.isExistInBookmark(context, bean.getArticleId())
                 .subscribe(articleBean->{
-                    bean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
+                    bean.setGroupType(NetConstants.G_BOOKMARK_DEFAULT);
                     if(bean.getArticleId().equals(articleBean.getArticleId())) {
-                        local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
+                        local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, NetConstants.G_BOOKMARK_DEFAULT);
                     } else {
-                        local_createBookmarkFromApp(context, bean, null, imageView, position, NetConstants.GROUP_DEFAULT_BOOKMARK);
+                        local_createBookmarkFromApp(context, bean, null, imageView, position, NetConstants.G_BOOKMARK_DEFAULT);
                     }
                 });
     }

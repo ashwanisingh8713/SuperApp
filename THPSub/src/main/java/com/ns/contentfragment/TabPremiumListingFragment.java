@@ -144,7 +144,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         }
 
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageType, false, mTabIndex, null, ToolbarChangeRequired.PREMIUM_LISTING_TOPBAR));
 
         Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);

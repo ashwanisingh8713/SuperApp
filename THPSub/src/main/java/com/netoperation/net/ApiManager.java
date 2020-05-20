@@ -38,6 +38,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.RetentionDef;
 import com.ns.model.PlanPage;
+import com.ns.utils.ContentUtil;
 import com.ns.utils.THPConstants;
 
 import org.json.JSONArray;
@@ -858,16 +859,16 @@ public class ApiManager {
                                 for (ArticleBean bean : beans) {
                                     if (recotype.equalsIgnoreCase(NetConstants.API_bookmarks)) {
                                         bean.setIsBookmark(1);
-                                        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+                                        bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
                                         TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                         thp.bookmarkTableDao().insertBookmark(tableBookmark);
                                     } else {
                                         TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(bean.getArticleId());
                                         if (tableBookmark != null && bean.getIsBookmark() == 1) {
-                                            bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+                                            bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
                                             thp.bookmarkTableDao().updateBookmark(bean.getArticleId(), bean);
                                         } else if (bean.getIsBookmark() == 1) {
-                                            bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+                                            bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
                                             TableBookmark bookmarkkTable = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                                             thp.bookmarkTableDao().insertBookmark(bookmarkkTable);
                                         } else if (bean.getIsBookmark() == 0) {
@@ -1183,7 +1184,8 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
+//                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
+                        if (ContentUtil.isFromBookmarkPage(recoType)) {
                             TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (tableBookmark != null) {
                                 ArticleBean articleBean = tableBookmark.getBean();
@@ -1200,7 +1202,6 @@ public class ApiManager {
                                     ArrayList<String> tu = new ArrayList<>();
                                     tu.add(thumbUrl);
                                     articleBean.setThumbnailUrl(tu);
-
                                     thp.bookmarkTableDao().updateBookmark(aid, articleBean);
                                 }
                                 return articleBean;
@@ -1277,7 +1278,8 @@ public class ApiManager {
 
                         THPDB thp = THPDB.getInstance(context);
 
-                        if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
+                        //if (recoType != null && recoType.equalsIgnoreCase(NetConstants.API_bookmarks)) {
+                        if (ContentUtil.isFromBookmarkPage(recoType)) {
                             TableBookmark tableBookmark = thp.bookmarkTableDao().getBookmarkArticle(aid);
                             if (tableBookmark != null) {
                                 ArticleBean articleBean = tableBookmark.getBean();
@@ -2242,7 +2244,7 @@ public class ApiManager {
         db.dashboardDao().deleteAll();
         //db.bookmarkTableDao().deleteAll();
         // Only premium bookmark should be deleted
-        db.bookmarkTableDao().delete(NetConstants.GROUP_PREMIUM_BOOKMARK);
+        db.bookmarkTableDao().delete(NetConstants.G_BOOKMARK_PREMIUM);
         PremiumPref.getInstance(context).setIsRefreshRequired(true);
     }
 

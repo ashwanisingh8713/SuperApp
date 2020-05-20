@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.netoperation.util.NetConstants;
 import com.ns.utils.ResUtil;
 
 import java.util.ArrayList;
@@ -126,7 +127,7 @@ public class ArticleBean implements Parcelable {
         return groupType;
     }
 
-    public void setGroupType(String groupType) {
+    public void setGroupType(@NetConstants.BookmarkType String groupType) {
         this.groupType = groupType;
     }
 

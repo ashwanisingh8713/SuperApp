@@ -137,7 +137,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         else if(ContentUtil.isFromBookmarkPage(mFrom)) {
             loadBookmarkData();
         }
-        else if(mFrom.equals(NetConstants.GROUP_NOTIFICATION)) {
+        else if(mFrom.equals(NetConstants.G_NOTIFICATION)) {
             loadNotificationData();
         }
         else {
@@ -258,10 +258,10 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private void loadBookmarkData() {
         Observable<List<ArticleBean>> observable = null;
 
-        if (mFrom != null && mFrom.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
-            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
-        } else if (mFrom != null && mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_DEFAULT_BOOKMARK);
+        if (mFrom != null && mFrom.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
+        } else if (mFrom != null && mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
         } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
         }

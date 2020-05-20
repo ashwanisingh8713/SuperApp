@@ -669,7 +669,7 @@ public class IntentUtil {
                                                .observeOn(AndroidSchedulers.mainThread())
                                                .subscribe(articleBean->{
                                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.GROUP_DEFAULT_SECTIONS, bean, clickedUrl);
+                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.G_DEFAULT_SECTIONS, bean, clickedUrl);
                                                        progress.dismiss();
                                                        disposable.clear();
                                                        disposable.dispose();

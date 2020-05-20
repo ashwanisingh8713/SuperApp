@@ -786,7 +786,7 @@ public class DefaultTHApiManager {
 
     public static Observable<List<ArticleBean>> getNotificationArticles(Context context) {
         // Check in TableTemperoryArticle
-        return THPDB.getInstance(context).daoTemperoryArticle().getAllNotification(NetConstants.GROUP_NOTIFICATION)
+        return THPDB.getInstance(context).daoTemperoryArticle().getAllNotification(NetConstants.G_NOTIFICATION)
                 .subscribeOn(Schedulers.io())
                 .map(temperoryTablesArticles -> {
                     List<ArticleBean> allArticle = new ArrayList<>();
@@ -800,7 +800,7 @@ public class DefaultTHApiManager {
 
 
     public static Single<Boolean> deleteAllNotification(Context context) {
-        return Single.just(NetConstants.GROUP_NOTIFICATION)
+        return Single.just(NetConstants.G_NOTIFICATION)
                 .subscribeOn(Schedulers.io())
                 .map(val->{
                     THPDB thpdb = THPDB.getInstance(context);

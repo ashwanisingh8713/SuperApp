@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.material.snackbar.Snackbar;
-import com.netoperation.config.model.ContentUrl;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -56,7 +54,6 @@ import com.ns.view.img.ListingIconView;
 import com.ns.view.THP_AutoResizeWebview;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BookmarkPremiumViewHolder;
-import com.ns.viewholder.BookmarkViewHolder;
 import com.ns.viewholder.BriefcaseViewHolder;
 import com.ns.viewholder.BriefingHeaderViewHolder;
 import com.ns.viewholder.DG_DetailAudioViewHolder;
@@ -310,7 +307,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.G_BOOKMARK_DEFAULT,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     }
                     else {
@@ -326,7 +323,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_DEFAULT_BOOKMARK,
+                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.G_BOOKMARK_DEFAULT,
                                 bean.getArticleUrl(), position, bean.getArticleId());
                     }
                     else {
@@ -489,9 +486,9 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
         holder.bookmark_Img.setOnClickListener(v -> {
-                    if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+                    if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
                         local_removeBookmarkFromApp(v.getContext(), bean.getArticleId(), bean, holder.bookmarkProgressBar, holder.bookmark_Img, position, mFrom);
-                    } else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                    } else if (NetUtils.isConnected(v.getContext()) && bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                         premium_updateBookmarkFavLike(holder.bookmarkProgressBar, holder.bookmark_Img, holder.bookmark_Img.getContext(), position, bean, "bookmark");
                     } else {
                         Alerts.noConnectionSnackBar(v, (AppCompatActivity) v.getContext());
@@ -507,7 +504,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         holder.itemView.setOnClickListener(v -> {
                     if (PremiumPref.getInstance(holder.itemView.getContext()).isUserAdsFree()) {
                         if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
-                            IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.GROUP_PREMIUM_BOOKMARK, bean.getArticleUrl(), position, bean.getArticleId());
+                            IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.G_BOOKMARK_PREMIUM, bean.getArticleUrl(), position, bean.getArticleId());
                         } else {
                             IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom, bean.getArticleUrl(), position, bean.getArticleId());
                         }
@@ -1346,7 +1343,7 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
                                             bean.setIsBookmark(book);
                                             if (from.equals("bookmark")) {
                                                 if (book == NetConstants.BOOKMARK_YES) {
-                                                    bean.setGroupType(NetConstants.GROUP_PREMIUM_SECTIONS);
+                                                    bean.setGroupType(NetConstants.G_PREMIUM_SECTIONS);
                                                     // To Create at App end
                                                     ApiManager.createBookmark(context, bean).subscribe(boole -> {
                                                         if (bar != null) {

@@ -142,7 +142,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 //                    FlurryAgent.logEvent("Widget: " + " Article Clicked");
 
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mRootLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -178,7 +178,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mWidgetLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mWidgetLayout);
 
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
@@ -213,7 +213,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mRootLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -245,7 +245,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     FlurryAgent.logEvent("Widget Openion: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, mOpinionViewHolder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, mOpinionViewHolder.mRootLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -282,7 +282,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mParentView);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mParentView);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -296,7 +296,7 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.GROUP_DEFAULT_SECTIONS, holder.mPlayButton);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mPlayButton);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }

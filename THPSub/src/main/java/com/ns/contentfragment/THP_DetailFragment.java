@@ -30,6 +30,7 @@ import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.AppTabContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
+import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.AppTabContentModel;
@@ -40,6 +41,7 @@ import com.ns.tts.TTSCallbacks;
 import com.ns.tts.TTSManager;
 import com.ns.utils.AppAudioManager;
 import com.ns.utils.CommonUtil;
+import com.ns.utils.ContentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
@@ -148,7 +150,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        loadRecyclerData();
+        //loadRecyclerData();
 
     }
 
@@ -174,10 +176,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     }
 
     private void loadRecyclerData() {
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
-                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+        if(mFrom.equals(NetConstants.G_DEFAULT_SECTIONS)
+                || ContentUtil.isFromBookmarkPage(mFrom)
+                || mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.G_NOTIFICATION)
                 || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             THPDB thpdb = THPDB.getInstance(getActivity());
             DaoMPReadArticle daoRead = thpdb.daoMPReadArticle();
@@ -196,15 +199,56 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(tableMPReadArticle->{
+
+
+                        /*if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
+
+                        }
+
+                        else {
+
+                        }*/
+
                         // It sends event in THP_DetailActivity.java => handleEvent(TableMPReadArticle mpReadArticle)
                         EventBus.getDefault().post(tableMPReadArticle);
 
-                        if(!mActivity.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
+
+
+                        ////////////////////////////////////////////////////////
+
+                        /*ToolbarChangeRequired toolbarChangeRequired = new ToolbarChangeRequired();
+
+                        String groupType = mArticleBean.getGroupType();
+
+                        if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+                            if(PremiumPref.getInstance(getActivity()).isHasSubscription()) {
+                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
+                            } else {
+                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
+                            }
+                        }
+                        else {
+                            if(PremiumPref.getInstance(getActivity()).isHasSubscription()) {
+                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
+                            } else {
+                                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
+                            }
+                        }*/
+
+
+
+
+                        ////////////////////////////////////////////////////////
+
+
+
+                        if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || tableMPReadArticle.isUserCanReRead()) {
                             if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1 || PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
                                 if(maintainRefreshStateForOnResume == 0 || maintainRefreshStateForOnResume == -1) {
                                     maintainRefreshStateForOnResume = 1;
                                 }
                                 mRecyclerAdapter.clearData();
+                                // Creates and Shows Detail Page
                                 dgPage(mArticleBean);
                                 if (PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
                                     ApiManager.nowNotRefreshRequired(getActivity());
@@ -216,7 +260,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                     maintainRefreshStateForOnResume = 0;
                                 }
                                 mRecyclerAdapter.clearData();
+                                // Creates and Shows Detail Page
                                 dgRestrictedPage(mArticleBean);
+
                                 if (PremiumPref.getInstance(getActivity()).isRefreshRequired()) {
                                     ApiManager.nowNotRefreshRequired(getActivity());
                                 }
@@ -225,6 +271,9 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     }, throwable -> {
                         Log.i("", "");
                     }));
+        }
+        else if(ContentUtil.isFromBookmarkPage(mFrom)) {
+
         }
         else {
             if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount()==0) {
@@ -277,7 +326,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
-    private String SEARCH_BY_ARTICLE_ID_URL = null;
+    private static String SEARCH_BY_ARTICLE_ID_URL = null;
 
     private void loadDataPremiumFromServer() {
 
@@ -326,21 +375,6 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         );
     }
 
-    private void tempArticle_loadDataFromDB() {
-        Observable<ArticleBean> observable =  ApiManager.getFromTemperoryArticle(getActivity(), mArticleId);
-
-        mDisposable.add(
-                observable.observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(recoBean->{
-                                    dgPage(recoBean);
-                                },
-                                throwable->{
-                                    Log.i("", "");
-                                })
-        );
-    }
-
-
     @Override
     public void onBackClickListener() {
 
@@ -358,12 +392,12 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
-                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+        if(mFrom.equals(NetConstants.G_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.G_NOTIFICATION)
                 || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
-            mArticleBean.setGroupType(NetConstants.GROUP_DEFAULT_BOOKMARK);
+            mArticleBean.setGroupType(NetConstants.G_BOOKMARK_DEFAULT);
             mArticleBean.setIsBookmark(1);
             // To Create at App end
             mDisposable.add(ApiManager.createBookmark(getContext(), mArticleBean).subscribe(boole -> {
@@ -383,10 +417,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onRemoveBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
-        if(mFrom.equals(NetConstants.GROUP_DEFAULT_SECTIONS)
-                || mFrom.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)
+        if(mFrom.equals(NetConstants.G_DEFAULT_SECTIONS)
+                || mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
-                || mFrom.equals(NetConstants.GROUP_NOTIFICATION)
+                || mFrom.equals(NetConstants.G_NOTIFICATION)
                 || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
             mArticleBean.setIsBookmark(0);
             // To Remove at App end
@@ -423,7 +457,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     //////////////////////////////////////////////////////////////////////////////////
     private void premium_updateBookmarkFavLike(final Context context, ArticleBean bean, String from) {
 
-        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+        bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
 
         if(!BaseAcitivityTHP.sIsOnline) {
             noConnectionSnackBar(getView());
@@ -463,7 +497,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             }
         }
 
-        bean.setGroupType(NetConstants.GROUP_PREMIUM_BOOKMARK);
+        bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
 
         final int book = bookmark;
         final int fav = favourite;

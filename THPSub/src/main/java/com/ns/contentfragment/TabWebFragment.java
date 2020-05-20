@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.netoperation.config.model.TabsBean;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.ToolbarChangeRequired;
@@ -71,7 +70,7 @@ public class TabWebFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_LISTING_TOPBAR));
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);
@@ -90,7 +89,7 @@ public class TabWebFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
 
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();

@@ -17,15 +17,13 @@ public class TableMPReadArticle {
         this.id = id;
     }
 
-    private String articleId;
-
     private boolean isArticleRestricted;
-
     private boolean isUserCanReRead;
+    private boolean isBannerCloseClick;
 
+    private String articleId;
     private int totalReadCount;
 
-    private boolean isBannerCloseClick;
 
     @Ignore
     public TableMPReadArticle() {

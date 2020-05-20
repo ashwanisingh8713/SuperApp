@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,14 +22,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.BookmarkActivity;
-import com.ns.activity.NotificationArticleActivity;
 import com.ns.adapter.AppTabContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
@@ -204,13 +201,13 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
      */
     private void loadData(boolean isOnline) {
         Observable<List<ArticleBean>> observable = null;
-        if (isOnline && mGoupType != null && mGoupType.equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if (isOnline && mGoupType != null && mGoupType.equals(NetConstants.G_PREMIUM_SECTIONS)) {
             observable = ApiManager.getRecommendationFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId,
                     NetConstants.API_bookmarks, "" + 1000, BuildConfig.SITEID);
-        } else if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
-            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_PREMIUM_BOOKMARK);
-        } else if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
-            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.GROUP_DEFAULT_BOOKMARK);
+        } else if (mGoupType != null && mGoupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
+        } else if (mGoupType != null && mGoupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
         } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
             if (ResUtil.isEmpty(mSearchBox.getText().toString())) {
                 observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
@@ -226,9 +223,9 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                                 int viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
                                 if (bean.getGroupType() == null) {
                                     continue;
-                                } else if (bean.getGroupType().equals(NetConstants.GROUP_DEFAULT_BOOKMARK)) {
+                                } else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
                                     viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
-                                } else if (bean.getGroupType().equals(NetConstants.GROUP_PREMIUM_BOOKMARK)) {
+                                } else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                                     viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
                                 }
                                 AppTabContentModel model = new AppTabContentModel(viewType);
@@ -273,7 +270,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
     private void showEmptyLayout() {
         if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
-            if (mGoupType != null && mGoupType.equals(NetConstants.GROUP_DEFAULT_BOOKMARK) || mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
+            if (mGoupType != null && mGoupType.equals(NetConstants.G_BOOKMARK_DEFAULT) || mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
                 TextView emptyTxtMsg = emptyLayout.findViewById(R.id.emptyTitleTxt);
                 emptyTxtMsg.setText("You have not added any bookmarks");
             }

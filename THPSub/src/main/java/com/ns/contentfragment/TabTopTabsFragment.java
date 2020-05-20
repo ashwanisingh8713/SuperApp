@@ -194,9 +194,9 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
         // It sends Event in AppTabActivity.java=> handleEvent(ToolbarChangeRequired toolbarChangeRequired)
         // ToolbarChangeRequired Event Post, It show Toolbar for Sub-Section
         if(mIsSubsection) {
-            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.SUB_SECTION_TOPBAR));
+            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.SUB_SECTION_LISTING_TOPBAR));
         } else {
-            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+            EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
         }
         Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);
@@ -249,7 +249,7 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
 
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();

@@ -165,7 +165,7 @@ public class AppNotification {
                 .subscribeOn(Schedulers.io())
                 .subscribe((tableConfiguration, throwable) -> {
                     DefaultTHApiManager.articleDetailFromServer(context,
-                            ""+artId, tableConfiguration.getSearchOption().getUrlId(), NetConstants.GROUP_NOTIFICATION)
+                            ""+artId, tableConfiguration.getSearchOption().getUrlId(), NetConstants.G_NOTIFICATION)
                             .subscribe(val->{
                                 Log.i("", "");
                             }, throwable1 -> {

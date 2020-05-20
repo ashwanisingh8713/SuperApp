@@ -216,7 +216,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 noConnectionSnackBar(getView());
             }
         });
-        view.findViewById(R.id.subscribeLayout).setOnClickListener(v -> {
+        subscribeLayout.setOnClickListener(v -> {
             if (!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
                 return;
@@ -227,7 +227,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         view.findViewById(R.id.subsCloseImg).setOnClickListener(v -> {
             PremiumPref.getInstance(getActivity()).setIsSubscribeClose(true);
-            view.findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+            subscribeLayoutVisibility(View.GONE);
         });
 
     }
@@ -240,12 +240,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         THPConstants.FLOW_TAB_CLICK = tabsBean.getPageSource();
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 mViewPager.setCurrentItem(tabIndex);
             } else {
@@ -254,12 +254,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
@@ -311,12 +311,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         // URL
-        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
@@ -335,12 +335,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
 
         // ADD_ON_SECTION
-        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
@@ -359,12 +359,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
 
         // SENSEX
-        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.GROUP_DEFAULT_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;
         }
 
-        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.GROUP_PREMIUM_SECTIONS)) {
+        if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
             if(isUserLoggedIn) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
@@ -440,13 +440,17 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
 
                     if (hasSubscriptionPlan) {
-                        getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+                        subscribeLayoutVisibility(View.GONE);
                     } else if (PremiumPref.getInstance(getActivity()).isSubscribeClose()) {
-                        getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+                        subscribeLayoutVisibility(View.GONE);
                     } else {
-                        getView().findViewById(R.id.subscribeLayout).setVisibility(View.VISIBLE);
+                        subscribeLayoutVisibility(View.VISIBLE);
                     }
                 }));
+    }
+
+    private void subscribeLayoutVisibility(int visibility) {
+        subscribeLayout.setVisibility(visibility);
     }
 
     /**
@@ -525,9 +529,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
             boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
             if(isHasSubscription) {
-                getView().findViewById(R.id.subscribeLayout).setVisibility(View.GONE);
+                subscribeLayoutVisibility(View.GONE);
             }
             return;
+        }
+        else {
+            subscribeLayoutVisibility(View.VISIBLE);
         }
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration == null) return;

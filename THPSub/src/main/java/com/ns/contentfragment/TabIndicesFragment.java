@@ -86,7 +86,7 @@ public class TabIndicesFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);
         // It sends Event in AppTabActivity.java=> handleEvent(ToolbarChangeRequired toolbarChangeRequired)
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_LISTING_TOPBAR));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TabIndicesFragment extends BaseFragmentTHP {
         Log.i("handleEvent", "Back Button Pressed ::  "+mPageSource+" :: "+mTabIndex);
 
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
-        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_TOPBAR));
+        EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();
