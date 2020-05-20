@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.main.SuperApp;
 import com.netoperation.db.TableBookmark;
 import com.netoperation.db.TableBreifing;
 import com.netoperation.db.TableSubscriptionArticle;
@@ -483,9 +484,7 @@ public class ApiManager {
                                                 final Date nextRenewalPlanDateObj = dateFormat.parse(nextRenewal);
                                                 if (nextRenewalDateObj.after(nextRenewalPlanDateObj)) {
                                                     userProfile.setHasSubscribedPlan(true);
-                                                    if (context != null) {
-                                                        PremiumPref.getInstance(context).setHasSubscription(true);
-                                                    }
+                                                    PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                                 }
                                             }
 
@@ -498,9 +497,7 @@ public class ApiManager {
                                             // If user free plan is not available then this will check for subscribed user
                                             if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
-                                                if (context != null) {
-                                                    PremiumPref.getInstance(context).setHasSubscription(true);
-                                                }
+                                                PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }
 
                                             TxnDataBean bean = new TxnDataBean();
@@ -727,10 +724,9 @@ public class ApiManager {
                                                 final Date nextRenewalPlanDateObj = dateFormat.parse(nextRenewal);
                                                 if (nextRenewalDateObj.after(nextRenewalPlanDateObj)) {
                                                     userProfile.setHasSubscribedPlan(true);
+                                                    PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                                 }
-                                                if (context != null) {
-                                                    PremiumPref.getInstance(context).setHasSubscription(true);
-                                                }
+
                                             }
 
                                             final String freeTrialPlanId = "10";
@@ -742,9 +738,7 @@ public class ApiManager {
                                             // If user free plan is not available then this will check for subscribed user
                                             if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
-                                                if (context != null) {
-                                                    PremiumPref.getInstance(context).setHasSubscription(true);
-                                                }
+                                                PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }
 
                                             TxnDataBean bean = new TxnDataBean();

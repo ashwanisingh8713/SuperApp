@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.main.DFPAds;
+import com.main.SuperApp;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
@@ -64,17 +65,9 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         return fragment;
     }
 
-
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private AppBottomTabAdapter mAppBottomTabAdapter;
-
-
-
-    /**
-     * Holds String value of User Name, to know whether user has logged in or not
-     */
-    protected String mUserLoggedName;
 
     private boolean mIsUserThemeDay;
 
@@ -422,34 +415,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
     }
 
-    /**
-     * Loads User Profile Data
-     */
-    private void loadUserProfile() {
-        mDisposable.add(ApiManager.getUserProfile(getActivity())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userProfile -> {
-                    if (userProfile != null && !TextUtils.isEmpty(userProfile.getFullName())) {
-                        mUserLoggedName = userProfile.getFullName().toUpperCase();
-                    } else if (userProfile != null && !TextUtils.isEmpty(userProfile.getEmailId())) {
-                        mUserLoggedName = userProfile.getEmailId().toUpperCase();
-                    } else if (userProfile != null && !TextUtils.isEmpty(userProfile.getContact())) {
-                        mUserLoggedName = userProfile.getContact().toUpperCase();
-                    }
-
-                    boolean hasFreePlan = userProfile.isHasFreePlan();
-                    boolean hasSubscriptionPlan = userProfile.isHasSubscribedPlan();
-
-                    if (hasSubscriptionPlan) {
-                        subscribeLayoutVisibility(View.GONE);
-                    } else if (PremiumPref.getInstance(getActivity()).isSubscribeClose()) {
-                        subscribeLayoutVisibility(View.GONE);
-                    } else {
-                        subscribeLayoutVisibility(View.VISIBLE);
-                    }
-                }));
-    }
-
     private void subscribeLayoutVisibility(int visibility) {
         subscribeLayout.setVisibility(visibility);
     }
@@ -476,8 +441,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     @Override
     public void onResume() {
         super.onResume();
-        // Shows user name
-        loadUserProfile();
+
+        bottomBannerAds(true);
 
         EventBus.getDefault().register(this);
     }
@@ -525,18 +490,24 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
     private void bottomBannerAds(boolean isHomePage) {
-        if(PremiumPref.getInstance(getActivity()).isUserAdsFree()) {
-            getView().findViewById(R.id.banner_Ad_layout).setVisibility(View.GONE);
 
-            boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
-            if(isHasSubscription) {
-                subscribeLayoutVisibility(View.GONE);
+        // TO show / hide subscription banner bottom layout
+        if (PremiumPref.getInstance(getActivity()).isSubscribeClose()
+                || PremiumPref.getInstance(SuperApp.getAppContext()).isHasSubscription()) {
+            subscribeLayoutVisibility(View.GONE);
+        } else {
+            subscribeLayoutVisibility(View.VISIBLE);
+        }
+
+        // TO hide bottom banner Ads layout
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+            LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
+            if(banner_Ad_layout != null) {
+                banner_Ad_layout.setVisibility(View.GONE);
             }
             return;
         }
-        else {
-            subscribeLayoutVisibility(View.VISIBLE);
-        }
+
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration == null) return;
         DFPAds DFPAds = new DFPAds();

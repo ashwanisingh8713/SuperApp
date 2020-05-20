@@ -599,7 +599,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         mWidgetsViewHolder.mWidgetTitleTextView.setText(widgetAdapter.getSectionName());
 
         if(THPConstants.IS_SHOW_INDEX) {
-            mWidgetsViewHolder.mWidgetTitleTextView.setText(indexText(verticleItemPosition, "View All " + widgetAdapter.getSectionName()));
+            mWidgetsViewHolder.mWidgetTitleTextView.setText(indexText(verticleItemPosition, widgetAdapter.getSectionName()));
         }
         //for top-picks we are desableing the visiblity the view all textview
         if (dataBean.getWidgetAdapter().getSectionId()== 88) {
