@@ -24,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.ns.alerts.Alerts;
@@ -120,6 +122,7 @@ public class SocialLoginUtil {
         String id = mActivity.getString(R.string.custom_web_client_id);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(mActivity.getString(R.string.default_web_client_id))
+//                .requestIdToken(id)
                 .requestEmail()
                 .build();
 
