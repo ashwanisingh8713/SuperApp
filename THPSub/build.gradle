@@ -6,7 +6,27 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
+
+    defaultConfig {
+        compileSdkVersion "$COMPILE_SDK_VERSION".toInteger()
+        minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
+        targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
+
+        versionCode 1
+        versionName "SP1.0"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        //Staging / Production Switch
+        buildConfigField "boolean", "IS_PRODUCTION", "true"
+
+        buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
+        buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
+        buildConfigField "String", "LOCALE", "\"en\""
+
+        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
+        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
+    }
+
 
     buildTypes {
         release {
@@ -139,25 +159,6 @@ android {
             resValue "string", "custom_web_client_id", "617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com"
         }
     }
-
-    defaultConfig {
-        minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
-        targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
-        versionCode 1
-        versionName "SP1.0"
-        vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
-        //Staging / Production Switch
-        buildConfigField "boolean", "IS_PRODUCTION", "true"
-
-        buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
-        buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
-        buildConfigField "String", "LOCALE", "\"en\""
-
-        buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
-        buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
-    }
-
 
 
 }

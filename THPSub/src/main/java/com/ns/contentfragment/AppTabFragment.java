@@ -144,6 +144,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
         mViewPager.setOffscreenPageLimit(4);
+
         // App Tab Configuration
         mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
                 .subscribe(tabsBeans -> {

@@ -20,10 +20,10 @@ public class ContentUtil {
             if(groupType == null) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
             }
-            else if(groupType == NetConstants.G_BOOKMARK_DEFAULT) {
+            else if(groupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
             }
-            else if(groupType == NetConstants.G_BOOKMARK_PREMIUM) {
+            else if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
             }
 
@@ -32,10 +32,10 @@ public class ContentUtil {
             if(groupType == null) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN);
             }
-            else if(groupType == NetConstants.G_BOOKMARK_DEFAULT) {
+            else if(groupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN);
             }
-            else if(groupType == NetConstants.G_BOOKMARK_PREMIUM) {
+            else if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
             }
         }

@@ -260,18 +260,16 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
 
         if (mFrom != null && mFrom.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
-        } else if (mFrom != null && mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+        }
+        else if (mFrom != null && mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
-        } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
+        }
+        else {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
         }
 
         mDisposable.add(
                 observable
-                        .map(value -> {
-
-                            return value;
-                        })
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(value -> {
                             if (value.size() > 0) {
@@ -361,6 +359,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
         mViewPager = getView().findViewById(R.id.viewPager);
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
+        mViewPager.setOffscreenPageLimit(4);
 
         // To Check the selected article Index
         if (mArticleId != null) {

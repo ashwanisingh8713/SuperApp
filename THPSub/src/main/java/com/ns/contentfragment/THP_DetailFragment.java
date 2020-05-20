@@ -138,6 +138,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
         }
 
+        mPullToRefreshLayout.showProgressBar();
+
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 
         mPullToRefreshLayout.setTryAgainBtnClickListener(this:: tryAgainBtnClick);
@@ -226,7 +228,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 mRecyclerAdapter.clearData();
                                 // Creates and Shows Detail Page
                                 if(groupType != null && groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
-                                    premiumPage(mArticleBean);
+                                    if (mArticleBean.getHasDescription() == 0) {
+                                        loadDataPremiumFromServer();
+                                    } else {
+                                        premium_loadDataFromDB();
+                                    }
                                 } else {
                                     dgPage(mArticleBean);
                                 }
@@ -250,6 +256,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                         }
                     }, throwable -> {
                         Log.i("", "");
+                        mPullToRefreshLayout.hideProgressBar();
                     }));
         }
         else if(ContentUtil.isFromBookmarkPage(mFrom)) {
@@ -323,6 +330,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                                         },
                                                         throwabl -> {
                                                             Log.i("", "");
+                                                            mPullToRefreshLayout.hideProgressBar();
                                                         })
                                 );
                             }
@@ -337,6 +345,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                     },
                                     throwable -> {
                                         Log.i("", "");
+                                        mPullToRefreshLayout.hideProgressBar();
                                     })
             );
         }
@@ -351,6 +360,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 },
                                 throwable->{
                                     Log.i("", "");
+                                    mPullToRefreshLayout.hideProgressBar();
                                 })
         );
     }
@@ -743,6 +753,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mRecyclerAdapter.addData(descriptionModel);
 
         mArticleBean = bean;
+
+        mPullToRefreshLayout.hideProgressBar();
     }
 
     /**
@@ -792,6 +804,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mRecyclerAdapter.addData(taboolaModel);
 
         loadAdvertisiment();
+
+        mPullToRefreshLayout.hideProgressBar();
     }
 
 
@@ -807,6 +821,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, "taboolaModel");
         taboolaModel.setBean(bean);
         mRecyclerAdapter.addData(taboolaModel);
+
+        mPullToRefreshLayout.hideProgressBar();
     }
 
 
