@@ -10,33 +10,33 @@
     "staticItem": [
       {
         "title": "Terms & Condition",
-        "urlDark": "https://www.thehindu.com/app-termsofuse/",
-        "urlLight": "https://www.thehindu.com/app-termsofuse/"
+        "urlDark": "https://alphabl.businessline.in/app/termsofusedark/",
+        "urlLight": "https://alphabl.businessline.in/app/termsofuselite/"
       },
       {
         "title": "Privacy Policy",
-        "urlDark": "https://alphath.thehindu.co.in/app-privacypolicy-dark/?test",
-        "urlLight": "https://www.thehindu.com/privacypolicy/"
+        "urlDark": "https://alphabl.businessline.in/app/Privacypolicydark/",
+        "urlLight": "https://alphabl.businessline.in/app/Privacypolicylite/"
       },
       {
         "title": "Help",
-        "urlDark": "https://www.google.com/?client=safari",
-        "urlLight": "https://www.google.com/?client=safari"
+        "urlDark": "https://alphabl.businessline.in/app/helpdark/",
+        "urlLight": "https://alphabl.businessline.in/app/helplite/"
       },
       {
         "title": "AboutUs",
-        "urlDark": "https://www.google.com/?client=safari",
-        "urlLight": "https://www.google.com/?client=safari"
+        "urlDark": "https://alphabl.businessline.in/app/aboutusdark/",
+        "urlLight": "https://alphabl.businessline.in/app/aboutuslite/"
       }
     ],
     "tabs": [
       {
         "title": "Home",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/unfavorite.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/unfavorite.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/favorite.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/favorite.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -44,10 +44,10 @@
       {
         "title": "Portfolio Section ",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -369,10 +369,10 @@
       {
         "title": "BLink ",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -720,10 +720,10 @@
       {
         "title": "Indices",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "SENSEX"
@@ -758,22 +758,22 @@
       },
       "topBarBg": {
         "dark": "#313131",
-        "light": "#1394D1"
+        "light": "#ffffff"
       },
       "bottomBar": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#ededed",
           "light": "#818181",
-          "lightSelected": "#ff0000"
+          "lightSelected": "#000000"
         },
         "bg": {
           "dark": "#313131",
-          "light": "#1394D1"
+          "light": "#ffffff"
         },
         "indicator": {
-          "dark": "#ffffff",
-          "light": "#818181"
+          "dark": "#00000000",
+          "light": "#00000000"
         }
       },
       "breadcrumb": {
@@ -785,7 +785,7 @@
         },
         "bg": {
           "dark": "#313131",
-          "light": "#1394D1"
+          "light": "#ffffff"
         },
         "indicator": {
           "dark": "#ffffff",

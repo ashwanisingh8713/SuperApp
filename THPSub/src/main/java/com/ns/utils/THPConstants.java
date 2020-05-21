@@ -279,7 +279,7 @@ public class THPConstants {
     public static final String PLAN_OFFER25 = "25%"; //P3
 
 
-    public static final boolean IS_SHOW_INDEX = true;
+    public static final boolean IS_SHOW_INDEX = false;
     public static final boolean IS_USE_SEVER_THEME = true;
 
 

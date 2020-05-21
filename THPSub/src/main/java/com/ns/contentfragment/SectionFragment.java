@@ -677,7 +677,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     @Override
     public void onDFPAdLoadSuccess(AdData adData) {
-        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId()+mPage);
+        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         item.setProposedIndex(adData.getIndex());
         doRunnableWork(runnableAdsItem(item));
@@ -690,7 +690,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     @Override
     public void onTaboolaAdLoadSuccess(AdData adData) {
-        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId()+mPage);
+        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         item.setProposedIndex(adData.getIndex());
         doRunnableWork(runnableAdsItem(item));
