@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layoutType="Black_Dark"
-        android:layout_marginTop="@dimen/searchview_margintop"
+        android:layout_marginTop="@dimen/topBar_height"
         >
 
         <include
