@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.ads.AdSize;
 import com.main.AdsBase;
 import com.main.SectionListingAds;
 import com.netoperation.config.model.WidgetIndex;
@@ -70,6 +69,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     int PAGE_SIZE = 10;
     private boolean isLoading;
     private boolean isLastPage;
+
+    private SectionListingAds mSectionAds;
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private LinearLayout emptyLayout;
@@ -334,7 +335,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         }
         else if (mIsSubsection) {
             DefaultTHApiManager.getSubSectionContentFromServer(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
-        } else {
+        }
+        else {
             DefaultTHApiManager.getSectionContentFromServer(getActivity(), requestCallback, mSectionId, page, mSectionType, 0);
         }
     }
@@ -356,7 +358,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }
             }
             item.setProposedIndex(subSectionIndex);
-            doRunnableWork(runnableItem(item));
+            doRunnableWork(runnableItem(item), 200);
         }
     }
 
@@ -616,10 +618,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPage = 1;
     }
 
-    /*private TaboolaAds taboolaAds;
-    private DFPAds dfpAds;*/
-
-    private SectionListingAds ads;
 
     private void loadAdvertisment() {
 
@@ -631,45 +629,25 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             return;
         }
 
-        Log.i("TATA", "loadAdvertisment :: ");
-
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration == null) {
             return;
         }
-        List<AdData> listingAdsBeans = tableConfiguration.getAds().getListingPageAds();
-        List<AdData> taboolaAdsBeans = new ArrayList<>();
-        List<AdData> dfpAdsBeans = new ArrayList<>();
 
-        if(ads == null) {
-            ads = new SectionListingAds();
-            ads.setOnDFPAdLoadListener(this);
-            ads.setOnTaboolaAdLoadListener(this);
 
-            for(AdData adsBean : listingAdsBeans) {
-                adsBean.setSecId(mSectionId);
-                if(adsBean.getType().equalsIgnoreCase("DFP")) {
-                    adsBean.setAdSize(AdSize.MEDIUM_RECTANGLE);
-                    adsBean.setReloadOnScroll(false);
-                    dfpAdsBeans.add(adsBean);
-                }
-                else {
-                    taboolaAdsBeans.add(adsBean);
-                }
-            }
-
-            ads.setTaboolaAdsBeans(taboolaAdsBeans);
-            ads.setDfpAdsBeans(dfpAdsBeans);
+        if(mSectionAds == null) {
+            mSectionAds = new SectionListingAds(mSectionId);
+            mSectionAds.setOnDFPAdLoadListener(this);
+            mSectionAds.setOnTaboolaAdLoadListener(this);
         }
 
-        if(mRecyclerAdapter.getItemCount() <= ads.getLastAdIndex()) {
+        if(mRecyclerAdapter.getItemCount() <= mSectionAds.getLastAdIndex()) {
             return;
         }
 
-        ads.createMEDIUM_RECTANGLE();
-
+        doRunnableWork(runnableDFPDelayStart(), 100);
         // Start Taboola Ads with some delay
-        doRunnableWork(runnableTaboolaDelayStart(true));
+        doRunnableWork(runnableTaboolaDelayStart(true), 1000);
 
 
     }
@@ -680,12 +658,12 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         item.setProposedIndex(adData.getIndex());
-        doRunnableWork(runnableAdsItem(item));
+        doRunnableWork(runnableAdsItem(item), 300);
     }
 
     @Override
     public void onDFPAdLoadFailure(AdData adData) {
-        ads.createMEDIUM_RECTANGLE();
+        mSectionAds.createMEDIUM_RECTANGLE();
     }
 
     @Override
@@ -693,7 +671,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_TABOOLA_LISTING_ADS, adData.getAdDataUiqueId());
         item.setAdData(adData);
         item.setProposedIndex(adData.getIndex());
-        doRunnableWork(runnableAdsItem(item));
+        doRunnableWork(runnableAdsItem(item), 300);
     }
 
     @Override
@@ -703,99 +681,75 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     private Handler mHandler;
 
-    private void doRunnableWork(Runnable runnable) {
+    private void doRunnableWork(Runnable runnable, int delayInMillies) {
         if(mHandler == null) {
             mHandler = new Handler();
         }
-        mHandler.postDelayed(runnable, 300);
+        mHandler.postDelayed(runnable, delayInMillies);
     }
 
-    private Runnable runnableTaboolaDelayStart(boolean isInit) {
 
+    private Runnable runnableDFPDelayStart() {
         return new Runnable(){
             @Override
             public void run() {
-                if(ads != null) {
+                if(mSectionAds != null) {
+                    mSectionAds.createMEDIUM_RECTANGLE();
+                }
+            }
+        };
+    }
+
+    private Runnable runnableTaboolaDelayStart(boolean isInit) {
+        return new Runnable(){
+            @Override
+            public void run() {
+                if(mSectionAds != null) {
                     if(isInit) {
-                        ads.initAndLoadRecommendationsBatch();
+                        mSectionAds.initAndLoadRecommendationsBatch();
                     }
                     else {
-                        ads.loadNextRecommendationsBatch();
+                        mSectionAds.loadNextRecommendationsBatch();
                     }
                 }
             }
         };
-
     }
-
 
 
     private Runnable runnableAdsItem(SectionAdapterItem item) {
         return new Runnable() {
             @Override
             public void run() {
-                if (mRecyclerAdapter == null || ads == null) {
+                if (mRecyclerAdapter == null || mSectionAds == null) {
                     return;
                 }
 
 
                 int index = mRecyclerAdapter.indexOf(item);
                 if (index == -1) {
-                    int lastAdIndex = ads.getLastAdIndex();
+                    int lastAdIndex = mSectionAds.getLastAdIndex();
                     int proposedIndex = item.getProposedIndex();
-                    int difference = 0;
-
-
-
-                    /*if(mSectionId.equalsIgnoreCase(NetConstants.RECO_HOME_TAB))*/ {
-                        Log.i("LALALAL", "TYPE :: " + item.getAdData().getType());
-                        Log.i("LALALAL", "lastAdIndex :: " + lastAdIndex);
-                        Log.i("LALALAL", "proposedIndex :: " + proposedIndex);
-                    }
-
-                    /*if(lastAdIndex < proposedIndex) {
-                        difference = proposedIndex - lastAdIndex;
-                    }
-                    else if(proposedIndex < lastAdIndex) {
-                        difference = lastAdIndex - proposedIndex;
-                        lastAdIndex += difference;
-                    }
-
-                    if (difference < 2 || difference > proposedIndex) {
-                        proposedIndex = lastAdIndex+4;
-                    }*/
-
-                    /*if(mSectionId.equalsIgnoreCase(NetConstants.RECO_HOME_TAB))*/ {
-                        Log.i("LALALAL", "difference :: " + difference);
-                        Log.i("LALALAL", "proposedIndex updated :: " + proposedIndex);
-
-                        Log.i("LALALAL", "========================================== :: ");
-                    }
-
 
                     proposedIndex = lastAdIndex+3;
 
                     int updateIndex = mRecyclerAdapter.insertItem(item, proposedIndex);
-                    ads.setLastAdIndex(updateIndex);
+                    mSectionAds.setLastAdIndex(updateIndex);
                     mRecyclerAdapter.notifyItemChanged(updateIndex);
 
-                    if(mRecyclerAdapter.getItemCount() <= ads.getLastAdIndex()) {
+                    if(mRecyclerAdapter.getItemCount() <= mSectionAds.getLastAdIndex()) {
                         return;
                     }
 
                     AdData adData = item.getAdData();
                     if (adData.getType().equalsIgnoreCase("DFP")) {
-                        ads.createMEDIUM_RECTANGLE();
+                        doRunnableWork(runnableDFPDelayStart(), 100);
                     }
                     else {
                         // Start Taboola Ads with some delay
-                        doRunnableWork(runnableTaboolaDelayStart(false));
-
+                        doRunnableWork(runnableTaboolaDelayStart(false), 1000);
                     }
-
                 }
-
-
             }
         };
     }

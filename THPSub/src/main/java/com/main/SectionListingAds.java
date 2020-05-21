@@ -3,9 +3,12 @@ package com.main;
 import android.util.Log;
 import android.util.SparseIntArray;
 
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.util.PremiumPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.taboola.android.api.TBPlacement;
 import com.taboola.android.api.TBPlacementRequest;
 import com.taboola.android.api.TBRecommendationItem;
@@ -14,6 +17,7 @@ import com.taboola.android.api.TBRecommendationsRequest;
 import com.taboola.android.api.TBRecommendationsResponse;
 import com.taboola.android.api.TaboolaApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SectionListingAds extends AdsBase {
@@ -29,9 +33,36 @@ public class SectionListingAds extends AdsBase {
     private List<AdData> taboolaAdsBeans;
     private List<AdData> dfpAdsBeans;
 
+    public SectionListingAds(String sectionId) {
+
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration == null) {
+            return;
+        }
+
+        List<AdData> listingAdsBeans = tableConfiguration.getAds().getListingPageAds();
+        List<AdData> taboolaAdsBeans = new ArrayList<>();
+        List<AdData> dfpAdsBeans = new ArrayList<>();
+
+        for(AdData adsBean : listingAdsBeans) {
+            adsBean.setSecId(sectionId);
+            if(adsBean.getType().equalsIgnoreCase("DFP")) {
+                adsBean.setAdSize(AdSize.MEDIUM_RECTANGLE);
+                adsBean.setReloadOnScroll(false);
+                dfpAdsBeans.add(adsBean);
+            }
+            else {
+                taboolaAdsBeans.add(adsBean);
+            }
+        }
+
+        setTaboolaAdsBeans(taboolaAdsBeans);
+        setDfpAdsBeans(dfpAdsBeans);
+    }
+
 
     public void createMEDIUM_RECTANGLE() {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+        if(dfpAdsBeans == null || PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
         if(dfpLoadedCount>=dfpAdsBeans.size()) {
@@ -75,11 +106,11 @@ public class SectionListingAds extends AdsBase {
 
 
     public void initAndLoadRecommendationsBatch() {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+        if(taboolaAdsBeans == null || PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
             return;
         }
-        if(taboolaAdsBeans == null || taboolaAdsBeans.size()<= taboolaLoadedCount) {
-            return;
+        if( taboolaLoadedCount >= taboolaAdsBeans.size() ) {
+            taboolaLoadedCount = 0;
         }
         AdData adData = taboolaAdsBeans.get(taboolaLoadedCount);
         if(isTaboolaAlreadyExecuted(adData.getIndex())) {
