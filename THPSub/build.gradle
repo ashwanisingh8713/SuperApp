@@ -104,7 +104,7 @@ android {
             resValue "string", "facebook_app_id", "360214941478115"
             resValue "string", "fb_login_protocol_scheme", "fb360214941478115"
             //Google Sign in
-            resValue "string", "custom_web_client_id", "124091613188-0fb97lkpnj7l92loa3h4oad0kneln3m7.apps.googleusercontent.com"
+            resValue "string", "custom_web_client_id", "958742245699-43e2kqr95pqabssmhoptiodd4c5h78f9.apps.googleusercontent.com"
         }
         TheHindu {
             dimension "version"
