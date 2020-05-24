@@ -276,6 +276,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onPause() {
+        //TTS Player UI update.
+        if(TTSManager.getInstance().isTTSPlaying()) {
+            mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
+        }
         super.onPause();
         if(mPageStartTime > 1000) {
             mPageEndTime = System.currentTimeMillis();
