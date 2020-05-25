@@ -24,6 +24,7 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
@@ -117,8 +118,13 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     .inflate(R.layout.cardview_home_banner, viewGroup, false));
         }
         else if(viewType == VT_THD_DEFAULT_ROW) {
-            return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.th_cardview_article_list, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_cardview_article_list, viewGroup, false));
+            } else {
+                return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_cardview_article_list, viewGroup, false));
+            }
         }
         else if(viewType == VT_THD_SEARCH_ROW) {
             return new SearchRecyclerHolder(LayoutInflater.from(viewGroup.getContext())
