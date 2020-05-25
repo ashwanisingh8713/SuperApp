@@ -22,7 +22,6 @@ public class AdData {
     public AdData(int index, String adId) {
         this.index = index;
         this.adId = adId;
-        this.adDataUiqueId = createAdDataUiqueId(index, adId);
     }
 
     public void setIndex(int index) {
@@ -65,10 +64,7 @@ public class AdData {
         return reloadOnScroll;
     }
 
-    public String createAdDataUiqueId(int index, String adId) {
-        adDataUiqueId = adId+"_"+"_"+index;
-     return adDataUiqueId;
-    }
+
 
     public void setAdDataUiqueId(String adDataUiqueId) {
         this.adDataUiqueId = adDataUiqueId;

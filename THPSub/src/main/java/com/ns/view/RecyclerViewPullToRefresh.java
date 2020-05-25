@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -67,6 +68,9 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
         networkIndicationLayout = findViewById(R.id.networkIndicationLayout);
 
         enablePullToRefresh(true);
+
+        // Removes blinks
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         // Setting Recycler Layout Manager
         llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);

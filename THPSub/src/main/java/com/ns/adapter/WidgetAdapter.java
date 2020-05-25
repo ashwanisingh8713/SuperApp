@@ -42,7 +42,6 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     private List<ArticleBean> mWidgetList;
     private int sectionId;
     private String sectionName;
-    private WidgetIndex widgetIndex;
 
 
     public WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
@@ -315,14 +314,6 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
     public List<ArticleBean> getArticleList() {
         return mWidgetList;
-    }
-
-    public WidgetIndex getWidgetIndex() {
-        return widgetIndex;
-    }
-
-    public void setWidgetIndex(WidgetIndex widgetIndex) {
-        this.widgetIndex = widgetIndex;
     }
 
     public void updateArticleList(List<ArticleBean> articleBeans) {

@@ -166,13 +166,10 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.i("TabFragment", "onResume() In THP_DetailActivity EventBus Registered");
         EventBus.getDefault().register(this);
-
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "THP_DetailActivity Screen", THP_DetailActivity.class.getSimpleName());
         bottomBannerAds();
-
     }
 
     @Override

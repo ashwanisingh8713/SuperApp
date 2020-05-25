@@ -45,6 +45,7 @@ import com.ns.utils.ContentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
+import com.ns.utils.RowIds;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
@@ -770,36 +771,36 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 mRecyclerAdapter.addData(meModel);
             }
             return;*/
-            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_PHOTO_VIEW, "photoModel");
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_PHOTO_VIEW, RowIds.rowId_photoModel());
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
         } else if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_VIDEO)) {
-            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_VIDEO_PLAYER, "videoModel");
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_VIDEO_PLAYER, RowIds.rowId_videoModel());
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
         } else if (!ResUtil.isEmpty(bean.getArticleType()) && bean.getArticleType().equalsIgnoreCase(THPConstants.ARTICLE_TYPE_AUDIO)) {
-            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_AUDIO_PLAYER, "audioModel");
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_DETAIL_AUDIO_PLAYER, RowIds.rowId_audioModel());
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
         } else {
-            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+            AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, RowIds.rowId_bannerModel());
             bannerModel.setBean(bean);
             mRecyclerAdapter.addData(bannerModel);
         }
 
-        AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_1Model");
+        AppTabContentModel description_1Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, RowIds.rowId_description_1());
         description_1Model.setBean(mArticleBean);
         mRecyclerAdapter.addData(description_1Model);
 
-        AppTabContentModel description_2Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, "description_2Model");
+        AppTabContentModel description_2Model = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_DESCRIPTION_WEBVIEW, RowIds.rowId_description_2());
         description_2Model.setBean(mArticleBean);
         mRecyclerAdapter.addData(description_2Model);
 
-        AppTabContentModel postCommentBtnModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_POST_COMMENT_BTN_VIEW, "postCommentBtn");
+        AppTabContentModel postCommentBtnModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_POST_COMMENT_BTN_VIEW, RowIds.rowId_postCommentBtn());
         postCommentBtnModel.setBean(bean);
         mRecyclerAdapter.addData(postCommentBtnModel);
 
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, "taboolaModel");
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, RowIds.rowId_taboolaModel());
         taboolaModel.setBean(bean);
         mRecyclerAdapter.addData(taboolaModel);
 
@@ -810,15 +811,15 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
 
     private void dgRestrictedPage(ArticleBean bean) {
-        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, "bannerModel");
+        AppTabContentModel bannerModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_IMAGE_BANNER, RowIds.rowId_bannerModel());
         bannerModel.setBean(bean);
         mRecyclerAdapter.addData(bannerModel);
 
-        AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, "description_restricted");
+        AppTabContentModel description_restricted = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, RowIds.rowId_description_1());
         description_restricted.setBean(bean);
         mRecyclerAdapter.addData(description_restricted);
 
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, "taboolaModel");
+        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, RowIds.rowId_taboolaModel());
         taboolaModel.setBean(bean);
         mRecyclerAdapter.addData(taboolaModel);
 
@@ -862,7 +863,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onDFPAdLoadSuccess(AdData adData) {
-        AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, adData.getAdDataUiqueId());
+        AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_300X250_ADS, RowIds.adDataUiqueId(adData.getIndex(), adData.getAdId()));
         item.setAdData(adData);
         int index = mRecyclerAdapter.indexOf(item);
         if(index == -1) {
@@ -878,8 +879,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
+    @Override
+    public void onAdClose() {
 
-
+    }
 
 
 }

@@ -19,7 +19,7 @@ import com.netoperation.util.PremiumPref;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DFPAds {
+public class DFPAds extends AdsBase {
 
     private final String TAG = DFPAds.class.getName();
 
@@ -32,23 +32,6 @@ public class DFPAds {
     private int mLoadedCount;
 
     private static PublisherInterstitialAd mPublisherInterstitialAd;
-
-    public interface OnDFPAdLoadListener {
-        void onDFPAdLoadSuccess(AdData adData);
-        void onDFPAdLoadFailure(AdData adData);
-    }
-
-    private OnDFPAdLoadListener mOnDFPAdLoadListener;
-
-    private static Bundle nonPersonalizedAdsReqBundle;
-
-    private interface InAdLoadListener extends OnDFPAdLoadListener {
-        void onAdClose();
-    }
-
-    public void setOnAppAdLoadListener(OnDFPAdLoadListener onDFPAdLoadListener) {
-        this.mOnDFPAdLoadListener = onDFPAdLoadListener;
-    }
 
     /**
      * To Add test devices to show Ads
@@ -90,7 +73,7 @@ public class DFPAds {
             publisherAdView.setAdUnitId(adData.getAdId());
             publisherAdView.setAdSizes(adData.getAdSize());
 
-            publisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
+            publisherAdView.setAdListener(appAdListener(adData, new OnDFPAdLoadListener() {
                 @Override
                 public void onDFPAdLoadSuccess(AdData adData) {
                     mLoadedCount++;
@@ -121,43 +104,6 @@ public class DFPAds {
         }
     }
 
-    public void createMEDIUM_RECTANGLE(AdData adData) {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
-            return;
-        }
-        adData.createAdDataUiqueId(adData.getIndex(), adData.getAdId());
-        final PublisherAdView publisherAdView = new PublisherAdView(SuperApp.getAppContext());
-        publisherAdView.setAdUnitId(adData.getAdId());
-        publisherAdView.setAdSizes(adData.getAdSize());
-
-        publisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
-            @Override
-            public void onDFPAdLoadSuccess(AdData adData) {
-                mLoadedCount++;
-                adData.setAdView(publisherAdView);
-                if(mOnDFPAdLoadListener != null) {
-                    mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
-                }
-                listingAds();
-            }
-
-            @Override
-            public void onDFPAdLoadFailure(AdData adData) {
-                if(mOnDFPAdLoadListener != null) {
-                    mOnDFPAdLoadListener.onDFPAdLoadSuccess(adData);
-                }
-            }
-
-            @Override
-            public void onAdClose() {
-
-            }
-
-        }));
-
-        // Start loading the ad.
-        publisherAdView.loadAd(appAdRequest());
-    }
 
     public void createBannerAdRequest(boolean isHomePage, String homePageAdId, String otherPageAdId) {
         if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
@@ -180,7 +126,7 @@ public class DFPAds {
         mBannerPublisherAdView.setAdSizes(adData.getAdSize());
         mBannerPublisherAdView.setAdUnitId(adData.getAdId());
 
-        mBannerPublisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
+        mBannerPublisherAdView.setAdListener(appAdListener(adData, new OnDFPAdLoadListener() {
             @Override
             public void onAdClose() {
 
@@ -246,7 +192,7 @@ public class DFPAds {
 
         mPublisherInterstitialAd.loadAd(appAdRequest());
 
-        mPublisherInterstitialAd.setAdListener(appAdListener(adData, new InAdLoadListener() {
+        mPublisherInterstitialAd.setAdListener(appAdListener(adData, new OnDFPAdLoadListener() {
             @Override
             public void onAdClose() {
                 mPublisherInterstitialAd.setAdListener(null);
@@ -267,95 +213,8 @@ public class DFPAds {
 
     }
 
-    /**
-     * Create an Ad request.
-     * @return
-     */
-    private PublisherAdRequest appAdRequest() {
-        if(nonPersonalizedAdsReqBundle == null) {
-            nonPersonalizedAdsReqBundle = DFPConsent.GDPRStatusBundle(SuperApp.getAppContext());
-        }
 
-        String THE_HINDU_URL = "http://www.thehindu.com";
 
-        PublisherAdRequest request;
-        if(nonPersonalizedAdsReqBundle != null) {
-            Bundle extras = new FacebookAdapter.FacebookExtrasBundleBuilder()
-                    .setNativeAdChoicesIconExpandable(false)
-                    .build();
-            return new PublisherAdRequest.Builder()
-                    .addNetworkExtrasBundle(AdMobAdapter.class, nonPersonalizedAdsReqBundle)
-                    .addNetworkExtrasBundle(FacebookAdapter.class, extras)
-                    .setContentUrl(THE_HINDU_URL).build();
-
-        }
-        else {
-            return new PublisherAdRequest.Builder().setContentUrl(THE_HINDU_URL).build();
-
-        }
-    }
-
-    /**
-     * Ads Listener
-     * @param adData
-     * @param inAdLoadListener
-     * @return
-     */
-    private AdListener appAdListener(AdData adData, InAdLoadListener inAdLoadListener) {
-        return new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Log.i(TAG, "onAdLoaded() :: " + adData.toString());
-                if(inAdLoadListener != null) {
-                    inAdLoadListener.onDFPAdLoadSuccess(adData);
-                }
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.i(TAG, "onAdFailedToLoad() :: " + adData.toString());
-                if(inAdLoadListener != null) {
-                    inAdLoadListener.onDFPAdLoadSuccess(adData);
-                }
-            }
-
-            @Override
-            public void onAdImpression() {
-                super.onAdImpression();
-                Log.i(TAG, "onAdImpression() :: " + adData.toString());
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-                Log.i(TAG, "onAdLeftApplication() :: " + adData.toString());
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                Log.i(TAG, "onAdOpened() :: " + adData.toString());
-            }
-
-            @Override
-            public void onAdClicked() {
-                super.onAdClicked();
-                Log.i(TAG, "onAdClicked() :: " + adData.toString());
-            }
-
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                Log.i(TAG, "onAdClosed() :: " + adData.toString());
-                if(inAdLoadListener != null) {
-                    inAdLoadListener.onDFPAdLoadSuccess(adData);
-                }
-            }
-        };
-
-    }
 
 
 

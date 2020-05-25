@@ -7,8 +7,10 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
+import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
+import com.ns.activity.BaseRecyclerViewAdapter;
 import com.taboola.android.api.TBPlacement;
 import com.taboola.android.api.TBPlacementRequest;
 import com.taboola.android.api.TBRecommendationItem;
@@ -33,48 +35,25 @@ public class SectionListingAds extends AdsBase {
     private List<AdData> taboolaAdsBeans;
     private List<AdData> dfpAdsBeans;
 
-    public SectionListingAds(String sectionId) {
 
-        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration == null) {
-            return;
-        }
+    public SectionListingAds() {
 
-        List<AdData> listingAdsBeans = tableConfiguration.getAds().getListingPageAds();
-        List<AdData> taboolaAdsBeans = new ArrayList<>();
-        List<AdData> dfpAdsBeans = new ArrayList<>();
-
-        for(AdData adsBean : listingAdsBeans) {
-            adsBean.setSecId(sectionId);
-            if(adsBean.getType().equalsIgnoreCase("DFP")) {
-                adsBean.setAdSize(AdSize.MEDIUM_RECTANGLE);
-                adsBean.setReloadOnScroll(false);
-                dfpAdsBeans.add(adsBean);
-            }
-            else {
-                taboolaAdsBeans.add(adsBean);
-            }
-        }
-
-        setTaboolaAdsBeans(taboolaAdsBeans);
-        setDfpAdsBeans(dfpAdsBeans);
     }
 
-
     public void createMEDIUM_RECTANGLE() {
-        if(dfpAdsBeans == null || PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+        if(dfpAdsBeans == null) {
             return;
         }
         if(dfpLoadedCount>=dfpAdsBeans.size()) {
-            dfpLoadedCount = 0;
+            //dfpLoadedCount = 0;
+            return;
         }
         AdData adData = dfpAdsBeans.get(dfpLoadedCount);
-        adData.createAdDataUiqueId(adData.getIndex(), adData.getAdId());
         final PublisherAdView publisherAdView = new PublisherAdView(SuperApp.getAppContext());
         publisherAdView.setAdUnitId(adData.getAdId());
         publisherAdView.setAdSizes(adData.getAdSize());
 
-        publisherAdView.setAdListener(appAdListener(adData, new InAdLoadListener() {
+        publisherAdView.setAdListener(appAdListener(adData, new OnDFPAdLoadListener() {
             @Override
             public void onDFPAdLoadSuccess(AdData adData) {
                 totalLoadedAdCount++;
@@ -106,11 +85,12 @@ public class SectionListingAds extends AdsBase {
 
 
     public void initAndLoadRecommendationsBatch() {
-        if(taboolaAdsBeans == null || PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+        if(taboolaAdsBeans == null) {
             return;
         }
         if( taboolaLoadedCount >= taboolaAdsBeans.size() ) {
-            taboolaLoadedCount = 0;
+            //taboolaLoadedCount = 0;
+            return;
         }
         AdData adData = taboolaAdsBeans.get(taboolaLoadedCount);
         if(isTaboolaAlreadyExecuted(adData.getIndex())) {
@@ -136,7 +116,6 @@ public class SectionListingAds extends AdsBase {
                         totalLoadedAdCount++;
                         addTaboolaSuccessPosition(adData.getIndex());
                         TBRecommendationItem item = mTbPlacement.getItems().get(0);
-                        adData.createAdDataUiqueId(adData.getIndex(), item.getPublisherId());
                         adData.setTaboolaNativeAdItem(item);
                         mOnTaboolaAdLoadListener.onTaboolaAdLoadSuccess(adData);
                     }
@@ -153,9 +132,6 @@ public class SectionListingAds extends AdsBase {
     }
 
     public void loadNextRecommendationsBatch() {
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
-            return;
-        }
         if (mTbPlacement != null) {
             if(taboolaAdsBeans == null || taboolaAdsBeans.size()<= taboolaLoadedCount) {
                 return;
@@ -176,7 +152,6 @@ public class SectionListingAds extends AdsBase {
                             totalLoadedAdCount++;
                             addTaboolaSuccessPosition(adData.getIndex());
                             TBRecommendationItem item = mTbPlacement.getItems().get(0);
-                            adData.createAdDataUiqueId(adData.getIndex(), item.getPublisherId());
                             adData.setTaboolaNativeAdItem(item);
                             mOnTaboolaAdLoadListener.onTaboolaAdLoadSuccess(adData);
                         }

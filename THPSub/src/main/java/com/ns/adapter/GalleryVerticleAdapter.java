@@ -81,13 +81,14 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
         }*/
 
         viewHolder.tv_photoCount.setText("Photo " + (position+1) + "/" + getItemCount());
-        viewHolder.tv_photoCount.setVisibility(View.VISIBLE);
+        viewHolder.tv_photoCount.setVisibility(View.GONE);
 
         String capton = item.getCaption();
         if (capton != null && !ResUtil.isEmpty(capton)) {
-            viewHolder.tv_caption.setVisibility(View.GONE);
+            viewHolder.tv_caption.setVisibility(View.VISIBLE);
             capton = replaceSpecialChar(capton);
-            viewHolder.tv_caption.setText(Html.fromHtml(capton));
+            //viewHolder.tv_caption.setText(Html.fromHtml(capton));
+            viewHolder.tv_caption.setText(ResUtil.htmlText(capton));
         } else {
             viewHolder.tv_caption.setVisibility(View.GONE);
         }

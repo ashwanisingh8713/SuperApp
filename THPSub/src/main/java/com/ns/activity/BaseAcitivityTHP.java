@@ -19,6 +19,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.InAppNotificationButtonListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.main.AdsBase;
 import com.main.DFPAds;
 import com.main.SuperApp;
 import com.netoperation.default_db.TableConfiguration;
@@ -326,19 +327,31 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
         DFPAds DFPAds = new DFPAds();
         DFPAds.createBannerAdRequest(false, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
-        DFPAds.setOnAppAdLoadListener(new com.main.DFPAds.OnDFPAdLoadListener() {
+        DFPAds.setOnDFPAdLoadListener(new AdsBase.OnDFPAdLoadListener() {
             @Override
             public void onDFPAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);
                 if(banner_Ad_layout != null) {
                     banner_Ad_layout.setVisibility(View.VISIBLE);
+                    int childCount = banner_Ad_layout.getChildCount();
+                    if(banner_Ad_layout.getChildCount() > 0) {
+                        for(int i=0; i<childCount; i++) {
+                            banner_Ad_layout.removeViewAt(i);
+                        }
+                    }
                     banner_Ad_layout.addView(adData.getAdView());
                 }
+
             }
 
             @Override
             public void onDFPAdLoadFailure(AdData adData) {
                 Log.i("", "");
+
+            }
+
+            @Override
+            public void onAdClose() {
 
             }
         });

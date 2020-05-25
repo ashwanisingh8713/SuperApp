@@ -33,11 +33,9 @@ public class AdsBase {
     public interface OnDFPAdLoadListener {
         void onDFPAdLoadSuccess(AdData adData);
         void onDFPAdLoadFailure(AdData adData);
-    }
-
-    protected interface InAdLoadListener extends OnDFPAdLoadListener {
         void onAdClose();
     }
+
 
     public void setOnDFPAdLoadListener(OnDFPAdLoadListener onDFPAdLoadListener) {
         this.mOnDFPAdLoadListener = onDFPAdLoadListener;
@@ -77,12 +75,11 @@ public class AdsBase {
      * @param inAdLoadListener
      * @return
      */
-    public AdListener appAdListener(AdData adData, InAdLoadListener inAdLoadListener) {
+    public AdListener appAdListener(AdData adData, OnDFPAdLoadListener inAdLoadListener) {
         return new AdListener() {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                Log.i(TAG, "onAdLoaded() :: " + adData.toString());
                 if(inAdLoadListener != null) {
                     inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
@@ -91,7 +88,6 @@ public class AdsBase {
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                Log.i(TAG, "onAdFailedToLoad() :: " + adData.toString());
                 if(inAdLoadListener != null) {
                     inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }
@@ -100,31 +96,26 @@ public class AdsBase {
             @Override
             public void onAdImpression() {
                 super.onAdImpression();
-                Log.i(TAG, "onAdImpression() :: " + adData.toString());
             }
 
             @Override
             public void onAdLeftApplication() {
                 super.onAdLeftApplication();
-                Log.i(TAG, "onAdLeftApplication() :: " + adData.toString());
             }
 
             @Override
             public void onAdOpened() {
                 super.onAdOpened();
-                Log.i(TAG, "onAdOpened() :: " + adData.toString());
             }
 
             @Override
             public void onAdClicked() {
                 super.onAdClicked();
-                Log.i(TAG, "onAdClicked() :: " + adData.toString());
             }
 
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
-                Log.i(TAG, "onAdClosed() :: " + adData.toString());
                 if(inAdLoadListener != null) {
                     inAdLoadListener.onDFPAdLoadSuccess(adData);
                 }

@@ -46,6 +46,7 @@ import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
+import com.ns.utils.RowIds;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
@@ -1014,10 +1015,10 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         String fullDescription = bean.getDescription();
 
         if (bean.getAdd_pos() > 1) {
-            if (item.getUniqueIdForView().equals("description_1Model")) {
+            if (item.getUniqueIdForView().equals(RowIds.rowId_description_1())) {
                 holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), bean.getLe(), fullDescription.substring(0, bean.getAdd_pos() - 1)),
                         "text/html", "UTF-8", null);
-            } else if (item.getUniqueIdForView().equals("description_2Model")) {
+            } else if (item.getUniqueIdForView().equals(RowIds.rowId_description_2())) {
                 holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.defaultgroup_showDescription(holder.itemView.getContext(), "", fullDescription.substring(bean.getAdd_pos() - 1)),
                         "text/html", "UTF-8", null);
             }

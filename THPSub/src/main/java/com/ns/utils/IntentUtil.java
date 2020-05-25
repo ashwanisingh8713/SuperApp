@@ -863,8 +863,6 @@ public class IntentUtil {
     }
 
 
-
-
     public static void openVerticleGalleryActivity(Context context, ArrayList<MeBean> mImageList, String title) {
         ArrayList<ImageGallaryUrl> mImageUrlList = null;
         if (mImageList != null && mImageList.size() > 0) {

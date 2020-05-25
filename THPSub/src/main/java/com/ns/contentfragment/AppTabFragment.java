@@ -17,6 +17,7 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.main.AdsBase;
 import com.main.DFPAds;
 import com.main.SuperApp;
 import com.netoperation.config.model.TabsBean;
@@ -512,7 +513,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tableConfiguration == null) return;
         DFPAds DFPAds = new DFPAds();
         DFPAds.createBannerAdRequest(isHomePage, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
-        DFPAds.setOnAppAdLoadListener(new com.main.DFPAds.OnDFPAdLoadListener() {
+        DFPAds.setOnDFPAdLoadListener(new AdsBase.OnDFPAdLoadListener() {
             @Override
             public void onDFPAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
@@ -531,6 +532,11 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             @Override
             public void onDFPAdLoadFailure(AdData adData) {
                 Log.i("", "");
+
+            }
+
+            @Override
+            public void onAdClose() {
 
             }
         });

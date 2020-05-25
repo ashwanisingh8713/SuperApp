@@ -22,6 +22,7 @@ import com.netoperation.model.StaticPageUrlBean;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
@@ -163,7 +164,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             fillSearchedArticleData(holder, position);
         }
         else if(holder instanceof StaticItemWebViewHolder) {
-            fillStaticWebview(holder, item);
+            fillStaticWebview(holder, item, position);
         }
         else if(holder instanceof InlineAdViewHolder) {
             fillInlineAdView(holder, item, position);
@@ -201,13 +202,15 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if(THPConstants.IS_SHOW_INDEX) {
             exploreHolder.exploreTitle.setText(indexText(position, holder.itemView.getContext().getString(R.string.info_home_explore)));
         }
-
     }
 
     private void fillTaboolaAds(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
         TBRecommendationItem tbRecommendationItem = item.getAdData().getTaboolaNativeAdItem();
         TaboolaNativeAdViewHolder taboolaNativeAdViewHolder = (TaboolaNativeAdViewHolder) holder;
         taboolaNativeAdViewHolder.mAttributionView.setOnClickListener(view -> TaboolaApi.getInstance().handleAttributionClick(holder.itemView.getContext()));
+        if(tbRecommendationItem == null) {
+            return;
+        }
         TBImageView thumbnailView = tbRecommendationItem.getThumbnailView(taboolaNativeAdViewHolder.itemView.getContext());
         thumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -285,8 +288,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         inlineAdViewHolder.frameLayout.removeAllViews();
         inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
         final PublisherAdView adView = adData.getAdView();
+        //inlineAdViewHolder.frameLayout.setBackground(null);
 
-        if(adData.isReloadOnScroll()) {
+        if(adView !=null && adData.isReloadOnScroll()) {
             // Create an ad request.
             PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
             // Start loading the ad.
@@ -294,18 +298,24 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
 
         inlineAdViewHolder.frameLayout.setBackground(null);
-        adView.removeView(inlineAdViewHolder.frameLayout);
+        if(adView != null) {
+            adView.removeView(inlineAdViewHolder.frameLayout);
+        }
         // Just below is fix of Crashlytics #6509
         if (adView != null && adView.getParent() != null) {
+            adView.removeView(inlineAdViewHolder.frameLayout);
             ((ViewGroup) adView.getParent()).removeView(adView);
         }
-        inlineAdViewHolder.frameLayout.addView(adView);
+        if(adView != null) {
+            inlineAdViewHolder.frameLayout.addView(adView);
+        }
+
     }
 
-    private void fillStaticWebview(final RecyclerView.ViewHolder holder, SectionAdapterItem item) {
+    private void fillStaticWebview(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
         StaticItemWebViewHolder staticItemHolder = (StaticItemWebViewHolder) holder;
         StaticPageUrlBean pageUrlBean = item.getStaticPageUrlBean();
-        if(pageUrlBean == null) {
+        if(pageUrlBean == null || !BaseAcitivityTHP.sIsOnline) {
             return;
         }
         staticItemHolder.webView.loadUrl(pageUrlBean.getUrl());
@@ -545,6 +555,18 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         return updateIndex;
     }
 
+    public boolean insertItemAfterArrangingIndex(SectionAdapterItem item, int index) {
+        boolean isInserted = false;
+        if(index >= adapterItems.size()) {
+            isInserted = false;
+        } else if(index < adapterItems.size()) {
+            adapterItems.add(index, item);
+            isInserted = true;
+        }
+
+        return isInserted;
+    }
+
     public int indexOf(SectionAdapterItem item) {
         return adapterItems.indexOf(item);
     }
@@ -593,7 +615,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 return false;
             }
         });*/
+
         WidgetAdapter widgetAdapter = dataBean.getWidgetAdapter();
+        if(widgetAdapter == null) {
+            return;
+        }
 
         mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(widgetAdapter);
         mWidgetsViewHolder.mWidgetTitleTextView.setText(widgetAdapter.getSectionName());
