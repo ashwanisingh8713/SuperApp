@@ -18,6 +18,19 @@
         app:font_path="@string/THP_TundraOffc"
         android:textSize="17sp" />
 
-    <include layout="@layout/layout_article_list_bottom" />
+    <com.ns.view.text.ArticleTitleTextView
+        android:id="@+id/author_textView"
+        app:textType="XS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_article_list_header"
+        android:layout_toRightOf="@id/imageParentLayout"
+        android:maxLines="1"
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:textSize="11sp"
+        android:text=""/>
+
+    <include layout="@layout/th_layout_article_list_bottom" />
 
 </LinearLayout>

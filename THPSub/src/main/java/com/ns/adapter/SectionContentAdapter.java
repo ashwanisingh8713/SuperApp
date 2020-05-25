@@ -363,6 +363,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         ArticlesViewHolder holder = (ArticlesViewHolder) articlesViewHolder;
         final ArticleBean bean = adapterItems.get(position).getArticleBean();
         if (bean != null) {
+
+            if(BuildConfig.IS_BL) {
+                holder.author_textView.setText(bean.getAu());
+            }
+
             // Dims Read article given view
             dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.mArticlesLayout);
             // Checks article's type

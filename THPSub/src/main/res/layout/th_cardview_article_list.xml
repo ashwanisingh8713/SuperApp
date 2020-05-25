@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.layout.NSLinearLayoutWindowBG xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/article_item_parent_height"
+    android:layout_height="@dimen/th_article_item_parent_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     app:layoutType="Black_Dark">
@@ -48,4 +48,4 @@
         android:layout_gravity="bottom"
         android:background="@color/color_52969696" />
 
-</com.ns.view.layout.NSLinearLayout>
+</com.ns.view.layout.NSLinearLayoutWindowBG>

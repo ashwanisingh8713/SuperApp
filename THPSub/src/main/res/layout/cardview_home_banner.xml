@@ -54,7 +54,7 @@
             app:textType="M" />
 
         <include
-            layout="@layout/layout_article_list_bottom"
+            layout="@layout/th_layout_article_list_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

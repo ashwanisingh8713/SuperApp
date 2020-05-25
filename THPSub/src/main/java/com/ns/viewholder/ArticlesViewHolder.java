@@ -1,6 +1,7 @@
 package com.ns.viewholder;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,7 +22,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     public TextView mArticleTextView;
     public TextView mArticleTimeTextView;
     public TextView mArticleSectionName;
-    public LinearLayout mArticlesLayout;
+    public TextView author_textView;
+    public ViewGroup mArticlesLayout;
     public ListingIconView mBookmarkButton;
     public ImageView mShareArticleButton;
     public ImageButton mMultimediaButton;
@@ -38,6 +40,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         mArticleTimeTextView = itemView.findViewById(R.id.textview_time);
         mBookmarkButton = itemView.findViewById(R.id.button_bookmark);
         mArticleSectionName = itemView.findViewById(R.id.section_name);
+        author_textView = itemView.findViewById(R.id.author_textView);
         mArticleSectionName.setVisibility(View.VISIBLE);
     }
 }
