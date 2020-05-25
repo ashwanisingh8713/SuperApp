@@ -77,17 +77,18 @@
             android:contentDescription="Notification Icon"
             app:srcCompat="@drawable/ic_more_w" />
 
-        <TextView
+        <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/textview_overflow_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="13dp"
+            app:font_path="@string/THP_FiraSans_Bold"
+            app:textType="XS"
             android:gravity="center"
             android:maxLength="3"
             android:padding="3dp"
-            android:textColor="#ffffff"
             android:textSize="10sp"
             android:textStyle="bold"
             android:visibility="gone" />

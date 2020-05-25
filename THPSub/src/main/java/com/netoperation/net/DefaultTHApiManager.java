@@ -660,6 +660,36 @@ public class DefaultTHApiManager {
                 });
     }
 
+    public static void readArticleId(Context context, final String articleId, String groupType) {
+        if (context == null || articleId == null) {
+            return;
+        }
+        Maybe.just(articleId)
+                .subscribeOn(Schedulers.io())
+                .map(id -> {
+                    if (context == null) {
+                        return "";
+                    }
+                    THPDB thpdb = THPDB.getInstance(context);
+                    DaoRead daoRead = thpdb.daoRead();
+                    TableRead read = daoRead.getReadArticleId(articleId);
+                    if (read == null) {
+                        read = new TableRead(id);
+                        read.setGroupType(groupType);
+                        daoRead.insertReadArticle(read);
+                        DefaultTHApiManager.getCommentCount(articleId, context);
+                    } else {
+                        long lut = read.getLutOfCommentCount();
+                        long interval = 1000 * 60 * 10;
+                        if (lut + interval < System.currentTimeMillis()) {
+                            DefaultTHApiManager.getCommentCount(articleId, context);
+                        }
+                    }
+                    return "";
+                }).subscribe();
+
+    }
+
     public static void readArticleId(Context context, final String articleId) {
         if (context == null || articleId == null) {
             return;
@@ -794,6 +824,19 @@ public class DefaultTHApiManager {
                         allArticle.add(tempArticle.getBean());
                     }
                     return allArticle;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Integer> getNotificationArticlesCount(Context context) {
+        // Check in Table TemporaryArticle
+        return THPDB.getInstance(context).daoTemperoryArticle().getAllNotification(NetConstants.G_NOTIFICATION)
+                .subscribeOn(Schedulers.io())
+                .map(temperoryTablesArticles -> {
+                    int totalCounts = temperoryTablesArticles.size();
+                    int readCounts = THPDB.getInstance(context).daoRead().getAllReadArticlesCount(NetConstants.G_NOTIFICATION);
+                    int leftReadCounts = totalCounts - readCounts;
+                    return leftReadCounts;
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }

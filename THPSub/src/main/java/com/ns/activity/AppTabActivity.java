@@ -23,6 +23,7 @@ import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
@@ -44,6 +45,7 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.ns.utils.TabUtils;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
 
@@ -67,6 +69,9 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private NavigationExpandableListViewAdapter mNavigationExpandableListViewAdapter;
     private ExpandableListView mNavigationExpandableListView;
     private DrawerLayout mDrawerLayout;
+    //Counts
+    private int mUnreadNotificationArticleCount, mUnreadBookmarkArticleCount;
+
 
 
     @Override
@@ -129,7 +134,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     getDrawerStaticItem();
 
                 }));
-
+        //Observe notifications count
+        observeNotificationsCount();
     }
 
 
@@ -419,7 +425,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         TextView mReadLaterCountTextView = layout.findViewById(R.id.textview_menu_readlater_count);
         TextView mNotificationsCountTextView = layout.findViewById(R.id.textview_menu_notifications_count);
 
-        /*mReadLaterCountTextView.setText(mUnreadBookmarkArticleCount + "");
+        mReadLaterCountTextView.setText(mUnreadBookmarkArticleCount + "");
         mNotificationsCountTextView.setText(mUnreadNotificationArticleCount + "");
 
         if (mUnreadBookmarkArticleCount == 0) {
@@ -428,7 +434,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         if (mUnreadNotificationArticleCount == 0) {
             mNotificationsCountTextView.setVisibility(View.GONE);
-        }*/
+        }
 
         final boolean isUserFromEurope = DefaultPref.getInstance(this).isUserFromEurope();
 
@@ -541,5 +547,29 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         // Required when using TaboolaApi (Native Android) integration
         TaboolaApi.getInstance().init(this, getResources().getString(R.string.taboola_publisher_id),
                 getResources().getString(R.string.taboola_publisher_apikey));
+    }
+
+    /**
+     * Observe notifications counts
+     */
+    private void observeNotificationsCount() {
+        mDisposable.add(DefaultTHApiManager.getNotificationArticlesCount(this)
+                .subscribe( counts -> {
+                    mUnreadNotificationArticleCount = counts;
+                    if (getDetailToolbar() != null) {
+                        getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadNotificationArticleCount + mUnreadBookmarkArticleCount));
+                    }
+                }));
+    }
+    /*
+    * Observe Read Later counts*/
+    private void observeReadLaterCount() {
+        mDisposable.add(DefaultTHApiManager.getNotificationArticlesCount(this)
+                .subscribe( counts -> {
+                    mUnreadBookmarkArticleCount = counts;
+                    if (getDetailToolbar() != null) {
+                        getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadBookmarkArticleCount + mUnreadNotificationArticleCount));
+                    }
+                }));
     }
 }
