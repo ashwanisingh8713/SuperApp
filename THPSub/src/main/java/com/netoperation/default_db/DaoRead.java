@@ -20,6 +20,9 @@ public abstract class  DaoRead {
     @Query("SELECT * FROM TableRead")
     public abstract Single<List<TableRead>> getAllReadArticleId();
 
+    @Query("SELECT COUNT(*) FROM TableRead WHERE groupType = :groupT")
+    public abstract int getAllReadArticlesCount(String groupT);
+
     @Query("SELECT * FROM TableRead WHERE articleId = :articleId")
     public abstract TableRead getReadArticleId(String articleId);
 

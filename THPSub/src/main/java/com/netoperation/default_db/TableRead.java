@@ -21,6 +21,7 @@ public class TableRead {
     private String commentCount;
 
     private long lutOfCommentCount;
+    private String groupType;
 
     public TableRead(String articleId) {
         this.articleId = articleId;
@@ -48,5 +49,13 @@ public class TableRead {
 
     public void setLutOfCommentCount(long lutOfCommentCount) {
         this.lutOfCommentCount = lutOfCommentCount;
+    }
+
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
     }
 }

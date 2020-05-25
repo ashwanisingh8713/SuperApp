@@ -35,6 +35,9 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.img.LogoImgView;
 import com.ns.view.img.TopbarIconView;
+import com.ns.view.text.ArticleTitleTextView;
+
+import java.util.Locale;
 
 
 /**
@@ -45,6 +48,7 @@ public class Topbar extends Toolbar {
 
     private ToolbarClickListener mToolbarClickListener;
     private TextView mTitleTextView;
+    private ArticleTitleTextView mTextCountsOnOverflow;
     private TopbarIconView mBackImageView;
     private LogoImgView mLogoImageView;
     private TopbarIconView mSearchImageView;
@@ -533,6 +537,7 @@ public class Topbar extends Toolbar {
         }
 
         mTitleTextView = findViewById(R.id.action_titleText);
+        mTextCountsOnOverflow = findViewById(R.id.textview_overflow_count);
         mBackImageView = findViewById(R.id.action_back);
         mLogoImageView = findViewById(R.id.action_logo);
         mSearchImageView = findViewById(R.id.action_search);
@@ -886,6 +891,20 @@ public class Topbar extends Toolbar {
                 mTTSPauseImageView.setVisibility(VISIBLE);
                 mTTSPlayImageView.setVisibility(GONE);
                 mProgressTTS.setVisibility(GONE);
+            }
+        }
+    }
+
+    public void updateOverFlowMenuActionButtonCounts(int mUnreadArticleCounts) {
+        if (mTextCountsOnOverflow != null) {
+            if (mUnreadArticleCounts > 0 && mUnreadArticleCounts < 100) {
+                mTextCountsOnOverflow.setText(String.format(Locale.US,"%d", mUnreadArticleCounts));
+                mTextCountsOnOverflow.setVisibility(View.VISIBLE);
+            } else if (mUnreadArticleCounts > 99) {
+                mTextCountsOnOverflow.setText("99+");
+                mTextCountsOnOverflow.setVisibility(View.VISIBLE);
+            } else {
+                mTextCountsOnOverflow.setVisibility(View.INVISIBLE);
             }
         }
     }

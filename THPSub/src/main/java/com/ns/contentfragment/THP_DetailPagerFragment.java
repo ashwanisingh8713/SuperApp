@@ -370,7 +370,13 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             if (index != -1) {
                 mClickedPosition = index;
                 DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), mArticleId, articleBeans.get(mClickedPosition).isArticleRestricted(), getAllowedCount(getActivity()));
-                DefaultTHApiManager.readArticleId(getActivity(), mArticleId);
+                //if article bean group type is not empty, then insert article read with group type
+                if (bean.getGroupType() != null) {
+                    //insert article read with group type
+                    DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId(), bean.getGroupType());
+                } else {
+                    DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId());
+                }
             }
         }
 
@@ -393,7 +399,13 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
                 mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
                 ArticleBean bean = mSectionsPagerAdapter.getArticleBean(position);
                 DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), bean.getArticleId(), bean.isArticleRestricted(), getAllowedCount(getActivity()));
-                DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId());
+                //if article bean group type is not empty, then insert article read with group type
+                if (bean.getGroupType() != null) {
+                    //insert article read with group type
+                    DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId(), bean.getGroupType());
+                } else {
+                    DefaultTHApiManager.readArticleId(getActivity(), bean.getArticleId());
+                }
 
             }
 

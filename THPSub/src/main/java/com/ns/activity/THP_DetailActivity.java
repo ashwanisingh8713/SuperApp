@@ -122,6 +122,13 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
         if(mArticleBean != null) {
             DefaultTHApiManager.insertMeteredPaywallArticleId(this, mArticleBean.getArticleId(), mArticleBean.isArticleRestricted(), BaseFragmentTHP.getAllowedCount(this));
+            //if article bean group type is not empty, then insert article read with group type
+            if (mArticleBean.getGroupType() != null) {
+                //insert article read with group type
+                DefaultTHApiManager.readArticleId(this, mArticleBean.getArticleId(), mArticleBean.getGroupType());
+            } else {
+                DefaultTHApiManager.readArticleId(this, mArticleBean.getArticleId());
+            }
             THP_DetailFragment fragment = THP_DetailFragment.getInstance(mArticleBean, mArticleBean.getArticleId(), "", mFrom);
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
         } else {
