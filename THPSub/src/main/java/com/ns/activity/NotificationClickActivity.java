@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.clevertap.android.sdk.CleverTapAPI;
+import com.netoperation.util.NetConstants;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
 
@@ -56,7 +57,7 @@ public class NotificationClickActivity extends AppCompatActivity {
             }else{
                 //Article Type
                 String articleId = getIntent().getExtras().getString("ns_article_id");
-                IntentUtil.openDetailAfterSearchInActivity(this, articleId, actionURL);
+                IntentUtil.openDetailAfterSearchInActivity(this, articleId, actionURL, NetConstants.G_NOTIFICATION);
             }
 
             Bundle extras = getIntent().getExtras();
@@ -126,7 +127,7 @@ public class NotificationClickActivity extends AppCompatActivity {
             } else {
                 //Article Type
                 String articleId = intent.getExtras().getString("ns_article_id");
-                IntentUtil.openDetailAfterSearchInActivity(this, articleId, actionURL);
+                IntentUtil.openDetailAfterSearchInActivity(this, articleId, actionURL, NetConstants.G_NOTIFICATION);
             }
             Bundle extras = intent.getExtras();
             if (extras != null) {

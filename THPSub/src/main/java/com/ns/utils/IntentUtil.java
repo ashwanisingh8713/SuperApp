@@ -650,7 +650,11 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openDetailAfterSearchInActivity(Context context, String aid, String clickedUrl) {
+    public static void openDetailAfterSearchInActivity(Context context, String aid, String clickedUrl, String from) {
+        if (from == null) {
+            from = "tempSec";
+        }
+        String finalFrom = from;
         CompositeDisposable disposable = new CompositeDisposable();
         final ProgressDialog progress = Alerts.showProgressDialog(context);
         disposable.add(DefaultTHApiManager.isExistInTempArticleArticle(context, aid)
@@ -682,7 +686,7 @@ public class IntentUtil {
                                                        .subscribe((tableConfiguration, throwable) -> {
                                                        // Making Server request to get Article from server
                                                        // and Saving into DB, with SectionName = "tempSec"
-                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId(), "tempSec");
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId(), finalFrom);
                                                        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
                                                                .subscribe(new Consumer<ArticleBean>() {
                                                                               @Override

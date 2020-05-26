@@ -45,7 +45,6 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.utils.TabUtils;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
 
@@ -58,6 +57,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableListViewItemClickListener {
@@ -71,7 +71,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private DrawerLayout mDrawerLayout;
     //Counts
     private int mUnreadNotificationArticleCount, mUnreadBookmarkArticleCount;
-
+    private Disposable notificationCountsObserver, bookmarksCountObserver;
 
 
     @Override
@@ -134,8 +134,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     getDrawerStaticItem();
 
                 }));
-        //Observe notifications count
-        observeNotificationsCount();
     }
 
 
@@ -238,6 +236,10 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
         Log.i("TabFragment", "onResume() In AppTabActivity EventBus Registered");
         EventBus.getDefault().register(this);
+        //Observe notifications count
+        observeNotificationsCount();
+        //Observe bookmarks count
+        observeBookmarksCount();
     }
 
     @Override
@@ -245,6 +247,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         super.onPause();
         Log.i("TabFragment", "onPause() In AppTabActivity EventBus UnRegistered");
         EventBus.getDefault().unregister(this);
+        clearObservers();
     }
 
     @Override
@@ -428,11 +431,11 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         mReadLaterCountTextView.setText(mUnreadBookmarkArticleCount + "");
         mNotificationsCountTextView.setText(mUnreadNotificationArticleCount + "");
 
-        if (mUnreadBookmarkArticleCount == 0) {
+        if (mUnreadBookmarkArticleCount <= 0) {
             mReadLaterCountTextView.setVisibility(View.GONE);
         }
 
-        if (mUnreadNotificationArticleCount == 0) {
+        if (mUnreadNotificationArticleCount <= 0) {
             mNotificationsCountTextView.setVisibility(View.GONE);
         }
 
@@ -553,23 +556,32 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
      * Observe notifications counts
      */
     private void observeNotificationsCount() {
-        mDisposable.add(DefaultTHApiManager.getNotificationArticlesCount(this)
+        notificationCountsObserver = DefaultTHApiManager.getUnreadNotificationArticlesCount(this)
                 .subscribe( counts -> {
                     mUnreadNotificationArticleCount = counts;
                     if (getDetailToolbar() != null) {
                         getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadNotificationArticleCount + mUnreadBookmarkArticleCount));
                     }
-                }));
+                });
+        mDisposable.add(notificationCountsObserver);
     }
     /*
-    * Observe Read Later counts*/
-    private void observeReadLaterCount() {
-        mDisposable.add(DefaultTHApiManager.getNotificationArticlesCount(this)
+    * Observe Bookmarks counts*/
+    private void observeBookmarksCount() {
+        bookmarksCountObserver = ApiManager.getUnReadBookmarksCounts(this)
                 .subscribe( counts -> {
                     mUnreadBookmarkArticleCount = counts;
                     if (getDetailToolbar() != null) {
                         getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadBookmarkArticleCount + mUnreadNotificationArticleCount));
                     }
-                }));
+                });
+        mDisposable.add(bookmarksCountObserver);
+    }
+
+    /*
+     * Clear observers for counts*/
+    private void clearObservers() {
+        mDisposable.remove(notificationCountsObserver);
+        mDisposable.remove(bookmarksCountObserver);
     }
 }

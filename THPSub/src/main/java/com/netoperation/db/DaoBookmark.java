@@ -9,6 +9,8 @@ import com.netoperation.model.ArticleBean;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 
@@ -26,6 +28,9 @@ public interface DaoBookmark {
 
     @Query("SELECT * FROM TableBookmark WHERE groupType = :groupType")
     List<TableBookmark> getBookmarkGroupType(String groupType);
+
+    @Query("SELECT COUNT(*) FROM TableBookmark")
+    Observable<Integer> getTotalBookmarksCount();
 
     @Query("DELETE FROM TableBookmark WHERE aid = :aid")
     int deleteBookmarkArticle(String aid);

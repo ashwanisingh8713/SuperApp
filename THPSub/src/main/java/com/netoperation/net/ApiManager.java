@@ -936,12 +936,27 @@ public class ApiManager {
                 );
 
     }
+
+    public static Observable<Integer> getUnReadBookmarksCounts(Context context) {
+        return THPDB.getInstance(context).bookmarkTableDao().getTotalBookmarksCount()
+                .subscribeOn(Schedulers.io())
+                .map(totalCounts -> {
+                    int bookMarksDefault = THPDB.getInstance(context).daoRead().getAllReadArticlesCount(NetConstants.G_BOOKMARK_DEFAULT);
+                    int bookMarksPremium = THPDB.getInstance(context).daoRead().getAllReadArticlesCount(NetConstants.G_BOOKMARK_PREMIUM);
+                    int sumReadBookmarks = bookMarksDefault + bookMarksPremium;
+                    int leftBookmarksArticlesToRead = totalCounts - sumReadBookmarks;
+                    return leftBookmarksArticlesToRead;
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
     public static Single<Boolean> deleteAllBookmarks(Context context) {
         return Single.just(NetConstants.BOOKMARK_IN_ONE)
                 .subscribeOn(Schedulers.io())
                 .map(val->{
                     THPDB thpdb = THPDB.getInstance(context);
                     thpdb.bookmarkTableDao().deleteAll();
+                    int dCountsDD = thpdb.daoRead().deleteReadArticleByGroupType(NetConstants.G_BOOKMARK_DEFAULT);
+                    int dCountsP = thpdb.daoRead().deleteReadArticleByGroupType(NetConstants.G_BOOKMARK_PREMIUM);
                     return true;
                 })
                 .observeOn(AndroidSchedulers.mainThread());

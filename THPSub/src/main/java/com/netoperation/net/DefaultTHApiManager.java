@@ -661,7 +661,7 @@ public class DefaultTHApiManager {
     }
 
     public static void readArticleId(Context context, final String articleId, String groupType) {
-        if (context == null || articleId == null) {
+        if (context == null || articleId == null || groupType == null) {
             return;
         }
         Maybe.just(articleId)
@@ -672,7 +672,7 @@ public class DefaultTHApiManager {
                     }
                     THPDB thpdb = THPDB.getInstance(context);
                     DaoRead daoRead = thpdb.daoRead();
-                    TableRead read = daoRead.getReadArticleId(articleId);
+                    TableRead read = daoRead.getReadArticleIdByGroupType(articleId, groupType);
                     if (read == null) {
                         read = new TableRead(id);
                         read.setGroupType(groupType);
@@ -828,7 +828,7 @@ public class DefaultTHApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<Integer> getNotificationArticlesCount(Context context) {
+    public static Observable<Integer> getUnreadNotificationArticlesCount(Context context) {
         // Check in Table TemporaryArticle
         return THPDB.getInstance(context).daoTemperoryArticle().getAllNotification(NetConstants.G_NOTIFICATION)
                 .subscribeOn(Schedulers.io())
@@ -848,7 +848,8 @@ public class DefaultTHApiManager {
                 .map(val->{
                     THPDB thpdb = THPDB.getInstance(context);
                     int count = thpdb.daoTemperoryArticle().deleteAllNotification(val);
-                    return count>0;
+                    int c = thpdb.daoRead().deleteReadArticleByGroupType(val);
+                    return count > 0;
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }

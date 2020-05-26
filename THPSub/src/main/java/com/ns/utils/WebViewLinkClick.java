@@ -82,7 +82,7 @@ public class WebViewLinkClick {
                 int aid = CommonUtil.getArticleIdFromArticleUrl(url);
 
                 if(aid > 0) {
-                    IntentUtil.openDetailAfterSearchInActivity(context, "" + aid, url);
+                    IntentUtil.openDetailAfterSearchInActivity(context, "" + aid, url, null);
                 }
                 else if(mIsDetailPage) {
                     IntentUtil.openUrlInBrowser(context, url);
