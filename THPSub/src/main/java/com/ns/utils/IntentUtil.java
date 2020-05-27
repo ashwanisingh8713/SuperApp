@@ -663,7 +663,7 @@ public class IntentUtil {
                                @Override
                                public void accept(ArticleBean bean) {
                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                       IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, bean, clickedUrl);
+                                       IntentUtil.openSingleDetailActivity(context, finalFrom, bean, clickedUrl);
                                        progress.dismiss();
                                        disposable.clear();
                                        disposable.dispose();
@@ -673,7 +673,7 @@ public class IntentUtil {
                                                .observeOn(AndroidSchedulers.mainThread())
                                                .subscribe(articleBean->{
                                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.G_DEFAULT_SECTIONS, bean, clickedUrl);
+                                                       IntentUtil.openSingleDetailActivity(context, finalFrom, bean, clickedUrl);
                                                        progress.dismiss();
                                                        disposable.clear();
                                                        disposable.dispose();
@@ -695,7 +695,7 @@ public class IntentUtil {
                                                                                       return;
                                                                                   }
                                                                                   if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
-                                                                                      IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, articleBean, clickedUrl);
+                                                                                      IntentUtil.openSingleDetailActivity(context, finalFrom, articleBean, clickedUrl);
                                                                                   }
                                                                                   else {
                                                                                       // Opening Article In Web Page

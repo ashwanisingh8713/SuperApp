@@ -2,6 +2,7 @@ package com.ns.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,14 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
     @Override
     public int layoutRes() {
         return R.layout.activity_notification_article;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 
     @Override

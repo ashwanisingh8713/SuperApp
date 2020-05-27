@@ -287,6 +287,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if (AppAudioManager.getInstance().isPlaying()){
             AppAudioManager.getInstance().pausePlayer();
         }
+        //TTS Player UI update.
+        if(TTSManager.getInstance().isTTSPlaying()) {
+            mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
+        }
     }
 
 

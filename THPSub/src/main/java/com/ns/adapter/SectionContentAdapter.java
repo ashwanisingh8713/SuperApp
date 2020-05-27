@@ -258,7 +258,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
             if (isOrganic) {
                 int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-                IntentUtil.openDetailAfterSearchInActivity(holder.itemView.getContext(), ""+articleId, url, null);
+                IntentUtil.openDetailAfterSearchInActivity(holder.itemView.getContext(), ""+articleId, url, NetConstants.G_DEFAULT_SECTIONS);
 
                 /*FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked));
                 GoogleAnalyticsTracker.setGoogleAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",

@@ -79,6 +79,11 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         return R.layout.activity_apptab;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        THPConstants.sISMAIN_ACTIVITY_LAUNCHED = true;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -583,5 +588,11 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private void clearObservers() {
         mDisposable.remove(notificationCountsObserver);
         mDisposable.remove(bookmarksCountObserver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        THPConstants.sISMAIN_ACTIVITY_LAUNCHED = false;
     }
 }
