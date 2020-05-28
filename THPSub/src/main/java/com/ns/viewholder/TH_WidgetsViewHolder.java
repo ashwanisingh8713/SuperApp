@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
 
-public class WidgetsViewHolder extends RecyclerView.ViewHolder {
+public class TH_WidgetsViewHolder extends RecyclerView.ViewHolder {
 
     public RecyclerView mWidgetsRecyclerView;
     public TextView mWidgetTitleTextView, mWidgetFooterTextView;
     public LinearLayoutManager layoutManager;
 
-    public WidgetsViewHolder(View itemView) {
+    public TH_WidgetsViewHolder(View itemView) {
         super(itemView);
 
         mWidgetsRecyclerView = itemView.findViewById(R.id.recyclerview_widgets);

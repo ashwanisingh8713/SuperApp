@@ -43,7 +43,7 @@ public class BookmarkActivity extends BaseAcitivityTHP {
             getDetailToolbar().showNotificationAndBookmarkeIcons(true);
         }
 
-        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), mIsDayTheme, mGroupTypeDisplay);
+        pagerAdapter = new MergedBookmarkPagerAdapter(getSupportFragmentManager(), sIsDayTheme, mGroupTypeDisplay);
         bookmarkViewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(bookmarkViewPager, true);

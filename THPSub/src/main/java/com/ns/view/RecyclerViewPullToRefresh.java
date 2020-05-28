@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.R;
+import com.ns.utils.WrapContentLinearLayoutManager;
 import com.ns.view.text.CustomTextView;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
@@ -37,7 +38,7 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
     private boolean isLastPage;
 
     private TryAgainBtnClickListener mTryAgainBtnClickListener;
-    private LinearLayoutManager llm;
+    private WrapContentLinearLayoutManager llm;
 
     public void setTryAgainBtnClickListener(TryAgainBtnClickListener tryAgainBtnClickListener) {
         mTryAgainBtnClickListener = tryAgainBtnClickListener;
@@ -73,7 +74,8 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         // Setting Recycler Layout Manager
-        llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//        llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        llm = new WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(llm);
 
         // Try Again Click Listener
@@ -133,6 +135,10 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
         mSwipeRefreshLayout.setRefreshing(isRefreshing);
     }
 
+    public void setScrollEnabled(boolean isScrollEnabled) {
+        llm.setScrollEnabled(isScrollEnabled);
+    }
+
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
@@ -149,10 +155,6 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
         return llm;
     }
 
-    public void setGridLayoutManager() {
-        llm = new GridLayoutManager(getContext(), 2);
-        mRecyclerView.setLayoutManager(llm);
-    }
 
     public boolean isRefreshing() {
         return mSwipeRefreshLayout.isRefreshing();

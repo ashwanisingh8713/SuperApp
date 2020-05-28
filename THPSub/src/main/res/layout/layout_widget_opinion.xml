@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_root_opinion"
+    android:id="@+id/widgetParentLayout"
     android:layout_width="@dimen/widget_recyclerView_opinion_width"
     android:layout_height="@dimen/widget_recyclerView_opinion_height"
     android:layout_marginEnd="@dimen/widget_recyclerView_opinion_marginRight"
     android:layout_marginRight="@dimen/widget_recyclerView_opinion_marginRight"
-    app:layoutType="OPINION"
     android:orientation="vertical"
     android:padding="@dimen/widget_recyclerView_opinion_padding">
 
@@ -33,4 +32,4 @@
         app:textType="WigetText"
         android:textSize="@dimen/widget_opinion_title_size" />
 
-</com.ns.view.layout.NSLinearLayout>
+</LinearLayout>

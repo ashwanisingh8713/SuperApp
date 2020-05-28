@@ -21,7 +21,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
-import com.ns.adapter.AppTabContentAdapter;
+import com.ns.adapter.PremiumListingContentAdapter;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnEditionBtnClickListener;
@@ -55,7 +55,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         , OnEditionBtnClickListener, THP_AppEmptyPageListener, BaseFragmentTHP.EmptyViewClickListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
-    private AppTabContentAdapter mRecyclerAdapter;
+    private PremiumListingContentAdapter mRecyclerAdapter;
     private String mBreifingType = NetConstants.BREIFING_ALL;
     private AppTabContentModel mProfileNameModel;
     private String mPageType;
@@ -114,7 +114,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
 
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mPageType, mUserId, mPullToRefreshLayout.getRecyclerView());
+        mRecyclerAdapter = new PremiumListingContentAdapter(new ArrayList<>(), mPageType, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setOnEditionBtnClickListener(this::OnEditionBtnClickListener);
         mRecyclerAdapter.setAppEmptyPageListener(this :: checkPageEmpty);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
@@ -208,6 +208,18 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     }
 
+    private void setFetchingDataFromServer(boolean isFetchingDataFromServer, boolean enableSmoothProgressBar) {
+        mPullToRefreshLayout.setScrollEnabled(!isFetchingDataFromServer);
+        if(enableSmoothProgressBar) {
+            mPullToRefreshLayout.showSmoothProgressBar();
+        }
+        mPullToRefreshLayout.setRefreshing(isFetchingDataFromServer && !enableSmoothProgressBar);
+        mRecyclerAdapter.setFetchingDataFromServer(isFetchingDataFromServer);
+        if(!isFetchingDataFromServer) {
+            mPullToRefreshLayout.hideProgressBar();
+        }
+    }
+
     /**
      * Adding Pull To Refresh Listener
      */
@@ -215,10 +227,10 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(()->{
             if(!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
-                mPullToRefreshLayout.setRefreshing(false);
+                setFetchingDataFromServer(false, false);
                 return;
             }
-            mPullToRefreshLayout.setRefreshing(true);
+            setFetchingDataFromServer(true, false);
             loadData();
         });
     }
@@ -226,13 +238,13 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     @Override
     public void tryAgainBtnClick() {
-        mPullToRefreshLayout.showSmoothProgressBar();
+        setFetchingDataFromServer(true, true);
         loadData();
     }
 
     private void loadData() {
         if(!mPullToRefreshLayout.isRefreshing()) {
-            mPullToRefreshLayout.showSmoothProgressBar();
+            setFetchingDataFromServer(true, true);
         }
         hideEmptyLayout();
         loadData(BaseAcitivityTHP.sIsOnline);
@@ -296,14 +308,12 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
                             mRecyclerAdapter.setData(value);
                         }, throwable -> {
                             loadData(false);
-                            mPullToRefreshLayout.hideProgressBar();
-                            mPullToRefreshLayout.setRefreshing(false);
+                            setFetchingDataFromServer(false, false);
 
                             Log.i("AshwaniE", "Error :: "+isOnline);
 
                         }, () -> {
-                            mPullToRefreshLayout.hideProgressBar();
-                            mPullToRefreshLayout.setRefreshing(false);
+                            setFetchingDataFromServer(false, false);
                             // Showing Empty Msg.
                             showEmptyLayout(emptyLayout, isOnline, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mPageType);
 

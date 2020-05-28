@@ -28,10 +28,12 @@ import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
-import com.ns.adapter.WidgetAdapter;
+import com.ns.adapter.TH_WidgetAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
 import com.ns.utils.SectionSideWork;
@@ -263,21 +265,19 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                 mSectionSideWork.incrementPageCount();
 
                                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mSectionSideWork.getPage() - 1));
-                                mSectionSideWork.setLoading(false);
-                                mPullToRefreshLayout.setRefreshing(false);
+                                setFetchingDataFromServer(false, false);
                             }
                         },
                         throwable -> {
                             Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mSectionSideWork.getPage() + " :: throwable - " + throwable);
                             Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionDataFromDB() :: " + throwable);
-                            mSectionSideWork.setLoading(false);
-                            mPullToRefreshLayout.setRefreshing(false);
+                            setFetchingDataFromServer(false, false);
                         }));
     }
 
     private void sectionOrSubSectionFromServer(int page) {
-        mPullToRefreshLayout.showSmoothProgressBar();
-        mSectionSideWork.setLoading(true);
+
+        setFetchingDataFromServer(true, true);
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
             @Override
             public void onNext(ArrayList<SectionAdapterItem> articleBeans) {
@@ -311,16 +311,13 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }
                 Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
-                mSectionSideWork.setLoading(false);
-                mPullToRefreshLayout.setRefreshing(false);
+                setFetchingDataFromServer(false, false);
             }
 
             @Override
             public void onComplete(String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
-                mSectionSideWork.setLoading(false);
-                mPullToRefreshLayout.hideProgressBar();
-                mPullToRefreshLayout.setRefreshing(false);
+                setFetchingDataFromServer(false, false);
                 showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
             }
         };
@@ -368,11 +365,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(() -> {
             if (!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
-                mPullToRefreshLayout.setRefreshing(false);
+                setFetchingDataFromServer(false, false);
                 return;
             }
-
-            mPullToRefreshLayout.setRefreshing(true);
+            setFetchingDataFromServer(true, false);
 
             if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
                 getHomeDataFromServer();
@@ -380,6 +376,19 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 sectionOrSubSectionFromServer(1);
             }
         });
+    }
+
+    private void setFetchingDataFromServer(boolean isFetchingDataFromServer, boolean enableSmoothProgressBar) {
+        mPullToRefreshLayout.setScrollEnabled(!isFetchingDataFromServer);
+        if(enableSmoothProgressBar) {
+            mPullToRefreshLayout.showSmoothProgressBar();
+        }
+        mPullToRefreshLayout.setRefreshing(isFetchingDataFromServer && !enableSmoothProgressBar);
+        mRecyclerAdapter.setFetchingDataFromServer(isFetchingDataFromServer);
+        mSectionSideWork.setLoading(isFetchingDataFromServer);
+        if(!isFetchingDataFromServer) {
+            mPullToRefreshLayout.hideProgressBar();
+        }
     }
 
 
@@ -398,12 +407,16 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             @Override
             public void onError(Throwable throwable, String str) {
                 Log.i(NetConstants.TAG_ERROR, "getHomeDataFromServer() :: " + throwable);
-                mSectionSideWork.setLoading(false);
+                setFetchingDataFromServer(false, false);
             }
 
             @Override
             public void onComplete(String str) {
+                int co = mRecyclerAdapter.getItemCount();
                 mRecyclerAdapter.deleteAllItems();
+                //mRecyclerAdapter.notifyDataSetChanged();
+//                mRecyclerAdapter.notifyItemRangeRemoved(0, co);
+
                 homeAndBannerArticleFromDB();
             }
         });
@@ -417,9 +430,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
     /**
-     * It shows home page widgets
+     * It shows home page widgets, for TheHindu
      */
-    private void showHomeWidgetsFromObservable() {
+    private void TH_showHomeWidgetsFromObservable() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
         mDisposable.add(widgetObservable
@@ -435,30 +448,54 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         int index = mRecyclerAdapter.indexOf(item);
                         if(index != -1) {
                             item = mRecyclerAdapter.getItem(index);
-                            if(item.getWidgetAdapter() == null) {
-                                WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
-                                item.setWidgetAdapter(widgetAdapter);
+                            if(item.getTHWidgetAdapter() == null) {
+                                TH_WidgetAdapter th_widgetAdapter = new TH_WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
+                                th_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
+                                item.setTHWidgetAdapter(th_widgetAdapter);
                             }
-
-                            item.getWidgetAdapter().updateArticleList(widget.getBeans());
+                            item.getTHWidgetAdapter().updateArticleList(widget.getBeans());
                             mRecyclerAdapter.notifyItemChanged(index);
                             Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
                         }
-                        /*if (index == -1) {
-                            WidgetAdapter widgetAdapter = new WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
-                            item.setWidgetAdapter(widgetAdapter);
-                            if(xx == null) {
-                                mRecyclerAdapter.addSingleItem(item);
-                            } else {
-                                mRecyclerAdapter.insertItem(item, index);
-                            }
-                            Log.i(TAG, "Home Page Widget Added :: " + widget.getSecName() + " :: " + widget.getSecId());
-                        } else {
+                    }
+
+                }, throwable -> {
+                    Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
+                }, ()->{
+
+                }));
+    }
+
+    /**
+     * It shows home page widgets, for BusinessLine
+     */
+    private void BL_showHomeWidgetsFromObservable() {
+        final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
+        Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
+        mDisposable.add(widgetObservable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+
+                    for (TableWidget widget : value) {
+                        if (widget.getBeans() == null || widget.getBeans().size() == 0) {
+                            continue;
+                        }
+                        final String itemRowId = RowIds.rowId_widget(widget.getSecId());
+                        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BLD_WIDGET_DEFAULT, itemRowId);
+                        int index = mRecyclerAdapter.indexOf(item);
+                        if(index != -1) {
                             item = mRecyclerAdapter.getItem(index);
-                            item.getWidgetAdapter().updateArticleList(widget.getBeans());
+                            if(item.getBLWidgetAdapter() == null) {
+                                BL_WidgetAdapter bl_widgetAdapter = new BL_WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
+                                bl_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
+                                item.setBLWidgetAdapter(bl_widgetAdapter);
+                            }
+
+                            item.getBLWidgetAdapter().updateArticleList(widget.getBeans());
                             mRecyclerAdapter.notifyItemChanged(index);
                             Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
-                        }*/
+                        }
+
                     }
 
                 }, throwable -> {
@@ -485,8 +522,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         mSectionSideWork.setStaticPageBean(banner.getStaticPageBean());
                         int count = 0;
                         for (ArticleBean bean : banner.getBeans()) {
-                            final String itemRowId = RowIds.rowId_banner(bean.getSid(), bean.getAid());
                             if (count == 0) {
+                                final String itemRowId = RowIds.rowId_banner(bean.getSid());
                                 SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_BANNER, itemRowId);
                                 int index = mRecyclerAdapter.indexOf(item);
                                 if (index == -1) {
@@ -500,6 +537,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: UI :: Banner Updated :: " + itemRowId);
                                 }
                             } else {
+                                final String itemRowId = RowIds.rowId_defaultArticle(bean.getAid());
                                 SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
                                 item.setArticleBean(bean);
                                 mRecyclerAdapter.insertItem(item, count);
@@ -529,7 +567,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         }
                     }
 
-                    mPullToRefreshLayout.setRefreshing(false);
+                    setFetchingDataFromServer(false, false);
                     hideProgressDialog();
 
                 }, throwable -> {
@@ -544,8 +582,13 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
     private void loadFirstScrollPageData() {
-        mSectionSideWork.indexConfig(mRecyclerAdapter);
-        showHomeWidgetsFromObservable();
+        mSectionSideWork.indexConfig(mRecyclerAdapter, sIsDayTheme);
+        if(BuildConfig.IS_BL) {
+            BL_showHomeWidgetsFromObservable();
+        }
+        else {
+            TH_showHomeWidgetsFromObservable();
+        }
         addStaticWebPage();
         addSubsectionUI();
         adRequest();

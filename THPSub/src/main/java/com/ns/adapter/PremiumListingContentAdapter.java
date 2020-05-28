@@ -81,10 +81,11 @@ import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
+public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
     private List<AppTabContentModel> mContent;
     private String mFrom;
     private String mUserId;
+    private boolean isFetchingDataFromServer;
 
     /**
      * This holds description webview position in recyclerview.
@@ -118,7 +119,15 @@ public class AppTabContentAdapter extends BaseRecyclerViewAdapter {
         this.mGroupType = groupType;
     }
 
-    public AppTabContentAdapter(List<AppTabContentModel> content, String from, String userId, RecyclerView recyclerView) {
+    public boolean isFetchingDataFromServer() {
+        return isFetchingDataFromServer;
+    }
+
+    public void setFetchingDataFromServer(boolean fetchingDataFromServer) {
+        isFetchingDataFromServer = fetchingDataFromServer;
+    }
+
+    public PremiumListingContentAdapter(List<AppTabContentModel> content, String from, String userId, RecyclerView recyclerView) {
         this.mContent = content;
         this.mFrom = from;
         this.mUserId = userId;

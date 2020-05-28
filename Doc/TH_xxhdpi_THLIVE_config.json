@@ -150,17 +150,25 @@
         }
       }
     },
-    "widgetIndex": [
+    "widget": [
       {
         "secId": "142",
-        "index": "6",
+        "index": "5",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
@@ -170,9 +178,17 @@
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
@@ -182,9 +198,17 @@
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
@@ -194,9 +218,17 @@
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
@@ -206,9 +238,17 @@
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       }
     ],

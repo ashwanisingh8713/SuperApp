@@ -109,7 +109,7 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
 
     private void createWarningDialog() {
         AlertDialog.Builder builder = null;
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             builder = new AlertDialog.Builder(this);
         } else {
             builder = new AlertDialog.Builder(this, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK);

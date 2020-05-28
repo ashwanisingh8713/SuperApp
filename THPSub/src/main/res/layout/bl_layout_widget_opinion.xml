@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/widgetParentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/tools"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/layout_root_opinion"
+        android:layout_width="@dimen/widget_recyclerView_opinion_width"
+        android:layout_height="@dimen/widget_recyclerView_opinion_height"
+        android:orientation="vertical"
+        android:padding="@dimen/widget_recyclerView_opinion_padding">
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_opinion_title"
+            app:textType="WigetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:font_path="@string/THP_FiraSans_Regular"
+            android:textSize="9sp" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_opinion_content"
+            app:textType="WigetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/text_line_spacing"
+            android:maxLines="3"
+            app:font_path="@string/THP_TundraOffc"
+            android:textSize="@dimen/widget_opinion_title_size" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/widgetParentLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginEnd="@dimen/widget_recyclerView_column_margin_right"
-    android:layout_marginRight="@dimen/widget_recyclerView_column_margin_right"
-    app:layoutType="NORMAL_WIDGET"
-    >
+    xmlns:app="http://schemas.android.com/tools"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:id="@+id/layout_widget"
         android:layout_width="@dimen/widget_recyclerView_column_width"
-        android:layout_height="@dimen/widget_item_newheight"
+        android:layout_height="@dimen/widget_item_height"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageview_widget_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/widget_recyclerView_image_newheight"
-            android:src="@drawable/ph_toppicks_th" />
+            android:layout_height="@dimen/widget_recyclerView_image_height"
+            />
 
         <com.ns.view.text.ArticleTitleTextView
+            app:textType="XL"
             android:id="@+id/textview_widget_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,9 +33,8 @@
             android:lineSpacingExtra="@dimen/text_line_spacing"
             android:maxLines="3"
             android:minLines="3"
+            app:font_path="@string/THP_FiraSans_SemiBold"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="@dimen/widget_recyclerView_text_size"
-            app:font_path="@string/THP_TundraOffc"
-            app:textType="M"/>
+            android:textSize="@dimen/widget_recyclerView_text_size" />
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -27,7 +27,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.THP_DetailActivity;
-import com.ns.adapter.AppTabContentAdapter;
+import com.ns.adapter.PremiumListingContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarChangeRequired;
@@ -62,7 +62,7 @@ import io.reactivex.schedulers.Schedulers;
 public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, DFPAds.OnDFPAdLoadListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
-    private AppTabContentAdapter mRecyclerAdapter;
+    private PremiumListingContentAdapter mRecyclerAdapter;
     private ArticleBean mArticleBean;
     private String mArticleId;
     private String mFrom;
@@ -136,7 +136,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
 
         if(mRecyclerAdapter == null) {
-            mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
+            mRecyclerAdapter = new PremiumListingContentAdapter(new ArrayList<>(), mFrom, mUserId, mPullToRefreshLayout.getRecyclerView());
         }
 
         mPullToRefreshLayout.showProgressBar();

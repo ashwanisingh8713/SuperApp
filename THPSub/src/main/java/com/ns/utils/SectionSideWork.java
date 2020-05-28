@@ -20,6 +20,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.SectionContentAdapter;
+import com.ns.thpremium.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,8 +49,6 @@ public class SectionSideWork {
     private String mSectionId;
 
     private List<IndexArrange> indexArranges = new ArrayList<>();
-
-
 
     public SectionSideWork(String sectionId) {
         mSectionId = sectionId;
@@ -186,29 +185,45 @@ public class SectionSideWork {
         }
     }
 
+    Map<String, WidgetIndex> widgetIndexMap = new HashMap<>();
 
-    public void indexConfig(SectionContentAdapter mRecyclerAdapter) {
+    public WidgetIndex getWidgetIndex(String widgetItemRowId) {
+        return widgetIndexMap.get(widgetItemRowId);
+    }
+
+    public void indexConfig(SectionContentAdapter mRecyclerAdapter, boolean isDayTheme) {
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration == null) {
             return;
         }
 
-
-
         // Widget Index
         if(mSectionId.equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
-            List<WidgetIndex> widgetIndices = tableConfiguration.getWidgetIndex();
+            List<WidgetIndex> widgetIndices = tableConfiguration.getWidget();
             for (WidgetIndex widgetIndex : widgetIndices) {
                 final String itemRowId = RowIds.rowId_widget(widgetIndex.getSecId());
-                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
+                SectionAdapterItem item = null;
+                if(BuildConfig.IS_BL) {
+                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BLD_WIDGET_DEFAULT, itemRowId);
+                } else {
+                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
+                }
+                /*if(isDayTheme) {
+                    item.setBackgroundColor(widgetIndex.getBackground().getLight());
+                    item.setTextColor(widgetIndex.getText().getLight());
+                } else {
+                    item.setBackgroundColor(widgetIndex.getBackground().getDark());
+                    item.setTextColor(widgetIndex.getText().getDark());
+                }*/
                 int index = widgetIndex.getIndex();
                 IndexArrange widgetArrange = new IndexArrange(index, item);
                 indexArranges.add(widgetArrange);
+                widgetIndexMap.put(itemRowId, widgetIndex);
             }
         }
 
         // Ads Index
-        if(!PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() ) {
+        if(!PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() && BaseAcitivityTHP.sIsOnline ) {
             for (AdData adsBean : tableConfiguration.getAds().getListingPageAds()) {
                 adsBean.setSecId(mSectionId);
                 adsBean.setAdDataUiqueId(RowIds.adDataUiqueId(adsBean.getIndex(), adsBean.getType()));

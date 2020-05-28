@@ -40,7 +40,7 @@ public abstract class BaseFragmentTHP extends Fragment {
 
     public abstract int getLayoutRes();
 
-    protected static boolean sIsDayTheme = true;
+    public static boolean sIsDayTheme = true;
     protected boolean mIsVisible;
     protected int mSize = 30;
     protected String mUserId;

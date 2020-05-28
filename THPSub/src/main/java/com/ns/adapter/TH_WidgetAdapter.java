@@ -1,5 +1,6 @@
 package com.ns.adapter;
 
+import android.graphics.Color;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,18 +17,21 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.callbacks.WidgetItemClickListener;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
 import java.util.List;
 import java.util.Locale;
 
 
-public class WidgetAdapter extends BaseRecyclerViewAdapter {
+public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private static final String TAG = "WidgetAdapter";
     private final int VIEW_WIDGET = 1;
@@ -43,8 +47,17 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     private int sectionId;
     private String sectionName;
 
+    private WidgetIndex widgetIndex;
 
-    public WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
+    public void setWidgetIndex(WidgetIndex widgetIndex) {
+        this.widgetIndex = widgetIndex;
+    }
+
+    public WidgetIndex getWidgetIndex() {
+        return widgetIndex;
+    }
+
+    public TH_WidgetAdapter(List<ArticleBean> mWidgetListParam, int sectionId, String sectionName) {
         mWidgetList = mWidgetListParam;
         this.sectionId = sectionId;
         this.sectionName = sectionName;
@@ -132,16 +145,25 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private void fillAppExclusiveData(AppExclusiveViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.mTitleTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
+        }
+        else {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.mTitleTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
+        }
         if (bean != null) {
-            holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
-            holder.mRootLayout.setOnClickListener(new View.OnClickListener() {
+            //holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            holder.mTitleTextView.setText(ResUtil.htmlText("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
 //                    FlurryAgent.logEvent("Widget: " + " Article Clicked");
 
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.widgetParentLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -149,12 +171,20 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             });
 
             // Dims Read article given view
-            dimReadArticle(holder.mRootLayout.getContext(), bean.getArticleId(), holder.mRootLayout);
+            dimReadArticle(holder.widgetParentLayout.getContext(), bean.getArticleId(), holder.widgetParentLayout);
         }
     }
 
     private void fillWidgetData(final WidgetViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
+        }
+        else {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
+        }
         if (bean != null) {
 
             String imageUrl = bean.getIm_thumbnail_v2();
@@ -169,15 +199,15 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             holder.mWidgetTextView.setText(bean.getTi());
 
             // Dims Read article given view
-            dimReadArticle(holder.mWidgetLayout.getContext(), bean.getArticleId(), holder.mWidgetLayout);
-            holder.mWidgetLayout.setOnClickListener(new View.OnClickListener() {
+            dimReadArticle(holder.widgetParentLayout.getContext(), bean.getArticleId(), holder.widgetParentLayout);
+            holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mWidgetLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.widgetParentLayout);
 
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
@@ -188,6 +218,14 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void fillCartoonData(CartoonViewHolder holder, final int position) {
+
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+        }
+        else {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+        }
+
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
             if (bean.getHi().equals("1")) {
@@ -203,16 +241,16 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
             }
 
             // Dims Read article given view
-            dimReadArticle(holder.mRootLayout.getContext(), bean.getArticleId(), holder.mRootLayout);
+            dimReadArticle(holder.widgetParentLayout.getContext(), bean.getArticleId(), holder.widgetParentLayout);
 
-            holder.mRootLayout.setOnClickListener(new View.OnClickListener() {
+            holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.widgetParentLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -221,30 +259,38 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillOpinionData(OpinionViewHolder mOpinionViewHolder, final int position) {
+    private void fillOpinionData(OpinionViewHolder holder, final int position) {
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
+            holder.mWidgetDescripitionTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
+        }
+        else {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
+            holder.mWidgetDescripitionTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
+        }
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
-            mOpinionViewHolder.mWidgetTextView.setText("OPINION");
+            holder.mWidgetTextView.setText("OPINION");
             String description = bean.getTi();
             if (description != null) {
-                mOpinionViewHolder.mWidgetDescripitionTextView.setText(
-                        Html.fromHtml(description)
-                );
+                holder.mWidgetDescripitionTextView.setText(ResUtil.htmlText(description));
             } else {
-                mOpinionViewHolder.mWidgetDescripitionTextView.setText("");
+                holder.mWidgetDescripitionTextView.setText("");
             }
 
             // Dims Read article given view
-            dimReadArticle(mOpinionViewHolder.mRootLayout.getContext(), bean.getArticleId(), mOpinionViewHolder.mRootLayout);
+            dimReadArticle(holder.itemView.getContext(), bean.getArticleId(), holder.widgetParentLayout);
 
-            mOpinionViewHolder.mRootLayout.setOnClickListener(new View.OnClickListener() {
+            holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Openion", "Widget Openion: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Openion: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, mOpinionViewHolder.mRootLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.widgetParentLayout);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -254,10 +300,18 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void fillMultiMediaData(MultiMediaViewHolder holder, final int position) {
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
+        }
+        else {
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
+        }
         final ArticleBean bean = mWidgetList.get(position);
         if (bean != null) {
             boolean isDayTheme = DefaultPref.getInstance(holder.itemView.getContext()).isUserThemeDay();
-            holder.mWidgetTitleTextView.setText(bean.getTi());
+            holder.mWidgetTextView.setText(bean.getTi());
             String publishTime = bean.getGmt();
             String timeDiff = AppDateUtil.getDurationFormattedDate(AppDateUtil.strToMlsForSearchedArticle(publishTime), Locale.ENGLISH);
             holder.mWidgetTime.setText(timeDiff);
@@ -323,11 +377,11 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     public class WidgetViewHolder extends RecyclerView.ViewHolder {
         private ImageView mWidgetImageView;
         private TextView mWidgetTextView;
-        private LinearLayout mWidgetLayout;
+        private LinearLayout widgetParentLayout;
 
         public WidgetViewHolder(View itemView) {
             super(itemView);
-            mWidgetLayout = itemView.findViewById(R.id.layout_widget);
+            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
             mWidgetImageView = itemView.findViewById(R.id.imageview_widget_image);
             mWidgetTextView = itemView.findViewById(R.id.textview_widget_text);
         }
@@ -336,24 +390,24 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     public class CartoonViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mWidgetImageView;
-        private LinearLayout mRootLayout;
+        private LinearLayout widgetParentLayout;
 
         public CartoonViewHolder(View itemView) {
             super(itemView);
             mWidgetImageView = itemView.findViewById(R.id.imageview_widget_cartoon);
-            mRootLayout = itemView.findViewById(R.id.layout_root_cartoon);
+            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
 
         }
     }
 
     public class AppExclusiveViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout mRootLayout;
+        private LinearLayout widgetParentLayout;
         private TextView mTitleTextView;
 
         public AppExclusiveViewHolder(View itemView) {
             super(itemView);
-            mRootLayout = itemView.findViewById(R.id.layout_root_opinion);
+            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
             mTitleTextView = itemView.findViewById(R.id.title);
         }
     }
@@ -361,16 +415,18 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     public class MultiMediaViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mWidgetImageView;
-        private TextView mWidgetTitleTextView;
+        private TextView mWidgetTextView;
         private TextView mWidgetTime;
         private ImageView mPlayButton;
         private View mParentView;
+        private LinearLayout widgetParentLayout;
 
         public MultiMediaViewHolder(View itemView) {
             super(itemView);
             mParentView = itemView;
+            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
             mWidgetImageView = itemView.findViewById(R.id.imageview_multimedia_thumbnail);
-            mWidgetTitleTextView = itemView.findViewById(R.id.textview_multimedia_title);
+            mWidgetTextView = itemView.findViewById(R.id.textview_multimedia_title);
             mWidgetTime = itemView.findViewById(R.id.textview_multimedia_time);
             mPlayButton = itemView.findViewById(R.id.button_multimedia_play);
         }
@@ -379,14 +435,14 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
     public class OpinionViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mWidgetTextView, mWidgetDescripitionTextView;
-        private LinearLayout mRootLayout;
+        private LinearLayout widgetParentLayout;
 
         public OpinionViewHolder(View itemView) {
             super(itemView);
 
             mWidgetTextView = itemView.findViewById(R.id.textview_opinion_title);
             mWidgetDescripitionTextView = itemView.findViewById(R.id.textview_opinion_content);
-            mRootLayout = itemView.findViewById(R.id.layout_root_opinion);
+            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
         }
     }
 
@@ -396,7 +452,5 @@ public class WidgetAdapter extends BaseRecyclerViewAdapter {
         mWidgetItemClickListener = widgetItemClickListener;
     }
 
-    public interface WidgetItemClickListener {
-        void onWidgetItemClickListener(int innerItemPosition, String secId);
-    }
+
 }

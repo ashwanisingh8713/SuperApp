@@ -394,6 +394,7 @@ public class DefaultTHApiManager {
                         }
                         return "";
                     })
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(val -> {
                         if (callback != null) {
                             callback.onNext("homeArticles");

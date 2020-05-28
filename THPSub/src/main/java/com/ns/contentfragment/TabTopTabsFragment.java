@@ -9,11 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.THPDB;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.adapter.TopTabsAdapter;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
@@ -232,6 +235,21 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
             TabTopTabsFragment tabTopTabsFragment = TabTopTabsFragment.getInstance(mTabIndex, mPageSource, mSectionId, true, tableSection.getSecId(), tableSection.getSecName());
             FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, tabTopTabsFragment);
         }
+        else {
+            String sid = tableSection.getSecId();
+            TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+            List<TabsBean> tabs = tableConfiguration.getTabs();
+            int count = 0;
+            for(TabsBean tabsBean1 : tabs) {
+                tabsBean1.setIndex(count);
+                if(tabsBean1.getSection() != null && tabsBean1.getSection().getSecId().equals(sid)) {
+                    // Sending Event in AppTabFragment.java => handleEvent(TabsBean tabsBean)
+                    EventBus.getDefault().post(tabsBean1);
+                    break;
+                }
+                count++;
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -250,6 +268,12 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
 
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
+
+        // If, not sub-section, and tabIndex is zero and any other section is selected apart from "Home"
+        if(!mIsSubsection &&  mTabIndex == 0 && mViewPager.getCurrentItem() != 0) {
+            mViewPager.setCurrentItem(0);
+            return;
+        }
 
         // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
         BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();

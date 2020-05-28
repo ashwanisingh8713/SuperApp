@@ -1,0 +1,104 @@
+{
+  "widget": [
+    {
+      "secId": "5",
+      "index": "5",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "viewAll": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    },
+    {
+      "secId": "26",
+      "index": "8",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "viewAll": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    },
+    {
+      "secId": "30",
+      "index": "10",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "viewAll": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    },
+    {
+      "secId": "37",
+      "index": "12",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "viewAll": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    },
+    {
+      "secId": "18",
+      "index": "15",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "viewAll": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    }
+  ]
+}

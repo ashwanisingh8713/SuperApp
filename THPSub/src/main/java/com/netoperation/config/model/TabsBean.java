@@ -1,5 +1,7 @@
 package com.netoperation.config.model;
 
+import androidx.room.Ignore;
+
 import com.netoperation.model.SectionBean;
 
 public class TabsBean {
@@ -19,7 +21,18 @@ public class TabsBean {
     private String value;
     private SectionBean section;
 
+    @Ignore
+    private int index;
 
+    @Ignore
+    public int getIndex() {
+        return index;
+    }
+
+    @Ignore
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public String getTitle() {
         return title;

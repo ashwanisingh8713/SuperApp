@@ -4,8 +4,10 @@ public class WidgetIndex {
 
     private String secId;
     private int index;
-    private UrlBean background;
-    private UrlBean text;
+    private DayNightColor background;
+    private DayNightColor description;
+    private DayNightColor title;
+    private DayNightColor viewAll;
 
     public String getSecId() {
         return secId;
@@ -23,19 +25,35 @@ public class WidgetIndex {
         this.index = index;
     }
 
-    public UrlBean getBackground() {
+    public DayNightColor getBackground() {
         return background;
     }
 
-    public void setBackground(UrlBean background) {
+    public void setBackground(DayNightColor background) {
         this.background = background;
     }
 
-    public UrlBean getText() {
-        return text;
+    public DayNightColor getDescription() {
+        return description;
     }
 
-    public void setText(UrlBean text) {
-        this.text = text;
+    public void setDescription(DayNightColor description) {
+        this.description = description;
+    }
+
+    public DayNightColor getTitle() {
+        return title;
+    }
+
+    public void setTitle(DayNightColor title) {
+        this.title = title;
+    }
+
+    public DayNightColor getViewAll() {
+        return viewAll;
+    }
+
+    public void setViewAll(DayNightColor viewAll) {
+        this.viewAll = viewAll;
     }
 }

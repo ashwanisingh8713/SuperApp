@@ -137,7 +137,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(1);
 
         // App Tab Configuration
         mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
@@ -480,6 +480,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 });
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(AdData adData) {
         if(adData != null && adData.getSecId().equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
@@ -488,6 +489,11 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         else {
             bottomBannerAds(false);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(TabsBean tabsBean) {
+        mViewPager.setCurrentItem(tabsBean.getIndex());
     }
 
     private void bottomBannerAds(boolean isHomePage) {

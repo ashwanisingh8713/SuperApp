@@ -10,33 +10,33 @@
     "staticItem": [
       {
         "title": "Terms & Condition",
-        "urlDark": "https://alphabl.businessline.in/app/termsofusedark/",
-        "urlLight": "https://alphabl.businessline.in/app/termsofuselite/"
+        "urlDark": "https://www.thehindu.com/app-termsofuse/",
+        "urlLight": "https://www.thehindu.com/app-termsofuse/"
       },
       {
         "title": "Privacy Policy",
-        "urlDark": "https://alphabl.businessline.in/app/Privacypolicydark/",
-        "urlLight": "https://alphabl.businessline.in/app/Privacypolicylite/"
+        "urlDark": "https://alphath.thehindu.co.in/app-privacypolicy-dark/?test",
+        "urlLight": "https://www.thehindu.com/privacypolicy/"
       },
       {
         "title": "Help",
-        "urlDark": "https://alphabl.businessline.in/app/helpdark/",
-        "urlLight": "https://alphabl.businessline.in/app/helplite/"
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
       },
       {
         "title": "AboutUs",
-        "urlDark": "https://alphabl.businessline.in/app/aboutusdark/",
-        "urlLight": "https://alphabl.businessline.in/app/aboutuslite/"
+        "urlDark": "https://www.google.com/?client=safari",
+        "urlLight": "https://www.google.com/?client=safari"
       }
     ],
     "tabs": [
       {
         "title": "Home",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/unfavorite.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/favorite.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xxhdpi/favorite.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/urlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -44,10 +44,10 @@
       {
         "title": "Portfolio Section ",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -369,10 +369,10 @@
       {
         "title": "BLink ",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/BLinkurlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/BLinkurlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -720,10 +720,10 @@
       {
         "title": "Indices",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlLight.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlLight.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png",
-          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png"
+          "urlDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
+          "urlLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlLight.png",
+          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png",
+          "urlSelectedLight": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/xhdpi/IndicesurlSelectedLight.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "SENSEX"
@@ -758,22 +758,22 @@
       },
       "topBarBg": {
         "dark": "#313131",
-        "light": "#ffffff"
+        "light": "#1394D1"
       },
       "bottomBar": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#ededed",
           "light": "#818181",
-          "lightSelected": "#000000"
+          "lightSelected": "#ff0000"
         },
         "bg": {
           "dark": "#313131",
-          "light": "#ffffff"
+          "light": "#1394D1"
         },
         "indicator": {
-          "dark": "#00000000",
-          "light": "#00000000"
+          "dark": "#ffffff",
+          "light": "#818181"
         }
       },
       "breadcrumb": {
@@ -785,7 +785,7 @@
         },
         "bg": {
           "dark": "#313131",
-          "light": "#ffffff"
+          "light": "#1394D1"
         },
         "indicator": {
           "dark": "#ffffff",
@@ -793,65 +793,105 @@
         }
       }
     },
-    "widgetIndex": [
+    "widget": [
       {
-        "secId": "142",
+        "secId": "5",
         "index": "5",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
-        "secId": "88",
+        "secId": "26",
         "index": "8",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
-        "secId": "5",
+        "secId": "30",
         "index": "10",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
-        "secId": "138",
+        "secId": "37",
         "index": "12",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
-        "secId": "69",
+        "secId": "18",
         "index": "15",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
         },
-        "text": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
+        },
+        "viewAll": {
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       }
     ],
@@ -924,81 +964,81 @@
     "totalIcons": "88",
     "otherIconsDownloadUrls": {
       "dark": {
-        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/Logo.png",
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/unbookmark.png",
-          "like": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/like.png",
-          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/dislike.png",
-          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/unfavorite.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/share.png"
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xxhdpi/left_slider_three_line.png",
-          "logo": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/logo_actionbar.png",
-          "search": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/back.png",
-          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/ttsPause.png",
-          "comment": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/comment.png",
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/unbookmark.png",
-          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/textSize.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/share.png",
-          "crown": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/crown.png",
-          "like": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/like.png",
-          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/dislike.png",
-          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/Logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
         },
         "placeHolder": {
-          "banner": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/banner-b.png",
-          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/thumb-b.png",
-          "widget": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/widget-b.png",
-          "ads": "http://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/ads.png"
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Dark/xhdpi/ads.png"
         }
       },
       "light": {
-        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/Logo.png",
+        "Logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unbookmark.png",
-          "like": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/like.png",
-          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/dislike.png",
-          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/share.png"
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unbookmark.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/left_slider_three_line.png",
-          "logo": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/logo_actionbar.png",
-          "search": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/back.png",
-          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/ttsPause.png",
-          "comment": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/comment.png",
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unbookmark.png",
-          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/textSize.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/share.png",
-          "crown": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/crown.png",
-          "like": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/like.png",
-          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/dislike.png",
-          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/left_slider_three_line.png",
+          "logo": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/Logo.png",
+          "search": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/search.png",
+          "overflow_verticle_dot": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/overflow_verticle_dot.png",
+          "back": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/back.png",
+          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPlay.png",
+          "ttsPause": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ttsPause.png",
+          "comment": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/comment.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/bookmark.png",
+          "textSize": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/textSize.png",
+          "share": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/share.png",
+          "crown": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/crown.png",
+          "like": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/like.png",
+          "dislike": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/dislike.png",
+          "favorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/favorite.png",
+          "unfavorite": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
         },
         "placeHolder": {
-          "banner": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/banner-b.png",
-          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/thumb-b.png",
-          "widget": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/widget-b.png",
-          "ads": "http://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/ads.png"
+          "banner": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/banner.png",
+          "thumb": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/thumb.png",
+          "widget": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/widget.png",
+          "ads": "http://appsearch.thehindu.com/admin/assets/icons/Light/xhdpi/ads.png"
         }
       }
     },
@@ -1010,7 +1050,7 @@
     "searchOption": {
       "urlId": "https://www.thehindubusinessline.com/app/search.json?term=",
       "urlText": "https://www.thehindubusinessline.com/app/search.json?term=",
-      "searchItem": [
+      "types": [
         {
           "title": "Article",
           "searchType": "article"

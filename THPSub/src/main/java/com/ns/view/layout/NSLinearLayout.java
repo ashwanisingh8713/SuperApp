@@ -13,7 +13,7 @@ import com.ns.utils.ResUtil;
 
 public class NSLinearLayout extends LinearLayout {
 
-    private int viewType;
+    private int layoutType;
 
     public NSLinearLayout(Context context) {
         super(context);
@@ -34,20 +34,22 @@ public class NSLinearLayout extends LinearLayout {
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NSLayout);
             if (typedArray.hasValue(R.styleable.NSLayout_layoutType)) {
-                viewType = typedArray.getInt(R.styleable.NSLayout_layoutType, 0);
+                layoutType = typedArray.getInt(R.styleable.NSLayout_layoutType, 0);
             } else {
-                viewType = -1;
+                layoutType = -1;
             }
+
+            typedArray.recycle();
         }
 
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
 
         // 0 = Opinion
-        if(viewType == 0) {
+        if(layoutType == 0) {
             setBackgroundColor(ResUtil.getColor(getResources(), R.color.widget_opinion_background)); //133b5a
         }
         // 1 = Multimedia
-        else if(viewType == 1) {
+        else if(layoutType == 1) {
             if(isUserThemeDay) {
                 setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_light)); // ffffff
             }
@@ -56,15 +58,15 @@ public class NSLinearLayout extends LinearLayout {
             }
         }
         // 2 = Cartoon
-        else if(viewType == 2) {
+        else if(layoutType == 2) {
             setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.cartoon_border)); // d4d4d4
         }
         // 3 = APPEXCLUSIVE
-        else if(viewType == 3) {
+        else if(layoutType == 3) {
             setBackgroundColor(ResUtil.getColor(getResources(), R.color.red)); //CF4939
         }
         // 4 = Normal Widget
-        else if(viewType == 4) {
+        else if(layoutType == 4) {
             if(isUserThemeDay) {
                 setBackground(ResUtil.getBackgroundDrawable(getResources(), R.drawable.drawable_explore_light)); // ffffff
             }
@@ -73,7 +75,7 @@ public class NSLinearLayout extends LinearLayout {
             }
         }
         // 5 = Black_Light
-        else if(viewType == 5){
+        else if(layoutType == 5){
             if (isUserThemeDay) {
                 setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); // ffffff
             } else {
@@ -81,7 +83,7 @@ public class NSLinearLayout extends LinearLayout {
             }
         }
         // 6 = Black_Dark
-        else if(viewType == 6){
+        else if(layoutType == 6){
             if(isUserThemeDay) {
                 setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); //ffffff
             }
@@ -90,7 +92,7 @@ public class NSLinearLayout extends LinearLayout {
             }
         }
         // 7 = Black_Full
-        else if(viewType == 7) {
+        else if(layoutType == 7) {
             if(isUserThemeDay) {
                 setBackgroundColor(ResUtil.getColor(getResources(), R.color.color_ffffff)); // ffffff
             }

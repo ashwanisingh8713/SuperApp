@@ -2,15 +2,17 @@ package com.netoperation.model;
 
 import androidx.annotation.Nullable;
 
+import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
-import com.ns.adapter.WidgetAdapter;
+import com.ns.adapter.TH_WidgetAdapter;
 
 public class SectionAdapterItem {
 
     private final int viewType;
     private final String itemRowId;
     private ArticleBean articleBean;
-    private WidgetAdapter widgetAdapter;
+    private TH_WidgetAdapter THWidgetAdapter;
+    private BL_WidgetAdapter BLWidgetAdapter;
     private ExploreAdapter exploreAdapter;
     private StaticPageUrlBean staticPageUrlBean;
     private AdData adData;
@@ -21,6 +23,7 @@ public class SectionAdapterItem {
         this.viewType = viewType;
         this.itemRowId = itemRowId;
     }
+
 
     public int getProposedIndex() {
         return proposedIndex;
@@ -62,12 +65,20 @@ public class SectionAdapterItem {
         return itemRowId;
     }
 
-    public WidgetAdapter getWidgetAdapter() {
-        return widgetAdapter;
+    public TH_WidgetAdapter getTHWidgetAdapter() {
+        return THWidgetAdapter;
     }
 
-    public void setWidgetAdapter(WidgetAdapter widgetAdapter) {
-        this.widgetAdapter = widgetAdapter;
+    public void setTHWidgetAdapter(TH_WidgetAdapter THWidgetAdapter) {
+        this.THWidgetAdapter = THWidgetAdapter;
+    }
+
+    public BL_WidgetAdapter getBLWidgetAdapter() {
+        return BLWidgetAdapter;
+    }
+
+    public void setBLWidgetAdapter(BL_WidgetAdapter BLWidgetAdapter) {
+        this.BLWidgetAdapter = BLWidgetAdapter;
     }
 
     public StaticPageUrlBean getStaticPageUrlBean() {

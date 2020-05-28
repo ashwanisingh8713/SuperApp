@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/bl_article_item_parent_height"
     xmlns:app="http://schemas.android.com/tools"
-    android:layout_marginLeft="5dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginEnd="5dp"
+    android:layout_marginLeft="@dimen/bl_item_margin_left"
+    android:layout_marginStart="@dimen/bl_item_margin_left"
+    android:layout_marginRight="@dimen/bl_item_margin_right"
+    android:layout_marginEnd="@dimen/bl_item_margin_right"
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 

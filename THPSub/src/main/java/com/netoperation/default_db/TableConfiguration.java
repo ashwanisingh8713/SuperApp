@@ -69,14 +69,14 @@ public class TableConfiguration {
         this.totalIcons = totalIcons;
     }
 
-    private List<WidgetIndex> widgetIndex;
+    private List<WidgetIndex> widget;
 
-    public List<WidgetIndex> getWidgetIndex() {
-        return widgetIndex;
+    public List<WidgetIndex> getWidget() {
+        return widget;
     }
 
-    public void setWidgetIndex(List<WidgetIndex> widgetIndex) {
-        this.widgetIndex = widgetIndex;
+    public void setWidget(List<WidgetIndex> widget) {
+        this.widget = widget;
     }
 
     public String getLastServerUpdateTime() {

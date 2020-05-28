@@ -11,8 +11,8 @@ public class RowIds {
         return "staticWebpage_" + secId + "_" + position;
     }
 
-    public static String rowId_banner(String secId, String articleId) {
-        return "banner_" + secId + "_" + articleId;
+    public static String rowId_banner(String secId) {
+        return "banner_" + secId ;
     }
 
     public static String adDataUiqueId(int index, String adId) {

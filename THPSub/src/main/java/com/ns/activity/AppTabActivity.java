@@ -45,7 +45,6 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.utils.TabUtils;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
 
@@ -152,7 +151,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                         staticItem.setSecName(bean.getTitle());
                         staticItem.setType("staticUrlPage");
                         staticItem.setSecId("staticUrlPage");
-                        if(mIsDayTheme) {
+                        if(sIsDayTheme) {
                             staticItem.setWebLink(bean.getUrlLight());
                         }
                         else {
@@ -360,17 +359,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void handleEvent(BackPressCallback backPressCallback) {
-        Log.i("handleEvent", "Received BackPressCallback :: From TabIndex = "+backPressCallback.getTabIndex());
-        if(backPressCallback.isPopBack()) {
-            return;
-        } else if(backPressCallback.getTabIndex() != 0){
-            mAppTabFragment.setCurrentTab(0);
-        } else {
-            finish();
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
@@ -395,6 +383,18 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void handleEvent(BackPressCallback backPressCallback) {
+        Log.i("handleEvent", "Received BackPressCallback :: From TabIndex = "+backPressCallback.getTabIndex());
+        if(backPressCallback.isPopBack()) {
+            return;
+        } else if(backPressCallback.getTabIndex() != 0){
+            mAppTabFragment.setCurrentTab(0);
+        } else {
+            finish();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         //drawer is open
@@ -402,7 +402,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             mDrawerLayout.closeDrawers();
             return;
         }
-
+        // It sends event to current visible fragment, in handleEvent(BackPressImpl backPress)
         EventBus.getDefault().post(new BackPressImpl());
     }
 

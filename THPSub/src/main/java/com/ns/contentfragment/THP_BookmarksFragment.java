@@ -28,7 +28,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.activity.BookmarkActivity;
-import com.ns.adapter.AppTabContentAdapter;
+import com.ns.adapter.PremiumListingContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.THP_AppEmptyPageListener;
@@ -58,7 +58,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private LinearLayout emptyLayout;
-    private AppTabContentAdapter mRecyclerAdapter;
+    private PremiumListingContentAdapter mRecyclerAdapter;
     private String mUserId;
     private String mGoupType;
     private UserProfile mUserProfile;
@@ -110,7 +110,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mGoupType != null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)){
             mSearchParentLayout.setVisibility(View.VISIBLE);
         }
-        mRecyclerAdapter = new AppTabContentAdapter(new ArrayList<>(), mGoupType, mUserId, mPullToRefreshLayout.getRecyclerView());
+        mRecyclerAdapter = new PremiumListingContentAdapter(new ArrayList<>(), mGoupType, mUserId, mPullToRefreshLayout.getRecyclerView());
         mRecyclerAdapter.setAppEmptyPageListener(this);
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
 

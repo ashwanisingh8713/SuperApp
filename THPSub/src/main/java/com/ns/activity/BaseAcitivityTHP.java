@@ -50,29 +50,29 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     protected final CompositeDisposable mDisposable = new CompositeDisposable();
 
-    public abstract int layoutRes();
+    public static boolean sIsDayTheme = true;
+    public static boolean sIsOnline;
 
+    public abstract int layoutRes();
     protected FragmentTools mFragmentTools;
     private Topbar mToolbar;
+
 
     public Topbar getDetailToolbar() {
         return  mToolbar;
     }
-
-    protected boolean mIsDayTheme = true;
     private ArticleTitleTextView mNoConnectionTabText;
 
-    public static boolean sIsOnline;
     private Disposable internetDisposable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
+        sIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
         // Dialog Theme change
-        if(mIsDayTheme) {
+        if(sIsDayTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //For day mode theme for dialog
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); //For night mode theme for dialog

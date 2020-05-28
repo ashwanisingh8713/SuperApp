@@ -1,5 +1,6 @@
 package com.ns.adapter;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.callbacks.WidgetItemClickListener;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
@@ -36,6 +38,7 @@ import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewLinkClick;
 import com.ns.viewholder.ArticlesViewHolder;
+import com.ns.viewholder.BL_WidgetsViewHolder;
 import com.ns.viewholder.BannerViewHolder;
 import com.ns.viewholder.ExploreViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
@@ -43,7 +46,7 @@ import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.SearchRecyclerHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 import com.ns.viewholder.TaboolaNativeAdViewHolder;
-import com.ns.viewholder.WidgetsViewHolder;
+import com.ns.viewholder.TH_WidgetsViewHolder;
 import com.taboola.android.api.TBImageView;
 import com.taboola.android.api.TBRecommendationItem;
 import com.taboola.android.api.TBTextView;
@@ -60,6 +63,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private boolean mIsSubSection;
     private String mSectionId;
     private String mSectionType;
+    private boolean isFetchingDataFromServer;
     private SparseIntArray positionList = new SparseIntArray();
 
 
@@ -69,6 +73,14 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         this.mIsSubSection = isSubsection;
         this.mSectionId = sectionId;
         this.mSectionType = sectionType;
+    }
+
+    public boolean isFetchingDataFromServer() {
+        return isFetchingDataFromServer;
+    }
+
+    public void setFetchingDataFromServer(boolean fetchingDataFromServer) {
+        isFetchingDataFromServer = fetchingDataFromServer;
     }
 
     @Override
@@ -131,8 +143,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     .inflate(R.layout.search_recycler_item, viewGroup, false));
         }
         else if(viewType == VT_THD_WIDGET_DEFAULT) {
-            return new WidgetsViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cardview_home_widgets, viewGroup, false));
+            return new TH_WidgetsViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.th_cardview_home_widgets, viewGroup, false));
+        }
+        else if(viewType == VT_BLD_WIDGET_DEFAULT) {
+            return new BL_WidgetsViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.bl_cardview_home_widgets, viewGroup, false));
         }
         else if(viewType == VT_WEB_WIDGET) {
             return new StaticItemWebViewHolder(LayoutInflater.from(viewGroup.getContext())
@@ -160,8 +176,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if(holder instanceof BannerViewHolder) {
             fillBannerData((BannerViewHolder) holder, position);
         }
-        else if(holder instanceof WidgetsViewHolder) {
-            fillWidgetData((WidgetsViewHolder)holder, position);
+        else if(holder instanceof TH_WidgetsViewHolder) {
+            th_fillWidgetData((TH_WidgetsViewHolder)holder, position);
+        }
+        else if(holder instanceof BL_WidgetsViewHolder) {
+            bl_fillWidgetData((BL_WidgetsViewHolder)holder, position);
         }
         else if(holder instanceof ArticlesViewHolder) {
             fillArticleData(holder, position);
@@ -190,8 +209,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             ((TaboolaNativeAdViewHolder) holder).mAdContainer.removeAllViews();
             ((TaboolaNativeAdViewHolder) holder).thumbNailContainer.removeAllViews();
         }
-        else if(holder instanceof WidgetsViewHolder) {
-            WidgetsViewHolder widgetsViewHolder = (WidgetsViewHolder) holder;
+        else if(holder instanceof TH_WidgetsViewHolder) {
+            TH_WidgetsViewHolder widgetsViewHolder = (TH_WidgetsViewHolder) holder;
             final int position = widgetsViewHolder.getAdapterPosition();
             int firstVisiblePosition = widgetsViewHolder.layoutManager.findFirstVisibleItemPosition();
             positionList.put(position, firstVisiblePosition);
@@ -307,7 +326,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if(adView != null) {
             adView.removeView(inlineAdViewHolder.frameLayout);
         }
-        // Just below is fix of Crashlytics #6509
         if (adView != null && adView.getParent() != null) {
             adView.removeView(inlineAdViewHolder.frameLayout);
             ((ViewGroup) adView.getParent()).removeView(adView);
@@ -408,6 +426,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
 
@@ -419,6 +440,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
@@ -428,6 +452,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mMultimediaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
@@ -437,6 +464,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mShareArticleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     SharingArticleUtil.shareArticle(v.getContext(), bean);
                 }
             });
@@ -491,6 +521,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mBannerLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
@@ -503,6 +536,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mMultimediaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
@@ -511,6 +547,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");*/
 
@@ -521,6 +560,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             holder.mShareArticleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isFetchingDataFromServer()) {
+                        return;
+                    }
                     SharingArticleUtil.shareArticle(v.getContext(), bean);
                 }
             });
@@ -596,7 +638,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
 
     ////////////////////////////////////
-    private void fillWidgetData(WidgetsViewHolder mWidgetsViewHolder, final int verticleItemPosition) {
+    private void th_fillWidgetData(TH_WidgetsViewHolder mWidgetsViewHolder, final int verticleItemPosition) {
 
         final SectionAdapterItem dataBean = adapterItems.get(verticleItemPosition);
 
@@ -627,30 +669,39 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
         });*/
 
-        WidgetAdapter widgetAdapter = dataBean.getWidgetAdapter();
-        if(widgetAdapter == null) {
+        TH_WidgetAdapter thWidgetAdapter = dataBean.getTHWidgetAdapter();
+        if(thWidgetAdapter == null) {
             return;
         }
 
-        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(widgetAdapter);
-        mWidgetsViewHolder.mWidgetTitleTextView.setText(widgetAdapter.getSectionName());
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            mWidgetsViewHolder.mWidgetTitleTextView.setTextColor(Color.parseColor(thWidgetAdapter.getWidgetIndex().getTitle().getLight()));
+            mWidgetsViewHolder.mWidgetFooterTextView.setTextColor(Color.parseColor(thWidgetAdapter.getWidgetIndex().getViewAll().getLight()));
+        }
+        else {
+            mWidgetsViewHolder.mWidgetTitleTextView.setTextColor(Color.parseColor(thWidgetAdapter.getWidgetIndex().getTitle().getDark()));
+            mWidgetsViewHolder.mWidgetFooterTextView.setTextColor(Color.parseColor(thWidgetAdapter.getWidgetIndex().getViewAll().getDark()));
+        }
+
+        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(thWidgetAdapter);
+        mWidgetsViewHolder.mWidgetTitleTextView.setText(thWidgetAdapter.getSectionName());
 
         if(THPConstants.IS_SHOW_INDEX) {
-            mWidgetsViewHolder.mWidgetTitleTextView.setText(indexText(verticleItemPosition, widgetAdapter.getSectionName()));
+            mWidgetsViewHolder.mWidgetTitleTextView.setText(indexText(verticleItemPosition, thWidgetAdapter.getSectionName()));
         }
         //for top-picks we are desableing the visiblity the view all textview
-        if (dataBean.getWidgetAdapter().getSectionId()== 88) {
+        if (dataBean.getTHWidgetAdapter().getSectionId()== 88) {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.GONE);
         } else {
             mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
-            mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + widgetAdapter.getSectionName());
+            mWidgetsViewHolder.mWidgetFooterTextView.setText("View All " + thWidgetAdapter.getSectionName());
         }
 
         mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(v->{
-            FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+widgetAdapter.getSectionId());
+            FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+ thWidgetAdapter.getSectionId());
         });
 
-        widgetAdapter.setWidgetItemClickListener(new WidgetAdapter.WidgetItemClickListener() {
+        thWidgetAdapter.setWidgetItemClickListener(new WidgetItemClickListener() {
             @Override
             public void onWidgetItemClickListener(int innerItemPosition, String secId) {
                 int firstVisiblePosition = mWidgetsViewHolder.layoutManager.findFirstVisibleItemPosition();
@@ -663,6 +714,50 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if (lastSeenFirstPosition >= 0) {
             mWidgetsViewHolder.layoutManager.scrollToPositionWithOffset(lastSeenFirstPosition, 0);
         }
+
+    }
+
+
+    private void bl_fillWidgetData(BL_WidgetsViewHolder mWidgetsViewHolder, final int verticleItemPosition) {
+
+        final SectionAdapterItem dataBean = adapterItems.get(verticleItemPosition);
+
+        BL_WidgetAdapter blWidgetAdapter = dataBean.getBLWidgetAdapter();
+        if(blWidgetAdapter == null) {
+            return;
+        }
+
+        mWidgetsViewHolder.mWidgetsRecyclerView.setAdapter(blWidgetAdapter);
+
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            mWidgetsViewHolder.mWidgetTitleTextView.setTextColor(Color.parseColor(blWidgetAdapter.getWidgetIndex().getTitle().getLight()));
+            mWidgetsViewHolder.mWidgetFooterTextView.setTextColor(Color.parseColor(blWidgetAdapter.getWidgetIndex().getViewAll().getLight()));
+        }
+        else {
+            mWidgetsViewHolder.mWidgetTitleTextView.setTextColor(Color.parseColor(blWidgetAdapter.getWidgetIndex().getTitle().getDark()));
+            mWidgetsViewHolder.mWidgetFooterTextView.setTextColor(Color.parseColor(blWidgetAdapter.getWidgetIndex().getViewAll().getDark()));
+        }
+
+        mWidgetsViewHolder.mWidgetTitleTextView.setText(blWidgetAdapter.getSectionName());
+
+        mWidgetsViewHolder.mWidgetFooterTextView.setVisibility(View.VISIBLE);
+        mWidgetsViewHolder.mWidgetFooterTextView.setText(
+                mWidgetsViewHolder.itemView.getContext().getString(R.string.bl_info_widget_seemore) + " " + blWidgetAdapter.getSectionName());
+
+        blWidgetAdapter.setWidgetItemClickListener(new WidgetItemClickListener() {
+            @Override
+            public void onWidgetItemClickListener(int innerItemPosition, String secId) {
+                int firstVisiblePosition = mWidgetsViewHolder.layoutManager.findFirstVisibleItemPosition();
+                positionList.put(verticleItemPosition, firstVisiblePosition);
+            }
+        });
+
+        mWidgetsViewHolder.mWidgetFooterTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), ""+ blWidgetAdapter.getSectionId());
+            }
+        });
 
     }
 
