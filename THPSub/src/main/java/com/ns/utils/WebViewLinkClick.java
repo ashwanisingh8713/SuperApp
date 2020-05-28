@@ -85,10 +85,10 @@ public class WebViewLinkClick {
                     IntentUtil.openDetailAfterSearchInActivity(context, "" + aid, url, NetConstants.RECO_TEMP_NOT_EXIST);
                 }
                 else if(mIsDetailPage) {
+                    IntentUtil.openWebActivity(context,"" , url);
+                } else {
                     IntentUtil.openUrlInBrowser(context, url);
-                }
-                else {
-                    view.loadUrl(url);
+                    //view.loadUrl(url);
                 }
 
                 return true;
