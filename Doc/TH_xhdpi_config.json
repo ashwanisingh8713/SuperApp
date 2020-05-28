@@ -630,6 +630,7 @@
       {
         "secId": "142",
         "index": "5",
+        "itemCount" : "7",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -650,6 +651,7 @@
       {
         "secId": "88",
         "index": "8",
+        "itemCount" : "7",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -670,6 +672,7 @@
       {
         "secId": "5",
         "index": "10",
+        "itemCount" : "7",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -690,6 +693,7 @@
       {
         "secId": "138",
         "index": "12",
+        "itemCount" : "7",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -710,6 +714,7 @@
       {
         "secId": "69",
         "index": "15",
+        "itemCount" : "7",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"

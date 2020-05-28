@@ -17,5 +17,8 @@ BL Subscription
 
 
 /////////////////
-Listing Icons
-Need to define all pages for text color
+Place Holder
+Related Article
+Widget Length
+Verify BL apis
+

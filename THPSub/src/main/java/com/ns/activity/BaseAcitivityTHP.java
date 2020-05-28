@@ -71,12 +71,12 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
         sIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
-        // Dialog Theme change
+        /*// Dialog Theme change
         if(sIsDayTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //For day mode theme for dialog
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); //For night mode theme for dialog
-        }
+        }*/
 
         setContentView(layoutRes());
 

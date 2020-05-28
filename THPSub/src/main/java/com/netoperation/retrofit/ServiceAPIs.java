@@ -45,47 +45,50 @@ public interface ServiceAPIs {
     @POST("/userreco")
     Observable<JsonElement> recommendation(@Body JsonObject recommendationBody);
 
-    @POST("/taiauth/login/HINDU")
+    @POST(UrlPath.login)
     Observable<JsonElement> login(@Body JsonObject loginBody);
 
-    @POST("/taiauth/regSubmit/HINDU")
+    @POST(UrlPath.socialLogin)
+    Observable<JsonElement> socialLogin(@Body JsonObject loginDetails);
+
+    @POST(UrlPath.signup)
     Observable<JsonElement> signup(@Body JsonObject logoutBody);
 
-    @POST("/taiauth/logout/hindu")
+    @POST(UrlPath.logout)
     Observable<JsonElement> logout(@Header("Authorization") String authorization, @Body JsonObject loginBody);
 
-    @POST("/taiauth/userVerify/HINDU")
+    @POST(UrlPath.userVerification)
     Observable<JsonElement> userVerification(@Body JsonObject userVerificationBody);
 
-    @POST("/taiauth/resetPassword/HINDU")
+    @POST(UrlPath.resetPassword)
     Observable<JsonElement> resetPassword(@Body JsonObject resetPasswordBody);
 
-    @POST("/taiauth/userInfo/HINDU")
+    @POST(UrlPath.userInfo)
     Observable<JsonElement> userInfo(@Header("Authorization") String authorization, @Body JsonObject userInfoBody);
 
-    @POST("/taiauth/updateUserInfo/HINDU")
+    @POST(UrlPath.editProfile)
     Observable<JsonElement> editProfile(@Header("Authorization") String authorization,@Body JsonObject editProfileBody);
 
-    @POST("/taiauth/validateOtp/HINDU")
+    @POST(UrlPath.validateOtp)
     Observable<JsonElement> validateOtp(@Body JsonObject validateOtpBody);
 
-    @POST("/taiauth/updatePassword/HINDU")
+    @POST(UrlPath.updatePassword)
     Observable<JsonElement> updatePassword(@Header("Authorization") String authorization, @Body JsonObject updatePasswordBody);
 
-    @POST("/taiauth/updateAccountStatus/HINDU")
+    @POST(UrlPath.suspendAccount)
     Observable<JsonElement> suspendAccount(@Body JsonObject suspendAccountBody);
 
-    @POST("/taiauth/updateAccountStatus/HINDU")
+    @POST(UrlPath.deleteAccount)
     Observable<JsonElement> deleteAccount(@Body JsonObject deleteAccountBody);
 
-    @GET("/mydashboard/userreco/hindu")
+    @GET(UrlPath.getRecommendation)
     Observable<RecomendationData> getRecommendation(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("recotype") String recotype,
                                                     @Query("size") String size, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
-    @POST("/mydashboard/userchoice/HINDU")
+    @POST(UrlPath.createBookmarkFavLike)
     Observable<JsonElement> createBookmarkFavLike(@Header("Authorization") String authorization, @Body JsonObject bookmarkFavLikeBody);
 
-    @GET("/mydashboard/userchoicelist/HINDU")
+    @GET(UrlPath.getBookmarkFavLike)
     Observable<List<UserChoice>> getBookmarkFavLike(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid);
 
     @GET("")
@@ -98,40 +101,35 @@ public interface ServiceAPIs {
     @GET("")
     Observable<PrefListModel> getAllPreferences(@Url String url);
 
-    @GET("taiauth/list/HINDU")
+    @GET(UrlPath.getCountry)
     Observable<ArrayList<KeyValueModel>> getCountry(@Query("type") String type);
 
-    @GET("taiauth/list/HINDU")
+    @GET(UrlPath.getState)
     Observable<ArrayList<KeyValueModel>> getState(@Query("type") String type, @Query("country") String country);
 
-    @POST("taiauth/updateUserInfo/HINDU")
+    @POST(UrlPath.updateProfile)
     Observable<JsonElement> updateProfile(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
-    @POST("taiauth/updateUserInfo/HINDU")
+    @POST(UrlPath.updateAddress)
     Observable<JsonElement> updateAddress(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
-    @POST("taiauth/userPreference/hindu")
+    @POST(UrlPath.setPersonalise)
     Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
 
-    @POST("taiauth/userPreference/hindu")
+    @POST(UrlPath.getPersonalise)
     Observable<SelectedPrefModel> getPersonalise(@Body JsonObject updateProfile);
 
-    @GET("charging/transaction/detail/HINDU")
+    @GET(UrlPath.getTxnHistory)
     Observable<JsonElement> getTxnHistory(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);
 
-    @GET("subscription/getuserplaninfo/HINDU")
+    @GET(UrlPath.getUserPlanInfo)
     Observable<UserPlanList> getUserPlanInfo(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
-    @GET("subscription/getplaninfo/HINDU")
+    @GET(UrlPath.getRecommendedPlan)
     Observable<PlanRecoModel> getRecommendedPlan(@Query("siteid") String siteid, @Query("tagid") String tagid,
                                                  @Query("isInd") String isInd, @Query("isPlt") String isPlt);
-    @POST("subscription/createsub/HINDU")
+    @POST(UrlPath.createSubscription)
     Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Body JsonObject subscriptionBody);
-
-
-
-    @POST("taiauth/socialLogin/HINDU")
-    Observable<JsonElement> socialLogin(@Body JsonObject loginDetails);
 
     @POST("")
     Observable<JsonElement> getChecksumHash(@Url String url, @Body JsonObject checksumHashAPIBody);
@@ -158,11 +156,11 @@ public interface ServiceAPIs {
     @GET
     Observable<JsonElement> getSubsWebviewUrl(@Url String s);
 
-    @POST("/tait/appaudience/HINDU")
+    @POST(UrlPath.eventCapture)
     Observable<Void> eventCapture(@Body JsonObject captureBody);
 
 
-    @POST("/subscription/createfreesub/HINDU")
+    @POST(UrlPath.freePlan)
     Observable<JsonElement> freePlan(@Header("Authorization") String authorization, @Body JsonObject recommendationBody);
 
 

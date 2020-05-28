@@ -29,10 +29,10 @@
     <color name="color_customize_item_normal_outline_background">#F0F0F0</color>
     <color name="color_customize_text_normal">#939393</color>
     <color name="dimBackground">#80000000</color>
-    <color name="defaultWindowColor">#00000000</color>
     <color name="epaper_day">#005DA3</color>
     <color name="pinDefaultColor">#eeeeee</color>
 
+    <color name="defaultWindowColor">#00000000</color>
     <color name="red">#c7090f</color>
     <color name="green">#6fa057</color>
 

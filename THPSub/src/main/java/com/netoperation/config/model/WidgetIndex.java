@@ -4,6 +4,7 @@ public class WidgetIndex {
 
     private String secId;
     private int index;
+    private int itemCount;
     private DayNightColor background;
     private DayNightColor description;
     private DayNightColor title;
@@ -23,6 +24,14 @@ public class WidgetIndex {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 
     public DayNightColor getBackground() {

@@ -3,6 +3,7 @@
     {
       "secId": "5",
       "index": "5",
+      "itemCount" : "7",
       "background": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -23,6 +24,7 @@
     {
       "secId": "26",
       "index": "8",
+      "itemCount" : "7",
       "background": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -43,6 +45,7 @@
     {
       "secId": "30",
       "index": "10",
+      "itemCount" : "7",
       "background": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -63,6 +66,7 @@
     {
       "secId": "37",
       "index": "12",
+      "itemCount" : "7",
       "background": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -83,6 +87,7 @@
     {
       "secId": "18",
       "index": "15",
+      "itemCount" : "7",
       "background": {
         "dark": "#191919",
         "light": "#ffffff"

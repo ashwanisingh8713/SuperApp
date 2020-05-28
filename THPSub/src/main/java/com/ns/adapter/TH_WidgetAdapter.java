@@ -123,6 +123,8 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
     public int getItemCount() {
         if (mWidgetList == null) {
             return 0;
+        } else if(mWidgetList.size() > getWidgetIndex().getItemCount()) {
+            return getWidgetIndex().getItemCount();
         }
         return mWidgetList.size();
     }
@@ -154,7 +156,6 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
             holder.mTitleTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         if (bean != null) {
-            //holder.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
             holder.mTitleTextView.setText(ResUtil.htmlText("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
             holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
