@@ -26,11 +26,17 @@ public abstract class  DaoRead {
     @Query("SELECT * FROM TableRead WHERE articleId = :articleId")
     public abstract TableRead getReadArticleId(String articleId);
 
+    @Query("SELECT * FROM TableRead WHERE articleId = :articleId AND groupType =:gType")
+    public abstract TableRead getReadArticleIdByGroupType(String articleId, String gType);
+
     @Query("UPDATE TableRead SET commentCount = :commentCount, lutOfCommentCount =:lutOfCommentCount WHERE articleId = :articleId")
     public abstract int updateReadTable(String articleId, String commentCount, long lutOfCommentCount);
 
     @Query("DELETE FROM TableRead WHERE articleId = :articleId")
     public abstract int deleteReadArticleId(String articleId);
+
+    @Query("DELETE FROM TableRead WHERE groupType = :groupT")
+    public abstract int deleteReadArticleByGroupType(String groupT);
 
     @Query("delete from TableRead where articleId in (:idList)")
     public abstract int deleteMultiArticleId(List<String> idList);

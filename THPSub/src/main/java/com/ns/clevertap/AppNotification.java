@@ -96,7 +96,7 @@ public class AppNotification {
 
         Intent notificationIntent = new Intent(context, NotificationClickActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         notificationIntent.putExtra(THPConstants.LOAD_NOTIFICATIONS, true);
 

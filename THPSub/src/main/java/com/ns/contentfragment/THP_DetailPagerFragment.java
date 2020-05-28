@@ -369,6 +369,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
             int index = articleBeans.indexOf(bean);
             if (index != -1) {
                 mClickedPosition = index;
+                bean = articleBeans.get(mClickedPosition);
                 DefaultTHApiManager.insertMeteredPaywallArticleId(getActivity(), mArticleId, articleBeans.get(mClickedPosition).isArticleRestricted(), getAllowedCount(getActivity()));
                 //if article bean group type is not empty, then insert article read with group type
                 if (bean.getGroupType() != null) {

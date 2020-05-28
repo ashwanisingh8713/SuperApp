@@ -1183,7 +1183,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
                 if (isOrganic) {
                     int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
-                    IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), "" + articleId, url);
+                    IntentUtil.openDetailAfterSearchInActivity(mInfiniteTaboolaView.getContext(), "" + articleId, url, NetConstants.RECO_TEMP_NOT_EXIST);
 
                     /*FlurryAgent.logEvent(mInfiniteTaboolaView.getContext().getResources().getString(R.string.ga_article_taboola_organic_clicked));
                     GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mInfiniteTaboolaView.getContext(), "Taboola Item Click",

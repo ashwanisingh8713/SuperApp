@@ -185,6 +185,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         int fragmentCount = fm.getBackStackEntryCount();
         if (fragmentCount > 0) {
             fm.popBackStack();
+        } if (!THPConstants.sISMAIN_ACTIVITY_LAUNCHED) {
+            IntentUtil.openMainTabPage(this);
         } else {
             finish();
 //            IntentUtil.exitActivityAnim(this);
@@ -381,5 +383,14 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             loadConfigurationInstance();
         }
         return sTableConfiguration;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!THPConstants.sISMAIN_ACTIVITY_LAUNCHED) {
+            IntentUtil.openMainTabPage(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

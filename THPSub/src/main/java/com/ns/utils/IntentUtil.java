@@ -650,7 +650,11 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
-    public static void openDetailAfterSearchInActivity(Context context, String aid, String clickedUrl) {
+    public static void openDetailAfterSearchInActivity(Context context, String aid, String clickedUrl, String from) {
+        if (from == null) {
+            from = "tempSec";
+        }
+        String finalFrom = from;
         CompositeDisposable disposable = new CompositeDisposable();
         final ProgressDialog progress = Alerts.showProgressDialog(context);
         disposable.add(DefaultTHApiManager.isExistInTempArticleArticle(context, aid)
@@ -659,7 +663,7 @@ public class IntentUtil {
                                @Override
                                public void accept(ArticleBean bean) {
                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                       IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, bean, clickedUrl);
+                                       IntentUtil.openSingleDetailActivity(context, finalFrom, bean, clickedUrl);
                                        progress.dismiss();
                                        disposable.clear();
                                        disposable.dispose();
@@ -669,7 +673,7 @@ public class IntentUtil {
                                                .observeOn(AndroidSchedulers.mainThread())
                                                .subscribe(articleBean->{
                                                    if (bean.getArticleId()!= null && bean.getArticleId().equalsIgnoreCase(aid)) {
-                                                       IntentUtil.openSingleDetailActivity(context, NetConstants.G_DEFAULT_SECTIONS, bean, clickedUrl);
+                                                       IntentUtil.openSingleDetailActivity(context, finalFrom, bean, clickedUrl);
                                                        progress.dismiss();
                                                        disposable.clear();
                                                        disposable.dispose();
@@ -682,7 +686,7 @@ public class IntentUtil {
                                                        .subscribe((tableConfiguration, throwable) -> {
                                                        // Making Server request to get Article from server
                                                        // and Saving into DB, with SectionName = "tempSec"
-                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId(), "tempSec");
+                                                       Observable<ArticleBean> observable =  DefaultTHApiManager.articleDetailFromServer(context, aid, tableConfiguration.getSearchOption().getUrlId(), finalFrom);
                                                        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
                                                                .subscribe(new Consumer<ArticleBean>() {
                                                                               @Override
@@ -691,7 +695,7 @@ public class IntentUtil {
                                                                                       return;
                                                                                   }
                                                                                   if(articleBean != null &&  articleBean.getArticleId() != null && !ResUtil.isEmpty(articleBean.getArticleId())) {
-                                                                                      IntentUtil.openSingleDetailActivity(context, NetConstants.RECO_TEMP_NOT_EXIST, articleBean, clickedUrl);
+                                                                                      IntentUtil.openSingleDetailActivity(context, finalFrom, articleBean, clickedUrl);
                                                                                   }
                                                                                   else {
                                                                                       // Opening Article In Web Page

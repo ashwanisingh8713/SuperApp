@@ -206,7 +206,7 @@ public class TTSManager {
 
 
     public boolean isTTSPlaying() {
-        return textToSpeech.isSpeaking();
+        return textToSpeech != null && textToSpeech.isSpeaking();
     }
 
 
