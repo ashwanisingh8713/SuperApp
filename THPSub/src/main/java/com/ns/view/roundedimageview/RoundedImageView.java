@@ -644,6 +644,8 @@ public class RoundedImageView extends BaseImgView {
 
         bannerFilePath = FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl);
 
+        Log.i("", "");
+
         //PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));
     }
 

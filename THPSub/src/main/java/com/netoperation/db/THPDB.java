@@ -16,6 +16,7 @@ import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoMPReadArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
+import com.netoperation.default_db.DaoRelatedArticle;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoTempWork;
@@ -26,6 +27,7 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
+import com.netoperation.default_db.TableRelatedArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableTempWork;
@@ -37,7 +39,7 @@ import com.netoperation.default_db.TableWidget;
         TableHomeArticle.class, TableSectionArticle.class,
         TableSection.class, TableConfiguration.class,
         TableWidget.class, TablePersonaliseDefault.class, TableBanner.class, TableRead.class, TableTempWork.class,
-        TableTemperoryArticle.class, TableMP.class, TableMPReadArticle.class},
+        TableTemperoryArticle.class, TableMP.class, TableMPReadArticle.class, TableRelatedArticle.class},
         version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class THPDB extends RoomDatabase {
@@ -61,6 +63,7 @@ public abstract class THPDB extends RoomDatabase {
     public abstract DaoRead daoRead();
     public abstract DaoTempWork daoTempWork();
     public abstract DaoTemperoryArticle daoTemperoryArticle();
+    public abstract DaoRelatedArticle daoRelatedArticle();
 
     public static THPDB getInstance(Context context) {
         if (INSTANCE == null) {
