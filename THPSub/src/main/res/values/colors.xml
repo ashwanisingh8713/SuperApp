@@ -53,7 +53,7 @@
         <item>@color/sp_clr_3</item>
         <item>@color/sp_clr_4</item>
     </integer-array>
-
+    <color name="color_status_bar_dark">#FAFAFA</color>
 
     <!--    /////////////// ////////////// ///////////// ////////////////   -->
 

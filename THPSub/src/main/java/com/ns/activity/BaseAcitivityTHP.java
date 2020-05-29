@@ -90,7 +90,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                 getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
             } else {
                 getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
-                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
+                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_status_bar_dark));
             }
         }
 
