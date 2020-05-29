@@ -12,21 +12,21 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.InAppNotificationButtonListener;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
 import com.main.AdsBase;
 import com.main.DFPAds;
 import com.main.SuperApp;
+import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.net.DefaultTHApiManager;
-import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
+import com.netoperation.util.PremiumPref;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
@@ -34,14 +34,15 @@ import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.Topbar;
 import com.ns.view.text.ArticleTitleTextView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.util.HashMap;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -70,6 +71,28 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         super.onCreate(savedInstanceState);
 
         sIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
+        TableConfiguration tableConfiguration = getTableConfiguration();
+
+        //Set Navigation Background color
+        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+            ColorOptionBean topbarTheme = tableConfiguration.getAppTheme().getTopBarBg();
+            if (sIsDayTheme) {
+                getWindow().setNavigationBarColor(Color.parseColor(topbarTheme.getLight()));
+                getWindow().setStatusBarColor(Color.parseColor(topbarTheme.getLight()));
+            } else {
+                getWindow().setNavigationBarColor(Color.parseColor(topbarTheme.getDark()));
+                getWindow().setStatusBarColor(Color.parseColor(topbarTheme.getDark()));
+                //getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.grey));
+            }
+        } else {
+            if(sIsDayTheme) {
+                getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
+                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
+            } else {
+                getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
+                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.grey));
+            }
+        }
 
         /*// Dialog Theme change
         if(sIsDayTheme) {
