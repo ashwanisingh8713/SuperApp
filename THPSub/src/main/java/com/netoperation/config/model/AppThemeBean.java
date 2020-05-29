@@ -9,6 +9,8 @@ public class AppThemeBean {
      * bottomBarBg : {"dark":"#313131","light":"#ffffff"}
      * widgetBg : {"background":{"dark":"#191919","light":"#ffffff"}}
      * breadcrumBg : {"dark":"#313131","light":"#ffffff"}
+     * systemTopBarBackground : {"light":"#000000","dark":"#818181"}
+     * systemBottomBarBackground : {"light":"#000000","dark":"#818181"}
      */
 
     private TextColorsBean textColors;
@@ -18,6 +20,8 @@ public class AppThemeBean {
     private Breadcrumb bottomBar;
     private WidgetBgBean widgetBg;
     private Breadcrumb breadcrumb;
+    private ColorOptionBean systemTopBarBackground;
+    private ColorOptionBean systemBottomBarBackground;
 
     public TextColorsBean getTextColors() {
         return textColors;
@@ -73,6 +77,14 @@ public class AppThemeBean {
 
     public void setBreadcrumb(Breadcrumb breadcrumb) {
         this.breadcrumb = breadcrumb;
+    }
+
+    public ColorOptionBean getSystemTopBarBackground() {
+        return systemTopBarBackground;
+    }
+
+    public ColorOptionBean getSystemBottomBarBackground() {
+        return systemBottomBarBackground;
     }
 
     public static class TextColorsBean {

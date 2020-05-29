@@ -624,6 +624,14 @@
           "dark": "#ffffff",
           "light": "#818181"
         }
+      },
+      "systemTopBarBackground": {
+        "light": "#ffffff",
+        "dark": "#FAFAFA"
+      },
+      "systemBottomBarBackground": {
+        "light": "#ffffff",
+        "dark": "#000000"
       }
     },
     "widget": [

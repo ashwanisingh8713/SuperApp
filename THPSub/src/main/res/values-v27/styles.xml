@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
-        <item name="android:colorControlActivated">@color/color_191919_light</item>
-        <item name="android:textColorHint">@color/boldBlackColor_50alp</item>
-        <item name="colorControlNormal">@color/color_52969696</item>
-        <item name="colorControlActivated">@color/boldBlackColor_50alp</item>
-        <item name="font_path">@string/THP_FiraSans_Regular</item>
-    </style>
+<resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -18,6 +11,7 @@
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:navigationBarColor">@color/color_ffffff</item>
         <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
