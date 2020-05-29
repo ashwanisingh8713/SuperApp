@@ -791,6 +791,14 @@
           "dark": "#1375b3",
           "light": "#1375b3"
         }
+      },
+      "systemTopBarBackground": {
+        "light": "#ffffff",
+        "dark": "#FAFAFA"
+      },
+      "systemBottomBarBackground": {
+        "light": "#ffffff",
+        "dark": "#000000"
       }
     },
     "widget": [
