@@ -1,10 +1,7 @@
 package com.ns.utils;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -13,38 +10,24 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.netoperation.model.ArticleBean;
-import com.netoperation.net.ApiManager;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
-import com.ns.alerts.Alerts;
-import com.ns.thpremium.BuildConfig;
-import com.ns.thpremium.R;
+import com.ns.activity.BaseAcitivityTHP;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by ashwanisingh on 11/10/18.
  */
 
-public class WebViewLinkClick {
+public class WebViewClientForArticleDetail {
+
+    private boolean mIsErrorPageLoaded;
+    private boolean mIsFromDetailPage;
 
 
-    private boolean mIsDetailPage;
-
-
-    public WebViewLinkClick(boolean isDetailPage) {
-        this.mIsDetailPage = isDetailPage;
+    public WebViewClientForArticleDetail(boolean isDetailPage) {
+        this.mIsFromDetailPage = isDetailPage;
     }
 
     public void linkClick(WebView webView, Context context, ProgressBar mProgressBar) {
@@ -84,7 +67,7 @@ public class WebViewLinkClick {
                 if(aid > 0) {
                     IntentUtil.openDetailAfterSearchInActivity(context, "" + aid, url, NetConstants.RECO_TEMP_NOT_EXIST);
                 }
-                else if(mIsDetailPage) {
+                else if(mIsFromDetailPage) {
                     IntentUtil.openWebActivity(context,"" , url);
                 } else {
                     IntentUtil.openUrlInBrowser(context, url);
@@ -113,21 +96,19 @@ public class WebViewLinkClick {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                webView.loadUrl("about:blank");
-                webView.loadUrl("file:///android_asset/web/web_error.html");
                 if(mProgressBar != null) {
                     mProgressBar.setVisibility(View.GONE);
                 }
+                loadErrorPage(view);
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                webView.loadUrl("about:blank");
-                webView.loadUrl("file:///android_asset/web/web_error.html");
                 if(mProgressBar != null) {
                     mProgressBar.setVisibility(View.GONE);
                 }
+                loadErrorPage(view);
             }
 
 
@@ -137,8 +118,30 @@ public class WebViewLinkClick {
 
 
 
+    private void loadErrorPage(WebView view) {
+        if(isErrorPageLoaded()) {
+            return;
+        }
+        setIsErrorPageLoaded(true);
+        if(!mIsFromDetailPage && !BaseAcitivityTHP.sIsOnline) {
+            view.loadUrl("about:blank");
+            view.loadUrl("file:///android_asset/web/web_error.html");
+        }
+    }
 
+    public boolean isErrorPageLoaded() {
+        return mIsErrorPageLoaded;
+    }
 
+    public void setIsErrorPageLoaded(boolean mIsErrorPageLoaded) {
+        this.mIsErrorPageLoaded = mIsErrorPageLoaded;
+    }
 
+    public boolean isDetailPage() {
+        return mIsFromDetailPage;
+    }
 
+    public void setIsDetailPage(boolean mIsDetailPage) {
+        this.mIsFromDetailPage = mIsDetailPage;
+    }
 }

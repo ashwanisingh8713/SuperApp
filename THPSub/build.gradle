@@ -170,12 +170,11 @@ dependencies {
     api deps.supportDesign
     api deps.supportCardView
     implementation deps.constraintLayout
-    implementation deps.picasso
 
     implementation deps.CONSTRAINT_LAYOUT
     // Multidex
     api deps.multiDex
-    implementation 'com.joooonho:selectableroundedimageview:1.0.1'
+
     // Dot Indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
     //Image Zooming

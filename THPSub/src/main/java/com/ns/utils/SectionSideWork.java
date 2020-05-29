@@ -247,7 +247,7 @@ public class SectionSideWork {
         }
 
         // Static Web Page Index
-        if(getStaticPageBean() != null && getStaticPageBean().isIsEnabled() && getStaticPageBean().getPosition() > -1) {
+        if(getStaticPageBean() != null && getStaticPageBean().isIsEnabled() && getStaticPageBean().getPosition() > -1 && BaseAcitivityTHP.sIsOnline) {
                 final String itemRowId = RowIds.rowId_staticWebPage(mSectionId, getStaticPageBean().getPosition());
                 SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
                 IndexArrange staticArrange = new IndexArrange(getStaticPageBean().getPosition(), item);

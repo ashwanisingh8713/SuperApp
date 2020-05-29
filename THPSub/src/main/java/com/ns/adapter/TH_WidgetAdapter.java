@@ -26,6 +26,7 @@ import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 import java.util.List;
 import java.util.Locale;
@@ -193,10 +194,9 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
-            } else {
-                holder.mWidgetImageView.setImageResource(R.drawable.ph_toppicks_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl));
             }
+
             holder.mWidgetTextView.setText(bean.getTi());
 
             // Dims Read article given view
@@ -235,9 +235,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
                     imageUrl = bean.getMe().get(0).getIm();
                 }
                 if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                    PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl), R.drawable.ph_topnews_th);
-                } else {
-                    holder.mWidgetImageView.setImageResource(R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl));
                 }
             }
 
@@ -322,9 +320,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl), R.drawable.ph_exploresections_th);
-            } else {
-                holder.mWidgetImageView.setImageResource(R.drawable.ph_exploresections_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getMultimediaUrl(imageUrl));
             }
             // Dims Read article given view
             dimReadArticle(holder.mParentView.getContext(), bean.getArticleId(), holder.mParentView);
@@ -376,7 +372,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
     }
 
     public class WidgetViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mWidgetImageView;
+        private RoundedImageView mWidgetImageView;
         private TextView mWidgetTextView;
         private LinearLayout widgetParentLayout;
 
@@ -415,7 +411,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     public class MultiMediaViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView mWidgetImageView;
+        private RoundedImageView mWidgetImageView;
         private TextView mWidgetTextView;
         private TextView mWidgetTime;
         private ImageView mPlayButton;

@@ -9,16 +9,16 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
 
-    <com.joooonho.SelectableRoundedImageView
+    <com.ns.view.roundedimageview.RoundedImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        app:sriv_left_bottom_corner_radius="5dp"
-        app:sriv_left_top_corner_radius="5dp"
-        app:sriv_right_bottom_corner_radius="5dp"
-        app:sriv_right_top_corner_radius="5dp"
+        app:riv_corner_radius_bottom_left="5dp"
+        app:riv_corner_radius_top_left="5dp"
+        app:riv_corner_radius_bottom_right="5dp"
+        app:riv_corner_radius_top_right="5dp"
         android:scaleType="fitXY" />
 
     <View

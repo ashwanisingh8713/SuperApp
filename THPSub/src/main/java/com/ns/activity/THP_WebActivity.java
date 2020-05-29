@@ -2,14 +2,14 @@ package com.ns.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 
 import com.ns.thpremium.R;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.utils.WebViewLinkClick;
-import com.ns.view.THP_AutoResizeWebview;
+import com.ns.utils.WebViewClientForWebPage;
 
 public class THP_WebActivity extends BaseAcitivityTHP {
 
@@ -18,10 +18,12 @@ public class THP_WebActivity extends BaseAcitivityTHP {
         return R.layout.activity_web_thp;
     }
 
-    private THP_AutoResizeWebview mWebView;
+    private WebView mWebView;
     private ProgressBar mProgressBar;
     private String mUrl;
     private String mFrom;
+
+    private WebViewClientForWebPage mWebViewLinkClick;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +52,11 @@ public class THP_WebActivity extends BaseAcitivityTHP {
         }
 
 
-
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);
 
-
-        new WebViewLinkClick(false).linkClick(mWebView, this, mProgressBar);
+        mWebViewLinkClick = new WebViewClientForWebPage();
+        mWebViewLinkClick.linkClick(mWebView, this, mProgressBar);
 
         bottomBannerAds();
 
@@ -78,7 +79,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
 
     @Override
     public void onBackPressed() {
-        if(mWebView.canGoBack()) {
+        if(mWebView.canGoBack() && !mWebViewLinkClick.isErrorPageLoaded()) {
             mWebView.goBack();
         } else {
             super.onBackPressed();

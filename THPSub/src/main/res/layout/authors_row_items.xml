@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp">
 
-    <com.joooonho.SelectableRoundedImageView
+    <com.ns.view.roundedimageview.RoundedImageView
         android:id="@+id/image_author"
         android:layout_width="41dp"
         android:layout_height="41dp"

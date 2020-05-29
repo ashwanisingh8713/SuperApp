@@ -14,7 +14,8 @@
         android:layout_height="@dimen/widget_item_height"
         android:orientation="vertical">
 
-        <ImageView
+        <com.ns.view.roundedimageview.RoundedImageView
+            app:riv_place_holder="widget"
             android:id="@+id/imageview_widget_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/widget_recyclerView_image_height"

@@ -269,14 +269,16 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
         // ToolbarChangeRequired Event Post, It shows Toolbar for Section
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, true, mTabIndex, null, ToolbarChangeRequired.SECTION_LISTING_TOPBAR));
 
+        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
+        BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();
+
         // If, not sub-section, and tabIndex is zero and any other section is selected apart from "Home"
-        if(!mIsSubsection &&  mTabIndex == 0 && mViewPager.getCurrentItem() != 0) {
+        if(!mIsSubsection &&  mTabIndex == 0 && mViewPager.getCurrentItem() != 0 && !backPressCallback.isPopBack()) {
             mViewPager.setCurrentItem(0);
             return;
         }
 
-        // Send Back to AppTabActivity.java => handleEvent(BackPressCallback backPressCallback)
-        BackPressCallback backPressCallback = new BackPressImpl(this, mPageSource, mTabIndex).onBackPressed();
+
         EventBus.getDefault().post(backPressCallback);
 
     }

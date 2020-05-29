@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
 import com.ns.view.img.ListingIconView;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 public class BannerViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageView mBannerImageView;
+    public RoundedImageView mBannerImageView;
     public TextView mBannerTextView;
     public LinearLayout mBannerLayout;
     public TextView mArticleUpdateTime;

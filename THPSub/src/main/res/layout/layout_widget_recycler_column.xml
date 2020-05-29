@@ -15,11 +15,12 @@
         android:layout_height="@dimen/widget_item_newheight"
         android:orientation="vertical">
 
-        <ImageView
+        <com.ns.view.roundedimageview.RoundedImageView
+            app:riv_place_holder="widget"
             android:id="@+id/imageview_widget_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/widget_recyclerView_image_newheight"
-            android:src="@drawable/ph_toppicks_th" />
+            />
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/textview_widget_text"

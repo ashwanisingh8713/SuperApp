@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.joooonho.SelectableRoundedImageView;
+import com.ns.view.roundedimageview.RoundedImageView;
 import com.ns.thpremium.R;
 import com.ns.view.img.ListingIconView;
 import com.ns.view.text.CustomTextView;
@@ -22,7 +22,7 @@ public class DashboardViewHolder extends RecyclerView.ViewHolder {
     public ListingIconView bookmark_Img;
     public ListingIconView like_Img;
     public ImageView trendingIcon_Img;
-    public SelectableRoundedImageView image;
+    public RoundedImageView image;
     public View horizontalDivider;
 
     public ProgressBar toggleBtnProgressBar;

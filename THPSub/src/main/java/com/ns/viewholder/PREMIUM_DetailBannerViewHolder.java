@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 
 /**
@@ -20,7 +21,7 @@ public class PREMIUM_DetailBannerViewHolder extends RecyclerView.ViewHolder {
     public TextView tv_author_name;
     public TextView tv_city_name;
     public TextView tv_updated_time;
-    public ImageView imageView;
+    public RoundedImageView imageView;
     public ImageView articleTypeimageView;
     public TextView tv_caption;
     public View shadowOverlay;

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.joooonho.SelectableRoundedImageView;
+import com.ns.view.roundedimageview.RoundedImageView;
 import com.netoperation.model.PersonaliseDetails;
 import com.netoperation.model.PersonaliseModel;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -68,7 +68,7 @@ public class AuthorsRecyclerAdapter extends BaseRecyclerViewAdapter {
 
     private static class AuthorHolder extends RecyclerView.ViewHolder{
 
-        SelectableRoundedImageView image_author;
+        RoundedImageView image_author;
         TextView tv_author_name;
         ImageView imageview_click;
 

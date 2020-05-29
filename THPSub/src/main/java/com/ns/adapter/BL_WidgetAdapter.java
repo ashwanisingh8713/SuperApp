@@ -26,6 +26,7 @@ import com.ns.utils.ContentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -129,9 +130,7 @@ public class BL_WidgetAdapter extends BaseRecyclerViewAdapter {
                 imageUrl = bean.getIm_thumbnail();
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_toppicks_th);
-            } else {
-                holder.mWidgetImageView.setImageResource(R.drawable.ph_toppicks_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl));
             }
             
             holder.mWidgetTextView.setText(bean.getTi());
@@ -188,7 +187,7 @@ public class BL_WidgetAdapter extends BaseRecyclerViewAdapter {
 
 
     private class WidgetViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mWidgetImageView;
+        private RoundedImageView mWidgetImageView;
         private TextView mWidgetTextView;
         private LinearLayout mWidgetLayout;
         private CardView widgetParentLayout;

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 public class DG_DetailPhotoViewHolder extends RecyclerView.ViewHolder {
     public TextView mTitleTextView;
@@ -18,7 +19,7 @@ public class DG_DetailPhotoViewHolder extends RecyclerView.ViewHolder {
     public TextView mCaptionTextView;
     public TextView mAuthorTextView;
     public TextView mCreatedDateTextView;
-    public ImageView mHeaderImageView;
+    public RoundedImageView mHeaderImageView;
     public FrameLayout mHeaderFragmeLayout;
     public View mCaptionDevider;
     public ImageButton mMultiMediaButton;

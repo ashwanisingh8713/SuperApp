@@ -101,7 +101,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             int totalItemCount = mPullToRefreshLayout.getLinearLayoutManager().getItemCount();
             int firstVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstVisibleItemPosition();
 
-            if (!mSectionSideWork.isLoading() && !mSectionSideWork.isLastPage()) {
+            if (!mSectionSideWork.isLoading() && !mSectionSideWork.isLastPage() && BaseAcitivityTHP.sIsOnline) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= mSectionSideWork.PAGE_SIZE) {

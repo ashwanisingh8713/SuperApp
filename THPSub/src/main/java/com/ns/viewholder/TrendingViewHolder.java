@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.joooonho.SelectableRoundedImageView;
+import com.ns.view.roundedimageview.RoundedImageView;
 import com.ns.thpremium.R;
 import com.ns.view.text.CustomTextView;
 
@@ -20,7 +20,7 @@ public class TrendingViewHolder extends RecyclerView.ViewHolder {
     public ImageView bookmark_Img;
     public ImageView like_Img;
     public ImageView trendingIcon_Img;
-    public SelectableRoundedImageView image;
+    public RoundedImageView image;
     public View horizontalDivider;
 
     public TrendingViewHolder(@NonNull View itemView) {

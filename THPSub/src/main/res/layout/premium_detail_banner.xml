@@ -98,7 +98,8 @@
         android:alpha="@string/alpha_detail"/>
 
 
-    <com.joooonho.SelectableRoundedImageView
+    <com.ns.view.roundedimageview.RoundedImageView
+        app:riv_place_holder="banner"
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -106,10 +107,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        app:sriv_left_bottom_corner_radius="3dp"
-        app:sriv_left_top_corner_radius="3dp"
-        app:sriv_right_bottom_corner_radius="3dp"
-        app:sriv_right_top_corner_radius="3dp"
+        app:riv_corner_radius_bottom_left="3dp"
+        app:riv_corner_radius_top_left="3dp"
+        app:riv_corner_radius_bottom_right="3dp"
+        app:riv_corner_radius_top_right="3dp"
         android:scaleType="fitXY"
         app:layout_constraintTop_toBottomOf="@id/tv_updated_time"
         android:alpha="@string/alpha_detail"

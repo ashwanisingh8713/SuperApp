@@ -14,11 +14,12 @@
         android:layout_height="138dp"
         android:orientation="vertical">
 
-        <ImageView
+        <com.ns.view.roundedimageview.RoundedImageView
+            app:riv_place_holder="widget"
             android:id="@+id/imageview_explore_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/explore_column_image_newheight"
-            android:src="@drawable/ph_exploresections_th" />
+            />
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/textview_explore_section"

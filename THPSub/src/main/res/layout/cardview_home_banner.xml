@@ -23,11 +23,12 @@
             android:layout_height="@dimen/banner_image_newheight"
             >
 
-            <ImageView
+            <com.ns.view.roundedimageview.RoundedImageView
+                app:riv_place_holder="banner"
                 android:id="@+id/imageview_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/banner_image_newheight"
-                android:src="@drawable/ph_topnews_th" />
+                />
 
             <ImageButton
                 android:id="@+id/multimedia_button"

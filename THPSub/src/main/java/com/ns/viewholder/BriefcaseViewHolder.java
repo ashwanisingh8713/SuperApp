@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.joooonho.SelectableRoundedImageView;
+import com.ns.view.roundedimageview.RoundedImageView;
 import com.ns.thpremium.R;
 import com.ns.view.text.CustomTextView;
 
@@ -16,7 +16,7 @@ public class BriefcaseViewHolder extends RecyclerView.ViewHolder {
     public CustomTextView authorName_Txt;
     public CustomTextView description_Txt;
     public CustomTextView time_Txt;
-    public SelectableRoundedImageView image;
+    public RoundedImageView image;
     public View horizontalDivider;
 
     public BriefcaseViewHolder(@NonNull View itemView) {

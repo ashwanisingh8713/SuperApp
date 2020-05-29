@@ -36,7 +36,7 @@ import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
-import com.ns.utils.WebViewLinkClick;
+import com.ns.utils.WebViewClientForWebPage;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BL_WidgetsViewHolder;
 import com.ns.viewholder.BannerViewHolder;
@@ -351,7 +351,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             staticItemHolder.mDummyView.setVisibility(View.GONE);
             // Enabling Weblink click on Lead Text
-            new WebViewLinkClick(true).linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext(), null);
+            new WebViewClientForWebPage().linkClick(staticItemHolder.webView, staticItemHolder.itemView.getContext(), null);
         }
     }
 
@@ -404,7 +404,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 holder.mImageParentLayout.setVisibility(View.VISIBLE);
                 holder.mArticleImageView.setVisibility(View.VISIBLE);
                 imageUrl = ContentUtil.getThumbUrl(imageUrl);
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mArticleImageView, imageUrl);
 
             } else {
                 holder.mArticleImageView.setVisibility(View.GONE);
@@ -500,9 +500,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
                 imageUrl = ContentUtil.getBannerUrl(imageUrl);
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mBannerImageView, imageUrl, R.drawable.ph_topnews_th);
-            } else {
-                holder.mBannerImageView.setImageResource(R.drawable.ph_topnews_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mBannerImageView, imageUrl);
             }
 
             articleTypeImage(bean.getArticleType(), bean, holder.mMultimediaButton);

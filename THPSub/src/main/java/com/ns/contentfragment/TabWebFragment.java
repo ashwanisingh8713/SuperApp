@@ -13,7 +13,8 @@ import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
-import com.ns.utils.WebViewLinkClick;
+import com.ns.utils.WebViewClientForArticleDetail;
+import com.ns.utils.WebViewClientForWebPage;
 import com.ns.view.THP_AutoResizeWebview;
 
 import org.greenrobot.eventbus.EventBus;
@@ -74,7 +75,7 @@ public class TabWebFragment extends BaseFragmentTHP {
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(mUrl);
-        new WebViewLinkClick(false).linkClick(mWebView, getActivity(), mProgressBar);
+        new WebViewClientForWebPage().linkClick(mWebView, getActivity(), mProgressBar);
     }
 
     @Override

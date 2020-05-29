@@ -160,8 +160,6 @@ ext.deps = [
         // Firebase-jobdispatcher
         firebase_jobdispatcher:"com.firebase:firebase-jobdispatcher:0.8.5",
 
-        // Picasso Image Cashing Library
-        picasso: "com.squareup.picasso:picasso:2.5.2",
         //CONSTRAINT_LAYOUT
         CONSTRAINT_LAYOUT: "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_VERSION",
         // TABOOLA

@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
 import com.ns.view.img.ListingIconView;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 /**
  * Normal Row Item View Holder
  */
 public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageView mArticleImageView;
+    public RoundedImageView mArticleImageView;
     public TextView mArticleTextView;
     public TextView mArticleTimeTextView;
     public TextView mArticleSectionName;

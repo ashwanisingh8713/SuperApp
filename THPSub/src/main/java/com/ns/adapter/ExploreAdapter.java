@@ -15,6 +15,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.PicassoUtil;
+import com.ns.view.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -40,9 +41,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         String imageUrl = mSubSection.get(position).getImage();
         if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
             imageUrl = ContentUtil.getWidgetUrl(imageUrl);
-            PicassoUtil.loadImage(holder.itemView.getContext(), holder.mExploreImageView, ContentUtil.getWidgetUrl(imageUrl), R.drawable.ph_exploresections_th);
-        } else {
-            holder.mExploreImageView.setImageResource(R.drawable.ph_exploresections_th);
+            PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mExploreImageView, ContentUtil.getWidgetUrl(imageUrl));
         }
 
         String mParentSecctionName = mSubSection.get(position).getSecName();
@@ -78,7 +77,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout parentView;
-        private ImageView mExploreImageView;
+        private RoundedImageView mExploreImageView;
         private TextView mExploreTextView;
 
         public ViewHolder(View itemView) {

@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.joooonho.SelectableRoundedImageView;
+import com.ns.view.roundedimageview.RoundedImageView;
 import com.ns.thpremium.R;
 import com.ns.view.img.BaseImgView;
 import com.ns.view.text.CustomTextView;
@@ -20,7 +20,7 @@ public class BookmarkPremiumViewHolder extends RecyclerView.ViewHolder {
     public CustomTextView time_Txt;
     public BaseImgView bookmark_Img;
     public ImageView share_Img;
-    public SelectableRoundedImageView image;
+    public RoundedImageView image;
     public View horizontalDivider;
 
     public ProgressBar bookmarkProgressBar;

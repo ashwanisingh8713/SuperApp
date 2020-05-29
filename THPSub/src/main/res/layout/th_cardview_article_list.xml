@@ -22,11 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/article_list_text_marginLeft">
 
-            <ImageView
+            <com.ns.view.roundedimageview.RoundedImageView
+                app:riv_place_holder="thumb"
                 android:id="@+id/imageview_article_list_image"
                 android:layout_width="@dimen/article_item_image_square"
                 android:layout_height="@dimen/article_item_image_square"
-                android:src="@drawable/ph_newsfeed_th" />
+                />
 
             <ImageButton
                 android:id="@+id/multimedia_button"

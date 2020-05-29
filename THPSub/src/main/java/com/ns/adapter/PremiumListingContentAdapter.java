@@ -50,7 +50,7 @@ import com.ns.utils.RowIds;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
-import com.ns.utils.WebViewLinkClick;
+import com.ns.utils.WebViewClientForArticleDetail;
 import com.ns.view.img.ListingIconView;
 import com.ns.view.THP_AutoResizeWebview;
 import com.ns.viewholder.ArticlesViewHolder;
@@ -285,7 +285,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 holder.mImageParentLayout.setVisibility(View.VISIBLE);
                 holder.mArticleImageView.setVisibility(View.VISIBLE);
                 imageUrl = ContentUtil.getThumbUrl(imageUrl);
-                PicassoUtil.loadImage(holder.itemView.getContext(), holder.mArticleImageView, imageUrl, R.drawable.ph_newsfeed_th);
+                PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mArticleImageView, imageUrl);
 
             } else {
                 holder.mArticleImageView.setVisibility(View.GONE);
@@ -397,7 +397,8 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.trendingIcon_Img.setVisibility(View.GONE);
 
-        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
+        PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()));
+
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(bean.getArticletitle());
         // Section Name
@@ -475,7 +476,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Bookmark_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BookmarkPremiumViewHolder holder = (BookmarkPremiumViewHolder) viewHolder;
-        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()), R.drawable.th_ph_01);
+
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(bean.getArticletitle());
         // Section Name
@@ -494,6 +495,8 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         holder.share_Img.setVisibility(View.GONE);
 
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
+
+        PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()));
 
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
@@ -539,7 +542,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_Briefing_Row(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         BriefcaseViewHolder holder = (BriefcaseViewHolder) viewHolder;
-        PicassoUtil.loadImage(holder.image.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
+        PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.image, ContentUtil.getBreifingImgUrl(bean.getThumbnailUrl()));
         holder.authorName_Txt.setText(ContentUtil.getAuthor(bean.getAuthor()));
         holder.title.setText(ResUtil.htmlText(bean.getArticletitle()));
 
@@ -627,8 +630,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             holder.shadowOverlay.setVisibility(View.GONE);
         } else {
             holder.imageView.setVisibility(View.VISIBLE);
-            PicassoUtil.loadImage(holder.itemView.getContext(), holder.imageView, ContentUtil.getBannerUrl(bean.getThumbnailUrl()), R.drawable.th_ph_02);
-
+            PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.imageView, ContentUtil.getBannerUrl(bean.getThumbnailUrl()));
             String caption = null;
             if (bean.getIMAGES() != null && bean.getIMAGES().size() > 0) {
                 caption = bean.getIMAGES().get(0).getCa();
@@ -705,7 +707,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
-        new WebViewLinkClick(true).linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
+        new WebViewClientForArticleDetail(true).linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
 
         holder.mLeadTxt.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getArticletitle(), true),
                 "text/html", "UTF-8", null);
@@ -714,7 +716,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick(true).linkClick(holder.webview, holder.itemView.getContext(), null);
+        new WebViewClientForArticleDetail(true).linkClick(holder.webview, holder.itemView.getContext(), null);
 
         holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
                 "text/html", "UTF-8", null);
@@ -801,10 +803,11 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
             final ArrayList<MeBean> mImageList = bean.getMe();
 
+
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    PicassoUtil.loadImage(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImageWithFilePH(dg_banner_vh.itemView.getContext(), dg_banner_vh.mHeaderImageView, imageUrl);
                 } else {
                     dg_banner_vh.mHeaderImageView.setVisibility(View.GONE);
                 }
@@ -857,7 +860,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    PicassoUtil.loadImage(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImageWithFilePH(db_photo_banner_holder.itemView.getContext(), db_photo_banner_holder.mHeaderImageView, imageUrl);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
@@ -917,7 +920,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    PicassoUtil.loadImage(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImageWithFilePH(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
@@ -985,11 +988,11 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             if (mImageList != null && mImageList.size() > 0) {
                 String imageUrl = mImageList.get(0).getIm_v2();
                 if (!ResUtil.isEmpty(imageUrl)) {
-                    PicassoUtil.loadImage(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl, R.drawable.ph_topnews_th);
+                    PicassoUtil.loadImageWithFilePH(dg_detailAudioViewHolder.itemView.getContext(), dg_detailAudioViewHolder.mHeaderImageView, imageUrl);
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
-                    dg_detailAudioViewHolder.mCaptionTextView.setText(Html.fromHtml(caption));
+                    dg_detailAudioViewHolder.mCaptionTextView.setText(ResUtil.htmlText(caption));
                 } else {
                     dg_detailAudioViewHolder.mCaptionTextView.setVisibility(View.GONE);
                 }
@@ -1039,7 +1042,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         holder.webview.setSize(mDescriptionTextSize);
 
         // Enabling Weblink click on Description
-        new WebViewLinkClick(true).linkClick(holder.webview, holder.itemView.getContext(), null);
+        new WebViewClientForArticleDetail(true).linkClick(holder.webview, holder.itemView.getContext(), null);
 
 
     }

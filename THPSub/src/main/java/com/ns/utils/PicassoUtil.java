@@ -1,10 +1,18 @@
 package com.ns.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.ns.thpremium.R;
+import com.ns.view.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 
@@ -30,18 +38,52 @@ public class PicassoUtil {
         Picasso picasso = Picasso.with(context);
         picasso.load(file)
                 .into(imageView);
-
-        /*Picasso.Builder builder = new Picasso.Builder(context);
-        builder.listener(new Picasso.Listener()
-        {
-            @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-            {
-                exception.printStackTrace();
-            }
-        });
-        builder.build().load(filePath).into(imageView);*/
     }
 
+    public static void loadImageWithFilePH(Context context, final RoundedImageView imageView, String bannerUrl) {
+        File file = new File(imageView.getBannerFilePath());
+        picassoCombo(
+                Picasso.with(context)
+                        .load(file)
+                        ,
+                Picasso.with(context)
+                        .load(bannerUrl)
+                        ,
+                imageView
+        );
 
+        /*picassoCombo(
+                Picasso.with(context)
+                        .load(thumbUrl)
+                        .placeholder(R.drawable.ic_image_placeholder),
+                Picasso.with(context)
+                        .load(bannerUrl)
+                        .error(R.drawable.ic_image_broken),
+                imageView
+        );*/
+    }
+
+    public static void picassoCombo(final RequestCreator thumbnail,
+                                    final RequestCreator large,
+                                    final ImageView imageView) {
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                imageView.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                //imageView.setImageDrawable(errorDrawable);
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                thumbnail.into(imageView);
+            }
+        };
+
+        imageView.setTag(target); // To prevent target from being garbage collected
+        large.into(target);
+    }
 }

@@ -9,10 +9,11 @@
     app:layoutType="CARTOON"
     android:padding="10dp">
 
-    <ImageView
+    <com.ns.view.roundedimageview.RoundedImageView
+        app:riv_place_holder="banner"
         android:id="@+id/imageview_widget_cartoon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ph_topnews_th" />
+        />
 
 </LinearLayout>
