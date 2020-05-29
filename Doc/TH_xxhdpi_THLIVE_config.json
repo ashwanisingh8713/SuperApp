@@ -148,6 +148,14 @@
           "dark": "#1b528e",
           "light": "#191919"
         }
+      },
+      "systemTopBarBackground": {
+        "light": "#ffffff",
+        "dark": "#4a4a4a"
+      },
+      "systemBottomBarBackground": {
+        "light": "#ffffff",
+        "dark": "#000000"
       }
     },
     "widget": [
@@ -338,7 +346,7 @@
         },
         "topbar": {
           "left_slider_three_line": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/left_slider_three_line.png",
-          "logo": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/logo_actionbar.png",
+          "logo": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/logo_actionbar.png",
           "search": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/search.png",
           "overflow_verticle_dot": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
           "back": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/back.png",

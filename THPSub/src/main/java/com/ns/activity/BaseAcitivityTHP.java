@@ -72,16 +72,17 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
         sIsDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
         TableConfiguration tableConfiguration = getTableConfiguration();
-
         //Set Navigation Background color
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
-            ColorOptionBean topbarTheme = tableConfiguration.getAppTheme().getTopBarBg();
+            ColorOptionBean topSystemBarTheme = tableConfiguration.getAppTheme().getSystemTopBarBackground();
+            ColorOptionBean bottomSystemBarTheme = tableConfiguration.getAppTheme().getSystemBottomBarBackground();
             if (sIsDayTheme) {
-                getWindow().setNavigationBarColor(Color.parseColor(topbarTheme.getLight()));
-                getWindow().setStatusBarColor(Color.parseColor(topbarTheme.getLight()));
+                getWindow().setNavigationBarColor(Color.parseColor(bottomSystemBarTheme.getLight()));
+                getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getLight()));
             } else {
-                getWindow().setNavigationBarColor(Color.parseColor(topbarTheme.getDark()));
-                getWindow().setStatusBarColor(Color.parseColor(topbarTheme.getDark()));
+                getWindow().setNavigationBarColor(Color.parseColor(bottomSystemBarTheme.getDark()));
+                getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getDark()));
+                //getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
             }
         } else {
             if(sIsDayTheme) {
@@ -89,7 +90,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                 getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
             } else {
                 getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
-                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
+                getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
             }
         }
 
