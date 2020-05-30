@@ -180,14 +180,29 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             return new BriefingHeaderViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_briefing_header, viewGroup, false));
         } else if (viewType == VT_DASHBOARD) {
-            return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.premium_item_dashboard, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_premium_item_dashboard, viewGroup, false));
+            } else {
+                return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_premium_item_dashboard, viewGroup, false));
+            }
         } else if (viewType == VT_TRENDING) {
-            return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.premium_item_dashboard, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_premium_item_dashboard, viewGroup, false));
+            } else {
+                return new DashboardViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_premium_item_dashboard, viewGroup, false));
+            }
         } else if (viewType == VT_BOOKMARK_PREMIUM) {
-            return new BookmarkPremiumViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.premium_item_bookmark, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new BookmarkPremiumViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_premium_item_bookmark, viewGroup, false));
+            } else {
+                return new BookmarkPremiumViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_premium_item_bookmark, viewGroup, false));
+            }
         } else if (viewType == VT_BRIEFCASE) {
             return new BriefcaseViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.premium_apptab_item_briefcase, viewGroup, false));
@@ -342,14 +357,22 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
-                    if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.G_BOOKMARK_DEFAULT,
-                                bean.getArticleUrl(), position, bean.getArticleId());
+
+                    if(bean.getGroupType() != null && bean.getGroupType().equalsIgnoreCase(NetConstants.G_BOOKMARK_DEFAULT)) {
+                        if(mFrom.equals(NetConstants.BOOKMARK_IN_TAB)) {
+                            IntentUtil.openDetailActivity(holder.itemView.getContext(), NetConstants.G_BOOKMARK_DEFAULT,
+                                    bean.getArticleUrl(), position, bean.getArticleId());
+                        }
+                        else {
+                            IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
+                                    bean.getArticleUrl(), position, bean.getArticleId());
+                        }
                     }
                     else {
-                        IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,
-                                bean.getArticleUrl(), position, bean.getArticleId());
+                        IntentUtil.openSingleDetailActivity(view.getContext(), NetConstants.G_DEFAULT_SECTIONS, bean, bean.getArticleLink());
                     }
+
+
                 }
             });
 
@@ -805,7 +828,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         dg_banner_vh.mMultiMediaButton.setVisibility(View.GONE);
         boolean isAppExclusive = bean.getSid() != null && bean.getSid().equals("" + THPConstants.APP_EXCLUSIVE_SECTION_ID);
         if (isAppExclusive) {
-            dg_banner_vh.mTitleTextView.setText(Html.fromHtml("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
+            dg_banner_vh.mTitleTextView.setText(ResUtil.htmlText("<i>" + "\"" + bean.getTi() + "\"" + "</i>"));
             dg_banner_vh.mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             dg_banner_vh.mAuthorTextView.setVisibility(View.GONE);
             dg_banner_vh.mUpdatedTextView.setVisibility(View.GONE);

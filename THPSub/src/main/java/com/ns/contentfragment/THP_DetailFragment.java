@@ -376,16 +376,16 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     }
 
-    private static String SEARCH_BY_ARTICLE_ID_URL = null;
+
 
     private void loadDataPremiumFromServer() {
 
-        if (SEARCH_BY_ARTICLE_ID_URL == null) {
+        if (THPConstants.SEARCH_BY_ARTICLE_ID_URL == null) {
             mDisposable.add(THPDB.getInstance(getActivity()).daoConfiguration().getConfigurationSingle()
                     .subscribeOn(Schedulers.io())
                     .subscribe((tableConfiguration, throwable) -> {
-                                SEARCH_BY_ARTICLE_ID_URL = tableConfiguration.getSearchOption().getUrlId();
-                                Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+                        THPConstants.SEARCH_BY_ARTICLE_ID_URL = tableConfiguration.getSearchOption().getUrlId();
+                                Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, THPConstants.SEARCH_BY_ARTICLE_ID_URL, mFrom);
                                 mDisposable.add(
                                         observable.observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(recoBean -> {
@@ -400,7 +400,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     ));
         }
         else {
-            Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, SEARCH_BY_ARTICLE_ID_URL, mFrom);
+            Observable<ArticleBean> observable = ApiManager.premiumArticleDetailFromServer(getActivity(), mArticleId, THPConstants.SEARCH_BY_ARTICLE_ID_URL, mFrom);
             mDisposable.add(
                     observable.observeOn(AndroidSchedulers.mainThread())
                             .subscribe(recoBean -> {

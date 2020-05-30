@@ -5,6 +5,8 @@ public class THPConstants {
     public static final String TnC_URL = "https://www.thehindu.com/app-termsofuse/";
     public static final String FAQ_URL = "https://subscription.thehindu.com/appfaq";
 
+    public static String SEARCH_BY_ARTICLE_ID_URL = null;
+
     public static final String FROM_SubscriptionStep_1_Fragment = "SubscriptionStep_1_Fragment";
     public static final String FROM_BecomeMemberActivity = "BecomeMemberActivity";
     public static final String FROM_USER_SignUp = "userSignUp";

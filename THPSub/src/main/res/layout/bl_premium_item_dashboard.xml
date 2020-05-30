@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/bl_item_margin_left"
+    android:layout_marginLeft="@dimen/bl_item_margin_left"
+    android:layout_marginEnd="@dimen/bl_item_margin_right"
+    android:layout_marginRight="@dimen/bl_item_margin_right"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/apptab_listing_left_padding"
+        android:paddingLeft="@dimen/apptab_listing_left_padding"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/apptab_listing_right_padding"
+        android:paddingRight="@dimen/apptab_listing_right_padding"
+        android:paddingBottom="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/sectionName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="International"
+                android:textSize="12sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textColor="@color/color_1b528e" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="Statehood for Jammu and Kashmir will be restored, says prime minister Modi.Statehood for Jammu and Kashmir will be restored, says prime minister Modi."
+                android:textSize="@dimen/personal_info_textSize_16sp"
+                app:font_path="@string/THP_FiraSans_SemiBold"
+                app:layout_constraintBottom_toTopOf="@+id/authorName_Txt"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image"
+                app:layout_constraintTop_toBottomOf="@+id/sectionName"
+                app:textType="M" />
+
+
+            <com.ns.view.roundedimageview.RoundedImageView
+                android:id="@+id/image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/bookmark_Img"
+                app:layout_constraintRight_toRightOf="parent"
+                app:riv_corner_radius_bottom_left="3dp"
+                app:riv_corner_radius_bottom_right="3dp"
+                app:riv_corner_radius_top_left="3dp"
+                app:riv_corner_radius_top_right="3dp"
+                app:riv_place_holder="thumb" />
+
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/authorName_Txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/marging_end_author_name"
+                android:layout_marginBottom="10dp"
+                android:textSize="12sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                app:layout_constraintBottom_toTopOf="@+id/time_Txt"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/image"
+                app:textColor="@color/color_4f4f4f"
+                tools:text="Ashwani" />
+
+            <ImageView
+                android:id="@+id/trendingIcon_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:srcCompat="@drawable/tab_trending_selected" />
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/time_Txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 days ago"
+                android:textSize="12sp"
+                app:font_path="@string/THP_FiraSans_Regular"
+                app:layout_constraintBottom_toBottomOf="@+id/trendingIcon_Img"
+                app:layout_constraintLeft_toRightOf="@+id/trendingIcon_Img"
+                app:layout_constraintTop_toTopOf="@+id/trendingIcon_Img"
+                app:textColor="@color/color_818181_light" />
+
+            <com.ns.view.img.ListingIconView
+                android:id="@+id/toggleBtn_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:iconType="dislike"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/toggleBtnProgressBar"
+                style="@android:style/Widget.Holo.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+
+            <com.ns.view.img.ListingIconView
+                android:id="@+id/bookmark_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                app:iconType="unbookmark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img"
+                app:srcCompat="@drawable/ic_bookmark_unselected" />
+
+            <ProgressBar
+                android:id="@+id/bookmarkProgressBar"
+                style="@android:style/Widget.Holo.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img" />
+
+            <com.ns.view.img.ListingIconView
+                android:id="@+id/like_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                app:iconType="unfavourite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
+                app:srcCompat="@drawable/ic_like_unselected" />
+
+            <ProgressBar
+                android:id="@+id/likeProgressBar"
+                style="@android:style/Widget.Holo.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/bookmark_Img" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</com.ns.view.layout.NSCardView>

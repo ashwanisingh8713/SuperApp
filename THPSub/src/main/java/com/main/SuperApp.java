@@ -29,6 +29,7 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.THPConstants;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
 
@@ -110,6 +111,8 @@ public class SuperApp extends Application implements LifecycleObserver  {
         DefaultTHApiManager.readArticleDelete(this);
         // Reduces Related article table
         DefaultTHApiManager.deleteRelatedArticle();
+
+        THPConstants.SEARCH_BY_ARTICLE_ID_URL = null;
 
     }
 

@@ -1018,6 +1018,9 @@ public class ApiManager {
                     public Boolean apply(ArticleBean articleBean) {
                         ArticleBean bean = new ArticleBean();
                         bean.setArticleId(articleBean.getArticleId());
+                        bean.setMe(articleBean.getMe());
+                        bean.setMedia(articleBean.getMedia());
+                        bean.setIMAGES(articleBean.getIMAGES());
                         bean.setIm_thumbnail_v2(articleBean.getIm_thumbnail_v2());
                         bean.setIm_thumbnail(articleBean.getIm_thumbnail());
                         bean.setAid(articleBean.getAid());

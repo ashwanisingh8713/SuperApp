@@ -1061,7 +1061,7 @@
       "newsDigest": "http://thehindubusinessline.com/newsletter/"
     },
     "searchOption": {
-      "urlId": "https://www.thehindubusinessline.com/app/search.json?term=",
+      "urlId": "https://thehindubusinessline.com/app/getArticleByIds.json?articleIds=",
       "urlText": "https://www.thehindubusinessline.com/app/search.json?term=",
       "types": [
         {
