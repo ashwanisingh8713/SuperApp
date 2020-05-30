@@ -63,5 +63,9 @@ public class RowIds {
         return "taboolaModel";
     }
 
+    public static String rowId_relatedArticleHeader() {
+        return "relatedArticleHeader_";
+    }
+
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdSize;
 import com.main.DFPAds;
@@ -19,7 +20,9 @@ import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
+import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.ApiManager;
+import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
@@ -155,13 +158,32 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         //loadRecyclerData();
 
+        mPullToRefreshLayout.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int findLastVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastVisibleItemPosition();
+                if(isRelatedArticleLoaded) {
+                    return;
+                }
+                AppTabContentModel postCommentBtnModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_POST_COMMENT_BTN_VIEW, RowIds.rowId_postCommentBtn());
+                int postCommentIndex = mRecyclerAdapter.indexOf(postCommentBtnModel);
+                if(postCommentIndex != -1 && findLastVisibleItemPosition==postCommentIndex && !isRelatedArticleLoaded) {
+                    isRelatedArticleLoaded = true;
+                    getRelatedArticle();
+                }
+            }
+        });
+
     }
 
     private int maintainRefreshStateForOnResume = -1;
+    private boolean isRelatedArticleLoaded;
 
     @Override
     public void onResume() {
         super.onResume();
+
+
         mPageStartTime = System.currentTimeMillis();
         // Set Toolbar Item Click Listener
         mActivity.setOnFragmentTools(this);
@@ -176,6 +198,42 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
         loadRecyclerData();
 
+
+
+    }
+
+
+    private void getRelatedArticle() {
+        DefaultTHApiManager.getRelatedArticle(mArticleId)
+                .map(tableRelatedArticles -> {
+                    Log.i("", "");
+                    isRelatedArticleLoaded = true;
+                    final ArrayList<AppTabContentModel> uiRowItem = new ArrayList<>();
+                    if(tableRelatedArticles.getBeans().size() > 0 ) {
+                        final String itemRowId = RowIds.rowId_relatedArticleHeader();
+                        AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_RELATED_ARTICLE_HEADER, itemRowId);
+                        uiRowItem.add(item);
+                    }
+                    for (ArticleBean bean : tableRelatedArticles.getBeans()) {
+                        final String itemRowId = RowIds.rowId_defaultArticle(bean.getAid());
+                        AppTabContentModel item = new AppTabContentModel(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
+                        item.setBean(bean);
+                        uiRowItem.add(item);
+                    }
+                    return uiRowItem;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(uiRowItem->{
+                    if(uiRowItem.size() > 0) {
+                        AppTabContentModel postCommentBtnModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_POST_COMMENT_BTN_VIEW, RowIds.rowId_postCommentBtn());
+                        int postCommentIndex = mRecyclerAdapter.indexOf(postCommentBtnModel);
+                        mRecyclerAdapter.insertItem(uiRowItem, postCommentIndex + 1);
+                    }
+                    isRelatedArticleLoaded = true;
+                }, throwable -> {
+                    Log.i("", "");
+                    //isRelatedArticleLoaded = false;
+                });
     }
 
     private void loadRecyclerData() {

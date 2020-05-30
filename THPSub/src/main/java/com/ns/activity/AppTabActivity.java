@@ -246,6 +246,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         observeNotificationsCount();
         //Observe bookmarks count
         observeBookmarksCount();
+
     }
 
     @Override

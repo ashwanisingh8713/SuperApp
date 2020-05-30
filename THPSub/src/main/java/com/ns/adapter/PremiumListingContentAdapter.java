@@ -69,6 +69,7 @@ import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.PREMIUM_DetailBannerViewHolder;
 import com.ns.viewholder.PREMIUM_DetailDescriptionWebViewHolder;
 import com.ns.viewholder.DG_PostCommentBtnViewHolder;
+import com.ns.viewholder.RelatedArticleHeaderViewHolder;
 import com.ns.viewholder.ViewHolderTaboola;
 import com.taboola.android.TaboolaWidget;
 import com.taboola.android.listeners.TaboolaEventListener;
@@ -161,6 +162,16 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         return updateIndex;
     }
 
+    public void insertItem(List<AppTabContentModel> items, int index) {
+        if (index >= mContent.size()) {
+            mContent.addAll(items);
+        } else if (index < mContent.size()) {
+            mContent.addAll(index, items);
+        }
+
+        notifyItemRangeChanged(index, mContent.size());
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -210,8 +221,16 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewType == VT_POST_COMMENT_BTN_VIEW) {
             return new DG_PostCommentBtnViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dg_detail_post_comment_btn, viewGroup, false));
         } else if (viewType == VT_THD_DEFAULT_ROW) {
-            return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.th_cardview_article_list, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_cardview_article_list, viewGroup, false));
+            } else {
+                return new ArticlesViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_cardview_article_list, viewGroup, false));
+            }
+        } else if (viewType == VT_RELATED_ARTICLE_HEADER) {
+            return new RelatedArticleHeaderViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.bl_related_article_header, viewGroup, false));
         }
         return null;
     }
@@ -257,6 +276,13 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             premium_ui_Bookmark_Row(viewHolder, bean, position);
         } else if (viewHolder instanceof ArticlesViewHolder) {
             defaultBookmark_ArticleData(viewHolder, position);
+        } else if(viewHolder instanceof RelatedArticleHeaderViewHolder) {
+            RelatedArticleHeaderViewHolder holder = (RelatedArticleHeaderViewHolder) viewHolder;
+            if(BuildConfig.IS_BL) {
+                holder.indicatorView.setVisibility(View.VISIBLE);
+            } else {
+                holder.indicatorView.setVisibility(View.GONE);
+            }
         }
     }
 

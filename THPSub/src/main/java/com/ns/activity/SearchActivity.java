@@ -1,10 +1,13 @@
 package com.ns.activity;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,8 +24,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.main.SuperApp;
-import com.netoperation.asynctasks.GetCompanyNameTask;
+import com.google.gson.Gson;
 import com.netoperation.asynctasks.SearchAdapter;
 import com.netoperation.config.model.Breadcrumb;
 import com.netoperation.config.model.SearchType;
@@ -36,17 +38,24 @@ import com.netoperation.util.DefaultPref;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.model.CompanyData;
+import com.ns.model.CompanyNameModel;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.BLConstants;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.NetUtils;
+import com.ns.utils.RealmSupport;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.img.TopbarIconView;
 import com.ns.view.layout.NSLinearLayout;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +66,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.Case;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SearchActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
@@ -175,7 +185,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
         //Fetch Stocks API for BL
         if (BuildConfig.IS_BL) {
-            Realm mRealm = SuperApp.getRealmInstance();
+            Realm mRealm = new RealmSupport().getRealmInstance();
             OrderedRealmCollection<CompanyData> companyList = mRealm.where(CompanyData.class).findAll();
             if (companyList.size() <= 0) {
                 new GetCompanyNameTask().execute(BLConstants.COMPANY_NAME_LIST_URL);
@@ -304,7 +314,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
      * Update UI For Stocks SearchType
      */
     private void searchStocksByText(String searchText) {
-        Realm mRealm = SuperApp.getRealmInstance();
+        Realm mRealm = new RealmSupport().getRealmInstance();
         OrderedRealmCollection<CompanyData> companyList = mRealm.where(CompanyData.class)
                 .contains("name", searchText, Case.INSENSITIVE).findAll();
 
@@ -337,5 +347,50 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         }
     }
 
+
+    ///////////////////////////////////////////////
+
+
+
+    public class GetCompanyNameTask extends AsyncTask<String, Void, CompanyNameModel> {
+
+        @Override
+        protected CompanyNameModel doInBackground(String... params) {
+            CompanyNameModel response = null;
+            try {
+
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStream is = connection.getInputStream();
+                    Reader reader = new InputStreamReader(is);
+                    Gson gson = new Gson();
+                    response = gson.fromJson(reader, CompanyNameModel.class);
+                }
+                if (isCancelled()) {
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(final CompanyNameModel companyNameModel) {
+            super.onPostExecute(companyNameModel);
+            if (isCancelled()) {
+                return;
+            }
+            if (companyNameModel != null) {
+                final Realm mRealm = new RealmSupport().getRealmInstance();
+                mRealm.executeTransactionAsync(realm -> {
+                    List<CompanyData> mData = companyNameModel.getData();
+                    realm.copyToRealmOrUpdate(mData);
+                });
+            }
+        }
+    }
 
 }

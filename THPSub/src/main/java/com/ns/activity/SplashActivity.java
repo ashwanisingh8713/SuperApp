@@ -110,11 +110,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
         registerReceiver();
         sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server");
-
-        // Reduces Read article table
-        DefaultTHApiManager.readArticleDelete(this);
         DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(false);
-
 
     }
 

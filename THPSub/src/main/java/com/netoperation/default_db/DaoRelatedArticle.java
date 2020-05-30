@@ -17,7 +17,7 @@ public interface DaoRelatedArticle {
     void insertSectionArticle(TableRelatedArticle tableRelatedArticle);
 
     @Query("SELECT * FROM TableRelatedArticle WHERE articleId = :articleId")
-    List<TableRelatedArticle> getAllArticles(String articleId);
+    Maybe<TableRelatedArticle> getAllArticles(String articleId);
 
     @Query("SELECT * FROM TableRelatedArticle")
     List<TableRelatedArticle> getAllArticles();

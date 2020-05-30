@@ -287,4 +287,13 @@ public class DefaultPref {
         return mPreferences.getString("newsDigestUrl", "");
     }
 
+    public void setOldBookmarkLoaded(boolean isOldBookmarkLoaded) {
+        mEditor.putBoolean("isOldBookmarkLoaded", isOldBookmarkLoaded);
+        mEditor.apply();
+    }
+
+    public boolean isOldBookmarkLoaded() {
+        return mPreferences.getBoolean("isOldBookmarkLoaded", false);
+    }
+
 }

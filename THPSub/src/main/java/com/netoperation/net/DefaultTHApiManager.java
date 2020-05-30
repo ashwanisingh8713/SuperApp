@@ -1,9 +1,11 @@
 package com.netoperation.net;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -15,6 +17,7 @@ import com.netoperation.config.download.FileUtils;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.DaoMP;
 import com.netoperation.db.THPDB;
+import com.netoperation.db.TableBookmark;
 import com.netoperation.db.TableMP;
 import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoConfiguration;
@@ -22,6 +25,7 @@ import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoMPReadArticle;
 import com.netoperation.default_db.DaoPersonaliseDefault;
 import com.netoperation.default_db.DaoRead;
+import com.netoperation.default_db.DaoRelatedArticle;
 import com.netoperation.default_db.DaoSection;
 import com.netoperation.default_db.DaoSectionArticle;
 import com.netoperation.default_db.DaoTempWork;
@@ -32,6 +36,7 @@ import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableMPReadArticle;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
+import com.netoperation.default_db.TableRelatedArticle;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableTempWork;
@@ -39,6 +44,7 @@ import com.netoperation.default_db.TableTemperoryArticle;
 import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
+import com.netoperation.model.BookmarkBean;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
@@ -57,7 +63,9 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.thpremium.BuildConfig;
+import com.ns.utils.RealmSupport;
 import com.ns.utils.ResUtil;
+import com.ns.utils.RowIds;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,12 +77,16 @@ import java.util.stream.Collectors;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
+import io.realm.Sort;
 
 public class DefaultTHApiManager {
 
@@ -355,6 +367,8 @@ public class DefaultTHApiManager {
                                 tableBanner.setBeans(bannerArticles);
                                 daoBanner.insertBanner(tableBanner);
                                 Log.i("HomeData", "Banner :: Inserted");
+                                // Insert Related Article
+                                DefaultTHApiManager.insertRelatedArticle(bannerArticles);
                             } else {
                                 Log.i("HomeData", "Banner :: Not Valid");
                             }
@@ -390,6 +404,8 @@ public class DefaultTHApiManager {
                                 daoHomeArticle.insertHomeArticle(tableHomeArticle);
                                 Log.i("HomeData", "Article :: Inserted");
                                 Log.i(TAG, "homeArticles :: Home Article Added SEC-ID ::" + articlesBeans.getSec_id() + " :: " + articlesBeans.getData().size() + " Size");
+                                // Insert Related Article
+                                DefaultTHApiManager.insertRelatedArticle(articlesBeans.getData());
                             }
                         }
                         return "";
@@ -414,7 +430,6 @@ public class DefaultTHApiManager {
         }
 
         return Observable.just("").subscribe();
-
 
     }
 
@@ -464,6 +479,9 @@ public class DefaultTHApiManager {
                                         daoSectionArticle.insertSectionArticle(tableSectionArticle);
 
                                         Log.i("HomeData", "widgetContent :: Inserted");
+
+                                        // Insert Related Article
+                                        DefaultTHApiManager.insertRelatedArticle(sectionContent.getData().getArticle());
                                     }
                                     else {
                                         Log.i("HomeData", "widgetContent :: Not Valid");
@@ -517,11 +535,14 @@ public class DefaultTHApiManager {
                         daoSectionArticle.insertSectionArticle(sectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
-                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            final String itemRowId = RowIds.rowId_defaultArticle(bean.getAid());
                             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
                             item.setArticleBean(bean);
                             uiRowItem.add(item);
                         }
+
+                        // Insert Related Article
+                        DefaultTHApiManager.insertRelatedArticle(value.getData().getArticle());
                     }
 
                     return uiRowItem;
@@ -582,11 +603,14 @@ public class DefaultTHApiManager {
                         daoSectionArticle.insertSectionArticle(sectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
-                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            final String itemRowId = RowIds.rowId_defaultArticle(bean.getAid());
                             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
                             item.setArticleBean(bean);
                             uiRowItem.add(item);
                         }
+
+                        // Insert Related Article
+                        DefaultTHApiManager.insertRelatedArticle(value.getData().getArticle());
                     }
 
                     return uiRowItem;
@@ -633,11 +657,14 @@ public class DefaultTHApiManager {
                         daoSubSectionArticle.insertSectionArticle(subSectionArticles);
 
                         for (ArticleBean bean : value.getData().getArticle()) {
-                            final String itemRowId = "defaultRow_" + bean.getSid() + "_" + bean.getAid();
+                            final String itemRowId = RowIds.rowId_defaultArticle(bean.getAid());
                             SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW, itemRowId);
                             item.setArticleBean(bean);
                             uiRowItem.add(item);
                         }
+
+                        // Insert Related Article
+                        DefaultTHApiManager.insertRelatedArticle(value.getData().getArticle());
                     }
 
                     return uiRowItem;
@@ -659,6 +686,93 @@ public class DefaultTHApiManager {
                         requestCallback.onComplete("getNewsDigestContentFromServer");
                     }
                 });
+    }
+
+
+    public static void insertRelatedArticle(List<ArticleBean> articleBeans) {
+        Observable.just(articleBeans)
+                .subscribeOn(Schedulers.io())
+                .flatMapIterable(articleBeanList -> {
+                    return articleBeanList;
+                })
+                .subscribeOn(Schedulers.io())
+                .map(article->{
+                    if(article.getRn() != null && article.getRn().size() > 0) {
+                        THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
+                        DaoRelatedArticle daoRelatedArticle = thpdb.daoRelatedArticle();
+                        daoRelatedArticle.deleteRelatedAllArticle(article.getArticleId());
+                        TableRelatedArticle relatedArticle = new TableRelatedArticle(article.getArticleId(), article.getRn());
+                        daoRelatedArticle.insertSectionArticle(relatedArticle);
+                    }
+                    return "";
+                })
+                .subscribe();
+    }
+
+    public static Maybe<TableRelatedArticle>  getRelatedArticle(String articleId) {
+        THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
+        DaoRelatedArticle daoRelatedArticle = thpdb.daoRelatedArticle();
+        return daoRelatedArticle.getAllArticles(articleId).subscribeOn(Schedulers.io());
+    }
+
+    public static void deleteRelatedArticle() {
+        Observable.just("")
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
+                    DaoRelatedArticle daoRelatedArticle = thpdb.daoRelatedArticle();
+                    List<TableRelatedArticle> allRelatedArticle = daoRelatedArticle.getAllArticles();
+
+
+                    return allRelatedArticle;
+                })
+                .flatMapIterable(allRelatedArticle->{
+                    if(allRelatedArticle.size() > 40) {
+                        return allRelatedArticle.subList(29, allRelatedArticle.size() - 1);
+                    }
+                    return new ArrayList<TableRelatedArticle>();
+                })
+                .map(tableRelatedArticle -> {
+                    if(tableRelatedArticle.getArticleId() != null) {
+                        THPDB.getInstance(SuperApp.getAppContext()).daoRelatedArticle().deleteRelatedAllArticle(tableRelatedArticle.getArticleId());
+                        return true;
+                    }
+                    return false;
+                })
+                .subscribe(val->{
+                    Log.i("", "");
+                }, throwable -> {
+                    Log.i("", "");
+                });
+
+    }
+
+    public static void readArticleDelete(Context context) {
+        if (context == null) {
+            return;
+        }
+
+        THPDB thpdb = THPDB.getInstance(context);
+        DaoRead daoRead = thpdb.daoRead();
+        daoRead.getAllReadArticleId()
+                .subscribeOn(Schedulers.io())
+                .map(ids -> {
+                    if (ids.size() > 200) {
+                        List<TableRead> subList = ids.subList(199, ids.size() - 1);
+                        List<String> subListId = new ArrayList<>();
+                        for (TableRead tableRead : subList) {
+                            subListId.add(tableRead.getArticleId());
+                        }
+
+                        if (context != null) {
+                            THPDB thpdbb = THPDB.getInstance(context);
+                            DaoRead daoReadd = thpdbb.daoRead();
+                            daoReadd.deleteMultiArticleId(subListId);
+                        }
+                    }
+
+                    return "";
+                }).subscribe();
     }
 
     public static void readArticleId(Context context, final String articleId, String groupType) {
@@ -740,33 +854,7 @@ public class DefaultTHApiManager {
 
     }
 
-    public static void readArticleDelete(Context context) {
-        if (context == null) {
-            return;
-        }
 
-        THPDB thpdb = THPDB.getInstance(context);
-        DaoRead daoRead = thpdb.daoRead();
-        daoRead.getAllReadArticleId()
-                .subscribeOn(Schedulers.io())
-                .map(ids -> {
-                    if (ids.size() > 200) {
-                        List<TableRead> subList = ids.subList(199, ids.size() - 1);
-                        List<String> subListId = new ArrayList<>();
-                        for (TableRead tableRead : subList) {
-                            subListId.add(tableRead.getArticleId());
-                        }
-
-                        if (context != null) {
-                            THPDB thpdbb = THPDB.getInstance(context);
-                            DaoRead daoReadd = thpdbb.daoRead();
-                            daoReadd.deleteMultiArticleId(subListId);
-                        }
-                    }
-
-                    return "";
-                }).subscribe();
-    }
 
     public static Observable<ArticleBean> isExistInDGnArticle(Context context, final String aid) {
         return Observable.just(aid)
@@ -1367,6 +1455,58 @@ public class DefaultTHApiManager {
                 .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static void mergeOldBookmark() {
+        if(DefaultPref.getInstance(SuperApp.getAppContext()).isOldBookmarkLoaded()) {
+            return;
+        }
+        Observable.just("")
+                .subscribeOn(Schedulers.io())
+                .map(val->{
+                    THPDB thp = THPDB.getInstance(SuperApp.getAppContext());
+                    Realm mRealm = new RealmSupport().getRealmInstance();
+                    OrderedRealmCollection<BookmarkBean> oldBookmarkArticlesList = mRealm.where(BookmarkBean.class).findAllSorted("bookmarkDate", Sort.DESCENDING);
+                    for(BookmarkBean articleBean : oldBookmarkArticlesList) {
+                        ArticleBean bean = new ArticleBean();
+                        bean.setArticleId(""+articleBean.getAid());
+                        bean.setIm_thumbnail_v2(articleBean.getIm_thumbnail_v2());
+                        bean.setAid(""+articleBean.getAid());
+                        bean.setArticleSection(articleBean.getSname());
+                        bean.setArticletitle(articleBean.getTi());
+                        bean.setTi(articleBean.getTi());
+                        bean.setArticletype(articleBean.getArticleType());
+                        bean.setAu(articleBean.getAu());
+                        bean.setPubDate(articleBean.getPd());
+                        bean.setPubDateTime(articleBean.getPd());
+                        bean.setPd(articleBean.getPd());
+                        bean.setOd(articleBean.getOd());
+                        bean.setGmt(articleBean.getGmt());
+                        bean.setIsBookmark(1);
+                        bean.setIsFavourite(1);
+                        bean.setDescription(articleBean.getDe());
+                        bean.setShortDescription(articleBean.getLe());
+                        bean.setHasDescription(1);
+                        //bean.setMedia(articleBean.getMe());
+                        bean.setGroupType(NetConstants.G_BOOKMARK_DEFAULT);
+                        bean.setSid(articleBean.getSid());
+                        bean.setSectionName(articleBean.getSname());
+                        bean.setYoutube_video_id(articleBean.getVid());
+                        bean.setYoutubeVideoId(articleBean.getVid());
+                        bean.setLe(articleBean.getLe());
+                        bean.setLeadText(articleBean.getLe());
+                        bean.setAdd_pos(articleBean.getAdd_pos());
+                        TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
+                        thp.bookmarkTableDao().insertBookmark(tableBookmark);
+                    }
+                    DefaultPref.getInstance(SuperApp.getAppContext()).setOldBookmarkLoaded(true);
+                    return "";
+                })
+                .subscribe(val->{
+                    Log.i("", "");
+                }, throwable -> {
+                    Log.i("", "");
+                });
     }
 
 }
