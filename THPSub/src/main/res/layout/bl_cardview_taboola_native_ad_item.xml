@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="@dimen/bl_item_margin_left"
+    android:layout_marginLeft="@dimen/bl_item_margin_left"
+    android:layout_marginEnd="@dimen/bl_item_margin_right"
+    android:layout_marginRight="@dimen/bl_item_margin_right"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/parentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/bl_item_margin_top"
+        android:paddingBottom="@dimen/bl_item_margin_top"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/attribution_view"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/article_item_parent_left_right_padding"
+            android:paddingTop="@dimen/article_item_parent_top_bottom_padding"
+            android:paddingEnd="@dimen/article_item_parent_left_right_padding"
+            android:paddingBottom="@dimen/article_item_parent_top_bottom_padding">
+
+            <FrameLayout
+                android:id="@+id/frameLayoutContainer"
+                android:layout_width="@dimen/article_item_image_square"
+                android:layout_height="@dimen/article_item_image_square"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/article_list_text_marginLeft" />
+
+            <LinearLayout
+                android:id="@+id/textLayoutLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <com.ns.view.roundedimageview.RoundedImageView
+            android:id="@+id/attribution_view"
+            app:riv_place_holder="thumb"
+            app:srcCompat="@drawable/icon_attribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/article_item_parent_top_bottom_padding"
+            android:layout_marginEnd="@dimen/article_item_parent_top_bottom_padding"
+            android:layout_marginBottom="@dimen/article_item_parent_top_bottom_padding"
+            android:scaleType="fitCenter" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adIcon"
+            android:layout_width="40dp"
+            android:layout_height="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/article_item_parent_top_bottom_padding"
+            android:layout_marginBottom="@dimen/article_item_parent_top_bottom_padding"
+            android:background="@drawable/advt"
+            android:scaleType="centerInside" />
+
+
+    </RelativeLayout>
+</com.ns.view.layout.NSCardView>

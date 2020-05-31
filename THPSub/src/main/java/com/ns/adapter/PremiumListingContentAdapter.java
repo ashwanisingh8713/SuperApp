@@ -415,7 +415,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         AdData adData = item.getAdData();
         InlineAdViewHolder inlineAdViewHolder = (InlineAdViewHolder) holder;
         inlineAdViewHolder.frameLayout.removeAllViews();
-        inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
         final PublisherAdView adView = adData.getAdView();
 
         if (adData.isReloadOnScroll()) {

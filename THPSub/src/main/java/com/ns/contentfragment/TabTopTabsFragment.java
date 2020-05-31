@@ -236,6 +236,7 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
             FragmentUtil.pushFragmentFromFragment(this, R.id.sectionLayout, tabTopTabsFragment);
         }
         else {
+            // Try to send Event in AppTabFragment.java => handleEvent(TabsBean tabsBean)
             String sid = tableSection.getSecId();
             TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
             List<TabsBean> tabs = tableConfiguration.getTabs();

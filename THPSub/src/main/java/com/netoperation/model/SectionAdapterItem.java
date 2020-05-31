@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.TH_WidgetAdapter;
+import com.ns.model.SensexData;
 
 public class SectionAdapterItem {
 
@@ -16,7 +17,7 @@ public class SectionAdapterItem {
     private ExploreAdapter exploreAdapter;
     private StaticPageUrlBean staticPageUrlBean;
     private AdData adData;
-    private int proposedIndex;
+    private SensexData sensexData;
 
 
     public SectionAdapterItem(int viewType, String itemRowId) {
@@ -25,12 +26,12 @@ public class SectionAdapterItem {
     }
 
 
-    public int getProposedIndex() {
-        return proposedIndex;
+    public SensexData getSensexData() {
+        return sensexData;
     }
 
-    public void setProposedIndex(int proposedIndex) {
-        this.proposedIndex = proposedIndex;
+    public void setSensexData(SensexData sensexData) {
+        this.sensexData = sensexData;
     }
 
     public AdData getAdData() {

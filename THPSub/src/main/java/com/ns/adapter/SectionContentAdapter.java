@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,16 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.netoperation.config.model.TabsBean;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.StaticPageUrlBean;
+import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.net.RequestCallback;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.callbacks.WidgetItemClickListener;
+import com.ns.contentfragment.TabIndicesFragment;
+import com.ns.model.BSEData;
+import com.ns.model.NSEData;
+import com.ns.model.SensexData;
+import com.ns.model.SensexStatus;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
@@ -34,6 +44,7 @@ import com.ns.utils.FragmentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
+import com.ns.utils.RowIds;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewClientForWebPage;
@@ -44,6 +55,7 @@ import com.ns.viewholder.ExploreViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.SearchRecyclerHolder;
+import com.ns.viewholder.SensexViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
 import com.ns.viewholder.TaboolaNativeAdViewHolder;
 import com.ns.viewholder.TH_WidgetsViewHolder;
@@ -52,7 +64,11 @@ import com.taboola.android.api.TBRecommendationItem;
 import com.taboola.android.api.TBTextView;
 import com.taboola.android.api.TaboolaApi;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -159,12 +175,26 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     .inflate(R.layout.cardview_home_explore, viewGroup, false));
         }
         else if(viewType == VT_THD_300X250_ADS) {
-            return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.inline_ads_container, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_inline_ads_container, viewGroup, false));
+            } else {
+                return new InlineAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.inline_ads_container, viewGroup, false));
+            }
         }
         else if(viewType == VT_TABOOLA_LISTING_ADS) {
-            return new TaboolaNativeAdViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cardview_taboola_native_ad_item, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new TaboolaNativeAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_cardview_taboola_native_ad_item, viewGroup, false));
+            } else {
+                return new TaboolaNativeAdViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.cardview_taboola_native_ad_item, viewGroup, false));
+            }
+        }
+        else if(viewType == VT_BL_SENSEX) {
+            return new SensexViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.bl_cardview_sensex, viewGroup, false));
         }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
@@ -199,6 +229,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
         else if(holder instanceof ExploreViewHolder) {
             fillExploreData(holder, item, position);
+        }
+        else if(holder instanceof SensexViewHolder) {
+            bl_fillSensexData((SensexViewHolder)holder, position);
         }
     }
 
@@ -311,7 +344,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             inlineAdViewHolder.indexTxt.setText(indexText(position,""));
         }
         inlineAdViewHolder.frameLayout.removeAllViews();
-        inlineAdViewHolder.frameLayout.setBackgroundResource(R.drawable.interstetial_ads_bg);
         final PublisherAdView adView = adData.getAdView();
         //inlineAdViewHolder.frameLayout.setBackground(null);
 
@@ -757,6 +789,230 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
         });
 
+    }
+
+    private void bl_getSensexWidgetData() {
+            DefaultTHApiManager.bl_sensexWidget(new RequestCallback() {
+                @Override
+                public void onNext(Object o) {
+                    final String itemRowId = RowIds.rowId_sensexWidget();
+                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BL_SENSEX, itemRowId);
+                    int index = indexOf(item);
+                    if (index != -1) {
+                        item = getItem(index);
+                        if(o instanceof NSEData) {
+                            NSEData nseData = (NSEData)o;
+                            nseData.setStatus(SensexStatus.SUCCESS);
+                            item.getSensexData().setNSEData(nseData);
+                        }
+                        else if(o instanceof BSEData) {
+                            BSEData bseData = (BSEData) o;
+                            bseData.setStatus(SensexStatus.SUCCESS);
+                            item.getSensexData().setBSEData(bseData);
+                        }
+                        notifyItemChanged(index);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable t, String str) {
+                    final String itemRowId = RowIds.rowId_sensexWidget();
+                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BL_SENSEX, itemRowId);
+                    int index = indexOf(item);
+                    if (index != -1) {
+                        item = getItem(index);
+                        SensexData sensexData = item.getSensexData();
+                        sensexData.getmBSEData().setStatus(SensexStatus.ERROR);
+                        sensexData.getNSEData().setStatus(SensexStatus.ERROR);
+                        notifyItemChanged(index);
+                    }
+                }
+
+                @Override
+                public void onComplete(String str) {
+
+                }
+            });
+    }
+
+    private void bl_fillSensexData(SensexViewHolder sensexViewHolder, int position) {
+
+        final SectionAdapterItem dataBean = adapterItems.get(position);
+
+        int bseStatus = -1;
+        int nseStatus = -1;
+
+        final BSEData bseData = dataBean.getSensexData().getmBSEData();
+        final NSEData nseData = dataBean.getSensexData().getNSEData();
+        if(bseData != null) {
+            bseStatus = bseData.getStatus();
+        } else {
+            bl_getSensexWidgetData();
+        }
+        if(nseData !=null ) {
+            nseStatus = nseData.getStatus();
+        } else {
+            bl_getSensexWidgetData();
+        }
+
+
+        boolean isDayTheme = DefaultPref.getInstance(sensexViewHolder.itemView.getContext()).isUserThemeDay();
+
+        if(isDayTheme) {
+            sensexViewHolder.mBseParentLayout.setBackground(ResUtil.getBackgroundDrawable(sensexViewHolder.itemView.getResources(), R.drawable.bl_light_drawable_indices_border));
+            sensexViewHolder.mNseParentLayout.setBackground(ResUtil.getBackgroundDrawable(sensexViewHolder.itemView.getResources(), R.drawable.bl_light_drawable_indices_border));
+        } else {
+            sensexViewHolder.mBseParentLayout.setBackground(ResUtil.getBackgroundDrawable(sensexViewHolder.itemView.getResources(), R.drawable.bl_dark_drawable_indices_border));
+            sensexViewHolder.mNseParentLayout.setBackground(ResUtil.getBackgroundDrawable(sensexViewHolder.itemView.getResources(), R.drawable.bl_dark_drawable_indices_border));
+        }
+
+
+        // For BSE
+        switch (bseStatus) {
+            case SensexStatus.NONE:
+            case SensexStatus.INITIALISING:
+                sensexViewHolder.bseValParent.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                sensexViewHolder.bseValParent.findViewById(R.id.refresh).setVisibility(View.GONE);
+                sensexViewHolder.bseValParent.findViewById(R.id.topVal).setVisibility(View.GONE);
+                sensexViewHolder.bseValParent.findViewById(R.id.bottomVal).setVisibility(View.GONE);
+                sensexViewHolder.bseValParent.findViewById(R.id.refresh).setOnClickListener(null);
+                break;
+            case SensexStatus.SUCCESS:
+                sensexViewHolder.bseValParent.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                sensexViewHolder.bseValParent.findViewById(R.id.refresh).setVisibility(View.GONE);
+                TextView bseTopVal = sensexViewHolder.bseValParent.findViewById(R.id.topVal);
+                TextView bseBottomVal = sensexViewHolder.bseValParent.findViewById(R.id.bottomVal);
+
+                bseTopVal.setVisibility(View.VISIBLE);
+                bseBottomVal.setVisibility(View.VISIBLE);
+
+                double latestPrice = bseData.getCp();
+                double stockChange = bseData.getPer();
+                double change = bseData.getCh();
+                String latestUpdatedData = NumberFormat.getNumberInstance(Locale.US).format(latestPrice);
+                bseTopVal.setText("" + latestUpdatedData);
+                float changeIndicator;
+                changeIndicator = (float) stockChange;
+                if (changeIndicator < 0) {
+                    bseBottomVal.setText("" + change + "(" + stockChange + "%" + ")");
+                    bseBottomVal.setTextColor(sensexViewHolder.itemView.getResources().getColor(R.color.red));
+                    bseBottomVal.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stockchange_loss, 0, 0, 0);
+                } else if (changeIndicator > 0) {
+                    bseBottomVal.setText("+" + change + "(" + stockChange + "%" + ")");
+                    bseBottomVal.setTextColor(sensexViewHolder.itemView.getResources().getColor(R.color.green));
+                    bseBottomVal.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stockchange_profit, 0, 0, 0);//.setImageResource(R.drawable.stockchange_profit);
+
+                } else {
+                    bseBottomVal.setText("N.A.");
+                }
+
+
+                sensexViewHolder.mBseParentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                        List<TabsBean> tabs = tableConfiguration.getTabs();
+                        int count = 0;
+                        for(TabsBean tabsBean1 : tabs) {
+                            tabsBean1.setIndex(count);
+                            if(tabsBean1.getPageSource().equalsIgnoreCase(NetConstants.PS_SENSEX)) {
+                                TabIndicesFragment.sIndicesSelectedTabPosition = 0;
+                                // Sending Event in AppTabFragment.java => handleEvent(TabsBean tabsBean)
+                                EventBus.getDefault().post(tabsBean1);
+                                break;
+                            }
+                            count++;
+                        }
+                    }
+                });
+
+                break;
+            case SensexStatus.ERROR:
+                if(bseData == null) {
+                    sensexViewHolder.bseValParent.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    sensexViewHolder.bseValParent.findViewById(R.id.refresh).setVisibility(View.VISIBLE);
+                    sensexViewHolder.bseValParent.findViewById(R.id.refresh).setOnClickListener(v->{
+                        bl_getSensexWidgetData();
+                    });
+
+                    bseData.setStatus(SensexStatus.INITIALISING);
+                }
+                break;
+
+        }
+
+        // For NSE
+        switch (nseStatus) {
+            case SensexStatus.NONE:
+            case SensexStatus.INITIALISING:
+                sensexViewHolder.nseValParent.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                sensexViewHolder.nseValParent.findViewById(R.id.refresh).setVisibility(View.GONE);
+                sensexViewHolder.nseValParent.findViewById(R.id.topVal).setVisibility(View.GONE);
+                sensexViewHolder.nseValParent.findViewById(R.id.bottomVal).setVisibility(View.GONE);
+                sensexViewHolder.nseValParent.findViewById(R.id.refresh).setOnClickListener(null);
+                break;
+            case SensexStatus.SUCCESS:
+                sensexViewHolder.nseValParent.findViewById(R.id.refresh).setVisibility(View.GONE);
+                sensexViewHolder.nseValParent.findViewById(R.id.progressBar).setVisibility(View.GONE);
+
+                TextView nseTopVal = sensexViewHolder.nseValParent.findViewById(R.id.topVal);
+                TextView nseBottomVal = sensexViewHolder.nseValParent.findViewById(R.id.bottomVal);
+
+                nseTopVal.setVisibility(View.VISIBLE);
+                nseBottomVal.setVisibility(View.VISIBLE);
+
+                double latestPrice = nseData.getCp();
+                double stockChange = nseData.getPer();
+                double change = nseData.getCh();
+                String latestUpdatedData = NumberFormat.getNumberInstance(Locale.US).format(latestPrice);
+                nseTopVal.setText("" + latestUpdatedData);
+                float changeIndicator;
+                changeIndicator = (float) stockChange;
+                if (changeIndicator < 0) {
+                    nseBottomVal.setText("" + change + "(" + stockChange + "%" + ")");
+                    nseBottomVal.setTextColor(sensexViewHolder.itemView.getResources().getColor(R.color.red));
+                    nseBottomVal.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stockchange_loss, 0, 0, 0);
+
+                } else if (changeIndicator > 0) {
+                    nseBottomVal.setText("+" + change + "(" + stockChange + "%" + ")");
+                    nseBottomVal.setTextColor(sensexViewHolder.itemView.getResources().getColor(R.color.green));
+                    nseBottomVal.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stockchange_profit, 0, 0, 0);
+                } else {
+                    nseBottomVal.setText("N.A.");
+                }
+
+                sensexViewHolder.mNseParentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                        List<TabsBean> tabs = tableConfiguration.getTabs();
+                        int count = 0;
+                        for(TabsBean tabsBean1 : tabs) {
+                            tabsBean1.setIndex(count);
+                            if(tabsBean1.getPageSource().equalsIgnoreCase(NetConstants.PS_SENSEX)) {
+                                TabIndicesFragment.sIndicesSelectedTabPosition = 1;
+                                // Sending Event in AppTabFragment.java => handleEvent(TabsBean tabsBean)
+                                EventBus.getDefault().post(tabsBean1);
+                                break;
+                            }
+                            count++;
+                        }
+                    }
+                });
+
+                break;
+            case SensexStatus.ERROR:
+                if(nseData == null) {
+                    sensexViewHolder.nseValParent.findViewById(R.id.refresh).setVisibility(View.VISIBLE);
+                    sensexViewHolder.nseValParent.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    sensexViewHolder.nseValParent.findViewById(R.id.refresh)
+                            .setOnClickListener(v->{
+                                bl_getSensexWidgetData();
+                            });
+                }
+                break;
+
+        }
     }
 
 

@@ -78,11 +78,11 @@ public class FragmentUtil {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(value->{
                             if(value instanceof SectionBean) {
-                                // Sending Event in TopTabsFragment.java => handleEvent()
+                                // Sending Event in TopTabsFragment.java => handleEvent(SectionBean sectionBean)
                                 EventBus.getDefault().post((SectionBean)value);
                             }
                             else if(value instanceof TableSection) {
-                                // Sending Event in TopTabsFragment.java => handleEvent()
+                                // Sending Event in TopTabsFragment.java => handleEvent(TableSection tableSection)
                                 EventBus.getDefault().post((TableSection)value);
                             }
                         });

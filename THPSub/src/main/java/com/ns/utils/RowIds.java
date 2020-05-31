@@ -67,5 +67,9 @@ public class RowIds {
         return "relatedArticleHeader_";
     }
 
+    public static String rowId_sensexWidget() {
+        return "homeSensex_widget";
+    }
+
 
 }

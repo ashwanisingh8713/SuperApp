@@ -38,6 +38,7 @@ widgetType
     - Image_Title (Top Picks)
     - Only_Title(Quotes)
     - Image_Section_Card (BL)
+    - SENSEX (BL)
 
 viewAllGravity | titleGravity
     - Right_Bottom

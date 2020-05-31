@@ -5,10 +5,19 @@ public class WidgetIndex {
     private String secId;
     private int index;
     private int itemCount;
+    private String widgetType;
     private DayNightColor background;
     private DayNightColor description;
     private DayNightColor title;
     private DayNightColor viewAll;
+
+    public String getWidgetType() {
+        return widgetType;
+    }
+
+    public void setWidgetType(String widgetType) {
+        this.widgetType = widgetType;
+    }
 
     public String getSecId() {
         return secId;

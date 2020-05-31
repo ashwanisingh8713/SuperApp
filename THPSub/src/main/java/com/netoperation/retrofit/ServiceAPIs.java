@@ -8,6 +8,7 @@ import com.netoperation.model.HomeData;
 import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
+import com.netoperation.model.NSE_BSE_Data;
 import com.netoperation.model.PlanRecoModel;
 import com.netoperation.model.PrefListModel;
 import com.netoperation.model.RecomendationData;
@@ -18,6 +19,7 @@ import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
+import com.ns.model.SensexData;
 
 
 import org.json.JSONObject;
@@ -200,6 +202,9 @@ public interface ServiceAPIs {
 
     @POST("") // Force Update.php
     Observable<UpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);
+
+    @GET("") // BL SENSEX Widget api
+    Observable<NSE_BSE_Data> bl_sensexWidget(@Url String url);
 
 
 }

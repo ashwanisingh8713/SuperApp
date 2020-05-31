@@ -33,6 +33,10 @@ import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.adapter.TH_WidgetAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
+import com.ns.model.BSEData;
+import com.ns.model.NSEData;
+import com.ns.model.SensexData;
+import com.ns.model.SensexStatus;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
@@ -68,7 +72,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     private SectionContentAdapter mRecyclerAdapter;
 
     private SectionSideWork mSectionSideWork;
-
 
 
     public static SectionFragment getInstance(String pageSource, String sectionId, String sectionType, String sectionOrSubsectionName, boolean isSubsection) {
@@ -128,6 +131,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
@@ -228,6 +233,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 item.setStaticPageUrlBean(mSectionSideWork.getStaticPageBean());
                 mRecyclerAdapter.notifyItemChanged(index);
             }
+
         }
     }
 
@@ -475,7 +481,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mDisposable.add(widgetObservable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-
                     for (TableWidget widget : value) {
                         if (widget.getBeans() == null || widget.getBeans().size() == 0) {
                             continue;

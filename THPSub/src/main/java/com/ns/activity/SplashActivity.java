@@ -447,7 +447,9 @@ public class SplashActivity extends BaseAcitivityTHP {
                             Log.i(TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
 
                             //Metered Paywall Configs API calls.
-                            mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL));
+                            DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+                        }, throwable -> {
+
                         });
             }
         });

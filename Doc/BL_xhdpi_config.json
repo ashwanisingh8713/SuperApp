@@ -887,9 +887,8 @@
         }
       },
       {
-        "secId": "18",
-        "index": "15",
-        "itemCount" : "7",
+        "widgetType" : "SENSEX",
+        "index": "3",
         "background": {
           "dark": "#191919",
           "light": "#ffffff"

@@ -14,6 +14,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.main.DFPConsent;
+import com.netoperation.db.THPDB;
+import com.netoperation.default_db.DaoWidget;
+import com.netoperation.default_db.TableWidget;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.DefaultPref;
@@ -25,6 +28,11 @@ import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.view.CustomProgressBar;
 import com.ns.view.CustomViewPager;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.schedulers.Schedulers;
 
 
 public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
@@ -133,9 +141,33 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
             getDetailToolbar().showHomePeronsoliseIcons(getString(R.string.custom_home_screen), backBtn -> {
                 finish();
             });
-        } else {
+
+        }
+        else {
             DFP_GDPR_CONSENT(isHomeArticleOptionScreenShown);
             getDetailToolbar().setVisibility(View.GONE);
+
+            // Get Widget Data from server, because in SplashActivity we are not loading, If we need to show OnBoarding option screen.
+            final THPDB thpdb = THPDB.getInstance(CustomizeHomeScreenActivity.this);
+            // Get Widget Ids from server
+            DaoWidget daoWidget = thpdb.daoWidget();
+            daoWidget.getWidgetsSingle()
+                    .subscribeOn(Schedulers.io())
+                    .map(widgets -> {
+                        final Map<String, String> sections = new HashMap<>();
+                        for (TableWidget widget : widgets) {
+                            sections.put(widget.getSecId(), widget.getType());
+                        }
+                        // Get Widget Data From server
+                        DefaultTHApiManager.widgetContent(CustomizeHomeScreenActivity.this, sections);
+                        return "";
+                    })
+                    .subscribe(onSuccess -> {
+                        //Metered Paywall Configs API calls.
+                        DefaultTHApiManager.mpConfigurationAPI(CustomizeHomeScreenActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+                    }, throwable -> {
+
+                    });
         }
 
         mProgressBar = findViewById(R.id.progress_bar);

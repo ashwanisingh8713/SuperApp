@@ -61,6 +61,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int VT_THD_PHOTO_VIEW = 33;
     public static final int VT_POST_COMMENT_BTN_VIEW = 34;
     public static final int VT_RELATED_ARTICLE_HEADER = 35;
+    public static final int VT_BL_SENSEX = 36;
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 

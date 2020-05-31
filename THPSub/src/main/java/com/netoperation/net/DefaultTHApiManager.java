@@ -48,6 +48,7 @@ import com.netoperation.model.BookmarkBean;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
+import com.netoperation.model.NSE_BSE_Data;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.model.SectionAndWidget;
@@ -62,10 +63,15 @@ import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseRecyclerViewAdapter;
+import com.ns.model.BSEData;
+import com.ns.model.NSEData;
+import com.ns.model.SensexStatus;
 import com.ns.thpremium.BuildConfig;
+import com.ns.utils.BLConstants;
 import com.ns.utils.RealmSupport;
 import com.ns.utils.ResUtil;
 import com.ns.utils.RowIds;
+import com.ns.utils.THPConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -457,7 +463,7 @@ public class DefaultTHApiManager {
                     int count = 0;
                     for (Map.Entry<String, String> entry : sections.entrySet()) {
                         observables[count] = ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(entry.getKey(), 1, entry.getValue(), 0))
-                                .subscribeOn(Schedulers.newThread());
+                                .subscribeOn(Schedulers.io());
                         count++;
                     }
                     if (observables.length > 0) {
@@ -1457,6 +1463,51 @@ public class DefaultTHApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static void bl_sensexWidget(RequestCallback requestCallback) {
+        String [] urls = {BLConstants.NSE_URL, BLConstants.BSE_URL};
+        final Observable[] observables = new Observable[urls.length];
+        for(int i=0; i<urls.length; i++) {
+            observables[i] = ServiceFactory.getServiceAPIs().bl_sensexWidget(urls[i]).subscribeOn(Schedulers.io());
+        }
+
+        Observable.mergeArray(observables)
+                .map(value -> {
+                    if(value instanceof NSE_BSE_Data) {
+                        NSE_BSE_Data s = (NSE_BSE_Data) value;
+                        String scn = s.getSnapshot().getScn();
+                        if(scn.equalsIgnoreCase("Nifty 50")) {
+                            NSEData nseData = new NSEData();
+                            nseData.setStatus(SensexStatus.SUCCESS);
+                            nseData.setCh(s.getCh());
+                            nseData.setCp(s.getCp());
+                            nseData.setPer(s.getPer());
+                            nseData.setDa(s.getDa());
+                            nseData.setSnapShot(s.getSnapshot());
+                            return nseData;
+                        } else if(scn.equalsIgnoreCase("BSE Sensex")) {
+                            BSEData bseData = new BSEData();
+                            bseData.setStatus(SensexStatus.SUCCESS);
+                            bseData.setCh(s.getCh());
+                            bseData.setCp(s.getCp());
+                            bseData.setPer(s.getPer());
+                            bseData.setDa(s.getDa());
+                            bseData.setSnapShot(s.getSnapshot());
+                            return bseData;
+                        }
+                    }
+                    return "";
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(valu->{
+                    if(requestCallback != null) {
+                        requestCallback.onNext(valu);
+                    }
+                    Log.i("", "");
+                }, throwable -> {
+                    Log.i("", "");
+                });
+    }
+
     public static void mergeOldBookmark() {
         if(DefaultPref.getInstance(SuperApp.getAppContext()).isOldBookmarkLoaded()) {
             return;
@@ -1508,5 +1559,8 @@ public class DefaultTHApiManager {
                     Log.i("", "");
                 });
     }
+
+
+
 
 }

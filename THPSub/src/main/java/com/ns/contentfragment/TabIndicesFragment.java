@@ -29,7 +29,7 @@ public class TabIndicesFragment extends BaseFragmentTHP {
     private String mPageSource;
     private String mParentSectionName;
     private int mTabIndex = 0;
-    private int selectedTabPosition = 0;
+    public static int sIndicesSelectedTabPosition = 0;
 
     public ViewPager mViewPager;
     private CustomTabLayout mTabLayout;
@@ -76,8 +76,6 @@ public class TabIndicesFragment extends BaseFragmentTHP {
         mIndicesTabViewPagerAdapter = new IndicesTabViewPagerAdapter(getChildFragmentManager(), mIndicesSection);
         mViewPager.setAdapter(mIndicesTabViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setCurrentItem(selectedTabPosition, true);
-
     }
 
     @Override
@@ -87,6 +85,8 @@ public class TabIndicesFragment extends BaseFragmentTHP {
         EventBus.getDefault().register(this);
         // It sends Event in AppTabActivity.java=> handleEvent(ToolbarChangeRequired toolbarChangeRequired)
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_LISTING_TOPBAR));
+
+        mViewPager.setCurrentItem(sIndicesSelectedTabPosition, true);
     }
 
     @Override

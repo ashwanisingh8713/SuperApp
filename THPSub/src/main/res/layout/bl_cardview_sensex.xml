@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="12dp"
+    android:layout_marginLeft="@dimen/bl_item_margin_left"
+    android:layout_marginStart="@dimen/bl_item_margin_left"
+    android:layout_marginRight="@dimen/bl_item_margin_right"
+    android:layout_marginEnd="@dimen/bl_item_margin_right"
+    android:orientation="vertical"
+    app:layoutType="Black_Dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="14dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_section_marker" />
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="-2sp"
+            android:paddingLeft="6dp"
+            app:font_path="@string/THP_FiraSans_SemiBold"
+            app:textType="XL"
+            android:text="Indices"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <!--Start, This is layout of BSE-->
+        <LinearLayout
+            android:id="@+id/bseParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/bl_light_drawable_indices_border"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/bseSensexTitle"
+                app:font_path="@string/THP_FiraSans_Bold"
+                app:textType="WigetText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bl_drawable_sensex_border"
+                android:gravity="center_vertical"
+                android:padding="6dp"
+                android:text="@string/bseTitle"
+                android:textSize="9sp" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="end">
+
+                <include
+                    android:id="@+id/bseValLayout"
+                    layout="@layout/bl_item_layout_value_market">
+
+                </include>
+            </RelativeLayout>
+        </LinearLayout>
+        <!--End, This is layout of BSE-->
+
+
+        <!--Start, This is layout of NSE-->
+        <LinearLayout
+            android:id="@+id/nseParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/bl_light_drawable_indices_border"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.ns.view.text.ArticleTitleTextView
+                android:id="@+id/nseSensexTitle"
+                app:font_path="@string/THP_FiraSans_Bold"
+                app:textType="WigetText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bl_drawable_sensex_border"
+                android:gravity="center_vertical"
+                android:padding="6dp"
+                android:text="@string/nseTitle"
+                android:textSize="9sp" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".6"
+                android:gravity="end">
+
+                <include
+                    android:id="@+id/nseValLayout"
+                    layout="@layout/bl_item_layout_value_market">
+
+                </include>
+            </RelativeLayout>
+        </LinearLayout>
+        <!--End, This is layout of NSE-->
+
+    </LinearLayout>
+</com.ns.view.layout.NSLinearLayout>
