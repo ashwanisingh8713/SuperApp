@@ -1,6 +1,6 @@
 {
   "packageName": "com.mobstac.thehindu",
-  "environment" : "thg",
+  "environment" : "testing",
   "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",

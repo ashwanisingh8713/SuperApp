@@ -12,8 +12,6 @@ android {
         minSdkVersion "$MINIMUM_SDK_VERSION".toInteger()
         targetSdkVersion "$TARGETED_SDK_VERSION".toInteger()
 
-        versionCode 1
-        versionName "SP1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         //Staging / Production Switch
@@ -30,8 +28,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            debuggable false
+            minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
@@ -39,6 +37,8 @@ android {
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+
     }
 
     dexOptions {
@@ -55,14 +55,16 @@ android {
 
     productFlavors {
         BusinessLine {
+
+            versionCode 81
+            versionName android.productFlavors.BusinessLine.buildConfigFields.APP_NAME+"_"+versionCode + "-" + getTimestamp()
+
             dimension "version"
-            versionCode 1
-            versionName "BLSP1.0"
             applicationId "com.mobstac.thehindubusinessline"
 
-            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
+            buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
@@ -107,14 +109,16 @@ android {
             resValue "string", "custom_web_client_id", "958742245699-43e2kqr95pqabssmhoptiodd4c5h78f9.apps.googleusercontent.com"
         }
         TheHindu {
+
+            versionCode 81
+            versionName android.productFlavors.TheHindu.buildConfigFields.APP_NAME+"_"+versionCode + "-" + getTimestamp()
+
             dimension "version"
-            versionCode 1
-            versionName "THSP1.0"
             applicationId "com.mobstac.thehindu"
 
-            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            //buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
+            buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
@@ -158,7 +162,35 @@ android {
             //Google Sign in
             resValue "string", "custom_web_client_id", "617636753249-qa8f73j9sdo1e4e9cdqs6g0g32t2ltmv.apps.googleusercontent.com"
         }
+
     }
+
+    /*applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode // e.g 1.0
+            def flavorName = variant.flavorName // e. g. Free
+
+
+
+            //customize your app name by using variables
+            if(flavorName.equals("TheHindu")) {
+                def appName = variant.productFlavors[0].buildConfigFields.APP_NAME
+                def APP_ENVIROMENT = variant.productFlavors[0].buildConfigFields.APP_ENVIROMENT
+                //apkName = APP_ENVIROMENT + "_" + appName + "_" + versionName
+                outputFileName = "${APP_ENVIROMENT}.apk"
+            }
+            else if(flavorName.equals("BusinessLine")){
+                def appName = variant.productFlavors[1].buildConfigFields.APP_NAME
+                def APP_ENVIROMENT = variant.productFlavors[1].buildConfigFields.APP_ENVIROMENT
+                //apkName = APP_ENVIROMENT+"_"+appName+"_"+versionName
+                outputFileName = "${APP_ENVIROMENT}.apk"
+            }
+
+
+        }
+    }*/
 
 
 }
@@ -293,6 +325,11 @@ dependencies {
     implementation 'io.realm:android-adapters:1.3.0'
 
 
+}
+
+def getTimestamp() {
+    def date = new Date()
+    return date.format('_ddMMyy_HHmm')
 }
 
 

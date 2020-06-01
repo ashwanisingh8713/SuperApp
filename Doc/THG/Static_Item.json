@@ -1,0 +1,24 @@
+{
+  "staticItem": [
+    {
+      "title": "Terms & Condition",
+      "urlDark": "https://alphabl.businessline.in/app/termsofusedark/",
+      "urlLight": "https://alphabl.businessline.in/app/termsofuselite/"
+    },
+    {
+      "title": "Privacy Policy",
+      "urlDark": "https://alphabl.businessline.in/app/Privacypolicydark/",
+      "urlLight": "https://alphabl.businessline.in/app/Privacypolicylite/"
+    },
+    {
+      "title": "Help",
+      "urlDark": "https://alphabl.businessline.in/app/helpdark/",
+      "urlLight": "https://alphabl.businessline.in/app/helplite/"
+    },
+    {
+      "title": "AboutUs",
+      "urlDark": "https://alphabl.businessline.in/app/aboutusdark/",
+      "urlLight": "https://alphabl.businessline.in/app/aboutuslite/"
+    }
+  ]
+}
