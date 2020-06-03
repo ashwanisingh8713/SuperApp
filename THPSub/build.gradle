@@ -346,7 +346,7 @@ dependencies {
 
 def getTimestamp() {
     def date = new Date()
-    return date.format('_ddMMyy_HHmm')
+    return date.format('ddMMyy_HHmm')
 }
 
 
