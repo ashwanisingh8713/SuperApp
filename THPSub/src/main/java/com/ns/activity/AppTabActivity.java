@@ -1,9 +1,14 @@
 package com.ns.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
+import com.clevertap.android.sdk.CleverTapAPI;
 import com.netoperation.config.model.UrlBean;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
@@ -25,10 +34,12 @@ import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
-import com.netoperation.util.DefaultPref;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
+import com.ns.alerts.Alerts;
+import com.ns.alerts.HomePermissionInfoDialog;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
@@ -61,6 +72,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.ns.alerts.HomePermissionInfoDialog.REQUEST_PERMISSIONS_REQUEST_CODE;
+import static com.paytm.pgsdk.easypay.manager.PaytmAssist.getContext;
+
 public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableListViewItemClickListener {
 
     private String mFrom;
@@ -73,6 +87,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     //Counts
     private int mUnreadNotificationArticleCount, mUnreadBookmarkArticleCount;
     private Disposable notificationCountsObserver, bookmarksCountObserver;
+    //Dialog for Location Permission
+    private HomePermissionInfoDialog dialogPermission;
 
 
     @Override
@@ -239,6 +255,14 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     @Override
     protected void onResume() {
         super.onResume();
+        //Current location permission
+        boolean alreadyCancelled = DefaultPref.getInstance(this).getPermissionDialogPreference();
+        if(!alreadyCancelled) {
+            if (dialogPermission == null) {
+                dialogPermission = HomePermissionInfoDialog.getInstance("defaultInfoDialogForPermission");
+                showPermissionDialog();
+            }
+        }
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
         Log.i("TabFragment", "onResume() In AppTabActivity EventBus Registered");
         EventBus.getDefault().register(this);
@@ -597,5 +621,73 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onDestroy() {
         super.onDestroy();
         THPConstants.sISMAIN_ACTIVITY_LAUNCHED = false;
+    }
+
+    /**
+     * Return the current state of the permissions needed.
+     */
+    private boolean checkPermissions(Context context) {
+        int permissionState = ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void showPermissionDialog() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+        if(!checkPermissions(this) && shouldProvideRationale
+                || !DefaultPref.getInstance(getContext()).isLocationEnabled()){
+            dialogPermission.show(getSupportFragmentManager(), "di");
+            dialogPermission.setCancelable(false);
+            dialogPermission.setOnDialogOkClickListener(this::requestPermissions);
+            dialogPermission.setOnDialogCancelClickListener(() -> DefaultPref.getInstance(getContext()).savePermissionDialogPreference(true));
+        }
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (shouldProvideRationale) {
+            Alerts.showSnackbarInfinite(this, com.ns.thpremium.R.string.permission_rationale, android.R.string.ok,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Request permission
+                            ActivityCompat.requestPermissions(AppTabActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    REQUEST_PERMISSIONS_REQUEST_CODE);
+                        }
+                    });
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION) && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Alerts.showSnackbarInfinite(this, com.ns.thpremium.R.string.permission_location, R.string.settings,
+                        view -> {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        });
+            } else if (permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                DefaultPref.getInstance(getContext()).setLocationEnabled(true);
+                CleverTapAPI clevertap = CleverTapAPI.getDefaultInstance(getContext());
+                if (clevertap != null) {
+                    Location location = clevertap.getLocation();
+                    clevertap.setLocation(location);
+                }
+            }
+        }
     }
 }

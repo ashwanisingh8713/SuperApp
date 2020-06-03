@@ -13,6 +13,8 @@ import com.ns.thpremium.R;
 
 public class HomePermissionInfoDialog extends DialogFragment {
 
+    public static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
+
     private String mFrom;
 
     public static HomePermissionInfoDialog getInstance(String from) {

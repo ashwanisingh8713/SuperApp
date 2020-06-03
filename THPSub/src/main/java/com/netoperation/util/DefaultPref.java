@@ -2,6 +2,7 @@ package com.netoperation.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -296,4 +297,12 @@ public class DefaultPref {
         return mPreferences.getBoolean("isOldBookmarkLoaded", false);
     }
 
+    public void setLocationEnabled(boolean isEnabled) {
+        mEditor.putBoolean("LOCATION_ENABLE", isEnabled);
+        mEditor.apply();
+    }
+
+    public boolean isLocationEnabled() {
+        return mPreferences.getBoolean("LOCATION_ENABLE", false);
+    }
 }
