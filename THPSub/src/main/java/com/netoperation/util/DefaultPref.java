@@ -3,6 +3,9 @@ package com.netoperation.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.netoperation.default_db.TableConfiguration;
+import com.ns.activity.BaseAcitivityTHP;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +22,7 @@ public class DefaultPref {
     private SharedPreferences.Editor mEditor;
 
     private static DefaultPref mUser;
+    private static long SYNC_UP_DURATION = 0l;
 
     private DefaultPref(Context context) {
         try {
@@ -294,6 +298,32 @@ public class DefaultPref {
 
     public boolean isOldBookmarkLoaded() {
         return mPreferences.getBoolean("isOldBookmarkLoaded", false);
+    }
+
+    public void saveSectionSyncTimePref(String sectionId) {
+        mEditor.putLong(sectionId, System.currentTimeMillis());
+        mEditor.apply();
+    }
+
+    public boolean isSectionNeedToSync(String sectionId) {
+        long lastSyncTime = mPreferences.getLong(sectionId, 0);
+        long currentTimeInMilli = System.currentTimeMillis();
+        long lastSyncDuration = currentTimeInMilli - lastSyncTime;
+        if(SYNC_UP_DURATION == 0l) {
+            int SYNC_UP_MINUTE = 10;
+            try {
+                TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                if(tableConfiguration != null) {
+                    SYNC_UP_MINUTE = Integer.parseInt(tableConfiguration.getRefreshIntervalInMins());
+                }
+            }
+            catch (NumberFormatException e) {
+                System.out.println("SYNC_UP_MINUTE" + " is not a valid integer number");
+            }
+
+            SYNC_UP_DURATION = (SYNC_UP_MINUTE * 1000 * 60);
+        }
+        return lastSyncDuration > SYNC_UP_DURATION;
     }
 
 }

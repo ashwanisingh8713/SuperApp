@@ -13,10 +13,10 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/apptab_listing_left_padding"
+        
         android:paddingStart="@dimen/apptab_listing_left_padding"
         android:paddingEnd="@dimen/apptab_listing_right_padding"
-        android:paddingRight="@dimen/apptab_listing_right_padding"
+        
         android:paddingTop="@dimen/apptab_listing_top_padding"
         >
 

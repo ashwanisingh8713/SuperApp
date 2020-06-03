@@ -24,6 +24,7 @@ public class RealmSupport {
             if (android.os.Process.myPid() == processInfo.pid) {
                 if (TextUtils.equals(processInfo.processName, BuildConfig.APPLICATION_ID)) {
                     Realm.init(SuperApp.getAppContext());
+                    //Realm.setDefaultConfiguration(getMyRealmConfiguration());
                     Realm.setDefaultConfiguration(getMyRealmConfiguration());
                 }
                 break;
@@ -55,11 +56,11 @@ public class RealmSupport {
             DATABASE_SCHEMA_VERSION = 4;
         } else {
             realmDBName = "TheHindu.realm";
-            DATABASE_SCHEMA_VERSION = 13;
+            DATABASE_SCHEMA_VERSION = 14;
         }
 
         if (mRealmConfiguration == null) {
-            mRealmConfiguration = new RealmConfiguration.Builder()
+            mRealmConfiguration = new RealmConfiguration.Builder() //.deleteRealmIfMigrationNeeded()
                     .name(realmDBName)
                     .schemaVersion(DATABASE_SCHEMA_VERSION)
                     .build();

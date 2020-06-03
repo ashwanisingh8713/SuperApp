@@ -5,8 +5,11 @@
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
     "vokkleId": "432081eb-6e8e-4abc-a88f-ca5357aa7244",
-    "refreshIntervalInMins": "value",
-    "imprtantMsg": "This msg on update of config (not required always, if exist will be shown to user only once)",
+    "refreshIntervalInMins": "5",
+    "importantMsg": {
+      "title" : "Title",
+      "msg" : "This msg on update of config (not required always, if exist will be shown to user only once)"
+    },
     "staticItem": [
       {
         "title": "Terms & Condition",

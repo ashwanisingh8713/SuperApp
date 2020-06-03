@@ -410,7 +410,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
     @Override
     public void onBackPressed() {
-        if (!THPConstants.sISMAIN_ACTIVITY_LAUNCHED) {
+        if (!THPConstants.sISMAIN_ACTIVITY_LAUNCHED && DefaultPref.getInstance(this).isHomeArticleOptionScreenShown()) {
             IntentUtil.openMainTabPage(this);
         } else {
             super.onBackPressed();

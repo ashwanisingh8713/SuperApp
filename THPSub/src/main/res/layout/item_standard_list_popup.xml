@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/apptab_listing_left_padding"
-    android:paddingLeft="@dimen/apptab_listing_left_padding"
+    
     android:paddingEnd="@dimen/apptab_listing_right_padding"
-    android:paddingRight="@dimen/apptab_listing_right_padding"
+    
     >
 
     <com.ns.view.text.ArticleTitleTextView

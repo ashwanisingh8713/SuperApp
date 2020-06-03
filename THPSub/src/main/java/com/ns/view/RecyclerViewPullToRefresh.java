@@ -60,7 +60,7 @@ public class RecyclerViewPullToRefresh extends FrameLayout  {
     }
 
     private void init(Context context) {
-        View mView = LayoutInflater.from(context).inflate(R.layout.layout_recycler_pull_refresh, this, true);
+        LayoutInflater.from(context).inflate(R.layout.layout_recycler_pull_refresh, this, true);
         mSwipeRefreshLayout = findViewById(R.id.swipeRefresh);
         mRecyclerView = findViewById(R.id.recyclerViewPull);
         mTryAgainBtn = findViewById(R.id.tryAgainButton);

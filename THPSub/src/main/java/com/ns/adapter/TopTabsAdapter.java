@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.netoperation.default_db.TableSection;
@@ -14,7 +15,7 @@ import com.ns.contentfragment.SectionFragment;
 
 import java.util.List;
 
-public class TopTabsAdapter extends FragmentStatePagerAdapter {
+public class TopTabsAdapter extends FragmentPagerAdapter { // FragmentStatePagerAdapter  // FragmentPagerAdapter
 
     private String mPageSource;
     private List<TableSection> mSectionList;
@@ -36,18 +37,22 @@ public class TopTabsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(mIsSubsection) {
-            return SectionFragment.getInstance(mPageSource, mSubSectionList.get(position).getSecId(), mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
+            return SectionFragment.getInstance(mPageSource, mSubSectionList.get(position).getSecId(),
+                    mSubSectionList.get(position).getType(), mSubSectionList.get(position).getSecName(), mIsSubsection);
         }
-        return SectionFragment.getInstance(mPageSource, mSectionList.get(position).getSecId(), mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
+        return SectionFragment.getInstance(mPageSource, mSectionList.get(position).getSecId(),
+                mSectionList.get(position).getType(), mSectionList.get(position).getSecName(), mIsSubsection);
     }
 
     @Override
     public int getCount() {
         if(mSectionList != null) {
             return mSectionList.size();
-        } else if (mSubSectionList != null) {
+        }
+        else if (mSubSectionList != null) {
             return mSubSectionList.size();
-        } else {
+        }
+        else {
             return 0;
         }
     }

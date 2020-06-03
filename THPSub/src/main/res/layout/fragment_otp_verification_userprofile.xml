@@ -133,7 +133,7 @@
             app:btnType="back_circle_dark_arrow"
             style="@style/backBtnStyle"
             android:id="@+id/backBtn"
-            android:layout_marginLeft="20dp"
+            
             android:layout_marginStart="20dp"
             />
     </FrameLayout>

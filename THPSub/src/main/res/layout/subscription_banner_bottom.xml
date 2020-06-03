@@ -9,7 +9,7 @@
     android:background="#b49443"
     android:clickable="true"
     android:paddingStart="13dp"
-    android:paddingLeft="13dp"
+    
     android:paddingTop="6dp"
     android:paddingBottom="6dp"
     android:visibility="gone">
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        
         android:text="Become a Premium member now!"
         android:textColor="#ffffff"
         android:textSize="@dimen/subscription_bottom_title" />
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        
         android:text="Enjoy member benefits and more…"
         android:textColor="#ffffff"
         android:textSize="@dimen/subscription_bottom_sub_title" />

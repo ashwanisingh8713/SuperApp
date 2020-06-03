@@ -24,9 +24,9 @@
         android:layout_marginEnd="@dimen/userprofile_gap_for_1"
         android:layout_marginRight="@dimen/userprofile_gap_for_1"
         android:paddingStart="15dp"
-        android:paddingLeft="15dp"
+        
         android:paddingEnd="20dp"
-        android:paddingRight="20dp"
+        
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backBtn">

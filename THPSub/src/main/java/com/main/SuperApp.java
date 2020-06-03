@@ -57,8 +57,7 @@ public class SuperApp extends Application implements LifecycleObserver  {
 
         startPeriodicWork();
         initCleverTap();
-        //Merge Old Bookmark, from Realm DB to Room DB
-        DefaultTHApiManager.mergeOldBookmark();
+
     }
 
     public static Context getAppContext() {

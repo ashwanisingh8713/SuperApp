@@ -16,7 +16,7 @@
             android:layout_height="50dp"
             app:font_path="@string/THP_FiraSans_Bold"
             android:drawableEnd="@drawable/ic_drop_down"
-            android:drawableRight="@drawable/ic_drop_down"
+            
             android:gravity="center_vertical"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"

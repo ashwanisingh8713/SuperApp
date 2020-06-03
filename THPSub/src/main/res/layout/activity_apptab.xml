@@ -59,6 +59,14 @@
             android:paddingTop="@dimen/topTabHeight"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/type_device"
+                
+                android:paddingStart="20dp"
+                />
+
             <com.ns.view.img.LogoImgView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

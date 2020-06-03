@@ -167,9 +167,6 @@ public class PremiumPref {
         return mPreferences.getString("loginSource", "AppDirect");
     }
 
-
-
-
     public void setStatusTest(String value) {
         mEditor.putString("statusTest", value);
         mEditor.commit();

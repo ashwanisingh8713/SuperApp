@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        
         android:padding="10dp"
         app:iconType="back"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
         android:textSize="20sp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        
         android:text="@string/APP_NAME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/action_refresh"
@@ -43,7 +43,7 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        
         app:iconType="refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/action_search"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:layout_marginRight="@dimen/toolbar_ic_gap"
+        
         android:clickable="true"
         app:iconType="search"
         app:layout_constraintBottom_toBottomOf="parent"

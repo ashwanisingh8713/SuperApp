@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bl_item_margin_left"
-    android:layout_marginLeft="@dimen/bl_item_margin_left"
+    
     android:layout_marginEnd="@dimen/bl_item_margin_right"
-    android:layout_marginRight="@dimen/bl_item_margin_right"
+    
     android:paddingTop="@dimen/bl_item_margin_top"
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">

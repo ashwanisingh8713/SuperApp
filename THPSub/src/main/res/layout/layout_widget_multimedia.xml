@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginEnd="@dimen/explore_column_margin_right"
-    android:layout_marginRight="@dimen/explore_column_margin_right"
+    
     app:layoutType="MULTIMEDIA">
 
     <LinearLayout

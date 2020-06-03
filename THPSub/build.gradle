@@ -110,7 +110,7 @@ android {
         }
         TheHindu {
 
-            versionCode 81
+            versionCode 100
             versionName android.productFlavors.TheHindu.buildConfigFields.APP_NAME+"_"+versionCode + "-" + getTimestamp()
 
             dimension "version"
@@ -172,8 +172,6 @@ android {
             def versionCode = variant.versionCode // e.g 1.0
             def flavorName = variant.flavorName // e. g. Free
 
-
-
             //customize your app name by using variables
             if(flavorName.equals("TheHindu")) {
                 def appName = variant.productFlavors[0].buildConfigFields.APP_NAME
@@ -182,18 +180,28 @@ android {
                 outputFileName = "${APP_ENVIROMENT}.apk"
             }
             else if(flavorName.equals("BusinessLine")){
-                def appName = variant.productFlavors[1].buildConfigFields.APP_NAME
+                def appName = variant.productFlavors[0].buildConfigField.APP_NAME
                 def APP_ENVIROMENT = variant.productFlavors[1].buildConfigFields.APP_ENVIROMENT
                 //apkName = APP_ENVIROMENT+"_"+appName+"_"+versionName
                 outputFileName = "${APP_ENVIROMENT}.apk"
             }
-
-
         }
     }*/
 
 
+    applicationVariants.all { variant ->
+        def flavor = variant.productFlavors[0]
+        def name = android.productFlavors.TheHindu.buildConfigFields.APP_NAME
+        println "${flavor}"+"_Ashwani_"
+        def map = variant.productFlavors[0].properties
+        def buildConfigFields = map.get("buildConfigFields")
+        def val = buildConfigFields
+        //println val
+        //buildConfigFields.each{entry -> println "$entry.key: $entry.value"}
+    }
+
 }
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api deps.appcompatv7
@@ -286,7 +294,7 @@ dependencies {
     implementation project(path: ':exo_core')
 
     // Work Manager
-    implementation "android.arch.work:work-runtime:1.0.0"
+    implementation "android.arch.work:work-runtime:1.0.1"
 
     // this is to fix following issue, cause by "Work Manager" dependency implementation,
     //ExecutionException: java.lang.RuntimeException: Duplicate class com.google.common.util.concurrent.ListenableFuture found in modules guava-18.0.jar
@@ -315,7 +323,7 @@ dependencies {
 
     // OK HTTP
     //implementation 'com.squareup.okhttp3:okhttp:3.0.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
 
     // Local Broadcast Manager

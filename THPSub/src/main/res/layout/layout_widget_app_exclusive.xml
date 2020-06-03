@@ -5,7 +5,7 @@
     android:layout_width="300dp"
     android:layout_height="126dp"
     android:layout_marginEnd="@dimen/widget_recyclerView_opinion_marginRight"
-    android:layout_marginRight="@dimen/widget_recyclerView_opinion_marginRight"
+    
     android:orientation="vertical"
     android:padding="@dimen/widget_recyclerView_opinion_padding"
     >

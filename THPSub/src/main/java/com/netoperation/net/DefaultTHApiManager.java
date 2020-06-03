@@ -204,7 +204,7 @@ public class DefaultTHApiManager {
         String url = DefaultPref.getInstance(context).getDefaultContentBaseUrl() + "sectionList_v4.php";
         Observable<SectionAndWidget> observable = ServiceFactory.getServiceAPIs().sectionList(url, ReqBody.sectionList());
         return observable.subscribeOn(Schedulers.newThread())
-                .timeout(15, TimeUnit.SECONDS)
+                .timeout(10, TimeUnit.SECONDS)
                 .map(sectionAndWidget -> {
                             return insertSectionResponseInDB(sectionAndWidget, false);
                         }
@@ -312,6 +312,8 @@ public class DefaultTHApiManager {
                 })
         .subscribe(val->{
 
+        }, throwable -> {
+
         });
 
     }
@@ -357,8 +359,8 @@ public class DefaultTHApiManager {
                         });
 
                     })
-                    .switchMap(val -> {
-                        return val.subscribeOn(Schedulers.newThread());
+                    .switchMap(homeDataObservable -> {
+                        return homeDataObservable.subscribeOn(Schedulers.io()).timeout(10, TimeUnit.SECONDS);
                     })
                     .map(homeData -> {
                         if (context != null) {
@@ -504,8 +506,6 @@ public class DefaultTHApiManager {
                                 });
                     }
 
-
-
                 }, throwable -> {
 
                 });
@@ -527,6 +527,7 @@ public class DefaultTHApiManager {
         String defaultContentBaseUrl = DefaultPref.getInstance(context).getDefaultContentBaseUrl();
         final String url = defaultContentBaseUrl + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
+                .timeout(15, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
@@ -587,6 +588,7 @@ public class DefaultTHApiManager {
         String defaultContentBaseUrl = DefaultPref.getInstance(context).getDefaultContentBaseUrl();
         final String url = defaultContentBaseUrl + "section-content.php";
         return ServiceFactory.getServiceAPIs().sectionContent(url, ReqBody.sectionContent(secId, page, type, lut))
+                .timeout(15, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     final ArrayList<SectionAdapterItem> uiRowItem = new ArrayList<>();
@@ -1057,8 +1059,9 @@ public class DefaultTHApiManager {
 
     public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI, RequestCallback requestCallback) {
         Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
-        return observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
-                .subscribeOn(Schedulers.newThread())
+        return observable
+                .timeout(10, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
                 .map(cycleDurationModel -> {
                     Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());
                     THPDB db = THPDB.getInstance(context);
@@ -1208,6 +1211,7 @@ public class DefaultTHApiManager {
 
                     return config.getDATA();
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value->{
                     if(requestCallback != null) {
                         requestCallback.onNext(value);
@@ -1227,6 +1231,7 @@ public class DefaultTHApiManager {
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
         return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.APP_CONFIG_UPDATE_CHECK_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
                 .subscribeOn(Schedulers.io())
+                .timeout(10, TimeUnit.SECONDS)
                 .map(jsonElement -> {
                     if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
                         String lastUpdatedTime = ((JsonObject) jsonElement).get("lastUpdatedTime").getAsString();
@@ -1550,7 +1555,7 @@ public class DefaultTHApiManager {
                         TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
                         thp.bookmarkTableDao().insertBookmark(tableBookmark);
                     }
-                    DefaultPref.getInstance(SuperApp.getAppContext()).setOldBookmarkLoaded(true);
+                    //DefaultPref.getInstance(SuperApp.getAppContext()).setOldBookmarkLoaded(true);
                     return "";
                 })
                 .subscribe(val->{

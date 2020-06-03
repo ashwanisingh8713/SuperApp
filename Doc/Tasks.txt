@@ -23,9 +23,15 @@ System Bottom bar color  // DONE
 Widget Length // DONE
 Bookmark merging from old to new // DONE
 BL Home Indices // DONE
+Card Taboola Native Ads for BL // DONE
 Verify BL apis
 TH & BL Premium Testing
-Card Taboola Native Ads for BL
+
+////////////////////
+Configuration Msg Dialog
+Configuration refresh interval
+Build
+
 
 
 

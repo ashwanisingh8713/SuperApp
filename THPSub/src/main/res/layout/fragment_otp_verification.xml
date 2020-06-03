@@ -140,7 +140,7 @@
             style="@style/backBtnStyle"
             android:id="@+id/backBtn"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="20dp"
+            
             android:layout_marginStart="20dp"
             />
     </FrameLayout>

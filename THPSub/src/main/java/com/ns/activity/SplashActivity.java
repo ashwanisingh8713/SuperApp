@@ -21,6 +21,8 @@ import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -28,6 +30,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.main.SuperApp;
 import com.netoperation.config.download.Download;
 import com.netoperation.config.download.IconDownloadService;
+import com.netoperation.config.model.ImportantMsg;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
@@ -38,6 +41,8 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
+import com.ns.alerts.ConfigurationMsgDialog;
+import com.ns.callbacks.OnDialogBtnClickListener;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
@@ -49,6 +54,7 @@ import com.ns.view.text.ArticleTitleTextView;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
 
@@ -72,6 +78,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     private final int WHAT_Server_Section = 10;
     private final int WHAT_ROUTE_FOR_SCREEN = 11;
     private final int WHAT_FORCE_UPDATE = 12;
+    private final int WHAT_READY_TO_LAUNCH = 13;
 
     private boolean isErrorOccured = false;
     private int totalSentRequestIcons;
@@ -111,6 +118,9 @@ public class SplashActivity extends BaseAcitivityTHP {
         registerReceiver();
         sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server");
         DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(false);
+
+        //Merge Old Bookmark, from Realm DB to Room DB
+        DefaultTHApiManager.mergeOldBookmark();
 
     }
 
@@ -186,6 +196,9 @@ public class SplashActivity extends BaseAcitivityTHP {
                     }
                     isErrorOccured = true;
                     break;
+                case WHAT_READY_TO_LAUNCH:
+                    showProgressBar("Ready to launch");
+                    break;
             }
         }
     };
@@ -234,9 +247,6 @@ public class SplashActivity extends BaseAcitivityTHP {
                 }));
     }
 
-    private void launchTabScreen() {
-        IntentUtil.openMainTabPage(SplashActivity.this);
-    }
 
     private void routeToAppropriateAction() {
         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
@@ -311,12 +321,12 @@ public class SplashActivity extends BaseAcitivityTHP {
     }
 
 
-
     private void callAppConfigApi() {
         DefaultTHApiManager.appConfigurationFromServer(this, new RequestCallback<TableConfiguration>() {
             @Override
             public void onNext(TableConfiguration configuration) {
                 if(configuration != null) {
+                    ConfigurationMsgDialog(configuration.getImportantMsg());
                     DefaultPref.getInstance(SplashActivity.this).setDefaultContentBaseUrl(configuration.getContentUrl().getBaseUrlDefault());
                     DefaultPref.getInstance(SplashActivity.this).setNewsDigestUrl(configuration.getContentUrl().getNewsDigest());
                     PremiumPref.getInstance(SplashActivity.this).setPremiumContentBaseUrl(configuration.getContentUrl().getBaseUrlPremium());
@@ -357,7 +367,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Temperory Section is launching AppTabActivity");
                 }
                 else {
-                    IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+                    launchOnBoardingScreen();
                 }
 
                 //Metered Paywall Configs API calls.
@@ -381,7 +391,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Section data from server, it's send request server to get Home page data");
                 }
                 else {
-                    IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+                    launchOnBoardingScreen();
                 }
             }
 
@@ -516,8 +526,9 @@ public class SplashActivity extends BaseAcitivityTHP {
                 if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
-                        DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
-                        sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+                        //DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
+                        //sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+                        sendHandlerMsg(WHAT_ERROR, totalReceivedSuccessRequestIcons+" Icons are failed to download, making request for metered paywall");
                     }
                 }
 
@@ -584,5 +595,64 @@ public class SplashActivity extends BaseAcitivityTHP {
         }
         Dialog mDialog = builder.create();
         mDialog.show();
+    }
+
+    private void launchOnBoardingScreen() {
+        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching OnBoardingScreen");
+        if(isConfigurationMsgShown) {
+            isLaunchOnBoardingProceeded = true;
+            return;
+        }
+        IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+    }
+
+    private void launchTabScreen() {
+        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching AppTabActivity");
+        if(isConfigurationMsgShown) {
+            isLaunchHomeProceeded = true;
+            return;
+        }
+        IntentUtil.openMainTabPage(SplashActivity.this);
+    }
+
+    private boolean isConfigurationMsgShown = false;
+    private boolean isLaunchHomeProceeded = false;
+    private boolean isLaunchOnBoardingProceeded = false;
+
+    private void ConfigurationMsgDialog(ImportantMsg importantMsg) {
+        if(importantMsg==null) {
+            return;
+        }
+        isConfigurationMsgShown = true;
+        ConfigurationMsgDialog msgDialog = ConfigurationMsgDialog.getInstance(importantMsg);
+        msgDialog.setCancelable(false);
+
+        msgDialog.show(getSupportFragmentManager(), "ConfigurationMsgDialog");
+        msgDialog.setOnDialogOkClickListener(new OnDialogBtnClickListener() {
+            @Override
+            public void onDialogOkClickListener() {
+                isConfigurationMsgShown = false;
+
+                if(isLaunchOnBoardingProceeded) {
+                    isLaunchOnBoardingProceeded = false;
+                    launchOnBoardingScreen();
+                }
+                else if(isLaunchHomeProceeded) {
+                    isLaunchHomeProceeded = false;
+                    launchTabScreen();
+                }
+
+            }
+            @Override
+            public void onDialogCancelClickListener() {
+                finish();
+            }
+
+            @Override
+            public void onDialogAppInfoClickListener() {
+
+            }
+
+        });
     }
 }

@@ -25,6 +25,7 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionAdapterItem;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
@@ -33,10 +34,6 @@ import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.adapter.TH_WidgetAdapter;
 import com.ns.loginfragment.BaseFragmentTHP;
-import com.ns.model.BSEData;
-import com.ns.model.NSEData;
-import com.ns.model.SensexData;
-import com.ns.model.SensexStatus;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
@@ -132,8 +129,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         mPullToRefreshLayout = view.findViewById(R.id.recyclerView);
         emptyLayout = view.findViewById(R.id.emptyLayout);
         mPullToRefreshLayout.setTryAgainBtnClickListener(this);
@@ -141,48 +136,63 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         setEmptyViewClickListener(this);
 
-
         if(mRecyclerAdapter == null) {
             mRecyclerAdapter = new SectionContentAdapter(mPageSource, new ArrayList<>(), mIsSubsection, mSectionId, mSectionType);
-
-            if(mSectionId.equals("998")) { // Opens News-Digest
-                sectionOrSubSectionFromServer(mSectionSideWork.getPage());
-            }
-            else if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
-                // Here we are using observable to get Home Articles and banner, because in Splash screen it is asynchronous call.
-                homeAndBannerArticleFromDB();
-            }
-            else { // Other Sections or Sub-Section
-                // Registering Scroll Listener to load more item
-                mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
-                sectionOrSubSectionDataFromDB();
-            }
-
         }
 
         mPullToRefreshLayout.setDataAdapter(mRecyclerAdapter);
+        mRecyclerAdapter.setFetchingDataFromServer(false);
 
         // Pull To Refresh Listener
         registerPullToRefresh();
 
+        // Checks Adapter count is zero then only insert the data
+        if(mRecyclerAdapter.getItemCount() == 0) {
+            if (mSectionId.equals("998")) { // Opens News-Digest
+                sectionOrSubSectionFromServer(mSectionSideWork.getPage());
+            } else if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) { // Home Page of Section
+                homeAndBannerArticleFromDB();
+            } else { // Other Sections or Sub-Section
+                sectionOrSubSectionDataFromDB();
+                // Registering Scroll Listener to load more item
+                mPullToRefreshLayout.getRecyclerView().addOnScrollListener(mRecyclerViewOnScrollListener);
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(mRecyclerAdapter != null ) {
 
+        boolean isSectionNeedToSync = DefaultPref.getInstance(getActivity()).isSectionNeedToSync(mSectionId);
+        if (isSectionNeedToSync) {
+            showLoadingUIForServerData(true, true);
+        }
+
+        if (mSectionId.equals("998")) { // Opens News-Digest
+            // TODO, NOTHING
+        } else if (mSectionId.equals(NetConstants.RECO_HOME_TAB) && isSectionNeedToSync) { // Home Page of Section
+            getHomeDataFromServer();
+            return;
+        } else if (isSectionNeedToSync) { // Other Sections or Sub-Section
+            sectionOrSubSectionFromServer(1);
+            return;
+        }
+
+        if (mRecyclerAdapter != null) {
             int findFirstVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstVisibleItemPosition();
             int findLastVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastVisibleItemPosition();
             //int findFirstCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstCompletelyVisibleItemPosition();
             //int findLastCompletelyVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findLastCompletelyVisibleItemPosition();
-            int itemCount = findLastVisibleItemPosition-findFirstVisibleItemPosition;
-            if(itemCount < 3) {
+            int itemCount = findLastVisibleItemPosition - findFirstVisibleItemPosition;
+            if (itemCount < 3) {
                 itemCount = 3;
             }
             mRecyclerAdapter.notifyItemRangeChanged(findFirstVisibleItemPosition, itemCount);
+
         }
 
+        // Dummy AdData object
         AdData adData = new AdData(-1, "");
         adData.setSecId(mSectionId);
         // It sends event to AppTabFragment.java in handleEvent(AdData adData)
@@ -271,25 +281,26 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                 mSectionSideWork.incrementPageCount();
 
                                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete DB :: Page - " + (mSectionSideWork.getPage() - 1));
-                                setFetchingDataFromServer(false, false);
+                                showLoadingUIForServerData(false, false);
                             }
                         },
                         throwable -> {
                             Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from DB :: Page - " + mSectionSideWork.getPage() + " :: throwable - " + throwable);
                             Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionDataFromDB() :: " + throwable);
-                            setFetchingDataFromServer(false, false);
+                            showLoadingUIForServerData(false, false);
                         }));
     }
 
     private void sectionOrSubSectionFromServer(int page) {
-
-        setFetchingDataFromServer(true, true);
+        showLoadingUIForServerData(true, true);
         RequestCallback<ArrayList<SectionAdapterItem>> requestCallback = new RequestCallback<ArrayList<SectionAdapterItem>>() {
             @Override
             public void onNext(ArrayList<SectionAdapterItem> articleBeans) {
                 if (page == 1) {
                     mRecyclerAdapter.deleteAllItems();
                     mSectionSideWork.resetPageCount();
+                    // Save section last refresh time
+                    DefaultPref.getInstance(getActivity()).saveSectionSyncTimePref(mSectionId);
                 }
                 if (articleBeans.size() > 0) {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from Server :: Page - " + page);
@@ -317,13 +328,13 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }
                 Log.i(NetConstants.TAG_ERROR, "sectionOrSubSectionFromServer() :: " + throwable);
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: throwable from Server :: Page - " + page + " :: throwable - " + throwable);
-                setFetchingDataFromServer(false, false);
+                showLoadingUIForServerData(false, false);
             }
 
             @Override
             public void onComplete(String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
-                setFetchingDataFromServer(false, false);
+                showLoadingUIForServerData(false, false);
                 showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
             }
         };
@@ -371,10 +382,10 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mPullToRefreshLayout.getSwipeRefreshLayout().setOnRefreshListener(() -> {
             if (!BaseAcitivityTHP.sIsOnline) {
                 noConnectionSnackBar(getView());
-                setFetchingDataFromServer(false, false);
+                showLoadingUIForServerData(false, false);
                 return;
             }
-            setFetchingDataFromServer(true, false);
+            showLoadingUIForServerData(true, false);
 
             if (mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
                 getHomeDataFromServer();
@@ -384,7 +395,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         });
     }
 
-    private void setFetchingDataFromServer(boolean isFetchingDataFromServer, boolean enableSmoothProgressBar) {
+    private void showLoadingUIForServerData(boolean isFetchingDataFromServer, boolean enableSmoothProgressBar) {
         mPullToRefreshLayout.setScrollEnabled(!isFetchingDataFromServer);
         if(enableSmoothProgressBar) {
             mPullToRefreshLayout.showSmoothProgressBar();
@@ -407,23 +418,22 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         DefaultTHApiManager.homeArticles(getActivity(), "SectionFragment", new RequestCallback() {
             @Override
             public void onNext(Object o) {
-
+                // Save section last refresh time
+                DefaultPref.getInstance(getActivity()).saveSectionSyncTimePref(mSectionId);
             }
 
             @Override
             public void onError(Throwable throwable, String str) {
                 Log.i(NetConstants.TAG_ERROR, "getHomeDataFromServer() :: " + throwable);
-                setFetchingDataFromServer(false, false);
+                showLoadingUIForServerData(false, false);
             }
 
             @Override
             public void onComplete(String str) {
                 int co = mRecyclerAdapter.getItemCount();
                 mRecyclerAdapter.deleteAllItems();
-                //mRecyclerAdapter.notifyDataSetChanged();
-//                mRecyclerAdapter.notifyItemRangeRemoved(0, co);
-
                 homeAndBannerArticleFromDB();
+
             }
         });
 
@@ -572,7 +582,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         }
                     }
 
-                    setFetchingDataFromServer(false, false);
+                    showLoadingUIForServerData(false, false);
                     hideProgressDialog();
 
                 }, throwable -> {

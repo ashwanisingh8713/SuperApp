@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.netoperation.config.model.ContentUrl;
+import com.netoperation.config.model.ImportantMsg;
 import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.config.model.AdsBean;
@@ -36,6 +37,7 @@ public class TableConfiguration {
     private String vokkleId;
     private String refreshIntervalInMins;
     private String subSectionsIndex;
+    private ImportantMsg importantMsg;
     @ColumnInfo
     private AdsBean Ads;
     @ColumnInfo
@@ -52,6 +54,14 @@ public class TableConfiguration {
     private List<UrlBean> staticItem;
     @ColumnInfo
     private List<TabsBean> tabs;
+
+    public ImportantMsg getImportantMsg() {
+        return importantMsg;
+    }
+
+    public void setImportantMsg(ImportantMsg importantMsg) {
+        this.importantMsg = importantMsg;
+    }
 
     public ContentUrl getContentUrl() {
         return contentUrl;

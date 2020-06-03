@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 
-public class DetailPagerAdapter extends FragmentStatePagerAdapter {
+public class DetailPagerAdapter extends FragmentStatePagerAdapter { // FragmentStatePagerAdapter  // FragmentPagerAdapter
 
     private List<ArticleBean> articleList;
     private String mFrom;

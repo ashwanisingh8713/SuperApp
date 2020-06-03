@@ -29,6 +29,8 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.NavigationExpandableListViewAdapter;
+import com.ns.alerts.ErrorDialog;
+import com.ns.alerts.HomePermissionInfoDialog;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
@@ -140,7 +142,10 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     getDrawerStaticItem();
 
                 }));
+
     }
+
+
 
 
     private void getDrawerStaticItem() {

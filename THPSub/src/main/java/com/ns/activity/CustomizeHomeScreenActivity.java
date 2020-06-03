@@ -438,4 +438,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(isHomeArticleOptionScreenShown) {
+
+        }
+        super.onBackPressed();
+    }
 }

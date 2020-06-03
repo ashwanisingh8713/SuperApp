@@ -34,7 +34,7 @@
             android:textColor="#ffffff"
             android:text="Become a Premium member now!"
             app:font_path="@string/THP_FiraSans_Bold"
-            android:layout_marginLeft="15dp"
+            
             android:layout_marginStart="15dp"
             />
         <com.ns.view.text.CustomTextView
@@ -47,7 +47,7 @@
             android:textColor="#ffffff"
             android:text="Enjoy member benefits and more…"
             app:font_path="@string/THP_FiraSans_Regular"
-            android:layout_marginLeft="15dp"
+            
             android:layout_marginStart="15dp"
             />
 

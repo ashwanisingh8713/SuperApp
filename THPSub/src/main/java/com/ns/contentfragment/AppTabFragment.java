@@ -414,6 +414,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 }
             });
         }
+
     }
 
     private void subscribeLayoutVisibility(int visibility) {
