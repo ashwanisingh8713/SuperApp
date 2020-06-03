@@ -42,6 +42,7 @@ import com.ns.alerts.Alerts;
 import com.ns.alerts.HomePermissionInfoDialog;
 import com.ns.callbacks.BackPressCallback;
 import com.ns.callbacks.BackPressImpl;
+import com.ns.callbacks.OnDialogBtnClickListener;
 import com.ns.callbacks.OnExpandableListViewItemClickListener;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
@@ -640,8 +641,23 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 || !DefaultPref.getInstance(getContext()).isLocationEnabled()){
             dialogPermission.show(getSupportFragmentManager(), "di");
             dialogPermission.setCancelable(false);
-            dialogPermission.setOnDialogOkClickListener(this::requestPermissions);
-            dialogPermission.setOnDialogCancelClickListener(() -> DefaultPref.getInstance(getContext()).savePermissionDialogPreference(true));
+            dialogPermission.setOnDialogOkClickListener(new OnDialogBtnClickListener() {
+                @Override
+                public void onDialogOkClickListener() {
+                    requestPermissions();
+                }
+
+                @Override
+                public void onDialogAppInfoClickListener() {
+
+                }
+
+                @Override
+                public void onDialogCancelClickListener() {
+                    DefaultPref.getInstance(getContext()).savePermissionDialogPreference(true);
+                }
+            });
+
         }
     }
 
