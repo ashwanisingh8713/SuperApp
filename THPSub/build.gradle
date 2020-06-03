@@ -4,6 +4,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 //apply plug in for Realm DB
 apply plugin: 'realm-android'
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
@@ -253,6 +255,11 @@ dependencies {
     }
 
     // FIREBASE
+    //Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.4.2'
+
     implementation deps.FIREBASE_CORE
     implementation deps.FIREBASE_MESSAGING
 

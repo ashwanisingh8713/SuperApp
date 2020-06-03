@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "853251516072-avf32166gb4u4mddq6ff3dt4058rnhdc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobstac.thehindu",
+            "certificate_hash": "5e12975865c6104a07ab53c5a5722de64087348b"
+          }
+        },
+        {
           "client_id": "853251516072-n3p2bjltra8eg96ap5mrl53lsfggh1gs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
