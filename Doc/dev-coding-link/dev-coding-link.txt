@@ -1,1 +1,5 @@
 https://medium.com/@sgkantamani/android-product-flavors-eb526e35f9f1
+
+https://medium.com/@android2ee/playing-with-gradle-3-flavors-buildtypes-and-variants-ad5fe75158b9
+
+https://stackoverflow.com/questions/25104323/how-to-customize-the-apk-file-name-for-product-flavors

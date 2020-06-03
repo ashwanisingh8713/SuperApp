@@ -58,6 +58,13 @@ android {
     productFlavors {
         BusinessLine {
 
+            println "Using BusinessLine google-service.json"
+            copy {
+                from 'src/BusinessLine/'
+                include '*.json'
+                into '.'
+            }
+
             versionCode 37
             def appName = "SU_BL"
             versionName appName+"_"+versionCode + "_" + getTimestamp()
@@ -112,6 +119,12 @@ android {
             resValue "string", "custom_web_client_id", "958742245699-43e2kqr95pqabssmhoptiodd4c5h78f9.apps.googleusercontent.com"
         }
         TheHindu {
+            println "Using TheHindu google-service.json"
+            copy {
+                from 'src/TheHindu/'
+                include '*.json'
+                into '.'
+            }
 
             versionCode 82
             def appName = "SU_TH"
