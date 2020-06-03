@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.ns.callbacks.OnDialogBtnClickListener;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.view.text.ArticleTitleTextView;
 
 public class HomePermissionInfoDialog extends DialogFragment {
 
@@ -47,6 +49,11 @@ public class HomePermissionInfoDialog extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ArticleTitleTextView dialogTitle = view.findViewById(R.id.dialogTitle);
+        if(dialogTitle != null) {
+            dialogTitle.setText(getResources().getString(R.string.APP_NAME));
+        }
 
         if(view.findViewById(R.id.okTxt) != null) {
             view.findViewById(R.id.okTxt).setOnClickListener(v -> {
