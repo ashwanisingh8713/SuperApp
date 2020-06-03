@@ -1,82 +1,34 @@
 {
   "project_info": {
-    "project_number": "853251516072",
-    "firebase_url": "https://thehindu-1187.firebaseio.com",
-    "project_id": "thehindu-1187",
-    "storage_bucket": "thehindu-1187.appspot.com"
+    "project_number": "661011008554",
+    "firebase_url": "https://business-line.firebaseio.com",
+    "project_id": "business-line",
+    "storage_bucket": "business-line.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:853251516072:android:604a907e224b8a12",
+        "mobilesdk_app_id": "1:661011008554:android:a3e09c02d08d00a1",
         "android_client_info": {
-          "package_name": "com.mobstac.thehindu"
+          "package_name": "com.mobstac.thehindubusinessline"
         }
       },
       "oauth_client": [
         {
-          "client_id": "853251516072-avf32166gb4u4mddq6ff3dt4058rnhdc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "5e12975865c6104a07ab53c5a5722de64087348b"
-          }
-        },
-        {
-          "client_id": "853251516072-n3p2bjltra8eg96ap5mrl53lsfggh1gs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "957b4fcbd7dc86b453a2ed322cd79056d25c23be"
-          }
-        },
-        {
-          "client_id": "853251516072-5odtk1g4og081kcq08gff12712nilop6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "ef56e08e715ca6a676c7aae485d1d3051b4f9fbf"
-          }
-        },
-        {
-          "client_id": "853251516072-buu1aqmpehih6aagupjsf35edfjpn8b4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "91d968fb059031adcab1f1c96b0c637e8089d21c"
-          }
-        },
-        {
-          "client_id": "853251516072-a9ht1qd51vtqkdbib57qs1v9h4qmrvlh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "8c4af5a26c41972c77e31ff11cc6124497001c92"
-          }
-        },
-        {
-          "client_id": "853251516072-lgs8e91hp1pp8qg8gvb4vatr98i4fekk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mobstac.thehindu",
-            "certificate_hash": "f4d4be5db0ae24a96a175f13979f587746032578"
-          }
-        },
-        {
-          "client_id": "853251516072-4k3bue5q382um7vs6f0scass657kujg3.apps.googleusercontent.com",
+          "client_id": "661011008554-l3k9f4nme8caoiei7t4rqipgh537si4d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6T6UuBqodN6k2kqFgzeA4ocbGKSz_L5s"
+          "current_key": "AIzaSyBMzfP_Kp9fy024wIkKU4sj-4mQqeMvYtA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "853251516072-al07m1f3agod22jos6r69imrbb49uqml.apps.googleusercontent.com",
+              "client_id": "661011008554-l3k9f4nme8caoiei7t4rqipgh537si4d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

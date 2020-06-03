@@ -58,8 +58,9 @@ android {
     productFlavors {
         BusinessLine {
 
-            versionCode 81
-            versionName android.productFlavors.BusinessLine.buildConfigFields.APP_NAME+"_"+versionCode + "-" + getTimestamp()
+            versionCode 37
+            def appName = "SU_BL"
+            versionName appName+"_"+versionCode + "_" + getTimestamp()
 
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
@@ -103,7 +104,7 @@ android {
             resValue "string", "clevertap_test_account_token", "TEST-1b4-321"
             resValue "string", "clevertap_live_account_id", ""
             resValue "string", "clevertap_live_account_token", ""
-            resValue "string", "APP_NAME", "SU_BL"
+            resValue "string", "APP_NAME", appName
             //Facebook Sign In
             resValue "string", "facebook_app_id", "360214941478115"
             resValue "string", "fb_login_protocol_scheme", "fb360214941478115"
@@ -112,8 +113,9 @@ android {
         }
         TheHindu {
 
-            versionCode 100
-            versionName android.productFlavors.TheHindu.buildConfigFields.APP_NAME+"_"+versionCode + "-" + getTimestamp()
+            versionCode 82
+            def appName = "SU_TH"
+            versionName appName+"_"+versionCode + "_" + getTimestamp()
 
             dimension "version"
             applicationId "com.mobstac.thehindu"
@@ -157,7 +159,7 @@ android {
             resValue "string", "clevertap_test_account_token", "TEST-3b2-0b1"
             resValue "string", "clevertap_live_account_id", "W8W-R8K-465Z"
             resValue "string", "clevertap_live_account_token", "3b2-0b0"
-            resValue "string", "APP_NAME", "SU_TH"
+            resValue "string", "APP_NAME", appName
             //Facebook sign in
             resValue "string", "facebook_app_id", "467175884091779"
             resValue "string", "fb_login_protocol_scheme", "fb467175884091779"
