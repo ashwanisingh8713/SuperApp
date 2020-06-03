@@ -2,6 +2,7 @@ package com.netoperation.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.netoperation.default_db.TableConfiguration;
 import com.ns.activity.BaseAcitivityTHP;
@@ -300,6 +301,15 @@ public class DefaultPref {
         return mPreferences.getBoolean("isOldBookmarkLoaded", false);
     }
 
+    public void setLocationEnabled(boolean isEnabled) {
+        mEditor.putBoolean("LOCATION_ENABLE", isEnabled);
+        mEditor.apply();
+    }
+
+    public boolean isLocationEnabled() {
+        return mPreferences.getBoolean("LOCATION_ENABLE", false);
+    }
+
     public void saveSectionSyncTimePref(String sectionId) {
         mEditor.putLong(sectionId, System.currentTimeMillis());
         mEditor.apply();
@@ -325,5 +335,4 @@ public class DefaultPref {
         }
         return lastSyncDuration > SYNC_UP_DURATION;
     }
-
 }
