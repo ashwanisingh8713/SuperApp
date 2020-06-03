@@ -5,7 +5,7 @@
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
     "vokkleId": "d1a4a16d-cfaf-4ad2-8f9b-ddf5a1b257d2",
-    "refreshIntervalInMins": "value",
+    "refreshIntervalInMins": "5",
     "importantMsg": {
       "title" : "Title",
       "msg" : "This msg on update of config (not required always, if exist will be shown to user only once)"
