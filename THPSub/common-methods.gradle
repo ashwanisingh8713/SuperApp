@@ -1,0 +1,68 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+ext {
+    getCurrentFlavor = this.&getCurrentFlavor()
+    getCurrentBuildType = this.&getCurrentBuildType()
+    getTimestamp = this.getTimestamp()
+
+}
+
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String  tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if( tskReqStr.contains( "assemble" ) )
+        //pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug|_DEVELOPMENT|_TESTING|_THG)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug|_DEVELOPMENT|_TESTING|_THG)")
+
+    Matcher matcher = pattern.matcher( tskReqStr )
+
+    if( matcher.find() ) {
+        println matcher.group(1).toLowerCase()
+        return matcher.group(1).toLowerCase()
+    }
+    else
+    {
+        println "NO MATCH FOUND"
+        return "";
+    }
+}
+
+def getCurrentBuildType() {
+    Gradle gradle = getGradle()
+    String  tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    println "tskReqStr :: "+tskReqStr
+    if (tskReqStr.contains("Release")) {
+        println "getCurrentBuildType release"
+        return "release"
+    }
+    else if (tskReqStr.contains("Debug")) {
+        println "getCurrentBuildType debug"
+        return "debug"
+    }
+    else if (tskReqStr.contains("_DEVELOPMENT")) {
+        println "getCurrentBuildType _DEVELOPMENT"
+        return "_DEVELOPMENT"
+    }
+    else if (tskReqStr.contains("_TESTING")) {
+        println "getCurrentBuildType _TESTING"
+        return "_DEVELOPMENT"
+    }
+    else if (tskReqStr.contains("_THG")) {
+        println "getCurrentBuildType _THG"
+        return "_DEVELOPMENT"
+    }
+
+    println "NO MATCH FOUND"
+    return "";
+}
+
+def getTimestamp() {
+    def date = new Date()
+    return date.format('ddMMMyy_HHmm')
+}

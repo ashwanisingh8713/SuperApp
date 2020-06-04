@@ -11,13 +11,19 @@ android {
 
   buildTypes {
     release {
-      minifyEnabled MINIFY_ENABLED
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
 
-    debug {
-      minifyEnabled false
-      testCoverageEnabled true
+    }
+    debug{
+
+    }
+    _THG{
+
+    }
+    _TESTING{
+
+    }
+    _DEVELOPMENT{
+
     }
   }
 

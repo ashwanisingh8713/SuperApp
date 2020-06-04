@@ -1,3 +1,6 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 //apply plugin: 'com.android.library'
 apply plugin: 'com.android.application'
 //apply the Google Services Gradle plugin
@@ -6,6 +9,8 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'realm-android'
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
+
+apply from: 'common-methods.gradle'
 
 android {
 
@@ -27,17 +32,50 @@ android {
         buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
     }
 
+    signingConfigs {
+        config {
+            keyAlias 'mobstacapps'
+            keyPassword 'L$wgnoXk'
+            //storeFile file('/Users/apple/OfficeProjSample/SuperApp/releaseBuild/MobStacApps.keystore')
+            storeFile file('../releaseBuild/MobStacApps.keystore')
+            storePassword 'crMH5ui9u3NUL1UK'
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            signingConfig signingConfigs.config
         }
         debug{
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+        }
+        _THG{
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
+            signingConfig signingConfigs.config
+        }
+        _TESTING{
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
+            signingConfig signingConfigs.config
+        }
+        _DEVELOPMENT{
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            signingConfig signingConfigs.config
         }
 
 
@@ -57,24 +95,12 @@ android {
 
     productFlavors {
         BusinessLine {
-
-            println "Using BusinessLine google-service.json"
-            copy {
-                from 'src/BusinessLine/'
-                include '*.json'
-                into '.'
-            }
-
             versionCode 37
             def appName = "SU_BL"
-            versionName appName+"_"+versionCode + "_" + getTimestamp()
+            versionName "1.0"
 
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
-
-            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
@@ -119,23 +145,12 @@ android {
             resValue "string", "custom_web_client_id", "958742245699-43e2kqr95pqabssmhoptiodd4c5h78f9.apps.googleusercontent.com"
         }
         TheHindu {
-            println "Using TheHindu google-service.json"
-            copy {
-                from 'src/TheHindu/'
-                include '*.json'
-                into '.'
-            }
-
             versionCode 82
             def appName = "SU_TH"
-            versionName appName+"_"+versionCode + "_" + getTimestamp()
+            versionName "1.0"
 
             dimension "version"
             applicationId "com.mobstac.thehindu"
-
-            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
-            //buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
 
             buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
@@ -207,17 +222,53 @@ android {
 
 
     applicationVariants.all { variant ->
-        def flavor = variant.productFlavors[0]
-        def name = android.productFlavors.TheHindu.buildConfigFields.APP_NAME
-        println "${flavor}"+"_Ashwani_"
-        def map = variant.productFlavors[0].properties
-        def buildConfigFields = map.get("buildConfigFields")
-        def val = buildConfigFields
-        //println val
-        //buildConfigFields.each{entry -> println "$entry.key: $entry.value"}
+        def buildTypeName = variant.buildType.name
+        def flavorName = variant.productFlavors[0].name;
+
+        def googleServicesJson = 'google-services.json'
+        //def originalPath = "src/$flavorName/$buildTypeName/$googleServicesJson"
+        def originalPath = "src/$flavorName/$googleServicesJson"
+        def destPath = "."
+
+        def APP_ENVIROMENT = variant.productFlavors[0].buildConfigFields.APP_ENVIROMENT
+        def env = android.productFlavors.TheHindu.buildConfigFields.APP_ENVIROMENT
+
+        println "1 "+APP_ENVIROMENT
+        println "2 "+name
+
+        variant.productFlavors.each { flavor ->
+            println "============== :: "+flavor.name
+        }
+
+        println "Build Type :: "+buildTypeName
+        println "Flavour Name :: "+flavorName
+        println googleServicesJson+" path :: "+originalPath
+        println "getCurrentFlavor() :: "+getCurrentFlavor
+        println "getCurrentBuildType() :: "+getCurrentBuildType
+        println "################"
+
+
+        // It copies dynamically google-services.json, approprietly for all kind of flavour
+        if (flavorName.equalsIgnoreCase(getCurrentFlavor) && buildTypeName.equalsIgnoreCase(getCurrentBuildType)) {
+            copy {
+                println originalPath
+                from originalPath
+                include '*.json'
+                println destPath
+                into destPath
+            }
+        }
+
+        variant.outputs.all { output ->
+            def buildName = flavorName+buildTypeName+"_"+variant.versionName+"_"+variant.versionCode+"_"+getTimestamp
+            outputFileName = "${buildName}.apk"
+        }
+
     }
 
 }
+
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -357,10 +408,7 @@ dependencies {
 
 }
 
-def getTimestamp() {
-    def date = new Date()
-    return date.format('ddMMyy_HHmm')
-}
+
 
 
 

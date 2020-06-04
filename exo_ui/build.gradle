@@ -21,12 +21,22 @@ android {
         targetSdkVersion TARGETED_SDK_VERSION
     }
 
-    buildTypes {
-        // Re-enable test coverage when the following issue is fixed:
-        // https://issuetracker.google.com/issues/37019591
-        // debug {
-        //    testCoverageEnabled = true
-        // }
+    buildTypes{
+        release {
+
+        }
+        debug{
+
+        }
+        _THG{
+
+        }
+        _TESTING{
+
+        }
+        _DEVELOPMENT{
+
+        }
     }
 }
 

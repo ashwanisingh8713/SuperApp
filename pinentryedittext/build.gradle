@@ -9,10 +9,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+    buildTypes{
         release {
-            minifyEnabled MINIFY_ENABLED
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+        debug{
+
+        }
+        _THG{
+
+        }
+        _TESTING{
+
+        }
+        _DEVELOPMENT{
+
         }
     }
     lintOptions {

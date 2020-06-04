@@ -24,13 +24,15 @@ Widget Length // DONE
 Bookmark merging from old to new // DONE
 BL Home Indices // DONE
 Card Taboola Native Ads for BL // DONE
+Configuration Msg Dialog // DONE
+Configuration refresh interval // DONE
+Build // DONE
+
 Verify BL apis
 TH & BL Premium Testing
 
 ////////////////////
-Configuration Msg Dialog
-Configuration refresh interval
-Build
+
 
 
 
