@@ -17,16 +17,17 @@
             android:id="@+id/dialogTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The Hindu"
+            android:text="@string/APP_NAME"
             app:textType="M"
             android:textSize="@dimen/personal_info_textSize_16sp"
             app:font_path="@string/THP_FiraSans_SemiBold" />
 
         <com.ns.view.text.CustomTextView
+            android:id="@+id/informationTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="The Hindu requires the following information"
+            android:text="@string/the_hindu_requires_the_following_information"
             app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular" />

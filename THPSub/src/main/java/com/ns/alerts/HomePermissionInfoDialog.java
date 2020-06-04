@@ -13,6 +13,7 @@ import com.ns.callbacks.OnDialogBtnClickListener;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.view.text.ArticleTitleTextView;
+import com.ns.view.text.CustomTextView;
 
 public class HomePermissionInfoDialog extends DialogFragment {
 
@@ -51,8 +52,12 @@ public class HomePermissionInfoDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         ArticleTitleTextView dialogTitle = view.findViewById(R.id.dialogTitle);
+        CustomTextView informationTextView = view.findViewById(R.id.informationTextView);
         if(dialogTitle != null) {
             dialogTitle.setText(getResources().getString(R.string.APP_NAME));
+        }
+        if (informationTextView != null) {
+            informationTextView.setText(getString(R.string.the_hindu_requires_the_following_information, getString(R.string.APP_NAME)));
         }
 
         if(view.findViewById(R.id.okTxt) != null) {
