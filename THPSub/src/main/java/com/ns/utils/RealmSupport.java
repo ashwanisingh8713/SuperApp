@@ -9,6 +9,7 @@ import com.ns.thpremium.BuildConfig;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
 
 public class RealmSupport {
 
@@ -51,18 +52,22 @@ public class RealmSupport {
     private RealmConfiguration getMyRealmConfiguration() {
         String realmDBName = "t";
         int DATABASE_SCHEMA_VERSION = 1;
+        RealmMigration realmMigration;
         if(BuildConfig.IS_BL) {
             realmDBName = "TheHinduBusinessline.realm";
-            DATABASE_SCHEMA_VERSION = 4;
+            DATABASE_SCHEMA_VERSION = 6;
+            realmMigration = new BusinessLineRealmMigration();
         } else {
             realmDBName = "TheHindu.realm";
-            DATABASE_SCHEMA_VERSION = 14;
+            DATABASE_SCHEMA_VERSION = 15;
+            realmMigration = new TheHinduRealmMigration();
         }
 
         if (mRealmConfiguration == null) {
             mRealmConfiguration = new RealmConfiguration.Builder() //.deleteRealmIfMigrationNeeded()
                     .name(realmDBName)
                     .schemaVersion(DATABASE_SCHEMA_VERSION)
+                    .migration(realmMigration)
                     .build();
         }
         return mRealmConfiguration;
