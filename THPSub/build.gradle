@@ -197,30 +197,6 @@ android {
 
     }
 
-    /*applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
-            def versionName = variant.versionName
-            def versionCode = variant.versionCode // e.g 1.0
-            def flavorName = variant.flavorName // e. g. Free
-
-            //customize your app name by using variables
-            if(flavorName.equals("TheHindu")) {
-                def appName = variant.productFlavors[0].buildConfigFields.APP_NAME
-                def APP_ENVIROMENT = variant.productFlavors[0].buildConfigFields.APP_ENVIROMENT
-                //apkName = APP_ENVIROMENT + "_" + appName + "_" + versionName
-                outputFileName = "${APP_ENVIROMENT}.apk"
-            }
-            else if(flavorName.equals("BusinessLine")){
-                def appName = variant.productFlavors[0].buildConfigField.APP_NAME
-                def APP_ENVIROMENT = variant.productFlavors[1].buildConfigFields.APP_ENVIROMENT
-                //apkName = APP_ENVIROMENT+"_"+appName+"_"+versionName
-                outputFileName = "${APP_ENVIROMENT}.apk"
-            }
-        }
-    }*/
-
-
     applicationVariants.all { variant ->
         def buildTypeName = variant.buildType.name
         def flavorName = variant.productFlavors[0].name;
@@ -229,12 +205,6 @@ android {
         //def originalPath = "src/$flavorName/$buildTypeName/$googleServicesJson"
         def originalPath = "src/$flavorName/$googleServicesJson"
         def destPath = "."
-
-        def APP_ENVIROMENT = variant.productFlavors[0].buildConfigFields.APP_ENVIROMENT
-        def env = android.productFlavors.TheHindu.buildConfigFields.APP_ENVIROMENT
-
-        println "1 "+APP_ENVIROMENT
-        println "2 "+name
 
         variant.productFlavors.each { flavor ->
             println "============== :: "+flavor.name
@@ -259,6 +229,7 @@ android {
             }
         }
 
+        // It creates custom apk name
         variant.outputs.all { output ->
             def buildName = flavorName+buildTypeName+"_"+variant.versionName+"_"+variant.versionCode+"_"+getTimestamp
             outputFileName = "${buildName}.apk"
