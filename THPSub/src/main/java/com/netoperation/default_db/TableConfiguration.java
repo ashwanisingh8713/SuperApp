@@ -32,27 +32,18 @@ public class TableConfiguration {
     }
 
 
-    private int totalIcons;
     private String lastServerUpdateTime;
     private String vokkleId;
     private String refreshIntervalInMins;
     private String subSectionsIndex;
     private ImportantMsg importantMsg;
-    @ColumnInfo
     private AdsBean Ads;
-    @ColumnInfo
     private AppThemeBean appTheme;
-    @ColumnInfo
     private TaboolaBean taboola;
-    @ColumnInfo
     private SearchOptionBean searchOption;
-    @ColumnInfo
     private ContentUrl contentUrl;
-    @ColumnInfo
     private OtherIconsDownloadUrls otherIconsDownloadUrls;
-    @ColumnInfo
     private List<UrlBean> staticItem;
-    @ColumnInfo
     private List<TabsBean> tabs;
 
     public ImportantMsg getImportantMsg() {
@@ -69,14 +60,6 @@ public class TableConfiguration {
 
     public void setContentUrl(ContentUrl contentUrl) {
         this.contentUrl = contentUrl;
-    }
-
-    public int getTotalIcons() {
-        return totalIcons;
-    }
-
-    public void setTotalIcons(int totalIcons) {
-        this.totalIcons = totalIcons;
     }
 
     private List<WidgetIndex> widget;

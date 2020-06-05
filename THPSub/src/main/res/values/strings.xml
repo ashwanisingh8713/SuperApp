@@ -17,6 +17,7 @@
     <string name="hint_registered_mobile_number"><font size="30">My hint string</font></string>
 
     <string name="type_device">Default Device</string>
+    <string name="added_to_read_later">Added to Read Later</string>
     <string name="title_activity_maps">Map</string>
     <string name="something_went_wrong">Oops! Something went wrong.\nPlease try after sometime.</string>
 

@@ -51,8 +51,7 @@ public class SuperApp extends Application implements LifecycleObserver  {
 
         startPeriodicWork();
         initCleverTap();
-        //Init realm configuration
-        new RealmSupport().getRealmInstance();
+
     }
 
     public static Context getAppContext() {

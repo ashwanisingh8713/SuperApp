@@ -69,7 +69,7 @@ public abstract class THPDB extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (THPDB.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), THPDB.class, "THPDB2.db")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), THPDB.class, "THPDB3.db")
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)

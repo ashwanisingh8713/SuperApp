@@ -100,8 +100,6 @@ public *;
 
 #Flurry Ad SDK Settings
 
--keep class com.flurry.**{ *; }
--dontwarn com.flurry**
 -keepattributes *Annotation*,EnclosingMethod
 -keepclasseswithmembers class * {
  public <init>(android.content.Context, android.util.AttributeSet, int);}
@@ -119,28 +117,21 @@ public *;
 
 -dontwarn com.inmobi.**
 
-#UnityAds
 
--keep class com.unity3d.ads.android.** { *; }
-
--dontwarn com.unity3d.ads.android.**
 
 #Additional Settings:
 
 -dontwarn org.apache.http.**
 -dontwarn android.net.**
 -dontwarn com.google.ads.**
--dontwarn com.vmax.android.ads.volley.toolbox.**
 -dontwarn com.chartboost.sdk.impl.**
 -dontwarn okio.**
 -dontwarn com.vuforia.**
--dontwarn com.moengage.**
 -dontwarn com.comscore.**
 -dontwarn com.app.pokktsdk.**
 -dontwarn com.amazonaws.util.json.**
 -dontwarn com.moat.analytics.**
 -dontwarn com.squareup.okhttp.**
--dontwarn com.mbtechpro.**
 
 #Event Bus
 
@@ -184,42 +175,11 @@ public *;
 -dontwarn io.realm.**
 
 
-#Moengage
--dontwarn com.google.android.gms.location.**
--dontwarn com.google.android.gms.gcm.**
--dontwarn com.google.android.gms.iid.**
 
 -keep class com.google.android.gms.gcm.** { *; }
 -keep class com.google.android.gms.iid.** { *; }
 -keep class com.google.android.gms.location.** { *; }
 
--keep class com.moe.pushlibrary.activities.** { *; }
--keep class com.moengage.locationlibrary.GeofenceIntentService
--keep class com.moe.pushlibrary.InstallReceiver
--keep class com.moengage.push.MoEPushWorker
--keep class com.moe.pushlibrary.providers.MoEProvider
--keep class com.moengage.receiver.MoEInstanceIDListener
--keep class com.moengage.worker.MoEGCMListenerService
--keep class com.moe.pushlibrary.models.** { *;}
--keep class com.moengage.core.GeoTask
--keep class com.moengage.location.GeoManager
--keep class com.moengage.inapp.InAppManager
--keep class com.moengage.push.PushManager
--keep class com.moengage.inapp.InAppController
-
--keep class com.moengage.pushbase.activities.PushTracker
--keep class com.moengage.pushbase.activities.SnoozeTracker
--keep class com.moengage.pushbase.push.MoEPushWorker
--keep class com.moe.pushlibrary.MoEWorker
--keep class com.moe.pushlibrary.AppUpdateReceiver
--keep class com.moengage.core.MoEAlarmReceiver
-
-
--dontwarn com.moengage.location.GeoManager
--dontwarn com.moengage.core.GeoTask
--dontwarn com.moengage.receiver.*
--dontwarn com.moengage.worker.*
--dontwarn com.moengage.inapp.ViewEngine
 
 -keep class com.delight.**  { *; }
 
@@ -235,10 +195,7 @@ public *;
 -keep class com.comscore.** { *; }
 -dontwarn com.comscore.**
 
-#Bottom navigation
--keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
-    boolean mShiftingMode;
-}
+
 
 #Jsoup
 -keeppackagenames org.jsoup.nodes

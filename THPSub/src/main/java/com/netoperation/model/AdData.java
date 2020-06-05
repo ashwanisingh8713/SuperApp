@@ -4,19 +4,23 @@ package com.netoperation.model;
 
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.google.gson.annotations.Expose;
 import com.taboola.android.api.TBRecommendationItem;
 
 public class AdData {
+    @Expose
     private String type;
-    private String adId;
+    @Expose
     private int index;
-
-    private AdSize adSize;
-    private String adDataUiqueId;
-    private PublisherAdView adView;
-    private boolean reloadOnScroll;
-
+    @Expose
     private String secId;
+
+
+    private String adDataUiqueId;
+    private boolean reloadOnScroll;
+    private String adId;
+    private AdSize adSize;
+    private PublisherAdView adView;
     private TBRecommendationItem taboolaNativeAdItem;
 
     public AdData(int index, String adId) {

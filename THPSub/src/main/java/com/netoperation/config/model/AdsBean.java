@@ -19,7 +19,7 @@ public class AdsBean {
     private String fullScreenAdId;
     private String detailPageTopAdId;
     private String detailPageBottomAdId;
-    private List<AdData> listingPageAds;
+    private List<ListingPageAdsBean> listingPageAds;
 
     public String getBottomAdHomeId() {
         return bottomAdHomeId;
@@ -61,11 +61,11 @@ public class AdsBean {
         this.detailPageBottomAdId = detailPageBottomAdId;
     }
 
-    public List<AdData> getListingPageAds() {
+    public List<ListingPageAdsBean> getListingPageAds() {
         return listingPageAds;
     }
 
-    public void setListingPageAds(List<AdData> listingPageAds) {
+    public void setListingPageAds(List<ListingPageAdsBean> listingPageAds) {
         this.listingPageAds = listingPageAds;
     }
 

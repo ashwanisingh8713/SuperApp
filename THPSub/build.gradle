@@ -305,11 +305,14 @@ dependencies {
     implementation deps.rxjava2
     implementation deps.rxAndroid2
     implementation deps.rxRetrofitAdapter
-    implementation deps.gson
-    implementation deps.retrofit
     implementation deps.retrofitGsonConverter
     implementation 'net.danlew:android.joda:2.10.6'
 
+    implementation deps.gson
+//    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.0'
+//    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+
+    implementation deps.retrofit
     // Room components
     implementation deps.room
     annotationProcessor deps.room_annotationProcessor

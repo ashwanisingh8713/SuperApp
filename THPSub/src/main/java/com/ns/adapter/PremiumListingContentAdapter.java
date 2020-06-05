@@ -1392,7 +1392,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         final int fav = favourite;
         final String articleId = bean.getArticleId();
 
-        ApiManager.getUserProfile(imageView.getContext())
+        ApiManager.getUserProfile(context)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
                     // To Create and Remove at server end
@@ -1416,7 +1416,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                                                         CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_YES");
                                                     });
 
-                                                    Alerts.showToastAtCenter(context, "Added to Read Later");
+                                                    Alerts.showToastAtCenter(context, context.getResources().getString(R.string.added_to_read_later));
                                                 } else if (book == NetConstants.BOOKMARK_NO) {
                                                     // To Remove at App end
                                                     ApiManager.createUnBookmark(context, bean.getArticleId()).subscribe(boole -> {

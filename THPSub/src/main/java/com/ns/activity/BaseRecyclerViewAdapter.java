@@ -13,6 +13,7 @@ import com.netoperation.model.ArticleBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
+import com.ns.alerts.Alerts;
 import com.ns.callbacks.THP_AppEmptyPageListener;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.R;
@@ -206,7 +207,6 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
             notifyItemChanged(position);
             // Empty Check Call back
             checkPageEmptyCallback();
-
             CleverTapUtil.cleverTapBookmarkFavLike(context, articleId, mFrom, "NetConstants.BOOKMARK_NO");
         });
     }
@@ -234,6 +234,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
                         local_removeBookmarkFromApp(context, bean.getArticleId(), bean, null, imageView, position, NetConstants.G_BOOKMARK_DEFAULT);
                     } else {
                         local_createBookmarkFromApp(context, bean, null, imageView, position, NetConstants.G_BOOKMARK_DEFAULT);
+                        Alerts.showToastAtCenter(context, context.getResources().getString(R.string.added_to_read_later));
                     }
                 });
     }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.android.gms.ads.AdSize;
 import com.main.SuperApp;
+import com.netoperation.config.model.ListingPageAdsBean;
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
@@ -226,7 +227,10 @@ public class SectionSideWork {
 
         // Ads Index
         if(!PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() && BaseAcitivityTHP.sIsOnline ) {
-            for (AdData adsBean : tableConfiguration.getAds().getListingPageAds()) {
+            for (ListingPageAdsBean pageAdsBean : tableConfiguration.getAds().getListingPageAds()) {
+                AdData adsBean = new AdData(pageAdsBean.getIndex(), pageAdsBean.getAdId());
+                adsBean.setType(pageAdsBean.getType());
+
                 adsBean.setSecId(mSectionId);
                 adsBean.setAdDataUiqueId(RowIds.adDataUiqueId(adsBean.getIndex(), adsBean.getType()));
                 SectionAdapterItem item;

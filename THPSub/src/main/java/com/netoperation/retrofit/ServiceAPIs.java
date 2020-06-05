@@ -1,7 +1,6 @@
 package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
@@ -19,10 +18,6 @@ import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
-import com.ns.model.SensexData;
-
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

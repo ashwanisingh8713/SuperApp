@@ -18,6 +18,8 @@
         android:label="@string/APP_NAME"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
+        android:allowBackup="false"
+        android:allowClearUserData="false"
         android:theme="@style/AppTheme">
 
         <activity android:name="com.ns.activity.SplashActivity"

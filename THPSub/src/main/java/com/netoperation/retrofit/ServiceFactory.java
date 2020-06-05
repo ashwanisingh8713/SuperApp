@@ -1,8 +1,6 @@
 package com.netoperation.retrofit;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.ns.thpremium.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -58,6 +56,7 @@ public class ServiceFactory {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.THP_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(JacksonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
                 .client(createOkHttpClient())
                 .build();
