@@ -29,10 +29,12 @@ public class BookmarkBean extends RealmObject {
     private String multimediaPath;
     private String articleType;
     private String vid;
+    private String parentId;
     private String location;
     private String comm_count;
     private String im_thumbnail_v2;
     private String isArticleRestricted;
+    private int p4_pos;
 
     public String getIm_thumbnail_v2() {
         return im_thumbnail_v2;
@@ -60,7 +62,7 @@ public class BookmarkBean extends RealmObject {
                         String le, int hi, RealmList<ImageBean> me, long bookmarkDate,
                         boolean isRead, int add_pos, String multimediaPath,
                         String articleType, String vid, String location,
-                        String thumb_v2, String comm_count, String isArticleRestricted) {
+                        String thumb_v2, String comm_count, String isArticleRestricted, String parentId, int p4_pos) {
         this.aid = aid;
         this.sid = sid;
         this.sname = sname;
@@ -86,6 +88,8 @@ public class BookmarkBean extends RealmObject {
         this.im_thumbnail_v2 = thumb_v2;
         this.comm_count = comm_count;
         this.isArticleRestricted = isArticleRestricted;
+        this.p4_pos = p4_pos;
+        this.parentId = parentId;
     }
 
     public boolean isRead() {
@@ -224,6 +228,13 @@ public class BookmarkBean extends RealmObject {
     public void setAdd_pos(int add_pos) {
         this.add_pos = add_pos;
     }
+    public int getP4_pos() {
+        return p4_pos;
+    }
+
+    public void setP4_pos(int p4_pos) {
+        this.p4_pos = p4_pos;
+    }
 
     public String getMultimediaPath() {
         return multimediaPath;
@@ -267,5 +278,13 @@ public class BookmarkBean extends RealmObject {
 
     public String getIsArticleRestricted() {
         return isArticleRestricted;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

@@ -4,7 +4,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by ARVIND on 1/23/2016.
+ * Created by NS on 20/5/2020.
  */
 public class CompanyData extends RealmObject{
     @PrimaryKey

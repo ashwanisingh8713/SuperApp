@@ -211,5 +211,6 @@
     <string name="today_rate">Today’s Rate</string>
     <string name="remove_all">Remove All</string>
     <string name="hint_search_bookmark">Search</string>
+    <string name="the_hindu_requires_the_following_information">%s requires the following information</string>
 
 </resources>

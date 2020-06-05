@@ -1,16 +1,13 @@
 package com.main;
 
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
-import androidx.work.Configuration;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
@@ -29,17 +26,14 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.RealmSupport;
 import com.ns.utils.THPConstants;
-import com.taboola.android.api.TaboolaApi;
-import com.taboola.android.js.TaboolaJs;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 public class SuperApp extends Application implements LifecycleObserver  {
 
@@ -57,7 +51,8 @@ public class SuperApp extends Application implements LifecycleObserver  {
 
         startPeriodicWork();
         initCleverTap();
-
+        //Init realm configuration
+        new RealmSupport().getRealmInstance();
     }
 
     public static Context getAppContext() {
