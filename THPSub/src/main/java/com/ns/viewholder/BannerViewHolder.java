@@ -1,6 +1,7 @@
 package com.ns.viewholder;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +17,7 @@ public class BannerViewHolder extends RecyclerView.ViewHolder {
 
     public RoundedImageView mBannerImageView;
     public TextView mBannerTextView;
-    public LinearLayout mBannerLayout;
+    public ViewGroup mBannerLayout;
     public TextView mArticleUpdateTime;
     public TextView mArticleSectionName;
     public ListingIconView mBookmarkButton;

@@ -142,8 +142,13 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     .inflate(R.layout.item_loadmore, viewGroup, false));
         }
         else if(viewType == VT_THD_BANNER) {
-            return new BannerViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cardview_home_banner, viewGroup, false));
+            if(BuildConfig.IS_BL) {
+                return new BannerViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.bl_cardview_banner, viewGroup, false));
+            } else {
+                return new BannerViewHolder(LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.th_cardview_home_banner, viewGroup, false));
+            }
         }
         else if(viewType == VT_THD_DEFAULT_ROW) {
             if(BuildConfig.IS_BL) {

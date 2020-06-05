@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/bl_item_margin_left"
+    android:layout_marginEnd="@dimen/bl_item_margin_right"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <com.ns.view.layout.NSRelativeLayout
+        android:id="@+id/layout_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/article_item_parent_top_bottom_padding">
+
+        <FrameLayout
+            android:id="@+id/imageParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ns.view.roundedimageview.RoundedImageView
+                card_view:riv_place_holder="banner"
+                android:id="@+id/imageview_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_image_newheight"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                />
+
+            <ImageButton
+                android:id="@+id/multimedia_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/textview_banner"
+            card_view:font_path="@string/THP_FiraSans_Bold"
+            card_view:textType="M"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/article_item_title_height"
+            android:layout_below="@id/imageParentLayout"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/text_line_spacing"
+            android:maxLines="2"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:textSize="18sp"
+             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_banner"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+            <include
+                layout="@layout/bl_layout_article_list_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                />
+        </LinearLayout>
+    </com.ns.view.layout.NSRelativeLayout>
+
+
+</com.ns.view.layout.NSCardView>

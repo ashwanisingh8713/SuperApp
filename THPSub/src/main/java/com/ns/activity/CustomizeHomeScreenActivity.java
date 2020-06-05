@@ -46,11 +46,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
     private boolean isHomeArticleOptionScreenShown;
 
-    private final String  btn_previous = "PREVIOUS";
-    private final String  btn_save = "SAVE";
-    private final String  btn_done = "DONE";
-    private final String  btn_skip = "SKIP";
-    private final String  btn_next = "NEXT";
+    private final String btn_previous = "PREVIOUS";
+    private final String btn_save = "SAVE";
+    private final String btn_done = "DONE";
+    private final String btn_skip = "SKIP";
+    private final String btn_next = "NEXT";
 
     private DFPConsent dfpConsent;
 
@@ -72,7 +72,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     public void skipOrPreviousButtonFunctionality() {
         if (mCustomizeHomeScreenViewPager != null) {
 
-            if(isHomeArticleOptionScreenShown || mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
+            if (isHomeArticleOptionScreenShown || mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
                 mCustomizeHomeScreenViewPager.setCurrentItem(0, true);
                 return;
             }
@@ -81,14 +81,12 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
             boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
             boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
 
-            if(!isUserFromEurope && isDfpConsentExecuted) {
+            if (!isUserFromEurope && isDfpConsentExecuted) {
                 getHomeDataFromServer();
-            }
-            else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
+            } else if ((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
                 DFP_GDPR_CONSENT(true);
                 Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
-            }
-            else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
+            } else if ((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
                 getHomeDataFromServer();
             }
         }
@@ -99,7 +97,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
         boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
 
-        if(!isUserFromEurope && isDfpConsentExecuted) {
+        if (!isUserFromEurope && isDfpConsentExecuted) {
             Fragment fragment1 = getCurrentFragmet();
             CitiesInterestFragment citiesInterestFragment = null;
             if (fragment1 instanceof CitiesInterestFragment) {
@@ -108,12 +106,10 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
             if (citiesInterestFragment != null) {
                 citiesInterestFragment.saveButtonClicked();
             }
-        }
-        else if((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
+        } else if ((isUserFromEurope && isDfpConsentExecuted) && !isUserSelectedDfpConsent) {
             DFP_GDPR_CONSENT(isHomeArticleOptionScreenShown);
             Alerts.showToast(CustomizeHomeScreenActivity.this, "Please complete user consent.");
-        }
-        else if((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
+        } else if ((isUserFromEurope && isDfpConsentExecuted) && isUserSelectedDfpConsent) {
             Fragment fragment1 = getCurrentFragmet();
             CitiesInterestFragment citiesInterestFragment = null;
             if (fragment1 instanceof CitiesInterestFragment) {
@@ -129,7 +125,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(BuildConfig.IS_BL) {
+        if (BuildConfig.IS_BL) {
             NUMBER_OF_SCREENS = 1;
         } else {
             NUMBER_OF_SCREENS = 2;
@@ -137,13 +133,12 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
         isHomeArticleOptionScreenShown = DefaultPref.getInstance(this).isHomeArticleOptionScreenShown();
 
-        if(isHomeArticleOptionScreenShown) {
+        if (isHomeArticleOptionScreenShown) {
             getDetailToolbar().showHomePeronsoliseIcons(getString(R.string.custom_home_screen), backBtn -> {
                 finish();
             });
 
-        }
-        else {
+        } else {
             DFP_GDPR_CONSENT(isHomeArticleOptionScreenShown);
             getDetailToolbar().setVisibility(View.GONE);
 
@@ -247,7 +242,6 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     }
 
 
-
     /**
      * ViewPager Adapter to load the two fragments which is a part of onBoardingscreen
      * {@link CustomizeNewsFeedFragment} -- list of sections(widgets+topnews are removed)
@@ -329,12 +323,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     }
 
     public void secondFragmentBtn() {
-        if(isHomeArticleOptionScreenShown) {
+        if (isHomeArticleOptionScreenShown) {
             setSkipButtonText(btn_previous);
             setNextButtonText(btn_save);
             setVisiblityOfPriviousButton(View.VISIBLE);
-        }
-        else {
+        } else {
             setSkipButtonText(btn_previous);
             setNextButtonText(btn_done);
             setVisiblityOfPriviousButton(View.VISIBLE);
@@ -343,12 +336,11 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
     public void firstFragmentBtn() {
 
-        if(BuildConfig.IS_BL) {
+        if (BuildConfig.IS_BL) {
             setSkipButtonText(btn_skip);
             setNextButtonText(btn_done);
             setVisiblityOfPriviousButton(View.VISIBLE);
-        }
-        else {
+        } else {
             if (isHomeArticleOptionScreenShown) {
                 setNextButtonText(btn_next);
                 setVisiblityOfPriviousButton(View.GONE);
@@ -372,10 +364,9 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     }
 
 
-
     private void DFP_GDPR_CONSENT(boolean isHomeArticleOptionScreenShown) {
-        if(!isHomeArticleOptionScreenShown) {
-            if(dfpConsent != null) {
+        if (!isHomeArticleOptionScreenShown) {
+            if (dfpConsent != null) {
                 dfpConsent.initUserConsentForm(CustomizeHomeScreenActivity.this);
                 return;
             }
@@ -384,14 +375,14 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
             dfpConsent.init(this, true, new DFPConsent.ConsentSelectionListener() {
                 @Override
                 public void isUserInEurope(boolean isInEurope) {
-                    if(isInEurope) {
+                    if (isInEurope) {
                         dfpConsent.initUserConsentForm(CustomizeHomeScreenActivity.this);
                     }
                 }
 
                 @Override
                 public void consentLoadingError(String errorDescription) {
-                    Alerts.showToast(CustomizeHomeScreenActivity.this, "consentLoadingError :: "+errorDescription);
+                    Alerts.showToast(CustomizeHomeScreenActivity.this, "consentLoadingError :: " + errorDescription);
                 }
             });
         }
@@ -402,29 +393,57 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         enableAllBtns(false);
         mProgressBar.setVisibility(View.VISIBLE);
         final long startTime = System.currentTimeMillis();
-        Log.i("NSPEED", "Home Article APIs are called " );
+        Log.i("NSPEED", "Home Article APIs are called ");
         DefaultTHApiManager.homeArticles(this, "SplashActivity", new RequestCallback() {
             @Override
             public void onNext(Object o) {
                 DefaultPref.getInstance(CustomizeHomeScreenActivity.this).setHomeArticleOptionScreenShown(true);
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
-                Log.i("NSPEED", "Home Article Loaded from server, Launched Main Tab Page :: "+totalExecutionTime);
+                Log.i("NSPEED", "Home Article Loaded from server, Launched Main Tab Page :: " + totalExecutionTime);
             }
 
             @Override
             public void onError(Throwable t, String str) {
                 long totalExecutionTime = System.currentTimeMillis() - startTime;
-                Log.i("NSPEED", "ERROR2 Occur time :: "+totalExecutionTime);
-                if(mProgressBar != null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressBar.setVisibility(View.GONE);
-                            Alerts.noConnectionSnackBar(mProgressBar, CustomizeHomeScreenActivity.this);
-                            enableAllBtns(true);
-                        }
-                    });
+                Log.i("NSPEED", "ERROR2 Occur time :: " + totalExecutionTime);
 
+                if (t.getMessage() != null && t.getMessage().contains("mapper function returned a null")) {
+                    DefaultTHApiManager.sectionDirectFromServer(CustomizeHomeScreenActivity.this, new RequestCallback() {
+                                @Override
+                                public void onNext(Object o) {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable t, String str) {
+                                    if (mProgressBar != null) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mProgressBar.setVisibility(View.GONE);
+                                                Alerts.noConnectionSnackBar(mProgressBar, CustomizeHomeScreenActivity.this);
+                                                enableAllBtns(true);
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onComplete(String str) {
+                                    getHomeDataFromServer();
+                                }
+                            }, System.currentTimeMillis());
+                } else {
+                    if (mProgressBar != null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mProgressBar.setVisibility(View.GONE);
+                                Alerts.noConnectionSnackBar(mProgressBar, CustomizeHomeScreenActivity.this);
+                                enableAllBtns(true);
+                            }
+                        });
+                    }
                 }
             }
 
@@ -440,7 +459,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
     @Override
     public void onBackPressed() {
-        if(isHomeArticleOptionScreenShown) {
+        if (isHomeArticleOptionScreenShown) {
 
         }
         super.onBackPressed();
