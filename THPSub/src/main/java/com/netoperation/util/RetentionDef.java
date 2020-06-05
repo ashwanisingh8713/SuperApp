@@ -21,6 +21,6 @@ public interface RetentionDef {
     @interface userVerificationMode {}
 
     @Retention(SOURCE)
-    @StringDef({API_bookmarks, API_Mystories, API_suggested, API_briefcase})
+    @StringDef({API_Mystories, API_suggested, API_briefcase})
     @interface Recomendation {}
 }

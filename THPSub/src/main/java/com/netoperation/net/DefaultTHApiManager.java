@@ -11,8 +11,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.main.SuperApp;
-import com.mindorks.scheduler.Priority;
-import com.mindorks.scheduler.RxPS;
 import com.netoperation.config.download.FileUtils;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.DaoMP;
@@ -985,8 +983,7 @@ public class DefaultTHApiManager {
 
     public static Disposable mpConfigurationAPI(Context context, String urlConfigAPI) {
         Observable<MPConfigurationModel> observable = ServiceFactory.getServiceAPIs().mpConfigurationAPI(urlConfigAPI);
-
-        return observable.subscribeOn(RxPS.get(Priority.IMMEDIATE))
+        return observable
                 .subscribeOn(Schedulers.newThread())
                 .map(configurationModel -> {
                     THPDB db = THPDB.getInstance(context);
@@ -1265,9 +1262,9 @@ public class DefaultTHApiManager {
 
                     String destinationFolderPath;
                     if (isDayTheme) {
-                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_LIGHT).getPath();
+                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TAB_ICONs_LIGHT).getPath();
                     } else {
-                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TOPBAR_ICONs_DARK).getPath();
+                        destinationFolderPath = FileUtils.destinationFolder(context, FileUtils.TAB_ICONs_DARK).getPath();
                     }
 
                     List<TabsBean> tabsBeanList = tabsBeans.stream().limit(limit).collect(Collectors.toList());

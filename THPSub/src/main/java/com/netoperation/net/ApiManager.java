@@ -884,6 +884,38 @@ public class ApiManager {
                 );
     }
 
+    public static Observable<List<ArticleBean>> getPremiumBookmarkFromServer(final Context context, String authorization, String userid, String siteid) {
+        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, userid, NetConstants.API_bookmarks, "1500", siteid, ReqBody.REQUEST_SOURCE)
+                .subscribeOn(Schedulers.newThread())
+                .map(value -> {
+                            List<ArticleBean> beans = new ArrayList<>();
+                            if (value == null) {
+                                return beans;
+                            }
+                            beans = value.getReco();
+                            if (context == null) {
+                                return beans;
+                            }
+                            THPDB thp = THPDB.getInstance(context);
+                            if (beans != null && beans.size() > 0) {
+                                thp.bookmarkTableDao().delete(NetConstants.G_BOOKMARK_PREMIUM);
+                                for (ArticleBean bean : beans) {
+                                        bean.setIsBookmark(1);
+                                        bean.setGroupType(NetConstants.G_BOOKMARK_PREMIUM);
+                                        TableBookmark tableBookmark = new TableBookmark(bean.getArticleId(), bean, bean.getGroupType());
+                                        thp.bookmarkTableDao().insertBookmark(tableBookmark);
+                                }
+                            }
+
+                            if (beans == null) {
+                                beans = new ArrayList<>();
+                            }
+
+                            return beans;
+                        }
+                );
+    }
+
     public static Observable<List<ArticleBean>> getBookmarkGroupType(final Context context, final String groupType) {
         return Observable.just(new RecomendationData()).subscribeOn(Schedulers.newThread())
                 .map(value -> {

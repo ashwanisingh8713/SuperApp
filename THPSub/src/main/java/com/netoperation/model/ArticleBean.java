@@ -287,6 +287,9 @@ public class ArticleBean implements Parcelable {
 
     public String getDe() {
         if(de == null) {
+            if(description == null) {
+                return "";
+            }
             return description;
         }
         return de;
@@ -659,6 +662,9 @@ public class ArticleBean implements Parcelable {
 
     public String getDescription() {
         if(description == null) {
+            if(de == null) {
+                return "";
+            }
             return de;
         }
         return description;

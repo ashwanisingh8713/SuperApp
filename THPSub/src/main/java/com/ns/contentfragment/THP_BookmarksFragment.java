@@ -121,13 +121,11 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         // Pull To Refresh Listener
         registerPullToRefresh();
 
-        loadData();
-
         mDisposable.add(ApiManager.getUserProfile(getActivity())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
                     mUserProfile = userProfile;
-                    loadData();
+                    loadData(mGoupType, true);
                 }));
 //      Add Text Watcher
         mSearchBox.addTextChangedListener(this);
@@ -160,9 +158,9 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mActivity != null) {
             mActivity.setOnFragmentTools(this);
         }
-        if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
-            loadData(false);
-        }
+        /*if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+            loadData(mGoupType);
+        }*/
 
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Bookmark Screen", THP_BookmarksFragment.class.getSimpleName());
 
@@ -179,38 +177,37 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                 return;
             }
             mPullToRefreshLayout.setRefreshing(true);
-
-            loadData();
+            loadData(mGoupType, true);
         });
     }
 
     @Override
     public void tryAgainBtnClick() {
         mPullToRefreshLayout.showProgressBar();
-        loadData();
+        loadData(mGoupType, true);
     }
 
-    private void loadData() {
-        loadData(BaseAcitivityTHP.sIsOnline);
-    }
+
 
     /**
      * Load bookmarks from respective Group
      *
-     * @param isOnline
      */
-    private void loadData(boolean isOnline) {
+    private void loadData( String groupType, boolean needToClearOldData) {
         Observable<List<ArticleBean>> observable = null;
-        if (isOnline && mGoupType != null && mGoupType.equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            observable = ApiManager.getRecommendationFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId,
-                    NetConstants.API_bookmarks, "" + 1000, BuildConfig.SITEID);
-        } else if (mGoupType != null && mGoupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+        if (BaseAcitivityTHP.sIsOnline && groupType != null && groupType.equals(NetConstants.G_PREMIUM_SECTIONS)) {
+            observable = ApiManager.getPremiumBookmarkFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID);
+        } else if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
-        } else if (mGoupType != null && mGoupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+        } else if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
             observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
-        } else { //(mGoupType!=null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE))
+        } else if(groupType!=null && groupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
             if (ResUtil.isEmpty(mSearchBox.getText().toString())) {
-                observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+                if(BaseAcitivityTHP.sIsOnline && PremiumPref.getInstance(getActivity()).isUserLoggedIn()) {
+                    observable = ApiManager.getPremiumBookmarkFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID);
+                } else {
+                    observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+                }
             } else {
                 observable = ApiManager.getBookmarkGroupTypeWithQuery(getActivity(), mSearchBox.getText().toString());
             }
@@ -234,17 +231,26 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                                 model.setBean(bean);
                                 content.add(model);
                             }
+
+                            if(groupType!=null && groupType.equals(NetConstants.BOOKMARK_IN_ONE)
+                                    && BaseAcitivityTHP.sIsOnline && PremiumPref.getInstance(getActivity()).isUserLoggedIn()
+                                    && ResUtil.isEmpty(mSearchBox.getText().toString())) {
+                                loadData( NetConstants.G_BOOKMARK_DEFAULT, false);
+                            }
+
                             return content;
                         })
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(value -> {
                             if (value.size() > 0) {
-                                mRecyclerAdapter.clearData();
+                                if (needToClearOldData) {
+                                    mRecyclerAdapter.clearData();
+                                }
                                 mRecyclerAdapter.addData(value);
                                 mPullToRefreshLayout.setVisibility(View.VISIBLE);
                                 emptyLayout.setVisibility(View.GONE);
                             } else {
-                                if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+                                if (needToClearOldData && mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
                                     mRecyclerAdapter.clearData();
                                 }
                                 showEmptyLayout();
@@ -255,7 +261,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                             if (throwable instanceof ConnectException
                                     || throwable instanceof SocketTimeoutException || throwable instanceof TimeoutException
                                     || throwable instanceof NullPointerException) {
-                                loadData(false);
+                                loadData(groupType, false);
                             } else {
                                 showEmptyLayout();
                             }
@@ -288,7 +294,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     public void checkPageEmpty() {
         //showEmptyLayout();
         //Reload contents
-        loadData();
+        loadData(mGoupType, false);
     }
 
 
@@ -419,7 +425,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
             mClearText.setVisibility(View.VISIBLE);
         }
         //Load data for query string
-        loadData();
+        loadData(mGoupType, true);
     }
 
     @Override

@@ -29,15 +29,18 @@
         <com.ns.view.NSEditText
             android:id="@+id/searchEditText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="0.8"
-            android:background="@null"
             android:hint="@string/hint_search_bookmark"
             android:imeOptions="actionSearch"
             android:alpha="0.5"
             android:inputType="text"
             android:padding="10dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/close_button"

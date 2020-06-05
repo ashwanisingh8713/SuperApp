@@ -415,7 +415,13 @@
         }
       }
     },
-    "subSectionsIndex": "3",
+    "subSection": {
+      "index": "3",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      }
+    },
     "contentUrl": {
       "baseUrlDefault": "https://app.thehindu.com/hindu/service/api_v1.004/",
       "newsDigest": "https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php"

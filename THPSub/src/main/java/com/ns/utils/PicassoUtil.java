@@ -41,16 +41,23 @@ public class PicassoUtil {
     }
 
     public static void loadImageWithFilePH(Context context, final RoundedImageView imageView, String bannerUrl) {
-        File file = new File(imageView.getBannerFilePath());
-        picassoCombo(
-                Picasso.with(context)
-                        .load(file)
-                        ,
-                Picasso.with(context)
-                        .load(bannerUrl)
-                        ,
-                imageView
-        );
+        if(imageView.getBannerFilePath() != null) {
+            File file = new File(imageView.getBannerFilePath());
+            picassoCombo(
+                    Picasso.with(context)
+                            .load(file)
+                    ,
+                    Picasso.with(context)
+                            .load(bannerUrl)
+                    ,
+                    imageView
+            );
+        }
+        else {
+            Picasso picasso = Picasso.with(context);
+            picasso.load(bannerUrl)
+                    .into(imageView);
+        }
 
         /*picassoCombo(
                 Picasso.with(context)
