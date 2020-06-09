@@ -240,6 +240,17 @@ public class DefaultPref {
         return mPreferences.getLong("mpExpiryTimeInMillis", 0);
     }
 
+    /*Set Allowed article counts*/
+    public void setMPAllowedArticlesCount(int counts) {
+        mEditor.putInt("mpAllowedCounts", counts);
+        mEditor.apply();
+    }
+
+    /*Get Allowed article counts*/
+    public int getMPAllowedArticleCounts() {
+        return mPreferences.getInt("mpAllowedCounts", -1);
+    }
+
     public boolean isMpCycleOnceLoaded() {
         return mPreferences.getLong("mpExpiryTimeInMillis", 0)>0;
     }

@@ -97,7 +97,7 @@ android {
         BusinessLine {
             versionCode 37
             def appName = "SU_BL"
-            versionName "1.0"
+            versionName "BL"+getCurrentBuildType+"-1.0"
 
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
@@ -147,7 +147,7 @@ android {
         TheHindu {
             versionCode 82
             def appName = "SU_TH"
-            versionName "1.0"
+            versionName "TH"+getCurrentBuildType+"-1.0"
 
             dimension "version"
             applicationId "com.mobstac.thehindu"
