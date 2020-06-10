@@ -166,9 +166,9 @@ public class CommonUtil {
         Intent sharingIntent = new Intent(
                 android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        if (mShareUrl != null && !mShareUrl.contains("thehindu.com")) {
+        /*if (mShareUrl != null && !mShareUrl.contains("thehindu.com")) {
             mShareUrl = "http://thehindu.com" + mShareUrl;
-        }
+        }*/
         String shareBody = mShareTitle
                 + ": " + mShareUrl;
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,

@@ -121,7 +121,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
 
         if(mArticleBean != null) {
-            DefaultTHApiManager.insertMeteredPaywallArticleId(this, mArticleBean.getArticleId(), mArticleBean.isArticleRestricted(), BaseFragmentTHP.getAllowedCount(this));
+            DefaultTHApiManager.insertMeteredPaywallArticleId(this, mArticleBean.getArticleId(), mArticleBean.isArticleRestricted(), DefaultPref.getInstance(this).getMPAllowedArticleCounts());
             //if article bean group type is not empty, then insert article read with group type
             if (mArticleBean.getGroupType() != null) {
                 //insert article read with group type
@@ -195,7 +195,10 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
-
+        Log.i("THP_DetailActivity", "handleEvent :: "+toolbarChangeRequired);
+        if (toolbarChangeRequired.getTypeOfToolbar() == null) {
+            return;
+        }
         if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().BREIFING_DETAIL_TOPBAR_CROWN();
         }
@@ -230,6 +233,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(TableMPReadArticle tableMPReadArticle) {
+        Log.i("THP_DetailActivity", "handleEvent :: "+tableMPReadArticle);
         if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
             return;

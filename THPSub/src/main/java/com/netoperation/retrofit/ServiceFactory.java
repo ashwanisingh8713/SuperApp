@@ -54,7 +54,7 @@ public class ServiceFactory {
      */
     private static Retrofit createRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.THP_BASE_URL)
+                .baseUrl(BuildConfig.IS_PRODUCTION ? BuildConfig.THP_BASE_URL : BuildConfig.STATGGING_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
 //                .addConverterFactory(JacksonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this

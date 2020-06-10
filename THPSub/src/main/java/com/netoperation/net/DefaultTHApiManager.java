@@ -1080,6 +1080,7 @@ public class DefaultTHApiManager {
                         table.setExpiryTimeInMillis(allowedTimeInMillis);
                         //Save in Preferences
                         DefaultPref.getInstance(context).setMPExpiryTimeInMillis(allowedTimeInMillis);
+                        DefaultPref.getInstance(context).setMPAllowedArticlesCount(numOfAllowedArticles);
                         table.setCycleUniqueId(uniqueId);
                         table.setNetworkCurrentTimeInMilli(mpServerTimeInMillis);
                     }
