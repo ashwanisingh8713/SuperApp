@@ -13,6 +13,7 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.clevertap.android.sdk.ActivityLifecycleCallback;
 import com.clevertap.android.sdk.Application;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.comscore.Analytics;
@@ -44,6 +45,7 @@ public class SuperApp extends Application implements LifecycleObserver  {
 
     @Override
     public void onCreate() {
+        ActivityLifecycleCallback.register(this);
         super.onCreate();
         sAppContext = this;
 
@@ -176,14 +178,22 @@ public class SuperApp extends Application implements LifecycleObserver  {
         //Set DebugLevel as below - From CleverTap Support
         //CleverTapAPI.setDebugLevel(1277182231);
         if (BuildConfig.DEBUG) {
-            CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.DEBUG);
+            //CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.DEBUG);
+            CleverTapAPI.setDebugLevel(1277182231);
         } else {
             CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.OFF);
         }
-        CleverTapAPI.createNotificationChannelGroup(getApplicationContext(),"TheHindu","TheHindu");
-        CleverTapAPI.createNotificationChannel(getApplicationContext(),"TheHindu",
-                "TheHindu","TheHindu",
-                NotificationManager.IMPORTANCE_MAX,"TheHindu",true);
+        if (BuildConfig.IS_BL) {
+            CleverTapAPI.createNotificationChannelGroup(getApplicationContext(),"BusinessLine","BusinessLine");
+            CleverTapAPI.createNotificationChannel(getApplicationContext(),"BusinessLine",
+                    "BusinessLine","BusinessLine",
+                    NotificationManager.IMPORTANCE_MAX,"BusinessLine",true);
+        } else {
+            CleverTapAPI.createNotificationChannelGroup(getApplicationContext(),"TheHindu","TheHindu");
+            CleverTapAPI.createNotificationChannel(getApplicationContext(),"TheHindu",
+                    "TheHindu","TheHindu",
+                    NotificationManager.IMPORTANCE_MAX,"TheHindu",true);
+        }
     }
 
 

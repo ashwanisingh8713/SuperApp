@@ -9,10 +9,7 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.FcmMessageListenerService;
 import com.clevertap.android.sdk.NotificationInfo;
 import com.google.firebase.messaging.RemoteMessage;
-import com.netoperation.db.THPDB;
-import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
-import com.netoperation.util.NetConstants;
 import com.ns.utils.THPConstants;
 
 import java.util.Map;
