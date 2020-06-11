@@ -243,9 +243,9 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
         <!--To enable the CleverTap Region for India (in1)-->
-        <meta-data
+       <!-- <meta-data
             android:name="CLEVERTAP_REGION"
-            android:value="in1"/>
+            android:value="in1"/>-->
 
 <!--        In-App Notification-->
         <meta-data
