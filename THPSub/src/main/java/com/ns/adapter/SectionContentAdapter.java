@@ -274,7 +274,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)), 0);
         }
 
-        widgetLayoutCommonAdjustment(adapter, widgetHolder.itemView, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
+        widgetLayoutCommonAdjustment(adapter, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
                 widgetHolder.groupActionLeft, widgetHolder.groupActionCenter, widgetHolder.groupActionRight);
 
 
@@ -305,18 +305,17 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         widgetHolder.groupRecyclerView.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 2));
         widgetHolder.groupRecyclerView.setAdapter(adapter);
 
-        widgetLayoutCommonAdjustment(adapter, widgetHolder.itemView, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
+        widgetLayoutCommonAdjustment(adapter, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
                 widgetHolder.groupActionLeft, widgetHolder.groupActionCenter, widgetHolder.groupActionRight);
 
     }
 
 
-    private void widgetLayoutCommonAdjustment(SuWidgetRecyclerAdapter adapter, View itemView, ImageView groupHeaderIcon, TextView groupHeaderTxt, RecyclerView groupRecyclerView,
+    private void widgetLayoutCommonAdjustment(SuWidgetRecyclerAdapter adapter, ImageView groupHeaderIcon, TextView groupHeaderTxt, RecyclerView groupRecyclerView,
                                               TextView groupActionLeft, TextView groupActionCenter, TextView groupActionRight) {
         WidgetIndex widgetIndex = adapter.getWidgetIndex();
 
 
-        DayNightColor actionColor = widgetIndex.getAction();
         String actionGravity = widgetIndex.getActionGravity();
         boolean iconRequired = widgetIndex.isActionIconRequired();
         boolean headerRequired = widgetIndex.isGroupHeaderRequired();
@@ -331,20 +330,56 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         if (headerRequired) {
             groupHeaderTxt.setText(adapter.getSectionName());
             groupHeaderTxt.setVisibility(View.VISIBLE);
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                groupHeaderTxt.setTextColor(Color.parseColor(widgetIndex.getTitle().getLight()));
+            } else {
+                groupHeaderTxt.setTextColor(Color.parseColor(widgetIndex.getTitle().getDark()));
+            }
         } else {
             groupHeaderTxt.setVisibility(View.GONE);
         }
 
         if (actionGravity.equalsIgnoreCase("LeftBottom")) {
             groupActionLeft.setVisibility(View.VISIBLE);
+            groupActionLeft.setText(actionTitle);
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                groupActionLeft.setTextColor(Color.parseColor(widgetIndex.getAction().getLight()));
+            } else {
+                groupActionLeft.setTextColor(Color.parseColor(widgetIndex.getAction().getDark()));
+            }
+
+            if(iconRequired) {
+                groupActionLeft.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.back_more_from, 0);
+            }
+
             groupActionCenter.setVisibility(View.GONE);
             groupActionRight.setVisibility(View.GONE);
         } else if (actionGravity.equalsIgnoreCase("CenterBottom")) {
             groupActionLeft.setVisibility(View.GONE);
             groupActionRight.setVisibility(View.GONE);
             groupActionCenter.setVisibility(View.VISIBLE);
+            groupActionCenter.setText(actionTitle);
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                groupActionCenter.setTextColor(Color.parseColor(widgetIndex.getAction().getLight()));
+            } else {
+                groupActionCenter.setTextColor(Color.parseColor(widgetIndex.getAction().getDark()));
+            }
+
+            if(iconRequired) {
+                groupActionCenter.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.back_more_from, 0);
+            }
+
         } else if (actionGravity.equalsIgnoreCase("RightBottom")) {
             groupActionRight.setVisibility(View.VISIBLE);
+            groupActionRight.setText(actionTitle);
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                groupActionRight.setTextColor(Color.parseColor(widgetIndex.getAction().getLight()));
+            } else {
+                groupActionRight.setTextColor(Color.parseColor(widgetIndex.getAction().getDark()));
+            }
+            if(iconRequired) {
+                groupActionRight.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.back_more_from, 0);
+            }
             groupActionLeft.setVisibility(View.GONE);
             groupActionCenter.setVisibility(View.GONE);
         } else {

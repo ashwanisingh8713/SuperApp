@@ -166,7 +166,7 @@
         "secId": "142",
         "index": "5",
         "itemCount" : "7",
-        "widgetType": "MEDIA",
+        "widgetType": "TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
         "actionIconRequired" : "true",
@@ -178,7 +178,7 @@
         "itemElevation":4,
         "itemBackground": {
           "dark": "#191919",
-          "light": "#ffffff"
+          "light": "#94E72C"
         },
         "description": {
           "dark": "#ffffff",
@@ -197,14 +197,14 @@
         "secId": "88",
         "index": "8",
         "itemCount" : "7",
-        "widgetType": "TEXT",
+        "widgetType": "MEDIA_TITLE_TIME",
         "groupLayout" : "Grid",
         "groupHeaderRequired" : "true",
         "actionIconRequired" : "true",
         "actionTitle" : "View All",
         "actionGravity" : "CenterBottom",
         "itemMargin":[2, 15, 2, 5],
-        "layoutMargin":[10, 5, 5, 20],
+        "layoutMargin":[10, 5, 5, 0],
         "itemRadius":10,
         "itemElevation":4,
         "itemBackground": {
@@ -228,12 +228,16 @@
         "secId": "5",
         "index": "10",
         "itemCount" : "7",
-        "widgetType": "MEDIA_TEXT",
+        "widgetType": "MEDIA",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
         "actionIconRequired" : "true",
         "actionTitle" : "View All",
         "actionGravity" : "RightBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -261,6 +265,10 @@
         "actionIconRequired" : "true",
         "actionTitle" : "View All",
         "actionGravity" : "RightBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -282,12 +290,16 @@
         "secId": "69",
         "index": "15",
         "itemCount" : "7",
-        "widgetType": "MEDIA_TITLE_TIME",
+        "widgetType": "MEDIA",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
         "actionIconRequired" : "true",
         "actionTitle" : "View All",
         "actionGravity" : "CenterBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"

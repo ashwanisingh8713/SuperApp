@@ -1,7 +1,6 @@
 package com.ns.adapter;
 
 import android.graphics.Color;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.view.roundedimageview.RoundedImageView;
+import com.ns.viewholder.W_Item_Media_VH;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,12 +78,12 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
                 mViewHolder = new OpinionViewHolder(opinionView);
                 break;
             case VIEW_MULTIMEDIA:
-                View multiMedia = inflater.inflate(R.layout.layout_widget_multimedia, parent, false);
+                View multiMedia = inflater.inflate(R.layout.widget_item_media_title_time, parent, false);
                 mViewHolder = new MultiMediaViewHolder(multiMedia);
                 break;
             case VIEW_CARTOON:
-                View cartoonView = inflater.inflate(R.layout.layout_widget_cartoon, parent, false);
-                mViewHolder = new CartoonViewHolder(cartoonView);
+                View cartoonView = inflater.inflate(R.layout.widget_item_media, parent, false);
+                mViewHolder = new W_Item_Media_VH(cartoonView);
                 break;
             case VIEW_APPEXCLUSIVE:
                 View appExclusive = inflater.inflate(R.layout.layout_widget_app_exclusive, parent, false);
@@ -101,7 +101,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
                 fillWidgetData(widgetViewHolder, position);
                 break;
             case VIEW_CARTOON:
-                CartoonViewHolder cartoonViewHolder = (CartoonViewHolder) holder;
+                W_Item_Media_VH cartoonViewHolder = (W_Item_Media_VH) holder;
                 fillCartoonData(cartoonViewHolder, position);
                 break;
             case VIEW_MULTIMEDIA:
@@ -218,13 +218,13 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void fillCartoonData(CartoonViewHolder holder, final int position) {
+    private void fillCartoonData(W_Item_Media_VH holder, final int position) {
 
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
+            holder.cardView.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
+            holder.cardView.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
         }
 
         final ArticleBean bean = mWidgetList.get(position);
@@ -240,16 +240,16 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
             }
 
             // Dims Read article given view
-            dimReadArticle(holder.widgetParentLayout.getContext(), bean.getArticleId(), holder.widgetParentLayout);
+            dimReadArticle(holder.cardView.getContext(), bean.getArticleId(), holder.cardView);
 
-            holder.widgetParentLayout.setOnClickListener(new View.OnClickListener() {
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
-                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.widgetParentLayout);
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);
                     if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }
@@ -384,18 +384,7 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    public class CartoonViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView mWidgetImageView;
-        private LinearLayout widgetParentLayout;
-
-        public CartoonViewHolder(View itemView) {
-            super(itemView);
-            mWidgetImageView = itemView.findViewById(R.id.imageview_widget_cartoon);
-            widgetParentLayout = itemView.findViewById(R.id.widgetParentLayout);
-
-        }
-    }
 
     public class AppExclusiveViewHolder extends RecyclerView.ViewHolder {
 

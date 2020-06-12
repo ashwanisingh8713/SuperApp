@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ns.thpremium.R;
 import com.ns.view.roundedimageview.RoundedImageView;
 
-public class MultiMediaViewHolder extends RecyclerView.ViewHolder {
+public class W_Item_MediaTitleTime_VH extends RecyclerView.ViewHolder {
 
     public RoundedImageView mWidgetImageView;
     public TextView mWidgetTextView;
@@ -19,7 +19,7 @@ public class MultiMediaViewHolder extends RecyclerView.ViewHolder {
     public View mParentView;
     public CardView cardView;
 
-    public MultiMediaViewHolder(View itemView) {
+    public W_Item_MediaTitleTime_VH(View itemView) {
         super(itemView);
         mParentView = itemView;
         cardView = itemView.findViewById(R.id.widgetParentLayout);

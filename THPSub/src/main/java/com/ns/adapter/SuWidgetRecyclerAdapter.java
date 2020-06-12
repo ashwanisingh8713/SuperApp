@@ -21,7 +21,8 @@ import com.ns.utils.ContentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
-import com.ns.viewholder.MultiMediaViewHolder;
+import com.ns.viewholder.W_Item_MediaTitleTime_VH;
+import com.ns.viewholder.W_Item_Media_VH;
 
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +64,7 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA")) {
-
+            return new W_Item_Media_VH(inflater.inflate(R.layout.widget_item_media, parent, false));
         }
         else if(widgetIndex.getWidgetType().equalsIgnoreCase("TEXT")) {
 
@@ -75,19 +76,25 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
 
         }
         else if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA_TITLE_TIME")) {
-            return new MultiMediaViewHolder(inflater.inflate(R.layout.layout_widget_multimedia, parent, false));
+            return new W_Item_MediaTitleTime_VH(inflater.inflate(R.layout.widget_item_media_title_time, parent, false));
         }
         else if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA_TextOverlay")) {
 
         }
 
-        return new MultiMediaViewHolder(inflater.inflate(R.layout.layout_widget_multimedia, parent, false));
+        return new W_Item_MediaTitleTime_VH(inflater.inflate(R.layout.widget_item_media_title_time, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MultiMediaViewHolder multiMediaViewHolder = (MultiMediaViewHolder) holder;
-        fillMultiMediaData(multiMediaViewHolder, position);
+        if(holder instanceof W_Item_MediaTitleTime_VH) {
+            W_Item_MediaTitleTime_VH WItemMediaTitleTimeVH = (W_Item_MediaTitleTime_VH) holder;
+            mediaTitleTime(WItemMediaTitleTimeVH, position);
+        }
+        else if(holder instanceof W_Item_Media_VH) {
+            W_Item_Media_VH WItemMediaVH = (W_Item_Media_VH) holder;
+            mediaData(WItemMediaVH, position);
+        }
     }
 
     @Override
@@ -101,7 +108,7 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    private void fillMultiMediaData(MultiMediaViewHolder holder, final int position) {
+    private void mediaTitleTime(W_Item_MediaTitleTime_VH holder, final int position) {
 
         holder.cardView.setRadius((int)ResUtil.pxFromDp(holder.itemView.getContext(), widgetIndex.getItemRadius()));
         holder.cardView.setElevation((int)ResUtil.pxFromDp(holder.itemView.getContext(), widgetIndex.getItemElevation()));
@@ -166,6 +173,60 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     */
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mPlayButton);
+                    /*if(mWidgetItemClickListener != null) {
+                        mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
+                    }*/
+                }
+            });
+        }
+    }
+
+    private void mediaData(W_Item_Media_VH holder, final int position) {
+
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(holder.itemView.getContext(), widgetIndex.getItemRadius()));
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(holder.itemView.getContext(), widgetIndex.getItemElevation()));
+
+        RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+
+        List<Integer> itemMargin = widgetIndex.getItemMargin();
+
+        if(itemMargin != null && itemMargin.size() == 4) {
+            params.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), itemMargin.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), itemMargin.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), itemMargin.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), itemMargin.get(3)));
+        }
+
+        if(BaseAcitivityTHP.sIsDayTheme) {
+            holder.cardView.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
+        }
+        else {
+            holder.cardView.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
+        }
+
+        final ArticleBean bean = mWidgetList.get(position);
+        if (bean != null) {
+            if (bean.getHi().equals("1")) {
+                String imageUrl = bean.getMe().get(0).getIm_v2();
+                if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
+                    imageUrl = bean.getMe().get(0).getIm();
+                }
+                if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
+                    PicassoUtil.loadImage(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getCartoonUrl(imageUrl));
+                }
+            }
+
+            // Dims Read article given view
+            dimReadArticle(holder.cardView.getContext(), bean.getArticleId(), holder.cardView);
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
+                    FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
+                    */
+                    IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
+                            bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);
                     /*if(mWidgetItemClickListener != null) {
                         mWidgetItemClickListener.onWidgetItemClickListener(position, bean.getSid());
                     }*/
