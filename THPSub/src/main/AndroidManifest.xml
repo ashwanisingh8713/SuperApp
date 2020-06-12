@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 <!--    <uses-permission android:name="android.permission.READ_SMS" />-->
 
     <application
@@ -234,16 +235,17 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
+        <!--Sender ID will be taking from google-services.json dynamically-->
+        <!--<meta-data
             android:name="FCM_SENDER_ID"
-            android:value="id:853251516072" />
+            android:value="id:853251516072" />-->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
         <!--To enable the CleverTap Region for India (in1)-->
-        <meta-data
+       <!-- <meta-data
             android:name="CLEVERTAP_REGION"
-            android:value="in1"/>
+            android:value="in1"/>-->
 
 <!--        In-App Notification-->
         <meta-data
