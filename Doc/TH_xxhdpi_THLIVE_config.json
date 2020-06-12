@@ -3,7 +3,7 @@
   "environment": "development",
   "resolution": "xxhdpi",
   "configJson": {
-    "lastServerUpdateTime": "UTC-TIME",
+    "lastServerUpdateTime": "UTC-TIM",
     "vokkleId": "432081eb-6e8e-4abc-a88f-ca5357aa7244",
     "refreshIntervalInMins": "5",
     "importantMsg": {
