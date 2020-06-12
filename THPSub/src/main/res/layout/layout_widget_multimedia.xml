@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetParentLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginEnd="@dimen/explore_column_margin_right"
-    
-    app:layoutType="MULTIMEDIA">
-
+    >
     <LinearLayout
         android:id="@+id/layout_multimedia_root"
         android:layout_width="@dimen/widget_recyclerView_multimedia_width"
@@ -17,13 +14,15 @@
         <FrameLayout
             android:id="@+id/layout_multimedia_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/widget_recyclerView_multimedia_newheight">
+            android:layout_height="@dimen/widget_recyclerView_multimedia_newheight"
+            android:background="#4D757575">
 
             <com.ns.view.roundedimageview.RoundedImageView
                 app:riv_place_holder="widget"
                 android:id="@+id/imageview_multimedia_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 />
 
             <ImageView
@@ -63,4 +62,4 @@
             app:font_path="@string/THP_TundraOffc" />
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

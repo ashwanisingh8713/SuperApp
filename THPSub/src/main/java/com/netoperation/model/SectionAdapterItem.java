@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
+import com.ns.adapter.SuWidgetRecyclerAdapter;
 import com.ns.adapter.TH_WidgetAdapter;
 import com.ns.model.SensexData;
 
@@ -18,6 +19,7 @@ public class SectionAdapterItem {
     private StaticPageUrlBean staticPageUrlBean;
     private AdData adData;
     private SensexData sensexData;
+    private SuWidgetRecyclerAdapter suWidgetRecyclerAdapter;
 
 
     public SectionAdapterItem(int viewType, String itemRowId) {
@@ -25,6 +27,13 @@ public class SectionAdapterItem {
         this.itemRowId = itemRowId;
     }
 
+    public SuWidgetRecyclerAdapter getSuWidgetRecyclerAdapter() {
+        return suWidgetRecyclerAdapter;
+    }
+
+    public void setSuWidgetRecyclerAdapter(SuWidgetRecyclerAdapter suWidgetRecyclerAdapter) {
+        this.suWidgetRecyclerAdapter = suWidgetRecyclerAdapter;
+    }
 
     public SensexData getSensexData() {
         return sensexData;

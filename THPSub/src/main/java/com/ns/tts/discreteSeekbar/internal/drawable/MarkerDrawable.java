@@ -37,7 +37,7 @@ import androidx.annotation.NonNull;
  * It's basically an implementation of an {@link Animatable} Drawable with the following details:
  * </p>
  * <ul>
- * <li>Animates from a circle shape to a "marker" shape just using a RoundRect</li>
+ * <li>Animates from a circle ic_section_marker to a "marker" ic_section_marker just using a RoundRect</li>
  * <li>Animates color change from the normal state color to the pressed state color</li>
  * <li>Uses a {@link Path} to also serve as Outline for API>=21</li>
  * </ul>

@@ -187,10 +187,37 @@ public class SectionSideWork {
         }
     }
 
-    Map<String, WidgetIndex> widgetIndexMap = new HashMap<>();
+    private Map<String, WidgetIndex> widgetIndexMap = new HashMap<>();
 
     public WidgetIndex getWidgetIndex(String widgetItemRowId) {
         return widgetIndexMap.get(widgetItemRowId);
+    }
+
+    private SectionAdapterItem widgetItemGroup(String widgetType, String groupLayout, String sectionId) {
+        SectionAdapterItem item = null;
+        if((widgetType != null && widgetType.equalsIgnoreCase("SENSEX")) || (groupLayout != null && groupLayout.equalsIgnoreCase("SENSEX"))) {
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BL_SENSEX, RowIds.rowId_sensexWidget());
+            item.setSensexData(new SensexData());
+        }
+        else if(groupLayout != null && groupLayout.equalsIgnoreCase("H-List")) {
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
+            item.setSensexData(new SensexData());
+        }
+        else if(groupLayout != null && groupLayout.equalsIgnoreCase("GRID")) {
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_GRID, RowIds.rowId_widget(sectionId));
+            item.setSensexData(new SensexData());
+        }
+        else if(groupLayout != null && groupLayout.equalsIgnoreCase("PAGER")) {
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_PAGER, RowIds.rowId_widget(sectionId));
+            item.setSensexData(new SensexData());
+        }
+        else {
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
+            item.setSensexData(new SensexData());
+        }
+
+
+        return item;
     }
 
     public void indexConfig(SectionContentAdapter mRecyclerAdapter, boolean isDayTheme) {
@@ -204,16 +231,7 @@ public class SectionSideWork {
             List<WidgetIndex> widgetIndices = tableConfiguration.getWidget();
             for (WidgetIndex widgetIndex : widgetIndices) {
 
-                SectionAdapterItem item = null;
-                if(widgetIndex.getWidgetType() != null && widgetIndex.getWidgetType().equalsIgnoreCase("SENSEX")) {
-                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BL_SENSEX, RowIds.rowId_sensexWidget());
-                    item.setSensexData(new SensexData());
-                }
-                else if(BuildConfig.IS_BL) {
-                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BLD_WIDGET_DEFAULT, RowIds.rowId_widget(widgetIndex.getSecId()));
-                } else {
-                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, RowIds.rowId_widget(widgetIndex.getSecId()));
-                }
+                SectionAdapterItem item = widgetItemGroup(widgetIndex.getWidgetType(), widgetIndex.getGroupLayout(), widgetIndex.getSecId());
 
                 if(item == null){
                     continue;

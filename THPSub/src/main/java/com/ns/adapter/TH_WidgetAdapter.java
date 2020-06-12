@@ -149,11 +149,11 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
     private void fillAppExclusiveData(AppExclusiveViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mTitleTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mTitleTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         if (bean != null) {
@@ -180,11 +180,11 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
     private void fillWidgetData(final WidgetViewHolder holder, final int position) {
         final ArticleBean bean = mWidgetList.get(position);
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         if (bean != null) {
@@ -221,10 +221,10 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
     private void fillCartoonData(CartoonViewHolder holder, final int position) {
 
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
         }
 
         final ArticleBean bean = mWidgetList.get(position);
@@ -260,12 +260,12 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private void fillOpinionData(OpinionViewHolder holder, final int position) {
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
             holder.mWidgetDescripitionTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
             holder.mWidgetDescripitionTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
@@ -300,11 +300,11 @@ public class TH_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private void fillMultiMediaData(MultiMediaViewHolder holder, final int position) {
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         final ArticleBean bean = mWidgetList.get(position);

@@ -40,6 +40,10 @@ widgetType
     - Image_Section_Card (BL)
     - SENSEX (BL)
 
+
+
+
+
 viewAllGravity | titleGravity
     - Right_Bottom
     - Right_Top

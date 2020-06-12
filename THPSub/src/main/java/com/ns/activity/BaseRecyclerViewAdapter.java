@@ -66,6 +66,31 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
 
     private final int SECTION_APP_EXCLUSIVE = THPConstants.APP_EXCLUSIVE_SECTION_ID;
 
+    public static final int WIDGET_LAYOUT_H_LIST = 301;
+    public static final int WIDGET_LAYOUT_GRID = 302;
+    public static final int WIDGET_LAYOUT_PAGER = 303;
+
+    public static final int GroupHeader_MEDIA_ActionAtLeft = 201;
+    public static final int GroupHeader_MEDIA_ActionAtCenter = 202;
+
+    public static final int GroupHeader_TEXT_ActionAtLeft = 203;
+    public static final int GroupHeader_TEXT_ActionAtCenter = 204;
+
+    public static final int GroupHeader_MEDIA_TEXT_ActionAtLeft = 205;
+    public static final int GroupHeader_MEDIA_TEXT_ActionAtCenter = 206;
+
+    public static final int GroupHeader_TITLE_TEXT_ActionAtLeft = 207;
+    public static final int GroupHeader_TITLE_TEXT_ActionAtCenter = 208;
+
+    public static final int GroupHeader_MEDIA_TITLE_TIME_ActionAtLeft = 209;
+    public static final int GroupHeader_MEDIA_TITLE_TIME_ActionAtCenter = 210;
+
+    public static final int GroupHeader_MEDIA = 211;
+
+    public static final int GroupHeader_MEDIA_TextOverlay = 212;
+
+
+
     private THP_AppEmptyPageListener appEmptyPageListener;
 
     public void setAppEmptyPageListener(THP_AppEmptyPageListener appEmptyPageListener) {

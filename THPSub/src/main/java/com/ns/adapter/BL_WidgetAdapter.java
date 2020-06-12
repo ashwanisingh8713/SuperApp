@@ -115,11 +115,11 @@ public class BL_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private void fillWidgetData(final WidgetViewHolder holder, final int position) {
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         final ArticleBean bean = mWidgetList.get(position);
@@ -154,11 +154,11 @@ public class BL_WidgetAdapter extends BaseRecyclerViewAdapter {
 
     private void fillOpinionData(OpinionViewHolder holder, final int position) {
         if(BaseAcitivityTHP.sIsDayTheme) {
-            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getBackground().getLight()));
+            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getLight()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getLight()));
         }
         else {
-            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getBackground().getDark()));
+            holder.widgetParentLayout.setCardBackgroundColor(Color.parseColor(widgetIndex.getItemBackground().getDark()));
             holder.mWidgetTextView.setTextColor(Color.parseColor(widgetIndex.getDescription().getDark()));
         }
         final ArticleBean bean = mWidgetList.get(position);

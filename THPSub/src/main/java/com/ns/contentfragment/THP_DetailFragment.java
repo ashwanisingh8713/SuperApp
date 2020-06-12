@@ -33,6 +33,7 @@ import com.ns.activity.THP_DetailActivity;
 import com.ns.adapter.PremiumListingContentAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.FragmentTools;
+import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
@@ -62,7 +63,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, DFPAds.OnDFPAdLoadListener {
+public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener, FragmentTools, OnDFPAdLoadListener {
 
     private RecyclerViewPullToRefresh mPullToRefreshLayout;
     private PremiumListingContentAdapter mRecyclerAdapter;

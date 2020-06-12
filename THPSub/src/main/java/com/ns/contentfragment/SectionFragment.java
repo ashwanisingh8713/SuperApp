@@ -32,7 +32,9 @@ import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
+import com.ns.adapter.SuWidgetRecyclerAdapter;
 import com.ns.adapter.TH_WidgetAdapter;
+import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
@@ -52,7 +54,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPullToRefresh.TryAgainBtnClickListener,
-        BaseFragmentTHP.EmptyViewClickListener, AdsBase.OnDFPAdLoadListener, AdsBase.OnTaboolaAdLoadListener {
+        BaseFragmentTHP.EmptyViewClickListener, OnDFPAdLoadListener, AdsBase.OnTaboolaAdLoadListener {
 
     private static String TAG = NetConstants.TAG_UNIQUE;
 
@@ -442,7 +444,39 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
     }
 
 
+    private void SU_showHomeWidgetsFromObservable() {
+        final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
+        Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
+        mDisposable.add(widgetObservable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
 
+                    for (TableWidget widget : value) {
+                        if (widget.getBeans() == null || widget.getBeans().size() == 0) {
+                            continue;
+                        }
+                        final String itemRowId = RowIds.rowId_widget(widget.getSecId());
+                        SectionAdapterItem item = new SectionAdapterItem(-1, itemRowId);
+                        int index = mRecyclerAdapter.indexOf(item);
+                        if(index != -1) {
+                            item = mRecyclerAdapter.getItem(index);
+                            if(item.getTHWidgetAdapter() == null) {
+                                SuWidgetRecyclerAdapter su_widgetAdapter = new SuWidgetRecyclerAdapter(widget.getBeans(), widget.getSecName());
+                                su_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
+                                item.setSuWidgetRecyclerAdapter(su_widgetAdapter);
+                            }
+                            item.getSuWidgetRecyclerAdapter().updateArticleList(widget.getBeans());
+                            mRecyclerAdapter.notifyItemChanged(index);
+                            Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
+                        }
+                    }
+
+                }, throwable -> {
+                    Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
+                }, ()->{
+
+                }));
+    }
 
 
     /**
@@ -602,7 +636,8 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             BL_showHomeWidgetsFromObservable();
         }
         else {
-            TH_showHomeWidgetsFromObservable();
+            //TH_showHomeWidgetsFromObservable();
+            SU_showHomeWidgetsFromObservable();
         }
         addStaticWebPage();
         addSubsectionUI();

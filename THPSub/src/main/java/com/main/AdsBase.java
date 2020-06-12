@@ -6,9 +6,13 @@ import android.util.Log;
 import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.ads.mediation.facebook.FacebookAdapter;
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.netoperation.model.AdData;
+import com.ns.callbacks.OnDFPAdLoadListener;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class AdsBase {
@@ -24,16 +28,24 @@ public class AdsBase {
         void onTaboolaAdLoadFailure(AdData adData);
     }
 
+    /**
+     * To Add test devices to show Ads
+     */
+    public void addTestDevice() {
+        RequestConfiguration.Builder requestConfiguration = MobileAds.getRequestConfiguration().toBuilder();
+        requestConfiguration.setTestDeviceIds(Arrays.asList("97DFDDD29DE36CE4F2D7D10BAA708307"));
+        requestConfiguration.build();
+    }
+
+    public AdsBase() {
+        addTestDevice();
+    }
+
+
     protected OnTaboolaAdLoadListener mOnTaboolaAdLoadListener;
 
     public void setOnTaboolaAdLoadListener(OnTaboolaAdLoadListener mOnTaboolaAdLoadListener) {
         this.mOnTaboolaAdLoadListener = mOnTaboolaAdLoadListener;
-    }
-
-    public interface OnDFPAdLoadListener {
-        void onDFPAdLoadSuccess(AdData adData);
-        void onDFPAdLoadFailure(AdData adData);
-        void onAdClose();
     }
 
 

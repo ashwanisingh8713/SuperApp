@@ -28,6 +28,7 @@ import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.callbacks.FragmentTools;
+import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
@@ -352,7 +353,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
 
         DFPAds DFPAds = new DFPAds();
         DFPAds.createBannerAdRequest(false, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
-        DFPAds.setOnDFPAdLoadListener(new AdsBase.OnDFPAdLoadListener() {
+        DFPAds.setOnDFPAdLoadListener(new OnDFPAdLoadListener() {
             @Override
             public void onDFPAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = findViewById(R.id.banner_Ad_layout);

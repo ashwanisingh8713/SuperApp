@@ -263,5 +263,13 @@
         <item name="dsb_mirrorForRtl">true</item>
     </style>
 
+    <style name="viewAllWidgetStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
 
 </resources>

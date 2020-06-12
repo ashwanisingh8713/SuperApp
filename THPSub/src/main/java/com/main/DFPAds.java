@@ -1,20 +1,12 @@
 package com.main;
 
-import android.os.Bundle;
-import android.util.Log;
-
-import com.google.ads.mediation.admob.AdMobAdapter;
-import com.google.ads.mediation.facebook.FacebookAdapter;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 import com.netoperation.model.AdData;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
+import com.ns.callbacks.OnDFPAdLoadListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +25,6 @@ public class DFPAds extends AdsBase {
 
     private static PublisherInterstitialAd mPublisherInterstitialAd;
 
-    /**
-     * To Add test devices to show Ads
-     */
-    private void addTestDevice() {
-        RequestConfiguration.Builder requestConfiguration = MobileAds.getRequestConfiguration().toBuilder();
-        requestConfiguration.setTestDeviceIds(Arrays.asList("69A27258C3736E220C92E889FD41FB39"));
-        requestConfiguration.build();
-    }
 
     public DFPAds() {
         addTestDevice();
@@ -48,12 +32,6 @@ public class DFPAds extends AdsBase {
 
     public DFPAds(ArrayList<AdData> adsData, OnDFPAdLoadListener onDFPAdLoadListener) {
         this.mAdsData = adsData;
-        mOnDFPAdLoadListener = onDFPAdLoadListener;
-        // To Add test devices to show Ads
-        addTestDevice();
-    }
-
-    public DFPAds(OnDFPAdLoadListener onDFPAdLoadListener) {
         mOnDFPAdLoadListener = onDFPAdLoadListener;
         // To Add test devices to show Ads
         addTestDevice();

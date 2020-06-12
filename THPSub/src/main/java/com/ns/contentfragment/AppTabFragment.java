@@ -31,6 +31,7 @@ import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.adapter.AppBottomTabAdapter;
+import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
 import com.ns.clevertap.AppNotification;
@@ -444,7 +445,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void onResume() {
         super.onResume();
 
-        bottomBannerAds(true);
+       // bottomBannerAds(true);
 
         EventBus.getDefault().register(this);
     }
@@ -482,6 +483,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     }
 
 
+    // It Receives event from SectionFragment.java => onResume(), to update bottom banner ads
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(AdData adData) {
         if(adData != null && adData.getSecId().equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
@@ -496,6 +498,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void handleEvent(TabsBean tabsBean) {
         mViewPager.setCurrentItem(tabsBean.getIndex());
     }
+
 
     private void bottomBannerAds(boolean isHomePage) {
 
@@ -520,15 +523,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         if(tableConfiguration == null) return;
         DFPAds DFPAds = new DFPAds();
         DFPAds.createBannerAdRequest(isHomePage, tableConfiguration.getAds().getBottomAdHomeId(), tableConfiguration.getAds().getBottomAdOtherId());
-        DFPAds.setOnDFPAdLoadListener(new AdsBase.OnDFPAdLoadListener() {
+        DFPAds.setOnDFPAdLoadListener(new OnDFPAdLoadListener() {
             @Override
             public void onDFPAdLoadSuccess(AdData adData) {
                 LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
                 if(banner_Ad_layout != null) {
                     banner_Ad_layout.setVisibility(View.VISIBLE);
                     int childCount = banner_Ad_layout.getChildCount();
-                    if(banner_Ad_layout.getChildCount() > 0) {
-                        for(int i=0; i<childCount; i++) {
+                    if(banner_Ad_layout.getChildCount() > 1) {
+                        for(int i=1; i<childCount; i++) {
                             banner_Ad_layout.removeViewAt(i);
                         }
                     }
