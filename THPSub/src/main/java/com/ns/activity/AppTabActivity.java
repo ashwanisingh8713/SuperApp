@@ -30,6 +30,7 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.netoperation.config.model.UrlBean;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
+import com.netoperation.default_db.TableOptional;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
@@ -58,6 +59,8 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
+import com.ns.view.layout.NSLinearLayout;
+import com.ns.view.text.CustomTextView;
 import com.taboola.android.api.TaboolaApi;
 import com.taboola.android.js.TaboolaJs;
 
@@ -90,6 +93,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private Disposable notificationCountsObserver, bookmarksCountObserver;
     //Dialog for Location Permission
     private HomePermissionInfoDialog dialogPermission;
+    private List<TableOptional.OptionsBean> menuItems;
 
 
     @Override
@@ -106,7 +110,10 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Get Menu Options API call
+        if (sIsOnline) {
+            getMenuOptionsFromApi();
+        }
         initTaboola();
 
         THPConstants.FLOW_TAB_CLICK = null;
@@ -448,7 +455,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.layout_menu_overflow, viewGroup);
+        /*NSLinearLayout nsLinearLayout = layout.findViewById(R.id.layout_custom);
 
+        if (menuItems != null && menuItems.size() > 0) {
+            for (TableOptional.OptionsBean optionsBean : menuItems) {
+                View view = layoutInflater.inflate(R.layout.item_overflow_menu, viewGroup);
+                CustomTextView titleText = view.findViewById(R.id.textTitle);
+                titleText.setText(optionsBean.getTitle());
+                nsLinearLayout.addView(view);
+            }
+        }*/
 
         final PopupWindow changeSortPopUp = new PopupWindow(this);
         //Inflating the Popup using xml file
@@ -622,6 +638,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onDestroy() {
         super.onDestroy();
         THPConstants.sISMAIN_ACTIVITY_LAUNCHED = false;
+        DefaultTHApiManager.deleteTableOptions(this);
     }
 
     /**
@@ -706,4 +723,17 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             }
         }
     }
+
+    private void getMenuOptionsFromApi() {
+        mDisposable.add(DefaultTHApiManager.getOptionsListApi(this)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(optionsBeans -> {
+                    Log.d("AppTabActivity", "getMenuOptionsFromApi");
+                    this.menuItems = optionsBeans;
+                },
+                throwable -> {
+                    Log.d("AppTabActivity", "getMenuOptionsFromApi");
+                }));
+    }
+
 }
