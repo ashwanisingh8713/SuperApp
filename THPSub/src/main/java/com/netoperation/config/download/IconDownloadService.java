@@ -135,7 +135,7 @@ public class IconDownloadService extends Service {
                         // Tabs Icons
                         for (TabsBean tab : tableConfiguration.getTabs()) {
                             downloadRequest(tab.getIconUrl().getUrlLight(), FileUtils.destinationFolder(this, FileUtils.TAB_ICONs_LIGHT));
-                            downloadRequest(tab.getIconUrl().getUrlSelectedDark(), FileUtils.destinationFolder(this, FileUtils.TAB_ICONs_LIGHT));
+                            downloadRequest(tab.getIconUrl().getUrlSelectedLight(), FileUtils.destinationFolder(this, FileUtils.TAB_ICONs_LIGHT));
 
                             downloadRequest(tab.getIconUrl().getUrlDark(), FileUtils.destinationFolder(this, FileUtils.TAB_ICONs_DARK));
                             downloadRequest(tab.getIconUrl().getUrlSelectedDark(), FileUtils.destinationFolder(this, FileUtils.TAB_ICONs_DARK));

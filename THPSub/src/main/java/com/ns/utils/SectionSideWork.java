@@ -208,7 +208,7 @@ public class SectionSideWork {
             item.setSensexData(new SensexData());
         }
         else if(groupLayout != null && groupLayout.equalsIgnoreCase("PAGER")) {
-            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_PAGER, RowIds.rowId_widget(sectionId));
+            item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
             item.setSensexData(new SensexData());
         }
         else {

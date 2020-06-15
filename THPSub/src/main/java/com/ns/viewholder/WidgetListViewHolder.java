@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
@@ -17,6 +18,7 @@ public class WidgetListViewHolder extends RecyclerView.ViewHolder {
     public TextView groupActionLeft;
     public TextView groupActionCenter;
     public TextView groupActionRight;
+    public CardView cardView;
 
 
     public WidgetListViewHolder(@NonNull View itemView) {
@@ -28,6 +30,7 @@ public class WidgetListViewHolder extends RecyclerView.ViewHolder {
         groupActionLeft = itemView.findViewById(R.id.groupActionLeftBottom);
         groupActionCenter = itemView.findViewById(R.id.groupActionCenterBottom);
         groupActionRight = itemView.findViewById(R.id.groupActionRightBottom);
+        cardView = itemView.findViewById(R.id.groupCardView);
     }
 
 }

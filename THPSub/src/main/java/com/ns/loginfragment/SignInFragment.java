@@ -97,7 +97,6 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
     private SignInAndUpActivity mActivity;
 
-
     private ProgressDialog mProgressDialog;
 
     private SocialLoginUtil mSocialLoginUtil;

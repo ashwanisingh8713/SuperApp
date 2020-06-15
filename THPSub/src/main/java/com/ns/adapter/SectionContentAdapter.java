@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
-import com.netoperation.config.model.DayNightColor;
 import com.netoperation.config.model.TabsBean;
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.default_db.TableConfiguration;
@@ -233,9 +232,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             bl_fillSensexData((SensexViewHolder) holder, position);
         } else if (holder instanceof WidgetListViewHolder) {
             su_WidgetList(holder, item, position);
-        }
-        else if (holder instanceof WidgetGridViewHolder) {
+        } else if (holder instanceof WidgetGridViewHolder) {
             su_WidgetGrid(holder, item, position);
+        } else if(holder instanceof WidgetPagerViewHolder) {
+            su_WidgetPager(holder, item, position);
         }
     }
 
@@ -254,59 +254,110 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void su_WidgetList(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
-        WidgetListViewHolder widgetHolder = (WidgetListViewHolder) holder;
+    private void su_WidgetList(final RecyclerView.ViewHolder viewHolder, SectionAdapterItem item, int verticleItemPosition) {
+        WidgetListViewHolder holder = (WidgetListViewHolder) viewHolder;
         SuWidgetRecyclerAdapter adapter = item.getSuWidgetRecyclerAdapter();
 
         if (adapter == null || adapter.getItemCount() == 0) {
             return;
         }
 
-        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) widgetHolder.itemView.getLayoutParams();
-        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) widgetHolder.groupRecyclerView.getLayoutParams();
-        List<Integer> layoutPadding = adapter.getWidgetIndex().getLayoutMargin();
+        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) holder.groupRecyclerView.getLayoutParams();
+        List<Integer> layoutPadding = adapter.getWidgetIndex().getGroupMargin();
 
         if(layoutPadding != null && layoutPadding.size() == 4) {
-            itemParams.setMargins((int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(0)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(1)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(2)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)));
-            recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)), 0);
+            itemParams.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)));
+            recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)), 0);
         }
 
-        widgetLayoutCommonAdjustment(adapter, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
-                widgetHolder.groupActionLeft, widgetHolder.groupActionCenter, widgetHolder.groupActionRight);
+        widgetLayoutCommonAdjustment(adapter, holder.groupHeaderIcon, holder.groupHeaderTxt, holder.groupRecyclerView,
+                holder.groupActionLeft, holder.groupActionCenter, holder.groupActionRight);
+
+        // Setting Radius
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupRadius()));
+        // Setting Elevation
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
 
 
-        widgetHolder.groupRecyclerView.setAdapter(adapter);
+        holder.groupRecyclerView.setAdapter(adapter);
+
+        adapter.setWidgetItemClickListener(new WidgetItemClickListener() {
+            @Override
+            public void onWidgetItemClickListener(int innerItemPosition, String secId) {
+                int firstVisiblePosition = ((LinearLayoutManager)holder.groupRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                positionList.put(verticleItemPosition, firstVisiblePosition);
+            }
+        });
 
     }
 
-    private void su_WidgetGrid(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
-        WidgetGridViewHolder widgetHolder = (WidgetGridViewHolder) holder;
+    private void su_WidgetGrid(final RecyclerView.ViewHolder viewHolder, SectionAdapterItem item, int position) {
+        WidgetGridViewHolder holder = (WidgetGridViewHolder) viewHolder;
         SuWidgetRecyclerAdapter adapter = item.getSuWidgetRecyclerAdapter();
 
         if (adapter == null || adapter.getItemCount() == 0) {
             return;
         }
 
-        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) widgetHolder.itemView.getLayoutParams();
+        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
         //ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) widgetHolder.groupRecyclerView.getLayoutParams();
-        List<Integer> layoutPadding = adapter.getWidgetIndex().getLayoutMargin();
+        List<Integer> layoutPadding = adapter.getWidgetIndex().getGroupMargin();
 
         if(layoutPadding != null && layoutPadding.size() == 4) {
-            itemParams.setMargins((int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(0)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(1)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(2)),
-                    (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)));
+            itemParams.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)));
             //recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)), 0);
         }
 
-        widgetHolder.groupRecyclerView.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 2));
-        widgetHolder.groupRecyclerView.setAdapter(adapter);
+        // Setting Radius
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupRadius()));
+        // Setting Elevation
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
 
-        widgetLayoutCommonAdjustment(adapter, widgetHolder.groupHeaderIcon, widgetHolder.groupHeaderTxt, widgetHolder.groupRecyclerView,
-                widgetHolder.groupActionLeft, widgetHolder.groupActionCenter, widgetHolder.groupActionRight);
+        holder.groupRecyclerView.setLayoutManager(new GridLayoutManager(viewHolder.itemView.getContext(), 2));
+        holder.groupRecyclerView.setAdapter(adapter);
+
+        widgetLayoutCommonAdjustment(adapter, holder.groupHeaderIcon, holder.groupHeaderTxt, holder.groupRecyclerView,
+                holder.groupActionLeft, holder.groupActionCenter, holder.groupActionRight);
+
+    }
+
+    private void su_WidgetPager(final RecyclerView.ViewHolder viewHolder, SectionAdapterItem item, int position) {
+        WidgetPagerViewHolder holder = (WidgetPagerViewHolder) viewHolder;
+        SuWidgetRecyclerAdapter adapter = item.getSuWidgetRecyclerAdapter();
+
+        if (adapter == null || adapter.getItemCount() == 0) {
+            return;
+        }
+
+        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        //ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) widgetHolder.groupRecyclerView.getLayoutParams();
+        List<Integer> layoutPadding = adapter.getWidgetIndex().getGroupMargin();
+
+        if(layoutPadding != null && layoutPadding.size() == 4) {
+            itemParams.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)));
+            //recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(widgetHolder.itemView.getContext(), layoutPadding.get(3)), 0);
+        }
+
+        // Setting Radius
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupRadius()));
+        // Setting Elevation
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
+
+        //holder.groupRecyclerView.setLayoutManager(new GridLayoutManager(viewHolder.itemView.getContext(), 2));
+        holder.groupViewPager.setAdapter(adapter);
+
+        /*widgetLayoutCommonAdjustment(adapter, holder.groupHeaderIcon, holder.groupHeaderTxt, holder.groupRecyclerView,
+                holder.groupActionLeft, holder.groupActionCenter, holder.groupActionRight);*/
 
     }
 
@@ -321,6 +372,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         boolean headerRequired = widgetIndex.isGroupHeaderRequired();
         String actionTitle = widgetIndex.getActionTitle();
 
+        actionTitle += " "+adapter.getSectionName();
+
         if (iconRequired && headerRequired) {
             groupHeaderIcon.setVisibility(View.VISIBLE);
         } else {
@@ -328,7 +381,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
 
         if (headerRequired) {
-            groupHeaderTxt.setText(adapter.getSectionName());
+            groupHeaderTxt.setText(adapter.getSectionName() +" :: "+widgetIndex.getSecId());
             groupHeaderTxt.setVisibility(View.VISIBLE);
             if(BaseAcitivityTHP.sIsDayTheme) {
                 groupHeaderTxt.setTextColor(Color.parseColor(widgetIndex.getTitle().getLight()));

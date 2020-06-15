@@ -40,7 +40,7 @@
         android:digits="()*_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.@+ "
         android:inputType="textEmailAddress"
         android:importantForAutofill="no"
-        android:text="famlenufyi@enayu.com"
+        android:text="sartikorte@enayu.com"
         />
 
     <com.ns.view.text.CustomTextView

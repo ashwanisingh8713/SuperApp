@@ -1,7 +1,6 @@
 package com.ns.viewholder;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,25 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ns.thpremium.R;
 import com.ns.view.roundedimageview.RoundedImageView;
 
-public class W_Item_MediaTitleTime_VH extends RecyclerView.ViewHolder {
-
+public class W_Item_Media_Text extends RecyclerView.ViewHolder {
     public RoundedImageView mWidgetImageView;
     public TextView mWidgetTextView;
-    public TextView mWidgetTime;
-    public ImageView mPlayButton;
-    public View mParentView;
     public CardView cardView;
     public LinearLayout innerParent;
 
-    public W_Item_MediaTitleTime_VH(View itemView) {
+    public W_Item_Media_Text(View itemView) {
         super(itemView);
-        mParentView = itemView;
         cardView = itemView.findViewById(R.id.widgetParentLayout);
-        mWidgetImageView = itemView.findViewById(R.id.imageview_multimedia_thumbnail);
-        mWidgetTextView = itemView.findViewById(R.id.textview_multimedia_title);
-        mWidgetTime = itemView.findViewById(R.id.textview_multimedia_time);
-        mPlayButton = itemView.findViewById(R.id.button_multimedia_play);
+        mWidgetImageView = itemView.findViewById(R.id.imageview_widget_image);
+        mWidgetTextView = itemView.findViewById(R.id.textview_widget_text);
         innerParent = itemView.findViewById(R.id.innerParent);
     }
-
 }

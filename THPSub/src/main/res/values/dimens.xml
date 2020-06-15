@@ -267,4 +267,9 @@
     <dimen name="webview_shadow_LARGER">89dp</dimen>
     <dimen name="webview_shadow_LARGEST">110dp</dimen>
 
+    <dimen name="widget_group_padding_left">10dp</dimen>
+    <dimen name="widget_group_padding_right">10dp</dimen>
+    <dimen name="widget_group_padding_top">10dp</dimen>
+    <dimen name="widget_group_padding_bottom">10dp</dimen>
+
 </resources>

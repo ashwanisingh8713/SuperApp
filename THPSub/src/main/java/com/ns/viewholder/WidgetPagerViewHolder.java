@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -14,9 +15,10 @@ public class WidgetPagerViewHolder extends RecyclerView.ViewHolder {
     public View groupHeaderIcon;
     public TextView groupHeaderTxt;
     public ViewPager2 groupViewPager;
-    public TextView groupActionLeftText;
-    public TextView groupActionCenterText;
-
+    public TextView groupActionLeft;
+    public TextView groupActionCenter;
+    public TextView groupActionRight;
+    public CardView cardView;
 
     public WidgetPagerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,8 +26,10 @@ public class WidgetPagerViewHolder extends RecyclerView.ViewHolder {
         groupHeaderIcon = itemView.findViewById(R.id.groupHeaderIcon);
         groupHeaderTxt = itemView.findViewById(R.id.groupHeaderTxt);
         groupViewPager = itemView.findViewById(R.id.groupViewPager);
-        groupActionLeftText = itemView.findViewById(R.id.groupActionLeftBottom);
-        groupActionCenterText = itemView.findViewById(R.id.groupActionCenterBottom);
+        groupActionLeft = itemView.findViewById(R.id.groupActionLeftBottom);
+        groupActionCenter = itemView.findViewById(R.id.groupActionCenterBottom);
+        groupActionRight = itemView.findViewById(R.id.groupActionRightBottom);
+        cardView = itemView.findViewById(R.id.groupCardView);
     }
 
 }

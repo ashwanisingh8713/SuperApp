@@ -12,17 +12,36 @@ public class WidgetIndex {
     private String itemLayout;
     private boolean groupHeaderRequired;
     private boolean actionIconRequired;
+    private boolean groupOuterLineRequired;
+    private List<Integer> groupMargin;
+    private int groupRadius;
+    private int groupElevation;
     private String actionTitle;
     private String actionGravity;
+    private boolean itemOuterLineRequired;
     private int itemRadius;
     private int itemElevation;
     private List<Integer> itemMargin;
-    private List<Integer> layoutMargin;
     private DayNightColor itemBackground;
     private DayNightColor description;
     private DayNightColor title;
     private DayNightColor action;
 
+    public int getGroupRadius() {
+        return groupRadius;
+    }
+
+    public void setGroupRadius(int groupRadius) {
+        this.groupRadius = groupRadius;
+    }
+
+    public int getGroupElevation() {
+        return groupElevation;
+    }
+
+    public void setGroupElevation(int groupElevation) {
+        this.groupElevation = groupElevation;
+    }
 
     public int getItemRadius() {
         return itemRadius;
@@ -86,6 +105,22 @@ public class WidgetIndex {
 
     public void setActionIconRequired(boolean actionIconRequired) {
         this.actionIconRequired = actionIconRequired;
+    }
+
+    public boolean isGroupOuterLineRequired() {
+        return groupOuterLineRequired;
+    }
+
+    public void setGroupOuterLineRequired(boolean groupOuterLineRequired) {
+        this.groupOuterLineRequired = groupOuterLineRequired;
+    }
+
+    public boolean isItemOuterLineRequired() {
+        return itemOuterLineRequired;
+    }
+
+    public void setItemOuterLineRequired(boolean itemOuterLineRequired) {
+        this.itemOuterLineRequired = itemOuterLineRequired;
     }
 
     public DayNightColor getItemBackground() {
@@ -160,11 +195,11 @@ public class WidgetIndex {
         this.itemMargin = itemMargin;
     }
 
-    public List<Integer> getLayoutMargin() {
-        return layoutMargin;
+    public List<Integer> getGroupMargin() {
+        return groupMargin;
     }
 
-    public void setLayoutMargin(List<Integer> layoutMargin) {
-        this.layoutMargin = layoutMargin;
+    public void setGroupMargin(List<Integer> groupMargin) {
+        this.groupMargin = groupMargin;
     }
 }

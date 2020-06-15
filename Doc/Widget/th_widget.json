@@ -10,13 +10,17 @@
       "actionIconRequired" : "true",
       "actionTitle" : "View All",
       "actionGravity" : "LeftBottom",
+      "groupMargin":[10, 5, 5, 20],
+      "groupRadius":10,
+      "groupElevation":4,
+      "groupOuterLineRequired" : "true",
       "itemMargin":[2, 15, 2, 5],
-      "layoutMargin":[10, 5, 5, 20],
       "itemRadius":10,
       "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
-        "dark": "#191919",
-        "light": "#94E72C"
+        "dark": "#96e7cd",
+        "light": "#e75531"
       },
       "description": {
         "dark": "#ffffff",
@@ -36,7 +40,7 @@
       "index": "8",
       "itemCount" : "7",
       "widgetType": "MEDIA_TITLE_TIME",
-      "groupLayout" : "Grid",
+      "groupLayout" : "H-List",
       "groupHeaderRequired" : "true",
       "actionIconRequired" : "true",
       "actionTitle" : "View All",
@@ -45,6 +49,7 @@
       "layoutMargin":[10, 5, 5, 0],
       "itemRadius":10,
       "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -66,7 +71,7 @@
       "secId": "5",
       "index": "10",
       "itemCount" : "7",
-      "widgetType": "MEDIA",
+      "widgetType": "MEDIA_TITLE_TIME",
       "groupLayout" : "H-List",
       "groupHeaderRequired" : "true",
       "actionIconRequired" : "true",
@@ -76,6 +81,7 @@
       "layoutMargin":[10, 5, 5, 20],
       "itemRadius":10,
       "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -97,7 +103,7 @@
       "secId": "138",
       "index": "12",
       "itemCount" : "7",
-      "widgetType": "TITLE_TEXT",
+      "widgetType": "MEDIA_TITLE_TIME",
       "groupLayout" : "H-List",
       "groupHeaderRequired" : "true",
       "actionIconRequired" : "true",
@@ -107,6 +113,7 @@
       "layoutMargin":[10, 5, 5, 20],
       "itemRadius":10,
       "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"
@@ -128,7 +135,7 @@
       "secId": "69",
       "index": "15",
       "itemCount" : "7",
-      "widgetType": "MEDIA",
+      "widgetType": "MEDIA_INNER_PADDING",
       "groupLayout" : "H-List",
       "groupHeaderRequired" : "true",
       "actionIconRequired" : "true",
@@ -138,6 +145,7 @@
       "layoutMargin":[10, 5, 5, 20],
       "itemRadius":10,
       "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"

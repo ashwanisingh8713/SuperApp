@@ -64,6 +64,9 @@ public class ArticleBean implements Parcelable {
     /** This is for Article Description (Default, Article search by id) */
     private String de;
 
+
+    private List<ArticleSection> sections;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Common Fields
@@ -114,6 +117,14 @@ public class ArticleBean implements Parcelable {
     private ArrayList<MeBean> media;
 
     private String timeForBriefing;
+
+    public List<ArticleSection> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<ArticleSection> sections) {
+        this.sections = sections;
+    }
 
     public boolean isArticleRestricted() {
         return isArticleRestricted;

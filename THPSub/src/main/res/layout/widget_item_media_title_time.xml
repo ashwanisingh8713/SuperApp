@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <LinearLayout
-        android:id="@+id/layout_multimedia_root"
+        android:id="@+id/innerParent"
         android:layout_width="@dimen/widget_recyclerView_multimedia_width"
         android:layout_height="@dimen/widget_recyclerView_multimedia_widget_newheight"
         android:orientation="vertical">
