@@ -1,0 +1,31 @@
+    ////////  widgetType  /////////////////////
+        SENSEX
+
+        MEDIA_FULL_SCR
+
+        MEDIA_INNER_PADDING
+
+        TEXT
+
+        MEDIA_TEXT
+
+        TITLE_TEXT
+
+        MEDIA_TITLE_TIME
+
+        MEDIA_TextOverlay
+
+    ////////  groupLayout  /////////////////////
+
+        H-List
+
+        Grid
+
+    /////////////////////////////////////////////
+
+     itemMargin = [Left, Top, Right, Bottom]
+
+     groupMargin = [Left, Top, Right, Bottom]
+
+
+

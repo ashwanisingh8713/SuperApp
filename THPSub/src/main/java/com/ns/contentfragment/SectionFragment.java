@@ -29,11 +29,9 @@ import com.netoperation.util.DefaultPref;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
-import com.ns.adapter.BL_WidgetAdapter;
 import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.adapter.SuWidgetRecyclerAdapter;
-import com.ns.adapter.TH_WidgetAdapter;
 import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.BuildConfig;
@@ -443,7 +441,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         mSectionSideWork.sendRequestToGetHomeWidgetFromServer();
     }
 
-
+    /**
+     * It shows home page widgets
+     */
     private void SU_showHomeWidgetsFromObservable() {
         final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
         Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
@@ -460,7 +460,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                         int index = mRecyclerAdapter.indexOf(item);
                         if(index != -1) {
                             item = mRecyclerAdapter.getItem(index);
-                            if(item.getTHWidgetAdapter() == null) {
+                            if(item.getSuWidgetRecyclerAdapter() == null) {
                                 SuWidgetRecyclerAdapter su_widgetAdapter = new SuWidgetRecyclerAdapter(widget.getBeans(), widget.getSecName());
                                 su_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
                                 item.setSuWidgetRecyclerAdapter(su_widgetAdapter);
@@ -469,82 +469,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                             mRecyclerAdapter.notifyItemChanged(index);
                             Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
                         }
-                    }
-
-                }, throwable -> {
-                    Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
-                }, ()->{
-
-                }));
-    }
-
-
-    /**
-     * It shows home page widgets, for TheHindu
-     */
-    private void TH_showHomeWidgetsFromObservable() {
-        final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
-        Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
-        mDisposable.add(widgetObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-
-                    for (TableWidget widget : value) {
-                        if (widget.getBeans() == null || widget.getBeans().size() == 0) {
-                            continue;
-                        }
-                        final String itemRowId = RowIds.rowId_widget(widget.getSecId());
-                        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_WIDGET_DEFAULT, itemRowId);
-                        int index = mRecyclerAdapter.indexOf(item);
-                        if(index != -1) {
-                            item = mRecyclerAdapter.getItem(index);
-                            if(item.getTHWidgetAdapter() == null) {
-                                TH_WidgetAdapter th_widgetAdapter = new TH_WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
-                                th_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
-                                item.setTHWidgetAdapter(th_widgetAdapter);
-                            }
-                            item.getTHWidgetAdapter().updateArticleList(widget.getBeans());
-                            mRecyclerAdapter.notifyItemChanged(index);
-                            Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
-                        }
-                    }
-
-                }, throwable -> {
-                    Log.i(NetConstants.TAG_ERROR, "showHomeWidgets() :: " + throwable);
-                }, ()->{
-
-                }));
-    }
-
-    /**
-     * It shows home page widgets, for BusinessLine
-     */
-    private void BL_showHomeWidgetsFromObservable() {
-        final DaoWidget daoWidget = THPDB.getInstance(getActivity()).daoWidget();
-        Observable<List<TableWidget>> widgetObservable = daoWidget.getWidgets().subscribeOn(Schedulers.io());
-        mDisposable.add(widgetObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-                    for (TableWidget widget : value) {
-                        if (widget.getBeans() == null || widget.getBeans().size() == 0) {
-                            continue;
-                        }
-                        final String itemRowId = RowIds.rowId_widget(widget.getSecId());
-                        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BLD_WIDGET_DEFAULT, itemRowId);
-                        int index = mRecyclerAdapter.indexOf(item);
-                        if(index != -1) {
-                            item = mRecyclerAdapter.getItem(index);
-                            if(item.getBLWidgetAdapter() == null) {
-                                BL_WidgetAdapter bl_widgetAdapter = new BL_WidgetAdapter(widget.getBeans(), Integer.parseInt(widget.getSecId()), widget.getSecName());
-                                bl_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
-                                item.setBLWidgetAdapter(bl_widgetAdapter);
-                            }
-
-                            item.getBLWidgetAdapter().updateArticleList(widget.getBeans());
-                            mRecyclerAdapter.notifyItemChanged(index);
-                            Log.i(TAG, "Home Page Widget Updated :: " + widget.getSecName() + " :: " + widget.getSecId());
-                        }
-
                     }
 
                 }, throwable -> {
@@ -632,13 +556,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     private void loadFirstScrollPageData() {
         mSectionSideWork.indexConfig(mRecyclerAdapter, sIsDayTheme);
-        if(BuildConfig.IS_BL) {
-            BL_showHomeWidgetsFromObservable();
-        }
-        else {
-            //TH_showHomeWidgetsFromObservable();
-            SU_showHomeWidgetsFromObservable();
-        }
+        SU_showHomeWidgetsFromObservable();
         addStaticWebPage();
         addSubsectionUI();
         adRequest();

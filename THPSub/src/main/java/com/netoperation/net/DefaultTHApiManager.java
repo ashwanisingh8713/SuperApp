@@ -1568,7 +1568,7 @@ public class DefaultTHApiManager {
 
     public static Single<List<TableOptional.OptionsBean>> getOptionsListApi(Context context) {
         return ServiceFactory.getServiceAPIs().getMenuSequence(BuildConfig.PRODUCTION_MENU_API)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map(jsonElement -> {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
                     Gson gson = new Gson();
@@ -1580,7 +1580,11 @@ public class DefaultTHApiManager {
     }
 
     public static void deleteTableOptions(Context context) {
-        Single.just(THPDB.getInstance(context).daoTableOptional().deleteTableOptional());
+        Single.just("Delete").subscribeOn(Schedulers.io())
+        .map(val->{
+            THPDB.getInstance(context).daoTableOptional().deleteTableOptional();
+            return "";
+        }).subscribe();
     }
 
 }

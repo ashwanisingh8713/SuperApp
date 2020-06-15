@@ -1,14 +1,14 @@
 {
   "packageName": "com.mobstac.thehindu",
-  "environment" : "thg",
+  "environment": "thg",
   "resolution": "xxhdpi",
   "configJson": {
-    "lastServerUpdateTime": "UTC-TIME",
+    "lastServerUpdateTime": "UTC-TIM",
     "vokkleId": "432081eb-6e8e-4abc-a88f-ca5357aa7244",
     "refreshIntervalInMins": "5",
     "importantMsg": {
-      "title" : "Title",
-      "msg" : "This msg on update of config (not required always, if exist will be shown to user only once)"
+      "title": "Title",
+      "msg": "This msg on update of config (not required always, if exist will be shown to user only once)"
     },
     "staticItem": [
       {
@@ -36,10 +36,10 @@
       {
         "title": "Home",
         "iconUrl": {
-          "urlDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "urlLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/favorite.png"
+          "urlDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/HomeurlDark.png",
+          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/HomeurlSelectedDark.png",
+          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/HomeurlDark.png",
+          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/HomeurlSelectedDark.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -47,10 +47,10 @@
       {
         "title": "Briefing",
         "iconUrl": {
-          "urlDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "urlLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/favorite.png"
+          "urlDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/BriefingurlDark.png",
+          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/BriefingurlSelectedDark.png",
+          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/BriefingurlLight.png",
+          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/BriefingurlSelectedLight.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "Briefing"
@@ -58,10 +58,10 @@
       {
         "title": "My Stories",
         "iconUrl": {
-          "urlDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "urlLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png"
+          "urlDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/MyStoriesurlDark.png",
+          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/MyStoriesurlSelectedDark.png",
+          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/MyStoriesurlLight.png",
+          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/MyStoriesurlSelectedLight.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "My Stories"
@@ -69,10 +69,10 @@
       {
         "title": "Suggested",
         "iconUrl": {
-          "urlDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "urlLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png"
+          "urlDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/SuggestedurlDark.png",
+          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/SuggestedurlSelectedDark.png",
+          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/SuggestedurlLight.png",
+          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/SuggestedurlSelectedLight.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "Suggested"
@@ -80,10 +80,10 @@
       {
         "title": "Profile",
         "iconUrl": {
-          "urlDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedDark": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png",
-          "urlLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Light/xxhdpi/unfavorite.png",
-          "urlSelectedLight": "https://appsearch.thehindu.com/admin/assets/icons/th/Dark/xxhdpi/favorite.png"
+          "urlDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ProfileurlDark.png",
+          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ProfileurlSelectedDark.png",
+          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/ProfileurlLight.png",
+          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/ProfileurlSelectedLight.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "Profile"
@@ -153,11 +153,11 @@
         }
       },
       "systemTopBarBackground": {
-        "light": "#ffffff",
+        "light": "#e0e0e0",
         "dark": "#4a4a4a"
       },
       "systemBottomBarBackground": {
-        "light": "#ffffff",
+        "light": "#e0e0e0",
         "dark": "#000000"
       }
     },
@@ -166,9 +166,23 @@
         "secId": "142",
         "index": "5",
         "itemCount" : "7",
-        "background": {
-          "dark": "#191919",
-          "light": "#ffffff"
+        "widgetType": "TEXT",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "LeftBottom",
+        "groupMargin":[10, 5, 5, 20],
+        "groupRadius":10,
+        "groupElevation":4,
+        "groupOuterLineRequired" : "true",
+        "itemMargin":[2, 15, 2, 5],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
+        "itemBackground": {
+          "dark": "#96e7cd",
+          "light": "#e75531"
         },
         "description": {
           "dark": "#ffffff",
@@ -178,7 +192,7 @@
           "dark": "#E7E73C",
           "light": "#E73CE5"
         },
-        "viewAll": {
+        "action": {
           "dark": "#E7603C",
           "light": "#3C70E7"
         }
@@ -187,7 +201,18 @@
         "secId": "88",
         "index": "8",
         "itemCount" : "7",
-        "background": {
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "CenterBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 0],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
+        "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
@@ -199,7 +224,7 @@
           "dark": "#E7E73C",
           "light": "#E73CE5"
         },
-        "viewAll": {
+        "action": {
           "dark": "#E7603C",
           "light": "#3C70E7"
         }
@@ -208,7 +233,18 @@
         "secId": "5",
         "index": "10",
         "itemCount" : "7",
-        "background": {
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "RightBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
+        "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
@@ -220,7 +256,7 @@
           "dark": "#E7E73C",
           "light": "#E73CE5"
         },
-        "viewAll": {
+        "action": {
           "dark": "#E7603C",
           "light": "#3C70E7"
         }
@@ -229,7 +265,18 @@
         "secId": "138",
         "index": "12",
         "itemCount" : "7",
-        "background": {
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "RightBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
+        "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
@@ -241,7 +288,7 @@
           "dark": "#E7E73C",
           "light": "#E73CE5"
         },
-        "viewAll": {
+        "action": {
           "dark": "#E7603C",
           "light": "#3C70E7"
         }
@@ -250,7 +297,18 @@
         "secId": "69",
         "index": "15",
         "itemCount" : "7",
-        "background": {
+        "widgetType": "MEDIA_INNER_PADDING",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "CenterBottom",
+        "itemMargin":[2, 15, 2, 5],
+        "layoutMargin":[10, 5, 5, 20],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
+        "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
@@ -262,7 +320,7 @@
           "dark": "#E7E73C",
           "light": "#E73CE5"
         },
-        "viewAll": {
+        "action": {
           "dark": "#E7603C",
           "light": "#3C70E7"
         }
@@ -415,7 +473,13 @@
         }
       }
     },
-    "subSectionsIndex": "3",
+    "subSection": {
+      "index": "3",
+      "background": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      }
+    },
     "contentUrl": {
       "baseUrlDefault": "https://app.thehindu.com/hindu/service/api_v1.004/",
       "newsDigest": "https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php"
