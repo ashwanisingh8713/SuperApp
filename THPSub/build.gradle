@@ -125,6 +125,8 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
+            buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/overflow\""
+
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"j2rIA5nAJCNVvAvQzOK9YOebE\""
             buildConfigField "String", "TWITTER_API_SECRET_KEY", "\"77I77S0CeAQgcZOLFJGrSKQ2Srta3F1Jvk1nIbjdjiSJh3jod\""
@@ -174,6 +176,8 @@ android {
 
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
+
+            buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/overflow\""
 
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""

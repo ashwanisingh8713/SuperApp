@@ -32,6 +32,7 @@ import com.netoperation.default_db.TableBanner;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableMPReadArticle;
+import com.netoperation.default_db.TableOptional;
 import com.netoperation.default_db.TablePersonaliseDefault;
 import com.netoperation.default_db.TableRead;
 import com.netoperation.default_db.TableRelatedArticle;
@@ -56,6 +57,7 @@ import com.netoperation.model.THDefaultPersonalizeBean;
 import com.netoperation.model.UpdateModel;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
+import com.netoperation.retrofit.ServiceAPIs;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
@@ -91,6 +93,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.Sort;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DefaultTHApiManager {
 
@@ -1563,7 +1566,21 @@ public class DefaultTHApiManager {
                 });
     }
 
+    public static Single<List<TableOptional.OptionsBean>> getOptionsListApi(Context context) {
+        return ServiceFactory.getServiceAPIs().getMenuSequence(BuildConfig.PRODUCTION_MENU_API)
+                .subscribeOn(Schedulers.newThread())
+                .map(jsonElement -> {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    Gson gson = new Gson();
+                    TableOptional tableOptional = gson.fromJson(jsonObject.get("DATA"), TableOptional.class);
+                    THPDB thpdb = THPDB.getInstance(context);
+                    thpdb.daoTableOptional().insertTableOptional(tableOptional);
+                    return tableOptional.getOptions();
+                });
+    }
 
-
+    public static void deleteTableOptions(Context context) {
+        Single.just(THPDB.getInstance(context).daoTableOptional().deleteTableOptional());
+    }
 
 }

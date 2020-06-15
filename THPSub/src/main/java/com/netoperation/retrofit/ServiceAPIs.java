@@ -1,6 +1,7 @@
 package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.netoperation.default_db.TableOptional;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -200,6 +202,9 @@ public interface ServiceAPIs {
 
     @GET("") // BL SENSEX Widget api
     Observable<NSE_BSE_Data> bl_sensexWidget(@Url String url);
+
+    @GET("") //Menu Sequence API
+    Single<JsonElement> getMenuSequence(@Url String url);
 
 
 }

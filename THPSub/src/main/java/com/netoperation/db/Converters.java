@@ -10,6 +10,7 @@ import com.netoperation.config.model.ImportantMsg;
 import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.config.model.PlaceHolder;
 import com.netoperation.config.model.WidgetIndex;
+import com.netoperation.default_db.TableOptional;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.StaticPageUrlBean;
@@ -282,7 +283,19 @@ public class Converters {
     }
 
 
-    //////////////////////////// Start Configuration's Bean
+    /////////////////////////// Start List<OptionsBean>
+    @TypeConverter
+    public static List<TableOptional.OptionsBean> stringToOptionsBeanList(String value) {
+        Type listType = new TypeToken<List<TableOptional.OptionsBean>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
 
+    @TypeConverter
+    public static String OptionsBeanListToString(List<TableOptional.OptionsBean> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+    //////////////////////////// End List<OptionsBean>
 
 }
