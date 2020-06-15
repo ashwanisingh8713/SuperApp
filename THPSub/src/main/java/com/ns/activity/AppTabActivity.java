@@ -5,14 +5,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -55,6 +59,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
+import com.ns.utils.OverflowPopUp;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
@@ -69,6 +74,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -449,138 +455,12 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         EventBus.getDefault().post(new BackPressImpl());
     }
 
+
+
     @Override
     public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
-        LinearLayout viewGroup = findViewById(R.id.layout_custom);
-
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.layout_menu_overflow, viewGroup);
-        /*NSLinearLayout nsLinearLayout = layout.findViewById(R.id.layout_custom);
-
-        if (menuItems != null && menuItems.size() > 0) {
-            for (TableOptional.OptionsBean optionsBean : menuItems) {
-                View view = layoutInflater.inflate(R.layout.item_overflow_menu, viewGroup);
-                CustomTextView titleText = view.findViewById(R.id.textTitle);
-                titleText.setText(optionsBean.getTitle());
-                nsLinearLayout.addView(view);
-            }
-        }*/
-
-        final PopupWindow changeSortPopUp = new PopupWindow(this);
-        //Inflating the Popup using xml file
-        changeSortPopUp.setContentView(layout);
-        changeSortPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeSortPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeSortPopUp.setFocusable(true);
-        changeSortPopUp.setBackgroundDrawable(getResources().getDrawable(R.drawable.shadow_143418));
-
-        TextView mReadLaterCountTextView = layout.findViewById(R.id.textview_menu_readlater_count);
-        TextView mNotificationsCountTextView = layout.findViewById(R.id.textview_menu_notifications_count);
-
-        mReadLaterCountTextView.setText(mUnreadBookmarkArticleCount + "");
-        mNotificationsCountTextView.setText(mUnreadNotificationArticleCount + "");
-
-        if (mUnreadBookmarkArticleCount <= 0) {
-            mReadLaterCountTextView.setVisibility(View.GONE);
-        }
-
-        if (mUnreadNotificationArticleCount <= 0) {
-            mNotificationsCountTextView.setVisibility(View.GONE);
-        }
-
-        final boolean isUserFromEurope = DefaultPref.getInstance(this).isUserFromEurope();
-
-        LinearLayout mReadLayout = layout.findViewById(R.id.layout_readlater);
-        mReadLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                FlurryAgent.logEvent(getString(R.string.ga_bookmark_screen_button_clicked));
-//                GoogleAnalyticsTracker.setGoogleAnalyticsEvent(MainActivity.this, getString(R.string.ga_action), getString(R.string.ga_bookmark_screen_button_clicked), "Home Fragment");
-                /*if(PremiumPref.getInstance(AppTabActivity.this).isUserLoggedIn()) {
-                    IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_IN_TAB);
-                } else {
-                    IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_IN_ONE);
-                }*/
-                IntentUtil.openBookmarkActivity(AppTabActivity.this, NetConstants.BOOKMARK_IN_ONE);
-                changeSortPopUp.dismiss();
-            }
-        });
-        LinearLayout mNotificationsLayout = layout.findViewById(R.id.layout_notifications);
-        mNotificationsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(MainActivity.this, getString(R.string.ga_action), "Notification: Action Button Clicked ", "Main Activity");
-                FlurryAgent.logEvent("Notification: Action Button clicked");
-                NotificationFragment notificationFragment = new NotificationFragment();
-                pushFragmentToBackStack(notificationFragment);
-                SharedPreferenceHelper.putBoolean(getApplicationContext(), Constants.NEW_NOTIFICATION, false);*/
-
-                IntentUtil.openNotificationArticleActivity(AppTabActivity.this);
-
-                changeSortPopUp.dismiss();
-            }
-        });
-
-        TextView mHomeScreen = layout.findViewById(R.id.textView_menu_customize_home_screen);
-        mHomeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                        MainActivity.this,
-                        getString(R.string.ga_action),
-                        "Customise: Customise Button Clicked ",
-                        getString(R.string.custom_home_screen));
-                FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
-                changeSortPopUp.dismiss();
-                IntentUtil.openHomeArticleOptionActivity(AppTabActivity.this);
-            }
-        });
-
-        TextView personaliseSubscription = layout.findViewById(R.id.textView_menu_personalise_subscription);
-        if(isUserLoggedIn() && !isUserFromEurope && NetUtils.isConnected(this)) {
-            personaliseSubscription.setVisibility(View.VISIBLE);
-            personaliseSubscription.setOnClickListener(v -> {
-                if(!NetUtils.isConnected(this)) {
-                    noConnectionSnackBar(v);
-                    return;
-                }
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                        MainActivity.this,
-                        getString(R.string.ga_action),
-                        "Customise Subscription: Customise Subscription Button Clicked ",
-                        getString(R.string.custom_home_screen));
-                FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
-
-                changeSortPopUp.dismiss();
-                startActivity(new Intent(AppTabActivity.this, THPPersonaliseActivity.class));
-            });
-        } else {
-            personaliseSubscription.setVisibility(View.GONE);
-        }
-
-        TextView mSettigsScreen = layout.findViewById(R.id.textView_menu_settings);
-        mSettigsScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeSortPopUp.dismiss();
-                IntentUtil.openSettingActivity(AppTabActivity.this);
-            }
-        });
-
-        TextView mShareAppScreen = layout.findViewById(R.id.textView_menu_share_app);
-        mShareAppScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeSortPopUp.dismiss();
-                String mShareTitle = "Download The Hindu official app.";
-                String mShareUrl = "https://play.google.com/store/apps/details?id=com.mobstac.thehindu";
-                SharingArticleUtil.shareArticle(AppTabActivity.this, mShareTitle, mShareUrl,"Home");
-
-                //CleverTap
-                CleverTapUtil.cleverTapEvent(AppTabActivity.this,THPConstants.CT_EVENT_SHARE_THIS_APP,null);
-
-            }
-        });
+        OverflowPopUp overflowPopUp = new OverflowPopUp(this, menuItems);
+        PopupWindow changeSortPopUp = overflowPopUp.initPopUpView(mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount);
         int width = getDetailToolbar().getWidth();
         int height = getDetailToolbar().getHeight();
         // Show Pop-up Window

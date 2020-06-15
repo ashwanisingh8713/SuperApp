@@ -272,4 +272,9 @@
     <dimen name="widget_group_padding_top">10dp</dimen>
     <dimen name="widget_group_padding_bottom">10dp</dimen>
 
+    <dimen name="overflow_item">40dp</dimen>
+    <dimen name="overflow_item_readcount_margin">5dp</dimen>
+    <dimen name="overflow_item_readcount_width">30dp</dimen>
+    <dimen name="overflow_item_readcount_height">17dp</dimen>
+
 </resources>

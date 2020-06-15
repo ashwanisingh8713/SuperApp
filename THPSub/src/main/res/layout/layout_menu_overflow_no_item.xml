@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_custom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutType="Black_Dark"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+</com.ns.view.layout.NSLinearLayout>
