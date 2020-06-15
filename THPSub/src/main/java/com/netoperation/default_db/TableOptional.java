@@ -29,6 +29,11 @@ public class TableOptional {
     }
 
     public static class OptionsBean {
+        public OptionsBean(String title, int id) {
+            this.title = title;
+            this.id = id;
+        }
+
         /**
          * title : Read Later
          * id : 1

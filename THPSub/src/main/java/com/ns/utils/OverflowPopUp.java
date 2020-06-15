@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.netoperation.default_db.TableOptional;
 import com.netoperation.util.NetConstants;
+import com.netoperation.util.PremiumPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.THPPersonaliseActivity;
 import com.ns.alerts.Alerts;
@@ -36,6 +37,9 @@ public class OverflowPopUp {
     }
 
     public PopupWindow initPopUpView(int mUnreadBookmarkArticleCount, int mUnreadNotificationArticleCount) {
+        if (menuItems == null) {
+            setDefaultMenusOptions();
+        }
         List<Integer> titleLength = new ArrayList<>();
         for( TableOptional.OptionsBean bean :menuItems) {
             titleLength.add(bean.getTitle().length());
@@ -57,6 +61,9 @@ public class OverflowPopUp {
 
         // Adding Views in Overflow
         for( TableOptional.OptionsBean bean :menuItems) {
+            if (bean.getTitle().contains("My Stories") && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
+                continue;
+            }
             viewGroup.addView(getOverflowView(bean.getId(), itemHeight, bean.getTitle(), "#808080", mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount));
         }
 
@@ -74,6 +81,7 @@ public class OverflowPopUp {
     private LinearLayout rowTitleCount(int id, int height, String title, String textColor, boolean needCounterView, int count) {
         LinearLayout ll_1 = new LinearLayout(mContext);
         ll_1.setOrientation(LinearLayout.HORIZONTAL);
+        ll_1.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams llParam_1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
         ll_1.setLayoutParams(llParam_1);
 
@@ -142,19 +150,13 @@ public class OverflowPopUp {
             case PESONALISE_HOME_SECEEN_ID:
                 LinearLayout ll_3 = rowTitleCount(id, height, title, textColor, false, -1);
                 ll_3.setOnClickListener(v->{
-                    if(!NetUtils.isConnected(mContext)) {
-                        Alerts.noConnectionSnackBar(v, (AppCompatActivity) mContext);
-                        return;
-                    }
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
                         MainActivity.this,
                         getString(R.string.ga_action),
                         "Customise Subscription: Customise Subscription Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
-
-                    mContext.startActivity(new Intent(mContext, THPPersonaliseActivity.class));
-
+                    IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) mContext);
                     if(changeSortPopUp != null) {
                         changeSortPopUp.dismiss();
                         changeSortPopUp = null;
@@ -165,13 +167,17 @@ public class OverflowPopUp {
             case PESONALISE_MY_STORIES_ID:
                 LinearLayout ll_4 = rowTitleCount(id, height, title, textColor, false, -1);
                 ll_4.setOnClickListener(v->{
+                    if(!NetUtils.isConnected(mContext)) {
+                        Alerts.noConnectionSnackBar(v, (AppCompatActivity) mContext);
+                        return;
+                    }
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
                         MainActivity.this,
                         getString(R.string.ga_action),
                         "Customise: Customise Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
-                    IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) mContext);
+                    mContext.startActivity(new Intent(mContext, THPPersonaliseActivity.class));
                     if(changeSortPopUp != null) {
                         changeSortPopUp.dismiss();
                         changeSortPopUp = null;
@@ -215,9 +221,16 @@ public class OverflowPopUp {
                 });
                 return ll_7;
         }
-
-
     }
 
+    private void setDefaultMenusOptions() {
+        menuItems = new ArrayList<>();
+        menuItems.add(new TableOptional.OptionsBean("Read Later",1));
+        menuItems.add(new TableOptional.OptionsBean("Notifications",2));
+        menuItems.add(new TableOptional.OptionsBean("Personalise Home Screen",3));
+        menuItems.add(new TableOptional.OptionsBean("Personalise My Stories", 4));
+        menuItems.add(new TableOptional.OptionsBean("Settings",5));
+        menuItems.add(new TableOptional.OptionsBean("Share this app",6));
+    }
 
 }
