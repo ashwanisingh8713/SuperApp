@@ -62,6 +62,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
             signingConfig signingConfigs.config
+            versionNameSuffix "-THG"
         }
         _TESTING{
             minifyEnabled false
@@ -69,6 +70,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
             signingConfig signingConfigs.config
+            versionNameSuffix "-TESTING"
         }
         _DEVELOPMENT{
             minifyEnabled false
@@ -76,6 +78,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             signingConfig signingConfigs.config
+            versionNameSuffix "-DEVELOPMENT"
         }
 
 
@@ -97,7 +100,7 @@ android {
         BusinessLine {
             versionCode 37
             def appName = "SU_BL"
-            versionName "BL_TESTING"+"-1.1"
+            versionName "1.1"
 
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
@@ -149,7 +152,7 @@ android {
         TheHindu {
             versionCode 82
             def appName = "SU_TH"
-            versionName "TH_TESTING"+"-1.1"
+            versionName "1.1"
 
             dimension "version"
             applicationId "com.mobstac.thehindu"
