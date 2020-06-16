@@ -192,7 +192,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                             staticItem.setWebLink(bean.getUrlLight());
                         }
                         else {
-                            staticItem.setWebLink(bean.getUrlLight());
+                            staticItem.setWebLink(bean.getUrlDark());
                         }
                         staticItemList.add(staticItem);
                     }
