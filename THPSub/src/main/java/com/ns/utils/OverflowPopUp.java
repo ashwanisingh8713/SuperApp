@@ -58,7 +58,7 @@ public class OverflowPopUp {
 
         // Adding Views in Overflow
         for( TableOptional.OptionsBean bean :menuItems) {
-            if (bean.getTitle().contains("My Stories") && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
+            if (bean.getId() == 4 /*My Stories*/ && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
                 continue;
             }
             viewGroup.addView(getOverflowView(bean.getId(), itemHeight, bean.getTitle(), "#808080", mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount));
