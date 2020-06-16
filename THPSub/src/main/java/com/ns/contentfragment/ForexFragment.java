@@ -25,6 +25,7 @@ import com.ns.adapter.ForexAdapter;
 import com.ns.model.ForexData;
 import com.ns.thpremium.R;
 import com.ns.utils.BLConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 
 import java.io.IOException;
@@ -142,5 +143,13 @@ public class ForexFragment extends Fragment {
                 //mProgressView.setErrorText("Failed To Load Content !!");
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Forex Fragment Screen", ForexFragment.class.getSimpleName());
     }
 }

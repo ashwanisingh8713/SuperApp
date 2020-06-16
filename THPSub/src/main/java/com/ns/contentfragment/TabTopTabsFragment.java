@@ -24,6 +24,7 @@ import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.FragmentUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomTabLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -203,6 +204,10 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
         }
         Log.i("handleEvent", "register() ::  "+mPageSource+" :: "+mTabIndex);
         EventBus.getDefault().register(this);
+
+
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "TabTopTabs Fragment Screen", TabTopTabsFragment.class.getSimpleName());
     }
 
 

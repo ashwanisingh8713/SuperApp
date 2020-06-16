@@ -13,6 +13,7 @@ import com.ns.thpremium.R;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.ResUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.text.CustomTextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -143,5 +144,12 @@ public class EditionOptionFragment extends BaseFragmentTHP {
 
     public interface OnEditionOptionClickListener {
         void onEditionOptionClickListener(String value);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Edition Option Screen", EditionOptionFragment.class.getSimpleName());
     }
 }

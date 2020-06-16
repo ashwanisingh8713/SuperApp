@@ -47,6 +47,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 import com.ns.view.img.LogoImgView;
 import com.ns.view.text.ArticleTitleTextView;
@@ -654,5 +655,12 @@ public class SplashActivity extends BaseAcitivityTHP {
             }
 
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, getString(R.string.ga_splash_screen), SplashActivity.class.getSimpleName());
     }
 }

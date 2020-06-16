@@ -15,6 +15,7 @@ import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.model.IndicesSection;
 import com.ns.thpremium.R;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomTabLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -87,6 +88,10 @@ public class TabIndicesFragment extends BaseFragmentTHP {
         EventBus.getDefault().post(new ToolbarChangeRequired(mPageSource, false, mTabIndex, mParentSectionName, ToolbarChangeRequired.OTHER_LISTING_TOPBAR));
 
         mViewPager.setCurrentItem(sIndicesSelectedTabPosition, true);
+
+
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "TabIndices Fragment Screen", TabIndicesFragment.class.getSimpleName());
     }
 
     @Override

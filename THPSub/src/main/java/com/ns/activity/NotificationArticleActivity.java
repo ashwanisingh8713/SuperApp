@@ -20,6 +20,7 @@ import com.netoperation.util.NetConstants;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.text.ArticleTitleTextView;
 import com.ns.view.text.CustomTextView;
@@ -45,6 +46,8 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
         NotificationManager notificationManager = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(NotificationArticleActivity.this, "Notification Article Screen", NotificationArticleActivity.class.getSimpleName());
     }
 
     @Override

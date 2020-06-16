@@ -200,6 +200,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         loadRecyclerData();
 
 
+       //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "THP DetailFragment Screen", THP_DetailFragment.class.getSimpleName());
 
     }
 
