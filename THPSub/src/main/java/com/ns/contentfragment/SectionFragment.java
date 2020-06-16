@@ -38,6 +38,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
 import com.ns.utils.SectionSideWork;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
 import org.greenrobot.eventbus.EventBus;
@@ -197,6 +198,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         adData.setSecId(mSectionId);
         // It sends event to AppTabFragment.java in handleEvent(AdData adData)
         EventBus.getDefault().post(adData);
+
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Section Fragment Screen", SectionFragment.class.getSimpleName());
     }
 
     @Override

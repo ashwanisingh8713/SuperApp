@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.ns.thpremium.R;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 
 public class MoreOptionFragment extends BaseFragmentTHP {
 
@@ -60,4 +61,10 @@ public class MoreOptionFragment extends BaseFragmentTHP {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+         //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "MoreOption Fragment Screen", MoreOptionFragment.class.getSimpleName());
+    }
 }

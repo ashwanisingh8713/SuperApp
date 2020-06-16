@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exo.ui.PlayerView;
 import com.ns.thpremium.R;
+import com.ns.utils.THPFirebaseAnalytics;
 
 /**
  * Created by ashwani on 16/10/16.
@@ -36,7 +37,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         player.init(this, playerView);
-
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(VideoPlayerActivity.this, "Video Player Screen", VideoPlayerActivity.class.getSimpleName());
     }
 
     @Override

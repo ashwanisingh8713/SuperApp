@@ -29,6 +29,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.flowlayout.FlowLayout;
 import com.ns.view.flowlayout.TagAdapter;
 import com.ns.view.flowlayout.TagFlowLayout;
@@ -185,6 +186,8 @@ public class CustomizeNewsFeedFragment extends Fragment {
         AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Customize News Feed Screen", CustomizeNewsFeedFragment.class.getSimpleName());
         FlurryAgent.logEvent("Customize News Feed Screen");
         FlurryAgent.onPageView();*/
+
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Customize News Feed Screen", CustomizeNewsFeedFragment.class.getSimpleName());
     }
 
 

@@ -28,6 +28,7 @@ import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.flowlayout.FlowLayout;
 import com.ns.view.flowlayout.TagAdapter;
 import com.ns.view.flowlayout.TagFlowLayout;
@@ -184,6 +185,8 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
 
         FlurryAgent.logEvent("City interest screen");
         FlurryAgent.onPageView();*/
+
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "City Interest Screen", CitiesInterestFragment.class.getSimpleName());
     }
 
 

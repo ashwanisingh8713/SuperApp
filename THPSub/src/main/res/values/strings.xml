@@ -134,6 +134,10 @@
     <string name="ga_article_taboola_section_organic_clicked">Section: Taboola Organic Hindu article clicked</string>
     <string name="ga_article_taboola_home_nonorganic_clicked">Home: Taboola Non Organic article clicked</string>
     <string name="ga_article_taboola_section_nonorganic_clicked">Section: Taboola Non Organic article clicked</string>
+
+    <string name="fa_app_settings_activity">App Settings Screen</string>
+
+
     <!--End Start Google Analytics screen Name-->
 
     <!-- Start Pop Up Window Options-->

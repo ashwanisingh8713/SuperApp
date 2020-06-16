@@ -11,6 +11,7 @@ import com.netoperation.util.DefaultPref;
 import com.ns.contentfragment.GetQuoteFragment;
 import com.ns.contentfragment.StockDetailsFragment;
 import com.ns.thpremium.R;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.LatoSemiBoldTextView;
 import com.ns.view.img.TopbarIconView;
 import com.ns.view.TopbarStocks;
@@ -110,5 +111,12 @@ public class StocksDetailsActivity extends BaseAcitivityTHP {
             TextView tv = mTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
             tv.setTextColor(textColorCode);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(StocksDetailsActivity.this, "Stock Details Screen", StocksDetailsActivity.class.getSimpleName());
     }
 }

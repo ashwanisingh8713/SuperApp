@@ -22,12 +22,14 @@ import com.main.DFPConsent;
 import com.netoperation.util.DefaultPref;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
+import com.ns.contentfragment.THP_DetailFragment;
 import com.ns.thpremium.R;
 import com.ns.tts.LanguageItem;
 import com.ns.tts.TTSPreference;
 import com.ns.tts.TTSUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +115,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(getActivity(), "Setting", "Setting Screen: Article font size changed",
                         "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Article font size changed");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting", "Setting Screen: Article font size changed", AppSettingActivity.class.getSimpleName());
+
                 switch (progress) {
                     case 0:
                         mSizeTextView.setText(getString(R.string.info_article_small));
@@ -152,6 +158,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(getActivity(), "Setting", "Setting Screen: Article font button clicked",
                         "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Article font button clicked");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting",  "Setting Screen: Article font button clicked", AppSettingActivity.class.getSimpleName());
+
                 adjustFontSize();
             }
         });
@@ -162,6 +172,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(getActivity(), "Setting", "Setting Screen: Article font button clicked",
                         "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Article font button clicked");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting",  "Setting Screen: Article font button clicked", AppSettingActivity.class.getSimpleName());
+
                 adjustFontSize();
             }
         });
@@ -284,6 +298,9 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
                         "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Night mode button clicked");*/
 
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting", "Setting Screen: Night mode button clicked", AppSettingActivity.class.getSimpleName());
+
                 DefaultPref.getInstance(this).setUserTheme(!isDayMode);
 
                 if (!isDayMode) {
@@ -302,11 +319,19 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
             case R.id.switch_location:
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(this, "Setting", "Setting Screen: Detect location button clicked", "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Detect location button clicked");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting", "Setting Screen: Detect location button clicked", AppSettingActivity.class.getSimpleName());
+
                 // TODO, Currently not required
                 break;
             case R.id.switch_push_notification:
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(this, "Setting", "Setting Screen: Push Notification  button clicked", "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Push Notification button clicked");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting", "Setting Screen: Push Notification  button clicked", AppSettingActivity.class.getSimpleName());
+
                 DefaultPref.getInstance(this).setNotificationEnable(checked);
                 //Clever Tap Event
                 if (checked) {
@@ -318,6 +343,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
             case R.id.switch_turn_off_image:
                 /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(this, "Setting", "Setting Screen: Turn off images  button clicked", "Setting Fragment");
                 FlurryAgent.logEvent("Setting Screen: Turn off images button clicked");*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppSettingActivity.this, "Setting", "Setting Screen: Turn off images  button clicked", AppSettingActivity.class.getSimpleName());
+
                 // TODO, Currently not required
                 break;
         }
@@ -422,5 +451,11 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
             textToSpeech.stop();
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, getString(R.string.fa_app_settings_activity), AppSettingActivity.class.getSimpleName());
     }
 }
