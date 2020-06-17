@@ -187,6 +187,10 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
                         loadData();
                     }
                 }));
+
+
+         //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "TabPremiumListing Fragment Screen", TabPremiumListingFragment.class.getSimpleName());
     }
 
     @Override

@@ -2,20 +2,22 @@ package com.netoperation.default_db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import java.util.List;
+
+import io.reactivex.Single;
 
 @Dao
 public interface DaoTableOptional {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTableOptional(TableOptional tableOptional);
 
     @Query("SELECT * from TableOptional")
-    List<TableOptional> getListOptions();
+    Single<TableOptional> getItemTableOptional();
 
     @Query("DELETE from TableOptional")
-    int deleteTableOptional();
+    void deleteTableOptional();
 
 }

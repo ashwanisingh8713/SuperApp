@@ -1579,6 +1579,18 @@ public class DefaultTHApiManager {
                 });
     }
 
+    public static Single<List<TableOptional.OptionsBean>> getOptionsListDB(Context context) {
+        return THPDB.getInstance(context).daoTableOptional().getItemTableOptional()
+                .subscribeOn(Schedulers.io())
+                .map(tableOptional -> {
+                    if (tableOptional == null) {
+                        return null;
+                    } else {
+                        return tableOptional.getOptions();
+                    }
+                });
+    }
+
     public static void deleteTableOptions(Context context) {
         Single.just("Delete").subscribeOn(Schedulers.io())
         .map(val->{

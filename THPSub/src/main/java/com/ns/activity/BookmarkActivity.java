@@ -84,6 +84,6 @@ public class BookmarkActivity extends BaseAcitivityTHP {
     @Override
     protected void onResume() {
         super.onResume();
-        //AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkMergedActivity.this, "BookmarkMergedActivity Screen", BookmarkMergedActivity.class.getSimpleName());
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(BookmarkActivity.this, "Bookmark Activity Screen", BookmarkActivity.class.getSimpleName());
     }
 }

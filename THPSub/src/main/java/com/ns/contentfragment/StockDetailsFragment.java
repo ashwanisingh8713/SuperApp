@@ -22,11 +22,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.netoperation.util.AppDateUtil;
+import com.ns.activity.StocksDetailsActivity;
 import com.ns.adapter.NiftyAndSensexAdapter;
 import com.ns.model.BSEData;
 import com.ns.model.BSETopGainer;
 import com.ns.thpremium.R;
 import com.ns.utils.BLConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 
 import java.io.IOException;
@@ -551,6 +553,10 @@ public class StockDetailsFragment extends Fragment implements View.OnClickListen
     }
 
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+         //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Stock Details Fragment Screen", StockDetailsFragment.class.getSimpleName());
+    }
 }

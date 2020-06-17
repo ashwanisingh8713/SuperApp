@@ -26,6 +26,7 @@ import com.ns.thd_fragment.CustomizeNewsFeedFragment;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 import com.ns.view.CustomViewPager;
 
@@ -229,6 +230,10 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                             getString(R.string.customize_news_feed_menu));
                     FlurryAgent.logEvent("Customize news feed: Save button clicked");
                     */
+
+                    //Firebase Analytics event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(CustomizeHomeScreenActivity.this, "Action", "Customize news feed: Back button clicked", CustomizeHomeScreenActivity.class.getSimpleName());
+
                     getSupportActionBar().setTitle(getString(R.string.custom_local_screen));
                 } else {
                     getSupportActionBar().setTitle(getString(R.string.custom_home_screen));
@@ -360,7 +365,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     @Override
     protected void onResume() {
         super.onResume();
-        //AppFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(CustomizeHomeScreenActivity.this, "CustomizeHomeScreenActivity Screen", CustomizeHomeScreenActivity.class.getSimpleName());
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(CustomizeHomeScreenActivity.this, "CustomizeHomeScreenActivity Screen", CustomizeHomeScreenActivity.class.getSimpleName());
     }
 
 
@@ -464,4 +469,6 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         }
         super.onBackPressed();
     }
+
+
 }

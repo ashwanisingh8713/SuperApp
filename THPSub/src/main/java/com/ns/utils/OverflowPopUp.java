@@ -37,9 +37,6 @@ public class OverflowPopUp {
     }
 
     public PopupWindow initPopUpView(int mUnreadBookmarkArticleCount, int mUnreadNotificationArticleCount) {
-        if (menuItems == null) {
-            setDefaultMenusOptions();
-        }
         List<Integer> titleLength = new ArrayList<>();
         for( TableOptional.OptionsBean bean :menuItems) {
             titleLength.add(bean.getTitle().length());
@@ -61,7 +58,7 @@ public class OverflowPopUp {
 
         // Adding Views in Overflow
         for( TableOptional.OptionsBean bean :menuItems) {
-            if (bean.getTitle().contains("My Stories") && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
+            if (bean.getId() == 4 /*My Stories*/ && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
                 continue;
             }
             viewGroup.addView(getOverflowView(bean.getId(), itemHeight, bean.getTitle(), "#808080", mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount));
@@ -222,15 +219,4 @@ public class OverflowPopUp {
                 return ll_7;
         }
     }
-
-    private void setDefaultMenusOptions() {
-        menuItems = new ArrayList<>();
-        menuItems.add(new TableOptional.OptionsBean("Read Later",1));
-        menuItems.add(new TableOptional.OptionsBean("Notifications",2));
-        menuItems.add(new TableOptional.OptionsBean("Personalise Home Screen",3));
-        menuItems.add(new TableOptional.OptionsBean("Personalise My Stories", 4));
-        menuItems.add(new TableOptional.OptionsBean("Settings",5));
-        menuItems.add(new TableOptional.OptionsBean("Share this app",6));
-    }
-
 }

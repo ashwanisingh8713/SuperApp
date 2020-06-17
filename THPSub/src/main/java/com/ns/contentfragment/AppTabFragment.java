@@ -448,6 +448,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
        // bottomBannerAds(true);
 
         EventBus.getDefault().register(this);
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "App Tab Screen", AppTabFragment.class.getSimpleName());
     }
 
 

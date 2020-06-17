@@ -7,8 +7,8 @@ import java.util.List;
 
 @Entity(tableName = "TableOptional")
 public class TableOptional {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey()
+    private int id = 1;
 
     public int getId() {
         return id;

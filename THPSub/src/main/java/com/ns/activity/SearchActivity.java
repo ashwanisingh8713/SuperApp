@@ -46,6 +46,7 @@ import com.ns.utils.NetUtils;
 import com.ns.utils.RealmSupport;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 import com.ns.view.img.TopbarIconView;
 import com.ns.view.layout.NSLinearLayout;
@@ -392,4 +393,10 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(SearchActivity.this, "Search Screen", SearchActivity.class.getSimpleName());
+    }
 }

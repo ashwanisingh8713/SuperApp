@@ -19,6 +19,7 @@ import com.google.gson.JsonSyntaxException;
 import com.ns.model.GoldDollarDataModel;
 import com.ns.thpremium.R;
 import com.ns.utils.BLConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 
 import java.io.IOException;
@@ -164,5 +165,12 @@ public class GoldFragment extends Fragment {
             }
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+         //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Gold Fragment Screen", GoldFragment.class.getSimpleName());
     }
 }

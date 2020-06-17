@@ -26,6 +26,7 @@ import com.ns.model.CompanyBseData;
 import com.ns.model.CompanyNseData;
 import com.ns.thpremium.R;
 import com.ns.utils.NetUtils;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.ProgressView;
 
 import java.io.IOException;
@@ -326,4 +327,10 @@ public class GetQuoteFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "GetQuote Fragment Screen", GetQuoteFragment.class.getSimpleName());
+    }
 }

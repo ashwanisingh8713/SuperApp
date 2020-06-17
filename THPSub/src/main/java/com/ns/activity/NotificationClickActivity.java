@@ -14,6 +14,7 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.netoperation.util.NetConstants;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 
 public class NotificationClickActivity extends AppCompatActivity {
 
@@ -153,5 +154,12 @@ public class NotificationClickActivity extends AppCompatActivity {
             }
         }
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Firebase Analytics
+        THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(NotificationClickActivity.this, "Notification Click Screen", NotificationClickActivity.class.getSimpleName());
     }
 }

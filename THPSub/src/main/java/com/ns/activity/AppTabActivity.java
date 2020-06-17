@@ -119,6 +119,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         //Get Menu Options API call
         if (sIsOnline) {
             getMenuOptionsFromApi();
+        } else {
+            getMenuOptionsFromDB();
         }
         initTaboola();
 
@@ -190,7 +192,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                             staticItem.setWebLink(bean.getUrlLight());
                         }
                         else {
-                            staticItem.setWebLink(bean.getUrlLight());
+                            staticItem.setWebLink(bean.getUrlDark());
                         }
                         staticItemList.add(staticItem);
                     }
@@ -518,7 +520,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     protected void onDestroy() {
         super.onDestroy();
         THPConstants.sISMAIN_ACTIVITY_LAUNCHED = false;
-        DefaultTHApiManager.deleteTableOptions(this);
+        //DefaultTHApiManager.deleteTableOptions(this);
     }
 
     /**
@@ -604,16 +606,49 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         }
     }
 
+    //Setting Menu Options
     private void getMenuOptionsFromApi() {
         mDisposable.add(DefaultTHApiManager.getOptionsListApi(this)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(optionsBeans -> {
                     Log.d("AppTabActivity", "getMenuOptionsFromApi");
-                    this.menuItems = optionsBeans;
+                    if (optionsBeans != null && optionsBeans.size() > 0) {
+                        this.menuItems = optionsBeans;
+                    } else {
+                        getMenuOptionsFromDB();
+                    }
                 },
                 throwable -> {
-                    Log.d("AppTabActivity", "getMenuOptionsFromApi");
+                    Log.d("AppTabActivity", "getMenuOptionsFromApi : Failed");
+                    getMenuOptionsFromDB();
                 }));
+    }
+
+    private void getMenuOptionsFromDB() {
+        mDisposable.add(DefaultTHApiManager.getOptionsListDB(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(optionsBeans -> {
+                            Log.d("AppTabActivity", "getMenuOptionsFromDB");
+                            if (optionsBeans != null && optionsBeans.size() > 0) {
+                                this.menuItems = optionsBeans;
+                            } else {
+                                setDefaultMenusOptions();
+                            }
+                        },
+                        throwable -> {
+                            Log.d("AppTabActivity", "getMenuOptionsFromDB : Failed");
+                            setDefaultMenusOptions();
+                        }));
+    }
+
+    private void setDefaultMenusOptions() {
+        menuItems = new ArrayList<>();
+        menuItems.add(new TableOptional.OptionsBean("Read Later",1));
+        menuItems.add(new TableOptional.OptionsBean("Notifications",2));
+        menuItems.add(new TableOptional.OptionsBean("Personalise Home Screen",3));
+        menuItems.add(new TableOptional.OptionsBean("Personalise My Stories", 4));
+        menuItems.add(new TableOptional.OptionsBean("Settings",5));
+        menuItems.add(new TableOptional.OptionsBean("Share this app",6));
     }
 
 }
