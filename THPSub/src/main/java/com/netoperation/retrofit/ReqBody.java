@@ -36,7 +36,7 @@ public class ReqBody {
     public static JsonObject signUp(String otp, String countryCode, String password, String emailId, String contact, String deviceId, String siteId, String originUrl) {
         JsonObject object = new JsonObject();
         object.addProperty("otp", otp);
-        object.addProperty("countryCode", countryCode);
+        //object.addProperty("countryCode", countryCode);
         object.addProperty("password", password);
         object.addProperty("emailId", emailId);
         object.addProperty("contact", contact);
@@ -52,6 +52,7 @@ public class ReqBody {
         object.addProperty("userId", userId);
         object.addProperty("deviceId", deviceId);
         object.addProperty("siteId", siteId);
+        object.addProperty("requestSource", REQUEST_SOURCE);
         return object;
     }
 
@@ -75,6 +76,7 @@ public class ReqBody {
         object.addProperty("siteId", siteId);
         object.addProperty("originUrl", originUrl);
         object.addProperty("contact", contact);
+        object.addProperty("requestSource", REQUEST_SOURCE);
         return object;
     }
 
@@ -97,17 +99,19 @@ public class ReqBody {
         return object;
     }
 
-    public static JsonObject validateOtp(String otp, String emailOrContact) {
+    public static JsonObject validateOtp(String otp, String emailOrContact, String siteId) {
         JsonObject object = new JsonObject();
         object.addProperty("otp", otp);
         object.addProperty("userName", emailOrContact);
+        object.addProperty("siteId", siteId);
         return object;
     }
 
 
-    public static JsonObject updatePassword(String userId, String oldPassword, String newPassword) {
+    public static JsonObject updatePassword(String userId, String oldPassword, String newPassword, String siteId) {
         JsonObject object = new JsonObject();
         object.addProperty("userId", userId);
+        object.addProperty("siteId", siteId);
         object.addProperty("oldPassword", oldPassword);
         object.addProperty("newPassword", newPassword);
         object.addProperty("requestSource", REQUEST_SOURCE);
@@ -306,6 +310,7 @@ public class ReqBody {
         object.addProperty("validity","1-month");
         object.addProperty("currency","INR");
         object.addProperty("netAmount","0.0");
+        object.addProperty("requestSource", REQUEST_SOURCE);
 
         return object;
     }

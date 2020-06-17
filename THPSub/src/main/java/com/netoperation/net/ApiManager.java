@@ -70,7 +70,11 @@ public class ApiManager {
 
     public static void userVerification(RequestCallback<KeyValueModel> callback,
                                         String email, String contact, String siteId, @RetentionDef.userVerificationMode String event) {
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userVerification(ReqBody.userVerification(email, contact, siteId, event));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userVerification(origin, ReqBody.userVerification(email, contact, siteId, event));
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(value -> {
@@ -107,7 +111,11 @@ public class ApiManager {
 
 
     public static void resetPassword(RequestCallback<KeyValueModel> callback, String otp, String password, String countryCode, String emailId, String siteId, String originUrl, String contact) {
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().resetPassword(ReqBody.resetPassword(otp, password, countryCode, emailId, siteId, originUrl, contact));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().resetPassword(origin, ReqBody.resetPassword(otp, password, countryCode, emailId, siteId, originUrl, contact));
         observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(value -> {
@@ -142,8 +150,11 @@ public class ApiManager {
     }
 
     public static Observable<Boolean> generateOtp(String email, String contact, String siteId, String otpEventType) {
-
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userVerification(ReqBody.userVerification(email, contact, siteId, otpEventType));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userVerification(origin, ReqBody.userVerification(email, contact, siteId, otpEventType));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             if (((JsonObject) value).has("status")) {
@@ -156,8 +167,11 @@ public class ApiManager {
     }
 
     public static void validateOTP(RequestCallback<Boolean> callback, String otp, String emailOrContact) {
-
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().validateOtp(ReqBody.validateOtp(otp, emailOrContact));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().validateOtp(origin, ReqBody.validateOtp(otp, emailOrContact, BuildConfig.SITEID));
         observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(value -> {
@@ -186,7 +200,11 @@ public class ApiManager {
 
 
     public static Observable<KeyValueModel> userSignUp(Context context, String otp, String countryCode, String password, String email, String contact, String deviceId, String siteId, String originUrl) {
-        return ServiceFactory.getServiceAPIs().signup(ReqBody.signUp(otp, countryCode, password, email, contact, deviceId, siteId, originUrl))
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().signup(origin, ReqBody.signUp(otp, countryCode, password, email, contact, deviceId, siteId, originUrl))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -324,8 +342,12 @@ public class ApiManager {
 
     public static Observable<KeyValueModel> userLogin(Context context, String email, String contact,
                                                       String siteId, String password, String deviceId, String originUrl, boolean isClearDB) {
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
 
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().login(ReqBody.login(email, contact, password, deviceId, siteId, originUrl));
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().login(origin, ReqBody.login(email, contact, password, deviceId, siteId, originUrl));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -365,7 +387,11 @@ public class ApiManager {
      */
     public static Observable<Boolean> getUserInfo(Context context, String authorization, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
 
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, ReqBody.userInfo(deviceId, siteId, usrId));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, origin, ReqBody.userInfo(deviceId, siteId, usrId));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(responseFromServer -> {
                             if (((JsonObject) responseFromServer).has("status")) {
@@ -605,8 +631,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<UserProfile> getUserInfoObject(Context context, String authorization, String siteId, String deviceId, String usrId, String loginId, String loginPasswd) {
-
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, ReqBody.userInfo(deviceId, siteId, usrId));
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().userInfo(authorization, origin, ReqBody.userInfo(deviceId, siteId, usrId));
         return observable.subscribeOn(Schedulers.io())
                 .map(responseFromServer -> {
                             UserProfile userProfile = new UserProfile();
@@ -837,7 +866,11 @@ public class ApiManager {
     public static Observable<List<ArticleBean>> getRecommendationFromServer(final Context context, String authorization, String userid,
                                                                             final @RetentionDef.Recomendation String recotype,
                                                                             String size, String siteid) {
-        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, userid, recotype, size, siteid, ReqBody.REQUEST_SOURCE)
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, origin, userid, recotype, size, siteid, ReqBody.REQUEST_SOURCE)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             List<ArticleBean> beans = new ArrayList<>();
@@ -886,7 +919,11 @@ public class ApiManager {
     }
 
     public static Observable<List<ArticleBean>> getPremiumBookmarkFromServer(final Context context, String authorization, String userid, String siteid) {
-        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, userid, NetConstants.API_bookmarks, "1500", siteid, ReqBody.REQUEST_SOURCE)
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getRecommendation(authorization, origin, userid, NetConstants.API_bookmarks, "1500", siteid, ReqBody.REQUEST_SOURCE)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             List<ArticleBean> beans = new ArrayList<>();
@@ -1146,8 +1183,12 @@ public class ApiManager {
     public static Observable<Boolean> createBookmarkFavLike(String authorization, @NonNull String userId, @NonNull String siteId,
                                                             @NonNull String contentId, @NonNull int bookmarkVal,
                                                             @NonNull int favoriteVal) {
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
         Observable<JsonElement> observable = ServiceFactory.getServiceAPIs()
-                .createBookmarkFavLike(authorization, ReqBody.createBookmarkFavLike(userId, siteId, contentId, bookmarkVal, favoriteVal));
+                .createBookmarkFavLike(authorization, origin, ReqBody.createBookmarkFavLike(userId, siteId, contentId, bookmarkVal, favoriteVal));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     if (((JsonObject) value).has("status")) {
@@ -1706,7 +1747,11 @@ public class ApiManager {
     public static Observable<KeyValueModel> updateProfile(Context context, UserProfile userProfile, String siteId,
                                                           String FullName, String DOB,
                                                           String Gender, String Profile_Country, String Profile_State) {
-        return ServiceFactory.getServiceAPIs().updateProfile(userProfile.getAuthorization(), ReqBody.updateProfile(userProfile.getEmailId(), userProfile.getContact(),
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().updateProfile(userProfile.getAuthorization(), origin, ReqBody.updateProfile(userProfile.getEmailId(), userProfile.getContact(),
                 siteId, userProfile.getUserId(), FullName, DOB, Gender, Profile_Country, Profile_State))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -1736,7 +1781,11 @@ public class ApiManager {
                                                           String address_house_no, String address_street, String address_landmark,
                                                           String address_pincode, String address_state, String address_city,
                                                           String address_default_option, String address_fulllname) {
-        return ServiceFactory.getServiceAPIs().updateAddress(userProfile.getAuthorization(), ReqBody.updateAddress(userProfile.getEmailId(),
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().updateAddress(userProfile.getAuthorization(), origin, ReqBody.updateAddress(userProfile.getEmailId(),
                 userProfile.getContact(), siteId, userProfile.getUserId(), address_house_no, address_street, address_landmark,
                 address_pincode, address_state, address_city, address_default_option, address_fulllname))
                 .subscribeOn(Schedulers.newThread())
@@ -1773,7 +1822,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<List<TxnDataBean>> getTxnHistory(String authorization, String userId, String siteId) {
-        return ServiceFactory.getServiceAPIs().getTxnHistory(authorization, userId, "0", siteId, "app")
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getTxnHistory(authorization, origin, userId, "0", siteId, "app")
                 .subscribeOn(Schedulers.newThread())
                 .map(jsonElement -> {
                             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -1797,7 +1850,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<KeyValueModel> updatePassword(String authorization, String userId, String oldPasswd, String newPasswd) {
-        return ServiceFactory.getServiceAPIs().updatePassword(authorization, ReqBody.updatePassword(userId, oldPasswd, newPasswd))
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().updatePassword(authorization, origin, ReqBody.updatePassword(userId, oldPasswd, newPasswd, BuildConfig.SITEID))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -1830,8 +1887,12 @@ public class ApiManager {
      * @param otp
      * @return
      */
-    public static Observable<KeyValueModel> suspendAccount(String userId, String siteId, String deviceId, String emailId, String contact, String otp) {
-        return ServiceFactory.getServiceAPIs().suspendAccount(ReqBody.suspendAccount(userId, siteId, deviceId, emailId, contact, otp))
+    public static Observable<KeyValueModel> suspendAccount(String authorization, String userId, String siteId, String deviceId, String emailId, String contact, String otp) {
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().suspendAccount(authorization, origin, ReqBody.suspendAccount(userId, siteId, deviceId, emailId, contact, otp))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -1865,8 +1926,12 @@ public class ApiManager {
      * @param otp
      * @return
      */
-    public static Observable<KeyValueModel> deleteAccount(String userId, String siteId, String deviceId, String emailId, String contact, String otp) {
-        return ServiceFactory.getServiceAPIs().deleteAccount(ReqBody.deleteAccount(userId, siteId, deviceId, emailId, contact, otp))
+    public static Observable<KeyValueModel> deleteAccount(String authorization, String userId, String siteId, String deviceId, String emailId, String contact, String otp) {
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().deleteAccount(authorization, origin, ReqBody.deleteAccount(userId, siteId, deviceId, emailId, contact, otp))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -1935,7 +2000,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<List<TxnDataBean>> getUserPlanInfo(String authorization, String userId, String siteId) {
-        return ServiceFactory.getServiceAPIs().getUserPlanInfo(authorization, userId, siteId, ReqBody.REQUEST_SOURCE)
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getUserPlanInfo(authorization, origin, userId, siteId, ReqBody.REQUEST_SOURCE)
                 .subscribeOn(Schedulers.newThread())
                 .map(value ->
                         {
@@ -1959,7 +2028,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<List<TxnDataBean>> getRecommendedPlan(String userId, String siteId) {
-        return ServiceFactory.getServiceAPIs().getRecommendedPlan(siteId, "25", "1", "1")
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getRecommendedPlan(origin, siteId, "25", "1", "1")
                 .subscribeOn(Schedulers.newThread())
                 .map(value ->
                         value.getCamapignList()
@@ -2014,8 +2087,11 @@ public class ApiManager {
             ja.add(author);
         }
         personaliseObj.add("author", ja);
-
-        return ServiceFactory.getServiceAPIs().setPersonalise(authorization, ReqBody.setUserPreference(userId, siteId, deviceId, personaliseObj))
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().setPersonalise(authorization, origin, ReqBody.setUserPreference(userId, siteId, deviceId, personaliseObj))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                             KeyValueModel keyValueModel = new KeyValueModel();
@@ -2037,7 +2113,11 @@ public class ApiManager {
     }
 
     public static Observable<PrefListModel> getUserSavedPersonalise(String userId, String siteId, String deviceId) {
-        return ServiceFactory.getServiceAPIs().getPersonalise(ReqBody.getUserPreference(userId, siteId, deviceId))
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().getPersonalise(origin, ReqBody.getUserPreference(userId, siteId, deviceId))
                 .subscribeOn(Schedulers.newThread())
                 .map(selectedPrefModel -> {
 
@@ -2106,7 +2186,11 @@ public class ApiManager {
                                                                String amt, String channel, String siteid, String planid,
                                                                String plantype, String billingchannel, String validity,
                                                                String contact, String currency, String tax, String netAmount) {
-        return ServiceFactory.getServiceAPIs().createSubscription(authorization, ReqBody.createSubscription(userid, trxnid,
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().createSubscription(authorization, origin, ReqBody.createSubscription(userid, trxnid,
                 amt, channel, siteid, planid, plantype, billingchannel, validity, contact, currency, tax, netAmount))
                 .subscribeOn(Schedulers.newThread())
                 .map(jsonElement -> {
@@ -2126,8 +2210,12 @@ public class ApiManager {
 
     public static Observable<KeyValueModel> socialLogin(Context context, String deviceId, String originUrl, String provider,
                                                         String socialId, String userEmail, String userName, String siteId) {
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
 
-        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().socialLogin(ReqBody.socialLogin(deviceId,
+        Observable<JsonElement> observable = ServiceFactory.getServiceAPIs().socialLogin(origin, ReqBody.socialLogin(deviceId,
                 originUrl, provider, socialId, userEmail, userName));
         return observable.subscribeOn(Schedulers.newThread())
                 .map(value -> {
@@ -2311,8 +2399,11 @@ public class ApiManager {
 
         trxnid += thisYear + thisMonth + thisDay + "KCaFREE" + hour + minute + second;
         JsonObject jsonObject = ReqBody.freePlan(userId, contact, trxnid, siteid);
-
-        ServiceFactory.getServiceAPIs().freePlan(authorization, jsonObject)
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        ServiceFactory.getServiceAPIs().freePlan(authorization, origin, jsonObject)
                 .subscribeOn(Schedulers.newThread())
                 .repeatWhen(value -> {
                     /**
@@ -2352,7 +2443,11 @@ public class ApiManager {
         trxnid += thisYear + thisMonth + thisDay + "KCaFREE" + hour + minute + second;
         JsonObject jsonObject = ReqBody.freePlan(userId, contact, trxnid, siteid);
 
-        return ServiceFactory.getServiceAPIs().freePlan(authorization, jsonObject)
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().freePlan(authorization, origin, jsonObject)
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     if (((JsonObject) value).has("status")) {

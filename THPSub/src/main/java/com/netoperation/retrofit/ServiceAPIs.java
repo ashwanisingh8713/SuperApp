@@ -1,7 +1,7 @@
 package com.netoperation.retrofit;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.netoperation.default_db.TableOptional;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
@@ -15,11 +15,10 @@ import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionContentFromServer;
+import com.netoperation.model.SelectedPrefModel;
 import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
-import com.netoperation.model.SelectedPrefModel;
-import com.ns.thpremium.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -47,50 +45,50 @@ public interface ServiceAPIs {
     Observable<JsonElement> recommendation(@Body JsonObject recommendationBody);
 
     @POST(UrlPath.login)
-    Observable<JsonElement> login(@Body JsonObject loginBody);
+    Observable<JsonElement> login(@Header("Origin") String origin, @Body JsonObject loginBody);
 
     @POST(UrlPath.socialLogin)
-    Observable<JsonElement> socialLogin(@Body JsonObject loginDetails);
+    Observable<JsonElement> socialLogin(@Header("Origin") String origin, @Body JsonObject loginDetails);
 
     @POST(UrlPath.signup)
-    Observable<JsonElement> signup(@Body JsonObject logoutBody);
+    Observable<JsonElement> signup(@Header("Origin") String origin, @Body JsonObject logoutBody);
 
     @POST(UrlPath.logout)
     Observable<JsonElement> logout(@Header("Authorization") String authorization, @Header("Origin") String origin,  @Body JsonObject loginBody);
 
     @POST(UrlPath.userVerification)
-    Observable<JsonElement> userVerification(@Body JsonObject userVerificationBody);
+    Observable<JsonElement> userVerification(@Header("Origin") String origin, @Body JsonObject userVerificationBody);
 
     @POST(UrlPath.resetPassword)
-    Observable<JsonElement> resetPassword(@Body JsonObject resetPasswordBody);
+    Observable<JsonElement> resetPassword(@Header("Origin") String origin, @Body JsonObject resetPasswordBody);
 
     @POST(UrlPath.userInfo)
-    Observable<JsonElement> userInfo(@Header("Authorization") String authorization, @Body JsonObject userInfoBody);
+    Observable<JsonElement> userInfo(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject userInfoBody);
 
     @POST(UrlPath.editProfile)
-    Observable<JsonElement> editProfile(@Header("Authorization") String authorization,@Body JsonObject editProfileBody);
+    Observable<JsonElement> editProfile(@Header("Authorization") String authorization, @Header("Origin") String origin,@Body JsonObject editProfileBody);
 
     @POST(UrlPath.validateOtp)
-    Observable<JsonElement> validateOtp(@Body JsonObject validateOtpBody);
+    Observable<JsonElement> validateOtp(@Header("Origin") String origin, @Body JsonObject validateOtpBody);
 
     @POST(UrlPath.updatePassword)
-    Observable<JsonElement> updatePassword(@Header("Authorization") String authorization, @Body JsonObject updatePasswordBody);
+    Observable<JsonElement> updatePassword(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject updatePasswordBody);
 
     @POST(UrlPath.suspendAccount)
-    Observable<JsonElement> suspendAccount(@Body JsonObject suspendAccountBody);
+    Observable<JsonElement> suspendAccount(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject suspendAccountBody);
 
     @POST(UrlPath.deleteAccount)
-    Observable<JsonElement> deleteAccount(@Body JsonObject deleteAccountBody);
+    Observable<JsonElement> deleteAccount(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject deleteAccountBody);
 
     @GET(UrlPath.getRecommendation)
-    Observable<RecomendationData> getRecommendation(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("recotype") String recotype,
+    Observable<RecomendationData> getRecommendation(@Header("Authorization") String authorization, @Header("Origin") String origin, @Query("userid") String userid, @Query("recotype") String recotype,
                                                     @Query("size") String size, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
     @POST(UrlPath.createBookmarkFavLike)
-    Observable<JsonElement> createBookmarkFavLike(@Header("Authorization") String authorization, @Body JsonObject bookmarkFavLikeBody);
+    Observable<JsonElement> createBookmarkFavLike(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject bookmarkFavLikeBody);
 
     @GET(UrlPath.getBookmarkFavLike)
-    Observable<List<UserChoice>> getBookmarkFavLike(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid);
+    Observable<List<UserChoice>> getBookmarkFavLike(@Header("Authorization") String authorization, @Header("Origin") String origin, @Query("userid") String userid, @Query("siteid") String siteid);
 
     @GET("")
     Observable<SearchedArticleModel> searchArticleByIDFromServer(@Url String url);
@@ -109,28 +107,28 @@ public interface ServiceAPIs {
     Observable<ArrayList<KeyValueModel>> getState(@Query("type") String type, @Query("country") String country);
 
     @POST(UrlPath.updateProfile)
-    Observable<JsonElement> updateProfile(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
+    Observable<JsonElement> updateProfile(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject updateProfile);
 
     @POST(UrlPath.updateAddress)
-    Observable<JsonElement> updateAddress(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
+    Observable<JsonElement> updateAddress(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject updateProfile);
 
     @POST(UrlPath.setPersonalise)
-    Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Body JsonObject updateProfile);
+    Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject updateProfile);
 
     @POST(UrlPath.getPersonalise)
-    Observable<SelectedPrefModel> getPersonalise(@Body JsonObject updateProfile);
+    Observable<SelectedPrefModel> getPersonalise(@Header("Origin") String origin,@Body JsonObject updateProfile);
 
     @GET(UrlPath.getTxnHistory)
-    Observable<JsonElement> getTxnHistory(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);
+    Observable<JsonElement> getTxnHistory(@Header("Authorization") String authorization,  @Header("Origin") String origin, @Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);
 
     @GET(UrlPath.getUserPlanInfo)
-    Observable<UserPlanList> getUserPlanInfo(@Header("Authorization") String authorization, @Query("userid") String userid, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
+    Observable<UserPlanList> getUserPlanInfo(@Header("Authorization") String authorization, @Header("Origin") String origin, @Query("userid") String userid, @Query("siteid") String siteid, @Query("requestSource") String requestSource);
 
     @GET(UrlPath.getRecommendedPlan)
-    Observable<PlanRecoModel> getRecommendedPlan(@Query("siteid") String siteid, @Query("tagid") String tagid,
+    Observable<PlanRecoModel> getRecommendedPlan(@Header("Origin") String origin, @Query("siteid") String siteid, @Query("tagid") String tagid,
                                                  @Query("isInd") String isInd, @Query("isPlt") String isPlt);
     @POST(UrlPath.createSubscription)
-    Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Body JsonObject subscriptionBody);
+    Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject subscriptionBody);
 
     @POST("")
     Observable<JsonElement> getChecksumHash(@Url String url, @Body JsonObject checksumHashAPIBody);
@@ -162,7 +160,7 @@ public interface ServiceAPIs {
 
 
     @POST(UrlPath.freePlan)
-    Observable<JsonElement> freePlan(@Header("Authorization") String authorization, @Body JsonObject recommendationBody);
+    Observable<JsonElement> freePlan(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject recommendationBody);
 
 
     // ######################################################################################################## //

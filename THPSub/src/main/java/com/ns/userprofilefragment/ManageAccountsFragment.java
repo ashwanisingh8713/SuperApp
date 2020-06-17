@@ -138,7 +138,7 @@ public class ManageAccountsFragment extends BaseFragmentTHP {
         enableViews(THPConstants.FROM_SUSPEND_ACCOUNT, true);
         ApiManager.getUserProfile(getActivity())
                 .map(userProfile -> {
-                    ApiManager.suspendAccount(userProfile.getUserId(), BuildConfig.SITEID,
+                    ApiManager.suspendAccount(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID,
                             ResUtil.getDeviceId(getActivity()), userProfile.getEmailId(), userProfile.getContact(), otp)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(keyValueModel -> {
@@ -162,7 +162,7 @@ public class ManageAccountsFragment extends BaseFragmentTHP {
         enableViews(THPConstants.FROM_DELETE_ACCOUNT, true);
         ApiManager.getUserProfile(getActivity())
                 .map(userProfile -> {
-                    ApiManager.deleteAccount(userProfile.getUserId(), BuildConfig.SITEID,
+                    ApiManager.deleteAccount(userProfile.getAuthorization(), userProfile.getUserId(), BuildConfig.SITEID,
                             ResUtil.getDeviceId(getActivity()), userProfile.getEmailId(), userProfile.getContact(), otp)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(keyValueModel -> {
