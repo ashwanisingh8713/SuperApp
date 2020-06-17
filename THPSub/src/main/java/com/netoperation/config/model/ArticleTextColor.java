@@ -39,6 +39,8 @@ public class ArticleTextColor {
         private String author;
         private String section;
         private String detail;
+        private String link;
+        private String lead;
 
         public String getTitle() {
             return title;
@@ -78,6 +80,22 @@ public class ArticleTextColor {
 
         public void setDetail(String detail) {
             this.detail = detail;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public String getLead() {
+            return lead;
+        }
+
+        public void setLead(String lead) {
+            this.lead = lead;
         }
     }
 

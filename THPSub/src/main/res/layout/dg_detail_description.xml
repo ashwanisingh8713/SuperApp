@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<com.ns.view.ScreenBg_FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    
     android:paddingStart="7dp"
-    
-    android:paddingEnd="4dp"
-    app:layoutType="Black_Dark">
+    android:paddingEnd="4dp">
 
     <com.ns.view.THP_AutoResizeWebview
         android:id="@+id/webview"
@@ -16,4 +11,4 @@
         android:layout_height="wrap_content"
         />
 
-</com.ns.view.layout.NSRelativeLayout>
+</com.ns.view.ScreenBg_FrameLayout>

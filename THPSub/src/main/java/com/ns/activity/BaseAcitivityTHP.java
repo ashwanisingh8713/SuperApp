@@ -18,7 +18,6 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.InAppNotificationButtonListener;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.snackbar.Snackbar;
-import com.main.AdsBase;
 import com.main.DFPAds;
 import com.main.SuperApp;
 import com.netoperation.config.model.ColorOptionBean;
