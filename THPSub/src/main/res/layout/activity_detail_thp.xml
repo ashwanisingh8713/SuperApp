@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.ScreenBg_ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutType="Black_Dark"
-    >
+    android:layout_height="match_parent">
 
     <com.ns.view.Topbar
         android:id="@+id/toolbar"
@@ -102,4 +100,4 @@
 
 
 
-</com.ns.view.layout.NSConstraintLayout>
+</com.ns.view.ScreenBg_ConstraintLayout>

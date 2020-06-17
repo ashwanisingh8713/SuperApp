@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parentContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:paddingBottom="15dp">
+
     <View
         android:id="@+id/top_horizontal_line"
         android:layout_width="match_parent"
@@ -39,35 +40,40 @@
             android:orientation="vertical" />
     </LinearLayout>
 
-    <com.ns.view.roundedimageview.RoundedImageView
-        app:riv_place_holder="thumb"
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/attribution_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/article_item_parent_top_bottom_padding"
         android:layout_marginEnd="@dimen/article_item_parent_top_bottom_padding"
         android:layout_marginBottom="@dimen/article_item_parent_top_bottom_padding"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         app:srcCompat="@drawable/icon_attribution" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/adIcon"
-        android:layout_width="40dp"
-        android:layout_height="15dp"
-        android:scaleType="centerInside"
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="@dimen/article_item_parent_top_bottom_padding"
-        android:layout_marginBottom="@dimen/article_item_parent_top_bottom_padding"
-        android:background="@drawable/advt" />
+        android:layout_marginEnd="@dimen/article_item_parent_top_bottom_padding">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adIcon"
+            android:layout_width="40dp"
+            android:layout_height="18dp"
+            android:background="@drawable/advt"
+            android:scaleType="centerInside"
+            android:layout_marginBottom="5dp"/>
+    </FrameLayout>
 
     <View
+        android:id="@+id/bottom_divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/color_52969696" />
 
-</com.ns.view.layout.NSRelativeLayout>
+</com.ns.view.Tile_RelativeLayout>

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingTop="20dp"
-    
     android:paddingStart="@dimen/apptab_listing_left_padding"
     android:paddingEnd="@dimen/apptab_listing_right_padding"
-    
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,12 +24,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Statehood for Jammu and Kashmir will be restored, says prime minister Modi.Statehood for Jammu and Kashmir will be restored, says prime minister Modi."
-            app:textType="M"
+            app:textType="title"
             android:textSize="@dimen/personal_info_textSize_16sp"
             android:ellipsize="end"
             app:font_path="@string/THP_FiraSans_SemiBold"
@@ -59,14 +57,14 @@
             android:layout_marginBottom="10dp"/>
 
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/authorName_Txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:textType="author"
             android:text="Rajesh Sundaram"
             android:layout_marginEnd="@dimen/marging_end_author_name"
             app:layout_constraintRight_toLeftOf="@id/image"
-            app:textColor="@color/color_4f4f4f"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -75,12 +73,12 @@
             />
 
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/time_Txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:textType="time"
             android:text="3 days ago"
-            app:textColor="@color/color_818181_light"
             android:textSize="12sp"
             app:font_path="@string/THP_FiraSans_Regular"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,8 +89,8 @@
         <com.ns.view.img.TopbarIconView
             app:iconType="bookmarked"
             android:id="@+id/bookmark_Img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/article_item_icon_width"
+            android:layout_height="@dimen/article_item_icon_height"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/ic_bookmark_unselected"
@@ -114,8 +112,8 @@
         <com.ns.view.img.TopbarIconView
             app:iconType="share"
             android:id="@+id/share_Img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/article_item_icon_width"
+            android:layout_height="@dimen/article_item_icon_height"
             app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="20dp"
@@ -133,4 +131,4 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/listing_divider_height"
         android:layout_marginTop="20dp"/>
-</LinearLayout>
+</com.ns.view.Tile_LinearLayout>

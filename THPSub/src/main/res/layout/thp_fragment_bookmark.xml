@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +16,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.ns.view.layout.NSLinearLayout
+    <LinearLayout
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:background="@null"
             app:srcCompat="@drawable/ic_clear"
             android:visibility="gone" />
-    </com.ns.view.layout.NSLinearLayout>
+    </LinearLayout>
 
 
     <com.ns.view.RecyclerViewPullToRefresh
@@ -96,4 +96,4 @@
             />
     </LinearLayout>
 
-</com.ns.view.layout.NSConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

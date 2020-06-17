@@ -165,16 +165,16 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
         super.onResume();
 
         boolean isSectionNeedToSync = DefaultPref.getInstance(getActivity()).isSectionNeedToSync(mSectionId);
-        if (isSectionNeedToSync) {
+        if (isSectionNeedToSync && BaseAcitivityTHP.sIsOnline) {
             showLoadingUIForServerData(true, true);
         }
 
         if (mSectionId.equals("998")) { // Opens News-Digest
             // TODO, NOTHING
-        } else if (mSectionId.equals(NetConstants.RECO_HOME_TAB) && isSectionNeedToSync) { // Home Page of Section
+        } else if (mSectionId.equals(NetConstants.RECO_HOME_TAB) && isSectionNeedToSync && BaseAcitivityTHP.sIsOnline) { // Home Page of Section
             getHomeDataFromServer();
             return;
-        } else if (isSectionNeedToSync) { // Other Sections or Sub-Section
+        } else if (isSectionNeedToSync && BaseAcitivityTHP.sIsOnline) { // Other Sections or Sub-Section
             sectionOrSubSectionFromServer(1);
             return;
         }

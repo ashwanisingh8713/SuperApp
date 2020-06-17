@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.ScreenBg_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <com.ns.view.CustomTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -12,14 +13,12 @@
         app:tabGravity="fill"
         app:tabIndicatorHeight="2dp"
         app:tabMode="scrollable"
-        app:tabType="sectionTop"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        />
+        app:tabType="sectionTop" />
 
     <com.ns.view.NonSwipeableViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1"
-        />
-</com.ns.view.layout.NSLinearLayout>
+        android:layout_weight="1" />
+</com.ns.view.ScreenBg_LinearLayout>

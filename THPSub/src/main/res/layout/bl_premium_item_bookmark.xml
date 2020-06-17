@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bl_item_margin_left"
-    
     android:layout_marginEnd="@dimen/bl_item_margin_right"
-    
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
@@ -16,7 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="@dimen/apptab_listing_left_padding"
-        
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingEnd="@dimen/apptab_listing_right_padding"
@@ -98,9 +95,10 @@
 
             <com.ns.view.img.TopbarIconView
                 android:id="@+id/bookmark_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 app:iconType="bookmarked"
+                android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:srcCompat="@drawable/ic_bookmark_unselected" />
@@ -119,10 +117,10 @@
 
             <com.ns.view.img.TopbarIconView
                 android:id="@+id/share_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 android:layout_marginEnd="20dp"
-                
+                android:scaleType="centerInside"
                 app:iconType="share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
@@ -132,4 +130,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-</com.ns.view.layout.NSCardView>
+</com.ns.view.Tile_CardView>

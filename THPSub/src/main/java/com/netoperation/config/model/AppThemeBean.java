@@ -13,6 +13,8 @@ public class AppThemeBean {
      * systemBottomBarBackground : {"light":"#000000","dark":"#818181"}
      */
 
+
+
     private TextColorsBean textColors;
     private ColorOptionBean tilesBg;
     private ColorOptionBean screenBg;
@@ -22,6 +24,8 @@ public class AppThemeBean {
     private Breadcrumb breadcrumb;
     private ColorOptionBean systemTopBarBackground;
     private ColorOptionBean systemBottomBarBackground;
+
+    private ArticleTextColor articleText;
 
     public TextColorsBean getTextColors() {
         return textColors;
@@ -85,6 +89,14 @@ public class AppThemeBean {
 
     public ColorOptionBean getSystemBottomBarBackground() {
         return systemBottomBarBackground;
+    }
+
+    public ArticleTextColor getArticleText() {
+        return articleText;
+    }
+
+    public void setArticleText(ArticleTextColor articleText) {
+        this.articleText = articleText;
     }
 
     public static class TextColorsBean {

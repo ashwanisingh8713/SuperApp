@@ -15,7 +15,7 @@ import com.ns.view.FontCache;
 public class CustomTextView extends AppCompatTextView {
 
     String mFontPath;
-    int viewType = -1;
+    int textType = -1;
     int textColor = 0;
 
     public CustomTextView(Context context) {
@@ -47,9 +47,9 @@ public class CustomTextView extends AppCompatTextView {
 
             mFontPath = typedArray.getString(R.styleable.TextView_font_path);
             if (typedArray.hasValue(R.styleable.TextView_textType)) {
-                viewType = typedArray.getInt(R.styleable.TextView_textType, 0);
+                textType = typedArray.getInt(R.styleable.TextView_textType, 0);
             } else {
-                viewType = -1;
+                textType = -1;
             }
 
             if (typedArray.hasValue(R.styleable.TextView_textColor)) {
@@ -70,8 +70,8 @@ public class CustomTextView extends AppCompatTextView {
         }
     }
 
-    public int getViewType() {
-        return viewType;
+    public int getTextType() {
+        return textType;
     }
 
     public int getTextColor() {

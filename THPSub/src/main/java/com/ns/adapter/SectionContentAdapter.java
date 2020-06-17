@@ -143,10 +143,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewType == VT_THD_BANNER) {
             if (BuildConfig.IS_BL) {
                 return new BannerViewHolder(LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.bl_cardview_banner, viewGroup, false));
+                        .inflate(R.layout.bl_home_banner, viewGroup, false));
             } else {
                 return new BannerViewHolder(LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.th_cardview_home_banner, viewGroup, false));
+                        .inflate(R.layout.th_home_banner, viewGroup, false));
             }
         } else if (viewType == VT_THD_DEFAULT_ROW) {
             if (BuildConfig.IS_BL) {
@@ -358,7 +358,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
     private void widgetLayoutCommonAdjustment(SuWidgetRecyclerAdapter adapter, ImageView groupHeaderIcon, TextView groupHeaderTxt, RecyclerView groupRecyclerView,
                                               TextView groupActionLeft, TextView groupActionCenter, TextView groupActionRight) {
         WidgetIndex widgetIndex = adapter.getWidgetIndex();
-
 
         String actionGravity = widgetIndex.getActionGravity();
         boolean iconRequired = widgetIndex.isActionIconRequired();

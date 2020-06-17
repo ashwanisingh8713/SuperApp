@@ -357,6 +357,7 @@ public class THP_DetailPagerFragment extends BaseFragmentTHP {
     private void viewPagerSetup(List<ArticleBean> articleBeans, String from) {
 
         mViewPager = getView().findViewById(R.id.viewPager);
+
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
         mViewPager.setOffscreenPageLimit(4);

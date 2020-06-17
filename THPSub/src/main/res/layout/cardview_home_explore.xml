@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,4 +35,4 @@
             android:layout_marginTop="@dimen/explore_content_marginTop" />
     </com.ns.view.layout.NSLinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.ns.view.Tile_CardView>

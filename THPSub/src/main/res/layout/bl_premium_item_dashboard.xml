@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bl_item_margin_left"
-    
     android:layout_marginEnd="@dimen/bl_item_margin_right"
-    
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
@@ -16,10 +14,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="@dimen/apptab_listing_left_padding"
-        
         android:paddingTop="10dp"
         android:paddingEnd="@dimen/apptab_listing_right_padding"
-        
         android:paddingBottom="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textColor="@color/color_1b528e" />
 
-            <com.ns.view.text.ArticleTitleTextView
+            <com.ns.view.text.SectionTextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,7 +48,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/image"
                 app:layout_constraintTop_toBottomOf="@+id/sectionName"
-                app:textType="M" />
+                app:textType="title" />
 
 
             <com.ns.view.roundedimageview.RoundedImageView
@@ -85,8 +81,8 @@
 
             <ImageView
                 android:id="@+id/trendingIcon_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 android:scaleType="centerInside"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -107,11 +103,12 @@
 
             <com.ns.view.img.ListingIconView
                 android:id="@+id/toggleBtn_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 app:iconType="dislike"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:scaleType="centerInside"/>
 
             <ProgressBar
                 android:id="@+id/toggleBtnProgressBar"
@@ -128,10 +125,10 @@
 
             <com.ns.view.img.ListingIconView
                 android:id="@+id/bookmark_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 android:layout_marginEnd="20dp"
-                
+                android:scaleType="centerInside"
                 app:iconType="unbookmark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img"
@@ -151,10 +148,10 @@
 
             <com.ns.view.img.ListingIconView
                 android:id="@+id/like_Img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_item_icon_width"
+                android:layout_height="@dimen/article_item_icon_height"
                 android:layout_marginEnd="20dp"
-                
+                android:scaleType="centerInside"
                 app:iconType="unfavourite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
@@ -175,4 +172,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-</com.ns.view.layout.NSCardView>
+</com.ns.view.Tile_CardView>

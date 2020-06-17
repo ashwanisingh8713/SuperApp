@@ -32,7 +32,7 @@ public class ArticleTitleTextView extends CustomTextView {
 
         boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
         // 0 = "XL", XLarge
-        if(getViewType() == 0) {
+        if(getTextType() == 0) {
             if (isUserThemeDay) {
                 setTextColor(ResUtil.getColor(getResources(), R.color.color_424242)); // 424242
             } else {
@@ -40,7 +40,7 @@ public class ArticleTitleTextView extends CustomTextView {
             }
         }
         // 1 = "L", Large
-        else if(getViewType() == 1) {
+        else if(getTextType() == 1) {
                 if (isUserThemeDay) {
                     setTextColor(ResUtil.getColor(getResources(), R.color.color_111111_light)); // 111111
                 } else {
@@ -48,7 +48,7 @@ public class ArticleTitleTextView extends CustomTextView {
                 }
         }
         // 2 = "S", Small
-        else if(getViewType() == 2) {
+        else if(getTextType() == 2) {
             if (isUserThemeDay) {
                 setTextColor(ResUtil.getColor(getResources(), R.color.color_111111_light)); // 111111
             } else {
@@ -56,7 +56,7 @@ public class ArticleTitleTextView extends CustomTextView {
             }
         }
         // 3 = "XS", X_Small
-        else if(getViewType() == 3) {
+        else if(getTextType() == 3) {
             if (isUserThemeDay) {
                 setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light)); // 818181
             } else {
@@ -64,11 +64,11 @@ public class ArticleTitleTextView extends CustomTextView {
             }
         }
         // 4 = "WigetText" colored text View
-        else if(getViewType() == 4) {
+        else if(getTextType() == 4) {
             setTextColor(ResUtil.getColor(getResources(), R.color.white));
         }
         // 5 = "M", M
-        else if(getViewType() == 5) {
+        else if(getTextType() == 5) {
             if (isUserThemeDay) {
                 setTextColor(ResUtil.getColor(getResources(), R.color.color_191919_light));  // 191919
             } else {

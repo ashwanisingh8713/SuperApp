@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
 
-    <com.ns.view.text.ArticleTitleTextView
-        app:textType="L"
+    <com.ns.view.text.SectionTextView
+        app:textType="title"
         android:id="@+id/textview_article_list_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/article_item_title_height"
@@ -18,9 +18,9 @@
         app:font_path="@string/THP_TundraOffc"
         android:textSize="17sp" />
 
-    <com.ns.view.text.ArticleTitleTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/author_textView"
-        app:textType="XS"
+        app:textType="author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textview_article_list_header"

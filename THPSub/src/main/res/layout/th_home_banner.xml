@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,12 +10,12 @@
         android:layout_height="0.5dp"
         android:background="@color/color_52969696" />
 
-    <com.ns.view.layout.NSLinearLayout
+    <LinearLayout
         android:id="@+id/layout_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layoutType="Black_Dark">
+        >
 
         <FrameLayout
             android:id="@+id/imageParentLayout"
@@ -39,7 +39,7 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/textview_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:paddingTop="10dp"
             app:font_path="@string/THP_TundraOffc"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            app:textType="M" />
+            app:textType="title" />
 
         <include
             layout="@layout/th_layout_article_list_bottom"
@@ -61,7 +61,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp" />
-    </com.ns.view.layout.NSLinearLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -69,4 +69,4 @@
         android:layout_gravity="bottom"
         android:background="@color/color_52969696" />
 
-</LinearLayout>
+</com.ns.view.Tile_LinearLayout>

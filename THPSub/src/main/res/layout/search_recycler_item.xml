@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.ns.view.text.ArticleTitleTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,9 +16,8 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:textColor="@color/color_111111_light"
         android:textSize="14sp"
-        app:textType="M"
+        app:textType="title"
          />
 
     <LinearLayout
@@ -26,7 +25,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/sectionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,24 +33,23 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="@color/color_818181_light"
+            app:textType="section"
             android:textSize="12sp" />
 
-        <com.ns.view.text.CustomTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/publish_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:drawablePadding="10dp"
             android:drawableStart="@drawable/ic_dot"
             android:fontFamily="sans-serif"
             android:paddingRight="10dp"
-            app:textColor="@color/color_818181_light"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:textType="title"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/color_52969696" />
-</LinearLayout>
+</com.ns.view.Tile_LinearLayout>

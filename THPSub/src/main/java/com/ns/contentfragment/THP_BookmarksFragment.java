@@ -62,7 +62,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     private String mUserId;
     private String mGoupType;
     private UserProfile mUserProfile;
-    private NSLinearLayout mSearchParentLayout;
+    private LinearLayout mSearchParentLayout;
     private NSEditText mSearchBox;
     private AppCompatImageView mClearText;
 

@@ -41,8 +41,8 @@
             android:layout_marginRight="6dp"
             android:background="@drawable/ic_clock" />
 
-        <com.ns.view.text.ArticleTitleTextView
-            app:textType="XS"
+        <com.ns.view.text.SectionTextView
+            app:textType="time"
             android:id="@+id/textview_time"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"
@@ -63,12 +63,11 @@
             android:background="@color/grey"
             android:visibility="visible" />
 
-        <com.ns.view.text.ArticleTitleTextView
-            app:textType="XS"
+        <com.ns.view.text.SectionTextView
+            app:textType="section"
             android:id="@+id/section_name"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/article_item_icon_height"
-            
             android:layout_alignParentStart="true"
             android:ellipsize="end"
             android:gravity="center_vertical"

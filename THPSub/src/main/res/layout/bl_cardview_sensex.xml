@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="12dp"
-    
     android:layout_marginStart="@dimen/bl_item_margin_left"
-    
     android:layout_marginEnd="@dimen/bl_item_margin_right"
     android:orientation="vertical"
     app:layoutType="Black_Dark">
@@ -127,4 +125,4 @@
         <!--End, This is layout of NSE-->
 
     </LinearLayout>
-</com.ns.view.layout.NSLinearLayout>
+</com.ns.view.Tile_LinearLayout>

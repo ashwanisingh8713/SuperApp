@@ -12,6 +12,11 @@
             <enum name="XS" value="3" /> <!-- XS DONE-->
             <enum name="S" value="2" /> <!-- S DONE-->
             <enum name="WigetText" value="4" /> <!-- White DONE-->
+            <enum name="title" value="5" />
+            <enum name="time" value="6" />
+            <enum name="author" value="7" />
+            <enum name="section" value="8" />
+            <enum name="detail" value="9" />
         </attr>
     </declare-styleable>
 

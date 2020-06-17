@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bl_item_margin_left"
-    
     android:layout_marginEnd="@dimen/bl_item_margin_right"
-    
     android:paddingTop="@dimen/bl_item_margin_top"
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
@@ -26,4 +24,4 @@
             android:layout_height="wrap_content" />
 
 
-</com.ns.view.layout.NSCardView>
+</com.ns.view.Tile_CardView>

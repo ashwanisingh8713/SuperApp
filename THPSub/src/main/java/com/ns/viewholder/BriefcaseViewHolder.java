@@ -1,21 +1,21 @@
 package com.ns.viewholder;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.view.roundedimageview.RoundedImageView;
 import com.ns.thpremium.R;
-import com.ns.view.text.CustomTextView;
 
 public class BriefcaseViewHolder extends RecyclerView.ViewHolder {
 
-    public CustomTextView sectionName;
-    public CustomTextView title;
-    public CustomTextView authorName_Txt;
-    public CustomTextView description_Txt;
-    public CustomTextView time_Txt;
+    public TextView sectionName;
+    public TextView title;
+    public TextView authorName_Txt;
+    public TextView description_Txt;
+    public TextView time_Txt;
     public RoundedImageView image;
     public View horizontalDivider;
 

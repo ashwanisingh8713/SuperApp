@@ -3,6 +3,7 @@ package com.ns.viewholder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +15,10 @@ import com.ns.view.text.CustomTextView;
 
 public class DashboardViewHolder extends RecyclerView.ViewHolder {
 
-    public CustomTextView sectionName;
-    public CustomTextView title;
-    public CustomTextView authorName_Txt;
-    public CustomTextView time_Txt;
+    public TextView sectionName;
+    public TextView title;
+    public TextView authorName_Txt;
+    public TextView time_Txt;
     public ListingIconView toggleBtn_Img;
     public ListingIconView bookmark_Img;
     public ListingIconView like_Img;

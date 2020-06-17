@@ -404,22 +404,20 @@
       }
     ],
     "appTheme": {
-      "textColors": {
-        "dark": {
-          "XL": "#000000",
-          "L": "#000000",
-          "M": "#000000",
-          "S": "#818181",
-          "XS": "#818181",
-          "detailpageText": "#000000"
+      "articleText" : {
+        "dark" : {
+          "title" : "#191919",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#818181"
         },
-        "light": {
-          "XL": "#ffffff",
-          "L": "#ffffff",
-          "M": "#ffffff",
-          "S": "#818181",
-          "XS": "#818181",
-          "detailpageText": "#ffffff"
+        "light" : {
+          "title" : "#191919",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#818181"
         }
       },
       "tilesBg": {
@@ -431,26 +429,10 @@
         "light": "#ffffff"
       },
       "topBarBg": {
-        "dark": "#191919",
-        "light": "#1375B3"
+        "dark": "#000000",
+        "light": "#ffffff"
       },
       "bottomBar": {
-        "text": {
-          "dark": "#818181",
-          "darkSelected": "#818181",
-          "light": "#818181",
-          "lightSelected": "#031670"
-        },
-        "bg": {
-          "dark": "#191919",
-          "light": "#ffffff"
-        },
-        "indicator": {
-          "dark": "#191919",
-          "light": "#ffffff"
-        }
-      },
-      "breadcrumb": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#ededed",
@@ -458,20 +440,36 @@
           "lightSelected": "#424242"
         },
         "bg": {
+          "dark": "#000000",
+          "light": "#ffffff"
+        },
+        "indicator": {
+          "dark": "#00000000",
+          "light": "#00000000"
+        }
+      },
+      "breadcrumb": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ffffff",
+          "light": "#818181",
+          "lightSelected": "#000000"
+        },
+        "bg": {
           "dark": "#191919",
           "light": "#ffffff"
         },
         "indicator": {
-          "dark": "#1375b3",
-          "light": "#1375b3"
+          "dark": "#1b528e",
+          "light": "#191919"
         }
       },
       "systemTopBarBackground": {
-        "light": "#0588FC",
-        "dark": "#000000"
+        "light": "#e0e0e0",
+        "dark": "#4a4a4a"
       },
       "systemBottomBarBackground": {
-        "light": "#ffffff",
+        "light": "#e0e0e0",
         "dark": "#000000"
       }
     },

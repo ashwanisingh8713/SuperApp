@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.ScreenBg_ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutType="Black_Full">
+    android:layout_height="match_parent">
 
     <!--Bottom Divider-->
     <View
@@ -78,4 +77,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-</com.ns.view.layout.NSConstraintLayout>
+</com.ns.view.ScreenBg_ConstraintLayout>

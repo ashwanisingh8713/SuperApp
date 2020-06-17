@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.ScreenBg_FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutType="Black_Dark">
+    android:layout_height="match_parent">
 
-    <com.ns.view.layout.NSConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:layoutType="Black_Dark"
         android:layout_marginTop="@dimen/topBar_height"
         >
 
@@ -34,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-        <com.ns.view.layout.NSLinearLayout
+        <com.ns.view.ScreenBg_LinearLayout
             android:id="@+id/emptyLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,9 +98,9 @@
                 android:visibility="gone"
                 />
 
-        </com.ns.view.layout.NSLinearLayout>
+        </com.ns.view.ScreenBg_LinearLayout>
 
-    </com.ns.view.layout.NSConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--<com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/searchBar"
@@ -128,4 +126,4 @@
         app:contentInsetEnd="0dp"/>
 
 
-</com.ns.view.layout.NSFrameLayout>
+</com.ns.view.ScreenBg_FrameLayout>

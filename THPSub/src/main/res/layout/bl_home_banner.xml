@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +8,7 @@
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
-    <com.ns.view.layout.NSRelativeLayout
+    <RelativeLayout
         android:id="@+id/layout_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,10 +39,10 @@
 
         </FrameLayout>
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/textview_banner"
             card_view:font_path="@string/THP_FiraSans_Bold"
-            card_view:textType="M"
+            card_view:textType="title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/article_item_title_height"
             android:layout_below="@id/imageParentLayout"
@@ -69,7 +69,7 @@
                 android:layout_marginBottom="10dp"
                 />
         </LinearLayout>
-    </com.ns.view.layout.NSRelativeLayout>
+    </RelativeLayout>
 
 
-</com.ns.view.layout.NSCardView>
+</com.ns.view.Tile_CardView>
