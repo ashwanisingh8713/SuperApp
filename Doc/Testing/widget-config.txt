@@ -1,9 +1,9 @@
     ////////  widgetType  /////////////////////
         SENSEX
 
-        MEDIA_FULL_SCR
-
         MEDIA_INNER_PADDING
+
+        MEDIA_FULL_SCR
 
         TEXT
 
@@ -11,9 +11,7 @@
 
         TITLE_TEXT
 
-        MEDIA_TITLE_TIME
-
-        MEDIA_TextOverlay
+        MEDIA_TEXT_TIME
 
     ////////  groupLayout  /////////////////////
 

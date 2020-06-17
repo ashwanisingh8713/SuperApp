@@ -725,9 +725,20 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     private void updateDescriptionTextSize() {
         if(mRecyclerAdapter != null) {
             int descriptionSize = DefaultPref.getInstance(getActivity()).getDescriptionSize();
-            if(mRecyclerAdapter.getLastDescriptionTextSize() != descriptionSize) {
-                mRecyclerAdapter.notifyItemChanged(mRecyclerAdapter.getDescriptionItemPosition());
+
+            AppTabContentModel description_1 = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, RowIds.rowId_description_1());
+            AppTabContentModel description_2 = new AppTabContentModel(BaseRecyclerViewAdapter.VT_GROUP_DEFAULT_DETAIL_RESTRICTED_DESCRIPTION_WEBVIEW, RowIds.rowId_description_2());
+
+            int index_1 = mRecyclerAdapter.indexOf(description_1);
+            int index_2 = mRecyclerAdapter.indexOf(description_2);
+
+            if(index_1 != -1) {
+                mRecyclerAdapter.notifyItemChanged(index_1);
             }
+            if(index_2 != -1) {
+                mRecyclerAdapter.notifyItemChanged(index_2);
+            }
+
         }
     }
 

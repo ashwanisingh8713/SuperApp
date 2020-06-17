@@ -19,6 +19,7 @@ import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 import com.netoperation.model.SelectedPrefModel;
+import com.ns.thpremium.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -54,7 +56,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> signup(@Body JsonObject logoutBody);
 
     @POST(UrlPath.logout)
-    Observable<JsonElement> logout(@Header("Authorization") String authorization, @Body JsonObject loginBody);
+    Observable<JsonElement> logout(@Header("Authorization") String authorization, @Header("Origin") String origin,  @Body JsonObject loginBody);
 
     @POST(UrlPath.userVerification)
     Observable<JsonElement> userVerification(@Body JsonObject userVerificationBody);

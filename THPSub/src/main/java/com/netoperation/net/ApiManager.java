@@ -39,6 +39,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.RetentionDef;
 import com.ns.model.PlanPage;
+import com.ns.thpremium.BuildConfig;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.THPConstants;
 
@@ -1897,7 +1898,11 @@ public class ApiManager {
      * @return
      */
     public static Observable<KeyValueModel> logout(Context context, String authorization, String userId, String siteId, String deviceId) {
-        return ServiceFactory.getServiceAPIs().logout(authorization, ReqBody.logout(userId, siteId, deviceId))
+        String origin = BuildConfig.ORIGIN_STAGING;
+        if(BuildConfig.IS_PRODUCTION) {
+            origin = BuildConfig.ORIGIN_PRODUCATION;
+        }
+        return ServiceFactory.getServiceAPIs().logout(authorization, origin, ReqBody.logout(userId, siteId, deviceId))
                 .subscribeOn(Schedulers.newThread())
                 .map(value -> {
                     KeyValueModel keyValueModel = new KeyValueModel();

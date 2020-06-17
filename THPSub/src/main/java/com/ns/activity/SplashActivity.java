@@ -195,6 +195,9 @@ public class SplashActivity extends BaseAcitivityTHP {
                         showProgressBar(getResources().getString(R.string.something_went_wrong));
                         Alerts.showSnackbar(SplashActivity.this, getResources().getString(R.string.something_went_wrong));
                     }
+
+                    Alerts.showErrorDailog(getSupportFragmentManager(), "This is Just for Testing !! ERROR !!", from);
+
                     isErrorOccured = true;
                     break;
                 case WHAT_READY_TO_LAUNCH:

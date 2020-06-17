@@ -1,32 +1,31 @@
-    ////////  widgetType  /////////////////////
-        SENSEX
 
-        MEDIA_FULL_SCR
+        ////////  widgetType  /////////////////////
+            SENSEX
 
-        MEDIA_INNER_PADDING
+            MEDIA_INNER_PADDING
 
-        TEXT
+            MEDIA_FULL_SCR
 
-        MEDIA_TEXT
+            TEXT
 
-        TITLE_TEXT
+            MEDIA_TEXT
 
-        MEDIA_TITLE_TIME
+            TITLE_TEXT
 
-        MEDIA_TextOverlay
+            MEDIA_TEXT_TIME
 
-    ////////  groupLayout  /////////////////////
+            MEDIA_TextOverlay
 
-        H-List
+        ////////  groupLayout  /////////////////////
 
-        Grid
+            H-List
 
-        Pager
-    /////////////////////////////////////////////
+            Grid
 
-     itemMargin = [Left, Top, Right, Bottom]
+            Pager
 
-     groupMargin = [Left, Top, Right, Bottom]
+        /////////////////////////////////////////////
 
+         itemMargin = [Left, Top, Right, Bottom]
 
-
+         groupMargin = [Left, Top, Right, Bottom]

@@ -371,8 +371,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                     else {
                         IntentUtil.openSingleDetailActivity(view.getContext(), NetConstants.G_DEFAULT_SECTIONS, bean, bean.getArticleLink());
                     }
-
-
                 }
             });
 
@@ -650,7 +648,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             holder.tv_city_name.setVisibility(View.VISIBLE);
             holder.tv_city_name.setText(location);
-
         }
 
         String timeToRead = bean.getTimeToRead();
@@ -692,8 +689,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 holder.shadowOverlay.setVisibility(View.GONE);
                 holder.tv_caption.setVisibility(View.GONE);
             }
-
-
         }
 
         // Banner Image Click Listener

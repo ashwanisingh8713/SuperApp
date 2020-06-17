@@ -58,7 +58,12 @@ public class SectionTextView extends AppCompatTextView {
                 return;
             }
 
+
             final ArticleTextColor articleTextColor = tableConfiguration.getAppTheme().getArticleText();
+
+            if(articleTextColor == null) {
+                return;
+            }
 
             // title
             if(textType == 5) {

@@ -90,7 +90,7 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
         else if(widgetIndex.getWidgetType().equalsIgnoreCase("TITLE_TEXT")) {
             return new W_Item_Title_Text_VH(inflater.inflate(R.layout.widget_item_title_text, parent, false));
         }
-        else if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA_TITLE_TIME")) {
+        else if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA_TEXT_TIME")) {
             return new W_Item_MediaTitleTime_VH(inflater.inflate(R.layout.widget_item_media_title_time, parent, false));
         }
         else if(widgetIndex.getWidgetType().equalsIgnoreCase("MEDIA_TextOverlay")) {
@@ -172,6 +172,9 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
             String imageUrl = bean.getIm_thumbnail_v2();
             if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
                 imageUrl = bean.getIm_thumbnail();
+            }
+            if (imageUrl == null || TextUtils.isEmpty(imageUrl)) {
+                imageUrl = "http://";
             }
             if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
                 PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mWidgetImageView, ContentUtil.getWidgetUrl(imageUrl));
