@@ -6,20 +6,20 @@
     android:orientation="vertical"
     android:paddingBottom="10dp">
 
-    <com.ns.view.text.ArticleTitleTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:textType="title"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:lineSpacingExtra="@dimen/text_line_spacing"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textColor="@color/color_191919_light"
         android:textIsSelectable="true"
         android:textSize="22sp"
         app:font_path="@string/THP_TundraOffc"
-        app:textType="M"/>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,13 +28,13 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:textType="author"
             android:text=""
             android:textSize="18sp"
-            app:textColor="@color/color_818181_light"
             app:font_path="@string/THP_TundraOffc"/>
 
     </LinearLayout>
@@ -46,36 +46,36 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/articleLocationTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:textType="time"
             android:textSize="14sp"
-            app:textColor="@color/color_818181_light"
             app:font_path="@string/THP_FiraSans_Regular"
             />
 
-        <com.ns.view.text.ArticleTitleTextView
+        <com.ns.view.text.SectionTextView
             android:id="@+id/createdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:textType="time"
             android:paddingLeft="2dp"
             android:textSize="14sp"
-            app:textColor="@color/color_818181_light"
             app:font_path="@string/THP_FiraSans_Regular"
             />
 
     </LinearLayout>
 
 
-    <com.ns.view.text.ArticleTitleTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/updated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:textType="time"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:textSize="14sp"
-        app:textColor="@color/color_818181_light"
         app:font_path="@string/THP_FiraSans_Regular"/>
 
     <FrameLayout
@@ -107,17 +107,18 @@
 
     </FrameLayout>
 
-    <com.ns.view.text.CustomTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:textType="time"
         android:paddingLeft="8dp"
         android:paddingTop="7dp"
         android:paddingRight="8dp"
         android:paddingBottom="7dp"
         android:textSize="10sp"
         app:font_path="@string/THP_TundraOffc"
-        app:textColor="@color/text_caption_color" />
+        />
 
     <View
         android:id="@+id/captiondevider"

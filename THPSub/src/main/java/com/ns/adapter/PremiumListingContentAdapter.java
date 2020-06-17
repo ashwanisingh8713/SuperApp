@@ -88,14 +88,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
     private String mUserId;
     private boolean isFetchingDataFromServer;
 
-    /**
-     * This holds description webview position in recyclerview.
-     * This is being used to notify recyclerview on TextSize change.
-     */
-    private int mDescriptionItemPosition;
-    private int mDescriptionTextSize;
-
-
     private Snackbar snackbar;
 
     public Snackbar getSnackbar() {
@@ -747,7 +739,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void premium_ui_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean, int position) {
         PREMIUM_DetailDescriptionWebViewHolder holder = (PREMIUM_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
+        int mDescriptionTextSize = DefaultPref.getInstance(holder.mLeadTxt.getContext()).getDescriptionSize();
 
         // Enabling Weblink click on Lead Text
         new WebViewClientForArticleDetail(true).linkClick(holder.mLeadTxt, holder.itemView.getContext(), null);
@@ -763,8 +755,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.webview.loadDataWithBaseURL("https:/", THP_AutoResizeWebview.premium_WebTextDescription(holder.webview.getContext(), bean.getDescription(), false),
                 "text/html", "UTF-8", null);
-
-        mDescriptionItemPosition = position;
 
     }
 
@@ -1065,7 +1055,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
     private void dg_ui_detail_description(RecyclerView.ViewHolder viewHolder, AppTabContentModel item) {
         ArticleBean bean = item.getBean();
         DG_DetailDescriptionWebViewHolder holder = (DG_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        int mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
 
         String fullDescription = bean.getDescription();
 
@@ -1098,7 +1088,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
      */
     private void dg_ui_restricted_detail_description(RecyclerView.ViewHolder viewHolder, ArticleBean bean) {
         DG_Restricted_DetailDescriptionWebViewHolder holder = (DG_Restricted_DetailDescriptionWebViewHolder) viewHolder;
-        mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
+        int mDescriptionTextSize = DefaultPref.getInstance(holder.itemView.getContext()).getDescriptionSize();
 
         holder.webview.setSize(mDescriptionTextSize);
 
@@ -1522,13 +1512,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
     }
 
-    public int getDescriptionItemPosition() {
-        return mDescriptionItemPosition;
-    }
-
-    public int getLastDescriptionTextSize() {
-        return mDescriptionTextSize;
-    }
 
     private OnEditionBtnClickListener mOnEditionBtnClickListener;
 

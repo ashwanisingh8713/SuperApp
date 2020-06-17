@@ -90,38 +90,24 @@
       }
     ],
     "appTheme": {
-      "textColors": {
-        "dark": {
-          "XL": "#000000",
-          "L": "#000000",
-          "M": "#000000",
-          "S": "#818181",
-          "XS": "#818181",
-          "detailpageText": "#000000"
-        },
-        "light": {
-          "XL": "#ffffff",
-          "L": "#ffffff",
-          "M": "#ffffff",
-          "S": "#818181",
-          "XS": "#818181",
-          "detailpageText": "#ffffff"
-        }
-      },
       "articleText" : {
         "dark" : {
           "title" : "#85E766",
           "time" : "#818181",
           "author" : "#818181",
           "section" : "#818181",
-          "detail" : "#818181"
+          "detail" : "#E73A31",
+          "link" : "#2435E7",
+          "lead" : "#37E7B9"
         },
         "light" : {
           "title" : "#85E766",
           "time" : "#E7DD1E",
           "author" : "#38B4E7",
           "section" : "#D678E7",
-          "detail" : "#2435E7"
+          "detail" : "#E7E34C",
+          "link" : "#72E71F",
+          "lead" : "#E738D3"
         }
       },
       "tilesBg": {
@@ -130,7 +116,7 @@
       },
       "screenBg": {
         "dark": "#191919",
-        "light": "#ffffff"
+        "light": "#E7573A"
       },
       "topBarBg": {
         "dark": "#000000",
@@ -182,7 +168,7 @@
         "secId": "142",
         "index": "5",
         "itemCount" : "7",
-        "widgetType": "TEXT",
+        "widgetType": "MEDIA_TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
         "actionIconRequired" : "true",
