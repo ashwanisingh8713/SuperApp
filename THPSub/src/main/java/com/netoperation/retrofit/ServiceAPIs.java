@@ -116,7 +116,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> setPersonalise(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject updateProfile);
 
     @POST(UrlPath.getPersonalise)
-    Observable<SelectedPrefModel> getPersonalise(@Header("Origin") String origin,@Body JsonObject updateProfile);
+    Observable<SelectedPrefModel> getPersonalise(@Header("Authorization") String authorization, @Header("Origin") String origin,@Body JsonObject updateProfile);
 
     @GET(UrlPath.getTxnHistory)
     Observable<JsonElement> getTxnHistory(@Header("Authorization") String authorization,  @Header("Origin") String origin, @Query("userid") String userid, @Query("pageno") String pageno, @Query("siteId") String siteId, @Query("requestSource") String requestSource);

@@ -2112,12 +2112,12 @@ public class ApiManager {
                 );
     }
 
-    public static Observable<PrefListModel> getUserSavedPersonalise(String userId, String siteId, String deviceId) {
+    public static Observable<PrefListModel> getUserSavedPersonalise(String authorization, String userId, String siteId, String deviceId) {
         String origin = BuildConfig.ORIGIN_STAGING;
         if(BuildConfig.IS_PRODUCTION) {
             origin = BuildConfig.ORIGIN_PRODUCATION;
         }
-        return ServiceFactory.getServiceAPIs().getPersonalise(origin, ReqBody.getUserPreference(userId, siteId, deviceId))
+        return ServiceFactory.getServiceAPIs().getPersonalise(authorization, origin, ReqBody.getUserPreference(userId, siteId, deviceId))
                 .subscribeOn(Schedulers.newThread())
                 .map(selectedPrefModel -> {
 
