@@ -129,7 +129,7 @@ public interface ServiceAPIs {
     Observable<PlanRecoModel> getRecommendedPlan(@Header("Origin") String origin, @Query("siteid") String siteid, @Query("tagid") String tagid,
                                                  @Query("isInd") String isInd, @Query("isPlt") String isPlt);
     @POST(UrlPath.createSubscription)
-    Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Body JsonObject subscriptionBody);
+    Observable<JsonElement> createSubscription(@Header("Authorization") String authorization, @Header("Origin") String origin, @Body JsonObject subscriptionBody);
 
     @POST("")
     Observable<JsonElement> getChecksumHash(@Url String url, @Body JsonObject checksumHashAPIBody);
