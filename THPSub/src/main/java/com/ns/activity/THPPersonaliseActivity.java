@@ -225,7 +225,7 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
 
     private void getUserSavedPersonalise(String userId) {
         mDisposable.add(
-                ApiManager.getUserSavedPersonalise(userId, BuildConfig.SITEID, ResUtil.getDeviceId(this))
+                ApiManager.getUserSavedPersonalise(mUserProfile.getAuthorization(), userId, BuildConfig.SITEID, ResUtil.getDeviceId(this))
                         .map(prefListModel -> {
                     mPrefListModel = prefListModel;
                     getAllPersonalise();

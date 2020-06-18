@@ -23,9 +23,6 @@ android {
         multiDexEnabled true
         //Staging / Production Switch
         buildConfigField "boolean", "IS_PRODUCTION", "true"
-
-
-        buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
         buildConfigField "String", "LOCALE", "\"en\""
 
         buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
@@ -115,8 +112,9 @@ android {
             buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
 
             buildConfigField "String", "SITEID", "\"THB-KGYI42\""
-            buildConfigField "String", "ORIGIN_PRODUCATION", "\"thehindubusinessline.com\""
+            buildConfigField "String", "ORIGIN_PRODUCATION", "\"https://www.thehindubusinessline.com\""
             buildConfigField "String", "ORIGIN_STAGING", "\"tai.businessline.in\""
+            buildConfigField "String", "ORIGIN_URL", "\"www.thehindubusinessline.com\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
@@ -171,8 +169,9 @@ android {
             buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
 
             buildConfigField "String", "SITEID", "\"TRC-J3AFTO\""
-            buildConfigField "String", "ORIGIN_PRODUCATION", "\"thehindu.com\""
+            buildConfigField "String", "ORIGIN_PRODUCATION", "\"https://www.thehindu.com\""
             buildConfigField "String", "ORIGIN_STAGING", "\"tai.thehindu.co.in\""
+            buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""

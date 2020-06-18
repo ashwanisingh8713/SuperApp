@@ -450,7 +450,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     private void getUserSavedPersonalise(String userId) {
         mDisposable.add(
-                ApiManager.getUserSavedPersonalise(userId, BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()))
+                ApiManager.getUserSavedPersonalise(mUserProfile.getAuthorization(), userId, BuildConfig.SITEID, ResUtil.getDeviceId(getActivity()))
                         .map(mPrefListModel ->{
                             boolean hasPreference = false;
                             if(mPrefListModel != null) {

@@ -36,6 +36,7 @@ import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.NetUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SocialLoginUtil;
 import com.ns.utils.StringUtils;
@@ -406,7 +407,11 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                                             }, throwable -> {
                                                 enableButton(true, false);
                                                 if(getView() != null && getActivity() != null) {
-                                                    Alerts.noConnectionSnackBar(getView(), (AppCompatActivity) getActivity());
+                                                    if (!NetUtils.isConnected(getActivity())) {
+                                                        Alerts.noConnectionSnackBar(getView(), (AppCompatActivity) getActivity());
+                                                    } else {
+                                                        Alerts.showSnackbar(getActivity(), throwable.getMessage());
+                                                    }
                                                 }
                                             }, () -> {
                                                 enableButton(true, false);
@@ -417,7 +422,9 @@ public class SignInFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                             }, throwable -> {
                                 if (getActivity() != null && getView() != null) {
                                     enableButton(true, false);
-                                    if(getView() != null && getActivity() != null) {
+                                    if (!NetUtils.isConnected(getActivity())) {
+                                        Alerts.noConnectionSnackBar(getView(), (AppCompatActivity) getActivity());
+                                    } else {
                                         Alerts.showSnackbar(getActivity(), getResources().getString(R.string.something_went_wrong));
                                     }
                                 }
