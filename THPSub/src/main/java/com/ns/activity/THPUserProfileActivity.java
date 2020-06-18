@@ -168,7 +168,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 //Load user info details whenever returned from payment page
                 //getUserInfoApiCall();
                 showProgressDialog("\nVerifying transaction status ...");
-                ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
+                mDisposable.add(ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                         ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                         PremiumPref.getInstance(this).getLoginTypeId(),
                         PremiumPref.getInstance(this).getLoginPasswd())
@@ -192,7 +192,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                             hideProgressDialog();
                             TxnStatusFragment fragment = TxnStatusFragment.getInstance("pending", "Verifying transaction failed");
                             FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
-                        });
+                        }));
 
             } else if (resultCode == RESULT_CANCELED) {
                 //Load user info details whenever returned from payment page
@@ -474,7 +474,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                 .subscribe(paytmTransactionStatus -> {
                     //hideProgressDialog();
                     //getUserInfoApiCall();
-                    ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
+                    mDisposable.add(ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                             ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                             PremiumPref.getInstance(this).getLoginTypeId(),
                             PremiumPref.getInstance(this).getLoginPasswd())
@@ -517,7 +517,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                 }
                                 FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
 
-                            });
+                            }));
                 }, throwable -> {
                     hideProgressDialog();
                     //Handle Error and network interruption
@@ -528,11 +528,11 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     }
 
     private void getUserInfoApiCall() {
-        ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
+        mDisposable.add(ApiManager.getUserInfo(this, mUserProfile.getAuthorization(), BuildConfig.SITEID,
                 ResUtil.getDeviceId(this), mUserProfile.getUserId(),
                 PremiumPref.getInstance(this).getLoginTypeId(),
                 PremiumPref.getInstance(this).getLoginPasswd())
-                .subscribe();
+                .subscribe());
     }
 
     private void paytmIntegration(PaytmModel paytmModel) {
