@@ -112,7 +112,7 @@ public class SectionSideWork {
     }
 
     public void addTaboolaAdsBeans(AdData adData) {
-        if(this.taboolaAdsBeans == null) {
+        if (this.taboolaAdsBeans == null) {
             this.taboolaAdsBeans = new ArrayList<>();
         }
         this.taboolaAdsBeans.add(adData);
@@ -123,66 +123,67 @@ public class SectionSideWork {
     }
 
     public void addDfpAdsBeans(AdData adData) {
-        if(this.dfpAdsBeans == null) {
+        if (this.dfpAdsBeans == null) {
             this.dfpAdsBeans = new ArrayList<>();
         }
         this.dfpAdsBeans.add(adData);
     }
 
     private void getStaticPage() {
-            THPDB.getInstance(SuperApp.getAppContext())
-                    .daoSection().getStaticPage(mSectionId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(staticPageUrlBean -> {
-                        mStaticPageBean = staticPageUrlBean;
-                    }, throwable -> {
-                        Log.i("", "");
-                    });
-        }
+        THPDB.getInstance(SuperApp.getAppContext())
+                .daoSection().getStaticPage(mSectionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(staticPageUrlBean -> {
+                    mStaticPageBean = staticPageUrlBean;
+                }, throwable -> {
+                    Log.i("", "");
+                });
+    }
 
     private void getSubsections() {
-            Observable.just(mSectionId)
-                    .subscribeOn(Schedulers.io())
-                    .map(secId -> {
-                        THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
-                        DaoSection daoSection = thpdb.daoSection();
-                        return daoSection.getSubSections(secId).getSubSections();
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(val -> {
-                        mSubSections = val;
-                    }, throwable -> {
+        Observable.just(mSectionId)
+                .subscribeOn(Schedulers.io())
+                .map(secId -> {
+                    THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
+                    DaoSection daoSection = thpdb.daoSection();
+                    return daoSection.getSubSections(secId).getSubSections();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(val -> {
+                    mSubSections = val;
+                }, throwable -> {
 
-                    });
+                });
     }
 
 
     /**
      * It only send request to server to get Widget Data,
      * but shows in
-     * @see  com.ns.contentfragment.SectionFragment#showHomeWidgetsFromObservable()
+     *
+     * @see com.ns.contentfragment.SectionFragment#showHomeWidgetsFromObservable()
      */
     private void homeWidgetIdTypeMap() {
-            final THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
-            DaoWidget daoWidget = thpdb.daoWidget();
-            daoWidget.getWidgetsSingle()
-                    .subscribeOn(Schedulers.io())
-                    .map(widgets -> {
-                        mWidgetsIdTypeMap = new HashMap<>();
-                        for (TableWidget widget : widgets) {
-                            mWidgetsIdTypeMap.put(widget.getSecId(), widget.getType());
-                        }
-                        return "";
-                    })
-                    .subscribe();
+        final THPDB thpdb = THPDB.getInstance(SuperApp.getAppContext());
+        DaoWidget daoWidget = thpdb.daoWidget();
+        daoWidget.getWidgetsSingle()
+                .subscribeOn(Schedulers.io())
+                .map(widgets -> {
+                    mWidgetsIdTypeMap = new HashMap<>();
+                    for (TableWidget widget : widgets) {
+                        mWidgetsIdTypeMap.put(widget.getSecId(), widget.getType());
+                    }
+                    return "";
+                })
+                .subscribe();
 
 
-        }
+    }
 
 
     public void sendRequestToGetHomeWidgetFromServer() {
-        if(getWidgetsIdTypeMap() != null) {
+        if (getWidgetsIdTypeMap() != null) {
             DefaultTHApiManager.widgetContent(SuperApp.getAppContext(), getWidgetsIdTypeMap());
         }
     }
@@ -195,25 +196,17 @@ public class SectionSideWork {
 
     private SectionAdapterItem widgetItemGroup(String widgetType, String groupLayout, String sectionId) {
         SectionAdapterItem item = null;
-        if((widgetType != null && widgetType.equalsIgnoreCase("SENSEX")) || (groupLayout != null && groupLayout.equalsIgnoreCase("SENSEX"))) {
+        if ((widgetType != null && widgetType.equalsIgnoreCase("SENSEX")) || (groupLayout != null && groupLayout.equalsIgnoreCase("SENSEX"))) {
             item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_BL_SENSEX, RowIds.rowId_sensexWidget());
             item.setSensexData(new SensexData());
-        }
-        else if(groupLayout != null && groupLayout.equalsIgnoreCase("H-List")) {
+        } else if (groupLayout != null && groupLayout.equalsIgnoreCase("H-List")) {
             item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
-            item.setSensexData(new SensexData());
-        }
-        else if(groupLayout != null && groupLayout.equalsIgnoreCase("GRID")) {
+        } else if (groupLayout != null && groupLayout.equalsIgnoreCase("GRID")) {
             item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_GRID, RowIds.rowId_widget(sectionId));
-            item.setSensexData(new SensexData());
-        }
-        else if(groupLayout != null && groupLayout.equalsIgnoreCase("PAGER")) {
+        } else if (groupLayout != null && groupLayout.equalsIgnoreCase("PAGER")) {
             item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
-            item.setSensexData(new SensexData());
-        }
-        else {
+        } else {
             item = new SectionAdapterItem(BaseRecyclerViewAdapter.WIDGET_LAYOUT_H_LIST, RowIds.rowId_widget(sectionId));
-            item.setSensexData(new SensexData());
         }
 
 
@@ -222,18 +215,18 @@ public class SectionSideWork {
 
     public void indexConfig(SectionContentAdapter mRecyclerAdapter, boolean isDayTheme) {
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration == null) {
+        if (tableConfiguration == null) {
             return;
         }
 
         // Widget Index
-        if(mSectionId.equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
+        if (mSectionId.equalsIgnoreCase(NetConstants.RECO_HOME_TAB)) {
             List<WidgetIndex> widgetIndices = tableConfiguration.getWidget();
             for (WidgetIndex widgetIndex : widgetIndices) {
 
                 SectionAdapterItem item = widgetItemGroup(widgetIndex.getWidgetType(), widgetIndex.getGroupLayout(), widgetIndex.getSecId());
 
-                if(item == null){
+                if (item == null) {
                     continue;
                 }
                 int index = widgetIndex.getIndex();
@@ -244,7 +237,7 @@ public class SectionSideWork {
         }
 
         // Ads Index
-        if(!PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() && BaseAcitivityTHP.sIsOnline ) {
+        if (!PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() && BaseAcitivityTHP.sIsOnline) {
             for (ListingPageAdsBean pageAdsBean : tableConfiguration.getAds().getListingPageAds()) {
                 AdData adsBean = new AdData(pageAdsBean.getIndex(), pageAdsBean.getAdId());
                 adsBean.setType(pageAdsBean.getType());
@@ -270,52 +263,41 @@ public class SectionSideWork {
         }
 
         // Static Web Page Index
-        if(getStaticPageBean() != null && getStaticPageBean().isIsEnabled() && getStaticPageBean().getPosition() > -1 && BaseAcitivityTHP.sIsOnline) {
-                final String itemRowId = RowIds.rowId_staticWebPage(mSectionId, getStaticPageBean().getPosition());
-                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
-                IndexArrange staticArrange = new IndexArrange(getStaticPageBean().getPosition(), item);
-                indexArranges.add(staticArrange);
+        if (getStaticPageBean() != null && getStaticPageBean().isIsEnabled() && getStaticPageBean().getPosition() > -1 && BaseAcitivityTHP.sIsOnline) {
+            final String itemRowId = RowIds.rowId_staticWebPage(mSectionId, getStaticPageBean().getPosition());
+            SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_WEB_WIDGET, itemRowId);
+            IndexArrange staticArrange = new IndexArrange(getStaticPageBean().getPosition(), item);
+            indexArranges.add(staticArrange);
         }
 
         // Sub-Section Index
-        if(getSubSections() != null && getSubSections().size() > 0) {
-            String indexStr = tableConfiguration.getSubSectionsIndex();
-            if(!ResUtil.isEmpty(indexStr)) {
-                try {
-                    Integer index = Integer.parseInt(indexStr);
-                    if(index == -1) {
-                        index = 3;
-                    }
-                    String rowItemId = "subsection_" + mSectionId;
-                    SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_THD_HORIZONTAL_LIST, rowItemId);
-                    IndexArrange subsectionArrange = new IndexArrange(index, item);
-                    indexArranges.add(subsectionArrange);
-                } catch (Exception e) {
-
+        if (getSubSections() != null && getSubSections().size() > 0) {
+            int index = tableConfiguration.getSubSection().getIndex();
+            if (index > -1) {
+                String rowItemId = RowIds.rowId_subSection(mSectionId);
+                SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.SUBSECTION_LAYOUT_H_LIST, rowItemId);
+                if (tableConfiguration.getSubSection().getGroupLayout() != null && tableConfiguration.getSubSection().getGroupLayout().equalsIgnoreCase("GRID")) {
+                    item = new SectionAdapterItem(BaseRecyclerViewAdapter.SUBSECTION_LAYOUT_GRID, rowItemId);
                 }
+                IndexArrange subsectionArrange = new IndexArrange(index, item);
+                indexArranges.add(subsectionArrange);
             }
         }
-
         Collections.sort(indexArranges);
-
-
         loadForAnotherPage(mRecyclerAdapter);
-
-
     }
 
 
     public void loadForAnotherPage(SectionContentAdapter mRecyclerAdapter) {
         Iterator i = indexArranges.iterator();
         while (i.hasNext()) {
-            IndexArrange indexArrange = (IndexArrange)i.next();
+            IndexArrange indexArrange = (IndexArrange) i.next();
             boolean isInserted = mRecyclerAdapter.insertItemAfterArrangingIndex(indexArrange.adapterItem, indexArrange.getIndex());
-            if(isInserted) {
+            if (isInserted) {
                 i.remove();
             }
         }
     }
-
 
 
     private static class IndexArrange implements Comparable<IndexArrange> {

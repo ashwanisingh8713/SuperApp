@@ -71,7 +71,6 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@id/shareIV"
-                android:background="@drawable/ic_bookmark_unselected"
                 android:scaleType="centerInside"
                 android:visibility="gone"
                 android:layout_centerVertical="true"/>

@@ -117,13 +117,11 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
         app:iconType="search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/action_premiumLogoBtn"
         app:layout_constraintRight_toLeftOf="@id/action_premiumLogoBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search_w"
         android:visibility="gone"/>
     <!-- End Search Icon-->
 
@@ -146,7 +144,7 @@
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_switch_off_copy" />
+            />
 
         <ProgressBar
             android:id="@+id/action_likeTHPProgressBar"
@@ -235,7 +233,7 @@
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_like_selected" />
+            />
 
         <ProgressBar
             android:id="@+id/action_favTHPProgressBar"
@@ -254,9 +252,7 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
         android:scaleType="center"
-        android:src="@drawable/ic_share_article"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/favouriteParent"
         app:layout_constraintTop_toTopOf="parent"
@@ -274,7 +270,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
         android:visibility="gone">
 
         <com.ns.view.img.TopbarIconView

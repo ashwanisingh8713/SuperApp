@@ -172,6 +172,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     getDrawerStaticItem();
 
                 }));
+
     }
 
 

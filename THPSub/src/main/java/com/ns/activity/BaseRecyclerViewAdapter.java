@@ -70,6 +70,9 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int WIDGET_LAYOUT_GRID = 302;
     public static final int WIDGET_LAYOUT_PAGER = 303;
 
+    public static final int SUBSECTION_LAYOUT_H_LIST = 401;
+    public static final int SUBSECTION_LAYOUT_GRID = 402;
+
     public static final int GroupHeader_MEDIA_ActionAtLeft = 201;
     public static final int GroupHeader_MEDIA_ActionAtCenter = 202;
 
@@ -168,24 +171,13 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
                     }
                     imageView1.setVisibility(View.VISIBLE);
                     imageView1.setEnabled(true);
-                    if(THPConstants.IS_USE_SEVER_THEME) {
-                        if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
-                            // 3 = app:iconType="bookmarked"
-                            imageView1.updateIcon(3);
-                        } else {
-                            // 4 = app:iconType="unbookmark"
-                            imageView1.updateIcon(4);
-                        }
+                    if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
+                        // 3 = app:iconType="bookmarked"
+                        imageView1.updateIcon(3);
+                    } else {
+                        // 4 = app:iconType="unbookmark"
+                        imageView1.updateIcon(4);
                     }
-                    else {
-                        if (bean1.getArticleId() != null && bean1.getArticleId().equals(articleBean.getArticleId())) {
-                            imageView1.setImageResource(R.drawable.ic_bookmark_selected);
-                        } else {
-                            imageView1.setImageResource(R.drawable.ic_bookmark_unselected);
-                        }
-                    }
-
-
                 }, val -> {
                     Log.i("", "");
                 });

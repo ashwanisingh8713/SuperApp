@@ -88,38 +88,54 @@ public class THP_AutoResizeWebview extends WebView {
         if(description == null) {
             description = "";
         }
-        final boolean isUserThemeDay = DefaultPref.getInstance(context).isUserThemeDay();
-        String bodyCSS = "color: #000; background-color: #ffffff;";
-        String urlColor = "";
-        if(isUserThemeDay) {
-            bodyCSS = "color: #000; background-color: #ffffff;";
-            urlColor = "";
-        }
-        else {
-            bodyCSS = "color: #fff; background-color: #181818;";
-            urlColor = "a {color: #ffffff;}a:visited {color: #ffffff;}";
+        String bgColor = "#181818";
+        String descriptionTextColor = "#ffffff";
+        String leadColor = "#ffffff";
+        String linkColor = "#2435E7";
+        String linkVisitedColor = "#45E760";  // green
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration != null) {
+            ColorOptionBean screenBg = tableConfiguration.getAppTheme().getScreenBg();
+            ArticleTextColor articleTextColor = tableConfiguration.getAppTheme().getArticleText();
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                descriptionTextColor = articleTextColor.getLight().getDetail();
+                linkColor = articleTextColor.getLight().getLink();
+                leadColor = articleTextColor.getLight().getLead();
+                bgColor = screenBg.getLight();
+            } else {
+                descriptionTextColor = articleTextColor.getDark().getDetail();
+                linkColor = articleTextColor.getDark().getLink();
+                leadColor = articleTextColor.getDark().getLead();
+                bgColor = screenBg.getDark();
+            }
         }
 
-//        String font = "THP_FiraSans-Regular.ttf";
-        String font = "THP_TundraOffc.ttf";
+        String fontPath = context.getResources().getString(R.string.THP_TundraOffc);
 
-        if(isItalic) {
-            font = "THP_TundraOffc-Italic.ttf";
-        }
-        return "<html><head>"
-                + "<style type=\"text/css\">body{" +
-                bodyCSS  +
+        String leadText = "";
+
+        return description = "<html><head>"
+                + "<style type=\"text/css\">body{color: " +
+                descriptionTextColor +
+                "; background-color: " +
+                bgColor +
                 ";}" +
                 "@font-face {\n" +
                 "   font-family: 'tundra';\n" +
-                "   src: url('file:///android_asset/fonts/" +
-                font +
+                "   src: url('file:///android_asset/" +
+                fontPath +
                 "');" +
                 "} " +
                 "body {font-family: 'tundra';}"
-                +urlColor
-                + "</style></head>"
+                + "a {color: " +
+                linkColor +
+                ";}a:visited {color: " +
+                linkVisitedColor +
+                ";}</style></head>"
                 + "<body>"
+                + "<i> " + "<font color=\"" +
+                leadColor +
+                "\">" + leadText + "</font></i>"
                 + description
                 + "</body></html>";
 

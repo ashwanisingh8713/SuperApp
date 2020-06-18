@@ -15,6 +15,7 @@ import com.netoperation.model.RecomendationData;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionContentFromServer;
+import com.netoperation.model.USPData;
 import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
@@ -207,6 +208,9 @@ public interface ServiceAPIs {
 
     @GET("") //Menu Sequence API
     Single<JsonElement> getMenuSequence(@Url String url);
+
+    @POST("") //Menu Sequence API
+    Observable<USPData> getUSP(@Url String url, @Body JsonObject jsonObject);
 
 
 }

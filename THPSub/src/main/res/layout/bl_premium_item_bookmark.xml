@@ -101,7 +101,7 @@
                 android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@drawable/ic_bookmark_unselected" />
+                />
 
             <ProgressBar
                 android:id="@+id/bookmarkProgressBar"
@@ -113,7 +113,7 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@drawable/ic_bookmark_unselected" />
+                />
 
             <com.ns.view.img.TopbarIconView
                 android:id="@+id/share_Img"
@@ -124,7 +124,7 @@
                 app:iconType="share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
-                app:srcCompat="@drawable/ic_share_article" />
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

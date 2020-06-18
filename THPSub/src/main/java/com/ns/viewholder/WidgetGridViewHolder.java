@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ns.thpremium.R;
@@ -19,6 +20,7 @@ public class WidgetGridViewHolder extends RecyclerView.ViewHolder {
     public TextView groupActionCenter;
     public TextView groupActionRight;
     public CardView cardView;
+    public ConstraintLayout innerParent;
 
 
     public WidgetGridViewHolder(@NonNull View itemView) {
@@ -31,6 +33,7 @@ public class WidgetGridViewHolder extends RecyclerView.ViewHolder {
         groupActionCenter = itemView.findViewById(R.id.groupActionCenterBottom);
         groupActionRight = itemView.findViewById(R.id.groupActionRightBottom);
         cardView = itemView.findViewById(R.id.groupCardView);
+        innerParent = itemView.findViewById(R.id.innerParent);
     }
 
 }

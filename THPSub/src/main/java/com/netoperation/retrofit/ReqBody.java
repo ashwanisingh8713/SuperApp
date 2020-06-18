@@ -13,6 +13,13 @@ public class ReqBody {
 
     public static final String REQUEST_SOURCE = "app";
 
+    public static JsonObject ups( String packageName, String resolution) {
+        JsonObject object = new JsonObject();
+        object.addProperty("packageName", packageName);
+        object.addProperty("resolution", resolution);
+        return object;
+    }
+
     public static JsonObject configuration(String environment, String packageName, String resolution) {
         JsonObject object = new JsonObject();
         object.addProperty("packageName", packageName);

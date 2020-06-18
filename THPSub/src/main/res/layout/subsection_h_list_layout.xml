@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.Tile_CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/innerParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/widget_group_padding_top"
+        android:paddingBottom="@dimen/widget_group_padding_bottom"
+        >
+
+        <ImageView
+            android:id="@+id/groupHeaderIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingRight="7dp"
+            android:src="@drawable/ic_section_marker"
+            app:layout_constraintBottom_toBottomOf="@+id/groupHeaderTxt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/groupHeaderTxt"
+            android:layout_marginStart="@dimen/widget_group_padding_left"/>
+
+        <com.ns.view.text.ArticleTitleTextView
+            android:id="@+id/groupHeaderTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            app:font_path="@string/THP_FiraSans_SemiBold"
+            app:layout_constraintStart_toEndOf="@+id/groupHeaderIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="HEADER" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/groupRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groupHeaderTxt" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.ns.view.Tile_CardView>

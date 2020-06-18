@@ -283,6 +283,20 @@ public class Converters {
     }
 
 
+    @TypeConverter
+    public static String widgetIndexToString(WidgetIndex widgetIndex) {
+        Gson gson = new Gson();
+        String json = gson.toJson(widgetIndex);
+        return json;
+    }
+
+    @TypeConverter
+    public static WidgetIndex stringToWidgetIndex(String value) {
+        Type listType = new TypeToken<WidgetIndex>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+
     /////////////////////////// Start List<OptionsBean>
     @TypeConverter
     public static List<TableOptional.OptionsBean> stringToOptionsBeanList(String value) {

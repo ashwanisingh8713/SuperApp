@@ -58,6 +58,8 @@ import com.ns.viewholder.LoadMoreViewHolder;
 import com.ns.viewholder.SearchRecyclerHolder;
 import com.ns.viewholder.SensexViewHolder;
 import com.ns.viewholder.StaticItemWebViewHolder;
+import com.ns.viewholder.SubSectionGridViewHolder;
+import com.ns.viewholder.SubSectionListViewHolder;
 import com.ns.viewholder.TaboolaNativeAdViewHolder;
 import com.ns.viewholder.WidgetGridViewHolder;
 import com.ns.viewholder.WidgetListViewHolder;
@@ -194,6 +196,13 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             return new WidgetPagerViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.widget_pager_layout, viewGroup, false));
         }
+        else if (viewType == SUBSECTION_LAYOUT_H_LIST) {
+            return new SubSectionListViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.subsection_h_list_layout, viewGroup, false));
+        } else if (viewType == SUBSECTION_LAYOUT_GRID) {
+            return new SubSectionGridViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.subsection_grid_layout, viewGroup, false));
+        }
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
@@ -223,6 +232,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             su_WidgetGrid(holder, item, position);
         } else if(holder instanceof WidgetPagerViewHolder) {
             su_WidgetPager(holder, item, position);
+        } else if (holder instanceof SubSectionListViewHolder) {
+            subSectionHList(holder, item, position);
+        } else if (holder instanceof SubSectionGridViewHolder) {
+            subSectionGrid(holder, item, position);
         }
     }
 
@@ -237,7 +250,107 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             final int position = widgetsViewHolder.getAdapterPosition();
             int firstVisiblePosition = ((LinearLayoutManager)(widgetsViewHolder.groupRecyclerView.getLayoutManager())).findFirstVisibleItemPosition();
             positionList.put(position, firstVisiblePosition);
+        }
+    }
 
+    private void subSectionGrid(final RecyclerView.ViewHolder viewHolder, SectionAdapterItem item, int verticleItemPosition) {
+        SubSectionGridViewHolder holder = (SubSectionGridViewHolder) viewHolder;
+
+        ExploreAdapter adapter = item.getExploreAdapter();
+        if (adapter == null || adapter.getItemCount() == 0) {
+            return;
+        }
+
+        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) holder.groupRecyclerView.getLayoutParams();
+        List<Integer> layoutPadding = adapter.getWidgetIndex().getGroupMargin();
+
+        if(layoutPadding != null && layoutPadding.size() == 4) {
+            itemParams.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)));
+        }
+
+        // Setting Radius
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupRadius()));
+        // Setting Elevation
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
+
+        WidgetIndex widgetIndex = adapter.getWidgetIndex();
+
+        boolean iconRequired = widgetIndex.isActionIconRequired();
+        boolean headerRequired = widgetIndex.isGroupHeaderRequired();
+        String actionTitle = widgetIndex.getActionTitle();
+
+        holder.groupHeaderTxt.setText(actionTitle);
+
+        if (iconRequired && headerRequired) {
+            holder.groupHeaderIcon.setVisibility(View.VISIBLE);
+        } else {
+            holder.groupHeaderIcon.setVisibility(View.GONE);
+        }
+        holder.groupRecyclerView.setAdapter(adapter);
+
+        if(adapter.getWidgetIndex().isGroupOuterLineRequired()) {
+            holder.innerParent.setBackground(ResUtil.getBackgroundDrawable(holder.itemView.getResources(), R.drawable.cartoon_border));
+        } else {
+            holder.innerParent.setBackground(null);
+        }
+
+
+    }
+
+    private void subSectionHList(final RecyclerView.ViewHolder viewHolder, SectionAdapterItem item, int verticleItemPosition) {
+        SubSectionListViewHolder holder = (SubSectionListViewHolder) viewHolder;
+
+        ExploreAdapter adapter = item.getExploreAdapter();
+        if (adapter == null || adapter.getItemCount() == 0) {
+            return;
+        }
+
+        RecyclerView.LayoutParams itemParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        ConstraintLayout.LayoutParams recyclerParams = (ConstraintLayout.LayoutParams) holder.groupRecyclerView.getLayoutParams();
+        List<Integer> layoutPadding = adapter.getWidgetIndex().getGroupMargin();
+
+        if(layoutPadding != null && layoutPadding.size() == 4) {
+            itemParams.setMargins((int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(0)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(1)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(2)),
+                    (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)));
+            recyclerParams.setMargins(0, 0, (int)ResUtil.pxFromDp(holder.itemView.getContext(), layoutPadding.get(3)), 0);
+        }
+
+        // Setting Radius
+        holder.cardView.setRadius((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupRadius()));
+        // Setting Elevation
+        holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
+
+        WidgetIndex widgetIndex = adapter.getWidgetIndex();
+
+        boolean iconRequired = widgetIndex.isActionIconRequired();
+        boolean headerRequired = widgetIndex.isGroupHeaderRequired();
+        String actionTitle = widgetIndex.getActionTitle();
+
+        holder.groupHeaderTxt.setText(actionTitle);
+
+        if (iconRequired && headerRequired) {
+            holder.groupHeaderIcon.setVisibility(View.VISIBLE);
+        } else {
+            holder.groupHeaderIcon.setVisibility(View.GONE);
+        }
+        holder.groupRecyclerView.setAdapter(adapter);
+
+        if(adapter.getWidgetIndex().isGroupOuterLineRequired()) {
+            holder.innerParent.setBackground(ResUtil.getBackgroundDrawable(holder.itemView.getResources(), R.drawable.cartoon_border));
+        } else {
+            holder.innerParent.setBackground(null);
+        }
+
+        // Retrieve and set the saved position
+        int lastSeenFirstPosition = positionList.get(verticleItemPosition, 0);
+        if (lastSeenFirstPosition >= 0) {
+            ((LinearLayoutManager)holder.groupRecyclerView.getLayoutManager()).scrollToPositionWithOffset(lastSeenFirstPosition, 0);
         }
     }
 
@@ -280,6 +393,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             }
         });
 
+        if(adapter.getWidgetIndex().isGroupOuterLineRequired()) {
+            holder.innerParent.setBackground(ResUtil.getBackgroundDrawable(holder.itemView.getResources(), R.drawable.cartoon_border));
+        } else {
+            holder.innerParent.setBackground(null);
+        }
+
         // Retrieve and set the saved position
         int lastSeenFirstPosition = positionList.get(verticleItemPosition, 0);
         if (lastSeenFirstPosition >= 0) {
@@ -315,6 +434,12 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
         holder.groupRecyclerView.setLayoutManager(new GridLayoutManager(viewHolder.itemView.getContext(), 2));
         holder.groupRecyclerView.setAdapter(adapter);
+
+        if(adapter.getWidgetIndex().isGroupOuterLineRequired()) {
+            holder.innerParent.setBackground(ResUtil.getBackgroundDrawable(holder.itemView.getResources(), R.drawable.cartoon_border));
+        } else {
+            holder.innerParent.setBackground(null);
+        }
 
         widgetLayoutCommonAdjustment(adapter, holder.groupHeaderIcon, holder.groupHeaderTxt, holder.groupRecyclerView,
                 holder.groupActionLeft, holder.groupActionCenter, holder.groupActionRight);
@@ -383,6 +508,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             groupHeaderTxt.setVisibility(View.GONE);
         }
+
 
         if (actionGravity.equalsIgnoreCase("LeftBottom")) {
             groupActionLeft.setVisibility(View.VISIBLE);

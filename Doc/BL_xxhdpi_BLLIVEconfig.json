@@ -745,8 +745,8 @@
       "light": {
         "Logo": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
+          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/hdpi/bookmark.png",
+          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/hdpi/unbookmark.png",
           "like": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/like.png",
           "dislike": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
           "favorite": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
@@ -754,13 +754,13 @@
           "share": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/sharegrey.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/left_slider_three_line.png",
+          "left_slider_three_line": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
           "logo": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/logo_small.png",
-          "search": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/back.png",
+          "search": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
+          "overflow_verticle_dot": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
+          "back": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
           "ttsPlay": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/ttsPause.png",
+          "ttsPause": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
           "comment": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/Comment.png",
           "bookmark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
           "unbookmark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",

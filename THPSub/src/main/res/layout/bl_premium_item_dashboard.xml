@@ -132,7 +132,7 @@
                 app:iconType="unbookmark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/toggleBtn_Img"
-                app:srcCompat="@drawable/ic_bookmark_unselected" />
+                />
 
             <ProgressBar
                 android:id="@+id/bookmarkProgressBar"
@@ -155,7 +155,7 @@
                 app:iconType="unfavourite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
-                app:srcCompat="@drawable/ic_like_unselected" />
+                />
 
             <ProgressBar
                 android:id="@+id/likeProgressBar"

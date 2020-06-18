@@ -54,15 +54,12 @@ public class ListingIconView extends BaseImgView {
     public void updateIcon(int iconType) {
         final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
-            if(isUserThemeDay) {
+        if(tableConfiguration != null) {
+            if (isUserThemeDay) {
                 loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getLight().getListing(), FileUtils.destinationFolder(getContext(), FileUtils.LISTING_ICONs_LIGHT).getPath());
             } else {
                 loadIconsFromServer(iconType, tableConfiguration.getOtherIconsDownloadUrls().getDark().getListing(), FileUtils.destinationFolder(getContext(), FileUtils.LISTING_ICONs_DARK).getPath());
             }
-        }
-        else {
-            loadIconsFromApp(iconType, isUserThemeDay);
         }
     }
 
@@ -106,65 +103,6 @@ public class ListingIconView extends BaseImgView {
         PicassoUtil.loadImageFromCache(getContext(), this, FileUtils.getFilePathFromUrl(destinationFolderPath, iconUrl));
     }
 
-    private void loadIconsFromApp(int iconType, boolean isUserThemeDay) {
-        // 1 = app:iconType="share"
-        if(iconType == 1) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_share_article);
-            } else {
-                setImageResource(R.drawable.ic_share_article_w);
-            }
-        }
-        // 2 = app:iconType="favourite"
-        else if(iconType == 2) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_like_selected);
-            } else {
-                setImageResource(R.drawable.ic_like_selected);
-            }
-        }
-        // 3 = app:iconType="bookmarked"
-        else if(iconType == 3) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_bookmark_selected);
-            } else {
-                setImageResource(R.drawable.ic_bookmark_selected);
-            }
-        }
-        // 4 = app:iconType="unbookmark"
-        else if(iconType == 4) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_bookmark_unselected);
-            } else {
-                setImageResource(R.drawable.ic_bookmark_unselected);
-            }
-        }
-        // 6 = app:iconType="like"
-        else if(iconType == 6) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_switch_off_copy);
-            } else {
-                setImageResource(R.drawable.ic_switch_off_copy);
-            }
-        }
-
-        // 10 = app:iconType="dislike"
-        else if(iconType == 10) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_switch_on_copy);
-            } else {
-                setImageResource(R.drawable.ic_switch_on_copy);
-            }
-        }
-        // 11 = app:iconType="unfavourite"
-        else if(iconType == 11) {
-            if (isUserThemeDay) {
-                setImageResource(R.drawable.ic_like_unselected);
-            } else {
-                setImageResource(R.drawable.ic_like_unselected);
-            }
-        }
-    }
 
 
 }
