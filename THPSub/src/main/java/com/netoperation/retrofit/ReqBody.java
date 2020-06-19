@@ -324,9 +324,10 @@ public class ReqBody {
 
     public static JsonObject forceUpdate() {
         JsonObject object = new JsonObject();
-        object.addProperty("device", "android");
+        /*object.addProperty("device", "android");
         object.addProperty("app_version", BuildConfig.VERSION_NAME);
-        object.addProperty("os_version", android.os.Build.VERSION.SDK_INT);
+        object.addProperty("os_version", android.os.Build.VERSION.SDK_INT);*/
+        object.addProperty("packageName", BuildConfig.APPLICATION_ID);
         return object;
     }
 

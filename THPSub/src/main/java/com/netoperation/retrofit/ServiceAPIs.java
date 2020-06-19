@@ -1,7 +1,6 @@
 package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.netoperation.default_db.TableOptional;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
@@ -12,12 +11,12 @@ import com.netoperation.model.NSE_BSE_Data;
 import com.netoperation.model.PlanRecoModel;
 import com.netoperation.model.PrefListModel;
 import com.netoperation.model.RecomendationData;
+import com.netoperation.model.ForceUpdateModel;
 import com.netoperation.model.SearchedArticleModel;
 import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionContentFromServer;
 import com.netoperation.model.USPData;
 import com.netoperation.model.SelectedPrefModel;
-import com.netoperation.model.UpdateModel;
 import com.netoperation.model.UserChoice;
 import com.netoperation.model.UserPlanList;
 
@@ -199,7 +198,7 @@ public interface ServiceAPIs {
     Observable<JsonElement> configUpdateCheck(@Url String url, @Body JsonObject jsonObject);
 
     @POST("") // Force Update.php
-    Observable<UpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);
+    Observable<ForceUpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);
 
     @GET("") // BL SENSEX Widget api
     Observable<NSE_BSE_Data> bl_sensexWidget(@Url String url);

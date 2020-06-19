@@ -1462,10 +1462,15 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<UpdateModel> forceUpdate() {
+        String url = BuildConfig.FORCE_UPDATE_URL;
+        if (!BuildConfig.IS_PRODUCTION) {
+            url = BuildConfig.FORCE_UPDATE_URL;
+        }
         return ServiceFactory.getServiceAPIs()
-                .forceUpdate(BuildConfig.FORCE_UPDATE_URL, ReqBody.forceUpdate())
+                .forceUpdate(url, ReqBody.forceUpdate())
                 .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
+                .map(responseModel -> responseModel.getDATA().getAndroid())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

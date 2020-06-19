@@ -28,6 +28,7 @@ android {
         buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
         buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
         buildConfigField "String", "UPS_URL", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/usp\""
+        buildConfigField "String", "FORCE_UPDATE_URL", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/forceUpdate\""
     }
 
     signingConfigs {
@@ -103,7 +104,6 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
 
-            buildConfigField "String", "FORCE_UPDATE_URL", "\"https://app.thehindubusinessline.com/hinduBL/service/api_v1.002/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
             buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://3.0.22.177/hindu/subscription/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "true"
@@ -160,7 +160,6 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindu"
 
-            buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hinduappserver2.ninestars.in/hindu/service/api_v1.001/forceUpgrade.php\""
             buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
             buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://3.0.22.177/hindu/subscription/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "false"
