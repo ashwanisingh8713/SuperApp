@@ -371,7 +371,13 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                         //CommonUtil.sendBroadcastToKillBecomeAMemberScreen(getActivity());
                     }
                 }, throwable -> {
+                    if (getView() == null || getActivity() == null) {
+                        return;
+                    }
+                    Alerts.showSnackbar(getActivity(), throwable.getMessage());
+                    progressBar.setVisibility(View.GONE);
                     submit_Txt.setEnabled(true);
+                    submit_Txt.setText("Submit");
                 }));
 
     }
@@ -510,50 +516,59 @@ public class SetPasswordFragment extends BaseFragmentTHP {
     }
 
     private void freePlan(String authorization, String userId, String contact) {
-        ApiManager.freePlanF(authorization, userId, contact, BuildConfig.SITEID)
+        mDisposable.add(ApiManager.freePlanF(authorization, userId, contact, BuildConfig.SITEID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-
                     if (value) {
-                        //CleverTap
-                        mDisposable.add(ApiManager.getUserProfile(getActivity())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .map(userProfile -> {
-                                    if (userProfile == null) {
-                                        return "";
+                        // Fetch latest user info from server
+                        mDisposable.add(ApiManager.getUserInfo(getContext(), authorization, BuildConfig.SITEID,
+                                ResUtil.getDeviceId(getContext()), userId,
+                                PremiumPref.getInstance(getContext()).getLoginTypeId(),
+                                PremiumPref.getInstance(getContext()).getLoginPasswd())
+                                .subscribe(val->{
+                                    Log.i("", "");
+                                }, thr->{
+                                    Log.i("", "");
+                                }, () -> {
+                                    mDisposable.add(ApiManager.getUserProfile(getActivity())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .map(userProfile -> {
+                                                if (userProfile == null) {
+                                                    return "";
+                                                }
+                                                PremiumPref.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
+                                                //userProfile.setHasFreePlan(true);
+                                                CleverTapUtil.cleverTapUpdateProfile(getActivity(), true, userProfile, userProfile.isHasSubscribedPlan(), userProfile.isHasFreePlan());
+                                                return "";
+                                            })
+                                            .subscribe(v -> {
+                                            }, t -> {
+                                                Log.i("", "" + t);
+                                            }));
+                                    //Always set True if Successful Login
+                                    PremiumPref.getInstance(getContext()).setIsRelogginSuccess(true);
+                                    // When user logged in then we need this to refresh the default TH listing page.
+                                    PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("isKillToBecomeMemberActivity", true);
+                                    if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {
+                                        intent.putExtra("isRequestPayment", true);
+                                    } else if (THPConstants.IS_FROM_MP_BLOCKER) {
+                                        //Disable the MP constant
+                                        THPConstants.IS_FROM_MP_BLOCKER = false;
+                                    } else {
+                                        //Always open Briefing screen - Requirement 14 Sept,2019
+                                        IntentUtil.openContentListingActivity(getActivity(), THPConstants.FROM_USER_SignUp);
                                     }
-                                    PremiumPref.getInstance(getContext()).setLoginSource(THPConstants.DIRECT_LOGIN);
-                                    userProfile.setHasFreePlan(true);
-                                    CleverTapUtil.cleverTapUpdateProfile(getActivity(), true, userProfile, userProfile.isHasSubscribedPlan(), userProfile.isHasFreePlan());
-                                    return "";
-                                })
-                                .subscribe(v -> {
-                                }, t -> {
-                                    Log.i("", "" + t);
-                                }));
-                        //Always set True if Successful Login
-                        PremiumPref.getInstance(getContext()).setIsRelogginSuccess(true);
-                        // When user logged in then we need this to refresh the default TH listing page.
-                        PremiumPref.getInstance(getActivity()).setIsRefreshRequired(true);
-                        Intent intent = new Intent();
-                        intent.putExtra("isKillToBecomeMemberActivity", true);
-                        if (mFrom != null && !TextUtils.isEmpty(mFrom) && mFrom.contains(THPConstants.PAYMENT)) {
-                            intent.putExtra("isRequestPayment", true);
-                        } else if (THPConstants.IS_FROM_MP_BLOCKER) {
-                            //Disable the MP constant
-                            THPConstants.IS_FROM_MP_BLOCKER = false;
-                        } else {
-                            //Always open Briefing screen - Requirement 14 Sept,2019
-                            IntentUtil.openContentListingActivity(getActivity(), THPConstants.FROM_USER_SignUp);
-                        }
-                        //Send CleverTap Event for Free Trial Subscription
-                        CleverTapUtil.cleverTapEventFreeTrial(getContext());
-                        THPFirebaseAnalytics.setFirbaseFreeTrialEvent(getContext());
+                                    //Send CleverTap Event for Free Trial Subscription
+                                    CleverTapUtil.cleverTapEventFreeTrial(getContext());
+                                    THPFirebaseAnalytics.setFirbaseFreeTrialEvent(getContext());
 
-                        getActivity().setResult(RESULT_OK, intent);
-                        getActivity().finish();
-                        //Send Broadcast to Kill Become a member screen once user Signed up or Signed In
-                        CommonUtil.sendBroadcastToKillBecomeAMemberScreen(getActivity());
+                                    getActivity().setResult(RESULT_OK, intent);
+                                    getActivity().finish();
+                                    //Send Broadcast to Kill Become a member screen once user Signed up or Signed In
+                                    CommonUtil.sendBroadcastToKillBecomeAMemberScreen(getActivity());
+                                }));
                     } else {
                         progressBar.setVisibility(View.INVISIBLE);
                         submit_Txt.setEnabled(true);
@@ -581,7 +596,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                         });
                     }
                 }, throwable -> {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.GONE);
                     submit_Txt.setEnabled(true);
                     submit_Txt.setText("Submit");
                     Alerts.showAlertDialogOKListener(getActivity(), "Sorry!", "Free trial activation failed", new DialogInterface.OnClickListener() {
@@ -605,7 +620,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                             CommonUtil.sendBroadcastToKillBecomeAMemberScreen(getActivity());
                         }
                     });
-                });
+                }));
 
     }
 

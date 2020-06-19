@@ -233,6 +233,8 @@ public class ApiManager {
                                         if (((JsonObject) value).has("token")) {
                                             token = ((JsonObject) value).get("token").getAsString();
                                         }
+                                        //Set token in KeyValueModel
+                                        keyValueModel.setToken(token);
 
                                         if (context != null) {
                                             String loginId = "";
@@ -253,9 +255,9 @@ public class ApiManager {
 
                                         keyValueModel.setUserId(userId);
 
-                                        String authors_preference = obj.getString("authors_preference");
-                                        String cities_preference = obj.getString("cities_preference");
-                                        String topics_preference = obj.getString("topics_preference");
+                                        String authors_preference = obj.has("authors_preference") ? obj.getString("authors_preference") : null;
+                                        String cities_preference = obj.has("cities_preference") ? obj.getString("cities_preference") : null;
+                                        String topics_preference = obj.has("topics_preference") ? obj.getString("topics_preference") : null;
 
                                         String address_state = obj.getString("address_state");
                                         String address_pincode = obj.getString("address_pincode");
@@ -420,9 +422,9 @@ public class ApiManager {
                                         reason = ((JsonObject) responseFromServer).get("reason").getAsString();
                                     }
 
-                                    String authors_preference = userInfoJsonObj.getString("authors_preference");
-                                    String cities_preference = userInfoJsonObj.getString("cities_preference");
-                                    String topics_preference = userInfoJsonObj.getString("topics_preference");
+                                    String authors_preference = userInfoJsonObj.has("authors_preference") ? userInfoJsonObj.getString("authors_preference") : null;
+                                    String cities_preference = userInfoJsonObj.has("cities_preference") ? userInfoJsonObj.getString("cities_preference") : null;
+                                    String topics_preference = userInfoJsonObj.has("topics_preference") ? userInfoJsonObj.getString("topics_preference") : null;
 
                                     String address_state = userInfoJsonObj.getString("address_state");
                                     String address_pincode = userInfoJsonObj.getString("address_pincode");
@@ -665,9 +667,9 @@ public class ApiManager {
                                         reason = ((JsonObject) responseFromServer).get("reason").getAsString();
                                     }
 
-                                    String authors_preference = userInfoJsonObj.getString("authors_preference");
-                                    String cities_preference = userInfoJsonObj.getString("cities_preference");
-                                    String topics_preference = userInfoJsonObj.getString("topics_preference");
+                                    String authors_preference = userInfoJsonObj.has("authors_preference") ? userInfoJsonObj.getString("authors_preference") : null;
+                                    String cities_preference = userInfoJsonObj.has("cities_preference") ? userInfoJsonObj.getString("cities_preference") : null;
+                                    String topics_preference = userInfoJsonObj.has("topics_preference") ? userInfoJsonObj.getString("topics_preference") : null;
 
                                     String address_state = userInfoJsonObj.getString("address_state");
                                     String address_pincode = userInfoJsonObj.getString("address_pincode");
