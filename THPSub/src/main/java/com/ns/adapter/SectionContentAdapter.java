@@ -277,6 +277,9 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         // Setting Elevation
         holder.cardView.setElevation((int)ResUtil.pxFromDp(viewHolder.itemView.getContext(), adapter.getWidgetIndex().getGroupElevation()));
 
+        holder.groupRecyclerView.setLayoutManager(new GridLayoutManager(viewHolder.itemView.getContext(), 2));
+        holder.groupRecyclerView.setAdapter(adapter);
+
         WidgetIndex widgetIndex = adapter.getWidgetIndex();
 
         boolean iconRequired = widgetIndex.isActionIconRequired();
@@ -290,7 +293,6 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else {
             holder.groupHeaderIcon.setVisibility(View.GONE);
         }
-        holder.groupRecyclerView.setAdapter(adapter);
 
         if(adapter.getWidgetIndex().isGroupOuterLineRequired()) {
             holder.innerParent.setBackground(ResUtil.getBackgroundDrawable(holder.itemView.getResources(), R.drawable.cartoon_border));

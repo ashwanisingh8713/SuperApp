@@ -2,7 +2,170 @@
   "widget": [
     {
       "secId": "5",
-      "index": "5",
+      "index": "5",{
+      "widget": [
+        {
+          "secId": "5",
+          "index": "5",
+          "itemCount" : "7",
+          "widgetType": "MEDIA_TITLE_TIME",
+          "groupLayout" : "H-List",
+          "groupHeaderRequired" : "true",
+          "actionIconRequired" : "true",
+          "actionTitle" : "View All",
+          "actionGravity" : "LeftBottom",
+          "groupMargin":[10, 5, 5, 20],
+          "groupRadius":10,
+          "groupElevation":4,
+          "groupOuterLineRequired" : "true",
+          "itemMargin":[2, 15, 2, 5],
+          "itemRadius":10,
+          "itemElevation":4,
+          "itemOuterLineRequired" : "true",
+          "itemBackground": {
+            "dark": "#191919",
+            "light": "#ffffff"
+          },
+          "description": {
+            "dark": "#ffffff",
+            "light": "#191919"
+          },
+          "title": {
+            "dark": "#E7E73C",
+            "light": "#E73CE5"
+          },
+          "action": {
+            "dark": "#E7603C",
+            "light": "#3C70E7"
+          }
+        },
+        {
+          "secId": "26",
+          "index": "8",
+          "itemCount" : "7",
+          "widgetType": "MEDIA_TITLE",
+          "groupLayout" : "H-List",
+          "groupHeaderRequired" : "true",
+          "actionIconRequired" : "true",
+          "actionTitle" : "View All",
+          "actionGravity" : "LeftBottom",
+          "groupMargin":[10, 5, 5, 20],
+          "groupRadius":10,
+          "groupElevation":4,
+          "groupOuterLineRequired" : "true",
+          "itemMargin":[2, 15, 2, 5],
+          "itemRadius":10,
+          "itemElevation":4,
+          "itemOuterLineRequired" : "true",
+          "itemBackground": {
+            "dark": "#191919",
+            "light": "#ffffff"
+          },
+          "description": {
+            "dark": "#ffffff",
+            "light": "#191919"
+          },
+          "title": {
+            "dark": "#E7E73C",
+            "light": "#E73CE5"
+          },
+          "action": {
+            "dark": "#E7603C",
+            "light": "#3C70E7"
+          }
+        },
+        {
+          "secId": "30",
+          "index": "10",
+          "itemCount" : "7",
+          "widgetType": "MEDIA_TITLE_TIME",
+          "groupLayout" : "H-List",
+          "groupHeaderRequired" : "true",
+          "actionIconRequired" : "true",
+          "actionTitle" : "View All",
+          "actionGravity" : "LeftBottom",
+          "groupMargin":[10, 5, 5, 20],
+          "groupRadius":10,
+          "groupElevation":4,
+          "groupOuterLineRequired" : "true",
+          "itemMargin":[2, 15, 2, 5],
+          "itemRadius":10,
+          "itemElevation":4,
+          "itemOuterLineRequired" : "true",
+          "itemBackground": {
+            "dark": "#191919",
+            "light": "#ffffff"
+          },
+          "description": {
+            "dark": "#ffffff",
+            "light": "#191919"
+          },
+          "title": {
+            "dark": "#E7E73C",
+            "light": "#E73CE5"
+          },
+          "action": {
+            "dark": "#E7603C",
+            "light": "#3C70E7"
+          }
+        },
+        {
+          "secId": "37",
+          "index": "12",
+          "itemCount" : "7",
+          "widgetType": "MEDIA_TITLE_TIME",
+          "groupLayout" : "H-List",
+          "groupHeaderRequired" : "true",
+          "actionIconRequired" : "true",
+          "actionTitle" : "View All",
+          "actionGravity" : "LeftBottom",
+          "groupMargin":[10, 5, 5, 20],
+          "groupRadius":10,
+          "groupElevation":4,
+          "groupOuterLineRequired" : "true",
+          "itemMargin":[2, 15, 2, 5],
+          "itemRadius":10,
+          "itemElevation":4,
+          "itemOuterLineRequired" : "true",
+          "itemBackground": {
+            "dark": "#191919",
+            "light": "#ffffff"
+          },
+          "description": {
+            "dark": "#ffffff",
+            "light": "#191919"
+          },
+          "title": {
+            "dark": "#E7E73C",
+            "light": "#E73CE5"
+          },
+          "action": {
+            "dark": "#E7603C",
+            "light": "#3C70E7"
+          }
+        },
+        {
+          "widgetType" : "SENSEX",
+          "index": "3",
+          "itemBackground": {
+            "dark": "#191919",
+            "light": "#ffffff"
+          },
+          "description": {
+            "dark": "#ffffff",
+            "light": "#191919"
+          },
+          "title": {
+            "dark": "#E7E73C",
+            "light": "#E73CE5"
+          },
+          "action": {
+            "dark": "#E7603C",
+            "light": "#3C70E7"
+          }
+        }
+      ]
+    },
       "itemCount" : "7",
       "widgetType": "MEDIA_TITLE_TIME",
       "groupLayout" : "H-List",

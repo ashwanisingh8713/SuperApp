@@ -782,7 +782,36 @@
         }
       }
     },
-    "subSectionsIndex": "3",
+    "subSection": {
+      "index": "3",
+      "groupLayout" : "H-List",
+      "groupHeaderRequired" : "true",
+      "actionTitle" : "Explore Section",
+      "groupMargin":[10, 5, 5, 20],
+      "groupRadius":10,
+      "groupElevation":4,
+      "groupOuterLineRequired" : "true",
+      "itemMargin":[2, 15, 2, 5],
+      "itemRadius":10,
+      "itemElevation":4,
+      "itemOuterLineRequired" : "true",
+      "itemBackground": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ffffff",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
+      },
+      "action": {
+        "dark": "#E7603C",
+        "light": "#3C70E7"
+      }
+    },
     "contentUrl": {
       "baseUrlDefault": "https://app.thehindubusinessline.com/hinduBL/service/api_v2/",
       "newsDigest": "http://thehindubusinessline.com/newsletter/"

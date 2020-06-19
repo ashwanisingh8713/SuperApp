@@ -1060,7 +1060,7 @@ public class DefaultTHApiManager {
     public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI, RequestCallback requestCallback) {
         Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
         return observable
-                .timeout(10, TimeUnit.SECONDS)
+                .timeout(30, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .map(cycleDurationModel -> {
                     Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());

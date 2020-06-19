@@ -84,6 +84,7 @@ public class BecomeMemberIntroFragment extends BaseFragmentTHP {
     }
 
     private void uspRequest() {
+        progressBar.setVisibility(View.VISIBLE);
         DefaultTHApiManager.getUPS(getActivity(), new RequestCallback<List<String>>() {
             @Override
             public void onNext(List<String> strings) {
