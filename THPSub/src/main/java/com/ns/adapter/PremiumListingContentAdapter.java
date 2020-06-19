@@ -1297,7 +1297,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                     toggleLikeDisLikeImg.setVisibility(View.VISIBLE);
                     toggleLikeDisLikeImg.setEnabled(true);
 
-                    if(THPConstants.IS_USE_SEVER_THEME) {
+
                         if (like == NetConstants.LIKE_NEUTRAL) {
                             // 11 = app:iconType="unfavourite"
                             favStartImg.updateIcon(11);
@@ -1316,19 +1316,6 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                             // 6 = app:iconType="like"
                             toggleLikeDisLikeImg.updateIcon(6);
                         }
-                    }
-                    else {
-                        if (like == NetConstants.LIKE_NEUTRAL) {
-                            favStartImg.setImageResource(R.drawable.ic_like_unselected);
-                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
-                        } else if (like == NetConstants.LIKE_YES) {
-                            favStartImg.setImageResource(R.drawable.ic_like_selected);
-                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_off_copy);
-                        } else if (like == NetConstants.LIKE_NO) {
-                            favStartImg.setImageResource(R.drawable.ic_like_unselected);
-                            toggleLikeDisLikeImg.setImageResource(R.drawable.ic_switch_on_copy);
-                        }
-                    }
 
                 }, val -> {
                     Log.i("", "");

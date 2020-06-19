@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ns.view.layout.NSLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_explore_root"
+    android:id="@+id/card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/explore_column_margin_right"
-    
-    android:background="@drawable/drawable_explore_dark"
-    app:layoutType="Black_Dark">
+    android:layout_marginEnd="@dimen/explore_column_margin_right">
 
     <LinearLayout
+        android:id="@+id/innerParent"
         android:layout_width="165dp"
         android:layout_height="138dp"
         android:orientation="vertical">
@@ -19,6 +17,7 @@
             android:id="@+id/imageview_explore_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/explore_column_image_newheight"
+            android:background="@color/grey"
             />
 
         <com.ns.view.text.ArticleTitleTextView
@@ -39,4 +38,4 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-</com.ns.view.layout.NSLinearLayout>
+</androidx.cardview.widget.CardView>

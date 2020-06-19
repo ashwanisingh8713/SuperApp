@@ -769,14 +769,20 @@ public class Topbar extends Toolbar {
                     favStarTHPIC.setEnabled(true);
                     toggleLikeDisLikeTHPIC.setEnabled(true);
                     if (like == NetConstants.LIKE_NEUTRAL) {
-                        favStarTHPIC.setImageResource(R.drawable.ic_like_unselected);
-                        toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_off_copy);
+                        // 11 = app:iconType="unfavourite"
+                        favStarTHPIC.updateIcon(11);
+                        // 10 = app:iconType="dislike"
+                        toggleLikeDisLikeTHPIC.updateIcon(10);
                     } else if (like == NetConstants.LIKE_YES) {
-                        favStarTHPIC.setImageResource(R.drawable.ic_like_selected);
-                        toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_off_copy);
+                        // 2 = app:iconType="favourite"
+                        favStarTHPIC.updateIcon(2);
+                        // 10 = app:iconType="dislike"
+                        toggleLikeDisLikeTHPIC.updateIcon(10);
                     } else if (like == NetConstants.LIKE_NO) {
-                        favStarTHPIC.setImageResource(R.drawable.ic_like_unselected);
-                        toggleLikeDisLikeTHPIC.setImageResource(R.drawable.ic_switch_on_copy);
+                        // 11 = app:iconType="unfavourite"
+                        favStarTHPIC.updateIcon(11);
+                        // 6 = app:iconType="like"
+                        toggleLikeDisLikeTHPIC.updateIcon(6);
                     }
 
                 }, val -> {

@@ -1,5 +1,5 @@
 
-        ////////  widgetType  /////////////////////
+        ///////////  widgetType  /////////////////////
             SENSEX
 
             MEDIA_INNER_PADDING
@@ -14,18 +14,28 @@
 
             MEDIA_TEXT_TIME
 
-            MEDIA_TextOverlay
+        /////////////////////////////////////////////////////
+        ////////////////  groupLayout  /////////////////////
 
-        ////////  groupLayout  /////////////////////
+                         H-List
 
-            H-List
+                         Grid
 
-            Grid
+        ////////////////////////////////////////////////////
+        //////////////   actionGravity  ////////////////////
 
-            Pager
+                         LeftBottom
 
-        /////////////////////////////////////////////
+                         CenterBottom
+
+                         RightBottom
+
+
+        ////////////////////////////////////////////////////
 
          itemMargin = [Left, Top, Right, Bottom]
 
          groupMargin = [Left, Top, Right, Bottom]
+
+
+

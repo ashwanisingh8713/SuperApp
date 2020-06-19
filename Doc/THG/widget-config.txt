@@ -1,29 +1,41 @@
-    ////////  widgetType  /////////////////////
-        SENSEX
 
-        MEDIA_INNER_PADDING
+        ///////////  widgetType  /////////////////////
+            SENSEX
 
-        MEDIA_FULL_SCR
+            MEDIA_INNER_PADDING
 
-        TEXT
+            MEDIA_FULL_SCR
 
-        MEDIA_TEXT
+            TEXT
 
-        TITLE_TEXT
+            MEDIA_TEXT
 
-        MEDIA_TEXT_TIME
+            TITLE_TEXT
 
-    ////////  groupLayout  /////////////////////
+            MEDIA_TEXT_TIME
 
-        H-List
+        /////////////////////////////////////////////////////
+        ////////////////  groupLayout  /////////////////////
 
-        Grid
+                         H-List
 
-    /////////////////////////////////////////////
+                         Grid
 
-     itemMargin = [Left, Top, Right, Bottom]
+        ////////////////////////////////////////////////////
+        //////////////   actionGravity  ////////////////////
 
-     groupMargin = [Left, Top, Right, Bottom]
+                         LeftBottom
+
+                         CenterBottom
+
+                         RightBottom
+
+
+        ////////////////////////////////////////////////////
+
+         itemMargin = [Left, Top, Right, Bottom]
+
+         groupMargin = [Left, Top, Right, Bottom]
 
 
 

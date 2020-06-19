@@ -236,9 +236,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    int appVersionCode;
-
-                    appVersionCode = BuildConfig.VERSION_CODE;
+                    int appVersionCode = BuildConfig.VERSION_CODE;
                     if ((appVersionCode < serverVersionNumber)) {
                         final boolean isForceUpdate = updateModel.getForce_upgrade();
                         showUpdateDialog(updateModel.getApp_store_url(), updateModel.getMessage(), isForceUpdate, updateModel.getRemind_me());

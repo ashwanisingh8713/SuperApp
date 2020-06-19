@@ -18,6 +18,7 @@
             android:id="@+id/imageview_widget_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/widget_recyclerView_image_newheight"
+            android:background="@color/grey"
             />
 
         <com.ns.view.text.ArticleTitleTextView

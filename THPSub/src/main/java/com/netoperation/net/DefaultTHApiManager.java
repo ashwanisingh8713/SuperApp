@@ -1060,7 +1060,7 @@ public class DefaultTHApiManager {
     public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI, RequestCallback requestCallback) {
         Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
         return observable
-                .timeout(10, TimeUnit.SECONDS)
+                .timeout(30, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .map(cycleDurationModel -> {
                     Log.i("ApiManager", "MP Cyle START " + System.currentTimeMillis());
@@ -1232,7 +1232,7 @@ public class DefaultTHApiManager {
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
         return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.APP_CONFIG_UPDATE_CHECK_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
                 .subscribeOn(Schedulers.io())
-                .timeout(10, TimeUnit.SECONDS)
+                .timeout(30, TimeUnit.SECONDS)
                 .map(jsonElement -> {
                     if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
                         String lastUpdatedTime = ((JsonObject) jsonElement).get("lastUpdatedTime").getAsString();
@@ -1462,10 +1462,15 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<UpdateModel> forceUpdate() {
+        String url = BuildConfig.FORCE_UPDATE_URL;
+        if (!BuildConfig.IS_PRODUCTION) {
+            url = BuildConfig.FORCE_UPDATE_URL;
+        }
         return ServiceFactory.getServiceAPIs()
-                .forceUpdate(BuildConfig.FORCE_UPDATE_URL, ReqBody.forceUpdate())
+                .forceUpdate(url, ReqBody.forceUpdate())
                 .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
+                .map(responseModel -> responseModel.getDATA().getAndroid())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -1597,6 +1602,46 @@ public class DefaultTHApiManager {
             THPDB.getInstance(context).daoTableOptional().deleteTableOptional();
             return "";
         }).subscribe();
+    }
+
+
+    /**
+     * It is App Configuration, gets configuration data from server
+     * @param context
+     * @param requestCallback
+     */
+    public static void getUPS(Context context, RequestCallback<List<String>> requestCallback) {
+         ServiceFactory.getServiceAPIs().getUSP(BuildConfig.UPS_URL, ReqBody.ups(BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+                .subscribeOn(Schedulers.io())
+                .map(uspData->{
+                    boolean isDayTheme = DefaultPref.getInstance(context).isUserThemeDay();
+                    if(isDayTheme) {
+                        if(uspData.getDATA()!=null) {
+                            return uspData.getDATA().getLight().getUrls();
+                        }
+                    }
+                    else {
+                        if(uspData.getDATA()!=null) {
+                            return uspData.getDATA().getDark().getUrls();
+                        }
+                    }
+                    return new ArrayList<String>();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
+                }, throwable -> {
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "getUPS");
+                    }
+                }, ()->{
+                    if(requestCallback != null) {
+                        requestCallback.onComplete("getUPS");
+                    }
+                });
+
     }
 
 }

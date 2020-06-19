@@ -106,7 +106,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         mSearchParentLayout = view.findViewById(R.id.searchLayout);
         mSearchBox = view.findViewById(R.id.searchEditText);
         mClearText = view.findViewById(R.id.close_button);
-//Update Search Box View
+        //Update Search Box View
         if (mGoupType != null && mGoupType.equals(NetConstants.BOOKMARK_IN_ONE)){
             mSearchParentLayout.setVisibility(View.VISIBLE);
         }

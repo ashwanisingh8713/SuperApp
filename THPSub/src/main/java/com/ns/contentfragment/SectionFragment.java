@@ -17,6 +17,7 @@ import com.netoperation.default_db.DaoBanner;
 import com.netoperation.default_db.DaoHomeArticle;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableBanner;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableHomeArticle;
 import com.netoperation.default_db.TableSectionArticle;
 import com.netoperation.default_db.TableWidget;
@@ -230,7 +231,11 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             if (index != -1) {
                 item = mRecyclerAdapter.getItem(index);
                 ExploreAdapter exploreAdapter = new ExploreAdapter(mSectionSideWork.getSubSections(), mSectionId);
-                item.setExploreAdapter(exploreAdapter);
+                TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                if(tableConfiguration != null) {
+                    exploreAdapter.setWidgetIndex(tableConfiguration.getSubSection());
+                    item.setExploreAdapter(exploreAdapter);
+                }
             }
             mRecyclerAdapter.notifyItemChanged(index);
         }

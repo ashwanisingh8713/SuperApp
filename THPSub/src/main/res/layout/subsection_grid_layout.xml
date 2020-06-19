@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/widget_group_padding_top"
-        android:paddingBottom="@dimen/widget_group_padding_bottom"
-        >
+        android:paddingBottom="@dimen/widget_group_padding_bottom">
 
         <ImageView
             android:id="@+id/groupHeaderIcon"
@@ -29,49 +28,23 @@
             android:id="@+id/groupHeaderTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
             android:textSize="15sp"
             app:font_path="@string/THP_FiraSans_SemiBold"
             app:layout_constraintStart_toEndOf="@+id/groupHeaderIcon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="HEADER" />
+            tools:text="HEADER"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/groupRecyclerView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/groupHeaderTxt" />
 
-        <com.ns.view.text.ArticleTitleTextView
-            android:id="@+id/groupActionLeftBottom"
-            style="@style/viewAllWidgetStyle"
-            app:font_path="@string/THP_FiraSans_Regular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/groupRecyclerView"
-            app:textType="L"
-            android:layout_marginStart="@dimen/widget_group_padding_left"/>
 
-        <com.ns.view.text.ArticleTitleTextView
-            android:id="@+id/groupActionCenterBottom"
-            style="@style/viewAllWidgetStyle"
-            app:font_path="@string/THP_FiraSans_Regular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/groupRecyclerView"
-            app:textType="L" />
-
-        <com.ns.view.text.ArticleTitleTextView
-            android:id="@+id/groupActionRightBottom"
-            style="@style/viewAllWidgetStyle"
-            app:font_path="@string/THP_FiraSans_Regular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/groupRecyclerView"
-            app:textType="L"
-            android:layout_marginEnd="@dimen/widget_group_padding_right"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

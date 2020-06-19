@@ -99,7 +99,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private Disposable notificationCountsObserver, bookmarksCountObserver;
     //Dialog for Location Permission
     private HomePermissionInfoDialog dialogPermission;
-    private List<TableOptional.OptionsBean> menuItems;
 
 
     @Override
@@ -119,9 +118,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         //Get Menu Options API call
         if (sIsOnline) {
             getMenuOptionsFromApi();
-        } else {
-            getMenuOptionsFromDB();
         }
+
         initTaboola();
 
         THPConstants.FLOW_TAB_CLICK = null;
@@ -172,6 +170,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                     getDrawerStaticItem();
 
                 }));
+
     }
 
 
@@ -461,12 +460,37 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onOverflowClickListener(ToolbarCallModel toolbarCallModel) {
-        OverflowPopUp overflowPopUp = new OverflowPopUp(this, menuItems);
-        PopupWindow changeSortPopUp = overflowPopUp.initPopUpView(mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount);
-        int width = getDetailToolbar().getWidth();
-        int height = getDetailToolbar().getHeight();
-        // Show Pop-up Window
-        changeSortPopUp.showAsDropDown(getDetailToolbar(), width, -(height/3));
+
+        mDisposable.add(DefaultTHApiManager.getOptionsListDB(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(optionsBeans -> {
+                            Log.d("AppTabActivity", "getMenuOptionsFromDB");
+                            List <TableOptional.OptionsBean> menuItems = new ArrayList<>();
+                            if (optionsBeans == null || optionsBeans.size() == 0) {
+                                menuItems = getDefaultMenusOptions();
+                            } else {
+                                menuItems = optionsBeans;
+                            }
+
+                            OverflowPopUp overflowPopUp = new OverflowPopUp(this, menuItems);
+                            PopupWindow changeSortPopUp = overflowPopUp.initPopUpView(mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount);
+                            int width = getDetailToolbar().getWidth();
+                            int height = getDetailToolbar().getHeight();
+                            // Show Pop-up Window
+                            changeSortPopUp.showAsDropDown(getDetailToolbar(), width, -(height/3));
+                        },
+                        throwable -> {
+                            Log.d("AppTabActivity", "getMenuOptionsFromDB : Failed");
+                            OverflowPopUp overflowPopUp = new OverflowPopUp(this, getDefaultMenusOptions());
+                            PopupWindow changeSortPopUp = overflowPopUp.initPopUpView(mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount);
+                            int width = getDetailToolbar().getWidth();
+                            int height = getDetailToolbar().getHeight();
+                            // Show Pop-up Window
+                            changeSortPopUp.showAsDropDown(getDetailToolbar(), width, -(height/3));
+                        }));
+
+
+
     }
 
     @Override
@@ -612,43 +636,23 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(optionsBeans -> {
                     Log.d("AppTabActivity", "getMenuOptionsFromApi");
-                    if (optionsBeans != null && optionsBeans.size() > 0) {
-                        this.menuItems = optionsBeans;
-                    } else {
-                        getMenuOptionsFromDB();
-                    }
                 },
                 throwable -> {
                     Log.d("AppTabActivity", "getMenuOptionsFromApi : Failed");
-                    getMenuOptionsFromDB();
                 }));
     }
 
-    private void getMenuOptionsFromDB() {
-        mDisposable.add(DefaultTHApiManager.getOptionsListDB(this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(optionsBeans -> {
-                            Log.d("AppTabActivity", "getMenuOptionsFromDB");
-                            if (optionsBeans != null && optionsBeans.size() > 0) {
-                                this.menuItems = optionsBeans;
-                            } else {
-                                setDefaultMenusOptions();
-                            }
-                        },
-                        throwable -> {
-                            Log.d("AppTabActivity", "getMenuOptionsFromDB : Failed");
-                            setDefaultMenusOptions();
-                        }));
-    }
 
-    private void setDefaultMenusOptions() {
-        menuItems = new ArrayList<>();
+
+    private List <TableOptional.OptionsBean> getDefaultMenusOptions() {
+        List <TableOptional.OptionsBean> menuItems = new ArrayList<>();
         menuItems.add(new TableOptional.OptionsBean("Read Later",1));
         menuItems.add(new TableOptional.OptionsBean("Notifications",2));
         menuItems.add(new TableOptional.OptionsBean("Personalise Home Screen",3));
         menuItems.add(new TableOptional.OptionsBean("Personalise My Stories", 4));
         menuItems.add(new TableOptional.OptionsBean("Settings",5));
         menuItems.add(new TableOptional.OptionsBean("Share this app",6));
+        return menuItems;
     }
 
 }

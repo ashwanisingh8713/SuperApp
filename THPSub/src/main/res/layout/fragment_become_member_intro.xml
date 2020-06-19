@@ -34,5 +34,49 @@
         android:layout_marginBottom="10dp"
         />
 
+    <LinearLayout
+        android:id="@+id/emptyLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        >
+
+        <com.ns.view.text.SectionTextView
+            android:id="@+id/msgText"
+            app:textType="title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/something_went_wrong"
+            android:layout_marginBottom="10dp"
+            app:font_path="@string/THP_TundraOffc_Bold"
+            android:textSize="15sp"
+            />
+        <Button
+            android:id="@+id/refreshBtn"
+            android:layout_width="180dp"
+            android:layout_height="36dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="Try Again"
+            android:background="@drawable/blue_backgraoud"
+            />
+    </LinearLayout>
+
+    <com.ns.view.CustomProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

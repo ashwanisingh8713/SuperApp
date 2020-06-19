@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
+    <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>
+    <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>
+
+</resources>
