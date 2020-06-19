@@ -27,8 +27,8 @@ android {
 
         buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
         buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
-        buildConfigField "String", "UPS_URL", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/usp\""
-        buildConfigField "String", "FORCE_UPDATE_URL", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/forceUpdate\""
+        buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/usp\""
+        buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/forceUpdate\""
     }
 
     signingConfigs {
@@ -104,8 +104,8 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
 
-            buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
-            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://3.0.22.177/hindu/subscription/superapp/checkConfig\""
+            buildConfigField "String", "APP_CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/getConfig\""
+            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "true"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
@@ -131,7 +131,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/overflow\""
+            buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overflow\""
 
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"j2rIA5nAJCNVvAvQzOK9YOebE\""
@@ -160,8 +160,8 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindu"
 
-            buildConfigField "String", "APP_CONFIG_URL", "\"http://3.0.22.177/hindu/subscription/superapp/getConfig\""
-            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://3.0.22.177/hindu/subscription/superapp/checkConfig\""
+            buildConfigField "String", "APP_CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/getConfig\""
+            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "false"
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
@@ -187,7 +187,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/hindu/subscription/superapp/overflow\""
+            buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overflow\""
 
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
