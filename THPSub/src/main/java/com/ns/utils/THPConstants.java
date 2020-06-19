@@ -123,6 +123,9 @@ public class THPConstants {
     public static final String CT_KEY_Authors = "Authors";
     public static final String CT_KEY_Offer_Id = "Offer Id";
     public static final String CT_KEY_Date = "Date";
+    public static final String CT_KEY_Device_id = "Device Id";
+    public static final String CT_KEY_resolution = "Resolution";
+    public static final String CT_KEY_from = "From";
 
     public static final String CT_KEY_User_info = "User info";
     public static final String CT_KEY_Subscription_details = "Subscriptin details";
@@ -210,6 +213,7 @@ public class THPConstants {
     public static final String CT_EVENT_READ_LATER = "Readlater";
     public static final String CT_EVENT_FAVOURTING = "Favourting";
     public static final String CT_EVENT_SHOW_FEWER_STORIES = "Show fewer strories";
+    public static final String CT_EVENT_SPLASH_API = "Splash API";
 
 
     //Constant Values for CT

@@ -24,11 +24,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CleverTapUtil {
 
-    private static void pushCleverTapEvent(Context context, String key, HashMap<String, Object>  actions) {
-        if(1==1) {
-            return;
-        }
-        CleverTapAPI.getDefaultInstance(context).pushEvent(THPConstants.CT_TIME_SPENT, actions);
+    private static void pushCleverTapEvent(Context context, String event, HashMap<String, Object>  properties) {
+    /*if(1==1) {
+        return;
+    }*/
+        CleverTapAPI.getDefaultInstance(context).pushEvent(event, properties);
     }
 
     /**
@@ -441,6 +441,17 @@ public class CleverTapUtil {
         map.put(THPConstants.MP_Cycle, mpCycle);
         pushCleverTapEvent(context, THPConstants.MP_SignUp, map);
     }
+
+    //Splash From
+    public static void cleverTap_Splash_API(Context context, String from) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_platform, "app");
+        map.put(THPConstants.CT_KEY_Device_id, getUserIdOrDeviceId(context));
+        map.put(THPConstants.CT_KEY_resolution, ResUtil.resolution(context));
+        map.put(THPConstants.CT_KEY_from, from);
+        pushCleverTapEvent(context, THPConstants.CT_EVENT_SPLASH_API, map);
+    }
+
 
 
 

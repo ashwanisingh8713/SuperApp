@@ -43,6 +43,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.alerts.ConfigurationMsgDialog;
 import com.ns.callbacks.OnDialogBtnClickListener;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
@@ -135,6 +136,8 @@ public class SplashActivity extends BaseAcitivityTHP {
             Bundle bundle = msg.getData();
             String from = bundle.getString("from");
             Log.i("SplashPage", from);
+            //Clevertap Splash Api
+            CleverTapUtil.cleverTap_Splash_API(SplashActivity.this,from);
 
             switch (msg.what) {
                 case WHAT_FORCE_UPDATE:
