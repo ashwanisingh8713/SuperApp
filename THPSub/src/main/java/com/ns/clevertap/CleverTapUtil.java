@@ -12,6 +12,7 @@ import com.netoperation.model.UserProfile;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
+import com.ns.utils.DeviceUtils;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 
@@ -446,7 +447,7 @@ public class CleverTapUtil {
     public static void cleverTap_Splash_API(Context context, String from) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(THPConstants.CT_KEY_platform, "app");
-        map.put(THPConstants.CT_KEY_Device_id, getUserIdOrDeviceId(context));
+        map.put(THPConstants.CT_KEY_Device_model, DeviceUtils.getModel());
         map.put(THPConstants.CT_KEY_resolution, ResUtil.resolution(context));
         map.put(THPConstants.CT_KEY_from, from);
         pushCleverTapEvent(context, THPConstants.CT_EVENT_SPLASH_API, map);

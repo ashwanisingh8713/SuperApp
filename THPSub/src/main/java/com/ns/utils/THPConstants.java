@@ -123,7 +123,7 @@ public class THPConstants {
     public static final String CT_KEY_Authors = "Authors";
     public static final String CT_KEY_Offer_Id = "Offer Id";
     public static final String CT_KEY_Date = "Date";
-    public static final String CT_KEY_Device_id = "Device Id";
+    public static final String CT_KEY_Device_model = "Device Model";
     public static final String CT_KEY_resolution = "Resolution";
     public static final String CT_KEY_from = "From";
 
