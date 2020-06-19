@@ -77,9 +77,9 @@ public class BecomeMemberIntroFragment extends BaseFragmentTHP {
 
         });
 
-        //uspRequest();
+        uspRequest();
 
-        mViewPager.setAdapter(new BecomeMemberPagerAdapter(getActivity(), mFrom));
+        //mViewPager.setAdapter(new BecomeMemberPagerAdapter(getActivity(), mFrom));
 
     }
 
