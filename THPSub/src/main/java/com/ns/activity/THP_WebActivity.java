@@ -45,7 +45,7 @@ public class THP_WebActivity extends BaseAcitivityTHP {
         }*/
 
         getDetailToolbar().getBackView().setVisibility(View.VISIBLE);
-        getDetailToolbar().getPremiumLogoBtn().setVisibility(View.VISIBLE);
+        //getDetailToolbar().getPremiumLogoBtn().setVisibility(View.VISIBLE);
 
         if(mFrom != null) {
             getDetailToolbar().setTitle(mFrom);

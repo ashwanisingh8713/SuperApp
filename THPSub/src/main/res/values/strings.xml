@@ -26,7 +26,7 @@
     <string name="passwd_char_err_msg">Password should contain atleast 1 number and 1 alphabet. No special characters allowed.</string>
     <string name="all_field_mandatory">All fields are mandatory.</string>
 
-    <string name="comments">COMMENTS</string>
+    <string name="comments">Comments</string>
 
     <string name="language_not_available">Language is not available.</string>
     <string name="language_missing_data">Language is not downloaded. Please download from Google TTS voice data.</string>
