@@ -35,6 +35,7 @@ import com.ns.view.flowlayout.TagAdapter;
 import com.ns.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -96,6 +97,8 @@ public class CustomizeNewsFeedFragment extends Fragment {
                     List<TableSection> allList = daoSection.getSections();
                     List<TablePersonaliseDefault> allPersonalised = daoPersonaliseDefault.getCategoryPersonalise(NetConstants.PERSONALISE_CATEGORY_NEWS);
 
+                    List<TablePersonaliseDefault> AllSectionListSelected = new ArrayList<>();
+
                     for(TableSection tableSection : allList) {
                         if(tableSection.getCustomScreen().equals("1")) {
                             TablePersonaliseDefault defaultSec = new TablePersonaliseDefault(NetConstants.PERSONALISE_CATEGORY_NEWS, tableSection.getCustomScreenPri(), tableSection.getSecId(), null, tableSection.getSecName(), false, false);
@@ -103,7 +106,7 @@ public class CustomizeNewsFeedFragment extends Fragment {
                                 defaultSec.setUserPreffered(true);
                                 mAlreadySelectionSecIds.add(tableSection.getSecId());
                             }
-                            mSectionList.add(defaultSec);
+                            AllSectionListSelected.add(defaultSec);
 
                         }
                         List<SectionBean> subSection = tableSection.getSubSections();
@@ -114,11 +117,30 @@ public class CustomizeNewsFeedFragment extends Fragment {
                                     defaultSec.setUserPreffered(true);
                                     mAlreadySelectionSecIds.add(bean.getSecId());
                                 }
-                                mSectionList.add(defaultSec);
+                                AllSectionListSelected.add(defaultSec);
 
                             }
                         }
                     }
+
+                    List<TablePersonaliseDefault> SectionListSelected = new ArrayList<>();
+                    List<TablePersonaliseDefault> SectionListNotSelected = new ArrayList<>();
+
+                    for(TablePersonaliseDefault tablePersonalise : AllSectionListSelected) {
+                        if(tablePersonalise.isUserPreffered()) {
+                            SectionListSelected.add(tablePersonalise);
+                        }
+                    }
+
+                    for(TablePersonaliseDefault tablePersonalise : AllSectionListSelected) {
+                        if(!tablePersonalise.isUserPreffered()) {
+                            SectionListNotSelected.add(tablePersonalise);
+                        }
+                    }
+
+                    mSectionList.addAll(SectionListSelected);
+                    mSectionList.addAll(SectionListNotSelected);
+
                     Log.i("", "");
                     return "";
                 })

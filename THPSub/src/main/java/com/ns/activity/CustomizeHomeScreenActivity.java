@@ -233,7 +233,6 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
 
                     //Firebase Analytics event
                     THPFirebaseAnalytics.setFirbaseAnalyticsEvent(CustomizeHomeScreenActivity.this, "Action", "Customize news feed: Back button clicked", CustomizeHomeScreenActivity.class.getSimpleName());
-
                     getDetailToolbar().setTitle(getString(R.string.custom_local_screen));
                 } else {
                     getDetailToolbar().setTitle(getString(R.string.custom_home_screen));
