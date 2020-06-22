@@ -124,7 +124,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         mViewPager = view.findViewById(R.id.appTabsViewPager);
 
         //Developer Options Button, display only if it is Debug build
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("_DEVELOPMENT") && BuildConfig.DEBUG) {
             Button buttonDeveloperOptions = view.findViewById(R.id.buttonDeveloperOptions);
             buttonDeveloperOptions.setVisibility(View.VISIBLE);
             buttonDeveloperOptions.setOnClickListener(new View.OnClickListener() {

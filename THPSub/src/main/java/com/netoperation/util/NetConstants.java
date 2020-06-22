@@ -36,7 +36,7 @@ public class NetConstants {
     public static final String BREIFING_NOON = "NOON";
 
     public static final String RECO_TEMP_NOT_EXIST = "TEMP_NOT_EXIST";
-    public static final String RECO_HOME_TAB = "HOME";
+    public static final String RECO_HOME_TAB = "Home";
 
     public static final String G_DEFAULT_SECTIONS = "GROUP_DEFAULT_SECTIONS";
     public static final String G_PREMIUM_SECTIONS = "GROUP_PREMIUM_SECTIONS";

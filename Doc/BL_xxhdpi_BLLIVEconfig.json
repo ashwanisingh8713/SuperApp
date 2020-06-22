@@ -36,10 +36,10 @@
       {
         "title": "Home",
         "iconUrl": {
-          "urlDark": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/HomeurlDark.png",
-          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/HomeurlSelectedDark.png",
-          "urlLight": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/HomeurlLight.png",
-          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/HomeurlSelectedLight.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/home.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/homeSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/home.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/homeuSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -47,10 +47,10 @@
       {
         "title": "Portfolio",
         "iconUrl": {
-          "urlDark": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
-          "urlLight": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/PortfoliourlLight.png",
-          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png",
-          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/PortfoliourlSelectedLight.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolio.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolio.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolioSelected.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolioSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -372,10 +372,10 @@
       {
         "title": "My Stories",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/MyStoriesurlDark.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/MyStoriesurlSelectedDark.png",
-          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/MyStoriesurlLight.png",
-          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/MyStoriesurlSelectedLight.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/mystories.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/mystoriesSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/mystories.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/mystoriesSelected.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "My Stories"
@@ -383,10 +383,10 @@
       {
         "title": "Indices",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/IndicesurlDark.png",
-          "urlLight": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/IndicesurlSelectedDark.png",
-          "urlSelectedDark": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png",
-          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/IndicesurlSelectedLight.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/indices.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/indices.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/indicesSelected.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/indicesSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "SENSEX"
@@ -394,10 +394,10 @@
       {
         "title": "Profile",
         "iconUrl": {
-          "urlDark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/ProfileurlDark.png",
-          "urlSelectedDark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Dark/xxhdpi/ProfileurlSelectedDark.png",
-          "urlLight": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ProfileurlDark.png",
-          "urlSelectedLight": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ProfileurlSelectedDark.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/profile.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/profileSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/profile.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/profileSelected.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "Profile"
@@ -704,81 +704,81 @@
     "totalIcons": "88",
     "otherIconsDownloadUrls": {
       "dark": {
-        "Logo": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
         "Listing": {
-          "bookmark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
-          "like": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
-          "dislike": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
-          "favorite": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
-          "share": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/share.png"
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/share.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
-          "logo": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
-          "search": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
-          "ttsPlay": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
-          "comment": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/comment.png",
-          "bookmark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
-          "textSize": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/textSize.png",
-          "share": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/share.png",
-          "crown": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/crown.png",
-          "like": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
-          "dislike": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
-          "favorite": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
         },
         "placeHolder": {
-          "banner": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/banner.png",
-          "thumb": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/thumb.png",
-          "widget": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/widget.png",
-          "ads": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/ads.png"
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/banner.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/thumb.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/widget.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/ads.png"
         }
       },
       "light": {
-        "Logo": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/Logo.png",
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/hdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/icons/bl/Light/hdpi/unbookmark.png",
-          "like": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/like.png",
-          "dislike": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
-          "favorite": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
-          "share": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/sharegrey.png"
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/hdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/hdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/shareGray.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
-          "logo": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/logo_small.png",
-          "search": "http://3.0.22.177/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
-          "ttsPlay": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://3.0.22.177/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
-          "comment": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/Comment.png",
-          "bookmark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
-          "textSize": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/textSize.png",
-          "share": "http://appsearch.thehindu.com/admin/assets/images/icons/bl/Light/xxhdpi/share.png",
-          "crown": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/crown.png",
-          "like": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/like.png",
-          "dislike": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
-          "favorite": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://3.0.22.177/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/logo_small.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/Comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
         },
         "placeHolder": {
-          "banner": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/banner.png",
-          "thumb": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/thumb.png",
-          "widget": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/widget.png",
-          "ads": "http://3.0.22.177/admin/assets/images/icons/bl/Light/xxhdpi/ads.png"
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/banner.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/thumb.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/widget.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/ads.png"
         }
       }
     },

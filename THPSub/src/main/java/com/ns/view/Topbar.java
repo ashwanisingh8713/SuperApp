@@ -404,12 +404,12 @@ public class Topbar extends Toolbar {
         favouriteParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
         commentParent.setVisibility(GONE);
-        bookmarkParent.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
 
         premiumLogoBtn.setVisibility(VISIBLE);
         ttsParent.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
-        mTextSizeImageView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
     }
 
@@ -424,12 +424,12 @@ public class Topbar extends Toolbar {
         favouriteParent.setVisibility(GONE);
         likeParent.setVisibility(GONE);
         commentParent.setVisibility(GONE);
-        bookmarkParent.setVisibility(GONE);
         premiumLogoBtn.setVisibility(GONE);
+        mTextSizeImageView.setVisibility(GONE);
 
         ttsParent.setVisibility(VISIBLE);
         shareTHPIC.setVisibility(VISIBLE);
-        mTextSizeImageView.setVisibility(VISIBLE);
+        bookmarkParent.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
     }
 
