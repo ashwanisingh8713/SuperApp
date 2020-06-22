@@ -77,4 +77,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+
+
 </com.ns.view.ScreenBg_ConstraintLayout>

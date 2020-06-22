@@ -88,11 +88,11 @@ public class THP_AutoResizeWebview extends WebView {
         if(description == null) {
             description = "";
         }
-        String bgColor = "#181818";
-        String descriptionTextColor = "#ffffff";
-        String leadColor = "#ffffff";
+        String bgColor = "#ffffff";
+        String descriptionTextColor = "#181818";
+        String leadColor = "#181818";
         String linkColor = "#2435E7";
-        String linkVisitedColor = "#45E760";  // green
+        String linkVisitedColor = "#2435E7";  // green
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null) {
             ColorOptionBean screenBg = tableConfiguration.getAppTheme().getScreenBg();
@@ -148,25 +148,27 @@ public class THP_AutoResizeWebview extends WebView {
             description = description.trim();
         }
 
-        String bgColor = "#181818";
-        String descriptionTextColor = "#ffffff";
+        String bgColor = "#ffffff";
+        String descriptionTextColor = "#181818";
         String leadColor = "#ffffff";
         String linkColor = "#2435E7";
-        String linkVisitedColor = "#45E760";  // green
+        String linkVisitedColor = "#2435E7";  // blue
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null) {
             ColorOptionBean screenBg = tableConfiguration.getAppTheme().getScreenBg();
             ArticleTextColor articleTextColor = tableConfiguration.getAppTheme().getArticleText();
-            if(BaseAcitivityTHP.sIsDayTheme) {
-                descriptionTextColor = articleTextColor.getLight().getDetail();
-                linkColor = articleTextColor.getLight().getLink();
-                leadColor = articleTextColor.getLight().getLead();
-                bgColor = screenBg.getLight();
-            } else {
-                descriptionTextColor = articleTextColor.getDark().getDetail();
-                linkColor = articleTextColor.getDark().getLink();
-                leadColor = articleTextColor.getDark().getLead();
-                bgColor = screenBg.getDark();
+            if(articleTextColor != null) {
+                if (BaseAcitivityTHP.sIsDayTheme) {
+                    descriptionTextColor = articleTextColor.getLight().getDetail();
+                    linkColor = articleTextColor.getLight().getLink();
+                    leadColor = articleTextColor.getLight().getLead();
+                    bgColor = screenBg.getLight();
+                } else {
+                    descriptionTextColor = articleTextColor.getDark().getDetail();
+                    linkColor = articleTextColor.getDark().getLink();
+                    leadColor = articleTextColor.getDark().getLead();
+                    bgColor = screenBg.getDark();
+                }
             }
         }
 

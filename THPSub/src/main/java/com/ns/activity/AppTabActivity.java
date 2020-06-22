@@ -171,6 +171,11 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
                 }));
 
+
+        /*findViewById(R.id.overlayoutGuideImg).setOnClickListener(v->{
+            findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
+        });*/
+
     }
 
 

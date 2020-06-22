@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:allowBackup="false"
         android:allowClearUserData="false"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:icon="@mipmap/app_launcher">
 
         <activity android:name="com.ns.activity.SplashActivity"
             android:screenOrientation="portrait">

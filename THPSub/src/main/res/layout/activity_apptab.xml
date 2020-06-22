@@ -8,7 +8,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <com.ns.view.layout.NSLinearLayoutWindowBG
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <com.ns.view.ScreenBg_LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -44,7 +47,17 @@
             app:textType="S" />
 
 
-    </com.ns.view.layout.NSLinearLayoutWindowBG>
+    </com.ns.view.ScreenBg_LinearLayout>
+
+       <!-- <ImageView
+            android:id="@+id/overlayoutGuideImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/scrshot_1"
+            android:scaleType="fitXY"
+            />-->
+
+    </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -53,7 +66,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <com.ns.view.layout.NSLinearLayoutWindowBG
+        <com.ns.view.ScreenBg_LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/topTabHeight"
@@ -88,7 +101,7 @@
                 android:dividerHeight="0dp"
                 android:groupIndicator="@null"
                 android:scrollbars="none" />
-        </com.ns.view.layout.NSLinearLayoutWindowBG>
+        </com.ns.view.ScreenBg_LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
