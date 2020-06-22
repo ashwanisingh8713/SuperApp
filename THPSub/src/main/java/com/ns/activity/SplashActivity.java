@@ -531,8 +531,12 @@ public class SplashActivity extends BaseAcitivityTHP {
                 if(totalReceivedFailRequestIcons+totalReceivedSuccessRequestIcons >= totalSentRequestIcons) {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
+
+                        // Uncomment below two lines, If want to run app even though icons are not downloaded
                         //DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
                         //sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+
+                        // Comment below line, If want to run app even though icons are not downloaded
                         sendHandlerMsg(WHAT_ERROR, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
                     }
                 }
