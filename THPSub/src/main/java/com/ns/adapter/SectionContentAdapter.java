@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,6 +53,7 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.WebViewClientForWebPage;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BannerViewHolder;
+import com.ns.viewholder.HomePageFooterViewViewHolder;
 import com.ns.viewholder.ExploreViewHolder;
 import com.ns.viewholder.InlineAdViewHolder;
 import com.ns.viewholder.LoadMoreViewHolder;
@@ -202,10 +204,15 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         } else if (viewType == SUBSECTION_LAYOUT_GRID) {
             return new SubSectionGridViewHolder(LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.subsection_grid_layout, viewGroup, false));
+        } else if(viewType == VT_HOME_PAGE_FOOTER_VIEW) {
+            return new HomePageFooterViewViewHolder(LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.home_footer_view, viewGroup, false));
         }
+
         return new LoadMoreViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_loadmore, viewGroup, false));
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -236,6 +243,17 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             subSectionHList(holder, item, position);
         } else if (holder instanceof SubSectionGridViewHolder) {
             subSectionGrid(holder, item, position);
+        } else if(holder instanceof HomePageFooterViewViewHolder) {
+            HomePageFooterViewViewHolder footerViewViewHolder = (HomePageFooterViewViewHolder) holder;
+            footerViewViewHolder.itemView.setOnClickListener(v->{
+                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
+                        MainActivity.this,
+                        getString(R.string.ga_action),
+                        "Customise Subscription: Customise Subscription Button Clicked ",
+                        getString(R.string.custom_home_screen));
+                FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
+                IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) footerViewViewHolder.itemView.getContext());
+            });
         }
     }
 

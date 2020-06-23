@@ -8,14 +8,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <com.ns.view.ScreenBg_LinearLayout
+
+    <com.ns.view.ScreenBg_ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.ns.view.Topbar
             android:id="@+id/toolbar"
@@ -28,13 +25,18 @@
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
-            app:contentInsetStart="0dp" />
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
         <FrameLayout
             android:id="@+id/parentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/noConnectionTabText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.ns.view.text.ArticleTitleTextView
             android:id="@+id/noConnectionTabText"
@@ -44,20 +46,22 @@
             android:text="No connection"
             android:textSize="@dimen/textSize_10sp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:textType="S" />
 
 
-    </com.ns.view.ScreenBg_LinearLayout>
+    </com.ns.view.ScreenBg_ConstraintLayout>
 
-       <!-- <ImageView
-            android:id="@+id/overlayoutGuideImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/scrshot_1"
-            android:scaleType="fitXY"
-            />-->
+    <!-- <ImageView
+         android:id="@+id/overlayoutGuideImg"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:src="@drawable/scrshot_1"
+         android:scaleType="fitXY"
+         />-->
 
-    </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -69,16 +73,15 @@
         <com.ns.view.ScreenBg_LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/topTabHeight"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/topTabHeight">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/type_device"
-                
                 android:paddingStart="20dp"
-                />
+
+                android:text="@string/type_device" />
 
             <com.ns.view.img.LogoImgView
                 android:layout_width="wrap_content"

@@ -35,7 +35,6 @@ import com.ns.adapter.SectionContentAdapter;
 import com.ns.adapter.SuWidgetRecyclerAdapter;
 import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.loginfragment.BaseFragmentTHP;
-import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
 import com.ns.utils.SectionSideWork;
@@ -558,12 +557,22 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }, () -> {
                     Log.i(TAG, "SECTION :: " + mSectionId + "-" + sectionOrSubsectionName + " :: completed - DB");
                     loadFirstScrollPageData();
+                    homePageFooterView();
 
                 }));
     }
 
+    private void homePageFooterView() {
+        SectionAdapterItem item = new SectionAdapterItem(BaseRecyclerViewAdapter.VT_HOME_PAGE_FOOTER_VIEW, RowIds.rowId_homePageFooterView());
+        int index = mRecyclerAdapter.indexOf(item);
+        if (index == -1) {
+            mRecyclerAdapter.addSingleItem(item);
+        }
+    }
+
 
     private void loadFirstScrollPageData() {
+        initSectionAds();
         mSectionSideWork.indexConfig(mRecyclerAdapter, sIsDayTheme);
         SU_showHomeWidgetsFromObservable();
         addStaticWebPage();
@@ -579,19 +588,23 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
     private void adRequest() {
         if(mSectionAds == null) {
-            mSectionAds = new SectionListingAds();
-            mSectionAds.setOnDFPAdLoadListener(this);
-            mSectionAds.setOnTaboolaAdLoadListener(this);
-
-            mSectionAds.setTaboolaAdsBeans(mSectionSideWork.getTaboolaAdsBeans());
-            mSectionAds.setDfpAdsBeans(mSectionSideWork.getDfpAdsBeans());
-            doRunnableWork(runnableTaboolaDelayStart(true), 1000);
+            initSectionAds();
         } else {
             doRunnableWork(runnableTaboolaDelayStart(false), 1000);
         }
 
         mSectionAds.createMEDIUM_RECTANGLE();
 
+    }
+
+    private void initSectionAds() {
+        mSectionAds = new SectionListingAds();
+        mSectionAds.setOnDFPAdLoadListener(this);
+        mSectionAds.setOnTaboolaAdLoadListener(this);
+
+        mSectionAds.setTaboolaAdsBeans(mSectionSideWork.getTaboolaAdsBeans());
+        mSectionAds.setDfpAdsBeans(mSectionSideWork.getDfpAdsBeans());
+        doRunnableWork(runnableTaboolaDelayStart(true), 1000);
     }
 
 

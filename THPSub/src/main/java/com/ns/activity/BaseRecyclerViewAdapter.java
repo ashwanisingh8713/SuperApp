@@ -73,6 +73,8 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
     public static final int SUBSECTION_LAYOUT_H_LIST = 401;
     public static final int SUBSECTION_LAYOUT_GRID = 402;
 
+    public static final int VT_HOME_PAGE_FOOTER_VIEW = 501;
+
     public static final int GroupHeader_MEDIA_ActionAtLeft = 201;
     public static final int GroupHeader_MEDIA_ActionAtCenter = 202;
 
