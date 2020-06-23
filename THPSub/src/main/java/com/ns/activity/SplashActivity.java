@@ -19,10 +19,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -35,6 +37,7 @@ import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableWidget;
+import com.netoperation.model.USPData;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.net.RequestCallback;
 import com.netoperation.util.NetConstants;
@@ -48,6 +51,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.CustomProgressBar;
 import com.ns.view.img.LogoImgView;
@@ -123,6 +127,39 @@ public class SplashActivity extends BaseAcitivityTHP {
 
         //Merge Old Bookmark, from Realm DB to Room DB
         DefaultTHApiManager.mergeOldBookmark();
+
+        // Guide Overflow Api conditional call
+        /*if(DefaultPref.getInstance(this).getGuideOverlayUrl(true) == null)*/ {
+            DefaultTHApiManager.getGuideOverlay(this, new RequestCallback<USPData.DATABean.GuideOverlay>() {
+                @Override
+                public void onNext(USPData.DATABean.GuideOverlay guideOverlay) {
+                    String listing = guideOverlay.getListing();
+                    String detail = guideOverlay.getDetail();
+                    PicassoUtil.loadImage(SplashActivity.this, new ImageView(SplashActivity.this), listing);
+                    PicassoUtil.loadImage(SplashActivity.this, new ImageView(SplashActivity.this), detail);
+
+                    DefaultPref.getInstance(SplashActivity.this).saveGuideOverlay(listing, detail);
+
+                }
+
+                @Override
+                public void onError(Throwable t, String str) {
+
+                }
+
+                @Override
+                public void onComplete(String str) {
+
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    int height = displayMetrics.heightPixels;
+                    int width = displayMetrics.widthPixels;
+
+                    Log.i("", "");
+
+                }
+            });
+        }
 
     }
 

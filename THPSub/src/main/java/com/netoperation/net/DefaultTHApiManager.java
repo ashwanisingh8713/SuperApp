@@ -54,6 +54,7 @@ import com.netoperation.model.SectionAndWidget;
 import com.netoperation.model.SectionBean;
 import com.netoperation.model.SectionContentFromServer;
 import com.netoperation.model.THDefaultPersonalizeBean;
+import com.netoperation.model.USPData;
 import com.netoperation.model.UpdateModel;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
@@ -1639,6 +1640,30 @@ public class DefaultTHApiManager {
                 }, ()->{
                     if(requestCallback != null) {
                         requestCallback.onComplete("getUPS");
+                    }
+                });
+
+    }
+
+    public static void getGuideOverlay(Context context, RequestCallback<USPData.DATABean.GuideOverlay> requestCallback) {
+        ServiceFactory.getServiceAPIs().getUSP(BuildConfig.GUIDE_OVERLAY_URL, ReqBody.ups(BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+                .subscribeOn(Schedulers.io())
+                .map(uspData->{
+                    USPData.DATABean.GuideOverlay guideOverlay = uspData.getDATA().getAndroid();
+                    return guideOverlay;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
+                }, throwable -> {
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "getGuideOverlay");
+                    }
+                }, ()->{
+                    if(requestCallback != null) {
+                        requestCallback.onComplete("getGuideOverlay");
                     }
                 });
 

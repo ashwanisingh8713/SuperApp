@@ -47,6 +47,11 @@ public class USPData {
 
         private UrlkBean Dark;
         private UrlkBean Light;
+        private GuideOverlay android;
+
+        public GuideOverlay getAndroid() {
+            return android;
+        }
 
         public UrlkBean getDark() {
             return Dark;
@@ -74,6 +79,21 @@ public class USPData {
             public void setUrls(List<String> urls) {
                 this.urls = urls;
             }
+        }
+
+        public static class GuideOverlay {
+            private String detail;
+            private String listing;
+
+            public String getDetail() {
+                return detail;
+            }
+
+            public String getListing() {
+                return listing;
+            }
+
+
         }
 
 

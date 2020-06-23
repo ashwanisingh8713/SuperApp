@@ -346,4 +346,25 @@ public class DefaultPref {
         }
         return lastSyncDuration > SYNC_UP_DURATION;
     }
+
+
+    public void saveGuideOverlay(String listing, String detail) {
+        String urls = listing+"===="+detail;
+        mEditor.putString("guideOverlay", urls);
+        mEditor.apply();
+    }
+
+    public String getGuideOverlayUrl(boolean isListing) {
+        String urlStr = mPreferences.getString("guideOverlay", null);
+        if(urlStr == null) {
+            return null;
+        }
+        String urls [] = urlStr.split("====");
+        if(isListing) {
+            return urls[0];
+        }
+        else {
+            return urls[1];
+        }
+    }
 }

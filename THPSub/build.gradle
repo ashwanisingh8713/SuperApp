@@ -28,6 +28,7 @@ android {
         buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
         buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
         buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/usp\""
+        buildConfigField "String", "GUIDE_OVERLAY_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overlay\""
         buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/forceUpdate\""
     }
 

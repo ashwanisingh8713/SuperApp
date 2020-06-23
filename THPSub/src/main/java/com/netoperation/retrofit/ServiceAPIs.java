@@ -206,7 +206,7 @@ public interface ServiceAPIs {
     @GET("") //Menu Sequence API
     Single<JsonElement> getMenuSequence(@Url String url);
 
-    @POST("") //USP API
+    @POST("") //USP and Guide Overlay API
     Observable<USPData> getUSP(@Url String url, @Body JsonObject jsonObject);
 
 

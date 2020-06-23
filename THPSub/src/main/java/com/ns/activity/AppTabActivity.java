@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -60,6 +62,7 @@ import com.ns.utils.FragmentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.OverflowPopUp;
+import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
@@ -172,9 +175,22 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 }));
 
 
-        /*findViewById(R.id.overlayoutGuideImg).setOnClickListener(v->{
+        // Guide Overlay, for Listing Page
+        String guideOverlayListing = DefaultPref.getInstance(this).getGuideOverlayUrl(true);
+        if(!ResUtil.isEmpty(guideOverlayListing)) {
+            findViewById(R.id.overlayoutGuideImg).setVisibility(View.VISIBLE);
+            PicassoUtil.loadImage(AppTabActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayListing);
+            findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
+                findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
+                //DefaultPref.getInstance(AppTabActivity.this).saveGuideOverlay("", DefaultPref.getInstance(this).getGuideOverlayUrl(false));
+            });
+        }
+        else {
             findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
-        });*/
+        }
+
+
+
 
     }
 
