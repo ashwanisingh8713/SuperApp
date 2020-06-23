@@ -92,22 +92,22 @@
     "appTheme": {
       "articleText" : {
         "dark" : {
-          "title" : "#85E766",
+          "title" : "#ededed",
           "time" : "#818181",
           "author" : "#818181",
           "section" : "#818181",
-          "detail" : "#E73A31",
-          "link" : "#2435E7",
-          "lead" : "#37E7B9"
+          "detail" : "#ffffff",
+          "link" : "#3674E7",
+          "lead" : "#ffffff"
         },
         "light" : {
-          "title" : "#85E766",
-          "time" : "#E7DD1E",
-          "author" : "#38B4E7",
-          "section" : "#D678E7",
-          "detail" : "#E7E34C",
-          "link" : "#72E71F",
-          "lead" : "#E738D3"
+          "title" : "#191919",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#666666",
+          "link" : "#3674E7",
+          "lead" : "#666666"
         }
       },
       "tilesBg": {
