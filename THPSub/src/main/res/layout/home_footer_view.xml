@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ns.view.Tile_LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <com.ns.view.text.SectionTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textType="section"
+        android:gravity="center"
+        android:paddingBottom="@dimen/customise_home_text_padding"
+        android:paddingTop="@dimen/customise_home_text_padding"
+        android:text="@string/custom_home_screen"
+        app:textAllCaps="true"
+        android:textSize="12sp"
+        app:font_path="@string/THP_FiraSans_Regular"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/browser_actions_divider_color" />
+</com.ns.view.Tile_LinearLayout>

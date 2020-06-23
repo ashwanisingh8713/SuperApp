@@ -71,5 +71,9 @@ public class RowIds {
         return "homeSensex_widget";
     }
 
+    public static String rowId_homePageFooterView() {
+        return "homePageFooterView";
+    }
+
 
 }

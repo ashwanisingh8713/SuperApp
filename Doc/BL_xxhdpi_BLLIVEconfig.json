@@ -406,18 +406,22 @@
     "appTheme": {
       "articleText" : {
         "dark" : {
-          "title" : "#191919",
+          "title" : "#ededed",
           "time" : "#818181",
           "author" : "#818181",
           "section" : "#818181",
-          "detail" : "#818181"
+          "detail" : "#ffffff",
+          "link" : "#3674E7",
+          "lead" : "#ffffff"
         },
         "light" : {
           "title" : "#191919",
           "time" : "#818181",
           "author" : "#818181",
           "section" : "#818181",
-          "detail" : "#818181"
+          "detail" : "#666666",
+          "link" : "#3674E7",
+          "lead" : "#666666"
         }
       },
       "tilesBg": {
