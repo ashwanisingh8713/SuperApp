@@ -182,14 +182,12 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             PicassoUtil.loadImage(AppTabActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayListing);
             findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
                 findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
-                //DefaultPref.getInstance(AppTabActivity.this).saveGuideOverlay("", DefaultPref.getInstance(this).getGuideOverlayUrl(false));
+                DefaultPref.getInstance(AppTabActivity.this).saveGuideOverlay("", DefaultPref.getInstance(this).getGuideOverlayUrl(false));
             });
         }
         else {
             findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
         }
-
-
 
 
     }

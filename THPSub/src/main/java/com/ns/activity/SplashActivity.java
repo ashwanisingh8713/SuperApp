@@ -129,7 +129,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         DefaultTHApiManager.mergeOldBookmark();
 
         // Guide Overflow Api conditional call
-        /*if(DefaultPref.getInstance(this).getGuideOverlayUrl(true) == null)*/ {
+        if(DefaultPref.getInstance(this).getGuideOverlayUrl(true) == null) {
             DefaultTHApiManager.getGuideOverlay(this, new RequestCallback<USPData.DATABean.GuideOverlay>() {
                 @Override
                 public void onNext(USPData.DATABean.GuideOverlay guideOverlay) {
@@ -150,12 +150,12 @@ public class SplashActivity extends BaseAcitivityTHP {
                 @Override
                 public void onComplete(String str) {
 
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    /*DisplayMetrics displayMetrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int height = displayMetrics.heightPixels;
                     int width = displayMetrics.widthPixels;
 
-                    Log.i("", "");
+                    Log.i("", "");*/
 
                 }
             });
@@ -573,8 +573,14 @@ public class SplashActivity extends BaseAcitivityTHP {
                         //DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
                         //sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
 
-                        // Comment below line, If want to run app even though icons are not downloaded
-                        sendHandlerMsg(WHAT_ERROR, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+                        boolean isConfigurationOnceLoaded = DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded();
+                        if(isConfigurationOnceLoaded) {
+                            sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+                        }
+                        else {
+                            // Comment below line, If want to run app even though icons are not downloaded
+                            sendHandlerMsg(WHAT_ERROR, totalReceivedFailRequestIcons + " Icons are failed to download, making request for metered paywall");
+                        }
                     }
                 }
 

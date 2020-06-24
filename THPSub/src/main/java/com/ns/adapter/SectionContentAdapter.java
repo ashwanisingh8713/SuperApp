@@ -44,6 +44,7 @@ import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CommonUtil;
 import com.ns.utils.ContentUtil;
+import com.ns.utils.FragmentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.ResUtil;
@@ -579,6 +580,19 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             groupActionRight.setVisibility(View.GONE);
         }
 
+        groupActionLeft.setOnClickListener(viewAllClick(widgetIndex.getSecId()));
+        groupActionCenter.setOnClickListener(viewAllClick(widgetIndex.getSecId()));
+        groupActionRight.setOnClickListener(viewAllClick(widgetIndex.getSecId()));
+
+    }
+
+    private View.OnClickListener viewAllClick(String sectionId) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtil.redirectionOnSectionAndSubSection(v.getContext(), sectionId);
+            }
+        };
     }
 
     private void fillExploreData(final RecyclerView.ViewHolder holder, SectionAdapterItem item, int position) {
