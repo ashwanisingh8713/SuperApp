@@ -96,7 +96,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             }
         }
         // Premium Detail Page Toolbar
-        else if (mFrom != null && (((NetConstants.PS_My_Stories.equalsIgnoreCase(mFrom))
+        else if (mFrom != null && (((NetConstants.API_Mystories.equalsIgnoreCase(mFrom))
                 || (NetConstants.PS_Suggested.equalsIgnoreCase(mFrom))))) {
             if(PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().PREMIUM_DETAIL_TOPBAR();
@@ -179,7 +179,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             PicassoUtil.loadImage(THP_DetailActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayDetail);
             findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
                 findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
-                //DefaultPref.getInstance(THP_DetailActivity.this).saveGuideOverlay("", "");
+                DefaultPref.getInstance(THP_DetailActivity.this).saveGuideOverlay("", "");
             });
         }
         else {

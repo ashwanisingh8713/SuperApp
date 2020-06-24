@@ -98,9 +98,9 @@
                 android:layout_width="@dimen/article_item_icon_width"
                 android:layout_height="@dimen/article_item_icon_height"
                 app:iconType="bookmarked"
-                android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:scaleType="centerInside"
                 />
 
             <ProgressBar
@@ -120,10 +120,10 @@
                 android:layout_width="@dimen/article_item_icon_width"
                 android:layout_height="@dimen/article_item_icon_height"
                 android:layout_marginEnd="20dp"
-                android:scaleType="centerInside"
                 app:iconType="share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookmark_Img"
+                android:scaleType="centerInside"
                 />
 
 

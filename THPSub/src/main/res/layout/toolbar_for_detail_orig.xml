@@ -31,7 +31,7 @@
         app:layout_constraintLeft_toRightOf="@id/action_back"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"
-        />
+         />
     <!-- End Logo Icon-->
 
     <!-- Start Title TextView-->
@@ -50,239 +50,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
     <!-- Start Title TextView-->
-
-
-    <!-- Start TTS Icon -->
-    <FrameLayout
-        android:id="@+id/ttsParent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/commentParent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="ttsStop"
-            android:id="@+id/action_ttsStop"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
-            android:src="@drawable/tts_stop"
-            android:visibility="gone" />
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="ttsPlay"
-            android:id="@+id/action_ttsPlay"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
-            android:src="@drawable/ic_audio"
-            android:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/action_ttsProgress"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:visibility="gone" />
-    </FrameLayout>
-    <!-- End TTS Icon -->
-
-    <!-- Start Comment Icon -->
-    <RelativeLayout
-        android:id="@+id/commentParent"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bookmarkParent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:visibility="gone">
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="comment"
-            android:id="@+id/action_commentTHP"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
-            android:src="@drawable/ic_comment"
-            />
-
-        <TextView
-            android:id="@+id/textview_comment_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignTop="@id/action_commentTHP"
-            android:layout_alignRight="@id/action_commentTHP"
-            android:gravity="center"
-            android:textColor="#ffffffff"
-            android:textSize="12sp"
-            android:visibility="gone"
-            android:background="@drawable/ic_notify_day_mode"/>
-    </RelativeLayout>
-    <!-- End Comment Icon -->
-
-
-    <!-- Start Bookmark and Unbookmark-->
-    <FrameLayout
-        android:id="@+id/bookmarkParent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/action_fontSizeIC"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="bookmarked"
-            android:id="@+id/bookmarkedIC"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:layout_gravity="center"
-            android:scaleType="center"
-            android:visibility="invisible"
-            />
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="unbookmark"
-            android:id="@+id/unbookmarkIC"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:layout_gravity="center"
-            android:scaleType="center"
-            />
-
-        <ProgressBar
-            android:id="@+id/bookmarkrogressBar"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:visibility="gone" />
-
-    </FrameLayout>
-    <!-- End Bookmark and Unbookmark-->
-
-
-    <!-- Start Font Icon -->
-    <com.ns.view.img.TopbarIconView
-        app:iconType="fontSize"
-        android:id="@+id/action_fontSizeIC"
-        android:layout_width="@dimen/toolbar_ic_width"
-        android:layout_height="@dimen/toolbar_ic_height"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:scaleType="center"
-        android:src="@drawable/ic_textsize_w"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/favouriteParent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-    <!-- End Font Icon -->
-
-    <!-- Start Favourite Icon -->
-    <FrameLayout
-        android:id="@+id/favouriteParent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/likeParent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="favourite"
-            android:id="@+id/action_favTHP"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
-            />
-
-        <ProgressBar
-            android:id="@+id/action_favTHPProgressBar"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:visibility="gone"
-            />
-    </FrameLayout>
-    <!-- End Favourite Icon -->
-
-    <!-- Start Like -->
-    <FrameLayout
-        android:id="@+id/likeParent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/action_shareTHP"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
-
-        <com.ns.view.img.TopbarIconView
-            app:iconType="like"
-            android:id="@+id/action_likeTHPIC"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
-            />
-
-        <ProgressBar
-            android:id="@+id/action_likeTHPProgressBar"
-            style="@android:style/Widget.Holo.ProgressBar.Small"
-            android:layout_width="@dimen/toolbar_ic_width"
-            android:layout_height="@dimen/toolbar_ic_height"
-            android:visibility="gone"/>
-    </FrameLayout>
-    <!-- End Like -->
-
-    <!-- Start Share Icon -->
-    <com.ns.view.img.TopbarIconView
-        app:iconType="share"
-        android:id="@+id/action_shareTHP"
-        android:layout_width="@dimen/toolbar_ic_width"
-        android:layout_height="@dimen/toolbar_ic_height"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/action_premiumLogoBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-    <!-- End Share Icon -->
-
-    <!-- Start Search Icon-->
-    <com.ns.view.img.TopbarIconView
-        android:id="@+id/action_search"
-        android:layout_width="@dimen/toolbar_ic_width"
-        android:layout_height="@dimen/toolbar_ic_height"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        app:iconType="search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/action_premiumLogoBtn"
-        app:layout_constraintRight_toLeftOf="@id/action_premiumLogoBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-    <!-- End Search Icon-->
-
-
-
-    <!-- Start Crown Icon-->
-    <com.ns.view.img.TopbarIconView
-        android:id="@+id/action_premiumLogoBtn"
-        android:layout_width="@dimen/toolbar_ic_width"
-        android:layout_height="@dimen/toolbar_ic_height"
-        android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        app:iconType="crown"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/overflowParent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_premium_logo"
-        android:visibility="gone"/>
-    <!-- End Crown Icon-->
 
     <!-- Start Overflow Icon-->
     <FrameLayout
@@ -324,6 +91,244 @@
             android:visibility="gone" />
     </FrameLayout>
     <!-- End Overflow Icon-->
+
+    <!-- Start Crown Icon-->
+    <com.ns.view.img.TopbarIconView
+        android:id="@+id/action_premiumLogoBtn"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        app:iconType="crown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/overflowParent"
+        app:layout_constraintRight_toLeftOf="@id/overflowParent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_premium_logo"
+        android:visibility="gone"/>
+    <!-- End Crown Icon-->
+
+    <!-- Start Search Icon-->
+    <com.ns.view.img.TopbarIconView
+        android:id="@+id/action_search"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        app:iconType="search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/action_premiumLogoBtn"
+        app:layout_constraintRight_toLeftOf="@id/action_premiumLogoBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+    <!-- End Search Icon-->
+
+    <!-- Start Like -->
+    <FrameLayout
+        android:id="@+id/likeParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@id/action_search"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="like"
+            android:id="@+id/action_likeTHPIC"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            />
+
+        <ProgressBar
+            android:id="@+id/action_likeTHPProgressBar"
+            style="@android:style/Widget.Holo.ProgressBar.Small"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:visibility="gone"/>
+    </FrameLayout>
+    <!-- End Like -->
+
+    <!-- Start Bookmark and Unbookmark-->
+    <FrameLayout
+        android:id="@+id/bookmarkParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/likeParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="bookmarked"
+            android:id="@+id/bookmarkedIC"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:visibility="invisible"
+            />
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="unbookmark"
+            android:id="@+id/unbookmarkIC"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            />
+
+        <ProgressBar
+            android:id="@+id/bookmarkrogressBar"
+            style="@android:style/Widget.Holo.ProgressBar.Small"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:visibility="gone" />
+
+    </FrameLayout>
+    <!-- End Bookmark and Unbookmark-->
+
+    <!-- Start Font Icon -->
+    <com.ns.view.img.TopbarIconView
+        app:iconType="fontSize"
+        android:id="@+id/action_fontSizeIC"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        
+        android:scaleType="center"
+        android:src="@drawable/ic_textsize_w"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/bookmarkParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+    <!-- End Font Icon -->
+
+    <!-- Start Favourite Icon -->
+    <FrameLayout
+        android:id="@+id/favouriteParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toLeftOf="@+id/action_fontSizeIC"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="favourite"
+            android:id="@+id/action_favTHP"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            />
+
+        <ProgressBar
+            android:id="@+id/action_favTHPProgressBar"
+            style="@android:style/Widget.Holo.ProgressBar.Small"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:visibility="gone"
+            />
+    </FrameLayout>
+    <!-- End Favourite Icon -->
+
+    <!-- Start Share Icon -->
+    <com.ns.view.img.TopbarIconView
+        app:iconType="share"
+        android:id="@+id/action_shareTHP"
+        android:layout_width="@dimen/toolbar_ic_width"
+        android:layout_height="@dimen/toolbar_ic_height"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/favouriteParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+    <!-- End Share Icon -->
+
+    <!-- Start Comment Icon -->
+    <RelativeLayout
+        android:id="@+id/commentParent"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/action_shareTHP"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        android:visibility="gone">
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="comment"
+            android:id="@+id/action_commentTHP"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_comment"
+            />
+
+        <TextView
+            android:id="@+id/textview_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignTop="@id/action_commentTHP"
+            android:layout_alignRight="@id/action_commentTHP"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:background="@drawable/ic_notify_day_mode"/>
+    </RelativeLayout>
+    <!-- End Comment Icon -->
+
+    <!-- Start TTS Icon -->
+    <FrameLayout
+        android:id="@+id/ttsParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/toolbar_ic_gap"
+        
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/commentParent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="ttsStop"
+            android:id="@+id/action_ttsStop"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            android:src="@drawable/tts_stop"
+            android:visibility="gone" />
+
+        <com.ns.view.img.TopbarIconView
+            app:iconType="ttsPlay"
+            android:id="@+id/action_ttsPlay"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:scaleType="center"
+            android:src="@drawable/ic_audio"
+            android:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/action_ttsProgress"
+            style="@android:style/Widget.Holo.ProgressBar.Small"
+            android:layout_width="@dimen/toolbar_ic_width"
+            android:layout_height="@dimen/toolbar_ic_height"
+            android:visibility="gone" />
+    </FrameLayout>
+    <!-- End TTS Icon -->
 
     <include layout="@layout/divider"
         android:layout_width="match_parent"

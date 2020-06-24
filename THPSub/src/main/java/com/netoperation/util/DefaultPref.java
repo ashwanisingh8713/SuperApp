@@ -360,11 +360,13 @@ public class DefaultPref {
             return null;
         }
         String urls [] = urlStr.split("====");
-        if(isListing) {
+        if(isListing && urls.length > 0) {
             return urls[0];
         }
-        else {
+        else if(urls.length > 1){
             return urls[1];
+        } else {
+            return "";
         }
     }
 }
