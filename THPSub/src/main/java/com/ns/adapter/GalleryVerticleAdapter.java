@@ -1,6 +1,7 @@
 package com.ns.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
 //            viewHolder.imgView.setImageResource(R.mipmap.ph_topnews_th);
         }
 
-        viewHolder.tv_photoCount.setVisibility(View.GONE);
+        //viewHolder.tv_photoCount.setVisibility(View.GONE);
 
         /*if(getItemCount() == 1) {
             viewHolder.tv_photoCount.setVisibility(View.GONE);
@@ -81,7 +82,7 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
         }*/
 
         viewHolder.tv_photoCount.setText("Photo " + (position+1) + "/" + getItemCount());
-        viewHolder.tv_photoCount.setVisibility(View.GONE);
+        viewHolder.tv_photoCount.setVisibility(View.VISIBLE);
 
         String capton = item.getCaption();
         if (capton != null && !ResUtil.isEmpty(capton)) {
@@ -95,11 +96,10 @@ public class GalleryVerticleAdapter extends RecyclerView.Adapter {
 
 
         // Share Button click listener
-        viewHolder.shareimgView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        String finalCapton = capton;
+        viewHolder.shareimgView.setOnClickListener(v -> {
+            Intent intent = IntentUtil.shareArticleImageIntent(mTitle, imageUrl, finalCapton);
+            mContext.startActivity(intent);
         });
 
         // Check Image is download and store folder
