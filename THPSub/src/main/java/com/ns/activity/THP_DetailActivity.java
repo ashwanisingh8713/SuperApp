@@ -291,6 +291,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             //Hide Some Menu Icons
             getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
             if (!ResUtil.isEmpty(BaseFragmentTHP.getCycleName()) && totalReadSize > 0 && BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) > 0) {
+
                 //CleverTap
                 CleverTapUtil.cleverTapMPContentBocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
                 //Firebase
