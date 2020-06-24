@@ -89,7 +89,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 || (NetConstants.BREIFING_EVENING.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_NOON.equalsIgnoreCase(mFrom))
                 || (NetConstants.BREIFING_MORNING.equalsIgnoreCase(mFrom)))) {
-            if(PremiumPref.getInstance(this).isHasSubscription()) {
+            if (PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().BREIFING_DETAIL_TOPBAR();
             } else {
                 getDetailToolbar().BREIFING_DETAIL_TOPBAR_CROWN();
@@ -98,7 +98,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         // Premium Detail Page Toolbar
         else if (mFrom != null && (((NetConstants.PS_My_Stories.equalsIgnoreCase(mFrom))
                 || (NetConstants.PS_Suggested.equalsIgnoreCase(mFrom))))) {
-            if(PremiumPref.getInstance(this).isHasSubscription()) {
+            if (PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().PREMIUM_DETAIL_TOPBAR();
             } else {
                 getDetailToolbar().PREMIUM_DETAIL_TOPBAR_CROWN();
@@ -106,23 +106,21 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         }
         // Bookmark Detail Page Toolbar
         else if (ContentUtil.isFromPremiumBookmark(mFrom)) {
-            if(PremiumPref.getInstance(this).isHasSubscription()) {
+            if (PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR();
             } else {
                 getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN();
             }
-        }
-        else {
-            if(PremiumPref.getInstance(this).isHasSubscription()) {
+        } else {
+            if (PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
-            }
-            else {
+            } else {
                 getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
             }
         }
 
 
-        if(mArticleBean != null) {
+        if (mArticleBean != null) {
             DefaultTHApiManager.insertMeteredPaywallArticleId(this, mArticleBean.getArticleId(), mArticleBean.isArticleRestricted(), DefaultPref.getInstance(this).getMPAllowedArticleCounts());
             //if article bean group type is not empty, then insert article read with group type
             if (mArticleBean.getGroupType() != null) {
@@ -144,7 +142,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
 
         subscribeBtn_Txt_Mp.setOnClickListener(view -> {
-            if(NetUtils.isConnected(THP_DetailActivity.this)) {
+            if (NetUtils.isConnected(THP_DetailActivity.this)) {
                 //Redirect on subscription plan page
                 IntentUtil.openSubscriptionActivity(THP_DetailActivity.this, THPConstants.FROM_SUBSCRIPTION_EXPLORE);
                 THPConstants.IS_FROM_MP_BLOCKER = true;
@@ -167,22 +165,21 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
                 .subscribeOn(Schedulers.newThread())
                 .delay(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(val->{
+                .subscribe(val -> {
                     new DFPAds().loadFullScreenAds();
                 });
 
 
         // Guide Overlay, for Listing Page
         String guideOverlayDetail = DefaultPref.getInstance(this).getGuideOverlayUrl(false);
-        if(!ResUtil.isEmpty(guideOverlayDetail)) {
+        if (!ResUtil.isEmpty(guideOverlayDetail)) {
             findViewById(R.id.overlayoutGuideImg).setVisibility(View.VISIBLE);
             PicassoUtil.loadImage(THP_DetailActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayDetail);
             findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
                 findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
                 //DefaultPref.getInstance(THP_DetailActivity.this).saveGuideOverlay("", "");
             });
-        }
-        else {
+        } else {
             findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
         }
     }
@@ -212,35 +209,27 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void handleEvent(ToolbarChangeRequired toolbarChangeRequired) {
-        Log.i("THP_DetailActivity", "handleEvent :: "+toolbarChangeRequired);
+        Log.i("THP_DetailActivity", "handleEvent :: " + toolbarChangeRequired);
         if (toolbarChangeRequired.getTypeOfToolbar() == null) {
             return;
         }
-        if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR_CROWN)) {
+        if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().BREIFING_DETAIL_TOPBAR_CROWN();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.BREIFING_DETAIL_TOPBAR)) {
             getDetailToolbar().BREIFING_DETAIL_TOPBAR();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR_CROWN();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_BOOKMARK_DETAIL_TOPBAR)) {
             getDetailToolbar().PREMIUM_BOOKMARK_DETAIL_TOPBAR();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().PREMIUM_DETAIL_TOPBAR_CROWN();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR)) {
             getDetailToolbar().PREMIUM_DETAIL_TOPBAR();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR_CROWN)) {
             getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
-        }
-        else if(toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR)) {
+        } else if (toolbarChangeRequired.getTypeOfToolbar().equals(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR)) {
             getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
         }
     }
@@ -250,8 +239,8 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(TableMPReadArticle tableMPReadArticle) {
-        Log.i("THP_DetailActivity", "handleEvent :: "+tableMPReadArticle);
-        if(!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
+        Log.i("THP_DetailActivity", "handleEvent :: " + tableMPReadArticle);
+        if (!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
             return;
         }
@@ -271,30 +260,42 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
             bannerMsg = bannerMsg + (TextUtils.isEmpty(BaseFragmentTHP.getDurationUnit()) ? "" : " for " + BaseFragmentTHP.getDurationUnit());
         } else {
             //You have read 0 articles out of 0 free articles for 0 days/months
-            bannerMsg = "You have read "+totalReadSize+" articles out of "+BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this)+" free articles";
+            bannerMsg = "You have read " + totalReadSize + " articles out of " + BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) + " free articles";
             bannerMsg = bannerMsg + (TextUtils.isEmpty(BaseFragmentTHP.getDurationUnit()) ? "" : " for " + BaseFragmentTHP.getDurationUnit());
         }
 
         //Check Is Banner close button click TRUE/FALSE
         boolean isBannerCloseClick = tableMPReadArticle.isBannerCloseClick();
-        if(isNeedToShowMpBanner && !isBannerCloseClick) {
+        if (isNeedToShowMpBanner && !isBannerCloseClick) {
             msgCountTxt_Mp.setText(bannerMsg);
             subscribeLayout_Mp.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             subscribeLayout_Mp.setVisibility(View.GONE);
         }
         if (isNeedToShowMpBanner) {
             //Show Menu Icons
-            if(PremiumPref.getInstance(this).isHasSubscription()) {
+            if (PremiumPref.getInstance(this).isHasSubscription()) {
                 getDetailToolbar().DEFAULT_DETAIL_TOPBAR();
-            }
-            else {
+            } else {
                 getDetailToolbar().DEFAULT_DETAIL_TOPBAR_CROWN();
+                if (!ResUtil.isEmpty(BaseFragmentTHP.getCycleName()) && totalReadSize > 0 && BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) > 0) {
+                    //Article Count
+                    THPFirebaseAnalytics.firebaseMP_ArticleCount(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+                    CleverTapUtil.cleverTapMP_ArticleCount(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+                    //Metered Paywall
+                    THPFirebaseAnalytics.firebaseMetered_Paywall(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+                    CleverTapUtil.cleverTapMetered_Paywall(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+                }
             }
         } else {
             //Hide Some Menu Icons
             getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
+            if (!ResUtil.isEmpty(BaseFragmentTHP.getCycleName()) && totalReadSize > 0 && BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) > 0) {
+                //CleverTap
+                CleverTapUtil.cleverTapMPContentBocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+                //Firebase
+                THPFirebaseAnalytics.firebaseMetered_Paywall_Blocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
+            }
         }
     }
 

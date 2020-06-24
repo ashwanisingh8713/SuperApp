@@ -303,6 +303,7 @@ public class CleverTapUtil {
         pushCleverTapEvent(context, THPConstants.CT_EVENT_SETTINGS, map);
     }
 
+    //stoped by THG BB Issue #1528
     public static void cleverTapEventPaymentStatus(Context context,String status,int packValue,String packDuration,String packName,long startTime,long endTime) {
 
 
@@ -348,6 +349,7 @@ public class CleverTapUtil {
         pushCleverTapEvent(context, THPConstants.CT_EVENT_HAMBERGER, map);
     }
 
+    //stoped by THG BB Issue #1528
     public static void cleverTapEventFreeTrial(Context context) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(THPConstants.CT_KEY_Date_Subscription, AppDateUtil.getCurrentDateFormatted("dd/MM/yyyy"));
@@ -396,6 +398,17 @@ public class CleverTapUtil {
         map.put(THPConstants.ArticleCount,articleCount);
         map.put(THPConstants.Allowed_Counts,allowedCounts);
         pushCleverTapEvent(context, THPConstants.Metered_Paywall, map);
+    }
+
+    //MP Events for MP Content Blocker
+    public static void cleverTapMPContentBocker(Context context, String mpCycle, int articleCount, int allowedCounts) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_platform, "app");
+        map.put(THPConstants.CT_KEY_UserId, getUserIdOrDeviceId(context));
+        map.put(THPConstants.MP_Cycle, mpCycle);
+        map.put(THPConstants.ArticleCount,articleCount);
+        map.put(THPConstants.Allowed_Counts,allowedCounts);
+        pushCleverTapEvent(context,THPConstants.MP_Content_Blocker, map);
     }
 
     //MP Banner Subscribe

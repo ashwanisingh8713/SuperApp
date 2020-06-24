@@ -245,6 +245,7 @@ public class THPConstants {
     public static final String MP_SignUp = "MP Sign Up";
     public static final String MP_Article_Count = "MP Article Count";
     public static final String Metered_Paywall = "Metered Paywall";
+    public static final String MP_Content_Blocker = "MP Content Blocker";
     public static final String MP_Banner_Subscribe = "MP Banner Subscribe";
     public static final String Conversion_From_MP = "Conversion From MP";
     public static final String Get_Full_Access_Button_Click = "Get Full Access Button Click";
@@ -259,6 +260,7 @@ public class THPConstants {
     public static final String MP_SignUp_Firebase = "MP_Sign_Up";
     public static final String MP_Article_Count_Firebase = "MP_Article_Count";
     public static final String Metered_Paywall_Firebase = "Metered_Paywall";
+    public static final String Metered_Paywall_Blocker_Firebase = "MP_Content_Blocker";
     public static final String MP_Banner_Subscribe_Firebase = "MP_Banner_Subscribe";
     public static final String Conversion_From_MP_Firebase = "Conversion_From_MP";
     public static final String Get_Full_Access_Button_Click_Firebase = "Get_Full_Access_Button_Click";
