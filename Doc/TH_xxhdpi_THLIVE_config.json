@@ -116,11 +116,15 @@
       },
       "screenBg": {
         "dark": "#191919",
-        "light": "#E7573A"
+        "light": "#ffffff"
       },
       "topBarBg": {
         "dark": "#000000",
         "light": "#ffffff"
+      },
+      "topBarTitle": {
+        "dark": "#ffffff",
+        "light": "#000000"
       },
       "bottomBar": {
         "text": {

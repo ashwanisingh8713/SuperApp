@@ -436,6 +436,10 @@
         "dark": "#191919",
         "light": "#1375B3"
       },
+      "topBarTitle": {
+        "dark": "#ffffff",
+        "light": "#000000"
+      },
       "bottomBar": {
         "text": {
           "dark": "#818181",

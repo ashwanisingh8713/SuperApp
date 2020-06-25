@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.netoperation.config.model.ArticleTextColor;
+import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.default_db.TableConfiguration;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.thpremium.R;
@@ -55,6 +56,18 @@ public class SectionTextView extends AppCompatTextView {
             final TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
 
             if(tableConfiguration == null) {
+                return;
+            }
+
+            // topbarTitle
+            if(textType == 10) {
+                final ColorOptionBean topBarTitle = tableConfiguration.getAppTheme().getTopBarTitle();
+                if(BaseAcitivityTHP.sIsDayTheme) {
+                    setTextColor(Color.parseColor(topBarTitle.getLight()));
+                }
+                else {
+                    setTextColor(Color.parseColor(topBarTitle.getDark()));
+                }
                 return;
             }
 

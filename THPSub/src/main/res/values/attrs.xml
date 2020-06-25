@@ -17,6 +17,7 @@
             <enum name="author" value="7" />
             <enum name="section" value="8" />
             <enum name="detail" value="9" />
+            <enum name="topbarTitle" value="10" />
         </attr>
     </declare-styleable>
 

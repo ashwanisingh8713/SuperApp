@@ -19,6 +19,7 @@ public class AppThemeBean {
     private ColorOptionBean tilesBg;
     private ColorOptionBean screenBg;
     private ColorOptionBean topBarBg;
+    private ColorOptionBean topBarTitle;
     private Breadcrumb bottomBar;
     private WidgetBgBean widgetBg;
     private Breadcrumb breadcrumb;
@@ -77,6 +78,14 @@ public class AppThemeBean {
 
     public Breadcrumb getBreadcrumb() {
         return breadcrumb;
+    }
+
+    public ColorOptionBean getTopBarTitle() {
+        return topBarTitle;
+    }
+
+    public void setTopBarTitle(ColorOptionBean topBarTitle) {
+        this.topBarTitle = topBarTitle;
     }
 
     public void setBreadcrumb(Breadcrumb breadcrumb) {

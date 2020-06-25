@@ -20,17 +20,15 @@
     <!-- End Back Icon-->
 
     <!-- Start Title TextView-->
-    <com.ns.view.text.ArticleTitleTextView
+    <com.ns.view.text.SectionTextView
         android:id="@+id/action_titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:font_path="@string/THP_FiraSans_Regular"
-        app:textType="M"
+        app:textType="topbarTitle"
         android:textSize="20sp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
-        android:text="@string/APP_NAME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/action_refresh"
         app:layout_constraintLeft_toRightOf="@id/action_back"
