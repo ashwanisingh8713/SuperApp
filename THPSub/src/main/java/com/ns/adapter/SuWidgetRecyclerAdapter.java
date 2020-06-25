@@ -22,6 +22,8 @@ import com.ns.utils.ContentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
+import com.ns.utils.SharingArticleUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.viewholder.W_Item_MediaTitleTime_VH;
 import com.ns.viewholder.W_Item_Media_Text;
 import com.ns.viewholder.W_Item_Media_VH;
@@ -190,6 +192,10 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget: Article Clicked", "Home Fragment");
+
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);
 
@@ -260,6 +266,10 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Openion", "Widget Openion: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Openion: " + " Article Clicked");
                     */
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget Openion: Article Clicked", "Home Fragment");
+
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);
                     if(mWidgetItemClickListener != null) {
@@ -329,6 +339,10 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget : Article Clicked", "Home Fragment");
+
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mParentView);
                     /*if(mWidgetItemClickListener != null) {
@@ -343,6 +357,10 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget: " + " Article Clicked");
                     */
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget: Article Clicked", "Home Fragment");
+
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.mPlayButton);
                     if(mWidgetItemClickListener != null) {
@@ -404,6 +422,10 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget Cartoon", "Widget Cartoon: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Widget Cartoon: " + " Article Clicked");
                     */
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget Cartoon: Article Clicked", "Home Fragment");
+
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);
                     if(mWidgetItemClickListener != null) {
@@ -455,6 +477,9 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View view) {
 //                    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, "Widget", "Widget: Article Clicked", "Home Fragment");
 //                    FlurryAgent.logEvent("Widget: " + " Article Clicked");
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Widget: Article Clicked", "Home Fragment");
 
                     IntentUtil.openSectionOrSubSectionDetailActivity(view.getContext(), bean.getSid(),
                             bean.getArticleId(), NetConstants.G_DEFAULT_SECTIONS, holder.cardView);

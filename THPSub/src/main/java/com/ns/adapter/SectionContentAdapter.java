@@ -51,6 +51,7 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.RowIds;
 import com.ns.utils.SharingArticleUtil;
 import com.ns.utils.THPConstants;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.WebViewClientForWebPage;
 import com.ns.viewholder.ArticlesViewHolder;
 import com.ns.viewholder.BannerViewHolder;
@@ -253,6 +254,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                         "Customise Subscription: Customise Subscription Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
+
+                //Firebase event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Action", "Customise Subscription: Customise Subscription Button Clicked ", "Personalise Home Screen");
+
+
                 IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) footerViewViewHolder.itemView.getContext());
             });
         }
@@ -665,16 +671,25 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 int articleId = CommonUtil.getArticleIdFromArticleUrl(url);
                 IntentUtil.openDetailAfterSearchInActivity(holder.itemView.getContext(), "" + articleId, url, NetConstants.G_DEFAULT_SECTIONS);
 
-                /*FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked));
+              /*  FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked));
                 GoogleAnalyticsTracker.setGoogleAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
                         holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked),
                         holder.itemView.getContext().getString(R.string.ga_home));*/
+                //Firebase event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
+                        holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked),
+                        holder.itemView.getContext().getString(R.string.ga_home));
                 return false;
             } else {
                 /*FlurryAgent.logEvent(holder.itemView.getContext().getString(R.string.ga_article_taboola_home_nonorganic_clicked));
                 GoogleAnalyticsTracker.setGoogleAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
                         holder.itemView.getContext().getString(R.string.ga_article_taboola_home_nonorganic_clicked),
                         holder.itemView.getContext().getString(R.string.ga_home));*/
+
+                //Firebase event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(holder.itemView.getContext(), "Taboola Item Click",
+                        holder.itemView.getContext().getString(R.string.ga_article_taboola_home_organic_clicked),
+                        holder.itemView.getContext().getString(R.string.ga_home));
             }
 
             return true;
@@ -747,6 +762,8 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
             public void onClick(View v) {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Searched ", "Searched: Article Clicked", "Search Fragment");
                     FlurryAgent.logEvent("Searched: " + "Article Clicked");*/
+                //Firebase event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(v.getContext(), "Searched ", "Searched: Article Clicked", "Search Fragment");
                 IntentUtil.openSingleDetailActivity(v.getContext(), NetConstants.RECO_TEMP_NOT_EXIST, bean, bean.getArticleLink());
             }
         });
@@ -806,6 +823,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                         return;
                     }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
+
+                    //Firebase Events
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
+
                     //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
 
                     local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
@@ -820,6 +841,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                         return;
                     }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+
+                    //Firebase Events
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
@@ -832,6 +857,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                         return;
                     }
                     //GoogleAnalyticsTracker.setGoogleAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+
+                    //Firebase Events
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(view.getContext(), "Home", "Home: Article Clicked", "Home Fragment");
+
                     //FlurryAgent.logEvent("Home: " + "Article Clicked");
                     IntentUtil.openDetailActivity(view.getContext(), mPageSource, bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
                 }
@@ -902,6 +931,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
+                //Firebase Events
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
+
+
                 IntentUtil.openDetailActivity(holder.itemView.getContext(), mPageSource,
                         bean.getArticleId(), mSectionId, mSectionType, bean.getSectionName(), mIsSubSection);
 
@@ -917,6 +950,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Banner: " + "Article Clicked");*/
 
+                //Firebase Events
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(v.getContext(), "Banner", "Banner: Article Clicked", "Home Fragment");
+
+
             }
         });
         holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
@@ -927,6 +964,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
                 }
                     /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(v.getContext(), "Home", "Home: Bookmark button Clicked", "Home Fragment");
                     FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");*/
+
+                //Firebase Events
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent(v.getContext(), "Banner", "Home: Bookmark button Clicked", "Home Fragment");
+
 
                 local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
             }

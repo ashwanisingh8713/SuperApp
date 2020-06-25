@@ -561,7 +561,7 @@ public class SetPasswordFragment extends BaseFragmentTHP {
                                         IntentUtil.openContentListingActivity(getActivity(), THPConstants.FROM_USER_SignUp);
                                     }
                                     //Send CleverTap Event for Free Trial Subscription
-                                    CleverTapUtil.cleverTapEventFreeTrial(getContext());
+                                   // CleverTapUtil.cleverTapEventFreeTrial(getContext());
                                     THPFirebaseAnalytics.setFirbaseFreeTrialEvent(getContext());
 
                                     getActivity().setResult(RESULT_OK, intent);

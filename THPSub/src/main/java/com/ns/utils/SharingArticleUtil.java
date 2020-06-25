@@ -14,6 +14,7 @@ import com.netoperation.model.ArticleBean;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.userprofilefragment.AddAddressFragment;
 
 import java.io.Closeable;
 import java.io.File;
@@ -51,6 +52,10 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
 //
 //    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, mContext.getString(R.string.ga_action),
 //            mContext.getString(R.string.ga_section_share_button_clicked), mContext.getString(R.string.ga_article_detail_lebel));
+
+    //Firebase event
+    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", mContext.getString(R.string.ga_section_share_button_clicked), SharingArticleUtil.class.getSimpleName());
+
 }
 
 
@@ -80,6 +85,8 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
 //        FlurryAgent.logEvent(mContext.getString(R.string.ga_section_share_button_clicked));
 //        GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, mContext.getString(R.string.ga_action),
 //                mContext.getString(R.string.ga_section_share_button_clicked), mContext.getString(R.string.ga_article_detail_lebel));
+        //Firebase event
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", mContext.getString(R.string.ga_section_share_button_clicked), SharingArticleUtil.class.getSimpleName());
 
         //Clever Tap Event
         HashMap<String,Object> map = new HashMap<>();

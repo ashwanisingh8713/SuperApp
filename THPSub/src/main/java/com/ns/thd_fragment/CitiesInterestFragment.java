@@ -236,6 +236,10 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                 getString(R.string.title_city_interest));
         FlurryAgent.logEvent("Cities of interest: Save button clicked");*/
 
+        //Firebase event
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getActivity(), "Action", "Cities of interest: Save button clicked", CitiesInterestFragment.class.getSimpleName());
+
+
         ArrayList<String> selectedSectionsName = new ArrayList<>();
 
         for(TablePersonaliseDefault personaliseDefault : mSectionList) {

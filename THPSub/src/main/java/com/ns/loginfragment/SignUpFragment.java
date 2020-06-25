@@ -525,7 +525,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
 
         //Send CleverTap Event for Free Trial Subscription
         if (isNewAccount) {
-            CleverTapUtil.cleverTapEventFreeTrial(getContext());
+          //  CleverTapUtil.cleverTapEventFreeTrial(getContext());
             THPFirebaseAnalytics.setFirbaseFreeTrialEvent(getContext());
         }
     }

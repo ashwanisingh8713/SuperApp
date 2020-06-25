@@ -157,4 +157,14 @@ public class THPFirebaseAnalytics {
             bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
         mFirebaseAnalytics.logEvent(THPConstants.MP_SignUp_Firebase, bundle);
     }
+
+    //MP Events Metered Paywall
+    public static void firebaseMetered_Paywall_Blocker(Context context, String mpCycle, int articleCount, int allowedArticleCounts) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(THPConstants.MP_Cycle_Firebase, mpCycle);
+        bundle.putString(THPConstants.ArticleCount_Firebase,""+articleCount);
+        bundle.putString(THPConstants.Allowed_Counts_Firebase,""+allowedArticleCounts);
+        mFirebaseAnalytics.logEvent(THPConstants.Metered_Paywall_Blocker_Firebase, bundle);
+    }
 }

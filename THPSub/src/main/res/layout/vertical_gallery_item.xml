@@ -28,7 +28,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.ns.view.text.ArticleTitleTextView
                 android:id="@+id/photoCount"
@@ -39,17 +39,17 @@
                 android:textAlignment="center"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                app:textType="M"/>
+                app:textType="XS"/>
 
             <ImageView
                 android:id="@+id/shareIV"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/share"
+                android:tint="@color/color_818181_light"
                 android:scaleType="centerInside"
                 android:layout_centerVertical="true"/>
 

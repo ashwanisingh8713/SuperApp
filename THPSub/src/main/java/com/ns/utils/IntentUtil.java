@@ -972,4 +972,25 @@ public class IntentUtil {
         context.startActivity(intent);
     }
 
+    public static Intent shareArticleImageIntent(String title, String imgUrl, String caption) {
+        String mShareTitle = title;
+        if(caption != null && !TextUtils.isEmpty(caption)) {
+            caption = " \n "+caption;
+        } else {
+            caption = "";
+        }
+        String body = imgUrl+caption;
+
+        Intent sharingIntent = new Intent(
+                android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/html");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                mShareTitle);
+        sharingIntent
+                .putExtra(android.content.Intent.EXTRA_TEXT, body);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TITLE,
+                mShareTitle);
+        return Intent.createChooser(sharingIntent, "Share Via");
+    }
+
 }

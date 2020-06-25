@@ -51,7 +51,7 @@ public class IciciPGActivity extends AppCompatActivity {
                     setResult(RESULT_OK);
                     long mEndTime = System.currentTimeMillis();
                     double d = Double.parseDouble(planAmount)*70;
-                    CleverTapUtil.cleverTapEventPaymentStatus(IciciPGActivity.this, "success",(int)d,PlanValidity,planName,mStartTime,mEndTime);
+                //    CleverTapUtil.cleverTapEventPaymentStatus(IciciPGActivity.this, "success",(int)d,PlanValidity,planName,mStartTime,mEndTime);
                     THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(IciciPGActivity.this,"Action","success",(int)d,PlanValidity,planName,mStartTime,mEndTime);
                     finish();
 
@@ -71,7 +71,7 @@ public class IciciPGActivity extends AppCompatActivity {
                     long mEndTime = System.currentTimeMillis();
 
                     double d = Double.parseDouble(planAmount)*70;
-                    CleverTapUtil.cleverTapEventPaymentStatus(IciciPGActivity.this, "failed",(int)d,PlanValidity,planName,mStartTime,mEndTime);
+                  //  CleverTapUtil.cleverTapEventPaymentStatus(IciciPGActivity.this, "failed",(int)d,PlanValidity,planName,mStartTime,mEndTime);
                     THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(IciciPGActivity.this,"Action","failed",(int)d,PlanValidity,planName,mStartTime,mEndTime);
                     finish();
                 });

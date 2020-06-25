@@ -36,6 +36,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.alerts.Alerts;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.model.CompanyData;
 import com.ns.model.CompanyNameModel;
 import com.ns.thpremium.BuildConfig;
@@ -57,6 +58,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

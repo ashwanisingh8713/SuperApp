@@ -153,6 +153,10 @@ public class OverflowPopUp {
                         "Customise Subscription: Customise Subscription Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", "Customise Subscription: Customise Subscription Button Clicked ", OverflowPopUp.class.getSimpleName());
+
                     IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) mContext);
                     if(changeSortPopUp != null) {
                         changeSortPopUp.dismiss();
@@ -174,6 +178,10 @@ public class OverflowPopUp {
                         "Customise: Customise Button Clicked ",
                         getString(R.string.custom_home_screen));
                 FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
+
+                    //Firebase event
+                    THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", "Customise: Customise Button Clicked ", OverflowPopUp.class.getSimpleName());
+
                     mContext.startActivity(new Intent(mContext, THPPersonaliseActivity.class));
                     if(changeSortPopUp != null) {
                         changeSortPopUp.dismiss();

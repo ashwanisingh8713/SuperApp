@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.netoperation.config.model.WidgetIndex;
 import com.netoperation.model.SectionBean;
+import com.ns.activity.AppSettingActivity;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.ContentUtil;
 import com.ns.utils.FragmentUtil;
 import com.ns.utils.PicassoUtil;
 import com.ns.utils.ResUtil;
+import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -76,6 +78,13 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                                 "Clicked",
                                 "Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());
                 FlurryAgent.logEvent("Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());*/
+
+                //Firebase Analytics event
+                THPFirebaseAnalytics.setFirbaseAnalyticsEvent( holder.itemView.getContext() ,
+                        "Explore",
+                        "Clicked",
+                        "Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());
+
 
             }
         });
