@@ -133,15 +133,18 @@ public class StockDetailsFragment extends Fragment implements View.OnClickListen
 
         loadStockContents();
         if (isFragmentVisible) {
-            /*String screenName;
+            String screenName;
             if (mTabIndex == 0) {
-                screenName = getString(R.string.ga_stockdetail_bse_screen);
+                screenName = "BSE Screen";
             } else {
-                screenName = getString(R.string.ga_stockdetail_nse_screen);
+                screenName = "NSE Screen";
             }
-            GoogleAnalyticsTracker.setGoogleAnalyticScreenName(getActivity(), screenName);
+            /*GoogleAnalyticsTracker.setGoogleAnalyticScreenName(getActivity(), screenName);
             FlurryAgent.logEvent(screenName);
             FlurryAgent.onPageView();*/
+
+            //Firebase Analytics
+            THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), screenName, StockDetailsFragment.class.getSimpleName());
         }
         return mView;
     }

@@ -27,6 +27,7 @@ import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.OverflowPopUp;
 import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
@@ -285,6 +286,10 @@ public class CustomizeNewsFeedFragment extends Fragment {
                 "Customize news feed: Save button clicked",
                 getString(R.string.custom_home_screen));
         FlurryAgent.logEvent("Customize news feed: Save button clicked");*/
+
+        //Firebase event
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(getActivity(), "Action", "Customize news feed: Save button clicked", CustomizeNewsFeedFragment.class.getSimpleName());
+
         if (mMainActivity != null && !BuildConfig.IS_BL) {
             mMainActivity.setViewPagerItem(1);
         }
