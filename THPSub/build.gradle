@@ -99,8 +99,8 @@ android {
     productFlavors {
         BusinessLine {
             versionCode 37
-            def appName = "SU_BL"
-            versionName "1.1"
+            def appName = "Business Line"
+            versionName "1.2"
 
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
@@ -155,8 +155,8 @@ android {
         }
         TheHindu {
             versionCode 82
-            def appName = "SU_TH"
-            versionName "1.1"
+            def appName = "The Hindu"
+            versionName "1.2"
 
             dimension "version"
             applicationId "com.mobstac.thehindu"

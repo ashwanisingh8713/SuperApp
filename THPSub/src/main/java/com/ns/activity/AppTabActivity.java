@@ -178,7 +178,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         // Guide Overlay, for Listing Page
         String guideOverlayListing = DefaultPref.getInstance(this).getGuideOverlayUrl(true);
         if(!ResUtil.isEmpty(guideOverlayListing)) {
-            findViewById(R.id.overlayoutGuideImg).setVisibility(View.VISIBLE);
+            findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
             PicassoUtil.loadImage(AppTabActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayListing);
             findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
                 findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);

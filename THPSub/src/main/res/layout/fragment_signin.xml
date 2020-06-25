@@ -40,7 +40,7 @@
         android:digits="()*_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.@+ "
         android:inputType="textEmailAddress"
         android:importantForAutofill="no"
-        android:text="sartikorte@enayu.com"
+        android:text="@string/test_email"
         />
 
     <com.ns.view.text.CustomTextView
@@ -66,7 +66,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:maxLength="20"
-        android:text="12345"
+        android:text="@string/test_password"
         />
 
     <ImageButton

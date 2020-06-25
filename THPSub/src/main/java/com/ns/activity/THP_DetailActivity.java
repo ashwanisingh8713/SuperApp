@@ -173,7 +173,7 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         // Guide Overlay, for Listing Page
         String guideOverlayDetail = DefaultPref.getInstance(this).getGuideOverlayUrl(false);
         if (!ResUtil.isEmpty(guideOverlayDetail)) {
-            findViewById(R.id.overlayoutGuideImg).setVisibility(View.VISIBLE);
+            findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
             PicassoUtil.loadImage(THP_DetailActivity.this, findViewById(R.id.overlayoutGuideImg), guideOverlayDetail);
             findViewById(R.id.overlayoutGuideImg).setOnClickListener(v -> {
                 findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
@@ -1514,7 +1515,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         int sideMargin = 0;
         int marginBottom = snackBarView.getContext().getResources().getDimensionPixelSize(R.dimen.snackbarBottomMargin);
 
-        final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getLayoutParams();
+        final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) snackBarView.getLayoutParams();
 
         params.setMargins(params.leftMargin + sideMargin,
                 params.topMargin,

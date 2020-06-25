@@ -404,24 +404,24 @@
       }
     ],
     "appTheme": {
-      "articleText" : {
-        "dark" : {
-          "title" : "#ededed",
-          "time" : "#818181",
-          "author" : "#818181",
-          "section" : "#818181",
-          "detail" : "#ffffff",
-          "link" : "#3674E7",
-          "lead" : "#ffffff"
+      "articleText": {
+        "dark": {
+          "title": "#ededed",
+          "time": "#818181",
+          "author": "#818181",
+          "section": "#818181",
+          "detail": "#ffffff",
+          "link": "#3674E7",
+          "lead": "#ffffff"
         },
-        "light" : {
-          "title" : "#191919",
-          "time" : "#818181",
-          "author" : "#818181",
-          "section" : "#818181",
-          "detail" : "#666666",
-          "link" : "#3674E7",
-          "lead" : "#666666"
+        "light": {
+          "title": "#191919",
+          "time": "#818181",
+          "author": "#818181",
+          "section": "#818181",
+          "detail": "#666666",
+          "link": "#3674E7",
+          "lead": "#666666"
         }
       },
       "tilesBg": {
@@ -434,14 +434,18 @@
       },
       "topBarBg": {
         "dark": "#191919",
-        "light": "#1375B3"
+        "light": "#4169E1"
+      },
+      "topBarTitle": {
+        "dark": "#ffffff",
+        "light": "#000000"
       },
       "bottomBar": {
         "text": {
           "dark": "#818181",
           "darkSelected": "#061489",
           "light": "#818181",
-          "lightSelected": "#031670"
+          "lightSelected": "#4169E1"
         },
         "bg": {
           "dark": "#191919",
@@ -457,7 +461,7 @@
           "dark": "#818181",
           "darkSelected": "#ededed",
           "light": "#818181",
-          "lightSelected": "#424242"
+          "lightSelected": "#4169E1"
         },
         "bg": {
           "dark": "#191919",
@@ -465,7 +469,7 @@
         },
         "indicator": {
           "dark": "#1375b3",
-          "light": "#1375b3"
+          "light": "#4169E1"
         }
       },
       "systemTopBarBackground": {
@@ -480,22 +484,32 @@
     "widget": [
       {
         "secId": "5",
-        "index": "5",
-        "itemCount" : "7",
-        "widgetType": "MEDIA_TITLE_TIME",
-        "groupLayout" : "H-List",
-        "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
-        "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
-        "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
-        "itemElevation":4,
-        "itemOuterLineRequired" : "true",
+        "index": "7",
+        "itemCount": "9",
+        "widgetType": "MEDIA_TEXT",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "true",
+        "actionTitle": "View All",
+        "actionGravity": "LeftBottom",
+        "groupMargin": [
+          10,
+          5,
+          5,
+          20
+        ],
+        "groupRadius": 10,
+        "groupElevation": 200,
+        "groupOuterLineRequired": "true",
+        "itemMargin": [
+          2,
+          15,
+          2,
+          5
+        ],
+        "itemRadius": 10,
+        "itemElevation": 4,
+        "itemOuterLineRequired": "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -516,21 +530,31 @@
       {
         "secId": "26",
         "index": "8",
-        "itemCount" : "7",
+        "itemCount": "7",
         "widgetType": "MEDIA_TITLE",
-        "groupLayout" : "H-List",
-        "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
-        "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
-        "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
-        "itemElevation":4,
-        "itemOuterLineRequired" : "true",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "true",
+        "actionTitle": "View All",
+        "actionGravity": "LeftBottom",
+        "groupMargin": [
+          10,
+          5,
+          5,
+          20
+        ],
+        "groupRadius": 10,
+        "groupElevation": 4,
+        "groupOuterLineRequired": "true",
+        "itemMargin": [
+          2,
+          15,
+          2,
+          5
+        ],
+        "itemRadius": 10,
+        "itemElevation": 4,
+        "itemOuterLineRequired": "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -551,21 +575,31 @@
       {
         "secId": "30",
         "index": "10",
-        "itemCount" : "7",
+        "itemCount": "7",
         "widgetType": "MEDIA_TITLE_TIME",
-        "groupLayout" : "H-List",
-        "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
-        "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
-        "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
-        "itemElevation":4,
-        "itemOuterLineRequired" : "true",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "true",
+        "actionTitle": "View All",
+        "actionGravity": "LeftBottom",
+        "groupMargin": [
+          10,
+          5,
+          5,
+          20
+        ],
+        "groupRadius": 10,
+        "groupElevation": 4,
+        "groupOuterLineRequired": "true",
+        "itemMargin": [
+          2,
+          15,
+          2,
+          5
+        ],
+        "itemRadius": 10,
+        "itemElevation": 4,
+        "itemOuterLineRequired": "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -586,21 +620,31 @@
       {
         "secId": "37",
         "index": "12",
-        "itemCount" : "7",
+        "itemCount": "7",
         "widgetType": "MEDIA_TITLE_TIME",
-        "groupLayout" : "H-List",
-        "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
-        "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
-        "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
-        "itemElevation":4,
-        "itemOuterLineRequired" : "true",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "true",
+        "actionTitle": "View All",
+        "actionGravity": "LeftBottom",
+        "groupMargin": [
+          10,
+          5,
+          5,
+          20
+        ],
+        "groupRadius": 10,
+        "groupElevation": 4,
+        "groupOuterLineRequired": "true",
+        "itemMargin": [
+          2,
+          15,
+          2,
+          5
+        ],
+        "itemRadius": 10,
+        "itemElevation": 4,
+        "itemOuterLineRequired": "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
@@ -619,7 +663,7 @@
         }
       },
       {
-        "widgetType" : "SENSEX",
+        "widgetType": "SENSEX",
         "index": "3",
         "itemBackground": {
           "dark": "#191919",
@@ -749,8 +793,8 @@
       "light": {
         "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unbookmark.png",
           "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/like.png",
           "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/dislike.png",
           "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/favorite.png",
@@ -788,17 +832,27 @@
     },
     "subSection": {
       "index": "3",
-      "groupLayout" : "H-List",
-      "groupHeaderRequired" : "true",
-      "actionTitle" : "Explore Section",
-      "groupMargin":[10, 5, 5, 20],
-      "groupRadius":10,
-      "groupElevation":4,
-      "groupOuterLineRequired" : "true",
-      "itemMargin":[2, 15, 2, 5],
-      "itemRadius":10,
-      "itemElevation":4,
-      "itemOuterLineRequired" : "true",
+      "groupLayout": "H-List",
+      "groupHeaderRequired": "true",
+      "actionTitle": "Explore Section",
+      "groupMargin": [
+        10,
+        5,
+        5,
+        20
+      ],
+      "groupRadius": 10,
+      "groupElevation": 4,
+      "groupOuterLineRequired": "true",
+      "itemMargin": [
+        2,
+        15,
+        2,
+        5
+      ],
+      "itemRadius": 10,
+      "itemElevation": 4,
+      "itemOuterLineRequired": "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"

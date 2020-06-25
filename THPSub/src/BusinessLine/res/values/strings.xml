@@ -4,5 +4,5 @@
     <string name="THP_FiraSans_Bold">fonts/Lato-Bold.ttf</string>
     <string name="THP_FiraSans_Regular">fonts/Lato-Regular.ttf</string>
     <string name="THP_FiraSans_SemiBold">fonts/Lato-SemiBold.ttf</string>
-
+    <string name="text_title_plan_page">Business Line Subscription</string>
 </resources>

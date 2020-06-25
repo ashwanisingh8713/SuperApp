@@ -116,11 +116,15 @@
       },
       "screenBg": {
         "dark": "#191919",
-        "light": "#E7573A"
+        "light": "#ffffff"
       },
       "topBarBg": {
         "dark": "#000000",
         "light": "#ffffff"
+      },
+      "topBarTitle": {
+        "dark": "#ffffff",
+        "light": "#000000"
       },
       "bottomBar": {
         "text": {
@@ -155,44 +159,44 @@
         }
       },
       "systemTopBarBackground": {
-        "light": "#e0e0e0",
+        "light": "#1C2833",
         "dark": "#4a4a4a"
       },
       "systemBottomBarBackground": {
         "light": "#e0e0e0",
-        "dark": "#000000"
+        "dark": "#ffffff"
       }
     },
     "widget": [
       {
         "secId": "142",
-        "index": "5",
-        "itemCount" : "7",
-        "widgetType": "MEDIA_TEXT",
+        "index": "10",
+        "itemCount" : "10",
+        "widgetType": "TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
+        "actionIconRequired" : "false",
         "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
+        "actionGravity" : "CenterBottom",
+        "groupMargin":[10, 5, 5, 10],
+        "groupRadius":0,
         "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
+        "groupOuterLineRequired" : "false",
+        "itemMargin":[0, 0, 0, 0],
+        "itemRadius":0,
         "itemElevation":4,
         "itemOuterLineRequired" : "true",
         "itemBackground": {
           "dark": "#96e7cd",
-          "light": "#e75531"
+          "light": "#CF0322"
         },
         "description": {
           "dark": "#ffffff",
-          "light": "#191919"
+          "light": "#ffffff"
         },
         "title": {
           "dark": "#E7E73C",
-          "light": "#E73CE5"
+          "light": "#1C2833"
         },
         "action": {
           "dark": "#E7603C",
@@ -201,20 +205,20 @@
       },
       {
         "secId": "88",
-        "index": "8",
+        "index": "15",
         "itemCount" : "7",
         "widgetType": "MEDIA_TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
+        "actionIconRequired" : "false",
         "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
+        "actionGravity" : "",
+        "groupMargin":[10, 0, 0, 10],
+        "groupRadius":0,
         "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
+        "groupOuterLineRequired" : "false",
+        "itemMargin":[0, 0, 0, 0],
+        "itemRadius":0,
         "itemElevation":4,
         "itemOuterLineRequired" : "true",
         "itemBackground": {
@@ -227,7 +231,7 @@
         },
         "title": {
           "dark": "#E7E73C",
-          "light": "#E73CE5"
+          "light": "#1C2833"
         },
         "action": {
           "dark": "#E7603C",
@@ -236,33 +240,33 @@
       },
       {
         "secId": "5",
-        "index": "10",
+        "index": "20",
         "itemCount" : "7",
-        "widgetType": "MEDIA_TEXT",
+        "widgetType": "TITLE_TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
+        "actionIconRequired" : "false",
         "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
+        "actionGravity" : "CenterBottom",
+        "groupMargin":[10, 5, 5, 10],
+        "groupRadius":0,
         "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
+        "groupOuterLineRequired" : "false",
+        "itemMargin":[0, 0, 0, 0],
+        "itemRadius":0,
         "itemElevation":4,
         "itemOuterLineRequired" : "true",
         "itemBackground": {
           "dark": "#191919",
-          "light": "#ffffff"
+          "light": "#3F404D"
         },
         "description": {
           "dark": "#ffffff",
-          "light": "#191919"
+          "light": "#ffffff"
         },
         "title": {
           "dark": "#E7E73C",
-          "light": "#E73CE5"
+          "light": "#1C2833"
         },
         "action": {
           "dark": "#E7603C",
@@ -271,20 +275,20 @@
       },
       {
         "secId": "138",
-        "index": "12",
+        "index": "25",
         "itemCount" : "7",
         "widgetType": "MEDIA_TEXT",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
+        "actionIconRequired" : "false",
         "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
+        "actionGravity" : "CenterBottom",
+        "groupMargin":[10, 5, 5, 10],
+        "groupRadius":0,
         "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
+        "groupOuterLineRequired" : "false",
+        "itemMargin":[0, 0, 0, 0],
+        "itemRadius":0,
         "itemElevation":4,
         "itemOuterLineRequired" : "true",
         "itemBackground": {
@@ -297,7 +301,7 @@
         },
         "title": {
           "dark": "#E7E73C",
-          "light": "#E73CE5"
+          "light": "#1C2833"
         },
         "action": {
           "dark": "#E7603C",
@@ -306,20 +310,20 @@
       },
       {
         "secId": "69",
-        "index": "15",
+        "index": "30",
         "itemCount" : "7",
         "widgetType": "MEDIA_INNER_PADDING",
         "groupLayout" : "H-List",
         "groupHeaderRequired" : "true",
-        "actionIconRequired" : "true",
+        "actionIconRequired" : "false",
         "actionTitle" : "View All",
-        "actionGravity" : "LeftBottom",
-        "groupMargin":[10, 5, 5, 20],
-        "groupRadius":10,
+        "actionGravity" : "CenterBottom",
+        "groupMargin":[10, 5, 5, 10],
+        "groupRadius":0,
         "groupElevation":4,
-        "groupOuterLineRequired" : "true",
-        "itemMargin":[2, 15, 2, 5],
-        "itemRadius":10,
+        "groupOuterLineRequired" : "false",
+        "itemMargin":[0, 0, 0, 0],
+        "itemRadius":0,
         "itemElevation":4,
         "itemOuterLineRequired" : "true",
         "itemBackground": {
@@ -332,7 +336,7 @@
         },
         "title": {
           "dark": "#E7E73C",
-          "light": "#E73CE5"
+          "light": "#1C2833"
         },
         "action": {
           "dark": "#E7603C",
@@ -350,43 +354,43 @@
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "4"
+          "index": "5"
         },
         {
           "type": "taboola",
-          "index": "6"
+          "index": "12"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Footer",
-          "index": "8"
+          "index": "17"
         },
         {
           "type": "taboola",
-          "index": "10"
+          "index": "22"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Bottom",
-          "index": "12"
+          "index": "27"
         },
         {
           "type": "taboola",
-          "index": "13"
+          "index": "32"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "16"
+          "index": "36"
         },
         {
           "type": "taboola",
-          "index": "18"
+          "index": "40"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "20"
+          "index": "45"
         }
       ]
     },
@@ -492,14 +496,14 @@
       "groupLayout" : "H-List",
       "groupHeaderRequired" : "true",
       "actionTitle" : "Explore Section",
-      "groupMargin":[10, 5, 5, 20],
-      "groupRadius":10,
+      "groupMargin":[10, 5, 5, 10],
+      "groupRadius":0,
       "groupElevation":4,
-      "groupOuterLineRequired" : "true",
-      "itemMargin":[2, 15, 2, 5],
-      "itemRadius":10,
+      "groupOuterLineRequired" : "false",
+      "itemMargin":[0, 0, 0, 0],
+      "itemRadius":0,
       "itemElevation":4,
-      "itemOuterLineRequired" : "true",
+      "itemOuterLineRequired" : "false",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"

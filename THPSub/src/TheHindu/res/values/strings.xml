@@ -4,5 +4,6 @@
     <string name="THP_FiraSans_Bold">fonts/THP_FiraSans-Bold.ttf</string>
     <string name="THP_FiraSans_Regular">fonts/THP_FiraSans-Regular.ttf</string>
     <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>
+    <string name="text_title_plan_page">The Hindu Subscription</string>
 
 </resources>
