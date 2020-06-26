@@ -418,7 +418,7 @@
           "title": "#191919",
           "time": "#818181",
           "author": "#818181",
-          "section": "#818181",
+          "section": "#FF4500",
           "detail": "#666666",
           "link": "#3674E7",
           "lead": "#666666"
@@ -490,7 +490,7 @@
         "groupLayout": "H-List",
         "groupHeaderRequired": "true",
         "actionIconRequired": "true",
-        "actionTitle": "View All",
+        "actionTitle": "SEE MORE FROM",
         "actionGravity": "LeftBottom",
         "groupMargin": [
           10,
@@ -499,7 +499,7 @@
           20
         ],
         "groupRadius": 10,
-        "groupElevation": 200,
+        "groupElevation": 4,
         "groupOuterLineRequired": "true",
         "itemMargin": [
           2,
@@ -535,7 +535,7 @@
         "groupLayout": "H-List",
         "groupHeaderRequired": "true",
         "actionIconRequired": "true",
-        "actionTitle": "View All",
+        "actionTitle": "SEE MORE FROM",
         "actionGravity": "LeftBottom",
         "groupMargin": [
           10,
@@ -580,7 +580,7 @@
         "groupLayout": "H-List",
         "groupHeaderRequired": "true",
         "actionIconRequired": "true",
-        "actionTitle": "View All",
+        "actionTitle": "SEE MORE FROM",
         "actionGravity": "LeftBottom",
         "groupMargin": [
           10,
@@ -625,7 +625,7 @@
         "groupLayout": "H-List",
         "groupHeaderRequired": "true",
         "actionIconRequired": "true",
-        "actionTitle": "View All",
+        "actionTitle": "SEE MORE FROM",
         "actionGravity": "LeftBottom",
         "groupMargin": [
           10,
