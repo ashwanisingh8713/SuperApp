@@ -35,8 +35,8 @@
         "iconUrl": {
           "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/home.png",
           "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/homeSelected.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/home.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/homeSelected.png"
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/home.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/homeSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
