@@ -34,6 +34,7 @@ import com.ns.adapter.ExploreAdapter;
 import com.ns.adapter.SectionContentAdapter;
 import com.ns.adapter.SuWidgetRecyclerAdapter;
 import com.ns.callbacks.OnDFPAdLoadListener;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.RowIds;
@@ -472,6 +473,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                                 SuWidgetRecyclerAdapter su_widgetAdapter = new SuWidgetRecyclerAdapter(widget.getBeans(), widget.getSecName());
                                 su_widgetAdapter.setWidgetIndex(mSectionSideWork.getWidgetIndex(itemRowId));
                                 item.setSuWidgetRecyclerAdapter(su_widgetAdapter);
+                                //Event Tracking for Widgets
+                                CleverTapUtil.cleverTapWidget(getContext(), widget.getBeans(),widget.getSecName());
+                                Log.i(TAG, "Widget Tracking :: " + widget.getSecName());
                             }
                             item.getSuWidgetRecyclerAdapter().updateArticleList(widget.getBeans());
                             mRecyclerAdapter.notifyItemChanged(index);

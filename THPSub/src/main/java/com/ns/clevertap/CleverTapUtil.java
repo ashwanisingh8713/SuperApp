@@ -7,6 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.clevertap.android.sdk.CleverTapAPI;
+import com.netoperation.model.ArticleBean;
 import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.util.AppDateUtil;
@@ -261,29 +262,21 @@ public class CleverTapUtil {
     }
 
 
-    public static void CleverTapWidget(Context context, CTWidgetTracking widgetTracking) {
-        Observable.just(widgetTracking)
+    public static void cleverTapWidget(Context context, List<ArticleBean> articleBeanList, String sectionWidgetName) {
+        Observable.just(articleBeanList)
                 .subscribeOn(Schedulers.newThread())
-                .map(v->{
-                    final List<List<String>> widgetArticleIdsList = widgetTracking.widgetArticleIdsList;
-                    final List<String> widgetNames = widgetTracking.widgetName;
-                    int count = 0;
-                    for(String widgetType : widgetNames) {
-                        final HashMap<String, Object> map = new HashMap<>();
-                        map.put("Section Widget", widgetType);
-                        map.put(THPConstants.CT_KEY_platform,"app");
-                        map.put(THPConstants.CT_KEY_UserId, getUserId(context));
-                        final List<String> articleIdList = widgetArticleIdsList.get(count);
-                        String articleIds = "";
-                        for(String str : articleIdList) {
-                            articleIds +=str+", ";
-                        }
-                        map.put("ArticleIds", articleIds);
-                        map.put("ArticleCount", widgetArticleIdsList.get(count).size());
-
-                        pushCleverTapEvent(context, THPConstants.CT_EVENT_WIDGET, map);
-                        count++;
+                .map(articleBeans->{
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("Section Widget", sectionWidgetName);
+                    map.put(THPConstants.CT_KEY_platform,"app");
+                    map.put(THPConstants.CT_KEY_UserId, getUserId(context));
+                    String articleIdList = "";
+                    for(ArticleBean articleBean : articleBeans) {
+                        articleIdList +=articleBean.getAid()+", ";
                     }
+                    map.put("ArticleIds", articleIdList);
+                    map.put("ArticleCount", articleBeans.size());
+                    pushCleverTapEvent(context, THPConstants.CT_EVENT_WIDGET, map);
                 return "";
                 })
                 .subscribe(v->{
@@ -291,9 +284,6 @@ public class CleverTapUtil {
                 }, t->{
 
                 });
-
-
-
     }
 
     public static void cleverTapEventSettings(Context context, String propertyName, String value) {
