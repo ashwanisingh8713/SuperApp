@@ -29,6 +29,7 @@ import com.netoperation.util.PremiumPref;
 import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.ToolbarClickListener;
+import com.ns.clevertap.CleverTapUtil;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
@@ -226,7 +227,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         if(mFragmentTools != null) {
             mFragmentTools.onShareClickListener(toolbarCallModel);
             //share event
-
+            CleverTapUtil.cleverTapEvent(this, THPConstants.CT_EVENT_SHARE, null);
         }
     }
 
@@ -235,7 +236,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         if(mFragmentTools != null) {
             mFragmentTools.onCreateBookmarkClickListener(toolbarCallModel);
             //create bookmark
-
+            CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_BOOKMARK,null);
         }
     }
 
@@ -244,7 +245,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
         if(mFragmentTools != null) {
             mFragmentTools.onFontSizeClickListener(toolbarCallModel);
             //font event
-
+            CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_FONT,null);
         }
     }
 
@@ -252,6 +253,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public void onCommentClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFragmentTools != null) {
             mFragmentTools.onCommentClickListener(toolbarCallModel);
+            //comment event
+            CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_COMMENTS,null);
         }
     }
 
@@ -259,6 +262,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public void onTTSPlayClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFragmentTools != null) {
             mFragmentTools.onTTSPlayClickListener(toolbarCallModel);
+            //readloud event
+            CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_READLOUD,null);
         }
     }
 
