@@ -19,6 +19,7 @@ import com.ns.utils.THPConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -464,6 +465,15 @@ public class CleverTapUtil {
         map.put(THPConstants.CT_KEY_resolution, ResUtil.resolution(context));
         map.put(THPConstants.CT_KEY_from, from);
         pushCleverTapEvent(context, THPConstants.CT_EVENT_SPLASH_API, map);
+    }
+
+    //Crossword+ event
+    public static void cleverTap_crossword(Context context) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_platform, "app");
+        map.put(THPConstants.CT_KEY_onClick,"Yes" );
+        map.put(THPConstants.CT_KEY_UserId, getUserId(context));
+        CleverTapAPI.getDefaultInstance(context).pushEvent(THPConstants.CT_EVENT_CROSSWORD, map);
     }
 
 

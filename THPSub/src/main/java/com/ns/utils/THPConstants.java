@@ -168,6 +168,9 @@ public class THPConstants {
     public static final String CT_KEY_SECTION = "Section";
     public static final String CT_KEY_AUTHOR = "Author";
     public static final String CT_KEY_IS_ARTICLE = "Is Article";
+    public static final String CT_KEY_onClick = "on click";
+    public static final String Firebase_KEY_onClick = "on_click";
+
 
 
     //CleverTap Event Name (HINDU)
@@ -188,6 +191,7 @@ public class THPConstants {
     public static final String CT_EVENT_COMMENTS = "Comments";
     public static final String CT_EVENT_FONT = "Font";
     public static final String CT_EVENT_SHARE = "Share";
+    public static final String CT_EVENT_CROSSWORD = "Crossword";
 
     //CleverTap Event Name (SUBSCRIPTION)
     public static final String CT_EVENT_SIGN_IN = "Sign in";

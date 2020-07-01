@@ -167,4 +167,12 @@ public class THPFirebaseAnalytics {
         bundle.putString(THPConstants.Allowed_Counts_Firebase,""+allowedArticleCounts);
         mFirebaseAnalytics.logEvent(THPConstants.Metered_Paywall_Blocker_Firebase, bundle);
     }
+
+    //Crossword+ event
+    public static void firebase_crossword(Context context) {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        Bundle bundle = new Bundle();
+        bundle.putString(THPConstants.Firebase_KEY_onClick,"Yes" );
+        mFirebaseAnalytics.logEvent(THPConstants.CT_EVENT_CROSSWORD, bundle);
+    }
 }

@@ -317,6 +317,9 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
     @Override
     public void onExpandButtonClick(int groupPostion, boolean isExpanded) {
+        //Firebase event
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(AppTabActivity.this, "Navigation Screen", "Navigation drawer Expand Button Click", "Drawer View");
+
         if (isExpanded) {
             mNavigationExpandableListView.collapseGroup(groupPostion);
         } else {
@@ -348,6 +351,16 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         mDrawerLayout.closeDrawers();
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, tableSection.getSecName(), null);
+        // Firebase Hamburger Event Tracking
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this,"Hamberger","Clicked",tableSection.getSecName());
+
+        //crossword events for Firebase and Clevertap
+        if(tableSection.getSecName().equalsIgnoreCase("Crossword+")){
+            //clevertap & firebase events
+            THPFirebaseAnalytics.firebase_crossword(this);
+            CleverTapUtil.cleverTap_crossword(this);
+            //  Log.e("Crossword","Crossword");
+        }
 
     }
 
@@ -364,6 +377,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         // CleverTap Hamburger Event Tracking
         CleverTapUtil.cleverTapEventHamberger(this, groupSection.getSecName(), childSection.getSecName());
+        // Firebase Hamburger Event Tracking
+        THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this,"Hamberger","Clicked", groupSection.getSecName()+" --> "+childSection.getSecName());
     }
 
 

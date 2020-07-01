@@ -233,6 +233,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public void onShareClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFragmentTools != null) {
             mFragmentTools.onShareClickListener(toolbarCallModel);
+            //share event
+
         }
     }
 
@@ -240,6 +242,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public void onCreateBookmarkClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFragmentTools != null) {
             mFragmentTools.onCreateBookmarkClickListener(toolbarCallModel);
+            //create bookmark
+
         }
     }
 
@@ -247,6 +251,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
     public void onFontSizeClickListener(ToolbarCallModel toolbarCallModel) {
         if(mFragmentTools != null) {
             mFragmentTools.onFontSizeClickListener(toolbarCallModel);
+            //font event
+
         }
     }
 
