@@ -122,7 +122,7 @@ public class SplashActivity extends BaseAcitivityTHP {
         progressBar = findViewById(R.id.progressBar);
 
         registerReceiver();
-        sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server");
+        sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server", "FORCE_UPDATE", null);
         DefaultPref.getInstance(SuperApp.getAppContext()).setIsFullScreenAdLoaded(false);
 
         //Merge Old Bookmark, from Realm DB to Room DB
@@ -172,9 +172,16 @@ public class SplashActivity extends BaseAcitivityTHP {
             super.handleMessage(msg);
             Bundle bundle = msg.getData();
             String from = bundle.getString("from");
-            Log.i("SplashPage", from);
+            String detailMsg = bundle.getString("detailMsg");
+            String errorMsg = bundle.getString("errorMsg");
+            if(errorMsg == null) {
+                errorMsg = "";
+            }
+
+            String fullMsg = "From :: "+from+"\n"+"Detail Msg :: "+detailMsg+"\n"+"Error Msg :: "+errorMsg;
+
             //Clevertap Splash Api
-            CleverTapUtil.cleverTap_Splash_API(SplashActivity.this,from);
+            //CleverTapUtil.cleverTap_Splash_API(SplashActivity.this, fullMsg);
 
             switch (msg.what) {
                 case WHAT_FORCE_UPDATE:
@@ -198,13 +205,13 @@ public class SplashActivity extends BaseAcitivityTHP {
                 case WHAT_MP:
                     showProgressBar("Configuring Articles.");
                     if(!DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
-                        sendHandlerMsg(WHAT_ERROR, "Configuration file table has ERROR! So .....");
+                        sendHandlerMsg(WHAT_ERROR, "Configuration is not configured yet", "So Metered Paywall is not executing and coming in Error block", errorMsg);
                     }
                     else if (DefaultPref.getInstance(SplashActivity.this).getMPStartTimeInMillis() == 0 || DefaultPref.getInstance(SplashActivity.this).isMPDurationExpired()) {
                         callMpApi();
                     }
                     else {
-                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is not expired");
+                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is not expired", "Metered Paywall", null);
                     }
                     refreshConfigurationInstance();
                     break;
@@ -219,7 +226,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     showProgressBar("Fetching News.");
                     break;
                 case WHAT_ACTIIVTY_TAB:
-                    launchTabScreen();
+                    launchTabScreen(from);
                     break;
                 case WHAT_TEMP_SECTION:
                     tempSection();
@@ -236,7 +243,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                         Alerts.showSnackbar(SplashActivity.this, getResources().getString(R.string.something_went_wrong));
                     }
 
-                    Alerts.showErrorDailog(getSupportFragmentManager(), "This is Just for Testing !! ERROR !!", from);
+                    Alerts.showErrorDailog(getSupportFragmentManager(), "This is Just for Testing !! ERROR !!", fullMsg);
 
                     isErrorOccured = true;
                     break;
@@ -247,11 +254,13 @@ public class SplashActivity extends BaseAcitivityTHP {
         }
     };
 
-    private void sendHandlerMsg(int what, String from) {
+    private void sendHandlerMsg(int what, String detailMsg, String from, String errorMsg) {
         Message message = new Message();
         message.what = what;
         Bundle bundle = new Bundle();
+        bundle.putString("detailMsg", detailMsg);
         bundle.putString("from", from);
+        bundle.putString("errorMsg", errorMsg);
         message.setData(bundle);
         mHandler.sendMessage(message);
         //mHandler.sendEmptyMessage(what);
@@ -279,11 +288,11 @@ public class SplashActivity extends BaseAcitivityTHP {
                         showUpdateDialog(updateModel.getApp_store_url(), updateModel.getMessage(), isForceUpdate, updateModel.getRemind_me());
                     }
                     else {
-                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server", "Force_Update", null);
                     }
 
                 }, throwable -> {
-                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                        sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server, ", "Force_Update", throwable.getMessage());
                 }, ()->{
 
                 }));
@@ -303,19 +312,19 @@ public class SplashActivity extends BaseAcitivityTHP {
             startTime = System.currentTimeMillis();
             // On Good 4G or Good Wifi or Good Network
             if(downSpeed > 102100) {
-                sendHandlerMsg(WHAT_Server_Section, "Good Network, going to fetch Section data from server");
+                sendHandlerMsg(WHAT_Server_Section, "Good Network, going to fetch Section data from server", "routeToAppropriateAction()", null);
             }
             // For Moderate Network Speed
             else if(downSpeed > 5000 && downSpeed < 102100) {
-                sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Moderate Network, going to fetch Home Page data from server");
+                sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Moderate Network, going to fetch Home Page data from server", "routeToAppropriateAction()", null);
             }
             // For Low network speed, it will launch directly
             else {
-                sendHandlerMsg(WHAT_TEMP_SECTION, "Low network, going to fetch Temprory Section");
+                sendHandlerMsg(WHAT_TEMP_SECTION, "Low network, going to fetch Temprory Section", "routeToAppropriateAction()", null);
             }
 
         } else {
-            sendHandlerMsg(WHAT_TEMP_SECTION, "NO Network, going to fetch Temprory Section");
+            sendHandlerMsg(WHAT_TEMP_SECTION, "NO Network, going to fetch Temprory Section", "routeToAppropriateAction()", null);
         }
     }
 
@@ -324,16 +333,16 @@ public class SplashActivity extends BaseAcitivityTHP {
                 BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
                     @Override
                     public void onNext(Object o) {
-                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is updated from server");
+                        sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is updated from server", "Metered Paywall Cycle", null);
                     }
 
                     @Override
                     public void onError(Throwable t, String str) {
                         if(DefaultPref.getInstance(SplashActivity.this).isMpCycleOnceLoaded()) {
-                            sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall was expired and trying to update but got ERROR");
+                            sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall was expired and trying to update but got ERROR", "Metered Paywall Cycle", t.getMessage());
                         }
                         else {
-                            sendHandlerMsg(WHAT_ERROR, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR");
+                            sendHandlerMsg(WHAT_ERROR, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR", "Metered Paywall Cycle", t.getMessage());
                         }
                     }
 
@@ -348,16 +357,16 @@ public class SplashActivity extends BaseAcitivityTHP {
         mDisposable.add(DefaultTHApiManager.isConfigurationUpdateAvailable(this)
                 .subscribe(isAvailable->{
                     if(isAvailable) {
-                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER, "App Configuration update is available");
+                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER, "App Configuration update is available", "Configuration Update API", null);
                     } else {
-                        sendHandlerMsg(WHAT_MP, "NO, App Configuration update is Not available ");
+                        sendHandlerMsg(WHAT_MP, "NO, App Configuration update is Not available ", "Configuration Update API", null);
                     }
                 }, throwable -> {
                     if(DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
-                        sendHandlerMsg(WHAT_MP, "App Configuration update check failed but already once loaded");
+                        sendHandlerMsg(WHAT_MP, "App Configuration update check api Failed but already once configuration loaded", "Configuration Update API", throwable.getMessage());
                     }
                     else {
-                        sendHandlerMsg(WHAT_ERROR, "App Configuration update is not loaded yet");
+                        sendHandlerMsg(WHAT_ERROR, "App Configuration update check api Failed", "Configuration Update API", throwable.getMessage());
                     }
                 }));
     }
@@ -377,12 +386,12 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                sendHandlerMsg(WHAT_ERROR, "App Configuration data fetch is failed from server");
+                sendHandlerMsg(WHAT_ERROR, "App Configuration data fetch is failed from server", "Configuration API", t.getMessage());
             }
 
             @Override
             public void onComplete(String str) {
-                sendHandlerMsg(WHAT_DOWNLOADING_ICONS, "App Configuration data is received from server");
+                sendHandlerMsg(WHAT_DOWNLOADING_ICONS, "App Configuration data is received from server", "Configuration API", null);
             }
         });
     }
@@ -398,7 +407,7 @@ public class SplashActivity extends BaseAcitivityTHP {
 
             @Override
             public void onError(Throwable t, String str) {
-                sendHandlerMsg(WHAT_Server_Section, "Temperory Section has thrown ERROR so fetching section data from server");
+                sendHandlerMsg(WHAT_Server_Section, "Temperory Section has thrown ERROR so fetching section data from server", "tempSection()", t.getMessage());
             }
 
             @Override
@@ -406,10 +415,10 @@ public class SplashActivity extends BaseAcitivityTHP {
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 // Opens Main Tab Screen
                 if(isHomeArticleOptionScreenShown) {
-                    sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Temperory Section is launching AppTabActivity");
+                    sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Temperory Section is launching AppTabActivity", "tempSection()", null);
                 }
                 else {
-                    launchOnBoardingScreen();
+                    launchOnBoardingScreen("tempSection()");
                 }
 
                 //Metered Paywall Configs API calls.
@@ -430,10 +439,10 @@ public class SplashActivity extends BaseAcitivityTHP {
                 boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                 if(isHomeArticleOptionScreenShown) {
                     // Get Home Article from server
-                    sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Section data from server, it's send request server to get Home page data");
+                    sendHandlerMsg(WHAT_SERVER_HOME_CONTENT, "Section data from server, it's send request server to get Home page data", "getSectionDirectFromServer()", null);
                 }
                 else {
-                    launchOnBoardingScreen();
+                    launchOnBoardingScreen("getSectionDirectFromServer()");
                 }
             }
 
@@ -444,10 +453,10 @@ public class SplashActivity extends BaseAcitivityTHP {
                     public void run() {
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(SplashActivity.this).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {
-                            sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Section fetch is failed from server, and OnBoarding Screen is already loaded, So it's launching AppTabActivity");
+                            sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Section fetch is failed from server, and OnBoarding Screen is already loaded, So it's launching AppTabActivity", "getSectionDirectFromServer()", t.getMessage());
                         }
                         else {
-                            sendHandlerMsg(WHAT_ERROR, "Section fetch is failed from server, and thrown ERROR");
+                            sendHandlerMsg(WHAT_ERROR, "Section fetch is failed from server, and thrown ERROR", "getSectionDirectFromServer()", t.getMessage());
                         }
                     }
                 });
@@ -470,13 +479,13 @@ public class SplashActivity extends BaseAcitivityTHP {
             @Override
             public void onNext(Object o) {
                 // Opens Main Tab Screen
-                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Received latest data of Home Page from server, launching AppTabActivity");
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Received latest data of Home Page from server, launching AppTabActivity", "getHomeDataFromServer()", null);
             }
 
             @Override
             public void onError(Throwable t, String str) {
                 Log.i("NSPEED", "ERROR2");
-                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Failed to received data of Home Page from server, launching AppTabActivity");
+                sendHandlerMsg(WHAT_ACTIIVTY_TAB, "Failed to received data of Home Page from server, launching AppTabActivity", "getHomeDataFromServer()", t.getMessage());
             }
 
             @Override
@@ -575,11 +584,11 @@ public class SplashActivity extends BaseAcitivityTHP {
 
                         boolean isConfigurationOnceLoaded = DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded();
                         if(isConfigurationOnceLoaded) {
-                            sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall");
+                            sendHandlerMsg(WHAT_MP, totalReceivedFailRequestIcons+" Icons are failed to download, making request for metered paywall", "Icons APIs", "Icons APIs Failed");
                         }
                         else {
                             // Comment below line, If want to run app even though icons are not downloaded
-                            sendHandlerMsg(WHAT_ERROR, totalReceivedFailRequestIcons + " Icons are failed to download, making request for metered paywall");
+                            sendHandlerMsg(WHAT_ERROR, totalReceivedFailRequestIcons + " Icons are failed to download and configuration is configured yet, so going in Error block", "Icons APIs", "Icon APIs Failed");
                         }
                     }
                 }
@@ -593,7 +602,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                     if(!isMpRequestSentFromBroadcastReceiver) {
                         isMpRequestSentFromBroadcastReceiver = true;
                         DefaultPref.getInstance(SplashActivity.this).setConfigurationOnceLoaded(true);
-                        sendHandlerMsg(WHAT_MP, totalReceivedSuccessRequestIcons+" Icons are downloaded successfully, making request for metered paywall");
+                        sendHandlerMsg(WHAT_MP, totalReceivedSuccessRequestIcons+" Icons are downloaded successfully, making request for metered paywall", "Icons APIs", "Icons APIs Success");
                     }
                 }
                 Log.i("Downloading", "Success :: "+ totalReceivedSuccessRequestIcons +" :: URL = "+download.getUrl());
@@ -628,7 +637,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                             finish();
                         } else {
                             dialog.cancel();
-                            sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server");
+                            sendHandlerMsg(WHAT_CONFIG_UPDATE_CHECK, "App configuration update check request is sent to server", "Update Check Dialog, Cancel Btn", "");
                         }
                         break;
                 }
@@ -649,8 +658,8 @@ public class SplashActivity extends BaseAcitivityTHP {
         mDialog.show();
     }
 
-    private void launchOnBoardingScreen() {
-        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching OnBoardingScreen");
+    private void launchOnBoardingScreen(String from) {
+        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching OnBoardingScreen", from, null);
         if(isConfigurationMsgShown) {
             isLaunchOnBoardingProceeded = true;
             return;
@@ -658,8 +667,8 @@ public class SplashActivity extends BaseAcitivityTHP {
         IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
     }
 
-    private void launchTabScreen() {
-        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching AppTabActivity");
+    private void launchTabScreen(String from) {
+        sendHandlerMsg(WHAT_READY_TO_LAUNCH, "Launching AppTabActivity", from, null );
         if(isConfigurationMsgShown) {
             isLaunchHomeProceeded = true;
             return;
@@ -687,11 +696,11 @@ public class SplashActivity extends BaseAcitivityTHP {
 
                 if(isLaunchOnBoardingProceeded) {
                     isLaunchOnBoardingProceeded = false;
-                    launchOnBoardingScreen();
+                    launchOnBoardingScreen("ConfigurationMsgDialog");
                 }
                 else if(isLaunchHomeProceeded) {
                     isLaunchHomeProceeded = false;
-                    launchTabScreen();
+                    launchTabScreen("ConfigurationMsgDialog");
                 }
 
             }

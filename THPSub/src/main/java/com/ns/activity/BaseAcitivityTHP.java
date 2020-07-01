@@ -82,7 +82,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             } else {
                 getWindow().setNavigationBarColor(Color.parseColor(bottomSystemBarTheme.getDark()));
                 getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getDark()));
-                //getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
             }
         } else {
             if(sIsDayTheme) {
@@ -93,13 +92,6 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                 getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_status_bar_dark));
             }
         }
-
-        /*// Dialog Theme change
-        if(sIsDayTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //For day mode theme for dialog
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); //For night mode theme for dialog
-        }*/
 
         setContentView(layoutRes());
 

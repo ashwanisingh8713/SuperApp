@@ -66,19 +66,6 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             public void onClick(View view) {
 
                 FragmentUtil.redirectionOnSectionAndSubSection(view.getContext(), mSubSection.get(position).getSecId());
-
-                /*SlidingSectionFragment fragment = SlidingSectionFragment.newInstance(SlidingSectionFragment.FROM_EXPLORE, position, true, sectionId, mParentSecctionName);
-                ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.FRAME_CONTENT, fragment).addToBackStack(null).commit();
-
-                GoogleAnalyticsTracker
-                        .setGoogleAnalyticsEvent(
-                                mContext,
-                                "Explore",
-                                "Clicked",
-                                "Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());
-                FlurryAgent.logEvent("Explore - " + mParentSecctionName + " - " + mSubSection.get(position).getSecName());*/
-
                 //Firebase Analytics event
                 THPFirebaseAnalytics.setFirbaseAnalyticsEvent( holder.itemView.getContext() ,
                         "Explore",

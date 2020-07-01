@@ -906,6 +906,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
         if (imageUrl != null && !TextUtils.isEmpty(imageUrl)) {
             imageUrl = ContentUtil.getBannerUrl(imageUrl);
+//            imageUrl = ContentUtil.getWidgetUrl(imageUrl);
             PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.mBannerImageView, imageUrl);
         }
 

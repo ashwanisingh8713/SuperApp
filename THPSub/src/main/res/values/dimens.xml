@@ -146,6 +146,7 @@
     <dimen name="subscribeLayoutHeight">50dp</dimen>
     <dimen name="snackbarBottomMargin">52dp</dimen>
     <dimen name="bottomBarHeight">50dp</dimen>
+
     <dimen name="topTabHeight">45dp</dimen>
     <dimen name="signin_field_text_size">16sp</dimen>
     <dimen name="padding_current_plan">20dp</dimen>
@@ -177,7 +178,7 @@
     <!-- Banner -->
     <dimen name="banner_title_margin">8dp</dimen>
     <dimen name="banner_image_height">250dp</dimen>
-    <dimen name="banner_image_newheight">225dp</dimen>
+
 
     <!-- explore -->
     <dimen name="explore_content_marginTop">5dp</dimen>
@@ -220,20 +221,17 @@
     <!--outbrain item-->
 
     <!--Article Item  new changes-->
-    <dimen name="bl_article_item_parent_height">140dp</dimen>
+
     <dimen name="bl_item_margin_left">5dp</dimen>
     <dimen name="bl_item_margin_right">5dp</dimen>
     <dimen name="bl_item_margin_top">5dp</dimen>
     <dimen name="bl_item_margin_bottom">5dp</dimen>
-    <dimen name="th_article_item_parent_height">120dp</dimen>
+
     <dimen name="article_item_parent_left_right_padding">10dp</dimen>
     <dimen name="article_item_parent_top_bottom_padding">7dp</dimen>
     <dimen name="article_item_image_height">75dp</dimen>
     <dimen name="article_item_image_width">85dp</dimen>
-    <dimen name="article_item_title_height">60dp</dimen>
-    <dimen name="article_item_icon_height">32dp</dimen>
-    <dimen name="article_item_icon_width">32dp</dimen>
-    <dimen name="article_item_margin_between_icons">10dp</dimen>
+
 
     <dimen name="article_item_image_square">80dp</dimen>
 
@@ -276,5 +274,27 @@
     <dimen name="overflow_item_readcount_margin">5dp</dimen>
     <dimen name="overflow_item_readcount_width">30dp</dimen>
     <dimen name="overflow_item_readcount_height">17dp</dimen>
+
+
+
+
+
+
+    <dimen name="breadcrumBarHeight">50dp</dimen>
+    <dimen name="banner_title_text_size">22sp</dimen>
+    <dimen name="banner_padding">8dp</dimen>
+    <dimen name="banner_image_newheight">225dp</dimen>
+
+    <dimen name="th_article_item_parent_height">120dp</dimen>
+    <dimen name="bl_article_item_parent_height">140dp</dimen>
+    <dimen name="article_item_title_height">60dp</dimen>
+
+    <dimen name="article_item_icon_height">32dp</dimen>
+    <dimen name="article_item_icon_width">32dp</dimen>
+    <dimen name="article_item_margin_between_icons">10dp</dimen>
+
+    <dimen name="detail_article_padding">8dp</dimen>
+    <dimen name="detail_author_size">18sp</dimen>
+    <dimen name="detail_location_size">14sp</dimen>
 
 </resources>
