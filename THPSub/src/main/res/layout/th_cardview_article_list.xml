@@ -4,7 +4,7 @@
     android:layout_height="@dimen/th_article_item_parent_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    app:layoutType="Black_Dark">
+    >
 
     <LinearLayout
         android:id="@+id/layout_articles_root"

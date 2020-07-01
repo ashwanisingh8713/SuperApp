@@ -1,12 +1,15 @@
 {
   "packageName": "com.mobstac.thehindubusinessline",
-  "environment": "development",
-  "resolution": "xxhdpi",
+  "environment" : "development",
+  "resolution": "xhdpi",
   "configJson": {
     "lastServerUpdateTime": "UTC-TIME",
     "vokkleId": "d1a4a16d-cfaf-4ad2-8f9b-ddf5a1b257d2",
     "refreshIntervalInMins": "5",
-    "importantMsg": null,
+    "importantMsg": {
+      "title": "Title",
+      "msg": "This msg on update of config (not required always, if exist will be shown to user only once)"
+    },
     "staticItem": [
       {
         "title": "Terms & Condition",
@@ -33,10 +36,10 @@
       {
         "title": "Home",
         "iconUrl": {
-          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/home.png",
-          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/homeSelected.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/home.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/homeSelected.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/home.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/homeSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/home.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/homeSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "GROUP_DEFAULT_SECTIONS"
@@ -44,10 +47,10 @@
       {
         "title": "Portfolio",
         "iconUrl": {
-          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/portfolio.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolio.png",
-          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/portfolioSelected.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/portfolioSelected.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/portfolio.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/portfolio.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/portfolioSelected.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/portfolioSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "ADD_ON_SECTION",
@@ -369,10 +372,10 @@
       {
         "title": "My Stories",
         "iconUrl": {
-          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/mystories.png",
-          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/mystoriesSelected.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/mystories.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/mystoriesSelected.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/mystories.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/mystoriesSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/mystories.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/mystoriesSelected.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "My Stories"
@@ -380,10 +383,10 @@
       {
         "title": "Indices",
         "iconUrl": {
-          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/indices.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/indices.png",
-          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/indicesSelected.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/indicesSelected.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/indices.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/indices.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/indicesSelected.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/indicesSelected.png"
         },
         "group": "GROUP_DEFAULT_SECTIONS",
         "pageSource": "SENSEX"
@@ -391,34 +394,34 @@
       {
         "title": "Profile",
         "iconUrl": {
-          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/profile.png",
-          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/profileSelected.png",
-          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/profile.png",
-          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/profileSelected.png"
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/profile.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/profileSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/profile.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/profileSelected.png"
         },
         "group": "GROUP_PREMIUM_SECTIONS",
         "pageSource": "Profile"
       }
     ],
     "appTheme": {
-      "articleText": {
-        "dark": {
-          "title": "#ededed",
-          "time": "#818181",
-          "author": "#818181",
-          "section": "#ff5a00",
-          "detail": "#ffffff",
-          "link": "#ffffff",
-          "lead": "#E8EAEC"
+      "articleText" : {
+        "dark" : {
+          "title" : "#ededed",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#ffffff",
+          "link" : "#3674E7",
+          "lead" : "#ffffff"
         },
-        "light": {
-          "title": "#191919",
-          "time": "#818181",
-          "author": "#818181",
-          "section": "#ff5a00",
-          "detail": "#000000",
-          "link": "#2435E7",
-          "lead": "#666666"
+        "light" : {
+          "title" : "#191919",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#666666",
+          "link" : "#3674E7",
+          "lead" : "#666666"
         }
       },
       "tilesBg": {
@@ -426,23 +429,23 @@
         "light": "#ffffff"
       },
       "screenBg": {
-        "dark": "#313131",
-        "light": "#ededed"
+        "dark": "#191919",
+        "light": "#ffffff"
       },
       "topBarBg": {
-        "dark": "#1375b3",
-        "light": "#1375b3"
+        "dark": "#191919",
+        "light": "#1375B3"
       },
       "topBarTitle": {
-        "dark": "#FFFFFF",
-        "light": "#FFFFFF"
+        "dark": "#ffffff",
+        "light": "#000000"
       },
       "bottomBar": {
         "text": {
           "dark": "#818181",
-          "darkSelected": "#1375b3",
+          "darkSelected": "#061489",
           "light": "#818181",
-          "lightSelected": "#1375b3"
+          "lightSelected": "#031670"
         },
         "bg": {
           "dark": "#191919",
@@ -456,9 +459,9 @@
       "breadcrumb": {
         "text": {
           "dark": "#818181",
-          "darkSelected": "#1375b3",
+          "darkSelected": "#ededed",
           "light": "#818181",
-          "lightSelected": "#1375b3"
+          "lightSelected": "#424242"
         },
         "bg": {
           "dark": "#191919",
@@ -470,213 +473,173 @@
         }
       },
       "systemTopBarBackground": {
-        "light": "#004a83",
-        "dark": "#004a83"
+        "light": "#1169a1",
+        "dark": "#000000"
       },
       "systemBottomBarBackground": {
-        "light": "#00000000",
-        "dark": "#00000000"
+        "light": "#1375B3",
+        "dark": "#000000"
       }
     },
     "widget": [
       {
         "secId": "5",
         "index": "5",
-        "itemCount": "7",
-        "widgetType": "MEDIA_TEXT",
-        "groupLayout": "H-List",
-        "groupHeaderRequired": "true",
-        "actionIconRequired": "true",
-        "actionTitle": "See More from",
-        "actionGravity": "LeftBottom",
-        "groupMargin": [
-          8,
-          10,
-          8,
-          10
-        ],
-        "groupRadius": 2,
-        "groupElevation": 2,
-        "groupOuterLineRequired": "false",
-        "itemMargin": [
-          10,
-          10,
-          10,
-          5
-        ],
-        "itemRadius": 0,
-        "itemElevation": 3,
-        "itemOuterLineRequired": "false",
+        "itemCount" : "7",
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "LeftBottom",
+        "groupMargin":[10, 5, 5, 20],
+        "groupRadius":10,
+        "groupElevation":4,
+        "groupOuterLineRequired" : "true",
+        "itemMargin":[2, 15, 2, 5],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
         "description": {
-          "dark": "#ededed",
-          "light": "#111111"
+          "dark": "#ffffff",
+          "light": "#191919"
         },
         "title": {
-          "dark": "#ededed",
-          "light": "#424242"
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
         },
         "action": {
-          "dark": "#006599",
-          "light": "#006599"
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
         "secId": "26",
         "index": "8",
-        "itemCount": "7",
-        "widgetType": "TITLE_TEXT",
-        "groupLayout": "H-List",
-        "groupHeaderRequired": "true",
-        "actionIconRequired": "true",
-        "actionTitle": "See More from",
-        "actionGravity": "LeftBottom",
-        "groupMargin": [
-          8,
-          10,
-          8,
-          10
-        ],
-        "groupRadius": 2,
-        "groupElevation": 2,
-        "groupOuterLineRequired": "false",
-        "itemMargin": [
-          0,
-          10,
-          4,
-          5
-        ],
-        "itemRadius": 0,
-        "itemElevation": 3,
-        "itemOuterLineRequired": "false",
+        "itemCount" : "7",
+        "widgetType": "MEDIA_TITLE",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "LeftBottom",
+        "groupMargin":[10, 5, 5, 20],
+        "groupRadius":10,
+        "groupElevation":4,
+        "groupOuterLineRequired" : "true",
+        "itemMargin":[2, 15, 2, 5],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
         "itemBackground": {
-          "dark": "#133b5a",
-          "light": "#133b5a"
+          "dark": "#191919",
+          "light": "#ffffff"
         },
         "description": {
-          "dark": "#ffffffff",
-          "light": "#ffffffff"
+          "dark": "#ffffff",
+          "light": "#191919"
         },
         "title": {
-          "dark": "#ededed",
-          "light": "#424242"
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
         },
         "action": {
-          "dark": "#006599",
-          "light": "#006599"
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
         "secId": "30",
         "index": "10",
-        "itemCount": "7",
-        "widgetType": "MEDIA_TEXT",
-        "groupLayout": "H-List",
-        "groupHeaderRequired": "true",
-        "actionIconRequired": "true",
-        "actionTitle": "See More from",
-        "actionGravity": "LeftBottom",
-        "groupMargin": [
-          8,
-          10,
-          8,
-          10
-        ],
-        "groupRadius": 2,
-        "groupElevation": 2,
-        "groupOuterLineRequired": "false",
-        "itemMargin": [
-          10,
-          10,
-          10,
-          5
-        ],
-        "itemRadius": 0,
-        "itemElevation": 3,
-        "itemOuterLineRequired": "false",
+        "itemCount" : "7",
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "LeftBottom",
+        "groupMargin":[10, 5, 5, 20],
+        "groupRadius":10,
+        "groupElevation":4,
+        "groupOuterLineRequired" : "true",
+        "itemMargin":[2, 15, 2, 5],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
         "description": {
-          "dark": "#ededed",
-          "light": "#111111"
+          "dark": "#ffffff",
+          "light": "#191919"
         },
         "title": {
-          "dark": "#ededed",
-          "light": "#424242"
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
         },
         "action": {
-          "dark": "#006599",
-          "light": "#006599"
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
         "secId": "37",
         "index": "12",
-        "itemCount": "7",
-        "widgetType": "MEDIA_TEXT",
-        "groupLayout": "H-List",
-        "groupHeaderRequired": "true",
-        "actionIconRequired": "true",
-        "actionTitle": "See More from",
-        "actionGravity": "LeftBottom",
-        "groupMargin": [
-          8,
-          10,
-          8,
-          10
-        ],
-        "groupRadius": 2,
-        "groupElevation": 2,
-        "groupOuterLineRequired": "false",
-        "itemMargin": [
-          10,
-          10,
-          10,
-          5
-        ],
-        "itemRadius": 0,
-        "itemElevation": 3,
-        "itemOuterLineRequired": "false",
+        "itemCount" : "7",
+        "widgetType": "MEDIA_TITLE_TIME",
+        "groupLayout" : "H-List",
+        "groupHeaderRequired" : "true",
+        "actionIconRequired" : "true",
+        "actionTitle" : "View All",
+        "actionGravity" : "LeftBottom",
+        "groupMargin":[10, 5, 5, 20],
+        "groupRadius":10,
+        "groupElevation":4,
+        "groupOuterLineRequired" : "true",
+        "itemMargin":[2, 15, 2, 5],
+        "itemRadius":10,
+        "itemElevation":4,
+        "itemOuterLineRequired" : "true",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
         "description": {
-          "dark": "#ededed",
-          "light": "#111111"
+          "dark": "#ffffff",
+          "light": "#191919"
         },
         "title": {
-          "dark": "#ededed",
-          "light": "#424242"
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
         },
         "action": {
-          "dark": "#006599",
-          "light": "#006599"
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       },
       {
-        "widgetType": "SENSEX",
+        "widgetType" : "SENSEX",
         "index": "3",
         "itemBackground": {
           "dark": "#191919",
           "light": "#ffffff"
         },
         "description": {
-          "dark": "#ededed",
-          "light": "#111111"
+          "dark": "#ffffff",
+          "light": "#191919"
         },
         "title": {
-          "dark": "#ededed",
-          "light": "#424242"
+          "dark": "#E7E73C",
+          "light": "#E73CE5"
         },
         "action": {
-          "dark": "#006599",
-          "light": "#006599"
+          "dark": "#E7603C",
+          "light": "#3C70E7"
         }
       }
     ],
@@ -694,39 +657,39 @@
         },
         {
           "type": "taboola",
-          "index": "11"
+          "index": "6"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Footer",
-          "index": "16"
+          "index": "8"
         },
         {
           "type": "taboola",
-          "index": "21"
+          "index": "10"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Bottom",
-          "index": "26"
+          "index": "12"
         },
         {
           "type": "taboola",
-          "index": "31"
+          "index": "13"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "36"
+          "index": "16"
         },
         {
           "type": "taboola",
-          "index": "41"
+          "index": "18"
         },
         {
           "type": "DFP",
           "adId": "/22390678/Hindu_Android_HP_Middle",
-          "index": "46"
+          "index": "20"
         }
       ]
     },
@@ -749,118 +712,108 @@
     "totalIcons": "88",
     "otherIconsDownloadUrls": {
       "dark": {
-        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/logo_small.png",
         "Listing": {
-          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/unbookmark.png",
-          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/like.png",
-          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/dislike.png",
-          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/unfavorite.png",
-          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/share.png"
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/share.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/left_slider_three_line.png",
-          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/logo_small.png",
-          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/back.png",
-          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/ttsPause.png",
-          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/comment.png",
-          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/bookmark.png",
-          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/unbookmark.png",
-          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/textSize.png",
-          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/share.png",
-          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/crown.png",
-          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/like.png",
-          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/dislike.png",
-          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/favorite.png",
-          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/logo_small.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/unbookmark.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
         },
         "placeHolder": {
-          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/banner.png",
-          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/thumb.png",
-          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/widget.png",
-          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xxhdpi/ads.png"
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/banner.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/thumb.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/widget.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/ads.png"
         }
       },
       "light": {
-        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/Logo.png",
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/Logo.png",
         "Listing": {
-          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
-          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/like.png",
-          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/dislike.png",
-          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unfavorite.png",
-          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/shareGray.png"
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/shareGray.png"
         },
         "topbar": {
-          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/left_slider_three_line.png",
-          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/logo_small.png",
-          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/search.png",
-          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/overflow_verticle_dot.png",
-          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/back.png",
-          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/ttsPlay.png",
-          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/ttsPause.png",
-          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/comment.png",
-          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/bookmark.png",
-          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unbookmark.png",
-          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/textSize.png",
-          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/share.png",
-          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/crown.png",
-          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/like.png",
-          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/dislike.png",
-          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/favorite.png",
-          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/unfavorite.png",
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/logo_small.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Dark/xhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/unbookmark.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/unfavorite.png",
           "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
           "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
         },
         "placeHolder": {
-          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/banner.png",
-          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/thumb.png",
-          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/widget.png",
-          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xxhdpi/ads.png"
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/banner.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/thumb.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/widget.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/bl/Light/xhdpi/ads.png"
         }
       }
     },
     "subSection": {
       "index": "3",
-      "groupLayout": "H-List",
-      "groupHeaderRequired": "true",
-      "actionTitle": "Explore Section",
-      "groupMargin": [
-        8,
-        10,
-        8,
-        10
-      ],
-      "groupRadius": 2,
-      "groupElevation": 0,
-      "groupOuterLineRequired": "false",
-      "itemMargin": [
-        10,
-        10,
-        10,
-        5
-      ],
-      "itemRadius": 0,
-      "itemElevation": 2,
-      "itemOuterLineRequired": "false",
+      "groupLayout" : "H-List",
+      "groupHeaderRequired" : "true",
+      "actionTitle" : "Explore Section",
+      "groupMargin":[10, 5, 5, 20],
+      "groupRadius":10,
+      "groupElevation":4,
+      "groupOuterLineRequired" : "true",
+      "itemMargin":[2, 15, 2, 5],
+      "itemRadius":10,
+      "itemElevation":4,
+      "itemOuterLineRequired" : "true",
       "itemBackground": {
         "dark": "#191919",
         "light": "#ffffff"
       },
       "description": {
-        "dark": "#ededed",
-        "light": "#424242"
+        "dark": "#ffffff",
+        "light": "#191919"
       },
       "title": {
-        "dark": "#ededed",
-        "light": "#424242"
+        "dark": "#E7E73C",
+        "light": "#E73CE5"
       },
       "action": {
         "dark": "#E7603C",

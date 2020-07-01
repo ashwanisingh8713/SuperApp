@@ -12,7 +12,7 @@
         android:id="@+id/layout_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/article_item_parent_top_bottom_padding">
+        android:paddingBottom="@dimen/banner_padding">
 
         <FrameLayout
             android:id="@+id/imageParentLayout"
@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/banner_image_newheight"
                 android:layout_gravity="center_vertical"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 />
 
             <ImageButton
@@ -44,11 +44,12 @@
             card_view:font_path="@string/THP_FiraSans_Bold"
             card_view:textType="title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/article_item_title_height"
+            android:layout_height="wrap_content"
             android:layout_below="@id/imageParentLayout"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/text_line_spacing"
             android:maxLines="2"
+            android:minLines="2"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:paddingTop="10dp"

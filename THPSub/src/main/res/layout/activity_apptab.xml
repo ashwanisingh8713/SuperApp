@@ -5,7 +5,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
 
@@ -20,26 +19,27 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true">
+        >
 
         <com.ns.view.ScreenBg_LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/topTabHeight">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="@string/type_device" />
 
             <com.ns.view.img.LogoImgView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerInside"
                 app:logoType="Splash" />
 
             <View style="@style/dividerStyle" />

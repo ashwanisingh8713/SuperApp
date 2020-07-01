@@ -28,6 +28,7 @@
                 android:id="@+id/imageview_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/banner_image_newheight"
+                android:scaleType="fitXY"
                 />
 
             <ImageButton
@@ -46,19 +47,19 @@
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/text_line_spacing"
             android:maxLines="3"
-            android:paddingBottom="8dp"
+            android:paddingBottom="@dimen/banner_padding"
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
             android:paddingTop="10dp"
             app:font_path="@string/THP_TundraOffc"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/banner_title_text_size"
             app:textType="title" />
 
         <include
             layout="@layout/th_layout_article_list_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/banner_padding"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp" />
     </LinearLayout>

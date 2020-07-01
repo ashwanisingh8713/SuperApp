@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:textType="title"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/detail_article_padding"
+        android:layout_marginBottom="@dimen/detail_article_padding"
         android:lineSpacingExtra="@dimen/text_line_spacing"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:paddingLeft="@dimen/detail_article_padding"
+        android:paddingRight="@dimen/detail_article_padding"
         android:textIsSelectable="true"
-        android:textSize="22sp"
+        android:textSize="@dimen/banner_title_text_size"
         app:font_path="@string/THP_TundraOffc"
         />
 
@@ -25,8 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingLeft="@dimen/detail_article_padding"
+        android:paddingRight="@dimen/detail_article_padding">
 
         <com.ns.view.text.SectionTextView
             android:id="@+id/author"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             app:textType="author"
             android:text=""
-            android:textSize="18sp"
+            android:textSize="@dimen/detail_author_size"
             app:font_path="@string/THP_TundraOffc"/>
 
     </LinearLayout>
@@ -43,15 +43,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingLeft="@dimen/detail_article_padding"
+        android:paddingRight="@dimen/detail_article_padding">
 
         <com.ns.view.text.SectionTextView
             android:id="@+id/articleLocationTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:textType="time"
-            android:textSize="14sp"
+            android:textSize="@dimen/detail_location_size"
             app:font_path="@string/THP_FiraSans_Regular"
             />
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             app:textType="time"
             android:paddingLeft="2dp"
-            android:textSize="14sp"
+            android:textSize="@dimen/detail_location_size"
             app:font_path="@string/THP_FiraSans_Regular"
             />
 

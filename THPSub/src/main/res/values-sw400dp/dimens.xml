@@ -61,5 +61,23 @@
     <dimen name="add_address_info_et_gap">15dp</dimen>
 
 
+    <dimen name="breadcrumBarHeight">50dp</dimen>
+    <dimen name="banner_title_text_size">22sp</dimen>
+    <dimen name="banner_padding">8dp</dimen>
+    <dimen name="banner_image_newheight">225dp</dimen>
+
+    <dimen name="th_article_item_parent_height">120dp</dimen>
+    <dimen name="bl_article_item_parent_height">140dp</dimen>
+    <dimen name="article_item_title_height">60dp</dimen>
+
+    <dimen name="article_item_icon_height">32dp</dimen>
+    <dimen name="article_item_icon_width">32dp</dimen>
+    <dimen name="article_item_margin_between_icons">10dp</dimen>
+
+    <dimen name="detail_article_padding">8dp</dimen>
+    <dimen name="detail_author_size">18sp</dimen>
+    <dimen name="detail_location_size">14sp</dimen>
+
+
 
 </resources>
