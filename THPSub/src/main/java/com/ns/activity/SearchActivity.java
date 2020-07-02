@@ -343,6 +343,8 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             } else if (mSelectedSearchType.getSearchType().equalsIgnoreCase("stock")) {
                 searchStocksByText(text.toString());
             }
+            //CT Event Tracking
+            CleverTapUtil.cleverTapSearchEvent(this, text.toString());
         }
         else {
             Alerts.noConnectionSnackBar(mPullToRefreshLayout, this);

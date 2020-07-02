@@ -456,6 +456,14 @@ public class CleverTapUtil {
         pushCleverTapEvent(context, THPConstants.CT_EVENT_SPLASH_API, map);
     }
 
+    public static void cleverTapSearchEvent(Context context, String text) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_platform, "app");
+        map.put(THPConstants.CT_KEY_UserId, getUserId(context));
+        map.put(THPConstants.CT_KEY_KEYWORD, text);
+        pushCleverTapEvent(context, THPConstants.CT_EVENT_SEARCHED, map);
+    }
+
 
 
 

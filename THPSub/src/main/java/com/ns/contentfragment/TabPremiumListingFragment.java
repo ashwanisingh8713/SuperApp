@@ -138,6 +138,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         super.onResume();
 
         mUserId = PremiumPref.getInstance(getActivity()).getUserId();
+        mPageStartTime = System.currentTimeMillis();
 
         if(mRecyclerAdapter != null) {
             mRecyclerAdapter.setUserId(mUserId);
@@ -522,7 +523,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         if(mPageEndTime == -1 || mPageStartTime == -1) {
             return;
         }
-        if(mPageStartTime >= 1000 && mIsVisible) {
+        if(mPageStartTime >= 1000 /*&& mIsVisible*/) {
             mPageEndTime = System.currentTimeMillis();
             sendEventCapture(mPageStartTime, mPageEndTime);
             mPageStartTime = -1l;
@@ -531,7 +532,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     }
 
     private void briefingEventCapture(long pageStartTime, long pageEndTime) {
-        if(isBriefingPage()) {
+        if(isBriefingPage() && pageStartTime > 1000) {
             final String totalTime = AppDateUtil.millisToMinAndSec(pageEndTime - pageStartTime);
             final long timeInSeconds = AppDateUtil.millisToSecs(pageEndTime - pageStartTime);
             HashMap<String,Object> map = new HashMap<>();
