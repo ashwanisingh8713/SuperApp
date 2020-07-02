@@ -68,8 +68,8 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     private CustomTextView emptyBtnTxt;
     private UserProfile mUserProfile;
 
-    private long mPageStartTime = 0l;
-    private long mPageEndTime = 0l;
+    private long mPageStartTime = 0L;
+    private long mPageEndTime = 0L;
 
     private int mTabIndex;
 
@@ -139,6 +139,7 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
         mUserId = PremiumPref.getInstance(getActivity()).getUserId();
         mPageStartTime = System.currentTimeMillis();
+        mPageEndTime = 0L;
 
         if(mRecyclerAdapter != null) {
             mRecyclerAdapter.setUserId(mUserId);
@@ -523,11 +524,11 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         if(mPageEndTime == -1 || mPageStartTime == -1) {
             return;
         }
-        if(mPageStartTime >= 1000 /*&& mIsVisible*/) {
+        if(mPageStartTime >= 1000) {
             mPageEndTime = System.currentTimeMillis();
             sendEventCapture(mPageStartTime, mPageEndTime);
-            mPageStartTime = -1l;
-            mPageEndTime = -1l;
+            mPageStartTime = -1L;
+            mPageEndTime = -1L;
         }
     }
 
@@ -566,6 +567,17 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
         super.onPause();
         EventBus.getDefault().unregister(this);
         Log.i("handleEvent", "unregister() ::  "+mPageSource+" :: "+mTabIndex);
+
+        //Event Capture
+        if(mPageEndTime == -1 || mPageStartTime == -1) {
+            return;
+        }
+        if(mPageStartTime >= 1000) {
+            mPageEndTime = System.currentTimeMillis();
+            sendEventCapture(mPageStartTime, mPageEndTime);
+            mPageStartTime = -1L;
+            mPageEndTime = -1L;
+        }
     }
 
     @Override

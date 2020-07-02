@@ -71,8 +71,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     private String mArticleId;
     private String mFrom;
 
-    private long mPageStartTime = 0l;
-    private long mPageEndTime = 0l;
+    private long mPageStartTime = 0L;
+    private long mPageEndTime = 0L;
 
 
     public static THP_DetailFragment getInstance(ArticleBean articleBean, String articleId, String userId, String from) {
@@ -186,6 +186,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
 
         mPageStartTime = System.currentTimeMillis();
+        mPageEndTime = 0L;
         // Set Toolbar Item Click Listener
         mActivity.setOnFragmentTools(this);
 
@@ -339,11 +340,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void onPause() {
         super.onPause();
-        if(mPageStartTime > 1000) {
+        if(mPageStartTime > 0) {
             mPageEndTime = System.currentTimeMillis();
             sendEventCapture(mPageStartTime, mPageEndTime);
-            mPageStartTime = -1l;
-            mPageEndTime = -1l;
+            mPageStartTime = -1L;
+            mPageEndTime = -1L;
         }
         //Stop Media Player if Playing
         if (AppAudioManager.getInstance().isPlaying()){
@@ -800,7 +801,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                     mArticleBean.getSectionName(), mArticleBean.getArticleType(), totalTime);
 
             CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_ARTICLE, mArticleBean.getArticleId(),
-                    mArticleBean.getSectionName(), mArticleBean.getAuthor() == null ? "No Author" : TextUtils.join(", ", mArticleBean.getAuthor()), 1);
+                    mArticleBean.getSectionName(), mArticleBean.getAuthor() == null ? (ResUtil.isEmpty(mArticleBean.getAu()) ? "No Author" : mArticleBean.getAu()) : TextUtils.join(", ", mArticleBean.getAuthor()), 1);
         }
     }
 
@@ -810,8 +811,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         if(mPageEndTime == -1 || mPageStartTime == -1) {
             return;
         }
-        mPageEndTime = System.currentTimeMillis();
-        sendEventCapture(mPageStartTime, mPageEndTime);
+        if (mPageStartTime > 0) {
+            mPageEndTime = System.currentTimeMillis();
+            sendEventCapture(mPageStartTime, mPageEndTime);
+        }
     }
 
     /**
