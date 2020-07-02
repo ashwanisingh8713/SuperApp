@@ -20,7 +20,6 @@ import com.ns.utils.THPConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -459,11 +458,19 @@ public class CleverTapUtil {
 
     //Crossword+ event
     public static void cleverTap_crossword(Context context) {
-        Map<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put(THPConstants.CT_KEY_platform, "app");
         map.put(THPConstants.CT_KEY_onClick,"Yes" );
         map.put(THPConstants.CT_KEY_UserId, getUserId(context));
         CleverTapAPI.getDefaultInstance(context).pushEvent(THPConstants.CT_EVENT_CROSSWORD, map);
+    }
+
+    public static void cleverTapSearchEvent(Context context, String text) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(THPConstants.CT_KEY_platform, "app");
+        map.put(THPConstants.CT_KEY_UserId, getUserId(context));
+        map.put(THPConstants.CT_KEY_KEYWORD, text);
+        pushCleverTapEvent(context, THPConstants.CT_EVENT_SEARCHED, map);
     }
 
 
