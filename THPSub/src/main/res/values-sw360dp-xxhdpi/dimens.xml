@@ -3,4 +3,5 @@
 
     <dimen name="becomeMemberbackBtnMarginTop">10dp</dimen>
 
+    <dimen name="breadcrumBarHeight">40dp</dimen>
 </resources>

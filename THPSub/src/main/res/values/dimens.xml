@@ -109,6 +109,7 @@
     <dimen name="toolbar_ic_width">30dp</dimen>
     <dimen name="toolbar_ic_height">30dp</dimen>
     <dimen name="toolbar_ic_gap">17dp</dimen>
+    <dimen name="toolbar_logo">150dp</dimen>
 
     <dimen name="video_land_width">650dp</dimen>
     <dimen name="video_land_height">380dp</dimen>

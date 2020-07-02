@@ -99,5 +99,7 @@
     <dimen name="introIconMarginTop">23dp</dimen>
     <dimen name="introTextMarginTop">21dp</dimen>
 
+    <dimen name="toolbar_logo">140dp</dimen>
+
 
 </resources>

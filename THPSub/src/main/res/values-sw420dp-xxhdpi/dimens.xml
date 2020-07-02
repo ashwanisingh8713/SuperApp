@@ -7,4 +7,11 @@
 
 
     <dimen name="margin_to_social_signin_text">35dp</dimen>
+
+    <dimen name="article_item_margin_between_icons">15dp</dimen>
+
+    <dimen name="toolbar_ic_width">32dp</dimen>
+    <dimen name="toolbar_ic_height">32dp</dimen>
+    <dimen name="toolbar_ic_gap">20dp</dimen>
+    <dimen name="toolbar_logo">180dp</dimen>
 </resources>

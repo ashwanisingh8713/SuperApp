@@ -22,7 +22,7 @@
     <com.ns.view.img.LogoImgView
         android:id="@+id/action_logo"
         app:logoType="Section"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/toolbar_logo"
         android:layout_height="45dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
@@ -67,7 +67,7 @@
             android:id="@+id/action_ttsStop"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@drawable/tts_stop"
             android:visibility="gone" />
 
@@ -76,7 +76,7 @@
             android:id="@+id/action_ttsPlay"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_audio"
             android:visibility="visible" />
 
@@ -106,7 +106,7 @@
             android:id="@+id/action_commentTHP"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_comment"
             />
 
@@ -143,7 +143,7 @@
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
             android:layout_gravity="center"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:visibility="invisible"
             />
 
@@ -174,7 +174,7 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        android:scaleType="center"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_textsize_w"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/favouriteParent"
@@ -198,7 +198,7 @@
             android:id="@+id/action_favTHP"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             />
 
         <ProgressBar
@@ -227,7 +227,7 @@
             android:id="@+id/action_likeTHPIC"
             android:layout_width="@dimen/toolbar_ic_width"
             android:layout_height="@dimen/toolbar_ic_height"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             />
 
         <ProgressBar
@@ -260,6 +260,7 @@
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         app:iconType="search"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/action_premiumLogoBtn"
         app:layout_constraintRight_toLeftOf="@id/action_premiumLogoBtn"
@@ -276,6 +277,7 @@
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
         app:iconType="crown"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/overflowParent"
         app:layout_constraintTop_toTopOf="parent"
@@ -303,6 +305,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@null"
+            android:scaleType="centerInside"
             android:contentDescription="Notification Icon"
             app:srcCompat="@drawable/ic_more_w" />
 

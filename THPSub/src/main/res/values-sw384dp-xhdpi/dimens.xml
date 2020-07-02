@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="breadcrumBarHeight">32.5dp</dimen>
+    <dimen name="banner_title_text_size">20sp</dimen>
+    <dimen name="banner_padding">5dp</dimen>
+    <dimen name="banner_image_newheight">170dp</dimen>
 
+    <dimen name="th_article_item_parent_height">100dp</dimen>
+    <dimen name="bl_article_item_parent_height">120dp</dimen>
+    <dimen name="article_item_title_height">40dp</dimen>
+
+    <dimen name="article_item_icon_height">28dp</dimen>
+    <dimen name="article_item_icon_width">28dp</dimen>
+    <dimen name="article_item_margin_between_icons">8dp</dimen>
+
+    <dimen name="detail_article_padding">5dp</dimen>
+    <dimen name="detail_author_size">14sp</dimen>
+    <dimen name="detail_location_size">12sp</dimen>
+
+    <dimen name="toolbar_logo">180dp</dimen>
+    <dimen name="toolbar_ic_gap">17dp</dimen>
 
 
 </resources>

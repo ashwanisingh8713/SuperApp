@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="toolbar_ic_width">32dp</dimen>
+    <dimen name="toolbar_ic_height">32dp</dimen>
+    <dimen name="toolbar_ic_gap">19dp</dimen>
+    <dimen name="toolbar_logo">190dp</dimen>
+
 
 </resources>
