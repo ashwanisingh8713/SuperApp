@@ -1,0 +1,582 @@
+{
+  "packageName": "com.mobstac.thehindu",
+  "environment": "development",
+  "resolution": "xxhdpi",
+  "configJson": {
+    "lastServerUpdateTime": "UTC-TIM",
+    "vokkleId": "432081eb-6e8e-4abc-a88f-ca5357aa7244",
+    "refreshIntervalInMins": "5",
+    "importantMsg": null,
+    "staticItem": [
+      {
+        "title": "Terms & Condition",
+        "urlDark": "https://www.thehindu.com/app/app-terms-of-use/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-terms-of-use/"
+      },
+      {
+        "title": "Privacy Policy",
+        "urlDark": "https://www.thehindu.com/app/app-privacy-policy/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-privacy-policy/"
+      },
+      {
+        "title": "Help",
+        "urlDark": "https://www.thehindu.com/app/app-help/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-help/"
+      },
+      {
+        "title": "AboutUs",
+        "urlDark": "https://www.thehindu.com/app/app-about-us/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-about-us/"
+      }
+    ],
+    "tabs": [
+      {
+        "title": "Home",
+        "iconUrl": {
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/home.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/homeSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/home.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/homeSelected.png"
+        },
+        "group": "GROUP_DEFAULT_SECTIONS",
+        "pageSource": "GROUP_DEFAULT_SECTIONS"
+      },
+      {
+        "title": "Briefing",
+        "iconUrl": {
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/briefing.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/briefingSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/briefing.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/briefingSelected.png"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "Briefing"
+      },
+      {
+        "title": "My Stories",
+        "iconUrl": {
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/mystories.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/mystoriesSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/mystories.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/mystoriesSelected.png"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "My Stories"
+      },
+      {
+        "title": "Suggested",
+        "iconUrl": {
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/suggested.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/suggestedSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/suggested.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/suggestedSelected.png"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "Suggested"
+      },
+      {
+        "title": "Profile",
+        "iconUrl": {
+          "urlDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/profile.png",
+          "urlSelectedDark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/profileSelected.png",
+          "urlLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/profile.png",
+          "urlSelectedLight": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/profileSelected.png"
+        },
+        "group": "GROUP_PREMIUM_SECTIONS",
+        "pageSource": "Profile"
+      }
+    ],
+    "appTheme": {
+      "articleText" : {
+        "dark" : {
+          "title" : "#ededed",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#ffffff",
+          "link" : "#ffffff",
+          "lead" : "#E8EAEC"
+        },
+        "light" : {
+          "title" : "#111111",
+          "time" : "#818181",
+          "author" : "#818181",
+          "section" : "#818181",
+          "detail" : "#000000",
+          "link" : "#2435E7",
+          "lead" : "#666666"
+        }
+      },
+      "tilesBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "screenBg": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "topBarBg": {
+        "dark": "#000000",
+        "light": "#ffffff"
+      },
+      "topBarTitle": {
+        "dark": "#ffffff",
+        "light": "#000000"
+      },
+      "bottomBar": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#1b528e",
+          "light": "#818181",
+          "lightSelected": "#191919"
+        },
+        "bg": {
+          "dark": "#000000",
+          "light": "#ffffff"
+        },
+        "indicator": {
+          "dark": "#00000000",
+          "light": "#00000000"
+        }
+      },
+      "breadcrumb": {
+        "text": {
+          "dark": "#818181",
+          "darkSelected": "#ededed",
+          "light": "#818181",
+          "lightSelected": "#424242"
+        },
+        "bg": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "indicator": {
+          "dark": "#006599",
+          "light": "#000000"
+        }
+      },
+      "systemTopBarBackground": {
+        "light": "#000000",
+        "dark": "#000000"
+      },
+      "systemBottomBarBackground": {
+        "light": "#00000000",
+        "dark": "#00000000"
+      }
+    },
+    "widget": [
+      {
+        "secId": "142",
+        "index": "5",
+        "itemCount": "7",
+        "widgetType": "TEXT",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "false",
+        "actionTitle": "View All",
+        "actionGravity": "CenterBottom",
+        "groupMargin": [
+          10,
+          8,
+          10,
+          5
+        ],
+        "groupRadius": 0,
+        "groupElevation": 0,
+        "groupOuterLineRequired": "false",
+        "itemMargin": [
+          0,
+          10,
+          2,
+          5
+        ],
+        "itemRadius": 0,
+        "itemElevation": 0,
+        "itemOuterLineRequired": "false",
+        "itemBackground": {
+          "dark": "#CF4939",
+          "light": "#CF4939"
+        },
+        "description": {
+          "dark": "#FFFFFF",
+          "light": "#FFFFFF"
+        },
+        "title": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "action": {
+          "dark": "#006599",
+          "light": "#006599"
+        }
+      },
+      {
+        "secId": "88",
+        "index": "8",
+        "itemCount": "7",
+        "widgetType": "MEDIA_TEXT",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "false",
+        "actionTitle": "",
+        "actionGravity": "CenterBottom",
+        "groupMargin": [
+          10,
+          8,
+          10,
+          0
+        ],
+        "groupRadius": 0,
+        "groupElevation": 0,
+        "groupOuterLineRequired": "false",
+        "itemMargin": [
+          0,
+          10,
+          2,
+          2
+        ],
+        "itemRadius": 0,
+        "itemElevation": 0,
+        "itemOuterLineRequired": "true",
+        "itemBackground": {
+          "dark": "#313131",
+          "light": "#ffffff"
+        },
+        "description": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "action": {
+          "dark": "#00000000",
+          "light": "#00000000"
+        }
+      },
+      {
+        "secId": "5",
+        "index": "10",
+        "itemCount": "7",
+        "widgetType": "TITLE_TEXT",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "false",
+        "actionTitle": "View All",
+        "actionGravity": "CenterBottom",
+        "groupMargin": [
+          10,
+          8,
+          10,
+          0
+        ],
+        "groupRadius": 0,
+        "groupElevation": 0,
+        "groupOuterLineRequired": "false",
+        "itemMargin": [
+          0,
+          10,
+          0,
+          2
+        ],
+        "itemRadius": 1,
+        "itemElevation": 0,
+        "itemOuterLineRequired": "true",
+        "itemBackground": {
+          "dark": "#133b5a",
+          "light": "#133b5a"
+        },
+        "description": {
+          "dark": "#FFFFFF",
+          "light": "#FFFFFF"
+        },
+        "title": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "action": {
+          "dark": "#006599",
+          "light": "#006599"
+        }
+      },
+      {
+        "secId": "138",
+        "index": "12",
+        "itemCount": "7",
+        "widgetType": "MEDIA_TEXT_TIME",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "false",
+        "actionTitle": "View All",
+        "actionGravity": "CenterBottom",
+        "groupMargin": [
+          10,
+          8,
+          10,
+          5
+        ],
+        "groupRadius": 0,
+        "groupElevation": 0,
+        "groupOuterLineRequired": "false",
+        "itemMargin": [
+          0,
+          10,
+          2,
+          2
+        ],
+        "itemRadius": 0,
+        "itemElevation": 0,
+        "itemOuterLineRequired": "true",
+        "itemBackground": {
+          "dark": "#313131",
+          "light": "#ffffff"
+        },
+        "description": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "action": {
+          "dark": "#006599",
+          "light": "#006599"
+        }
+      },
+      {
+        "secId": "69",
+        "index": "15",
+        "itemCount": "7",
+        "widgetType": "MEDIA_INNER_PADDING",
+        "groupLayout": "H-List",
+        "groupHeaderRequired": "true",
+        "actionIconRequired": "false",
+        "actionTitle": "View All",
+        "actionGravity": "CenterBottom",
+        "groupMargin": [
+          10,
+          8,
+          10,
+          0
+        ],
+        "groupRadius": 0,
+        "groupElevation": 0,
+        "groupOuterLineRequired": "false",
+        "itemMargin": [
+          2,
+          10,
+          2,
+          2
+        ],
+        "itemRadius": 0,
+        "itemElevation": 0,
+        "itemOuterLineRequired": "true",
+        "itemBackground": {
+          "dark": "#191919",
+          "light": "#ffffff"
+        },
+        "description": {
+          "dark": "#ffffff",
+          "light": "#191919"
+        },
+        "title": {
+          "dark": "#ededed",
+          "light": "#191919"
+        },
+        "action": {
+          "dark": "#006599",
+          "light": "#006599"
+        }
+      }
+    ],
+    "Ads": {
+      "bottomAdHomeId": "/22390678/Hindu_Android_HP_Sticky",
+      "bottomAdOtherId": "/22390678/Hindu_Android_AT_Sticky",
+      "fullScreenAdId": "/22390678/Hindu_Android_Interstitial",
+      "detailPageTopAdId": "/22390678/Hindu_Android_AT_Middle",
+      "detailPageBottomAdId": "/22390678/Hindu_Android_AT_Bottom",
+      "listingPageAds": [
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Middle",
+          "index": "4"
+        },
+        {
+          "type": "taboola",
+          "index": "11"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Footer",
+          "index": "26"
+        },
+        {
+          "type": "taboola",
+          "index": "21"
+        },
+        {
+          "type": "DFP",
+          "adId": "/22390678/Hindu_Android_HP_Bottom",
+          "index": "16"
+        },
+        {
+          "type": "taboola",
+          "index": "31"
+        }
+      ]
+    },
+    "taboola": {
+      "id": "thehindu-hinduappandroid",
+      "apikey": "65e50cbad5e7e156f110d188630a733c8054f54b",
+      "publisher": "thehindu-hinduappandroid",
+      "pageType": "article",
+      "mode": "thumbnails-a",
+      "placementLight": "Below Article Thumbnails",
+      "placementDark": "Below Article Thumbnails Dark",
+      "taboolaNativeAd": {
+        "placement_home": "Below Home Stream",
+        "placement_home_source_type": "home",
+        "placement_section": "Below Section Stream",
+        "placement_section_source_type": "section",
+        "placement_detail": "Below Article Stream"
+      }
+    },
+    "totalIcons": "88",
+    "otherIconsDownloadUrls": {
+      "dark": {
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/share.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/logo_actionbar.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unbookmark.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/unfavorite.png",
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_dark.png"
+        },
+        "placeHolder": {
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/banner-w.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/thumb-w.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/widget-w.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Dark/xxhdpi/ads.png"
+        }
+      },
+      "light": {
+        "Logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/Logo.png",
+        "Listing": {
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/bookmark.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unbookmark.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/shareGray.png"
+        },
+        "topbar": {
+          "left_slider_three_line": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/left_slider_three_line.png",
+          "logo": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/logo_actionbar.png",
+          "search": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/search.png",
+          "overflow_verticle_dot": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/overflow_verticle_dot.png",
+          "back": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/back.png",
+          "ttsPlay": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/ttsPlay.png",
+          "ttsPause": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/ttsPause.png",
+          "comment": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/comment.png",
+          "bookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/bookmarkBlack.png",
+          "unbookmark": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/bookmarkArticle.png",
+          "textSize": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/textSize.png",
+          "share": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/share.png",
+          "crown": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/crown.png",
+          "like": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/like.png",
+          "dislike": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/dislike.png",
+          "favorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/favorite.png",
+          "unfavorite": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/unfavorite.png",
+          "cross": "https://ashwani1387.s3.ap-south-1.amazonaws.com/cross_light.png",
+          "refresh": "https://ashwani1387.s3.ap-south-1.amazonaws.com/refresh_light.png"
+        },
+        "placeHolder": {
+          "banner": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/banner-b.png",
+          "thumb": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/thumb-b.png",
+          "widget": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/widget-b.png",
+          "ads": "http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/ads.png"
+        }
+      }
+    },
+    "subSection": {
+      "index": "3",
+      "groupLayout": "H-List",
+      "groupHeaderRequired": "true",
+      "actionTitle": "Explore Section",
+      "groupMargin": [
+        10,
+        16,
+        10,
+        16
+      ],
+      "groupRadius": 0,
+      "groupElevation": 0,
+      "groupOuterLineRequired": "false",
+      "itemMargin": [
+        0,
+        15,
+        2,
+        5
+      ],
+      "itemRadius": 0,
+      "itemElevation": 0,
+      "itemOuterLineRequired": "true",
+      "itemBackground": {
+        "dark": "#191919",
+        "light": "#ffffff"
+      },
+      "description": {
+        "dark": "#ededed",
+        "light": "#191919"
+      },
+      "title": {
+        "dark": "#ededed",
+        "light": "#424242"
+      },
+      "action": {
+        "dark": "#006599",
+        "light": "#006599"
+      }
+    },
+    "contentUrl": {
+      "baseUrlDefault": "https://app.thehindu.com/hindu/service/api_v1.004/",
+      "newsDigest": "https://appsearch.thehindu.com/hindu/service/api_v3/mobiles/newsLetter.php"
+    },
+    "searchOption": {
+      "urlId": "https://thehindu.com/app/getArticleByIds.json?articleIds=",
+      "urlText": "https://www.thehindu.com/app/search.json?term=",
+      "searchItem": [
+        {
+          "title": "Article",
+          "searchType": "article"
+        }
+      ]
+    }
+  }
+}
