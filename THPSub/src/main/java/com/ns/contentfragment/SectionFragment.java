@@ -37,8 +37,10 @@ import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
+import com.ns.utils.ResUtil;
 import com.ns.utils.RowIds;
 import com.ns.utils.SectionSideWork;
+import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
@@ -175,9 +177,13 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             // TODO, NOTHING
         } else if (mSectionId.equals(NetConstants.RECO_HOME_TAB) && isSectionNeedToSync && BaseAcitivityTHP.sIsOnline) { // Home Page of Section
             getHomeDataFromServer();
+            //CleverTap Page Visit Event
+            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_HOME, null, null, null, 0);
             return;
         } else if (isSectionNeedToSync && BaseAcitivityTHP.sIsOnline) { // Other Sections or Sub-Section
             sectionOrSubSectionFromServer(1);
+            //CleverTap Page Visit Event
+            CleverTapUtil.cleverTapEventPageVisit(getContext(), THPConstants.CT_PAGE_TYPE_SECTION, null, ResUtil.capitalizeFirstLetter(sectionOrSubsectionName), null, 0);
             return;
         }
 

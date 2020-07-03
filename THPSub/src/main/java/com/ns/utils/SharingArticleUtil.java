@@ -47,12 +47,6 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
     // This is from Share Intent
     Intent intent = getSharingIntent(mShareTitle, mShareUrl);
     mContext.startActivity(intent);
-
-//    FlurryAgent.logEvent(mContext.getString(R.string.ga_section_share_button_clicked));
-//
-//    GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, mContext.getString(R.string.ga_action),
-//            mContext.getString(R.string.ga_section_share_button_clicked), mContext.getString(R.string.ga_article_detail_lebel));
-
     //Firebase event
     THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", mContext.getString(R.string.ga_section_share_button_clicked), SharingArticleUtil.class.getSimpleName());
 
@@ -68,10 +62,10 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
         String parentName = bean.getParentName();
 
         if (mShareTitle == null) {
-            mShareTitle ="Download The Hindu official app.";
+            mShareTitle ="Download "+mContext.getResources().getString(R.string.APP_NAME)+" official app.";
         }
         if (mShareUrl == null) {
-            mShareUrl ="https://play.google.com/store/apps/details?id=com.mobstac.thehindu";
+            mShareUrl ="https://play.google.com/store/apps/details?id="+BuildConfig.APPLICATION_ID;
         }
         if (sectionName == null) {
             sectionName ="";
@@ -81,10 +75,6 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
         // This is from Share Intent
         Intent intent = getSharingIntent(mShareTitle, mShareUrl);
         mContext.startActivity(intent);
-
-//        FlurryAgent.logEvent(mContext.getString(R.string.ga_section_share_button_clicked));
-//        GoogleAnalyticsTracker.setGoogleAnalyticsEvent(mContext, mContext.getString(R.string.ga_action),
-//                mContext.getString(R.string.ga_section_share_button_clicked), mContext.getString(R.string.ga_article_detail_lebel));
         //Firebase event
         THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", mContext.getString(R.string.ga_section_share_button_clicked), SharingArticleUtil.class.getSimpleName());
 
@@ -92,14 +82,11 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
         HashMap<String,Object> map = new HashMap<>();
         if(TextUtils.isEmpty(parentName)){
             map.put(THPConstants.CT_KEY_Section, sectionName);
-            //map.put(THPConstants.CT_KEY_SubSection, "");
         }else {
             map.put(THPConstants.CT_KEY_Section, parentName);
             map.put(THPConstants.CT_KEY_SubSection, sectionName);
         }
         CleverTapUtil.cleverTapEvent(mContext, THPConstants.CT_EVENT_SHARE_ARTICLE, map);
-        CleverTapUtil.cleverTapEvent(mContext, THPConstants.CT_EVENT_SHARE, null);
-
     }
 
 

@@ -402,5 +402,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         super.onResume();
         //Firebase Analytics
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(SearchActivity.this, "Search Screen", SearchActivity.class.getSimpleName());
+        //CleverTap Page Visit Event
+        CleverTapUtil.cleverTapEventPageVisit(this, THPConstants.CT_PAGE_TYPE_SEARCH, null, null, null, 0);
     }
 }
