@@ -345,6 +345,9 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             }
             //CT Event Tracking
             CleverTapUtil.cleverTapSearchEvent(this, text.toString());
+            //Firebase Event Tracking
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Search", text.toString(), SearchActivity.class.getSimpleName());
+
         }
         else {
             Alerts.noConnectionSnackBar(mPullToRefreshLayout, this);

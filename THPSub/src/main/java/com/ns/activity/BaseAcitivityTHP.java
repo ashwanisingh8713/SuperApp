@@ -30,6 +30,7 @@ import com.ns.callbacks.FragmentTools;
 import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.clevertap.CleverTapUtil;
+import com.ns.contentfragment.TabPremiumListingFragment;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.R;
 import com.ns.tts.TTSManager;
@@ -228,6 +229,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             mFragmentTools.onShareClickListener(toolbarCallModel);
             //share event
             CleverTapUtil.cleverTapEvent(this, THPConstants.CT_EVENT_SHARE, null);
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Action", "Share clicked", BaseAcitivityTHP.class.getSimpleName());
         }
     }
 
@@ -237,6 +239,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             mFragmentTools.onCreateBookmarkClickListener(toolbarCallModel);
             //create bookmark
             CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_BOOKMARK,null);
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Action", "Bookmark clicked", BaseAcitivityTHP.class.getSimpleName());
         }
     }
 
@@ -246,6 +249,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             mFragmentTools.onFontSizeClickListener(toolbarCallModel);
             //font event
             CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_FONT,null);
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Action", "Font clicked", BaseAcitivityTHP.class.getSimpleName());
         }
     }
 
@@ -255,6 +259,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             mFragmentTools.onCommentClickListener(toolbarCallModel);
             //comment event
             CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_COMMENTS,null);
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Action", "Comments clicked", BaseAcitivityTHP.class.getSimpleName());
         }
     }
 
@@ -264,6 +269,7 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
             mFragmentTools.onTTSPlayClickListener(toolbarCallModel);
             //readloud event
             CleverTapUtil.cleverTapEvent(this,THPConstants.CT_EVENT_READLOUD,null);
+            THPFirebaseAnalytics.setFirbaseAnalyticsEvent(this, "Action", "Readloud clicked", BaseAcitivityTHP.class.getSimpleName());
         }
     }
 
