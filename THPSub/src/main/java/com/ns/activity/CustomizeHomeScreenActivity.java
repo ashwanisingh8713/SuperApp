@@ -73,7 +73,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
     public void skipOrPreviousButtonFunctionality() {
         if (mCustomizeHomeScreenViewPager != null) {
 
-            if (isHomeArticleOptionScreenShown || mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
+            if (/*isHomeArticleOptionScreenShown ||*/ mSkipButton.getText().toString().equalsIgnoreCase(btn_previous)) {
                 mCustomizeHomeScreenViewPager.setCurrentItem(0, true);
                 return;
             }

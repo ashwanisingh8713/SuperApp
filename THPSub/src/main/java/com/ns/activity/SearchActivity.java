@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.netoperation.asynctasks.SearchAdapter;
 import com.netoperation.config.model.Breadcrumb;
+import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.config.model.SearchType;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.TableConfiguration;
@@ -49,6 +50,7 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
+import com.ns.view.TopbarSearch;
 import com.ns.view.img.TopbarIconView;
 import com.ns.view.layout.NSLinearLayout;
 
@@ -114,18 +116,21 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
         if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
-            Breadcrumb breadcrumb = tableConfiguration.getAppTheme().getBreadcrumb();
-            String hintColr;
+            //Breadcrumb breadcrumb = tableConfiguration.getAppTheme().getBreadcrumb();
+            ColorOptionBean topBarTitle = tableConfiguration.getAppTheme().getTopBarTitle();
+            //String hintColr;
             String textColr;
             if(isDayTheme) {
-                hintColr = breadcrumb.getText().getLight();
-                textColr = breadcrumb.getText().getLightSelected();
+                //hintColr = topBarTitle.getText().getLight();
+                //textColr = breadcrumb.getText().getLightSelected();
+                textColr = topBarTitle.getLight();
             } else {
-                hintColr = breadcrumb.getText().getDark();
-                textColr = breadcrumb.getText().getDarkSelected();
+                //hintColr = breadcrumb.getText().getDark();
+                //textColr = breadcrumb.getText().getDarkSelected();
+                textColr = topBarTitle.getDark();
             }
             searchEditText.setTextColor(Color.parseColor(textColr));
-            searchEditText.setHintTextColor(Color.parseColor(textColr));
+            searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
 
         }
         else {
