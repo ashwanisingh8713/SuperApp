@@ -3,6 +3,7 @@ package com.ns.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.material.snackbar.Snackbar;
+import com.netoperation.config.model.ArticleTextColor;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.MeBean;
@@ -32,6 +35,7 @@ import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BaseRecyclerViewAdapter;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnEditionBtnClickListener;
@@ -597,6 +601,18 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         String formatedPubDt = CommonUtil.fomatedDate(bean.getPubDateTime(), mFrom);
         holder.time_Txt.setText(formatedPubDt);
         holder.description_Txt.setText(ResUtil.htmlText(bean.getDescription()));
+
+        String linkColor = "#2435E7";
+        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        if(tableConfiguration != null) {
+            ArticleTextColor articleTextColor = tableConfiguration.getAppTheme().getArticleText();
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                linkColor = articleTextColor.getLight().getLink();
+            } else {
+                linkColor = articleTextColor.getDark().getLink();
+            }
+        }
+        holder.description_Txt.setLinkTextColor(Color.parseColor(linkColor));
 
         holder.itemView.setOnClickListener(v -> {
             IntentUtil.openDetailActivity(holder.itemView.getContext(), mFrom,

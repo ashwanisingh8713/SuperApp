@@ -283,10 +283,10 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     }
 
     private void resetTextColors() {
-        mSmallArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
-        mMediumArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
-        mLargeArticleTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
-        mXLargeTextView.setTextColor(ResUtil.getColor(getResources(), getColor(R.color.color_818181_light)));
+        mSmallArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
+        mMediumArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
+        mLargeArticleTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
+        mXLargeTextView.setTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
 
     }
 

@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.netoperation.asynctasks.SearchAdapter;
+import com.netoperation.config.model.ArticleTextColor;
 import com.netoperation.config.model.Breadcrumb;
 import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.config.model.SearchType;
@@ -72,7 +73,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class SearchActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
+public class SearchActivity extends BaseAcitivityTHP implements TextView.OnEditorActionListener {
 
     private TopbarIconView mBackImageView;
     private TopbarIconView action_crossBtn;
@@ -89,9 +90,13 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
 
     @Override
+    public int layoutRes() {
+        return R.layout.activity_search;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
 
         mBackImageView = findViewById(R.id.action_back);
         action_crossBtn = findViewById(R.id.action_crossBtn);
@@ -102,10 +107,6 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         mPullToRefreshLayout.hideProgressBar();
         searchEditText.setHint("Search");
 
-        if (!THPConstants.IS_USE_SEVER_THEME) {
-            action_crossBtn.setImageResource(R.drawable.close);
-            action_crossBtn.setVisibility(View.GONE);
-        }
         action_crossBtn.setOnClickListener(view -> {
             searchEditText.setText("");
             searchEditText.clearFocus();
@@ -115,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         boolean isDayTheme = DefaultPref.getInstance(this).isUserThemeDay();
 
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+        if(tableConfiguration != null) {
             //Breadcrumb breadcrumb = tableConfiguration.getAppTheme().getBreadcrumb();
             ColorOptionBean topBarTitle = tableConfiguration.getAppTheme().getTopBarTitle();
             //String hintColr;
@@ -131,16 +132,6 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             }
             searchEditText.setTextColor(Color.parseColor(textColr));
             searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
-
-        }
-        else {
-            if (isDayTheme) {
-                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.color_000000));
-                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
-            } else {
-                searchEditText.setTextColor(ResUtil.getColor(getResources(), R.color.white));
-                searchEditText.setHintTextColor(ResUtil.getColor(getResources(), R.color.color_818181_light));
-            }
         }
 
         searchEditText.setOnEditorActionListener(this);
@@ -181,13 +172,18 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((tableConfiguration1, throwable) -> {
-                    Log.i("", "");
                     mListSearchTypes = tableConfiguration1.getSearchOption().getSearchItem();
                     if (mListSearchTypes.size() > 0) {
                         mSelectedSearchType = mListSearchTypes.get(0);
                         searchEditText.setHint("Search for " + mListSearchTypes.get(0).getTitle());
                     }
                     mSearchUrlByText = tableConfiguration1.getSearchOption().getUrlText();
+
+                    if (mListSearchTypes.size() < 2) {
+                        action_overflow.setVisibility(View.GONE);
+                    } else {
+                        action_overflow.setVisibility(View.VISIBLE);
+                    }
                 });
 
         //Fetch Stocks API for BL
@@ -215,6 +211,8 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         View layout = layoutInflater.inflate(R.layout.layout_radio_group, null, true);
         RadioGroup rg = new RadioGroup(this);
         NSLinearLayout nl = layout.findViewById(R.id.radioGroupLayout);
+        final TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+        final ArticleTextColor articleTextColor = tableConfiguration.getAppTheme().getArticleText();
         int count = 0;
         for (SearchType type : mListSearchTypes) {
             RadioButton rb = new RadioButton(this);
@@ -222,7 +220,12 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
             rb.setTag(type);
             rb.setPadding(10,20,10,10);
             rg.addView(rb);
-
+            if(BaseAcitivityTHP.sIsDayTheme) {
+                rb.setTextColor(Color.parseColor(articleTextColor.getLight().getTitle()));
+            }
+            else {
+                rb.setTextColor(Color.parseColor(articleTextColor.getDark().getTitle()));
+            }
             if(count == 0) {
                 rb.setChecked(true);
             }

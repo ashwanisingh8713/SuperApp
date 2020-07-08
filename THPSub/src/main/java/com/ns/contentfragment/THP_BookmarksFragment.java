@@ -158,9 +158,9 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mActivity != null) {
             mActivity.setOnFragmentTools(this);
         }
-        /*if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
-            loadData(mGoupType);
-        }*/
+        if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+            loadData(mGoupType, true);
+        }
 
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Bookmark Screen", THP_BookmarksFragment.class.getSimpleName());
 

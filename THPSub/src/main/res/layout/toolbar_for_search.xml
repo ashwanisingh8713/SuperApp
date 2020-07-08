@@ -42,7 +42,7 @@
         android:layout_width="@dimen/toolbar_ic_width"
         android:layout_height="@dimen/toolbar_ic_height"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
+        android:visibility="gone"
         app:iconType="cross"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/action_overflow"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/toolbar_ic_gap"
-        
+        android:visibility="gone"
         android:clickable="true"
         app:iconType="overflow"
         app:layout_constraintBottom_toBottomOf="parent"

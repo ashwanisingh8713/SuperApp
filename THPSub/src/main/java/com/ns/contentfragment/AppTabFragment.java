@@ -1,5 +1,6 @@
 package com.ns.contentfragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -31,6 +33,7 @@ import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.adapter.AppBottomTabAdapter;
+import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnDFPAdLoadListener;
 import com.ns.callbacks.OnSubscribeBtnClick;
 import com.ns.callbacks.TabClickListener;
@@ -38,7 +41,9 @@ import com.ns.clevertap.AppNotification;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.CallBackRelogin;
 import com.ns.utils.IntentUtil;
+import com.ns.utils.NetUtils;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.TabUtils;
@@ -73,7 +78,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     private boolean mIsUserThemeDay;
 
-    private String[] tabNames = {"Home", THPConstants.TAB_1, THPConstants.TAB_2, THPConstants.TAB_3, "Profile"};
+    /*private String[] tabNames = {"Home", THPConstants.TAB_1, THPConstants.TAB_2, THPConstants.TAB_3, "Profile"};
     private int[] tabUnSelectedIcons = {
             com.ns.thpremium.R.drawable.ic_thp_tab_home_unselected,
             com.ns.thpremium.R.drawable.ic_tab_briefcase_unselected,
@@ -87,7 +92,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             com.ns.thpremium.R.drawable.ic_tab_dashboard_selected,
             com.ns.thpremium.R.drawable.ic_tab_suggested_selected,
             com.ns.thpremium.R.drawable.ic_thp_tab_profile_selected
-    };
+    };*/
 
     @Override
     public int getLayoutRes() {
@@ -144,18 +149,18 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         mDisposable.add(DefaultTHApiManager.appConfigurationTabs(getActivity(), mIsUserThemeDay)
                 .subscribe(tabsBeans -> {
                     String[] tabNames = new String[tabsBeans.size()];
-                    String[] tabUnSelectedIcon = new String[tabsBeans.size()];
-                    String[] tabSelectedIcon = new String[tabsBeans.size()];
+//                    String[] tabUnSelectedIcon = new String[tabsBeans.size()];
+//                    String[] tabSelectedIcon = new String[tabsBeans.size()];
 
                     for (int i = 0; i < tabsBeans.size(); i++) {
                         TabsBean tab = tabsBeans.get(i);
                         tabNames[i] = tab.getTitle();
-                        tabUnSelectedIcon[i] = tab.getIconUrl().getLocalFilePath();
-                        tabSelectedIcon[i] = tab.getIconUrl().getLocalFileSelectedPath();
+//                        tabUnSelectedIcon[i] = tab.getIconUrl().getLocalFilePath();
+//                        tabSelectedIcon[i] = tab.getIconUrl().getLocalFileSelectedPath();
                         mPsTabIndexMap.put(tab.getPageSource(), i);
                     }
 
-                    mTabUtils = new TabUtils(tabNames, tabSelectedIcons, tabUnSelectedIcons, mIsUserThemeDay, tabsBeans);
+                    mTabUtils = new TabUtils(tabNames, mIsUserThemeDay, tabsBeans);
 
                     mAppBottomTabAdapter = new AppBottomTabAdapter(getChildFragmentManager(), tabsBeans);
 
@@ -231,10 +236,12 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     @Override
     public void onTabClick(int tabIndex, TabsBean tabsBean) {
         boolean isUserLoggedIn = PremiumPref.getInstance(getActivity()).isUserLoggedIn();
+        boolean isRelogginSuccess = PremiumPref.getInstance(getActivity()).isRelogginSuccess();
         boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
         boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
 
         THPConstants.FLOW_TAB_CLICK = tabsBean.getPageSource();
+
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
@@ -242,9 +249,17 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 mViewPager.setCurrentItem(tabIndex);
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_GROUP_DEFAULT_SECTIONS);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
@@ -256,7 +271,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_Briefing) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -266,14 +281,22 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_Briefing);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_My_Stories)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -283,14 +306,22 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_My_Stories);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_Suggested)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -300,7 +331,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_Suggested);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
@@ -313,7 +352,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_Url) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -323,7 +362,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_Url);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
@@ -337,7 +384,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_ADD_ON_SECTION) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -347,7 +394,15 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_ADD_ON_SECTION);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
@@ -361,7 +416,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_SENSEX) && tabsBean.getGroup().equals(NetConstants.G_PREMIUM_SECTIONS)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 if(!isUserAdsFree && !isHasSubscription) {
                     if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -371,22 +426,36 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 } else {
                     mViewPager.setCurrentItem(tabIndex);
                 }
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_SENSEX);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
         }
 
         if(tabsBean.getPageSource().equals(NetConstants.PS_Profile)) {
-            if(isUserLoggedIn) {
+            if(isUserLoggedIn && isRelogginSuccess) {
                 IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
-            } else {
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && BaseAcitivityTHP.sIsOnline) {
+                // TODO,
+                relogging(tabIndex, NetConstants.PS_Profile);
+            }
+            else if(isUserLoggedIn && !isRelogginSuccess && !BaseAcitivityTHP.sIsOnline) {
+                Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+            }
+            else {
                 IntentUtil.openMemberActivity(getActivity(), "");
             }
             return;
         }
-
-
 
     }
 
@@ -417,6 +486,45 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
     }
+
+
+    private void relogging(int index, String pageSource) {
+        //Show AlertDialog
+        ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setMessage("Please wait, fetching user profile");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
+        progress.show();
+        //ReLogin
+        IntentUtil.loginApiCall2(getActivity(), new CallBackRelogin() {
+            @Override
+            public void OnSuccess() {
+                progress.dismiss();
+
+                if(pageSource.equals(NetConstants.PS_Profile)) {
+                    IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
+                } else if (index != -1) {
+                    mViewPager.setCurrentItem(index);
+                }
+
+            }
+
+            @Override
+            public void OnFailure() {
+                progress.dismiss();
+                if (!BaseAcitivityTHP.sIsOnline) {
+                    Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+                    return;
+                }
+                //Clear session
+                //clearDatabaseAndSession();
+            }
+        });
+    }
+
+
 
     private void subscribeLayoutVisibility(int visibility) {
         subscribeLayout.setVisibility(visibility);
