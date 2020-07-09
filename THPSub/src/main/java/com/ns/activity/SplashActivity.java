@@ -49,6 +49,7 @@ import com.ns.callbacks.OnDialogBtnClickListener;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
+import com.ns.utils.CallBackRelogin;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.PicassoUtil;
@@ -160,6 +161,27 @@ public class SplashActivity extends BaseAcitivityTHP {
                 }
             });
         }
+
+        // On New session launch, we have show subscribe layout, if user is not subscribed.
+        PremiumPref.getInstance(this).setIsSubscribeClose(false);
+        PremiumPref.getInstance(this).setIsMPBannerClose(false);
+
+        // If User is relaunching the app then,
+        // If user had social logged-in then logout
+        // If user had default logged-in then relogin with save login id and passwd
+        // If user default reloggin is failed then mark as Not-Logged In
+        //IntentUtil.loginApiCall(this);
+        IntentUtil.loginApiCall2(this, new CallBackRelogin() {
+            @Override
+            public void OnSuccess() {
+                //Do Nothing
+            }
+
+            @Override
+            public void OnFailure() {
+                //Do Nothing
+            }
+        });
 
     }
 
@@ -342,7 +364,8 @@ public class SplashActivity extends BaseAcitivityTHP {
                             sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall was expired and trying to update but got ERROR", "Metered Paywall Cycle", t.getMessage());
                         }
                         else {
-                            sendHandlerMsg(WHAT_ERROR, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR", "Metered Paywall Cycle", t.getMessage());
+                            //sendHandlerMsg(WHAT_ERROR, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR", "Metered Paywall Cycle", t.getMessage());
+                            sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is not not loaded yet and trying to fetch but got ERROR", "Metered Paywall Cycle", t.getMessage());
                         }
                     }
 
