@@ -54,6 +54,7 @@ import com.ns.callbacks.OnExpandableListViewItemClickListener;
 import com.ns.callbacks.ToolbarChangeRequired;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.contentfragment.AppTabFragment;
+import com.ns.contentfragment.TabTopTabsFragment;
 import com.ns.loginfragment.AccountCreatedFragment;
 import com.ns.model.ToolbarCallModel;
 import com.ns.thpremium.BuildConfig;
@@ -148,7 +149,6 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
                 }));
 
-
         // Drawer Setup
         mNavigationExpandableListView = findViewById(R.id.expandableListView);
 
@@ -188,6 +188,14 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         else {
             findViewById(R.id.overlayoutGuideImg).setVisibility(View.GONE);
         }
+
+        getDetailToolbar().getLogoImageView().setOnClickListener(v->{
+            if(TabTopTabsFragment.sSelectedPagerIndex != 0) {
+                // It sends event to TabTopTabsFragment.java fragment, in handleEvent(BackPressImpl backPress)
+                EventBus.getDefault().post(new BackPressImpl());
+            }
+
+        });
 
 
     }

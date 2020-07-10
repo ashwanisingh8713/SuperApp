@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -96,16 +97,18 @@ public class THPImageGallaryVerticleActivity extends BaseAcitivityTHP implements
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 LinearLayoutManager layoutManager = ((LinearLayoutManager)mRecyclerView.getLayoutManager());
-
-
+                
                 int fvp = layoutManager.findFirstVisibleItemPosition();
                 int fcvip = layoutManager.findFirstCompletelyVisibleItemPosition();
                 int lvip = layoutManager.findLastVisibleItemPosition();
                 int lcvip =layoutManager.findLastCompletelyVisibleItemPosition();
 
+                Log.i("Ashwani", "fvp :: "+fvp);
+                Log.i("Ashwani", "fcvip :: "+fcvip);
+                Log.i("Ashwani", "lvip :: "+lvip);
+                Log.i("Ashwani", "lcvip :: "+lcvip);
 
-
-                setToolbarTitle((fcvip+1), galleryAdapter.getItemCount());
+                setToolbarTitle((lvip), galleryAdapter.getItemCount());
 
             }
 

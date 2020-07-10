@@ -56,7 +56,7 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
     private int mTabIndex;
     private String mParentSectionName;
 
-    int mSelectedPagerIndex = 0;
+    public static int sSelectedPagerIndex = 0;
 
 
     public static TabTopTabsFragment getInstance(int tabIndex, String pageSource, String sectionId,
@@ -126,7 +126,7 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
 
                         mViewPager.setAdapter(mTopTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
-                        mViewPager.setCurrentItem(mSelectedPagerIndex);
+                        mViewPager.setCurrentItem(sSelectedPagerIndex);
                     }
                     else {
                         Log.i("", "");
@@ -165,8 +165,8 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
                         subSectionBean.setSecId(mSubSectionId);
                         for (TableSection tableSection : sectionList) {
                             List<SectionBean> subSection = tableSection.getSubSections();
-                            mSelectedPagerIndex = subSection.indexOf(subSectionBean);
-                            if (mSelectedPagerIndex != -1) {
+                            sSelectedPagerIndex = subSection.indexOf(subSectionBean);
+                            if (sSelectedPagerIndex != -1) {
                                 mSubSectionList = subSection;
                                 break;
                             }
@@ -187,8 +187,25 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
                     }
                     mViewPager.setAdapter(mTopTabsAdapter);
                     mTabLayout.setupWithViewPager(mViewPager);
-                    mViewPager.setCurrentItem(mSelectedPagerIndex);
+                    mViewPager.setCurrentItem(sSelectedPagerIndex);
                 }));
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                sSelectedPagerIndex = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 

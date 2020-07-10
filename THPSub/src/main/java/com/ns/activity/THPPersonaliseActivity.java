@@ -123,7 +123,7 @@ public class THPPersonaliseActivity extends BaseAcitivityTHP implements THPPerso
                 }
 
             } else {
-                Alerts.noConnectionSnackBar(tv_savepref, this);
+                Alerts.noConnectionSnackBar(forwardArrow, this);
             }
 
         });

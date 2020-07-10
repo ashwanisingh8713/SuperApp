@@ -153,6 +153,8 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                             } else if (mNoConnectionTabText != null) {
                                 mNoConnectionTabText.setVisibility(View.VISIBLE);
                             }
+                        }, throwable -> {
+                            Log.i("", "");
                         }
                 );
     }

@@ -943,4 +943,8 @@ public class Topbar extends Toolbar {
     public CharSequence getTitle() {
         return mTitleTextView.getText();
     }
+
+    public LogoImgView getLogoImageView() {
+        return mLogoImageView;
+    }
 }

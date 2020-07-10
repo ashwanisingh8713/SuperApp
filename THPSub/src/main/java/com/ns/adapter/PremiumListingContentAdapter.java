@@ -974,16 +974,31 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 }
                 String caption = mImageList.get(0).getCa();
                 if (caption != null && !TextUtils.isEmpty(caption)) {
-                    db_video_banner_holder.mCaptionTextView.setText(Html.fromHtml(caption));
+                    db_video_banner_holder.mCaptionTextView.setText(ResUtil.htmlText(caption));
                 } else {
                     db_video_banner_holder.mCaptionTextView.setVisibility(View.GONE);
                 }
             }
+            else if(!ResUtil.isEmpty(bean.getYoutubeVideoId())){
+                String imageUrl = "https://i1.ytimg.com/vi/"+bean.getYoutubeVideoId()+"/maxresdefault.jpg";
+                PicassoUtil.loadImageWithFilePH(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl);
+                db_video_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+            }
+            else {
+                String imageUrl = ContentUtil.getBannerUrl(bean.getIm_thumbnail_v2());
+                PicassoUtil.loadImageWithFilePH(db_video_banner_holder.itemView.getContext(), db_video_banner_holder.mHeaderImageView, imageUrl);
+                db_video_banner_holder.mCaptionTextView.setVisibility(View.GONE);
+            }
+
+
             db_video_banner_holder.mHeaderImageView.setOnClickListener(v -> {
                 if (bean.getVid() != null && !TextUtils.isEmpty(bean.getVid())) {
                     IntentUtil.openJWVideoPayerActivity(v.getContext(), bean.getVid());
-                } else {
+                }
+                else if(!ResUtil.isEmpty(bean.getYoutubeVideoId())) {
                     IntentUtil.openYoutubeActivity(v.getContext(), bean.getYoutube_video_id());
+                } else {
+                    Alerts.showToastAtCenter(db_video_banner_holder.itemView.getContext(), "Youtube video is not available");
                 }
             });
             // To shows Article Type Image
@@ -993,8 +1008,11 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 public void onClick(View v) {
                     if (bean.getVid() != null && !TextUtils.isEmpty(bean.getVid())) {
                         IntentUtil.openJWVideoPayerActivity(v.getContext(), bean.getVid());
-                    } else {
+                    }
+                    else if(!ResUtil.isEmpty(bean.getYoutubeVideoId())) {
                         IntentUtil.openYoutubeActivity(v.getContext(), bean.getYoutube_video_id());
+                    } else {
+                        Alerts.showToastAtCenter(db_video_banner_holder.itemView.getContext(), "Youtube video is not available");
                     }
                 }
             });
@@ -1049,7 +1067,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
             }
             dg_detailAudioViewHolder.mHeaderImageView.setOnClickListener(v -> {
                 //Play or Pause Audio
-                AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
+                IntentUtil.openVerticleGalleryActivity(v.getContext(), mImageList, mFrom);
             });
             // To shows Article Type Image
             articleTypeImage(bean.getArticleType(), bean, dg_detailAudioViewHolder.mMultiMediaButton);
@@ -1057,7 +1075,26 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                 @Override
                 public void onClick(View v) {
                     //Play or Pause Audio
-                    AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
+
+                    if(AppAudioManager.getInstance().isPause()) {
+                        AppAudioManager.getInstance().startPlayer();
+                    } else if(AppAudioManager.getInstance().isPlaying()) {
+                        AppAudioManager.getInstance().pausePlayer();
+                    } else {
+                        AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
+                    }
+
+                    /*if(!AppAudioManager.getInstance().isPlaying()) {
+                        AppAudioManager.getInstance().changeMediaFile(bean.getAudioLink());
+                    }
+                    else if(AppAudioManager.getInstance().isPause()) {
+                        AppAudioManager.getInstance().startPlayer();
+                    }
+                    else if(!AppAudioManager.getInstance().isPause()){
+                        AppAudioManager.getInstance().pausePlayer();
+                    }*/
+
+
                 }
             });
         }

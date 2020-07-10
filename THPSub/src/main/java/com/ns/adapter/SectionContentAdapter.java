@@ -1045,6 +1045,10 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         return adapterItems.get(index);
     }
 
+    public List<SectionAdapterItem> getAllItem() {
+        return adapterItems;
+    }
+
 
     public void deleteAllItems() {
         if (adapterItems != null) {

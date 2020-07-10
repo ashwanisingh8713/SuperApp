@@ -116,7 +116,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter {
             }
             else if(articleType.equalsIgnoreCase(THPConstants.ARTICLE_TYPE_AUDIO)) {
                 articleTypeimageView.setVisibility(View.VISIBLE);
-                articleTypeimageView.setImageResource(R.drawable.podcasts);
+                articleTypeimageView.setImageResource(R.drawable.audio);
             }
             else if(articleType.equalsIgnoreCase(THPConstants.ARTICLE_TYPE_PHOTO)) {
                 articleTypeimageView.setVisibility(View.VISIBLE);

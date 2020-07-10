@@ -15,9 +15,11 @@ import com.netoperation.default_db.TableOptional;
 import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.ns.activity.AppTabActivity;
+import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.THPPersonaliseActivity;
 import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.view.text.CustomTextView;
 
@@ -30,6 +32,13 @@ public class OverflowPopUp {
     private Context mContext;
     private List<TableOptional.OptionsBean> menuItems;
     private PopupWindow changeSortPopUp = null;
+
+    final int READ_LATER_ID = 1;
+    final int NOTIFICATION_ID = 2;
+    final int PESONALISE_HOME_SECEEN_ID = 3;
+    final int PESONALISE_MY_STORIES_ID = 4;
+    final int SETTINGS_ID = 5;
+    final int SHARE_ID = 6;
 
     public OverflowPopUp(Context mContext, List<TableOptional.OptionsBean> menuItems) {
         this.mContext = mContext;
@@ -58,7 +67,10 @@ public class OverflowPopUp {
 
         // Adding Views in Overflow
         for( TableOptional.OptionsBean bean :menuItems) {
-            if (bean.getId() == 4 /*My Stories*/ && !PremiumPref.getInstance(mContext).isUserLoggedIn()) {
+            if ((bean.getId() == PESONALISE_MY_STORIES_ID && !PremiumPref.getInstance(mContext).isUserLoggedIn())) {
+                continue;
+            }
+            if ((bean.getId() == PESONALISE_MY_STORIES_ID && PremiumPref.getInstance(mContext).isUserLoggedIn()) && (!BaseAcitivityTHP.sIsOnline)) {
                 continue;
             }
             viewGroup.addView(getOverflowView(bean.getId(), itemHeight, bean.getTitle(), "#808080", mUnreadBookmarkArticleCount, mUnreadNotificationArticleCount));
@@ -115,12 +127,6 @@ public class OverflowPopUp {
     }
 
     private View getOverflowView(int id, int height, String title, String textColor, int readCount, int notificationCount) {
-        final int READ_LATER_ID = 1;
-        final int NOTIFICATION_ID = 2;
-        final int PESONALISE_HOME_SECEEN_ID = 3;
-        final int PESONALISE_MY_STORIES_ID = 4;
-        final int SETTINGS_ID = 5;
-        final int SHARE_ID = 6;
 
         switch (id) {
             case READ_LATER_ID:
@@ -147,13 +153,6 @@ public class OverflowPopUp {
             case PESONALISE_HOME_SECEEN_ID:
                 LinearLayout ll_3 = rowTitleCount(id, height, title, textColor, false, -1);
                 ll_3.setOnClickListener(v->{
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                        MainActivity.this,
-                        getString(R.string.ga_action),
-                        "Customise Subscription: Customise Subscription Button Clicked ",
-                        getString(R.string.custom_home_screen));
-                FlurryAgent.logEvent("Customise Subscription: Customise Subscription Button Clicked ");*/
-
                     //Firebase event
                     THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", "Customise Subscription: Customise Subscription Button Clicked ", OverflowPopUp.class.getSimpleName());
 
@@ -168,17 +167,6 @@ public class OverflowPopUp {
             case PESONALISE_MY_STORIES_ID:
                 LinearLayout ll_4 = rowTitleCount(id, height, title, textColor, false, -1);
                 ll_4.setOnClickListener(v->{
-                    if(!NetUtils.isConnected(mContext)) {
-                        Alerts.noConnectionSnackBar(v, (AppCompatActivity) mContext);
-                        return;
-                    }
-                /*GoogleAnalyticsTracker.setGoogleAnalyticsEvent(
-                        MainActivity.this,
-                        getString(R.string.ga_action),
-                        "Customise: Customise Button Clicked ",
-                        getString(R.string.custom_home_screen));
-                FlurryAgent.logEvent("Customise: Customise Button Clicked ");*/
-
                     //Firebase event
                     THPFirebaseAnalytics.setFirbaseAnalyticsEvent(mContext, "Action", "Customise: Customise Button Clicked ", OverflowPopUp.class.getSimpleName());
 
@@ -206,6 +194,15 @@ public class OverflowPopUp {
                 ll_6.setOnClickListener(v->{
                     String mShareTitle = "Download The Hindu official app.";
                     String mShareUrl = "https://play.google.com/store/apps/details?id=com.mobstac.thehindu";
+                    if(BuildConfig.IS_BL) {
+                        mShareTitle = "Download The Hindu Business Line official app.";
+                        mShareUrl = "https://play.google.com/store/apps/details?id=com.mobstac.thehindubusinessline";
+                    }
+                    else {
+                        mShareTitle = "Download The Hindu official app.";
+                        mShareUrl = "https://play.google.com/store/apps/details?id=com.mobstac.thehindu";
+                    }
+
                     SharingArticleUtil.shareArticle(mContext, mShareTitle, mShareUrl,"Home");
 
                     //CleverTap
