@@ -120,6 +120,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         mViewPager.setCurrentItem(tabIndex);
     }
 
+    public int getTabIndex() {
+        return mViewPager.getCurrentItem();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -131,7 +135,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         //Developer Options Button, display only if it is Debug build
         if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("_DEVELOPMENT") && BuildConfig.DEBUG) {
             Button buttonDeveloperOptions = view.findViewById(R.id.buttonDeveloperOptions);
-            buttonDeveloperOptions.setVisibility(View.VISIBLE);
+            //buttonDeveloperOptions.setVisibility(View.VISIBLE);
             buttonDeveloperOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

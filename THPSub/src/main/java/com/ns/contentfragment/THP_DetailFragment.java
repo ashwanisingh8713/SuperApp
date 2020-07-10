@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdSize;
@@ -347,9 +348,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             mPageEndTime = -1L;
         }
         //Stop Media Player if Playing
-        if (AppAudioManager.getInstance().isPlaying()){
-            AppAudioManager.getInstance().pausePlayer();
-        }
+        AppAudioManager.getInstance().releaseMedia();
         //TTS Player UI update.
         if(TTSManager.getInstance().isTTSPlaying()) {
             mActivity.getDetailToolbar().showTTSPlayView(DefaultPref.getInstance(getActivity()).isLanguageSupportTTS());
@@ -664,7 +663,11 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
 
     @Override
     public void onCommentClickListener(ToolbarCallModel toolbarCallModel) {
-        IntentUtil.openCommentActivity(getActivity(), mArticleBean);
+        if(BaseAcitivityTHP.sIsOnline) {
+            IntentUtil.openCommentActivity(getActivity(), mArticleBean);
+        } else {
+            Alerts.noConnectionSnackBar(getView(), (AppCompatActivity)getActivity());
+        }
     }
 
     @Override

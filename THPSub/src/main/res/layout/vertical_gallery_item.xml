@@ -41,14 +41,14 @@
                 android:textStyle="italic"
                 app:textType="XS"/>
 
-            <ImageView
+            <com.ns.view.img.TopbarIconView
+                app:iconType="share"
                 android:id="@+id/shareIV"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/toolbar_ic_width"
+                android:layout_height="@dimen/toolbar_ic_height"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/share"
                 android:tint="@color/color_818181_light"
                 android:scaleType="centerInside"
                 android:layout_centerVertical="true"/>

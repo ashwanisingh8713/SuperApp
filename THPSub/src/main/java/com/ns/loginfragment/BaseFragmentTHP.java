@@ -248,12 +248,17 @@ public abstract class BaseFragmentTHP extends Fragment {
 
                 }
                 else {
-                    if(!BaseAcitivityTHP.sIsOnline) {
-                        noConnectionSnackBar(getView());
+                    if (!BaseAcitivityTHP.sIsOnline) {
+                        //noConnectionSnackBar(getView());
+                        emptyTitleTxt.setText("Oh no!");
+                        emptySubTitleTxt.setText("NO INTERNET - WHAT TO DO?");
+                        emptySubTitleTxt.setTypeface(Typeface.DEFAULT_BOLD);
+                    }
+                    else {
+                        emptyTitleTxt.setText("Oops...");
+                        emptySubTitleTxt.setText("Something went wrong");
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
                     emptySubTitleTxt.setVisibility(View.VISIBLE);
                     emptyBtnTxt.setVisibility(View.VISIBLE);
                     emptyBtnTxt.setText("Refresh");
@@ -285,13 +290,18 @@ public abstract class BaseFragmentTHP extends Fragment {
                     });
                 }
                 else {
-                    if(!BaseAcitivityTHP.sIsOnline) {
-                        noConnectionSnackBar(getView());
+                    if (!BaseAcitivityTHP.sIsOnline) {
+                        //noConnectionSnackBar(getView());
+                        emptyTitleTxt.setText("Oh no!");
+                        emptySubTitleTxt.setText("NO INTERNET - WHAT TO DO?");
+                        emptySubTitleTxt.setTypeface(Typeface.DEFAULT_BOLD);
+                    }
+                    else {
+                        emptyTitleTxt.setText("Oops...");
+                        emptySubTitleTxt.setText("Something went wrong");
                     }
                     emptyIcon.setImageResource(R.drawable.ic_empty_something_wrong);
                     emptyTitleTxt.setVisibility(View.VISIBLE);
-                    emptyTitleTxt.setText("Oops...");
-                    emptySubTitleTxt.setText("Something went wrong");
                     emptySubTitleTxt.setVisibility(View.VISIBLE);
                     emptyBtnTxt.setVisibility(View.VISIBLE);
                     emptyBtnTxt.setText("Refresh");

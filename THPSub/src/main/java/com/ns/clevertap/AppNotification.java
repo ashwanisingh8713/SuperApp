@@ -20,6 +20,7 @@ import com.netoperation.db.THPDB;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
 import com.ns.activity.NotificationClickActivity;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
 
@@ -66,6 +67,11 @@ public class AppNotification {
 
 
         final RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.custom_collapsed_notification);
+        if(BuildConfig.IS_BL) {
+
+        } else {
+            collapsedView.setImageViewResource(R.id.notificationLogo, R.mipmap.app_launcher);
+        }
         collapsedView.setTextViewText(R.id.title_textview, body);
         collapsedView.setTextViewText(R.id.description_textview, title);
         collapsedView.setLong(R.id.time_textview, "setTime", System.currentTimeMillis());
@@ -223,9 +229,6 @@ public class AppNotification {
     private static int getNotificationIcon() {
         return R.drawable.icon_notification;
     }
-
-
-
 
     /**
      * Downloads Bitmap image from URL and shows notification.

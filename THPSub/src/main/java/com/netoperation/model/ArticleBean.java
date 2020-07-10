@@ -270,6 +270,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getYoutube_video_id() {
+        if(youtube_video_id == null) {
+            return youtubeVideoId;
+        }
         return youtube_video_id;
     }
 
@@ -756,6 +759,9 @@ public class ArticleBean implements Parcelable {
     }
 
     public String getYoutubeVideoId() {
+        if(youtubeVideoId == null) {
+            return youtube_video_id;
+        }
         return youtubeVideoId;
     }
 

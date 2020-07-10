@@ -297,6 +297,10 @@ public class SectionSideWork {
                 i.remove();
             }
         }
+
+        // Sometimes UI Data was not updating
+        mRecyclerAdapter.notifyDataSetChanged();
+
     }
 
 

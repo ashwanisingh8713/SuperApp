@@ -46,6 +46,7 @@ public class AppAudioManager implements ExoPlayer.EventListener {
     private SimpleExoPlayer player;
     private final String streamUrl = "http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-einws"; //bbc world service url
     private TrackSelector trackSelector;
+    private boolean isPause;
 
     private static AppAudioManager sAppAudioManager;
 
@@ -81,7 +82,12 @@ public class AppAudioManager implements ExoPlayer.EventListener {
     }
 
     public void releaseMedia() {
-        mediaSource.releaseSource();
+        if(player != null) {
+            player.setPlayWhenReady(false);
+        }
+        if(mediaSource != null) {
+            mediaSource.releaseSource();
+        }
     }
 
     public void changeMediaFile(String medialFile) {
@@ -99,19 +105,35 @@ public class AppAudioManager implements ExoPlayer.EventListener {
         startPlayer();
     }
 
-    public boolean isPlaying() {
+    /*public boolean isPlaying() {
         if(player != null) {
             return player.getPlayWhenReady();
         }
         return false;
+    }*/
+
+    public boolean isPlaying() {
+        return player != null
+                && player.getPlaybackState() != Player.STATE_ENDED
+                && player.getPlaybackState() != Player.STATE_IDLE
+                && player.getPlayWhenReady();
     }
 
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public void setPause(boolean pause) {
+        isPause = pause;
+    }
 
     public void pausePlayer(){
         player.setPlayWhenReady(false);
+        setPause(true);
     }
     public void startPlayer(){
         player.setPlayWhenReady(true);
+        setPause(false);
     }
 
     public void audioToggle() {
@@ -137,7 +159,7 @@ public class AppAudioManager implements ExoPlayer.EventListener {
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        Log.i("", "");
+        Log.i("Player", "playbackState :: "+playbackState);
     }
 
     @Override

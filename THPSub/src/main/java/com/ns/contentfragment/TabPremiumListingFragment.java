@@ -419,9 +419,6 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
     }
 
 
-
-
-
     private void hideEmptyLayout() {
         if(mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() < 1) {
             showEmptyLayoutAtLoading();
@@ -510,7 +507,6 @@ public class TabPremiumListingFragment extends BaseFragmentTHP implements Recycl
 
     @Override
     public void checkPageEmpty() {
-
         if(mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() == 1) {
             mRecyclerAdapter.deleteIndex(0);
             showEmptyLayout(emptyLayout, true, mRecyclerAdapter, mPullToRefreshLayout, isBriefingPage(), mPageType);
