@@ -144,8 +144,8 @@ android {
             //CleverTap
             resValue "string", "clevertap_test_account_id", "TEST-ZRK-48Z-865Z"
             resValue "string", "clevertap_test_account_token", "TEST-1b4-321"
-            resValue "string", "clevertap_live_account_id", ""
-            resValue "string", "clevertap_live_account_token", ""
+            resValue "string", "clevertap_live_account_id", "WRK-48Z-865Z"
+            resValue "string", "clevertap_live_account_token", "1b4-320"
             resValue "string", "APP_NAME", appName
             //Facebook Sign In
             resValue "string", "facebook_app_id", "360214941478115"
