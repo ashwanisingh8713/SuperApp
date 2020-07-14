@@ -242,6 +242,19 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         Log.i("THP_DetailActivity", "handleEvent :: " + tableMPReadArticle);
         if (!ContentUtil.shouldShowMeteredPaywall() || !tableMPReadArticle.isArticleRestricted() || (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted())) {
             subscribeLayout_Mp.setVisibility(View.GONE);
+
+            //For MP Content Blocker event
+            if (!tableMPReadArticle.isUserCanReRead() && tableMPReadArticle.isArticleRestricted()) {
+                int totalReadSize = tableMPReadArticle.getTotalReadCount();
+                int allowedCount = BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this);
+                if (totalReadSize > allowedCount) {
+                    totalReadSize = allowedCount;
+                }
+                //CleverTap
+                CleverTapUtil.cleverTapMPContentBocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, allowedCount);
+                //Firebase
+                THPFirebaseAnalytics.firebaseMetered_Paywall_Blocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, allowedCount);
+            }
             return;
         }
         mReadingArticleId = tableMPReadArticle.getArticleId();
@@ -290,13 +303,6 @@ public class THP_DetailActivity extends BaseAcitivityTHP {
         } else {
             //Hide Some Menu Icons
             getDetailToolbar().DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN();
-            if (!ResUtil.isEmpty(BaseFragmentTHP.getCycleName()) && totalReadSize > 0 && BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this) > 0) {
-
-                //CleverTap
-                CleverTapUtil.cleverTapMPContentBocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
-                //Firebase
-                THPFirebaseAnalytics.firebaseMetered_Paywall_Blocker(THP_DetailActivity.this, BaseFragmentTHP.getCycleName(), totalReadSize, BaseFragmentTHP.getAllowedCount(THP_DetailActivity.this));
-            }
         }
     }
 
