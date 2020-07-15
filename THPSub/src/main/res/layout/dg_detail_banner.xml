@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             app:textType="time"
             android:textSize="@dimen/detail_location_size"
-            app:font_path="@string/THP_FiraSans_Regular"
+            app:font_path="@string/Detail_Time_location_Font"
             />
 
         <com.ns.view.text.SectionTextView
@@ -62,7 +62,7 @@
             app:textType="time"
             android:paddingLeft="2dp"
             android:textSize="@dimen/detail_location_size"
-            app:font_path="@string/THP_FiraSans_Regular"
+            app:font_path="@string/Detail_Time_location_Font"
             />
 
     </LinearLayout>
@@ -75,8 +75,9 @@
         app:textType="time"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:font_path="@string/THP_FiraSans_Regular"/>
+        app:font_path="@string/Detail_Time_location_Font"/>
 
     <FrameLayout
         android:id="@+id/imageContainer"

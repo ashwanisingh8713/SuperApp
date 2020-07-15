@@ -41,6 +41,7 @@
         android:inputType="textEmailAddress"
         android:digits="()*_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.@+ "
         android:importantForAutofill="no"
+        android:text="@string/test_email"
         />
 
     <com.ns.view.text.CustomTextView

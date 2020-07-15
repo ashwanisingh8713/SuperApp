@@ -58,7 +58,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnClick, TabClickListener.OnTabClickListener {
 
@@ -510,8 +512,19 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 if(pageSource.equals(NetConstants.PS_Profile)) {
                     IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
                 } else if (index != -1) {
-                    mViewPager.setCurrentItem(index);
+                    boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
+                    if(isHasSubscription) {
+                        mViewPager.setCurrentItem(index);
+                    } else if (BaseAcitivityTHP.sIsOnline) {
+                        IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
+                    } else {
+                        Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
+                    }
                 }
+
+                ApiManager.getUserProfile(getActivity())
+                        .observeOn(Schedulers.io())
+                        .subscribe();
 
             }
 

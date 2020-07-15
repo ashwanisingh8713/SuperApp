@@ -345,6 +345,9 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                     //FlurryAgent.logEvent("Home: " + "Bookmark button Clicked");
 
                     local_bookmarkOperation(v.getContext(), bean, holder.mBookmarkButton, position);
+                    mContent.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, mContent.size());
 
                 }
             });
@@ -539,7 +542,15 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
         isExistInBookmark(holder.bookmark_Img.getContext(), bean, holder.bookmark_Img);
 
-        PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.image, ContentUtil.getThumbUrl(bean.getThumbnailUrl()));
+        String thumbnailUrl = "http://";
+        if(bean.getThumbnailUrl() != null && bean.getThumbnailUrl().size() > 0) {
+            thumbnailUrl = bean.getThumbnailUrl().get(0);
+            if(ResUtil.isEmpty(thumbnailUrl)) {
+                thumbnailUrl = "http://";
+            }
+        }
+
+        PicassoUtil.loadImageWithFilePH(holder.itemView.getContext(), holder.image, ContentUtil.getThumbUrl(thumbnailUrl));
 
         holder.bookmark_Img.setOnClickListener(v -> {
                     if (bean.getGroupType() == null || bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {

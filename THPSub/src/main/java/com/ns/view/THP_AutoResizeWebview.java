@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import com.netoperation.config.model.ArticleTextColor;
 import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.default_db.TableConfiguration;
-import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.thpremium.R;
 import com.ns.utils.THPConstants;
@@ -172,7 +171,7 @@ public class THP_AutoResizeWebview extends WebView {
             }
         }
 
-        String fontPath = context.getResources().getString(R.string.THP_TundraOffc);
+        String fontPath = context.getResources().getString(R.string.Detail_Description_Font);
 
         description = "<html><head>"
                 + "<style type=\"text/css\">body{color: " +

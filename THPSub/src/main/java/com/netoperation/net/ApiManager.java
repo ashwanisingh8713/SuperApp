@@ -966,7 +966,11 @@ public class ApiManager {
                             THPDB thp = THPDB.getInstance(context);
                             List<TableBookmark> tableBookmark = null;
                             if (groupType == null || groupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
-                                tableBookmark = thp.bookmarkTableDao().getAllBookmark();
+                                tableBookmark = thp.bookmarkTableDao().getBookmarkGroupType(NetConstants.G_BOOKMARK_PREMIUM);
+                                if(tableBookmark == null) {
+                                    tableBookmark = new ArrayList<>();
+                                }
+                                tableBookmark.addAll(thp.bookmarkTableDao().getBookmarkGroupType(NetConstants.G_BOOKMARK_DEFAULT));
                             } else {
                                 tableBookmark = thp.bookmarkTableDao().getBookmarkGroupType(groupType);
                             }

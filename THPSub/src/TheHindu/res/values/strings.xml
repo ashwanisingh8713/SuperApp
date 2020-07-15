@@ -6,4 +6,12 @@
     <string name="THP_FiraSans_SemiBold">fonts/THP_FiraSans-SemiBold.ttf</string>
     <string name="text_title_plan_page">The Hindu Subscription</string>
 
+    <string name="THP_TundraOffc">fonts/THP_TundraOffc.ttf</string>
+    <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>
+    <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
+    <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
+
+    <string name="Detail_Description_Font">fonts/Lato-THP_TundraOffc.ttf</string>
+    <string name="Detail_Time_location_Font">fonts/THP_FiraSans-Regular.ttf</string>
+
 </resources>

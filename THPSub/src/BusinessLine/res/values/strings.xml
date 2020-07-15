@@ -5,4 +5,13 @@
     <string name="THP_FiraSans_Regular">fonts/Lato-Regular.ttf</string>
     <string name="THP_FiraSans_SemiBold">fonts/Lato-SemiBold.ttf</string>
     <string name="text_title_plan_page">Business Line Subscription</string>
+
+
+    <string name="THP_TundraOffc">fonts/Lato-Bold.ttf</string>
+    <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>
+    <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
+    <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
+
+    <string name="Detail_Description_Font">fonts/Lato-Regular.ttf</string>
+    <string name="Detail_Time_location_Font">fonts/SerifOffc.ttf</string>
 </resources>

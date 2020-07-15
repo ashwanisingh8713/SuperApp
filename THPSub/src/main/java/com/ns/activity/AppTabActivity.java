@@ -255,6 +255,10 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
             if(from != null && !TextUtils.isEmpty(from) && from.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
                 AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
                 FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+
+                if(mAppTabFragment != null && THPConstants.FLOW_TAB_CLICK != null) {
+                    mAppTabFragment.showPageSource(THPConstants.FLOW_TAB_CLICK);
+                }
             }
         }
     }

@@ -1,9 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="THP_TundraOffc">fonts/THP_TundraOffc.ttf</string>
-    <string name="THP_TundraOffc_Bold">fonts/THP_TundraOffc-Bold.ttf</string>
-    <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
-    <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
+
 
     <string name="Rs">\u20B9</string>
     <string name="hint_registered_mobile_number"><font size="30">My hint string</font></string>
@@ -209,8 +206,8 @@
     <string name="remove_all">Remove All</string>
     <string name="hint_search_bookmark">Search</string>
     <string name="the_hindu_requires_the_following_information">%s requires the following information</string>
-    <string name="test_email"><!--sartikorte@enayu.com--></string>
-    <string name="test_password"><!--12345--></string>
+    <string name="test_email">thashwa123@yahoo.com</string>
+    <string name="test_password">123456@123</string>
     <string name="text_title_plan_page">The Hindu Subscription</string>
 
 </resources>

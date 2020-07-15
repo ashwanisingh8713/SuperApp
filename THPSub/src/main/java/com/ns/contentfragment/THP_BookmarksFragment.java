@@ -125,7 +125,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfile -> {
                     mUserProfile = userProfile;
-                    loadData(mGoupType, true);
+                    online(mGoupType, true);
                 }));
 //      Add Text Watcher
         mSearchBox.addTextChangedListener(this);
@@ -158,9 +158,11 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         if (mActivity != null) {
             mActivity.setOnFragmentTools(this);
         }
-        if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
-            loadData(mGoupType, true);
-        }
+        /*if (mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+            offline(mGoupType, true);
+        }*/
+
+        offline(mGoupType, true);
 
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Bookmark Screen", THP_BookmarksFragment.class.getSimpleName());
 
@@ -177,23 +179,163 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
                 return;
             }
             mPullToRefreshLayout.setRefreshing(true);
-            loadData(mGoupType, true);
+            online(mGoupType, true);
         });
     }
 
     @Override
     public void tryAgainBtnClick() {
         mPullToRefreshLayout.showProgressBar();
-        loadData(mGoupType, true);
+        online(mGoupType, true);
     }
 
+    private void online(String groupType, boolean needToClearOldData) {
+        Observable<List<ArticleBean>> observable = null;
+        if (BaseAcitivityTHP.sIsOnline && groupType != null && groupType.equals(NetConstants.G_PREMIUM_SECTIONS)) {
+            observable = ApiManager.getPremiumBookmarkFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID);
+        } else if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
+        } else if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
+        } else if(groupType!=null && groupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
+            if (ResUtil.isEmpty(mSearchBox.getText().toString())) {
+                if(BaseAcitivityTHP.sIsOnline && PremiumPref.getInstance(getActivity()).isUserLoggedIn()) {
+                    observable = ApiManager.getPremiumBookmarkFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID);
+                } else {
+                    observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+                }
+            } else {
+                observable = ApiManager.getBookmarkGroupTypeWithQuery(getActivity(), mSearchBox.getText().toString());
+            }
+        }
+
+        mDisposable.add(
+                observable
+                        .map(value -> {
+                            List<AppTabContentModel> content = new ArrayList<>();
+                            for (ArticleBean bean : value) {
+                                int viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
+                                if (bean.getGroupType() == null) {
+                                    continue;
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
+                                }
+                                AppTabContentModel model = new AppTabContentModel(viewType);
+                                model.setBean(bean);
+                                content.add(model);
+                            }
+
+                            if(groupType!=null && groupType.equals(NetConstants.BOOKMARK_IN_ONE)
+                                    && BaseAcitivityTHP.sIsOnline && PremiumPref.getInstance(getActivity()).isUserLoggedIn()
+                                    && ResUtil.isEmpty(mSearchBox.getText().toString())) {
+                                offline( NetConstants.G_BOOKMARK_DEFAULT, false);
+                            }
+
+                            return content;
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(value -> {
+                            if (value.size() > 0) {
+                                if (needToClearOldData) {
+                                    mRecyclerAdapter.clearData();
+                                }
+                                mRecyclerAdapter.addData(value);
+                                mPullToRefreshLayout.setVisibility(View.VISIBLE);
+                                emptyLayout.setVisibility(View.GONE);
+                            } else {
+                                if (needToClearOldData && mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+                                    mRecyclerAdapter.clearData();
+                                }
+                                showEmptyLayout();
+                            }
+                            mPullToRefreshLayout.hideProgressBar();
+                            mPullToRefreshLayout.setRefreshing(false);
+                        }, throwable -> {
+                            offline(groupType, true);
+                            mPullToRefreshLayout.hideProgressBar();
+                            mPullToRefreshLayout.setRefreshing(false);
+
+                        }, () -> {
+
+
+                        }));
+    }
+
+    private void offline(String groupType, boolean needToClearOldData) {
+        Observable<List<ArticleBean>> observable = null;
+        if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_PREMIUM);
+        } else if (groupType != null && groupType.equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+            observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.G_BOOKMARK_DEFAULT);
+        } else if(groupType!=null && groupType.equals(NetConstants.BOOKMARK_IN_ONE)) {
+            if (ResUtil.isEmpty(mSearchBox.getText().toString())) {
+                observable = ApiManager.getBookmarkGroupType(getActivity(), NetConstants.BOOKMARK_IN_ONE);
+            } else {
+                observable = ApiManager.getBookmarkGroupTypeWithQuery(getActivity(), mSearchBox.getText().toString());
+            }
+        }
+        mDisposable.add(
+                observable
+                        .map(value -> {
+                            List<AppTabContentModel> content = new ArrayList<>();
+                            for (ArticleBean bean : value) {
+                                int viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
+                                if (bean.getGroupType() == null) {
+                                    continue;
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_DEFAULT)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_THD_DEFAULT_ROW;
+                                }
+                                else if (bean.getGroupType().equals(NetConstants.G_BOOKMARK_PREMIUM)) {
+                                    viewType = BaseRecyclerViewAdapter.VT_BOOKMARK_PREMIUM;
+                                }
+                                AppTabContentModel model = new AppTabContentModel(viewType);
+                                model.setBean(bean);
+                                content.add(model);
+                            }
+
+                            return content;
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(value -> {
+                            if (value.size() > 0) {
+                                if (needToClearOldData) {
+                                    mRecyclerAdapter.clearData();
+                                }
+                                mRecyclerAdapter.addData(value);
+                                mPullToRefreshLayout.setVisibility(View.VISIBLE);
+                                emptyLayout.setVisibility(View.GONE);
+                            } else {
+                                if (needToClearOldData && mRecyclerAdapter != null && mRecyclerAdapter.getItemCount() > 0) {
+                                    mRecyclerAdapter.clearData();
+                                }
+                                showEmptyLayout();
+                            }
+                            mPullToRefreshLayout.hideProgressBar();
+                            mPullToRefreshLayout.setRefreshing(false);
+                        }, throwable -> {
+
+                            showEmptyLayout();
+
+                            mPullToRefreshLayout.hideProgressBar();
+                            mPullToRefreshLayout.setRefreshing(false);
+
+                        }, () -> {
+
+
+                        }));
+    }
 
 
     /**
      * Load bookmarks from respective Group
      *
      */
-    private void loadData( String groupType, boolean needToClearOldData) {
+    /*private void loadData( String groupType, boolean needToClearOldData) {
         Observable<List<ArticleBean>> observable = null;
         if (BaseAcitivityTHP.sIsOnline && groupType != null && groupType.equals(NetConstants.G_PREMIUM_SECTIONS)) {
             observable = ApiManager.getPremiumBookmarkFromServer(getActivity(), mUserProfile.getAuthorization(), mUserId, BuildConfig.SITEID);
@@ -274,7 +416,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
 
                         }));
 
-    }
+    }*/
 
     private void showEmptyLayout() {
         if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
@@ -293,8 +435,10 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
     @Override
     public void checkPageEmpty() {
         //showEmptyLayout();
-        //Reload contents
-        loadData(mGoupType, false);
+        if (mRecyclerAdapter == null || mRecyclerAdapter.getItemCount() == 0) {
+            showEmptyLayout();
+        }
+
     }
 
 
@@ -425,7 +569,7 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
             mClearText.setVisibility(View.VISIBLE);
         }
         //Load data for query string
-        loadData(mGoupType, true);
+        offline(mGoupType, true);
     }
 
     @Override
