@@ -27,16 +27,16 @@
         <com.ns.view.text.CustomTextView
             android:id="@+id/tryAgainButton"
             android:layout_width="wrap_content"
-            android:minWidth="200dp"
+            android:minWidth="180dp"
             android:layout_height="wrap_content"
             android:minHeight="45dp"
-            android:background="@drawable/grey_btn_background"
+            android:background="@drawable/item_blue_backgraoud"
             android:text="Try Again"
             android:layout_gravity="center"
             android:gravity="center"
-            android:alpha="0.5"
             android:visibility="gone"
-            android:textColor="@color/color_191919_light"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             />
 
         <com.ns.view.CustomProgressBar

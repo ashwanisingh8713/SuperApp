@@ -57,6 +57,7 @@ import com.ns.view.RecyclerViewPullToRefresh;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -376,7 +377,7 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
     @Override
     public void tryAgainBtnClick() {
         mPullToRefreshLayout.showProgressBar();
-
+        loadDataPremiumFromServer();
     }
 
 
@@ -397,6 +398,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                                         throwabl -> {
                                                             Log.i("", "");
                                                             mPullToRefreshLayout.hideProgressBar();
+                                                            if(throwable instanceof UnknownHostException || BaseAcitivityTHP.sIsOnline) {
+                                                                Alerts.noConnectionSnackBar(mPullToRefreshLayout, (AppCompatActivity)getActivity());
+                                                            }
+                                                            mPullToRefreshLayout.showTryAgainBtn("Refresh");
                                                         })
                                 );
                             }
@@ -412,6 +417,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                     throwable -> {
                                         Log.i("", "");
                                         mPullToRefreshLayout.hideProgressBar();
+                                        if(throwable instanceof UnknownHostException || BaseAcitivityTHP.sIsOnline) {
+                                            Alerts.noConnectionSnackBar(mPullToRefreshLayout, (AppCompatActivity)getActivity());
+                                        }
+                                        mPullToRefreshLayout.showTryAgainBtn("Refresh");
                                     })
             );
         }
@@ -427,6 +436,10 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                                 throwable->{
                                     Log.i("", "");
                                     mPullToRefreshLayout.hideProgressBar();
+                                    if(throwable instanceof UnknownHostException || BaseAcitivityTHP.sIsOnline) {
+                                        Alerts.noConnectionSnackBar(mPullToRefreshLayout, (AppCompatActivity)getActivity());
+                                    }
+                                    mPullToRefreshLayout.showTryAgainBtn("Refresh");
                                 })
         );
     }
@@ -490,7 +503,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
             CleverTapUtil.cleverTapBookmarkFavLike(getActivity(), mArticleId, mFrom, "NetConstants.BOOKMARK_NO");
         }
         else {
-            premium_updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+            if(BaseAcitivityTHP.sIsOnline) {
+                premium_updateBookmarkFavLike(getActivity(), mArticleBean, "bookmark");
+            }
+            else {
+                Alerts.noConnectionSnackBar(mPullToRefreshLayout, (AppCompatActivity)getActivity());
+                isExistInBookmark(mArticleBean.getArticleId());
+            }
         }
     }
 

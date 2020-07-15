@@ -100,7 +100,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
     private DrawerLayout mDrawerLayout;
     //Counts
     private int mUnreadNotificationArticleCount, mUnreadBookmarkArticleCount;
-    private Disposable notificationCountsObserver, bookmarksCountObserver;
+    //private Disposable notificationCountsObserver, bookmarksCountObserver;
     //Dialog for Location Permission
     private HomePermissionInfoDialog dialogPermission;
 
@@ -557,40 +557,39 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
      * Observe notifications counts
      */
     private void observeNotificationsCount() {
-        notificationCountsObserver = DefaultTHApiManager.getUnreadNotificationArticlesCount(this)
+        DefaultTHApiManager.getUnreadNotificationArticlesCount(this)
                 .subscribe( counts -> {
                     mUnreadNotificationArticleCount = counts;
                     if (getDetailToolbar() != null) {
                         getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadNotificationArticleCount + mUnreadBookmarkArticleCount));
                     }
                 });
-        mDisposable.add(notificationCountsObserver);
+        //mDisposable.add(notificationCountsObserver);
     }
     /*
     * Observe Bookmarks counts*/
     private void observeBookmarksCount() {
-        bookmarksCountObserver = ApiManager.getUnReadBookmarksCounts(this)
+        ApiManager.getUnReadBookmarksCounts(this)
                 .subscribe( counts -> {
                     mUnreadBookmarkArticleCount = counts;
                     if (getDetailToolbar() != null) {
                         getDetailToolbar().updateOverFlowMenuActionButtonCounts((mUnreadBookmarkArticleCount + mUnreadNotificationArticleCount));
                     }
                 });
-        mDisposable.add(bookmarksCountObserver);
+        //mDisposable.add(bookmarksCountObserver);
     }
 
     /*
      * Clear observers for counts*/
     private void clearObservers() {
-        mDisposable.remove(notificationCountsObserver);
-        mDisposable.remove(bookmarksCountObserver);
+//        mDisposable.remove(notificationCountsObserver);
+//        mDisposable.remove(bookmarksCountObserver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         THPConstants.sISMAIN_ACTIVITY_LAUNCHED = false;
-        //DefaultTHApiManager.deleteTableOptions(this);
     }
 
     /**
