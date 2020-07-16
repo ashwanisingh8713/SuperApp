@@ -611,7 +611,8 @@ public class ApiManager {
 
                                 } else if (status.equalsIgnoreCase("Fail")) {
                                     if (context != null) {
-                                        PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                                        //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                                        Log.i("AshwaniError", ":: getUserInfo :: false");
                                     }
                                 }
 
@@ -857,6 +858,7 @@ public class ApiManager {
                                 } else if (status.equalsIgnoreCase("Fail")) {
                                     if (context != null) {
                                         PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+                                        Log.i("AshwaniError", ":: getUserInfoObject :: false");
                                     }
                                 }
                             }

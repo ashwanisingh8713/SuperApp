@@ -108,7 +108,9 @@ public class THPImageGallaryVerticleActivity extends BaseAcitivityTHP implements
                 Log.i("Ashwani", "lvip :: "+lvip);
                 Log.i("Ashwani", "lcvip :: "+lcvip);
 
-                setToolbarTitle((lvip), galleryAdapter.getItemCount());
+                if(lvip > 0) {
+                    setToolbarTitle(lvip, galleryAdapter.getItemCount());
+                }
 
             }
 

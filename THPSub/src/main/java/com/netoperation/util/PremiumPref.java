@@ -2,6 +2,7 @@ package com.netoperation.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class PremiumPref {
     Context context;
@@ -33,6 +34,7 @@ public class PremiumPref {
     public void clearPref() {
         mEditor.clear();
         mEditor.commit();
+        Log.i("AshwaniError", ":: clearPref");
     }
 
     /**

@@ -524,6 +524,7 @@ public class IntentUtil {
                                 if (TextUtils.isEmpty(userId)) { // Fail
                                     PremiumPref.getInstance(context).setIsUserLoggedIn(false);
                                     callBackReloginListener.OnFailure();
+                                    Log.i("AshwaniError", ":: loginApiCall2 -> isDefaultLogin :: false");
                                 } else { // Success
                                     // Making server request to get User Info
                                     PremiumPref.getInstance(context).setIsUserLoggedIn(true);
@@ -533,6 +534,8 @@ public class IntentUtil {
                                 PremiumPref.getInstance(context).setIsRelogginSuccess(false);
                                 callBackReloginListener.OnFailure();
                                 //PremiumPref.getInstance(context).setIsUserLoggedIn(false);
+
+                                Log.i("AshwaniError", ":: "+throwable.getMessage());
                             },
                             () -> {
 
@@ -540,6 +543,8 @@ public class IntentUtil {
         } else {
             PremiumPref.getInstance(context).setIsRelogginSuccess(true); //Consider as true, in case of FRESH LAUNCH or, User not Logged in
             //PremiumPref.getInstance(context).clearPref();
+
+            Log.i("AshwaniError", ":: LLLLLL");
         }
     }
 

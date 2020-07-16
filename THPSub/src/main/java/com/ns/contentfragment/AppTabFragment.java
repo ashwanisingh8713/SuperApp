@@ -76,6 +76,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private LinearLayout appTabsOverlayLayout;
     private AppBottomTabAdapter mAppBottomTabAdapter;
 
     private boolean mIsUserThemeDay;
@@ -133,6 +134,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         subscribeLayout = view.findViewById(R.id.subscribeLayout);
         mTabLayout = view.findViewById(R.id.appTabsTabLayout);
         mViewPager = view.findViewById(R.id.appTabsViewPager);
+        appTabsOverlayLayout = view.findViewById(R.id.appTabsOverlayLayout);
 
         //Developer Options Button, display only if it is Debug build
         if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("_DEVELOPMENT") && BuildConfig.DEBUG) {
@@ -185,6 +187,17 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     // Tabs custom click handling
                     tabClickHandling(tabsBeans);
 
+                    appTabsOverlayLayout.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            appTabsOverlayLayout.setVisibility(View.GONE);
+                        }
+                    }, 3500);
+
+                    appTabsOverlayLayout.setOnClickListener(v->{
+                        Alerts.showToastAtCenter(getActivity(), "Configuring premium tabs");
+                    });
+
                 }, throwable -> {
                     Log.i("", "");
                 }));
@@ -236,7 +249,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             subscribeLayoutVisibility(View.GONE);
         });
 
-        bottomBannerAds(true);
 
     }
 
@@ -514,7 +526,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                     IntentUtil.openUserProfileActivity(getActivity(), THPConstants.FROM_USER_PROFILE);
                 } else if (index != -1) {
                     boolean isHasSubscription = PremiumPref.getInstance(getActivity()).isHasSubscription();
-                    if(isHasSubscription) {
+                    boolean isUserAdsFree = PremiumPref.getInstance(getActivity()).isUserAdsFree();
+                    if(isHasSubscription || isUserAdsFree) {
                         mViewPager.setCurrentItem(index);
                     } else if (BaseAcitivityTHP.sIsOnline) {
                         IntentUtil.openSubscriptionActivity(getActivity(), THPConstants.FROM_SUBSCRIPTION_EXPLORE);
@@ -535,7 +548,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
                 if (!BaseAcitivityTHP.sIsOnline) {
                     Alerts.noConnectionSnackBar(mTabLayout, (AppCompatActivity) getActivity());
                     return;
+                } else {
+                    Alerts.showSnackbar(getActivity(), getString(R.string.something_went_wrong));
                 }
+                Log.i("AshwaniError", "ERROR");
                 //Clear session
                 //clearDatabaseAndSession();
             }
@@ -571,7 +587,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
     public void onResume() {
         super.onResume();
 
-       // bottomBannerAds(true);
+        bottomBannerAds(true);
 
         EventBus.getDefault().register(this);
         //Firebase Analytics
@@ -629,9 +645,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
 
     private void bottomBannerAds(boolean isHomePage) {
-
-
-
         // TO show / hide subscription banner bottom layout
         if (PremiumPref.getInstance(getActivity()).isSubscribeClose()
                 || PremiumPref.getInstance(SuperApp.getAppContext()).isHasSubscription()) {
