@@ -13,6 +13,7 @@ import com.netoperation.config.model.TabsBean;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableSection;
+import com.netoperation.model.AdData;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.DefaultTHApiManager;
 import com.netoperation.util.NetConstants;
@@ -199,6 +200,16 @@ public class TabTopTabsFragment extends BaseFragmentTHP {
             @Override
             public void onPageSelected(int position) {
                 sSelectedPagerIndex = position;
+
+                // Dummy AdData object
+                AdData adData = new AdData(-1, "");
+                if(position == 0) {
+                    adData.setSecId(NetConstants.RECO_HOME_TAB);
+                } else {
+                    adData.setSecId("");
+                }
+                // It sends event to AppTabFragment.java in handleEvent(AdData adData)
+                EventBus.getDefault().post(adData);
             }
 
             @Override

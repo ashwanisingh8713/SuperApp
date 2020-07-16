@@ -200,12 +200,6 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
         }
 
-        // Dummy AdData object
-        AdData adData = new AdData(-1, "");
-        adData.setSecId(mSectionId);
-        // It sends event to AppTabFragment.java in handleEvent(AdData adData)
-        EventBus.getDefault().post(adData);
-
         //Firebase Analytics
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(getActivity(), "Section Fragment Screen", SectionFragment.class.getSimpleName());
     }

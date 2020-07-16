@@ -109,7 +109,7 @@ public class THP_AutoResizeWebview extends WebView {
             }
         }
 
-        String fontPath = context.getResources().getString(R.string.THP_TundraOffc);
+        String fontPath = context.getResources().getString(R.string.Detail_Description_Font);
 
         String leadText = "";
 

@@ -146,7 +146,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             });
         }
 
-
         // This is smooth scroll of ViewPager
         smoothPagerScroll();
         mViewPager.setOffscreenPageLimit(1);
@@ -236,6 +235,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             PremiumPref.getInstance(getActivity()).setIsSubscribeClose(true);
             subscribeLayoutVisibility(View.GONE);
         });
+
+        bottomBannerAds(true);
 
     }
 
@@ -629,6 +630,8 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
     private void bottomBannerAds(boolean isHomePage) {
 
+
+
         // TO show / hide subscription banner bottom layout
         if (PremiumPref.getInstance(getActivity()).isSubscribeClose()
                 || PremiumPref.getInstance(SuperApp.getAppContext()).isHasSubscription()) {
@@ -638,7 +641,7 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
         }
 
         // TO hide bottom banner Ads layout
-        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree()) {
+        if(PremiumPref.getInstance(SuperApp.getAppContext()).isUserAdsFree() || !BaseAcitivityTHP.sIsOnline) {
             LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
             if(banner_Ad_layout != null) {
                 banner_Ad_layout.setVisibility(View.GONE);
@@ -669,7 +672,10 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
             @Override
             public void onDFPAdLoadFailure(AdData adData) {
                 Log.i("", "");
-
+                LinearLayout banner_Ad_layout = getView().findViewById(R.id.banner_Ad_layout);
+                if(banner_Ad_layout != null) {
+                    banner_Ad_layout.setVisibility(View.GONE);
+                }
             }
 
             @Override

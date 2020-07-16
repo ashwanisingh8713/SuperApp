@@ -197,6 +197,11 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
 
         });
 
+        //Observe notifications count
+        observeNotificationsCount();
+        //Observe bookmarks count
+        observeBookmarksCount();
+
 
     }
 
@@ -312,10 +317,7 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         THPFirebaseAnalytics.setFirbaseAnalyticsScreenRecord(this, "AppTabActivity Screen", AppTabActivity.class.getSimpleName());
         Log.i("TabFragment", "onResume() In AppTabActivity EventBus Registered");
         EventBus.getDefault().register(this);
-        //Observe notifications count
-        observeNotificationsCount();
-        //Observe bookmarks count
-        observeBookmarksCount();
+
 
     }
 

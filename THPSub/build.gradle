@@ -50,7 +50,7 @@ android {
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             signingConfig signingConfigs.config
         }
-        debug{
+        debug {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

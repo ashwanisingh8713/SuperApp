@@ -11,7 +11,7 @@
     <string name="THP_TundraOffc_BoldItalic">fonts/THP_TundraOffc-BoldItalic.ttf</string>
     <string name="THP_TundraOffc_Italic">fonts/THP_TundraOffc-Italic.ttf</string>
 
-    <string name="Detail_Description_Font">fonts/Lato-THP_TundraOffc.ttf</string>
+    <string name="Detail_Description_Font">fonts/THP_TundraOffc.ttf</string>
     <string name="Detail_Time_location_Font">fonts/THP_FiraSans-Regular.ttf</string>
 
 </resources>

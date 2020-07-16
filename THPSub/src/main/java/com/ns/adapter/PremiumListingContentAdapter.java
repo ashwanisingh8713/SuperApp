@@ -1579,7 +1579,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
         int sideMargin = 0;
         int marginBottom = snackBarView.getContext().getResources().getDimensionPixelSize(R.dimen.snackbarBottomMargin);
 
-        final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) snackBarView.getLayoutParams();
+        final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getLayoutParams();
 
         params.setMargins(params.leftMargin + sideMargin,
                 params.topMargin,
