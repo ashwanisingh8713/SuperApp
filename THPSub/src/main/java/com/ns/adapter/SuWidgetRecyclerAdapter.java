@@ -248,7 +248,7 @@ public class SuWidgetRecyclerAdapter extends BaseRecyclerViewAdapter {
             if (mSections != null && mSections.size() > 0) {
                 holder.mWidgetTextView.setText(mSections.get(0).getSection_name());
             } else {
-                holder.mWidgetTextView.setText("Opinion");
+                holder.mWidgetTextView.setText("OPINION");
             }
             String description = bean.getTi();
             if (description != null) {

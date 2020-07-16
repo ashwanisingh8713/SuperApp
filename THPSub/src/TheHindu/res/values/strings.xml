@@ -14,4 +14,7 @@
     <string name="Detail_Description_Font">fonts/THP_TundraOffc.ttf</string>
     <string name="Detail_Time_location_Font">fonts/THP_FiraSans-Regular.ttf</string>
 
+    <string name="Topbar_Title_Font">fonts/THP_FiraSans-Regular.ttf</string>
+    <string name="Settings_Font">fonts/THP_TundraOffc.ttf</string>
+
 </resources>

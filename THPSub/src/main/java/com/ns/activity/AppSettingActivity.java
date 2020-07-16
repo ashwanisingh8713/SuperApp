@@ -85,9 +85,9 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
         mTurnOffImages = findViewById(R.id.switch_turn_off_image);
 
 
-        mLocationASwitch.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_TundraOffc)));
-        mDayModeASwitch.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_TundraOffc)));
-        mPushNotification.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.THP_TundraOffc)));
+        mLocationASwitch.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.Settings_Font)));
+        mDayModeASwitch.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.Settings_Font)));
+        mPushNotification.setTypeface(Typeface.createFromAsset(getAssets(), getResources().getString(R.string.Settings_Font)));
 
         isDayMode = DefaultPref.getInstance(AppSettingActivity.this).isUserThemeDay();
 

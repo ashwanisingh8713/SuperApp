@@ -14,4 +14,7 @@
 
     <string name="Detail_Description_Font">fonts/Lato-Regular.ttf</string>
     <string name="Detail_Time_location_Font">fonts/SerifOffc.ttf</string>
+    <string name="Topbar_Title_Font">fonts/Lato-Bold.ttf</string>
+
+    <string name="Settings_Font">fonts/SerifOffc.ttf</string>
 </resources>
