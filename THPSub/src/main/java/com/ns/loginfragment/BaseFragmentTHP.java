@@ -356,7 +356,8 @@ public abstract class BaseFragmentTHP extends Fragment {
                     });
                 }
             }
-        } else {
+        }
+        else {
             showHideLoadingViewCrossFade(mPullToRefreshLayout, emptyLayout);
         }
     }

@@ -26,7 +26,7 @@ public interface DaoSectionArticle {
     Observable<TableSectionArticle> getPageArticlesObservable(String secId, int page);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId AND page = :page")
-    Single<List<TableSectionArticle>> getPageArticlesMaybe(String secId, int page);
+    Single<List<TableSectionArticle>> getPageArticlesSingle(String secId, int page);
 
     @Query("SELECT * FROM TableSectionArticle WHERE secId = :secId")
     Maybe<List<TableSectionArticle>> getArticlesMaybe(String secId);

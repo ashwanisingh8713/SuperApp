@@ -44,8 +44,6 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.RecyclerViewPullToRefresh;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +103,7 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             int totalItemCount = mPullToRefreshLayout.getLinearLayoutManager().getItemCount();
             int firstVisibleItemPosition = mPullToRefreshLayout.getLinearLayoutManager().findFirstVisibleItemPosition();
 
-            if (!mSectionSideWork.isLoading() && !mSectionSideWork.isLastPage() && BaseAcitivityTHP.sIsOnline) {
+            if (!mSectionSideWork.isLoading() && !mSectionSideWork.isLastPage()) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= mSectionSideWork.PAGE_SIZE) {
@@ -258,8 +256,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
 
 
     private void sectionOrSubSectionDataFromDB() {
+        mSectionSideWork.setLoading(true);
         THPDB thpdb = THPDB.getInstance(getActivity());
-        mDisposable.add(thpdb.daoSectionArticle().getPageArticlesMaybe(mSectionId, mSectionSideWork.getPage())
+        mDisposable.add(thpdb.daoSectionArticle().getPageArticlesSingle(mSectionId, mSectionSideWork.getPage())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
@@ -313,7 +312,13 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
                 }
                 if (articleBeans.size() > 0) {
                     Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: Loaded from Server :: Page - " + page);
-                    mRecyclerAdapter.addMultiItems(articleBeans);
+                    for(SectionAdapterItem item : articleBeans) {
+                        int index = mRecyclerAdapter.indexOf(item);
+                        if(index == -1) {
+                            mRecyclerAdapter.addSingleItem(item);
+                        }
+                    }
+                    //mRecyclerAdapter.addMultiItems(articleBeans);
                     if(mSectionSideWork.getPage() == 1) {
                         loadFirstScrollPageData();
                     }
@@ -344,7 +349,9 @@ public class SectionFragment extends BaseFragmentTHP implements RecyclerViewPull
             public void onComplete(String str) {
                 Log.i(TAG, "SECTION :: " + sectionOrSubsectionName + "-" + mSectionId + " :: complete Server :: Page - " + (page));
                 showLoadingUIForServerData(false, false);
-                showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
+                if(emptyLayout.getVisibility() == View.VISIBLE && mRecyclerAdapter.getItemCount() > 0) {
+                    showEmptyLayout(emptyLayout, false, mRecyclerAdapter, mPullToRefreshLayout, false, mPageSource);
+                }
             }
         };
         if(mSectionId.equals("998")) {// Opens News-Digest
