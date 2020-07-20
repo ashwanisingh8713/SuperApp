@@ -28,6 +28,7 @@ import com.ns.activity.BaseAcitivityTHP;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.ToolbarClickListener;
 import com.ns.model.ToolbarCallModel;
+import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
@@ -538,6 +539,11 @@ public class Topbar extends Toolbar {
 
         mTitleTextView = findViewById(R.id.action_titleText);
         mTextCountsOnOverflow = findViewById(R.id.textview_overflow_count);
+
+        if(BuildConfig.IS_BL) {
+            mTextCountsOnOverflow.setTextColor(Color.WHITE);
+        }
+
         mBackImageView = findViewById(R.id.action_back);
         mLogoImageView = findViewById(R.id.action_logo);
         mSearchImageView = findViewById(R.id.action_search);

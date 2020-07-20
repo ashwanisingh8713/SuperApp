@@ -24,6 +24,7 @@ import com.netoperation.config.model.ColorOptionBean;
 import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.model.AdData;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.net.RequestCallback;
 import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.callbacks.FragmentTools;
@@ -411,6 +412,21 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                     });
 
     }
+
+    public static void refreshConfigurationInstance(RequestCallback<TableConfiguration> requestCallback) {
+        DefaultTHApiManager.appConfiguration(SuperApp.getAppContext())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tableConfiguration -> {
+                    if(requestCallback != null) {
+                        requestCallback.onNext(tableConfiguration);
+                    }
+                    sTableConfiguration = tableConfiguration;
+                }, throwable -> {
+                    requestCallback.onError(throwable, "");
+                });
+
+    }
+
 
     public static TableConfiguration getTableConfiguration() {
         if(sTableConfiguration == null) {

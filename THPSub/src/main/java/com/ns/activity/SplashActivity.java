@@ -33,6 +33,7 @@ import com.main.SuperApp;
 import com.netoperation.config.download.Download;
 import com.netoperation.config.download.IconDownloadService;
 import com.netoperation.config.model.ImportantMsg;
+import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
@@ -121,6 +122,32 @@ public class SplashActivity extends BaseAcitivityTHP {
         appIconImg = findViewById(R.id.appIconImg);
         loadingMsg = findViewById(R.id.loadingMsg);
         progressBar = findViewById(R.id.progressBar);
+
+        if(BaseAcitivityTHP.getTableConfiguration() == null) {
+            BaseAcitivityTHP.refreshConfigurationInstance(new RequestCallback<TableConfiguration>() {
+                @Override
+                public void onNext(TableConfiguration tableConfiguration) {
+                    if(tableConfiguration != null && tableConfiguration.getOtherIconsDownloadUrls() != null) {
+                        appIconImg.updateIcon(0);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable t, String str) {
+                    if (DefaultPref.getInstance(SplashActivity.this).isUserThemeDay()) {
+                        appIconImg.setImageResource(R.drawable.splash_logo);
+                    } else {
+                        appIconImg.setImageResource(R.drawable.splash_logo_dark);
+                    }
+                }
+
+                @Override
+                public void onComplete(String str) {
+
+                }
+            });
+
+        }
 
         registerReceiver();
         sendHandlerMsg(WHAT_FORCE_UPDATE, "Force Update request is sent to server", "FORCE_UPDATE", null);

@@ -46,7 +46,7 @@ public class LogoImgView extends BaseImgView {
     public void updateIcon(int logoType) {
         final boolean isUserThemeDay = DefaultPref.getInstance(getContext()).isUserThemeDay();
         TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
-        if(tableConfiguration != null && THPConstants.IS_USE_SEVER_THEME) {
+        if(tableConfiguration != null) {
             String destinationFolderPath;
             if(isUserThemeDay) {
                 // 0 = app:logoType="Splash"
@@ -67,9 +67,10 @@ public class LogoImgView extends BaseImgView {
             }
         }
         else {
-            loadIconsFromApp(logoType, isUserThemeDay);
+            //loadIconsFromApp(logoType, isUserThemeDay);
         }
     }
+
 
     private void loadIconsFromServer(int logoType, OtherIconUrls otherIconUrls, String destinationFolderPath) {
         String iconUrl = "";
