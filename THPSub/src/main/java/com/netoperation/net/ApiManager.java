@@ -367,6 +367,17 @@ public class ApiManager {
                                 }
                                 if (((JsonObject) value).has("token")) {
                                     keyValueModel.setToken(((JsonObject) value).get("token").getAsString());
+
+                                    DaoUserProfile dao = THPDB.getInstance(context).userProfileDao();
+                                    TableUserProfile tableUserProfile = dao.getUserProfileTable();
+                                    if(tableUserProfile != null) {
+                                        UserProfile userProfile = tableUserProfile.getUserProfile();
+                                        if(userProfile != null) {
+                                            userProfile.setAuthorization(keyValueModel.getToken());
+                                            dao.updateUserProfile(userProfile.getUserId(), userProfile);
+                                        }
+                                    }
+
                                 }
                                 keyValueModel.setState(status);
                                 keyValueModel.setName(reason);
@@ -2252,6 +2263,18 @@ public class ApiManager {
                                     if(((JsonObject) value).has("token")) {
                                         String token = ((JsonObject) value).get("token").getAsString();
                                         keyValueModel.setToken(token);
+
+                                        if(context != null) {
+                                            DaoUserProfile dao = THPDB.getInstance(context).userProfileDao();
+                                            TableUserProfile tableUserProfile = dao.getUserProfileTable();
+                                            if (tableUserProfile != null) {
+                                                UserProfile userProfile = tableUserProfile.getUserProfile();
+                                                if (userProfile != null) {
+                                                    userProfile.setAuthorization(keyValueModel.getToken());
+                                                    dao.updateUserProfile(userProfile.getUserId(), userProfile);
+                                                }
+                                            }
+                                        }
                                     }
 
                                     // If account is new then we need to send free plan API
