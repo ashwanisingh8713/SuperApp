@@ -93,7 +93,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
         }
     }
 
-    private void saveODoneButtonFunctionality() {
+    private void saveOrDoneButtonFunctionality() {
         boolean isUserSelectedDfpConsent = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserSelectedDfpConsent();
         boolean isDfpConsentExecuted = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isDfpConsentExecuted();
         boolean isUserFromEurope = DefaultPref.getInstance(CustomizeHomeScreenActivity.this).isUserFromEurope();
@@ -195,7 +195,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                         break;
                     case 1:
                         // // "Save or Done" Title Button Click
-                        saveODoneButtonFunctionality();
+                        saveOrDoneButtonFunctionality();
                         break;
                 }
             }

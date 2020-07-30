@@ -30,6 +30,11 @@ android {
         buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/usp\""
         buildConfigField "String", "GUIDE_OVERLAY_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overlay\""
         buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/forceUpdate\""
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'armeabi', 'mips', 'arm64-v8a', 'x86_64'
+        }
+
     }
 
     signingConfigs {
@@ -44,41 +49,41 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             signingConfig signingConfigs.config
+            minifyEnabled true
+            debuggable true
         }
         debug {
-            minifyEnabled false
-            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            minifyEnabled true
+            debuggable true
         }
         _THG{
-            minifyEnabled false
-            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
             signingConfig signingConfigs.config
             versionNameSuffix "-THG"
-        }
-        _TESTING{
             minifyEnabled false
             debuggable true
+        }
+        _TESTING{
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"testing\""
             signingConfig signingConfigs.config
             versionNameSuffix "-TESTING"
-        }
-        _DEVELOPMENT{
             minifyEnabled false
             debuggable true
+        }
+        _DEVELOPMENT{
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             signingConfig signingConfigs.config
             versionNameSuffix "-DEVELOPMENT"
+            minifyEnabled false
+            debuggable true
         }
 
 

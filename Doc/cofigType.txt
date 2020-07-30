@@ -32,6 +32,15 @@ staticItem
     }
 
 widgetType
+     SENSEX
+     MEDIA_INNER_PADDING
+     MEDIA_FULL_SCR
+     TEXT
+     MEDIA_TEXT
+     TITLE_TEXT
+     MEDIA_TEXT_TIME
+
+     // THIS is for Dev reference
     - FullScreenImg (Cartoon)
     - Section_Title (Opinion)
     - Image_Title_Time (Multimedia)

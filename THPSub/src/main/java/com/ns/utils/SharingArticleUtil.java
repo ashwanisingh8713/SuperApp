@@ -102,8 +102,14 @@ public static void shareArticle(Context mContext,String mShareTitle,String mShar
         Intent sharingIntent = new Intent(
                 Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        if (mShareUrl != null && !mShareUrl.contains("thehindu.com")) {
-            mShareUrl = "https://www.thehindu.com\n\n" + mShareUrl;
+        if(BuildConfig.IS_BL) {
+            if (mShareUrl != null && !mShareUrl.contains("thehindubusinessline.com")) {
+                mShareUrl = "https://www.thehindubusinessline.com\n\n" + mShareUrl;
+            }
+        } else {
+            if (mShareUrl != null && !mShareUrl.contains("thehindu.com")) {
+                mShareUrl = "https://www.thehindu.com\n\n" + mShareUrl;
+            }
         }
         String shareBody = mShareTitle
                 + ": " + mShareUrl;

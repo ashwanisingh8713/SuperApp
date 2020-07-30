@@ -261,7 +261,6 @@ public class AppTabFragment extends BaseFragmentTHP implements OnSubscribeBtnCli
 
         THPConstants.FLOW_TAB_CLICK = tabsBean.getPageSource();
 
-
         if(tabsBean.getPageSource().equals(NetConstants.PS_GROUP_DEFAULT_SECTIONS) && tabsBean.getGroup().equals(NetConstants.G_DEFAULT_SECTIONS)) {
             mViewPager.setCurrentItem(tabIndex);
             return;

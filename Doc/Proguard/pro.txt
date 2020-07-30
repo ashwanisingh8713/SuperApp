@@ -1,0 +1,7 @@
+https://medium.com/androiddevelopers/practical-proguard-rules-examples-5640a3907dc9
+
+https://medium.com/androiddevelopers/troubleshooting-proguard-issues-on-android-bce9de4f8a74
+
+
+Android's Built-in ProGuard Rules: The Missing Guide
+https://www.zacsweers.dev/android-proguard-rules/

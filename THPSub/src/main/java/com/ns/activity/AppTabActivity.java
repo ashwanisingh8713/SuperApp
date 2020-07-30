@@ -33,9 +33,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.clevertap.android.sdk.CleverTapAPI;
+import com.netoperation.config.model.TabsBean;
 import com.netoperation.config.model.UrlBean;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoSection;
+import com.netoperation.default_db.TableConfiguration;
 import com.netoperation.default_db.TableOptional;
 import com.netoperation.default_db.TableSection;
 import com.netoperation.model.SectionBean;
@@ -262,7 +264,21 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
                 FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
 
                 if(mAppTabFragment != null && THPConstants.FLOW_TAB_CLICK != null) {
-                    mAppTabFragment.showPageSource(THPConstants.FLOW_TAB_CLICK);
+                    if(NetConstants.PS_Profile.equalsIgnoreCase(THPConstants.FLOW_TAB_CLICK)) {
+                        TableConfiguration tableConfiguration = BaseAcitivityTHP.getTableConfiguration();
+                        if(tableConfiguration != null) {
+                            List<TabsBean> tabsBeans = tableConfiguration.getTabs();
+                            for(TabsBean tabsBean : tabsBeans) {
+                                if(tabsBean.getGroup().equalsIgnoreCase(NetConstants.G_PREMIUM_SECTIONS) && !tabsBean.getPageSource().equalsIgnoreCase(NetConstants.PS_Profile)) {
+                                    mAppTabFragment.showPageSource(tabsBean.getPageSource());
+                                    break;
+                                }
+                            }
+                        }
+
+                    } else {
+                        mAppTabFragment.showPageSource(THPConstants.FLOW_TAB_CLICK);
+                    }
                 }
             }
         }

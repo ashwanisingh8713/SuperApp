@@ -23,6 +23,7 @@ import com.netoperation.util.NetConstants;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.CustomizeHomeScreenActivity;
+import com.ns.alerts.Alerts;
 import com.ns.clevertap.CleverTapUtil;
 import com.ns.loginfragment.BaseFragmentTHP;
 import com.ns.thpremium.R;
@@ -285,6 +286,7 @@ public class CitiesInterestFragment extends BaseFragmentTHP {
                         boolean isHomeArticleOptionScreenShown = DefaultPref.getInstance(getActivity()).isHomeArticleOptionScreenShown();
                         if(isHomeArticleOptionScreenShown) {
                             getActivity().finish();
+                            Alerts.showToastAtCenter(getActivity(), "Saved");
                         }
                         else {
                             // TODO, Nothing
