@@ -528,7 +528,8 @@ public class ApiManager {
                                                 }
                                             }
 
-                                            final String freeTrialPlanId = "10";
+                                            final String freeTrialPlanId = "249";
+                                            // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
                                             if (planId.equals(freeTrialPlanId) && isActive == 1) {
                                                 userProfile.setHasFreePlan(true);
@@ -773,7 +774,8 @@ public class ApiManager {
 
                                             }
 
-                                            final String freeTrialPlanId = "10";
+                                            final String freeTrialPlanId = "249";
+                                            // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
                                             if (planId.equals(freeTrialPlanId) && isActive == 1) {
                                                 userProfile.setHasFreePlan(true);

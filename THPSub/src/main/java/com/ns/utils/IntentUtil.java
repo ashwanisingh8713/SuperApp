@@ -398,6 +398,7 @@ public class IntentUtil {
     public static void openSubscriptionActivity(Context context, String from) {
         Intent intent = new Intent(context, THPUserProfileActivity.class);
         intent.putExtra("from", from);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
 
@@ -725,6 +726,7 @@ public class IntentUtil {
         Intent intent = new Intent(context, THPUserProfileActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("planOffer", planOffer);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
 

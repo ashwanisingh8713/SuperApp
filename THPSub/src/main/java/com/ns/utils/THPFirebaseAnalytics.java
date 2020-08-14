@@ -79,7 +79,7 @@ public class THPFirebaseAnalytics {
         Bundle bundle = new Bundle();
         bundle.putString("Date_Registration", AppDateUtil.getCurrentDateFormatted("dd/MM/yyyy"));
         bundle.putString("User_Type", "Free_trial");
-        bundle.putString("Pack_Duration", "1 Month");
+        bundle.putString("Pack_Duration", "14 Days");
         mFirebaseAnalytics.logEvent("Free_Trial", bundle);
     }
 

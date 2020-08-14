@@ -62,6 +62,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     private ProgressDialog progress;
     private String mCountryName = "India";
     public static final String START_TIME_KEY = "startTimeKey";
+     String from;
 
 
     public void setOnSubscribeEvent(OnSubscribeEvent onSubscribeEvent) {
@@ -78,7 +79,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String from = getIntent().getExtras().getString("from");
+       from = getIntent().getExtras().getString("from");
 
         if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
             //SubscriptionStep_1_Fragment fragment = SubscriptionStep_1_Fragment.getInstance(from);
@@ -112,6 +113,38 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
             mUserProfile = userProfile;
         });
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        from = intent.getExtras().getString("from");
+        if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
+            //SubscriptionStep_1_Fragment fragment = SubscriptionStep_1_Fragment.getInstance(from);
+            //Filter plan Offer Type
+            String planOffer = intent.getExtras().getString("planOffer");
+            RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance(from, planOffer);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+        } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_PROFILE)) {
+            // Uncomment below code snippet
+            UserProfileFragment fragment = UserProfileFragment.getInstance("");
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+        } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_SignUp)) {
+            // Uncomment below code snippet
+            UserProfileFragment fragment = UserProfileFragment.getInstance("");
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
+            AccountCreatedFragment accountCreated = AccountCreatedFragment.getInstance("");
+            FragmentUtil.addFragmentAnim(this, R.id.parentLayout, accountCreated, FragmentUtil.FRAGMENT_NO_ANIMATION, false);
+        } else if (from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_ACCOUNT_CREATED)) {
+            SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_USER_ACCOUNT_CREATED);
+            FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_ANIMATION, false);
+        }
+
+
+        // Gets User Profile Data
+        ApiManager.getUserProfile(this).subscribe(userProfile -> {
+            mUserProfile = userProfile;
+        });
     }
 
     private List<String> mPlanIds = new ArrayList<>();
@@ -660,23 +693,22 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for(Fragment f : fragments){
-            if(f instanceof RecoPlansWebViewFragment) {
+            if(f.isVisible() && f instanceof RecoPlansWebViewFragment) {
                 if (!((RecoPlansWebViewFragment) f).onBackPressed()){
                     return;
                 }
             }
         }
-        if (getIntent() != null) {
-            String from = getIntent().getExtras().getString("from");
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            FragmentUtil.clearSingleBackStack(this);
+        } else {
+            super.onBackPressed();
             if (from != null && from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
                 if(!THPConstants.sISMAIN_ACTIVITY_LAUNCHED) {
-                    finish();
                     IntentUtil.openMainTabPage(this);
-                    return;
                 }
             }
         }
-        super.onBackPressed();
     }
 
     @Override
