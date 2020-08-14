@@ -164,10 +164,10 @@
         <!-- Start CleverTap -->
         <meta-data
             android:name="CLEVERTAP_ACCOUNT_ID"
-            android:value="@string/clevertap_test_account_id" />
+            android:value="@string/clevertap_live_account_id" />
         <meta-data
             android:name="CLEVERTAP_TOKEN"
-            android:value="@string/clevertap_test_account_token" />
+            android:value="@string/clevertap_live_account_token" />
 
         <!--
         IMPORTANT: To force use Google AD ID to uniquely identify  users,
