@@ -317,7 +317,8 @@ public class SplashActivity extends BaseAcitivityTHP {
 
     private void showProgressBar(String msg) {
         progressBar.setVisibility(View.VISIBLE);
-        loadingMsg.setVisibility(View.VISIBLE);
+        //Hide or Show Progress Message
+        loadingMsg.setVisibility(View.GONE);
         loadingMsg.setText(msg);
     }
 

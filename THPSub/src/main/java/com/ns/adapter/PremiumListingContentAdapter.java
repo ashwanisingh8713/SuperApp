@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
@@ -1502,6 +1503,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
                                                             if (bar != null) {
                                                                 // SnackBar Initializing
                                                                 snackbar = Snackbar.make(mRecyclerView, R.string.item_removed_message, 3000)
+                                                                        .setActionTextColor(ContextCompat.getColor(mRecyclerView.getContext(), R.color.undo_color))
                                                                         .setAction(R.string.undo, new View.OnClickListener() {
                                                                             @Override
                                                                             public void onClick(View v) {

@@ -57,6 +57,7 @@
         <item>@color/sp_clr_4</item>
     </integer-array>
     <color name="color_status_bar_dark">#FAFAFA</color>
+    <color name="undo_color">#ff009688</color>
 
     <!--    /////////////// ////////////// ///////////// ////////////////   -->
 
