@@ -34,9 +34,10 @@
             android:text="Try Again"
             android:layout_gravity="center"
             android:gravity="center"
+            android:padding="9dp"
             android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="17sp"
             />
 
         <com.ns.view.CustomProgressBar

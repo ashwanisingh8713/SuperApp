@@ -9,6 +9,16 @@
     "importantMsg": null,
     "staticItem": [
       {
+        "title": "About Us",
+        "urlDark": "https://www.thehindu.com/app/app-about-us/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-about-us/"
+      },
+      {
+        "title": "Help",
+        "urlDark": "https://www.thehindu.com/app/app-help/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-help/"
+      },
+      {
         "title": "Terms & Condition",
         "urlDark": "https://www.thehindu.com/app/app-terms-of-use/?page=dark",
         "urlLight": "https://www.thehindu.com/app/app-terms-of-use/"
@@ -17,16 +27,6 @@
         "title": "Privacy Policy",
         "urlDark": "https://www.thehindu.com/app/app-privacy-policy/?page=dark",
         "urlLight": "https://www.thehindu.com/app/app-privacy-policy/"
-      },
-      {
-        "title": "Help",
-        "urlDark": "https://www.thehindu.com/app/app-help/?page=dark",
-        "urlLight": "https://www.thehindu.com/app/app-help/"
-      },
-      {
-        "title": "AboutUs",
-        "urlDark": "https://www.thehindu.com/app/app-about-us/?page=dark",
-        "urlLight": "https://www.thehindu.com/app/app-about-us/"
       }
     ],
     "tabs": [

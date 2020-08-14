@@ -525,7 +525,7 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
         }
 
         if (headerRequired) {
-            groupHeaderTxt.setText(adapter.getSectionName() +" :: "+widgetIndex.getSecId());
+            groupHeaderTxt.setText(adapter.getSectionName());
             groupHeaderTxt.setVisibility(View.VISIBLE);
             if(BaseAcitivityTHP.sIsDayTheme) {
                 groupHeaderTxt.setTextColor(Color.parseColor(widgetIndex.getTitle().getLight()));

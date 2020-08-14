@@ -204,6 +204,8 @@ public class AppTabActivity extends BaseAcitivityTHP implements OnExpandableList
         //Observe bookmarks count
         observeBookmarksCount();
 
+        //Hide Device Resolution
+        findViewById(R.id.textDeviceResolution).setVisibility(View.GONE);
 
     }
 

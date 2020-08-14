@@ -9,6 +9,16 @@
     "importantMsg": null,
     "staticItem": [
       {
+        "title": "About Us",
+        "urlDark": "https://www.thehindu.com/app/app-about-us/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-about-us/"
+      },
+      {
+        "title": "Help",
+        "urlDark": "https://www.thehindu.com/app/app-help/?page=dark",
+        "urlLight": "https://www.thehindu.com/app/app-help/"
+      },
+      {
         "title": "Terms & Condition",
         "urlDark": "https://www.thehindu.com/app/app-terms-of-use/?page=dark",
         "urlLight": "https://www.thehindu.com/app/app-terms-of-use/"
@@ -17,16 +27,6 @@
         "title": "Privacy Policy",
         "urlDark": "https://www.thehindu.com/app/app-privacy-policy/?page=dark",
         "urlLight": "https://www.thehindu.com/app/app-privacy-policy/"
-      },
-      {
-        "title": "Help",
-        "urlDark": "https://www.thehindu.com/app/app-help/?page=dark",
-        "urlLight": "https://www.thehindu.com/app/app-help/"
-      },
-      {
-        "title": "AboutUs",
-        "urlDark": "https://www.thehindu.com/app/app-about-us/?page=dark",
-        "urlLight": "https://www.thehindu.com/app/app-about-us/"
       }
     ],
     "tabs": [
@@ -87,24 +87,24 @@
       }
     ],
     "appTheme": {
-      "articleText" : {
-        "dark" : {
-          "title" : "#ededed",
-          "time" : "#818181",
-          "author" : "#818181",
-          "section" : "#818181",
-          "detail" : "#ffffff",
-          "link" : "#ffffff",
-          "lead" : "#E8EAEC"
+      "articleText": {
+        "dark": {
+          "title": "#ededed",
+          "time": "#818181",
+          "author": "#818181",
+          "section": "#818181",
+          "detail": "#ffffff",
+          "link": "#ffffff",
+          "lead": "#E8EAEC"
         },
-        "light" : {
-          "title" : "#111111",
-          "time" : "#818181",
-          "author" : "#818181",
-          "section" : "#818181",
-          "detail" : "#000000",
-          "link" : "#2435E7",
-          "lead" : "#666666"
+        "light": {
+          "title": "#111111",
+          "time": "#818181",
+          "author": "#818181",
+          "section": "#818181",
+          "detail": "#000000",
+          "link": "#2435E7",
+          "lead": "#666666"
         }
       },
       "tilesBg": {
