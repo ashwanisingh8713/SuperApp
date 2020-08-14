@@ -101,8 +101,7 @@ public class AppNotification {
         //notification.bigContentView = expandedView;
 
         Intent notificationIntent = new Intent(context, NotificationClickActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         notificationIntent.putExtra(THPConstants.LOAD_NOTIFICATIONS, true);
 

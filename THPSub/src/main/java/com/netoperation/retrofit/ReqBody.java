@@ -318,10 +318,10 @@ public class ReqBody {
         object.addProperty("amt","0.0");
         object.addProperty("channel","android");
         object.addProperty("siteid", siteid);
-        object.addProperty("planid","10");
+        object.addProperty("planid","249");
         object.addProperty("plantype","Subscription");
         object.addProperty("billingchannel","paytm");
-        object.addProperty("validity","1-month");
+        object.addProperty("validity","14-days");
         object.addProperty("currency","INR");
         object.addProperty("netAmount","0.0");
         object.addProperty("requestSource", REQUEST_SOURCE);

@@ -59,7 +59,7 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:text="Sign Up for 30 days Free Trial"
+            android:text="Sign Up for 14 days Free Trial"
             app:font_path="@string/THP_FiraSans_Bold"
             />
 

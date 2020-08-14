@@ -375,12 +375,12 @@ dependencies {
     implementation 'com.comscore:android-analytics:5.7.3'
 
     // Facebook Ads
-    implementation 'com.facebook.android:audience-network-sdk:5.9.0'
+    implementation 'com.facebook.android:audience-network-sdk:5.11.0'
     implementation 'com.google.ads.mediation:facebook:5.1.0.0'
 
     //InMobi Ads
-    implementation 'com.inmobi.monetization:inmobi-ads:7.0.4'
-    implementation files('libs/libadapterinmobi.jar')
+    implementation 'com.inmobi.monetization:inmobi-ads:9.0.7'
+   // implementation files('libs/libadapterinmobi.jar')
 
     // OK HTTP
     //implementation 'com.squareup.okhttp3:okhttp:3.0.1'
