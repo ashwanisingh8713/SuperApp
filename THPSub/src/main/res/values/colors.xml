@@ -47,6 +47,9 @@
     <color name="sp_clr_3">#D2BA70</color>
     <color name="sp_clr_4">#E7D9AC</color>
 
+    <color name="uj_next">#006596</color>
+    <color name="uj_complete">#FFE334</color>
+
     <integer-array name="smooth_progress_colors">
         <item>@color/sp_clr_1</item>
         <item>@color/sp_clr_2</item>

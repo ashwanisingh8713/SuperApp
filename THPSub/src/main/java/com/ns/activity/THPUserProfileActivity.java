@@ -80,9 +80,9 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
 
         String from = getIntent().getExtras().getString("from");
 
-        if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
-            //SubscriptionStep_1_Fragment fragment = SubscriptionStep_1_Fragment.getInstance(from);
-            //Filter plan Offer Type
+        if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE)
+                || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)
+                || from.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
             String planOffer = getIntent().getExtras().getString("planOffer");
             RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance(from, planOffer);
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);

@@ -23,7 +23,6 @@ import java.util.ArrayList;
  */
 public class ImagePagerAdapter extends PagerAdapter {
     private Context mContext;
-
     private ArrayList<ImageGallaryUrl> mImageUrlList;
 
     public ImagePagerAdapter(Context mContext, ArrayList<ImageGallaryUrl> mImageUrlList) {

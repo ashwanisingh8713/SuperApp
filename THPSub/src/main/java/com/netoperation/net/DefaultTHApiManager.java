@@ -1201,7 +1201,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
-        return ServiceFactory.getServiceAPIs().config(BuildConfig.APP_CONFIG_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+        return ServiceFactory.getServiceAPIs().config(BuildConfig.CONFIG_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
         .subscribeOn(Schedulers.io())
                 .map(config->{
                     if(config.isSTATUS()) {
@@ -1231,11 +1231,31 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
-        return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.APP_CONFIG_UPDATE_CHECK_URL, ReqBody.configuration(BuildConfig.APP_ENVIROMENT, BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+        return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.CONFIG_UPDATE_CHECK_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
                 .subscribeOn(Schedulers.io())
                 .timeout(30, TimeUnit.SECONDS)
                 .map(jsonElement -> {
-                    if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
+                    if (((JsonObject) jsonElement).has("STATUS_MSG")) {
+                        String STATUS_MSG = ((JsonObject) jsonElement).get("STATUS_MSG").getAsString();
+                        if(STATUS_MSG.equalsIgnoreCase("true")) {
+                            JsonObject jsonObject = ((JsonObject) jsonElement).get("DATA").getAsJsonObject();
+                            if(jsonObject.has("lastUpdatedTime")) {
+                                String lastUpdatedTime = jsonObject.get("lastUpdatedTime").getAsString();
+                                THPDB thpdb = THPDB.getInstance(context);
+                                DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
+                                TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
+                                if(tableConfiguration == null) {
+                                    return true;
+                                }
+                                String dbLut = tableConfiguration.getLastServerUpdateTime();
+                                if (lastUpdatedTime.equalsIgnoreCase(dbLut)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+
+                    /*if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
                         String lastUpdatedTime = ((JsonObject) jsonElement).get("lastUpdatedTime").getAsString();
                         THPDB thpdb = THPDB.getInstance(context);
                         DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
@@ -1247,7 +1267,7 @@ public class DefaultTHApiManager {
                         if (lastUpdatedTime.equalsIgnoreCase(dbLut)) {
                             return false;
                         }
-                    }
+                    }*/
                     return true;
                 });
 
@@ -1468,7 +1488,7 @@ public class DefaultTHApiManager {
             url = BuildConfig.FORCE_UPDATE_URL;
         }
         return ServiceFactory.getServiceAPIs()
-                .forceUpdate(url, ReqBody.forceUpdate())
+                .forceUpdate(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
                 .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .map(responseModel -> responseModel.getDATA().getAndroid())
@@ -1573,7 +1593,7 @@ public class DefaultTHApiManager {
     }
 
     public static Single<List<TableOptional.OptionsBean>> getOptionsListApi(Context context) {
-        return ServiceFactory.getServiceAPIs().getMenuSequence(BuildConfig.PRODUCTION_MENU_API)
+        return ServiceFactory.getServiceAPIs().getMenuSequence(BuildConfig.PRODUCTION_MENU_API, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
                 .subscribeOn(Schedulers.io())
                 .map(jsonElement -> {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -1612,7 +1632,7 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static void getUPS(Context context, RequestCallback<List<String>> requestCallback) {
-         ServiceFactory.getServiceAPIs().getUSP(BuildConfig.UPS_URL, ReqBody.ups(BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+         ServiceFactory.getServiceAPIs().getUSP(BuildConfig.UPS_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
                 .subscribeOn(Schedulers.io())
                 .map(uspData->{
                     boolean isDayTheme = DefaultPref.getInstance(context).isUserThemeDay();
@@ -1646,7 +1666,7 @@ public class DefaultTHApiManager {
     }
 
     public static void getGuideOverlay(Context context, RequestCallback<USPData.DATABean.GuideOverlay> requestCallback) {
-        ServiceFactory.getServiceAPIs().getUSP(BuildConfig.GUIDE_OVERLAY_URL, ReqBody.ups(BuildConfig.APPLICATION_ID, ResUtil.resolution(context)))
+        ServiceFactory.getServiceAPIs().getUSP(BuildConfig.GUIDE_OVERLAY_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
                 .subscribeOn(Schedulers.io())
                 .map(uspData->{
                     USPData.DATABean.GuideOverlay guideOverlay = uspData.getDATA().getAndroid();

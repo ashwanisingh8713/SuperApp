@@ -20,11 +20,18 @@ public class ReqBody {
         return object;
     }
 
-    public static JsonObject configuration(String environment, String packageName, String resolution) {
+    public static JsonObject configuration(String resolution) {
         JsonObject object = new JsonObject();
-        object.addProperty("packageName", packageName);
+        object.addProperty("authKey", BuildConfig.CONFIG_AUTH_KEY);
         object.addProperty("resolution", resolution);
-        object.addProperty("environment", environment);
+        object.addProperty("id", BuildConfig.CONFIG_PRODUCTION_ID);
+        return object;
+    }
+
+    public static JsonObject configurationUpdateCheck() {
+        JsonObject object = new JsonObject();
+        object.addProperty("authKey", BuildConfig.CONFIG_AUTH_KEY);
+        object.addProperty("id", BuildConfig.CONFIG_PRODUCTION_ID);
         return object;
     }
 

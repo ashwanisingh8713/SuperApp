@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="H,1:1.5"
+        />
+
+    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+        android:id="@+id/spring_dots_indicator_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/journeyNextBtn"
+        app:dampingRatio="0.5"
+        app:dotsColor="#E5F0F5"
+        app:dotsStrokeColor="#E5F0F5"
+        app:dotsCornerRadius="9dp"
+        app:dotsSize="9dp"
+        app:dotsSpacing="4dp"
+        app:dotsStrokeWidth="7dp"
+        app:stiffness="300"
+        android:layout_marginBottom="@dimen/uj_dot_bottom_margin"
+        />
+
+    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+        android:id="@+id/spring_dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/journeyNextBtn"
+        app:dampingRatio="0.5"
+        app:dotsColor="#006596"
+        app:dotsStrokeColor="#00000000"
+        app:dotsCornerRadius="9dp"
+        app:dotsSize="9dp"
+        app:dotsSpacing="4dp"
+        app:dotsStrokeWidth=".1dp"
+        app:stiffness="300"
+        android:layout_marginBottom="@dimen/uj_dot_bottom_margin"
+        android:visibility="visible"
+        />
+
+    <com.ns.view.text.CustomTextView
+        android:id="@+id/journeyNextBtn"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        android:text="Next"
+        android:gravity="center"
+        android:textColor="@color/uj_next"
+        app:font_path="@string/UJ_subtitle"
+        android:layout_marginBottom="@dimen/uj_next_bottom_margin"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

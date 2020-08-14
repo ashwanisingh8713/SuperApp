@@ -32,13 +32,13 @@ import com.netoperation.model.MeBean;
 import com.netoperation.model.SectionBean;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
-import com.netoperation.util.NetConstants;
 import com.netoperation.util.PremiumPref;
 import com.netoperation.util.DefaultPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.BaseAcitivityTHP;
 import com.ns.activity.BecomeMemberActivity;
 import com.ns.activity.BookmarkActivity;
+import com.ns.activity.ConfigListActivity;
 import com.ns.activity.CustomizeHomeScreenActivity;
 import com.ns.activity.DemoActivity;
 import com.ns.activity.NotificationArticleActivity;
@@ -52,6 +52,7 @@ import com.ns.activity.THPUserProfileActivity;
 import com.ns.activity.THP_DetailActivity;
 import com.ns.activity.THP_WebActivity;
 import com.ns.activity.THP_YouTubeFullScreenActivity;
+import com.ns.activity.UserJourneyActivity;
 import com.ns.activity.VideoPlayerActivity;
 import com.ns.alerts.Alerts;
 import com.ns.model.ImageGallaryUrl;
@@ -713,6 +714,17 @@ public class IntentUtil {
 
     public static void openSettingActivity(AppCompatActivity context) {
         Intent intent = new Intent(context, AppSettingActivity.class);
+        context.startActivity(intent, startSlideActivity(context));
+    }
+
+    public static void openUserJourneyActivity(AppCompatActivity context) {
+        Intent intent = new Intent(context, UserJourneyActivity.class);
+        context.startActivity(intent, startSlideActivity(context));
+        context.finish();
+    }
+
+    public static void openConfigListActivity(AppCompatActivity context) {
+        Intent intent = new Intent(context, ConfigListActivity.class);
         context.startActivity(intent, startSlideActivity(context));
     }
 

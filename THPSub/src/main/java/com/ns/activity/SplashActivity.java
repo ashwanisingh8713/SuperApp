@@ -714,7 +714,12 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchOnBoardingProceeded = true;
             return;
         }
-        IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+        } else {
+//            IntentUtil.openUserJourneyActivity(SplashActivity.this);
+            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+        }
     }
 
     private void launchTabScreen(String from) {

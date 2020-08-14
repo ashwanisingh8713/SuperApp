@@ -312,6 +312,15 @@ public class DefaultPref {
         return mPreferences.getBoolean("isOldBookmarkLoaded", false);
     }
 
+    public void setUserJourneyLoaded(boolean isUserJourneyLoaded) {
+        mEditor.putBoolean("isUserJourneyLoaded", isUserJourneyLoaded);
+        mEditor.apply();
+    }
+
+    public boolean isUserJourneyLoaded() {
+        return mPreferences.getBoolean("isUserJourneyLoaded", false);
+    }
+
     public void setLocationEnabled(boolean isEnabled) {
         mEditor.putBoolean("LOCATION_ENABLE", isEnabled);
         mEditor.apply();

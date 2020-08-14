@@ -31,6 +31,7 @@ import com.ns.utils.FragmentUtil;
 import com.ns.utils.IntentUtil;
 import com.ns.utils.NetUtils;
 import com.ns.utils.OnBackPressed;
+import com.ns.utils.ResUtil;
 import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 
@@ -48,6 +49,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
     private WebView mWebView;
     private String JS_OBJECT_NAME = "Android";
     private String mPlanOffer;
+    private String mFrom ;
 
 
     public interface SubsPlanSelectListener {
@@ -73,6 +75,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             mPlanOffer = getArguments().getString("planOffer");
+            mFrom = getArguments().getString("from");
         }
     }
 
@@ -87,7 +90,18 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         mWebView = view.findViewById(R.id.webViewRecoPlans);
 
         initiateWebView();
-        loadSubsWebViewApi();
+        if(ResUtil.isEmpty(mFrom) || mFrom.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE)) {
+            view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+            //loadPlanRequestApi();
+            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);
+        } else if (mFrom.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
+            view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.backBtn).setVisibility(View.GONE);
+            view.findViewById(R.id.pageTitle).setVisibility(View.GONE);
+            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);
+        }
+
+
         // Back button click listener
         view.findViewById(R.id.backBtn).setOnClickListener(v -> {
             //getActivity().finish();
@@ -128,6 +142,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 hideProgressDialog();
+                getView().findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
 
             @Override
@@ -235,7 +250,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
             }
 
             @JavascriptInterface
-            public void ProductViewed(String planDetails){
+            public void ProductViewed(String planDetails) {
                 //Pass the information to Activity's interface
                 if (getView() == null || getActivity() == null) {
                     return;
@@ -296,16 +311,22 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
                 });
 
             }
+
+            @JavascriptInterface
+            public void skipButton() {
+                Alerts.showToast(getActivity(), "Hello");
+            }
+
         }, JS_OBJECT_NAME);
     }
 
-    private void loadSubsWebViewApi() {
+    private void loadPlanRequestApi() {
         showProgressDialog("Fetching recommended plans");
         String SUBSCRIPTION_WEB_URL = "";
         if(BuildConfig.IS_PRODUCTION) {
-            SUBSCRIPTION_WEB_URL = BuildConfig.PRODUCTION_SUBSCRIPTION_WEB_URL;
+            SUBSCRIPTION_WEB_URL = BuildConfig.PRODUCTION_SUBSCRIPTION_PLAN_REQUEST_URL;
         } else {
-            SUBSCRIPTION_WEB_URL = BuildConfig.STATGGING_SUBSCRIPTION_WEB_URL;
+            SUBSCRIPTION_WEB_URL = BuildConfig.STATGGING_SUBSCRIPTION_PLAN_REQUEST_URL;
         }
         if (!sIsDayTheme) {
             SUBSCRIPTION_WEB_URL += "true";

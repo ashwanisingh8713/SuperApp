@@ -27,9 +27,20 @@ android {
 
         buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle\""
         buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration\""
-        buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/usp\""
         buildConfigField "String", "GUIDE_OVERLAY_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overlay\""
-        buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/forceUpdate\""
+        buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/usp\""
+        buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/forceUpdate\""
+
+        buildConfigField "String", "CONFIG_AUTH_KEY", "\"351ac88979c3fe2c50c065038a160039\""
+
+        buildConfigField "String", "CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/loadById\""
+        buildConfigField "String", "CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/lut\""
+
+        buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/overflow\""
+
+        buildConfigField "String", "STATGGING_USERJOURNEY_PLAN_URL", "\"https://myaccount.thehindu.co.in/appview/115/android?type=onboard\""
+        buildConfigField "String", "STATGGING_SUBSCRIPTION_PLAN_REQUEST_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+        buildConfigField "String", "PRODUCTION_SUBSCRIPTION_PLAN_REQUEST_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
 
         ndk {
             abiFilters 'armeabi-v7a', 'x86', 'armeabi', 'mips', 'arm64-v8a', 'x86_64'
@@ -52,7 +63,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APP_ENVIROMENT", "\"development\""
             signingConfig signingConfigs.config
-            minifyEnabled true
+            minifyEnabled false
             debuggable true
         }
         debug {
@@ -110,9 +121,8 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindubusinessline"
 
-            buildConfigField "String", "APP_CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/getConfig\""
-            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "true"
+            buildConfigField "String", "CONFIG_PRODUCTION_ID", "\"2\""
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
             buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
@@ -125,9 +135,6 @@ android {
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
 
-            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
-            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
-
             buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
             buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
 
@@ -136,8 +143,6 @@ android {
 
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
-
-            buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overflow\""
 
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"j2rIA5nAJCNVvAvQzOK9YOebE\""
@@ -166,9 +171,8 @@ android {
             dimension "version"
             applicationId "com.mobstac.thehindu"
 
-            buildConfigField "String", "APP_CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/getConfig\""
-            buildConfigField "String", "APP_CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/checkConfig\""
             buildConfigField "boolean", "IS_BL", "false"
+            buildConfigField "String", "CONFIG_PRODUCTION_ID", "\"1\""
 
             buildConfigField "String", "STATGGING_BASE_URL", "\"https://tai.thehindu.co.in\""
             buildConfigField "String", "THP_BASE_URL", "\"https://tai.thehindu.com\""
@@ -181,9 +185,6 @@ android {
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
 
-            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
-            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
-
             buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
             buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
 
@@ -193,7 +194,7 @@ android {
             buildConfigField "String", "STATGGING_BREIFING_URL", "\"https://alphath.thehindu.co.in/briefing/?requestSource=app\""
             buildConfigField "String", "PRODUCTION_BREIFING_URL", "\"https://www.thehindu.com/briefing/?requestSource=app\""
 
-            buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overflow\""
+
 
             //Twitter Sign in
             buildConfigField "String", "TWITTER_API_KEY", "\"R4aG29tZVOgu3t8bIA2t7T9by\""
