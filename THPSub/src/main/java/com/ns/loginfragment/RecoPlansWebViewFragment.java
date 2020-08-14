@@ -92,8 +92,8 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         initiateWebView();
         if(ResUtil.isEmpty(mFrom) || mFrom.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE)) {
             view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
-            //loadPlanRequestApi();
-            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);
+            loadPlanRequestApi();
+//            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);
         } else if (mFrom.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
             view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
             view.findViewById(R.id.backBtn).setVisibility(View.GONE);
@@ -314,7 +314,10 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
 
             @JavascriptInterface
             public void skipButton() {
-                Alerts.showToast(getActivity(), "Hello");
+                if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
+                    IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) getActivity());
+                    IntentUtil.clearAllPreviousActivity((AppCompatActivity) getActivity());
+                }
             }
 
         }, JS_OBJECT_NAME);

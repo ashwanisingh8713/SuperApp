@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -515,7 +516,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                             .subscribe(val -> {
                                 hideProgressDialog();
                                 Log.i("Status", ""+val);
-                                TxnStatusFragment fragment;
+                                TxnStatusFragment fragment = null;
                                 boolean isRoot = true;
                                 mEndTime = System.currentTimeMillis();
                                 //Fail and success conditional implementation
@@ -523,7 +524,22 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     fragment = TxnStatusFragment.getInstance("pending", "Verifying transaction status failed in server");
                                     isRoot = false;
                                 } else if (paytmTransactionStatus.STATUS.equalsIgnoreCase("TXN_SUCCESS")) {
-                                    fragment = TxnStatusFragment.getInstance("success", "");
+                                    if(from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
+                                        /*Alerts.showSnackbarOnTop(THPUserProfileActivity.this, "Transaction Successful");
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                IntentUtil.openHomeArticleOptionActivity(THPUserProfileActivity.this);
+                                                IntentUtil.clearAllPreviousActivity(THPUserProfileActivity.this);
+                                            }
+                                        }, 2500);*/
+                                        Alerts.showToastAtCenter(THPUserProfileActivity.this, "Transaction Successful");
+                                        IntentUtil.openHomeArticleOptionActivity(THPUserProfileActivity.this);
+                                        IntentUtil.clearAllPreviousActivity(THPUserProfileActivity.this);
+
+                                    } else {
+                                        fragment = TxnStatusFragment.getInstance("success", "");
+                                    }
                                    // CleverTapUtil.cleverTapEventPaymentStatus(this,"success",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                                     THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(THPUserProfileActivity.this,"Action","success",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
 
@@ -548,7 +564,9 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     fragment = TxnStatusFragment.getInstance("pending", paytmTransactionStatus.RESPMSG);
                                     isRoot = false;
                                 }
-                                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
+                                if(fragment != null) {
+                                    FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
+                                }
 
                             }));
                 }, throwable -> {

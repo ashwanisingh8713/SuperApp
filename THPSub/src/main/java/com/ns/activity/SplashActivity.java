@@ -717,8 +717,8 @@ public class SplashActivity extends BaseAcitivityTHP {
         if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
             IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
         } else {
-//            IntentUtil.openUserJourneyActivity(SplashActivity.this);
-            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+            IntentUtil.openUserJourneyActivity(SplashActivity.this);
+//            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
         }
     }
 

@@ -538,7 +538,11 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         } else {
             builder = new AlertDialog.Builder(getActivity(), android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK);
         }
-        builder.setMessage("Do you want to remove all articles from Read Later ? ");
+        if(PremiumPref.getInstance(getActivity()).isUserLoggedIn()) {
+            builder.setMessage("Your premium bookmark will not be deleted.\nDo you want to remove non-premium all articles from Read Later ? ");
+        } else {
+            builder.setMessage("Do you want to remove all articles from Read Later ? ");
+        }
         builder.setPositiveButton("Yes", (dialog, id) -> {
             dialog.dismiss();
             //Clear Bookmarks
