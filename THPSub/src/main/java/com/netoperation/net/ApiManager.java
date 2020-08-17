@@ -316,7 +316,7 @@ public class ApiManager {
                                         userProfile.setTid(tid);
                                         userProfile.setGid(gid);
                                         userProfile.setAuthorization(token);
-                                        userProfile.setHasFreePlan(true);
+                                       // userProfile.setHasFreePlan(true);
 
                                         TableUserProfile tableUserProfile = new TableUserProfile(userId, userProfile);
 
@@ -531,12 +531,12 @@ public class ApiManager {
                                             final String freeTrialPlanId = "249";
                                             // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
-                                            if (planId.equals(freeTrialPlanId) && isActive == 1) {
+                                            if (planId.equals(freeTrialPlanId) || planId.equals("10") && isActive == 1 ) {
                                                 userProfile.setHasFreePlan(true);
                                             }
 
                                             // If user free plan is not available then this will check for subscribed user
-                                            if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
+                                            if (!planId.equals(freeTrialPlanId) && !planId.equals("10") && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
                                                 PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }
@@ -777,12 +777,12 @@ public class ApiManager {
                                             final String freeTrialPlanId = "249";
                                             // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
-                                            if (planId.equals(freeTrialPlanId) && isActive == 1) {
+                                            if (planId.equals(freeTrialPlanId) || planId.equals("10") && isActive == 1) {
                                                 userProfile.setHasFreePlan(true);
                                             }
 
                                             // If user free plan is not available then this will check for subscribed user
-                                            if (!planId.equals(freeTrialPlanId) && (isActive == 1)) {
+                                            if (!planId.equals(freeTrialPlanId) && !planId.equals("10")  && (isActive == 1) ) {
                                                 userProfile.setHasSubscribedPlan(true);
                                                 PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }
