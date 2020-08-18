@@ -17,4 +17,7 @@
     <string name="Topbar_Title_Font">fonts/Lato-Bold.ttf</string>
 
     <string name="Settings_Font">fonts/SerifOffc.ttf</string>
+
+    <string name="UJ_Title">fonts/PlayfairDisplay-VariableFont_wght.ttf</string>
+    <string name="UJ_subtitle">fonts/OpenSans-Light.ttf</string>
 </resources>

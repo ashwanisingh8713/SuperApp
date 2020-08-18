@@ -206,8 +206,8 @@
     <string name="remove_all">Remove All</string>
     <string name="hint_search_bookmark">Search</string>
     <string name="the_hindu_requires_the_following_information">%s requires the following information</string>
-    <string name="test_email">123nsandro123@gmail.com</string>
-    <string name="test_password">123456@123</string>
+    <string name="test_email"></string>
+    <string name="test_password"></string>
     <string name="text_title_plan_page">The Hindu Subscription</string>
 
 </resources>

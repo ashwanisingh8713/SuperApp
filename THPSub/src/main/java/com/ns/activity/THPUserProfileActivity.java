@@ -18,6 +18,7 @@ import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnPlanInfoLoad;
@@ -525,17 +526,10 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     isRoot = false;
                                 } else if (paytmTransactionStatus.STATUS.equalsIgnoreCase("TXN_SUCCESS")) {
                                     if(from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
-                                        /*Alerts.showSnackbarOnTop(THPUserProfileActivity.this, "Transaction Successful");
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                IntentUtil.openHomeArticleOptionActivity(THPUserProfileActivity.this);
-                                                IntentUtil.clearAllPreviousActivity(THPUserProfileActivity.this);
-                                            }
-                                        }, 2500);*/
                                         Alerts.showToastAtCenter(THPUserProfileActivity.this, "Transaction Successful");
                                         IntentUtil.openHomeArticleOptionActivity(THPUserProfileActivity.this);
                                         IntentUtil.clearAllPreviousActivity(THPUserProfileActivity.this);
+                                        DefaultPref.getInstance(THPUserProfileActivity.this).setUserJourneyLoaded(true);
 
                                     } else {
                                         fragment = TxnStatusFragment.getInstance("success", "");

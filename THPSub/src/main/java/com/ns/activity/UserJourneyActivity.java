@@ -36,7 +36,6 @@ public class UserJourneyActivity extends BaseAcitivityTHP {
         mDotsIndicator_ = findViewById(R.id.spring_dots_indicator_);
         journeyNextBtn = findViewById(R.id.journeyNextBtn);
 
-
         mViewPager.setAdapter(new UserJourneyAdapter(this));
         mDotsIndicator.setViewPager(mViewPager);
         mDotsIndicator_.setViewPager(mViewPager);
@@ -53,7 +52,8 @@ public class UserJourneyActivity extends BaseAcitivityTHP {
                     journeyNextBtn.setText("Complete");
                     journeyNextBtn.setBackgroundColor(ResUtil.getColor(getResources(), R.color.uj_complete));
                 } else {
-                    journeyNextBtn.setText("Next :: "+getString(R.string.type_device));
+                    //journeyNextBtn.setText("Next :: "+getString(R.string.type_device));
+                    journeyNextBtn.setText("Next");
                     journeyNextBtn.setTextColor(ResUtil.getColor(getResources(), R.color.uj_next));
                     journeyNextBtn.setBackground(null);
                 }
@@ -66,7 +66,11 @@ public class UserJourneyActivity extends BaseAcitivityTHP {
         });
 
         journeyNextBtn.setOnClickListener(v->{
-            IntentUtil.openSubscriptionActivity(this, THPConstants.FROM_USER_JOURNEY);
+            if(mViewPager.getCurrentItem() == mViewPager.getAdapter().getCount()-1) {
+                IntentUtil.openSubscriptionActivity(this, THPConstants.FROM_USER_JOURNEY);
+            } else {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
+            }
         });
 
 

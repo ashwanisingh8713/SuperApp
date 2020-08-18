@@ -13,7 +13,7 @@ public class USPData {
 
     private boolean STATUS;
     private String STATUS_MSG;
-    private DATABean DATA;
+    private USPDATABean DATA;
 
     public boolean isSTATUS() {
         return STATUS;
@@ -31,15 +31,15 @@ public class USPData {
         this.STATUS_MSG = STATUS_MSG;
     }
 
-    public DATABean getDATA() {
+    public USPDATABean getDATA() {
         return DATA;
     }
 
-    public void setDATA(DATABean DATA) {
+    public void setDATA(USPDATABean DATA) {
         this.DATA = DATA;
     }
 
-    public static class DATABean {
+    public static class USPDATABean {
         /**
          * Dark : {"urls":["http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/becomeAMember.png","http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/briefing.png","http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/myStories.png","http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/personalisedRecommendation.png","http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/adFree.png","http://3.0.22.177/admin/assets/images/usp/th/Dark/xxhdpi/fasterPage.png"]}
          * Light : {"urls":["http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/becomeAMember.png","http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/briefing.png","http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/myStories.png","http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/personalisedRecommendation.png","http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/adFree.png","http://3.0.22.177/admin/assets/images/usp/th/Light/xxhdpi/fasterPage.png"]}

@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.netoperation.net.ApiManager;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.activity.AppTabActivity;
 import com.ns.activity.THPUserProfileActivity;
@@ -317,6 +318,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
                 if(mFrom != null && mFrom.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
                     IntentUtil.openHomeArticleOptionActivity((AppCompatActivity) getActivity());
                     IntentUtil.clearAllPreviousActivity((AppCompatActivity) getActivity());
+                    DefaultPref.getInstance(getActivity()).setUserJourneyLoaded(true);
                 }
             }
 

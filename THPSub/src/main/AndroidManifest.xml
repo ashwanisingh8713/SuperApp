@@ -138,11 +138,11 @@
             android:name="com.ns.activity.ConfigListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <service android:name="com.netoperation.config.download.IconDownloadService"

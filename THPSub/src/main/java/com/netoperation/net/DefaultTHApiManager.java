@@ -1,11 +1,9 @@
 package com.netoperation.net;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -58,7 +56,6 @@ import com.netoperation.model.USPData;
 import com.netoperation.model.UpdateModel;
 import com.netoperation.model.WidgetBean;
 import com.netoperation.retrofit.ReqBody;
-import com.netoperation.retrofit.ServiceAPIs;
 import com.netoperation.retrofit.ServiceFactory;
 import com.netoperation.util.AppDateUtil;
 import com.netoperation.util.DefaultPref;
@@ -72,7 +69,6 @@ import com.ns.utils.BLConstants;
 import com.ns.utils.RealmSupport;
 import com.ns.utils.ResUtil;
 import com.ns.utils.RowIds;
-import com.ns.utils.THPConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +80,6 @@ import java.util.stream.Collectors;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -94,7 +89,6 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.Sort;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DefaultTHApiManager {
 
@@ -1665,11 +1659,11 @@ public class DefaultTHApiManager {
 
     }
 
-    public static void getGuideOverlay(Context context, RequestCallback<USPData.DATABean.GuideOverlay> requestCallback) {
+    public static void getGuideOverlay(Context context, RequestCallback<USPData.USPDATABean.GuideOverlay> requestCallback) {
         ServiceFactory.getServiceAPIs().getUSP(BuildConfig.GUIDE_OVERLAY_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
                 .subscribeOn(Schedulers.io())
                 .map(uspData->{
-                    USPData.DATABean.GuideOverlay guideOverlay = uspData.getDATA().getAndroid();
+                    USPData.USPDATABean.GuideOverlay guideOverlay = uspData.getDATA().getAndroid();
                     return guideOverlay;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
