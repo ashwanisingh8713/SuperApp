@@ -719,7 +719,6 @@ public class SplashActivity extends BaseAcitivityTHP {
             IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
         } else {
             IntentUtil.openUserJourneyActivity(SplashActivity.this);
-//            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
         }
     }
 
@@ -729,7 +728,12 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchHomeProceeded = true;
             return;
         }
-        IntentUtil.openMainTabPage(SplashActivity.this);
+        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+            IntentUtil.openMainTabPage(SplashActivity.this);
+        }
+        else {
+            IntentUtil.openUserJourneyActivity(SplashActivity.this);
+        }
     }
 
     private boolean isConfigurationMsgShown = false;

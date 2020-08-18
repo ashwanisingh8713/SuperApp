@@ -42,14 +42,10 @@ import com.ns.utils.ResUtil;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.view.NSEditText;
 import com.ns.view.RecyclerViewPullToRefresh;
-import com.ns.view.layout.NSLinearLayout;
 import com.ns.view.text.CustomTextView;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -546,11 +542,10 @@ public class THP_BookmarksFragment extends BaseFragmentTHP implements RecyclerVi
         builder.setPositiveButton("Yes", (dialog, id) -> {
             dialog.dismiss();
             //Clear Bookmarks
-            mDisposable.add(ApiManager.deleteAllBookmarks(getActivity())
-                    .subscribe(isAllDeleted -> {
+            mDisposable.add(ApiManager.deleteAllNonPremiumBookmarks(getActivity())
+                    .subscribe(premiumBookmarkCount -> {
                         Log.i("", "");
-                        mRecyclerAdapter.clearData();
-                        showEmptyLayout();
+                        offline(NetConstants.G_BOOKMARK_PREMIUM, true);
                     }, throwable -> {
                         Log.i("", "");
                     }));
