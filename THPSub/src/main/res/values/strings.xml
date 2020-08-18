@@ -209,5 +209,7 @@
     <string name="test_email"><!--ns123ashwani@gmail.com--></string>
     <string name="test_password"><!--123456@123--></string>
     <string name="text_title_plan_page">The Hindu Subscription</string>
+    <string name="accountCreatedMessage">You have unlocked 14 days free trial for The Hindu Premium</string>
+
 
 </resources>

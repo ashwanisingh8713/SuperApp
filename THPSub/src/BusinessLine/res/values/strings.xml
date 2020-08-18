@@ -17,4 +17,5 @@
     <string name="Topbar_Title_Font">fonts/Lato-Bold.ttf</string>
 
     <string name="Settings_Font">fonts/SerifOffc.ttf</string>
+    <string name="accountCreatedMessage">You have unlocked 14 days free trial for The Hindu Business Line Premium</string>
 </resources>

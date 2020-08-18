@@ -50,7 +50,7 @@
                 android:alpha="0.6"
                 app:textType="M"
                 android:letterSpacing="0.03"
-                android:text="You have unlocked 14 days free trial for The Hindu Premium"
+                android:text="@string/accountCreatedMessage"
                 app:font_path="@string/THP_FiraSans_Regular"
                 />
 
