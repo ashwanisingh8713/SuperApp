@@ -52,7 +52,6 @@ android {
         config {
             keyAlias 'mobstacapps'
             keyPassword 'L$wgnoXk'
-            //storeFile file('/Users/apple/OfficeProjSample/SuperApp/releaseBuild/MobStacApps.keystore')
             storeFile file('../releaseBuild/MobStacApps.keystore')
             storePassword 'crMH5ui9u3NUL1UK'
         }
@@ -61,7 +60,7 @@ android {
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "APP_ENVIROMENT", "\"development\""
+            buildConfigField "String", "APP_ENVIROMENT", "\"thg\""
             signingConfig signingConfigs.config
             minifyEnabled false
             debuggable true
@@ -132,8 +131,14 @@ android {
             buildConfigField "String", "ORIGIN_STAGING", "\"https://alphath.businessline.co.in\""
             buildConfigField "String", "ORIGIN_URL", "\"www.thehindubusinessline.com\""
 
+            buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle/thehindubl\""
+            buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration/thehindubl\""
+
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
+
+            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
 
             buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
             buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
@@ -164,9 +169,9 @@ android {
             resValue "string", "custom_web_client_id", "958742245699-43e2kqr95pqabssmhoptiodd4c5h78f9.apps.googleusercontent.com"
         }
         TheHindu {
-            versionCode 82
+            versionCode 84
             def appName = "The Hindu"
-            versionName "1.3"
+            versionName "Beta_3.8.16_P"
 
             dimension "version"
             applicationId "com.mobstac.thehindu"
@@ -181,6 +186,9 @@ android {
             buildConfigField "String", "ORIGIN_PRODUCATION", "\"https://www.thehindu.com\""
             buildConfigField "String", "ORIGIN_STAGING", "\"https://alphath.thehindu.co.in\""
             buildConfigField "String", "ORIGIN_URL", "\"www.thehindu.com\""
+
+            buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle/thehindu\""
+            buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration/thehindu\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
@@ -256,6 +264,13 @@ android {
             outputFileName = "${buildName}.apk"
         }
 
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 
 }
