@@ -91,7 +91,7 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
         mWebView = view.findViewById(R.id.webViewRecoPlans);
 
         initiateWebView();
-        if(ResUtil.isEmpty(mFrom) || mFrom.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE)) {
+        if(ResUtil.isEmpty(mFrom) || mFrom.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || mFrom.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
             view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             loadPlanRequestApi();
 //            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);

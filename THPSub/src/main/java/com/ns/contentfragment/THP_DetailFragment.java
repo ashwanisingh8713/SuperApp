@@ -465,7 +465,8 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
                 || mFrom.equals(NetConstants.G_BOOKMARK_DEFAULT)
                 || mFrom.equals(NetConstants.RECO_TEMP_NOT_EXIST)
                 || mFrom.equals(NetConstants.G_NOTIFICATION)
-                || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)) {
+                || mFrom.equals(NetConstants.PS_ADD_ON_SECTION)
+                || mArticleBean.getGroupType().equalsIgnoreCase(NetConstants.G_BOOKMARK_DEFAULT)) {
             mArticleBean.setGroupType(NetConstants.G_BOOKMARK_DEFAULT);
             mArticleBean.setIsBookmark(1);
             // To Create at App end
