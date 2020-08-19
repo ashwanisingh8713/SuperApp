@@ -1236,41 +1236,20 @@ public class DefaultTHApiManager {
         return ServiceFactory.getServiceAPIs().configUpdateCheck(BuildConfig.CONFIG_UPDATE_CHECK_URL, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
                 .subscribeOn(Schedulers.io())
                 .timeout(30, TimeUnit.SECONDS)
-                .map(jsonElement -> {
-                    if (((JsonObject) jsonElement).has("STATUS_MSG")) {
-                        String STATUS_MSG = ((JsonObject) jsonElement).get("STATUS_MSG").getAsString();
-                        if(STATUS_MSG.equalsIgnoreCase("true")) {
-                            JsonObject jsonObject = ((JsonObject) jsonElement).get("DATA").getAsJsonObject();
-                            if(jsonObject.has("lastUpdatedTime")) {
-                                String lastUpdatedTime = jsonObject.get("lastUpdatedTime").getAsString();
-                                THPDB thpdb = THPDB.getInstance(context);
-                                DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
-                                TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
-                                if(tableConfiguration == null) {
-                                    return true;
-                                }
-                                String dbLut = tableConfiguration.getLastServerUpdateTime();
-                                if (lastUpdatedTime.equalsIgnoreCase(dbLut)) {
-                                    return false;
-                                }
-                            }
+                .map(configUpdateCheck -> {
+
+                    if(configUpdateCheck.isSTATUS()) {
+                        String lastUpdatedTime = configUpdateCheck.getDATA().getLastUpdatedTime();
+                        String savedLUT = DefaultPref.getInstance(context).getConfigLUT();
+                        if (lastUpdatedTime.equalsIgnoreCase(savedLUT)) {
+                            return false;
+                        } else {
+                            DefaultPref.getInstance(context).setConfigLUT(lastUpdatedTime);
+                            return true;
                         }
                     }
 
-                    /*if (((JsonObject) jsonElement).has("lastUpdatedTime")) {
-                        String lastUpdatedTime = ((JsonObject) jsonElement).get("lastUpdatedTime").getAsString();
-                        THPDB thpdb = THPDB.getInstance(context);
-                        DaoConfiguration daoConfiguration = thpdb.daoConfiguration();
-                        TableConfiguration tableConfiguration = daoConfiguration.getConfiguration();
-                        if(tableConfiguration == null) {
-                            return true;
-                        }
-                        String dbLut = tableConfiguration.getLastServerUpdateTime();
-                        if (lastUpdatedTime.equalsIgnoreCase(dbLut)) {
-                            return false;
-                        }
-                    }*/
-                    return true;
+                    return false;
                 });
 
     }

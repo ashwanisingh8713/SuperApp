@@ -182,7 +182,7 @@ public class SocialLoginUtil {
                                 Alerts.showAlertDialogOKBtn(mActivity, "", keyValueModel.getName());
                             } else {
                                 // Making server request to get User Info
-                                ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, "google", "google")
+                                ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, userEmail, socialId)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(userProfile->{
 
@@ -323,7 +323,7 @@ public class SocialLoginUtil {
                                             Alerts.showAlertDialogOKBtn(mActivity, "", keyValueModel.getName());
                                         } else {
                                             // Making server request to get User Info
-                                            ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, "facebook", "facebook")
+                                            ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, userEmail, socialId)
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe(userProfile->{
 
@@ -522,7 +522,7 @@ public class SocialLoginUtil {
                                 Alerts.showAlertDialogOKBtn(mActivity, "", keyValueModel.getName());
                             } else {
                                 // Making server request to get User Info
-                                ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, "twitter", "twitter")
+                                ApiManager.getUserInfoObject(mActivity, keyValueModel.getToken(), BuildConfig.SITEID, ResUtil.getDeviceId(mActivity), userId, userEmail, socialId)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(userProfile->{
 
