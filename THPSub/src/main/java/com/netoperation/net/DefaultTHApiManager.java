@@ -979,7 +979,11 @@ public class DefaultTHApiManager {
 
 
 
-    public static Disposable mpConfigurationAPI(Context context, String urlConfigAPI) {
+    public static Disposable mpConfigurationAPI(Context context) {
+        String urlConfigAPI = BuildConfig.MP_CYCLE_CONFIGURATION_API_URL;
+        if (!BuildConfig.IS_PRODUCTION) {
+            urlConfigAPI = BuildConfig.MP_CYCLE_CONFIGURATION_API_URL_STAGING;
+        }
         Observable<MPConfigurationModel> observable = ServiceFactory.getServiceAPIs().mpConfigurationAPI(urlConfigAPI);
         return observable
                 .subscribeOn(Schedulers.newThread())
@@ -1052,7 +1056,11 @@ public class DefaultTHApiManager {
         });
     }
 
-    public static Disposable mpCycleDurationAPI(Context context, String urlCycleAPI, String urlConfigAPI, RequestCallback requestCallback) {
+    public static Disposable mpCycleDurationAPI(Context context, RequestCallback requestCallback) {
+        String urlCycleAPI = BuildConfig.MP_CYCLE_API_URL;
+        if (!BuildConfig.IS_PRODUCTION) {
+            urlCycleAPI = BuildConfig.MP_CYCLE_API_URL_STAGING;
+        }
         Observable<MPCycleDurationModel> observable = ServiceFactory.getServiceAPIs().mpCycleDurationAPI(urlCycleAPI);
         return observable
                 .timeout(30, TimeUnit.SECONDS)
@@ -1093,7 +1101,7 @@ public class DefaultTHApiManager {
                     mpTableDao.insertMpTableData(table);
 
                     // It calls configuration api, whenever cycle api is called.
-                    mpConfigurationAPI(context, urlConfigAPI);
+                    mpConfigurationAPI(context);
 
                     return "";
                 })
@@ -1421,7 +1429,7 @@ public class DefaultTHApiManager {
                             isUserCanReRead = true;
                         }
                         int size = allRestrictedArticleIds.size();
-                        if (size == 0) {
+                        if (size == 0 && isRestricted) {
                             long currentTimeInMillis = System.currentTimeMillis();
                             //Save startTime in DefaultPref
                             DefaultPref.getInstance(context).setMPStartTimeInMillis(currentTimeInMillis);

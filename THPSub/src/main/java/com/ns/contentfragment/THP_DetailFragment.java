@@ -900,11 +900,13 @@ public class THP_DetailFragment extends BaseFragmentTHP implements RecyclerViewP
         postCommentBtnModel.setBean(bean);
         mRecyclerAdapter.addData(postCommentBtnModel);
 
-        AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, RowIds.rowId_taboolaModel());
-        taboolaModel.setBean(bean);
-        mRecyclerAdapter.addData(taboolaModel);
+        if (!PremiumPref.getInstance(getContext()).isUserLoggedIn() || !PremiumPref.getInstance(getContext()).isUserAdsFree()) {
+            AppTabContentModel taboolaModel = new AppTabContentModel(BaseRecyclerViewAdapter.VT_TABOOLA_WIDGET, RowIds.rowId_taboolaModel());
+            taboolaModel.setBean(bean);
+            mRecyclerAdapter.addData(taboolaModel);
 
-        loadAdvertisiment();
+            loadAdvertisiment();
+        }
 
         mPullToRefreshLayout.hideProgressBar();
     }
