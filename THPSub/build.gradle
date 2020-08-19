@@ -141,6 +141,8 @@ android {
 
             buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle/thehindubl\""
             buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration/thehindubl\""
+            buildConfigField "String", "MP_CYCLE_API_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/meterPaywall/cycle/thehindubl\""
+            buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/meterPaywall/configuration/thehindubl\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
@@ -197,6 +199,8 @@ android {
 
             buildConfigField "String", "MP_CYCLE_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/cycle/thehindu\""
             buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL", "\"https://appsearch.thehindu.com/admin/meterPaywall/configuration/thehindu\""
+            buildConfigField "String", "MP_CYCLE_API_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/meterPaywall/cycle/thehindu\""
+            buildConfigField "String", "MP_CYCLE_CONFIGURATION_API_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/meterPaywall/configuration/thehindu\""
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""

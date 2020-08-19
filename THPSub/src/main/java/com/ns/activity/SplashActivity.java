@@ -373,8 +373,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     }
 
     private void callMpApi() {
-        mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, BuildConfig.MP_CYCLE_API_URL,
-                BuildConfig.MP_CYCLE_CONFIGURATION_API_URL, new RequestCallback() {
+        mDisposable.add(DefaultTHApiManager.mpCycleDurationAPI(this, new RequestCallback() {
                     @Override
                     public void onNext(Object o) {
                         sendHandlerMsg(WHAT_ROUTE_FOR_SCREEN, "Metered Paywall is updated from server", "Metered Paywall Cycle", null);
@@ -467,7 +466,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                 }
 
                 //Metered Paywall Configs API calls.
-                mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL));
+                mDisposable.add(DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this));
             }
         });
     }
@@ -553,7 +552,7 @@ public class SplashActivity extends BaseAcitivityTHP {
                             Log.i(TAG, "SplashActivity :: Widget :: Sent Server Request to get latest data");
 
                             //Metered Paywall Configs API calls.
-                            DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+                            DefaultTHApiManager.mpConfigurationAPI(SplashActivity.this);
                         }, throwable -> {
 
                         });
