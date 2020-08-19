@@ -54,7 +54,7 @@ public class NotificationArticleActivity extends BaseAcitivityTHP {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getDetailToolbar().setTitle("Notification");
+        getDetailToolbar().setTitle("Notifications");
         //Show ToolBar icons at Start
         getDetailToolbar().showNotificationAndBookmarkeIcons(false);
 
