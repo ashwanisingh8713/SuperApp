@@ -403,7 +403,11 @@ public class SplashActivity extends BaseAcitivityTHP {
                 .subscribe(isAvailable->{
                     if(isAvailable) {
                         sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER, "App Configuration update is available", "Configuration Update API", null);
-                    } else {
+                    }
+                    else if(!DefaultPref.getInstance(SplashActivity.this).isConfigurationOnceLoaded()) {
+                        sendHandlerMsg(WHAT_CONFIG_FETCH_SERVER, "App Configuration update is available", "Configuration Update API", null);
+                    }
+                    else {
                         sendHandlerMsg(WHAT_MP, "NO, App Configuration update is Not available ", "Configuration Update API", null);
                     }
                 }, throwable -> {

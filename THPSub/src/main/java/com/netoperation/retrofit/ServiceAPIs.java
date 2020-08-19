@@ -2,6 +2,7 @@ package com.netoperation.retrofit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.netoperation.model.BreifingModelNew;
+import com.netoperation.model.ConfigUpdateCheck;
 import com.netoperation.model.ConfigurationData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.KeyValueModel;
@@ -196,8 +197,8 @@ public interface ServiceAPIs {
     Observable<ConfigurationData> config(@Url String url, @Field("authKey") String authKey, @Field("id") String id, @Field("resolution") String resolution);
 
     @FormUrlEncoded
-    @POST("") // configuration api
-    Observable<JsonElement> configUpdateCheck(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
+    @POST("") // configuration update check api
+    Observable<ConfigUpdateCheck> configUpdateCheck(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
 
     @FormUrlEncoded
     @POST("") // Force Update.php

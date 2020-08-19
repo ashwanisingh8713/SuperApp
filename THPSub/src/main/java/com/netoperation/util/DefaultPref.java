@@ -378,4 +378,13 @@ public class DefaultPref {
             return "";
         }
     }
+
+    public void setConfigLUT(String configLut) {
+        mEditor.putString("configLut", configLut);
+        mEditor.commit();
+    }
+
+    public String getConfigLUT() {
+        return mPreferences.getString("configLut", "");
+    }
 }
