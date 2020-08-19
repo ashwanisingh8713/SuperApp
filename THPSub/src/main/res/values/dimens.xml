@@ -298,4 +298,9 @@
     <dimen name="detail_author_size">18sp</dimen>
     <dimen name="detail_location_size">14sp</dimen>
 
+    <dimen name="uj_dot_bottom_margin">25dp</dimen>
+    <dimen name="uj_next_bottom_margin">15dp</dimen>
+    <dimen name="uj_title_top_margin">15dp</dimen>
+    <dimen name="uj_subtitle_top_margin">7dp</dimen>
+
 </resources>

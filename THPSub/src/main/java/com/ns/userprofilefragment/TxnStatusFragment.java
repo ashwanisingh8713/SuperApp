@@ -75,8 +75,7 @@ public class TxnStatusFragment extends BaseFragmentTHP {
         loadUserData();
 
         if (mStatus.equalsIgnoreCase("success")) {
-            view.findViewById(R.id.viewSubscriptionBtn_Txt).setOnClickListener(view1 ->
-            {
+            view.findViewById(R.id.viewSubscriptionBtn_Txt).setOnClickListener(view1 -> {
                 SubscriptionStep_3_Fragment fragment = SubscriptionStep_3_Fragment.getInstance(THPConstants.FROM_PROFILE_VIEWALL);
                 FragmentUtil.replaceFragmentAnim((AppCompatActivity)getActivity(), R.id.parentLayout, fragment,
                         FragmentUtil.FRAGMENT_ANIMATION, true);

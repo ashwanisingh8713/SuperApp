@@ -191,23 +191,28 @@ public interface ServiceAPIs {
     @GET("") // newsLetter.php
     Observable<SectionContentFromServer> newsDigest(@Url String url);
 
+    @FormUrlEncoded
     @POST("") // configuration api
-    Observable<ConfigurationData> config(@Url String url, @Body JsonObject jsonObject);
+    Observable<ConfigurationData> config(@Url String url, @Field("authKey") String authKey, @Field("id") String id, @Field("resolution") String resolution);
 
+    @FormUrlEncoded
     @POST("") // configuration api
-    Observable<JsonElement> configUpdateCheck(@Url String url, @Body JsonObject jsonObject);
+    Observable<JsonElement> configUpdateCheck(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
 
+    @FormUrlEncoded
     @POST("") // Force Update.php
-    Observable<ForceUpdateModel> forceUpdate(@Url String url, @Body JsonObject jsonObject);
+    Observable<ForceUpdateModel> forceUpdate(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
 
     @GET("") // BL SENSEX Widget api
     Observable<NSE_BSE_Data> bl_sensexWidget(@Url String url);
 
-    @GET("") //Menu Sequence API
-    Single<JsonElement> getMenuSequence(@Url String url);
+    @FormUrlEncoded
+    @POST("") //Menu Sequence API
+    Single<JsonElement> getMenuSequence(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
 
+    @FormUrlEncoded
     @POST("") //USP and Guide Overlay API
-    Observable<USPData> getUSP(@Url String url, @Body JsonObject jsonObject);
+    Observable<USPData> getUSP(@Url String url, @Field("authKey") String authKey, @Field("id") String id, @Field("resolution") String resolution);
 
 
 }

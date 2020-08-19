@@ -19,11 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -33,7 +30,6 @@ import com.main.SuperApp;
 import com.netoperation.config.download.Download;
 import com.netoperation.config.download.IconDownloadService;
 import com.netoperation.config.model.ImportantMsg;
-import com.netoperation.config.model.OtherIconsDownloadUrls;
 import com.netoperation.db.THPDB;
 import com.netoperation.default_db.DaoWidget;
 import com.netoperation.default_db.TableConfiguration;
@@ -47,7 +43,6 @@ import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.alerts.ConfigurationMsgDialog;
 import com.ns.callbacks.OnDialogBtnClickListener;
-import com.ns.clevertap.CleverTapUtil;
 import com.ns.thpremium.BuildConfig;
 import com.ns.thpremium.R;
 import com.ns.utils.CallBackRelogin;
@@ -62,7 +57,6 @@ import com.ns.view.text.ArticleTitleTextView;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
 
@@ -158,9 +152,9 @@ public class SplashActivity extends BaseAcitivityTHP {
 
         // Guide Overflow Api conditional call
         if(DefaultPref.getInstance(this).getGuideOverlayUrl(true) == null) {
-            DefaultTHApiManager.getGuideOverlay(this, new RequestCallback<USPData.DATABean.GuideOverlay>() {
+            DefaultTHApiManager.getGuideOverlay(this, new RequestCallback<USPData.USPDATABean.GuideOverlay>() {
                 @Override
-                public void onNext(USPData.DATABean.GuideOverlay guideOverlay) {
+                public void onNext(USPData.USPDATABean.GuideOverlay guideOverlay) {
                     String listing = guideOverlay.getListing();
                     String detail = guideOverlay.getDetail();
                     PicassoUtil.loadImage(SplashActivity.this, new ImageView(SplashActivity.this), listing);
@@ -715,7 +709,11 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchOnBoardingProceeded = true;
             return;
         }
-        IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+            IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
+        } else {
+            IntentUtil.openUserJourneyActivity(SplashActivity.this);
+        }
     }
 
     private void launchTabScreen(String from) {
@@ -724,7 +722,12 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchHomeProceeded = true;
             return;
         }
-        IntentUtil.openMainTabPage(SplashActivity.this);
+        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+            IntentUtil.openMainTabPage(SplashActivity.this);
+        }
+        else {
+            IntentUtil.openUserJourneyActivity(SplashActivity.this);
+        }
     }
 
     private boolean isConfigurationMsgShown = false;
