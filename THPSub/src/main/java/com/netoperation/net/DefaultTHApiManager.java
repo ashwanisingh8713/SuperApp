@@ -1428,7 +1428,7 @@ public class DefaultTHApiManager {
                             isUserCanReRead = true;
                         }
                         int size = allRestrictedArticleIds.size();
-                        if (size == 0) {
+                        if (size == 0 && isRestricted) {
                             long currentTimeInMillis = System.currentTimeMillis();
                             //Save startTime in DefaultPref
                             DefaultPref.getInstance(context).setMPStartTimeInMillis(currentTimeInMillis);
