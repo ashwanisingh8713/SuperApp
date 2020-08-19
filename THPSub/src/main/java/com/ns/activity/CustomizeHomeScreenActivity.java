@@ -160,7 +160,7 @@ public class CustomizeHomeScreenActivity extends BaseAcitivityTHP {
                     })
                     .subscribe(onSuccess -> {
                         //Metered Paywall Configs API calls.
-                        DefaultTHApiManager.mpConfigurationAPI(CustomizeHomeScreenActivity.this, BuildConfig.MP_CYCLE_CONFIGURATION_API_URL);
+                        DefaultTHApiManager.mpConfigurationAPI(CustomizeHomeScreenActivity.this);
                     }, throwable -> {
 
                     });
