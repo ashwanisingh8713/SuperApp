@@ -122,10 +122,28 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.ns.activity.StocksDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.ns.activity.UserJourneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:label="TH CONFIG"
+            android:name="com.ns.activity.ConfigListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
 
         <service android:name="com.netoperation.config.download.IconDownloadService"
             android:exported="false"
@@ -251,7 +269,7 @@
 <!--        In-App Notification-->
         <meta-data
             android:name="CLEVERTAP_INAPP_EXCLUDE"
-            android:value="AppLocationActivity,IciciPGActivity,SignInAndUpActivity,SplashActivity,THP_YouTubeFullScreenActivity,VideoPlayerActivity" />
+            android:value="SplashActivity,UserJourneyActivity, AppLocationActivity,IciciPGActivity,SignInAndUpActivity,SplashActivity,THP_YouTubeFullScreenActivity,VideoPlayerActivity, CustomizeHomeScreenActivity, THPUserProfileActivity" />
 
         <!-- End CleverTap -->
 

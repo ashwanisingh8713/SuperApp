@@ -1040,15 +1040,15 @@ public class ApiManager {
                 }).observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Single<Boolean> deleteAllBookmarks(Context context) {
+    public static Single<Integer> deleteAllNonPremiumBookmarks(Context context) {
         return Single.just(NetConstants.BOOKMARK_IN_ONE)
                 .subscribeOn(Schedulers.io())
                 .map(val->{
                     THPDB thpdb = THPDB.getInstance(context);
                     thpdb.bookmarkTableDao().deleteAll();
                     int dCountsDD = thpdb.daoRead().deleteReadArticleByGroupType(NetConstants.G_BOOKMARK_DEFAULT);
-                    int dCountsP = thpdb.daoRead().deleteReadArticleByGroupType(NetConstants.G_BOOKMARK_PREMIUM);
-                    return true;
+                    int dCountsP = thpdb.daoRead().getAllReadArticlesCount(NetConstants.G_BOOKMARK_PREMIUM);
+                    return dCountsP;
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }

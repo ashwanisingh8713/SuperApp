@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.netoperation.model.TxnDataBean;
 import com.netoperation.model.UserProfile;
 import com.netoperation.net.ApiManager;
 import com.netoperation.net.DefaultTHApiManager;
+import com.netoperation.util.DefaultPref;
 import com.netoperation.util.PremiumPref;
 import com.ns.alerts.Alerts;
 import com.ns.callbacks.OnPlanInfoLoad;
@@ -81,9 +83,9 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
 
        from = getIntent().getExtras().getString("from");
 
-        if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE) || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)) {
-            //SubscriptionStep_1_Fragment fragment = SubscriptionStep_1_Fragment.getInstance(from);
-            //Filter plan Offer Type
+        if (from != null && from.equalsIgnoreCase(THPConstants.FROM_SUBSCRIPTION_EXPLORE)
+                || from.equalsIgnoreCase(THPConstants.FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE)
+                || from.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
             String planOffer = getIntent().getExtras().getString("planOffer");
             RecoPlansWebViewFragment fragment = RecoPlansWebViewFragment.getInstance(from, planOffer);
             FragmentUtil.replaceFragmentAnim(this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, true);
@@ -515,7 +517,7 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                             .subscribe(val -> {
                                 hideProgressDialog();
                                 Log.i("Status", ""+val);
-                                TxnStatusFragment fragment;
+                                TxnStatusFragment fragment = null;
                                 boolean isRoot = true;
                                 mEndTime = System.currentTimeMillis();
                                 //Fail and success conditional implementation
@@ -523,7 +525,15 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     fragment = TxnStatusFragment.getInstance("pending", "Verifying transaction status failed in server");
                                     isRoot = false;
                                 } else if (paytmTransactionStatus.STATUS.equalsIgnoreCase("TXN_SUCCESS")) {
-                                    fragment = TxnStatusFragment.getInstance("success", "");
+                                    if(from != null && from.equalsIgnoreCase(THPConstants.FROM_USER_JOURNEY)) {
+                                        Alerts.showToastAtCenter(THPUserProfileActivity.this, "Transaction Successful");
+                                        IntentUtil.openHomeArticleOptionActivity(THPUserProfileActivity.this);
+                                        IntentUtil.clearAllPreviousActivity(THPUserProfileActivity.this);
+                                        DefaultPref.getInstance(THPUserProfileActivity.this).setUserJourneyLoaded(true);
+
+                                    } else {
+                                        fragment = TxnStatusFragment.getInstance("success", "");
+                                    }
                                    // CleverTapUtil.cleverTapEventPaymentStatus(this,"success",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
                                     THPFirebaseAnalytics.setFirbasePaymentSuccessFailedEvent(THPUserProfileActivity.this,"Action","success",mpackValue,mpackValidity,mpackName,mStartTime,mEndTime);
 
@@ -548,7 +558,9 @@ public class THPUserProfileActivity extends AppLocationActivity implements OnSub
                                     fragment = TxnStatusFragment.getInstance("pending", paytmTransactionStatus.RESPMSG);
                                     isRoot = false;
                                 }
-                                FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
+                                if(fragment != null) {
+                                    FragmentUtil.replaceFragmentAnim(THPUserProfileActivity.this, R.id.parentLayout, fragment, FragmentUtil.FRAGMENT_NO_ANIMATION, isRoot);
+                                }
 
                             }));
                 }, throwable -> {

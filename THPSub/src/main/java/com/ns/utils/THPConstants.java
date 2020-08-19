@@ -20,6 +20,7 @@ public class THPConstants {
     public static final String FROM_DELETE_ACCOUNT = "deleteAccount";
     public static final String FROM_PROFILE_VIEWALL = "profileViewAll";
     public static final String FROM_SUBSCRIPTION_EXPLORE = "subscriptionExplore";
+    public static final String FROM_USER_JOURNEY = "userJourney";
     public static final String FROM_NOTIFICATION_SUBSCRIPTION_EXPLORE = "subscriptionExploreNotification";
     public static final String FROM_USER_PROFILE = "userProfile";
     public static final String FROM_BookmarkListing = "BookmarkListing";

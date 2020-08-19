@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,18 @@ public class Alerts {
         View container = activity.findViewById(android.R.id.content);
         if (container != null) {
             Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    public static void showSnackbarOnTop(Activity activity, final String text) {
+        View container = activity.findViewById(android.R.id.content);
+        if (container != null) {
+            Snackbar snack = Snackbar.make(container, text, Snackbar.LENGTH_LONG);
+            View view = snack.getView();
+            FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
+            params.gravity = Gravity.TOP;
+            view.setLayoutParams(params);
+            snack.show();
         }
     }
 
