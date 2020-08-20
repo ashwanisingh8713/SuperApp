@@ -1146,6 +1146,11 @@ public class ApiManager {
                         bean.setShort_de(articleBean.getShort_de());
                         bean.setAdd_pos(articleBean.getAdd_pos());
                         bean.setP4_pos(articleBean.getP4_pos());
+                        //Article link required for Infinite Taboola View fix in ReadLater detail page
+                        bean.setAl(articleBean.getAl());
+                        bean.setWeblink(articleBean.getWeblink());
+                        bean.setArticleUrl(articleBean.getArticleUrl());
+                        bean.setArticleLink(articleBean.getArticleLink());
 
                         THPDB thpdb = THPDB.getInstance(context);
                         TableBookmark tableBookmark = new TableBookmark(articleBean.getArticleId(), bean, articleBean.getGroupType());
