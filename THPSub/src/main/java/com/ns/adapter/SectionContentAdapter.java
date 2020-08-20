@@ -815,6 +815,11 @@ public class SectionContentAdapter extends BaseRecyclerViewAdapter {
 
             holder.mArticleTimeTextView.setText(timeDiff);
             holder.mArticleSectionName.setText(bean.getSname());
+            if (BuildConfig.IS_BL || mSectionId != null && mSectionId.equals(NetConstants.RECO_HOME_TAB)) {
+                holder.mArticleSectionName.setVisibility(View.VISIBLE);
+            } else {
+                holder.mArticleSectionName.setVisibility(View.GONE);
+            }
 
             holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
                 @Override

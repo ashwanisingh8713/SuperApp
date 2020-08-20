@@ -338,6 +338,7 @@ public class PremiumListingContentAdapter extends BaseRecyclerViewAdapter {
 
             holder.mArticleTimeTextView.setText(timeDiff);
             holder.mArticleSectionName.setText(bean.getSname());
+            holder.mArticleSectionName.setVisibility(View.GONE);
 
             holder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
