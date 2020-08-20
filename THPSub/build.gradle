@@ -25,20 +25,25 @@ android {
         buildConfigField "boolean", "IS_PRODUCTION", "false"
         buildConfigField "String", "LOCALE", "\"en\""
 
-        buildConfigField "String", "GUIDE_OVERLAY_URL", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overlay\""
-        buildConfigField "String", "UPS_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/usp\""
-        buildConfigField "String", "FORCE_UPDATE_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/forceUpdate\""
+        buildConfigField "String", "GUIDE_OVERLAY_URL", "\"https://appsearch.thehindu.com/admin/superapp/overlay\""
+        buildConfigField "String", "GUIDE_OVERLAY_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/superapp/overlay\""
+        buildConfigField "String", "UPS_URL", "\"https://appsearch.thehindu.com/admin/configurations/usp\""
+        buildConfigField "String", "UPS_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/usp\""
+        buildConfigField "String", "FORCE_UPDATE_URL", "\"https://appsearch.thehindu.com/admin/configurations/forceUpdate\""
+        buildConfigField "String", "FORCE_UPDATE_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/forceUpdate\""
 
         buildConfigField "String", "CONFIG_AUTH_KEY", "\"351ac88979c3fe2c50c065038a160039\""
 
-        buildConfigField "String", "CONFIG_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/loadById\""
-        buildConfigField "String", "CONFIG_UPDATE_CHECK_URL", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/lut\""
+        buildConfigField "String", "CONFIG_URL", "\"https://appsearch.thehindu.com/admin/configurations/loadById\""
+        buildConfigField "String", "CONFIG_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/loadById\""
+        buildConfigField "String", "CONFIG_UPDATE_CHECK_URL", "\"https://appsearch.thehindu.com/admin/configurations/lut\""
+        buildConfigField "String", "CONFIG_UPDATE_CHECK_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/lut\""
 
-        buildConfigField "String", "PRODUCTION_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/overflow\""
+        buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/admin/configurations/overflow\""
+        buildConfigField "String", "STAGING_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/overflow\""
 
         buildConfigField "String", "STATGGING_USERJOURNEY_PLAN_URL", "\"https://myaccount.thehindu.co.in/appview/115/android?type=onboard\""
-        buildConfigField "String", "STATGGING_SUBSCRIPTION_PLAN_REQUEST_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
-        buildConfigField "String", "PRODUCTION_SUBSCRIPTION_PLAN_REQUEST_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
+        //Todo Production UserJourney Url
 
         ndk {
             abiFilters 'armeabi-v7a', 'x86', 'armeabi', 'mips', 'arm64-v8a', 'x86_64'
@@ -147,8 +152,8 @@ android {
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
 
-            buildConfigField "String", "STATGGING_SUBSCRIPTION_WEB_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
-            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_WEB_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
+            buildConfigField "String", "STATGGING_SUBSCRIPTION_PLAN_REQUEST_URL", "\"http://hindumysqlstaging.ninestars.in/hindubl/subscription/\""
+            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_PLAN_REQUEST_URL", "\"https://appsearch.thehindu.com/hindubl/subscription/\""
 
             buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
             buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
@@ -204,6 +209,9 @@ android {
 
             buildConfigField "String", "STATGGING_PERSONALISE_URL", "\"https://myaccount.thehindu.co.in/js/preference.json\""
             buildConfigField "String", "PRODUCTION_PERSONALISE_URL", "\"https://subscription.thehindu.com/js/preference.json\""
+
+            buildConfigField "String", "STATGGING_SUBSCRIPTION_PLAN_REQUEST_URL", "\"http://hindumysqlstaging.ninestars.in/hindu/subscription/\""
+            buildConfigField "String", "PRODUCTION_SUBSCRIPTION_PLAN_REQUEST_URL", "\"https://appsearch.thehindu.com/hindu/subscription/\""
 
             buildConfigField "String", "STATGGING_PAYMENT_REDIRECT", "\"https://myaccount.thehindu.co.in/pgRedirect\""
             buildConfigField "String", "PRODUCTION_PAYMENT_REDIRECT", "\"https://subscription.thehindu.com/pgRedirect\""
