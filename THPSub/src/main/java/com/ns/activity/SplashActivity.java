@@ -712,11 +712,12 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchOnBoardingProceeded = true;
             return;
         }
-        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+       /* if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
             IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
         } else {
             IntentUtil.openUserJourneyActivity(SplashActivity.this);
-        }
+        }*/
+        IntentUtil.openHomeArticleOptionActivity(SplashActivity.this);
     }
 
     private void launchTabScreen(String from) {
@@ -725,12 +726,13 @@ public class SplashActivity extends BaseAcitivityTHP {
             isLaunchHomeProceeded = true;
             return;
         }
-        if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
+       /* if(DefaultPref.getInstance(this).isUserJourneyLoaded()) {
             IntentUtil.openMainTabPage(SplashActivity.this);
         }
         else {
             IntentUtil.openUserJourneyActivity(SplashActivity.this);
-        }
+        }*/
+        IntentUtil.openMainTabPage(SplashActivity.this);
     }
 
     private boolean isConfigurationMsgShown = false;
