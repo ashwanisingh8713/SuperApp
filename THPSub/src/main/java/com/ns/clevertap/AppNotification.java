@@ -51,13 +51,13 @@ public class AppNotification {
 
         NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        CharSequence name="APP ss";
-        String desc="this is notific";
-        int imp= NotificationManager.IMPORTANCE_HIGH;
-        final String ChannelID="TheHindu";
+        String desc="This is default notification channel";
+        int imp = NotificationManager.IMPORTANCE_HIGH;
+        String channelId = context.getString(R.string.default_notification_channel_id);
+        CharSequence channelName = context.getString(R.string.APP_NAME);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel mChannel = new NotificationChannel(ChannelID, name, imp);
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, imp);
             mChannel.setDescription(desc);
             mChannel.setLightColor(Color.CYAN);
             mChannel.canShowBadge();
@@ -67,17 +67,16 @@ public class AppNotification {
 
 
         final RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.custom_collapsed_notification);
-        if(BuildConfig.IS_BL) {
-
-        } else {
-            collapsedView.setImageViewResource(R.id.notificationLogo, R.mipmap.app_launcher);
-        }
+        //App launcher icon will be set from res file of each variant
+        collapsedView.setImageViewResource(R.id.notificationLogo, R.mipmap.app_launcher);
         collapsedView.setTextViewText(R.id.title_textview, body);
         collapsedView.setTextViewText(R.id.description_textview, title);
         collapsedView.setLong(R.id.time_textview, "setTime", System.currentTimeMillis());
 
         RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.custom_expanded_notification);
         try {
+            //App launcher icon will be set from res file of each variant
+            expandedView.setImageViewResource(R.id.notificationLogo, R.mipmap.app_launcher);
             expandedView.setTextViewText(R.id.title_textview, title);
             expandedView.setTextViewText(R.id.description_textview, body);
             expandedView.setLong(R.id.time_textview, "setTime", System.currentTimeMillis());
@@ -88,7 +87,7 @@ public class AppNotification {
             e.printStackTrace();
         }
 
-        Notification notification = new NotificationCompat.Builder(context, ChannelID)
+        Notification notification = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(icon)
                 .setContentTitle(body)
                 .setWhen(when)
