@@ -473,7 +473,8 @@ public class Topbar extends Toolbar {
         bookmarkParent.setVisibility(VISIBLE);
         mTextSizeImageView.setVisibility(VISIBLE);
         mBackImageView.setVisibility(VISIBLE);
-
+        // 14 = app:iconType="back"
+        mBackImageView.updateIcon(14);
     }
 
     public void DEFAULT_RESTRICTED_DETAIL_TOPBAR_CROWN() {

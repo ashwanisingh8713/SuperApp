@@ -26,6 +26,9 @@ public class ContentUtil {
             else if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR);
             }
+            else if(groupType.equals(NetConstants.G_NOTIFICATION)) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
+            }
 
         }
         else {
@@ -37,6 +40,9 @@ public class ContentUtil {
             }
             else if(groupType.equals(NetConstants.G_BOOKMARK_PREMIUM)) {
                 toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.PREMIUM_DETAIL_TOPBAR_CROWN);
+            }
+            else if(groupType.equals(NetConstants.G_NOTIFICATION)) {
+                toolbarChangeRequired.setTypeOfToolbar(ToolbarChangeRequired.DEFAULT_DETAIL_TOPBAR);
             }
         }
 

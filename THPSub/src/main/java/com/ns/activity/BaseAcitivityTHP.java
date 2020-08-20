@@ -87,13 +87,37 @@ public abstract class BaseAcitivityTHP extends AppCompatActivity implements Tool
                 getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getDark()));
             }
         } else {
-            if(sIsDayTheme) {
+           /* if(sIsDayTheme) {
                 getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
                 getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.topbar_light));
             } else {
                 getWindow().setNavigationBarColor(ResUtil.getColor(getResources(), R.color.topbar_dark));
                 getWindow().setStatusBarColor(ResUtil.getColor(getResources(), R.color.color_status_bar_dark));
-            }
+            }*/
+           refreshConfigurationInstance(new RequestCallback<TableConfiguration>() {
+               @Override
+               public void onNext(TableConfiguration tableConfiguration) {
+                   ColorOptionBean topSystemBarTheme = tableConfiguration.getAppTheme().getSystemTopBarBackground();
+                   ColorOptionBean bottomSystemBarTheme = tableConfiguration.getAppTheme().getSystemBottomBarBackground();
+                   if (sIsDayTheme) {
+                       getWindow().setNavigationBarColor(Color.parseColor(bottomSystemBarTheme.getLight()));
+                       getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getLight()));
+                   } else {
+                       getWindow().setNavigationBarColor(Color.parseColor(bottomSystemBarTheme.getDark()));
+                       getWindow().setStatusBarColor(Color.parseColor(topSystemBarTheme.getDark()));
+                   }
+               }
+
+               @Override
+               public void onError(Throwable t, String str) {
+
+               }
+
+               @Override
+               public void onComplete(String str) {
+
+               }
+           });
         }
 
         setContentView(layoutRes());
