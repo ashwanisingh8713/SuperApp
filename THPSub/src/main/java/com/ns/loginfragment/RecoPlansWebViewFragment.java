@@ -99,7 +99,11 @@ public class RecoPlansWebViewFragment extends BaseFragmentTHP implements OnBackP
             view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
             view.findViewById(R.id.backBtn).setVisibility(View.GONE);
             view.findViewById(R.id.pageTitle).setVisibility(View.GONE);
-            mWebView.loadUrl(BuildConfig.STATGGING_USERJOURNEY_PLAN_URL);
+            String url = BuildConfig.PRODUCTION_USERJOURNEY_PLAN_URL;
+            if (!BuildConfig.IS_PRODUCTION) {
+                url = BuildConfig.STATGGING_USERJOURNEY_PLAN_URL;
+            }
+            mWebView.loadUrl(url);
         }
 
 

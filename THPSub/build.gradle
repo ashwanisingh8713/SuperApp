@@ -43,7 +43,7 @@ android {
         buildConfigField "String", "STAGING_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/overflow\""
 
         buildConfigField "String", "STATGGING_USERJOURNEY_PLAN_URL", "\"https://myaccount.thehindu.co.in/appview/115/android?type=onboard\""
-        //Todo Production UserJourney Url
+        buildConfigField "String", "PRODUCTION_USERJOURNEY_PLAN_URL", "\"https://subscription.thehindu.com/appview/66/android?type=onboard\""
 
         ndk {
             abiFilters 'armeabi-v7a', 'x86', 'armeabi', 'mips', 'arm64-v8a', 'x86_64'
