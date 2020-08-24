@@ -122,7 +122,7 @@ public class THPImageGallaryVerticleActivity extends BaseAcitivityTHP implements
     }
 
     private void setToolbarTitle(int selectedPosition, int total) {
-        getDetailToolbar().setToolbarTitle("Photo "+selectedPosition+" of "+total);
+        getDetailToolbar().setToolbarTitle("Photos"/*+selectedPosition+" of "+total*/);
     }
 
 
