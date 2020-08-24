@@ -38,6 +38,7 @@ android {
         buildConfigField "String", "CONFIG_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/loadById\""
         buildConfigField "String", "CONFIG_UPDATE_CHECK_URL", "\"https://appsearch.thehindu.com/admin/configurations/lut\""
         buildConfigField "String", "CONFIG_UPDATE_CHECK_URL_STAGING", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/lut\""
+        buildConfigField "String", "CONFIGURATION_LIST", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/get\""
 
         buildConfigField "String", "PRODUCTION_MENU_API", "\"https://appsearch.thehindu.com/admin/configurations/overflow\""
         buildConfigField "String", "STAGING_MENU_API", "\"http://hindumysqlstaging.ninestars.in/admin/configurations/overflow\""

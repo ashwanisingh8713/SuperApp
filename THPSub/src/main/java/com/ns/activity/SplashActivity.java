@@ -317,7 +317,7 @@ public class SplashActivity extends BaseAcitivityTHP {
     }
 
     private void forceUpdate() {
-        mDisposable.add(DefaultTHApiManager.forceUpdate()
+        mDisposable.add(DefaultTHApiManager.forceUpdate(DefaultPref.getInstance(this).getConfigurationId())
                 .subscribe(updateModel -> {
                     String severVersionCode = updateModel.getVersion_code();
                     int serverVersionNumber = 0;

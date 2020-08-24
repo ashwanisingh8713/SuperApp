@@ -1,14 +1,19 @@
 package com.ns.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.paytm.pgsdk.easypay.manager.PaytmAssist.getContext;
+
 public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "SettingsFragment";
@@ -54,6 +61,8 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
     private boolean isDayMode;
 
     private DFPConsent dfpConsent;
+
+    private int forTestingPurposeCount;
 
 
     @Override
@@ -203,6 +212,52 @@ public class AppSettingActivity extends BaseAcitivityTHP implements CompoundButt
         if(TextUtils.isEmpty(displayName)) {
             languageAvailableVerification(this);
         }
+
+
+        findViewById(R.id.forTestingPurpose).setOnClickListener(v -> {
+            forTestingPurposeCount++;
+            if(forTestingPurposeCount == 10 ) {
+                showTestingDailog();
+            }
+        });
+
+    }
+
+
+    private void showTestingDailog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Configuration Testing Entry Dialog");
+        LayoutInflater inflater =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View viewInflated = inflater.inflate(R.layout.testing_text_inpu_password, null);
+        final EditText input =  viewInflated.findViewById(R.id.input);
+        builder.setView(viewInflated);
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                String m_Text = input.getText().toString();
+                forTestingPurposeCount = 0;
+                if(m_Text.equalsIgnoreCase("th01bl")) {
+                    startActivity(new Intent(AppSettingActivity.this, ConfigListActivity.class));
+                } else {
+                    Alerts.showToastAtTop(AppSettingActivity.this, "Password did not match");
+                }
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                forTestingPurposeCount = 0;
+            }
+        });
+
+        builder.show();
+        builder.setCancelable(false);
 
     }
 

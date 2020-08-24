@@ -42,6 +42,7 @@ import com.netoperation.default_db.TableWidget;
 import com.netoperation.model.ArticleBean;
 import com.netoperation.model.BannerBean;
 import com.netoperation.model.BookmarkBean;
+import com.netoperation.model.ConfigurationListData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.MPConfigurationModel;
 import com.netoperation.model.MPCycleDurationModel;
@@ -1204,10 +1205,11 @@ public class DefaultTHApiManager {
      */
     public static Disposable appConfigurationFromServer(Context context, RequestCallback<TableConfiguration> requestCallback) {
         String url = BuildConfig.CONFIG_URL;
+        String configurationId = DefaultPref.getInstance(context).getConfigurationId();
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.CONFIG_URL_STAGING;
         }
-        return ServiceFactory.getServiceAPIs().config(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
+        return ServiceFactory.getServiceAPIs().config(url, BuildConfig.CONFIG_AUTH_KEY, configurationId, ResUtil.resolution(context))
         .subscribeOn(Schedulers.io())
                 .map(config->{
                     if(config.isSTATUS()) {
@@ -1237,11 +1239,12 @@ public class DefaultTHApiManager {
     }
 
     public static Observable<Boolean> isConfigurationUpdateAvailable(Context context) {
+        String configurationId = DefaultPref.getInstance(context).getConfigurationId();
         String url = BuildConfig.CONFIG_UPDATE_CHECK_URL;
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.CONFIG_UPDATE_CHECK_URL_STAGING;
         }
-        return ServiceFactory.getServiceAPIs().configUpdateCheck(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
+        return ServiceFactory.getServiceAPIs().configUpdateCheck(url, BuildConfig.CONFIG_AUTH_KEY, configurationId)
                 .subscribeOn(Schedulers.io())
                 .timeout(30, TimeUnit.SECONDS)
                 .map(configUpdateCheck -> {
@@ -1471,13 +1474,13 @@ public class DefaultTHApiManager {
 
     }
 
-    public static Observable<UpdateModel> forceUpdate() {
+    public static Observable<UpdateModel> forceUpdate(String configurationId) {
         String url = BuildConfig.FORCE_UPDATE_URL;
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.FORCE_UPDATE_URL_STAGING;
         }
         return ServiceFactory.getServiceAPIs()
-                .forceUpdate(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
+                .forceUpdate(url, BuildConfig.CONFIG_AUTH_KEY, configurationId)
                 .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .map(responseModel -> responseModel.getDATA().getAndroid())
@@ -1582,11 +1585,12 @@ public class DefaultTHApiManager {
     }
 
     public static Single<List<TableOptional.OptionsBean>> getOptionsListApi(Context context) {
+        String configurationId = DefaultPref.getInstance(context).getConfigurationId();
         String url = BuildConfig.PRODUCTION_MENU_API;
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.STAGING_MENU_API;
         }
-        return ServiceFactory.getServiceAPIs().getMenuSequence(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID)
+        return ServiceFactory.getServiceAPIs().getMenuSequence(url, BuildConfig.CONFIG_AUTH_KEY, configurationId)
                 .subscribeOn(Schedulers.io())
                 .map(jsonElement -> {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -1625,11 +1629,12 @@ public class DefaultTHApiManager {
      * @param requestCallback
      */
     public static void getUPS(Context context, RequestCallback<List<String>> requestCallback) {
+        String configurationId = DefaultPref.getInstance(context).getConfigurationId();
         String url = BuildConfig.UPS_URL;
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.UPS_URL_STAGING;
         }
-         ServiceFactory.getServiceAPIs().getUSP(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
+         ServiceFactory.getServiceAPIs().getUSP(url, BuildConfig.CONFIG_AUTH_KEY, configurationId, ResUtil.resolution(context))
                 .subscribeOn(Schedulers.io())
                 .map(uspData->{
                     boolean isDayTheme = DefaultPref.getInstance(context).isUserThemeDay();
@@ -1663,16 +1668,39 @@ public class DefaultTHApiManager {
     }
 
     public static void getGuideOverlay(Context context, RequestCallback<USPData.USPDATABean.GuideOverlay> requestCallback) {
+        String configurationId = DefaultPref.getInstance(context).getConfigurationId();
         String url = BuildConfig.GUIDE_OVERLAY_URL;
         if (!BuildConfig.IS_PRODUCTION) {
             url = BuildConfig.GUIDE_OVERLAY_URL_STAGING;
         }
-        ServiceFactory.getServiceAPIs().getUSP(url, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.CONFIG_PRODUCTION_ID, ResUtil.resolution(context))
+        ServiceFactory.getServiceAPIs().getUSP(url, BuildConfig.CONFIG_AUTH_KEY, configurationId, ResUtil.resolution(context))
                 .subscribeOn(Schedulers.io())
                 .map(uspData->{
                     USPData.USPDATABean.GuideOverlay guideOverlay = uspData.getDATA().getAndroid();
                     return guideOverlay;
                 })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value->{
+                    if(requestCallback != null) {
+                        requestCallback.onNext(value);
+                    }
+                }, throwable -> {
+                    if(requestCallback != null) {
+                        requestCallback.onError(throwable, "getGuideOverlay");
+                    }
+                }, ()->{
+                    if(requestCallback != null) {
+                        requestCallback.onComplete("getGuideOverlay");
+                    }
+                });
+
+    }
+
+
+    public static void getConfigurationList(RequestCallback<ConfigurationListData> requestCallback) {
+        ServiceFactory.getServiceAPIs().configurationList(BuildConfig.CONFIGURATION_LIST, BuildConfig.CONFIG_AUTH_KEY, BuildConfig.APPLICATION_ID, 1, 100)
+                .subscribeOn(Schedulers.io())
+
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value->{
                     if(requestCallback != null) {

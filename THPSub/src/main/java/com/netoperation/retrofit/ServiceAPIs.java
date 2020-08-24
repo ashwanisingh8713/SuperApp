@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.netoperation.model.BreifingModelNew;
 import com.netoperation.model.ConfigUpdateCheck;
 import com.netoperation.model.ConfigurationData;
+import com.netoperation.model.ConfigurationListData;
 import com.netoperation.model.HomeData;
 import com.netoperation.model.KeyValueModel;
 import com.netoperation.model.MPConfigurationModel;
@@ -199,6 +200,10 @@ public interface ServiceAPIs {
     @FormUrlEncoded
     @POST("") // configuration update check api
     Observable<ConfigUpdateCheck> configUpdateCheck(@Url String url, @Field("authKey") String authKey, @Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("") // get all configuration list
+    Observable<ConfigurationListData> configurationList(@Url String url, @Field("authKey") String authKey, @Field("packageName") String packageName, @Field("pageNumber") int pageNumber, @Field("pageSize") int pageSize);
 
     @FormUrlEncoded
     @POST("") // Force Update.php

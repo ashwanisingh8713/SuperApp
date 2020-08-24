@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.netoperation.default_db.TableConfiguration;
 import com.ns.activity.BaseAcitivityTHP;
+import com.ns.thpremium.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -386,5 +387,14 @@ public class DefaultPref {
 
     public String getConfigLUT() {
         return mPreferences.getString("configLut", "");
+    }
+
+    public void setConfigurationId(String configId) {
+        mEditor.putString("configId", configId);
+        mEditor.commit();
+    }
+
+    public String getConfigurationId() {
+        return mPreferences.getString("configId", BuildConfig.CONFIG_PRODUCTION_ID);
     }
 }
