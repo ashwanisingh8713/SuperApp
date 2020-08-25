@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:imeOptions="actionDone"
         android:textSize="@dimen/signin_field_text_size"
-        android:hint="Mobile Number/Email Address"
+        android:hint="Email Address"
         android:maxLines="1"
         android:singleLine="true"
         android:inputType="textEmailAddress"

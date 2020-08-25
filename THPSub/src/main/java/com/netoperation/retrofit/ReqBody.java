@@ -311,6 +311,11 @@ public class ReqBody {
     }
 
     public static JsonObject freePlan(String userId, String contact, String trxnid, String siteid) {
+
+        String planId = BuildConfig.FREE_PLAN_ID_PRODUCATION;
+        if (!BuildConfig.IS_PRODUCTION) {
+            planId = BuildConfig.FREE_PLAN_ID_STAGING;
+        }
         JsonObject object = new JsonObject();
         object.addProperty("userid", userId);
         object.addProperty("trxnid", trxnid);
@@ -318,7 +323,7 @@ public class ReqBody {
         object.addProperty("amt","0.0");
         object.addProperty("channel","android");
         object.addProperty("siteid", siteid);
-        object.addProperty("planid","249");
+        object.addProperty("planid",planId);
         object.addProperty("plantype","Subscription");
         object.addProperty("billingchannel","paytm");
         object.addProperty("validity","14-days");

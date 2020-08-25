@@ -528,15 +528,21 @@ public class ApiManager {
                                                 }
                                             }
 
-                                            final String freeTrialPlanId = "249";
                                             // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
-                                            if (planId.equals(freeTrialPlanId) || planId.equals("10") && isActive == 1 ) {
+                                            String freeTrialPlanId = BuildConfig.FREE_PLAN_ID_PRODUCATION;
+                                            String freeTrialPlanIdOld = BuildConfig.FREE_PLAN_ID_OLD_PRODUCATION;
+                                            if (!BuildConfig.IS_PRODUCTION) {
+                                                freeTrialPlanId = BuildConfig.FREE_PLAN_ID_STAGING;
+                                                freeTrialPlanIdOld = BuildConfig.FREE_PLAN_ID_OLD_STAGING;
+                                            }
+
+                                            if (planId.equals(freeTrialPlanId) || planId.equals(freeTrialPlanIdOld) && isActive == 1 ) {
                                                 userProfile.setHasFreePlan(true);
                                             }
 
                                             // If user free plan is not available then this will check for subscribed user
-                                            if (!planId.equals(freeTrialPlanId) && !planId.equals("10") && (isActive == 1)) {
+                                            if (!planId.equals(freeTrialPlanId) && !planId.equals(freeTrialPlanIdOld) && (isActive == 1)) {
                                                 userProfile.setHasSubscribedPlan(true);
                                                 PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }
@@ -774,15 +780,21 @@ public class ApiManager {
 
                                             }
 
-                                            final String freeTrialPlanId = "249";
                                             // PlanId = 249, has "14 days free trial"
                                             // PlanId = 10, has "30 days free trial"
-                                            if (planId.equals(freeTrialPlanId) || planId.equals("10") && isActive == 1) {
+                                            String freeTrialPlanId = BuildConfig.FREE_PLAN_ID_PRODUCATION;
+                                            String freeTrialPlanIdOld = BuildConfig.FREE_PLAN_ID_OLD_PRODUCATION;
+                                            if (!BuildConfig.IS_PRODUCTION) {
+                                                freeTrialPlanId = BuildConfig.FREE_PLAN_ID_STAGING;
+                                                freeTrialPlanIdOld = BuildConfig.FREE_PLAN_ID_OLD_STAGING;
+                                            }
+
+                                            if (planId.equals(freeTrialPlanId) || planId.equals(freeTrialPlanIdOld) && isActive == 1) {
                                                 userProfile.setHasFreePlan(true);
                                             }
 
                                             // If user free plan is not available then this will check for subscribed user
-                                            if (!planId.equals(freeTrialPlanId) && !planId.equals("10")  && (isActive == 1) ) {
+                                            if (!planId.equals(freeTrialPlanId) && !planId.equals(freeTrialPlanIdOld)  && (isActive == 1) ) {
                                                 userProfile.setHasSubscribedPlan(true);
                                                 PremiumPref.getInstance(SuperApp.getAppContext()).setHasSubscription(true);
                                             }

@@ -43,6 +43,7 @@ import com.ns.utils.THPConstants;
 import com.ns.utils.THPFirebaseAnalytics;
 import com.ns.utils.TextSpanCallback;
 import com.ns.view.CustomProgressBarWhite;
+import com.ns.view.EmailTextChangedListener;
 import com.ns.view.text.CustomTextView;
 import com.ns.view.EmailMobileTextChangedListener;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -183,12 +184,12 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
             String emailOrMobile = emailOrMobile_Et.getText().toString();
             String mobileStr = "";
             String emailStr = "";
-            String prefix = THPConstants.MOBILE_COUNTRY_CODE;
+           // String prefix = THPConstants.MOBILE_COUNTRY_CODE;
 
-            boolean hasPrefix = StringUtils.startsWithIgnoreCase(emailOrMobile, prefix);
+           // boolean hasPrefix = StringUtils.startsWithIgnoreCase(emailOrMobile, prefix);
             emailOrMobile = StringUtils.trimAllWhitespace(emailOrMobile);
 
-            if(hasPrefix) {
+            /*if(hasPrefix) {
                 emailOrMobile = StringUtils.delete(emailOrMobile, prefix);
                 // This removed extra space and set values after triming space
                 emailOrMobile_Et.setText(THPConstants.MOBILE_COUNTRY_CODE+" "+emailOrMobile);
@@ -197,19 +198,22 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
                 // This removed extra space and set values after triming space
                 emailOrMobile_Et.setText(emailOrMobile);
                 emailOrMobile_Et.setSelection(emailOrMobile.length());
-            }
+            }*/
+
+            emailOrMobile_Et.setText(emailOrMobile);
+            emailOrMobile_Et.setSelection(emailOrMobile.length());
 
             if (ResUtil.isEmpty(emailOrMobile)) {
                 textViewErrorEmail.setVisibility(View.VISIBLE);
                 textViewErrorEmail.setText(R.string.please_enter_valid);
                 return;
             }
-            else if(hasPrefix && !ResUtil.isValidMobile(emailOrMobile)) {
+           /* else if(hasPrefix && !ResUtil.isValidMobile(emailOrMobile)) {
                 textViewErrorEmail.setVisibility(View.VISIBLE);
                 textViewErrorEmail.setText("Please enter valid Mobile Number");
                 return;
-            }
-            else if(!hasPrefix && !ResUtil.isValidEmail(emailOrMobile)) {
+            }*/
+            else if(!ResUtil.isValidEmail(emailOrMobile)) {
                 textViewErrorEmail.setVisibility(View.VISIBLE);
                 textViewErrorEmail.setText("Please enter valid Email Address");
                 return;
@@ -218,11 +222,11 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
             isUserEnteredMobile = false;
             isUserEnteredEmail = false;
 
-            if(ResUtil.isValidMobile(emailOrMobile)) {
+            /*if(ResUtil.isValidMobile(emailOrMobile)) {
                 isUserEnteredMobile = true;
                 isUserEnteredEmail = false;
                 mobileStr = emailOrMobile;
-            }
+            }*/
 
             if(ResUtil.isValidEmail(emailOrMobile)) {
                 isUserEnteredEmail = true;
@@ -233,7 +237,7 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
             if(!isUserEnteredMobile && !isUserEnteredEmail) {
                 //Alerts.showAlertDialogNoBtnWithCancelable(getActivity(), "", "\nPlease enter valid Email or Mobile \n");
                 textViewErrorEmail.setVisibility(View.VISIBLE);
-                textViewErrorEmail.setText(R.string.please_enter_valid);
+                textViewErrorEmail.setText("Please enter your Email Address");
                 return;
             }
 
@@ -378,7 +382,8 @@ public class SignUpFragment extends BaseFragmentTHP implements SocialLoginUtil.S
         });
 
         // Text Change Listener
-        emailOrMobile_Et.addTextChangedListener(new EmailMobileTextChangedListener(THPConstants.MOBILE_COUNTRY_CODE, emailOrMobile_Et, textViewErrorEmail));
+      // emailOrMobile_Et.addTextChangedListener(new EmailMobileTextChangedListener(THPConstants.MOBILE_COUNTRY_CODE, emailOrMobile_Et, textViewErrorEmail));
+       emailOrMobile_Et.addTextChangedListener(new EmailTextChangedListener(emailOrMobile_Et, textViewErrorEmail));
 
 
     }
